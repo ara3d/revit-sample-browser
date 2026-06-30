@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using Ara3D.Collections;
 using Ara3D.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.DirectContext3D;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
@@ -62,7 +62,7 @@ public sealed class RenderMesh
         for (var i = 0; i < idx.Length; i++)
             idx[i] = indices[i];
 
-        var rm = new RenderMesh(rv, idx);
+        RenderMesh rm = new(rv, idx);
         rm.ComputeSmoothedNormalsInPlace();
 
         return rm;
@@ -73,12 +73,12 @@ public sealed class RenderMesh
         var v = Vertices;
         Debug.Assert(v.Length > 0);
 
-        var minX = (double)v[0].PX; var minY = (double)v[0].PY; var minZ = (double)v[0].PZ;
+        double minX = v[0].PX; double minY = v[0].PY; double minZ = v[0].PZ;
         var maxX = minX; var maxY = minY; var maxZ = minZ;
 
         for (var i = 1; i < v.Length; i++)
         {
-            var x = (double)v[i].PX; var y = (double)v[i].PY; var z = (double)v[i].PZ;
+            double x = v[i].PX; double y = v[i].PY; double z = v[i].PZ;
             if (x < minX) minX = x; if (y < minY) minY = y; if (z < minZ) minZ = z;
             if (x > maxX) maxX = x; if (y > maxY) maxY = y; if (z > maxZ) maxZ = z;
         }
@@ -99,7 +99,7 @@ public sealed class RenderMesh
         var vertexCount = _vertices.Length;
         var acc = new Vector3[vertexCount];
 
-        for (int i = 0; i < _indices.Length; i += 3)
+        for (var i = 0; i < _indices.Length; i += 3)
         {
             var i0 = _indices[i];
             var i1 = _indices[i + 1];
@@ -126,7 +126,7 @@ public sealed class RenderMesh
             acc[i2] += n;
         }
 
-        for (int i = 0; i < vertexCount; i++)
+        for (var i = 0; i < vertexCount; i++)
         {
             var n = acc[i];
             var lenSq = n.LengthSquared();
@@ -148,7 +148,7 @@ public sealed class RenderMesh
         float minY = _vertices[0].PY, maxY = _vertices[0].PY;
         float minZ = _vertices[0].PZ, maxZ = _vertices[0].PZ;
 
-        for (int i = 1; i < _vertices.Length; i++)
+        for (var i = 1; i < _vertices.Length; i++)
         {
             var v = _vertices[i];
             if (v.PX < minX) minX = v.PX;
@@ -159,21 +159,21 @@ public sealed class RenderMesh
             if (v.PZ > maxZ) maxZ = v.PZ;
         }
 
-        float dx = maxX - minX;
-        float dy = maxY - minY;
-        float dz = maxZ - minZ;
+        var dx = maxX - minX;
+        var dy = maxY - minY;
+        var dz = maxZ - minZ;
 
         const float eps = 1e-12f;
         if (dx < eps) dx = 1;
         if (dy < eps) dy = 1;
         if (dz < eps) dz = 1;
 
-        for (int i = 0; i < _vertices.Length; i++)
+        for (var i = 0; i < _vertices.Length; i++)
         {
             var v = _vertices[i];
-            float nx = (v.PX - minX) / dx;
-            float ny = (v.PY - minY) / dy;
-            float nz = (v.PZ - minZ) / dz;
+            var nx = (v.PX - minX) / dx;
+            var ny = (v.PY - minY) / dy;
+            var nz = (v.PZ - minZ) / dz;
 
             if (enhanceContrast)
             {
@@ -182,9 +182,9 @@ public sealed class RenderMesh
                 nz = MathF.Pow(nz, 0.8f);
             }
 
-            byte r = (byte)(Math.Clamp(nx, 0f, 1f) * 255f);
-            byte g = (byte)(Math.Clamp(ny, 0f, 1f) * 255f);
-            byte b = (byte)(Math.Clamp(nz, 0f, 1f) * 255f);
+            var r = (byte)(Math.Clamp(nx, 0f, 1f) * 255f);
+            var g = (byte)(Math.Clamp(ny, 0f, 1f) * 255f);
+            var b = (byte)(Math.Clamp(nz, 0f, 1f) * 255f);
             _vertices[i] = new RenderVertex(v.Position, v.Normal, v.UV, new Color32(r, g, b, 255));
         }
     }
@@ -211,9 +211,11 @@ public readonly struct RenderVertex
     public readonly Color32 RGBA;
 
     public VertexPositionNormalColored ToRevit()
-        => new(
-            new XYZ(PX, PY, PZ),
-            new XYZ(NX, NY, NZ),
-            new ColorWithTransparency(RGBA.R, RGBA.G, RGBA.B, (byte)(255 - RGBA.A))
-        );
+    {
+        return new(
+                new XYZ(PX, PY, PZ),
+                new XYZ(NX, NY, NZ),
+                new ColorWithTransparency(RGBA.R, RGBA.G, RGBA.B, (byte)(255 - RGBA.A))
+            );
+    }
 }

@@ -22,12 +22,12 @@
 #endregion // Copyright
 
 #region Namespaces
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 #endregion
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
@@ -59,104 +59,102 @@ namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 
             try
             {
-                using (var log = new JtLogFile("SearchString"))
+                using JtLogFile log = new("SearchString");
+                SortableBindingList<SearchHit> data = null;
+
+                while (data == null || data.Count == 0)
                 {
-                    SortableBindingList<SearchHit> data = null;
+                    SearchForm form = new(log.Path);
 
-                    while (data == null || data.Count == 0)
+                    var r = form.ShowDialog();
+
+                    if (r == DialogResult.Cancel)
                     {
-                        var form = new SearchForm(log.Path);
+                        message = string.Empty;
+                        return Result.Cancelled;
+                    }
 
-                        var r = form.ShowDialog();
+                    if (form.CurrentSelection && selids.Count == 0)
+                    {
+                        InfoMsg("Sorry; you cannot search the current element selection, because it is empty.");
+                        continue;
+                    }
 
-                        if (r == DialogResult.Cancel)
-                        {
-                            message = string.Empty;
-                            return Result.Cancelled;
-                        }
+                    #region Set up filtered element collector
+                    var a
+                        = form.CurrentView
+                            ? new FilteredElementCollector(doc, doc.ActiveView.Id)
+                        : form.CurrentSelection
+                            ? new FilteredElementCollector(doc, uidoc.Selection.GetElementIds())
+                        : new FilteredElementCollector(doc);
 
-                        if (form.CurrentSelection && selids.Count == 0)
-                        {
-                            InfoMsg("Sorry; you cannot search the current element selection, because it is empty.");
-                            continue;
-                        }
+                    if (form.ElementType && form.NonElementType)
+                    {
+                        a.WhereElementIsElementType();
 
-                        #region Set up filtered element collector
-                        FilteredElementCollector a
-                            = form.CurrentView
-                                ? new FilteredElementCollector(doc, doc.ActiveView.Id)
-                            : form.CurrentSelection
-                                ? new FilteredElementCollector(doc, uidoc.Selection.GetElementIds())
+                        var b = form.CurrentView
+                            ? new FilteredElementCollector(doc, doc.ActiveView.Id)
                             : new FilteredElementCollector(doc);
 
-                        if (form.ElementType && form.NonElementType)
+                        b.WhereElementIsNotElementType();
+
+                        a.UnionWith(b);
+                    }
+                    else if (form.ElementType)
+                    {
+                        a.WhereElementIsElementType();
+                    }
+                    else if (form.NonElementType)
+                    {
+                        a.WhereElementIsNotElementType();
+                    }
+                    else
+                    {
+                        message = "Please select at least one or both of Element type and non-Element type.";
+                        return Result.Failed;
+                    }
+
+                    if (!form.AllCategories)
+                    {
+                        var bic = (BuiltInCategory)Enum.Parse(
+                            typeof(BuiltInCategory),
+                            form.CategoryName);
+
+                        a.OfCategory(bic);
+                    }
+                    #endregion // Set up filtered element collector
+
+                    StringSearcher ss = new(a, form.SearchOptions);
+
+                    try
+                    {
+                        data = ss.Run(log, out message);
+
+                        if (data.Count == 0)
                         {
-                            a.WhereElementIsElementType();
-
-                            var b = form.CurrentView
-                                ? new FilteredElementCollector(doc, doc.ActiveView.Id)
-                                : new FilteredElementCollector(doc);
-
-                            b.WhereElementIsNotElementType();
-
-                            a.UnionWith(b);
+                            InfoMsg(message.Length > 0 ? message : "No occurrences found.");
                         }
-                        else if (form.ElementType)
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        if (ex.StackTrace != null &&
+                            ex.StackTrace.Contains("RegularExpressions.RegexParser.ScanRegex"))
                         {
-                            a.WhereElementIsElementType();
-                        }
-                        else if (form.NonElementType)
-                        {
-                            a.WhereElementIsNotElementType();
+                            InfoMsg("Invalid regular expression. Error message:\r\n"
+                                + ex.Message
+                                + "\r\nIf you don't know what a regular expression is, don't use it"
+                                + "\r\n(cheat sheet: http://regexlib.com/cheatsheet.aspx).");
                         }
                         else
                         {
-                            message = "Please select at least one or both of Element type and non-Element type.";
-                            return Result.Failed;
-                        }
-
-                        if (!form.AllCategories)
-                        {
-                            var bic = (BuiltInCategory)Enum.Parse(
-                                typeof(BuiltInCategory),
-                                form.CategoryName);
-
-                            a.OfCategory(bic);
-                        }
-                        #endregion // Set up filtered element collector
-
-                        var ss = new StringSearcher(a, form.SearchOptions);
-
-                        try
-                        {
-                            data = ss.Run(log, out message);
-
-                            if (data.Count == 0)
-                            {
-                                InfoMsg(message.Length > 0 ? message : "No occurrences found.");
-                            }
-                        }
-                        catch (ArgumentException ex)
-                        {
-                            if (ex.StackTrace != null &&
-                                ex.StackTrace.Contains("RegularExpressions.RegexParser.ScanRegex"))
-                            {
-                                InfoMsg("Invalid regular expression. Error message:\r\n"
-                                    + ex.Message
-                                    + "\r\nIf you don't know what a regular expression is, don't use it"
-                                    + "\r\n(cheat sheet: http://regexlib.com/cheatsheet.aspx).");
-                            }
-                            else
-                            {
-                                throw;
-                            }
+                            throw;
                         }
                     }
-
-                    StringSearchHost.ShowNavigator(data);
-
-                    return Result.Succeeded;
                 }
+
+                StringSearchHost.ShowNavigator(data);
+
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {

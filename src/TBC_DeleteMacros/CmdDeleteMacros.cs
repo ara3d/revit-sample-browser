@@ -12,11 +12,8 @@
 
 #region Namespaces
 
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Macros;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Macros;
 

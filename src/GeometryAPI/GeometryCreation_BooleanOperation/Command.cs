@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation.CS
 {
@@ -20,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-                var tran = new Transaction(document, "GeometryCreation_BooleanOperation");
+                Transaction tran = new(document, "GeometryCreation_BooleanOperation");
                 tran.Start();
 
                 var geometryCreation = GeometryCreation.GetInstance(commandData.Application.Application);
@@ -42,14 +42,16 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
             }
         }
 
-        private static List<Solid> PrepareSolids(GeometryCreation geometrycreation) => new()
+        private static List<Solid> PrepareSolids(GeometryCreation geometrycreation)
         {
+            return [
             geometrycreation.CreateCenterbasedBox(XYZ.Zero, 25),
             geometrycreation.CreateCenterbasedSphere(XYZ.Zero, 20),
             geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, GeometryCreation.CylinderDirection.BasisX),
             geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, GeometryCreation.CylinderDirection.BasisY),
             geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, GeometryCreation.CylinderDirection.BasisZ)
-        };
+        ];
+        }
 
         // CSG tree: https://en.wikipedia.org/wiki/Constructive_solid_geometry
         private static void CsgTree(GeometryCreation geometrycreation, AnalysisVisualizationFramework avf)

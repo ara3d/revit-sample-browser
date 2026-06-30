@@ -1,7 +1,7 @@
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -16,7 +16,7 @@ namespace BuildingCoder
 
             if (!view.CropBoxActive)
             {
-                using var tr = new Transaction(doc);
+                using Transaction tr = new(doc);
                 tr.Start("Temp");
                 view.CropBoxActive = true;
                 viewBoundingBox = view.CropBox;
@@ -53,7 +53,7 @@ namespace BuildingCoder
                     new XYZ(viewBoundingBox.Max.X,
                         viewBoundingBox.Max.Z, viewBoundingBox.Max.Y));
 
-            using var boundingBoxAsOutline = new Outline(
+            using Outline boundingBoxAsOutline = new(
                 targetBoundingBox.Min, targetBoundingBox.Max);
             return boundingBoxAsOutline.Intersects(
                 viewOutline, 0);
@@ -63,14 +63,13 @@ namespace BuildingCoder
             FindAllViewsThatCanDisplayElements(
                 this Document doc)
         {
-            var filter
-                = new ElementMulticlassFilter(
-                    new List<Type>
-                    {
+            ElementMulticlassFilter filter
+                = new(
+                    [
                         typeof(View3D),
                         typeof(ViewPlan),
                         typeof(ViewSection)
-                    });
+                    ]);
 
             return new FilteredElementCollector(doc)
                 .WherePasses(filter)
@@ -86,7 +85,7 @@ namespace BuildingCoder
 
             var e1 = elements.FirstOrDefault();
 
-            if (null == e1) return new List<View>();
+            if (null == e1) return [];
 
             var doc = e1.Document;
 
@@ -95,15 +94,15 @@ namespace BuildingCoder
 
             var idsToCheck
                 = from e in elements
-                select e.Id;
+                  select e.Id;
 
             return from v in relevantViewList
-                let idList
-                    = new FilteredElementCollector(doc, v.Id)
-                        .WhereElementIsNotElementType()
-                        .ToElementIds()
-                where !idsToCheck.Except(idList).Any()
-                select v;
+                   let idList
+                       = new FilteredElementCollector(doc, v.Id)
+                           .WhereElementIsNotElementType()
+                           .ToElementIds()
+                   where !idsToCheck.Except(idList).Any()
+                   select v;
         }
 
         public static bool IsElementVisibleInView(
@@ -123,10 +122,10 @@ namespace BuildingCoder
                     new ElementId(BuiltInParameter.ID_PARAM),
                     elId);
 
-            var idFilter = new ElementParameterFilter(idRule);
+            ElementParameterFilter idFilter = new(idRule);
 
             var cat = el.Category;
-            var catFilter = new ElementCategoryFilter(cat.Id);
+            ElementCategoryFilter catFilter = new(cat.Id);
 
             var collector =
                 new FilteredElementCollector(doc, view.Id)

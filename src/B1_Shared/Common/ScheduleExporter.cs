@@ -1,11 +1,11 @@
+using Autodesk.Revit.DB;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
-using Autodesk.Revit.DB;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
 
 namespace ExcelExporterImporter.Common
 {
@@ -33,7 +33,7 @@ namespace ExcelExporterImporter.Common
         /// <returns></returns>
         public void ExportViewScheduleBasic(ViewSchedule schedule, ExcelWorksheet worksheet)
         {
-            var dt = new DataTable();
+            DataTable dt = new();
             //Definition of columns
             var fieldsCount = schedule.Definition.GetFieldCount();
             for (var fieldIndex = 0; fieldIndex < fieldsCount; fieldIndex++)
@@ -92,8 +92,8 @@ namespace ExcelExporterImporter.Common
         {
             var appliedParameters = parametersSettings.ParametersTranslations
                 .Where(p => p.Location == "*" || p.Location == "ViewSchedule_" + schedule.Name).ToList();
-            var LstParameter = new Dictionary<long, Parameter>();
-            var LstLastTypeFamilly = new Dictionary<string, int>();
+            Dictionary<long, Parameter> LstParameter = [];
+            Dictionary<string, int> LstLastTypeFamilly = [];
             var revitLinksElements = new FilteredElementCollector(doc, schedule.Id)
                 .OfCategory(BuiltInCategory.OST_RvtLinks).ToElementIds();
             //---Gets the list of items---
@@ -102,16 +102,16 @@ namespace ExcelExporterImporter.Common
 
             var bAnalyticalNodesShedule = false;
             var bRvtLinksShedule = false;
-            if (BuiltInCategory.OST_AnalyticalNodes == (BuiltInCategory) schedule.Definition.CategoryId.Value)
+            if (BuiltInCategory.OST_AnalyticalNodes == (BuiltInCategory)schedule.Definition.CategoryId.Value)
                 bAnalyticalNodesShedule = true;
-            else if (BuiltInCategory.OST_RvtLinks == (BuiltInCategory) schedule.Definition.CategoryId.Value)
+            else if (BuiltInCategory.OST_RvtLinks == (BuiltInCategory)schedule.Definition.CategoryId.Value)
                 bRvtLinksShedule = true;
             //Excluded revit links
             if (revitLinksElements.Any() && bRvtLinksShedule == false)
                 collector = collector.Excluding(revitLinksElements);
             //----------------------------------     
-            var fieldsList = new List<ScheduleField>();
-            var dt = new DataTable();
+            List<ScheduleField> fieldsList = [];
+            DataTable dt = new();
             //=========================================Creating the excel table header=================================
             var fieldsCount = schedule.Definition.GetFieldCount();
             dt.Columns.Add("ID");
@@ -155,11 +155,10 @@ namespace ExcelExporterImporter.Common
                 data["ID"] = element.UniqueId;
                 //=========================We will look for the type and family and note its position in the dictionary==========================
                 //For ElementsType, only the values written on the last line of a type and family member used for the update. We then note the last line of each family type and we will lock the other cells to avoid errors
-                var parameter_temp = element.get_Parameter((BuiltInParameter) (-1002052));
+                var parameter_temp = element.get_Parameter((BuiltInParameter)(-1002052));
                 if (parameter_temp != null)
                 {
-                    var elementType = doc.GetElement(parameter_temp.AsElementId()) as ElementType;
-                    if (elementType != null)
+                    if (doc.GetElement(parameter_temp.AsElementId()) is ElementType elementType)
                     {
                         var familyName = RevitUtilities.GetElementFamilyName(doc, elementType);
                         var sTypeNameFamilly = familyName.Trim() + ": " + elementType.Name.Trim();
@@ -262,8 +261,8 @@ namespace ExcelExporterImporter.Common
             var iRowAjust = 1;
             var iStartRow = 3;
             var iTotalRows = worksheet.Dimension.Rows; //Gives the total number of lines
-            var ListColHidden = new List<int> {1, 2}; //List which contains the numbers which must be hidden
-            var ListColFormula = new List<int>(); //List of columns which contains a formula
+            List<int> ListColHidden = [1, 2]; //List which contains the numbers which must be hidden
+            List<int> ListColFormula = []; //List of columns which contains a formula
 
             RevitUtilities.FormatingTable(worksheet);
             foreach (var scheduleField in fieldsList)
@@ -277,17 +276,17 @@ namespace ExcelExporterImporter.Common
                 var format = "";
                 var formatOptions = scheduleField.GetFormatOptions();
 #if REVIT2021
-                    if (!formatOptions.UseDefault && !formatOptions.GetSymbolTypeId().Empty())
-                    {
-                        var formatValueOptions = new FormatValueOptions();
-                        formatValueOptions.SetFormatOptions(formatOptions);
-                        format =
- UnitFormatUtils.Format(doc.GetUnits(), scheduleField.GetSpecTypeId(), 0, true, formatValueOptions);
-                    }
-                    else if (formatOptions.UseDefault && !scheduleField.GetSpecTypeId().Empty())
-                    {
-                        format = RevitUtilities.GetUnitTypeSymbol(doc, scheduleField.GetSpecTypeId());
-                    }
+                if (!formatOptions.UseDefault && !formatOptions.GetSymbolTypeId().Empty())
+                {
+                    FormatValueOptions formatValueOptions = new();
+                    formatValueOptions.SetFormatOptions(formatOptions);
+                    format =
+UnitFormatUtils.Format(doc.GetUnits(), scheduleField.GetSpecTypeId(), 0, true, formatValueOptions);
+                }
+                else if (formatOptions.UseDefault && !scheduleField.GetSpecTypeId().Empty())
+                {
+                    format = RevitUtilities.GetUnitTypeSymbol(doc, scheduleField.GetSpecTypeId());
+                }
 #else
                 if (!formatOptions.UseDefault && formatOptions.UnitSymbol != UnitSymbolType.UST_NONE)
                 {
@@ -347,7 +346,7 @@ namespace ExcelExporterImporter.Common
             //We group the group lines
             var level = 0;
             var iLevelMax = schedule.Definition.GetSortGroupFields().Count;
-            var dGroupFieldId = new Dictionary<string, int>();
+            Dictionary<string, int> dGroupFieldId = [];
             foreach (var scheduleSortGroupField in schedule.Definition.GetSortGroupFields())
             {
                 level++;
@@ -359,7 +358,7 @@ namespace ExcelExporterImporter.Common
                 dGroupFieldId.Add(fieldId, level);
                 var colIndex =
                     column.Ordinal + 1; //Indicates the column number. We do plus 1 in the first column this is the id
-                var dic = new Dictionary<string, int>();
+                Dictionary<string, int> dic = [];
                 var groupFirstRow = 3; //To start playback after declaring the title bar
                 var bSubRow = false;
                 for (var rowIndex = groupFirstRow; rowIndex <= iTotalRows; rowIndex++)
@@ -520,7 +519,7 @@ namespace ExcelExporterImporter.Common
             if (worksheet.Cells[rowIndex - 1, 1].Value + "" == "")
             {
                 var iSubRow = iLevel - 1;
-                rowIndex = rowIndex - iSubRow;
+                rowIndex -= iSubRow;
             }
 
             worksheet.InsertRow(rowIndex, 1);

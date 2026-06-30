@@ -3,12 +3,13 @@
 // Adapted from RevitFindExteriorWalls by Pekshev / Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/RevitFindExteriorWalls
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using PickObjectsCanceled = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 namespace Ara3D.RevitSampleBrowser.FindExteriorWalls.CS
@@ -60,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.FindExteriorWalls.CS
                 if (!selectedWalls.Any())
                     return Result.Cancelled;
 
-                var exteriorWalls = new List<Wall>();
+                List<Wall> exteriorWalls = new();
 
                 for (var i = 0; i < selectedWalls.Count; i++)
                 {
@@ -175,7 +176,7 @@ namespace Ara3D.RevitSampleBrowser.FindExteriorWalls.CS
             List<Wall> exteriorWalls,
             Wall currentWall)
         {
-            var intersectedWalls = new List<Wall>();
+            List<Wall> intersectedWalls = new();
             var intersectedWithFirstEnd = GetWallsIntersectedWithCurveByEnd(exteriorWalls, currentWall, 0);
             var intersectedWithSecondEnd = GetWallsIntersectedWithCurveByEnd(exteriorWalls, currentWall, 1);
             var locCurve = (LocationCurve)currentWall.Location;
@@ -224,7 +225,7 @@ namespace Ara3D.RevitSampleBrowser.FindExteriorWalls.CS
             Wall currentWall,
             int endIndex)
         {
-            var intersectedWalls = new List<Wall>();
+            List<Wall> intersectedWalls = new();
             var currentCurve = ((LocationCurve)currentWall.Location).Curve;
 
             foreach (var exteriorWall in exteriorWalls)

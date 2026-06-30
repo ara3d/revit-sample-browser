@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 {
     /// <summary>
@@ -39,7 +38,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 
         public string LocationName { get; set; }
 
-        public List<string> LocationNames { get; } = new List<string>();
+        public List<string> LocationNames { get; } = [];
 
         public void GatData()
         {
@@ -92,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         {
             var locations = m_application.ActiveUIDocument.Document.ProjectLocations;
             foreach (ProjectLocation projectLocation in locations)
-                //find the project location which is selected by user and
+            //find the project location which is selected by user and
             {
                 if (projectLocation.Name == locationName)
                 {
@@ -115,7 +114,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                 if (projectLocation.Name == locationName ||
                     $"{projectLocation.Name} (current)" == locationName)
                 {
-                    var origin = new XYZ(0, 0, 0);
+                    XYZ origin = new(0, 0, 0);
                     var pp = projectLocation.GetProjectPosition(origin);
                     AngleOffset = pp.Angle /= Modulus; //convert to unit degree  
                     EastWestOffset = pp.EastWest; //East to West offset
@@ -145,7 +144,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                 if (location.Name == locationName ||
                     $"{location.Name} (current)" == locationName)
                 {
-                    var origin = new XYZ(0, 0, 0);
+                    XYZ origin = new(0, 0, 0);
                     var projectPosition = location.GetProjectPosition(origin);
                     //change the offset value of the project position
                     projectPosition.Angle = newAngle * Modulus; //convert the unit 

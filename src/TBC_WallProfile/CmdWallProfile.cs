@@ -14,15 +14,14 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.IFC;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -38,14 +37,13 @@ namespace BuildingCoder
         {
             var use_execute_nr = 3;
 
-            switch (use_execute_nr)
+            return use_execute_nr switch
             {
-                case 1: return Execute1(cd, ref msg, els);
-                case 2: return Execute2(cd, ref msg, els);
-                case 3: return Execute3(cd, ref msg, els);
-            }
-
-            return Result.Failed;
+                1 => Execute1(cd, ref msg, els),
+                2 => Execute2(cd, ref msg, els),
+                3 => Execute3(cd, ref msg, els),
+                _ => Result.Failed,
+            };
         }
 
         // http://thebuildingcoder.typepad.com/blog/2008/11/wall-elevation-profile.html
@@ -146,40 +144,40 @@ namespace BuildingCoder
 
             foreach (var curveLoops2
                 in curveLoopLoop)
-            foreach (var curveLoop2 in curveLoops2)
-            {
-                var isCCW = curveLoop2.IsCounterclockwise(
+                foreach (var curveLoop2 in curveLoops2)
+                {
+                    var isCCW = curveLoop2.IsCounterclockwise(
                     normal);
 
-                var curves = creapp.NewCurveArray();
+                    var curves = creapp.NewCurveArray();
 
-                foreach (var curve in curveLoop2) curves.Append(curve.CreateTransformed(offset));
+                    foreach (var curve in curveLoop2) curves.Append(curve.CreateTransformed(offset));
 
-                //Plane plane = creapp.NewPlane( curves ); // 2016
+                    //Plane plane = creapp.NewPlane( curves ); // 2016
 
-                var plane = curveLoop2.GetPlane(); // 2017
+                    var plane = curveLoop2.GetPlane(); // 2017
 
-                var sketchPlane
-                    = SketchPlane.Create(doc, plane);
+                    var sketchPlane
+                        = SketchPlane.Create(doc, plane);
 
-                var curveElements
-                    = credoc.NewModelCurveArray(curves,
-                        sketchPlane);
+                    var curveElements
+                        = credoc.NewModelCurveArray(curves,
+                            sketchPlane);
 
-                if (isCCW)
-                    foreach (ModelCurve mcurve in curveElements)
-                    {
-                        var overrides
-                            = view.GetElementOverrides(
-                                mcurve.Id);
+                    if (isCCW)
+                        foreach (ModelCurve mcurve in curveElements)
+                        {
+                            var overrides
+                                = view.GetElementOverrides(
+                                    mcurve.Id);
 
-                        overrides.SetProjectionLineColor(
-                            colorRed);
+                            overrides.SetProjectionLineColor(
+                                colorRed);
 
-                        view.SetElementOverrides(
-                            mcurve.Id, overrides);
-                    }
-            }
+                            view.SetElementOverrides(
+                                mcurve.Id, overrides);
+                        }
+                }
 
             tx.Commit();
 
@@ -260,7 +258,7 @@ namespace BuildingCoder
                 var isCounterClockwize = curveLoop
                     .IsCounterclockwise(normal);
 
-                var wallCurve = ((LocationCurve) wall.Location).Curve;
+                var wallCurve = ((LocationCurve)wall.Location).Curve;
 
                 if (wallCurve is Line)
                 {

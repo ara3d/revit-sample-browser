@@ -40,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         {
             if (MouseButtons.Right == e.Button && Points.Count > 2)
             {
-                var line = new List<Point>(Points);
+                List<Point> line = [.. Points];
                 Lines.Add(line);
 
                 graphic.DrawLine(ForeGroundPen, Points[Points.Count - 1], Points[0]);

@@ -1,9 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System;
 namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 {
     /// <summary>
@@ -60,24 +58,24 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 
         public float DotProduct(Vector4 v)
         {
-            return X * v.X + Y * v.Y + Z * v.Z;
+            return (X * v.X) + (Y * v.Y) + (Z * v.Z);
         }
 
         public Vector4 CrossProduct(Vector4 v)
         {
-            return new Vector4(Y * v.Z - Z * v.Y, Z * v.X
-                                                  - X * v.Z, X * v.Y - Y * v.X);
+            return new Vector4((Y * v.Z) - (Z * v.Y), (Z * v.X)
+                                                  - (X * v.Z), (X * v.Y) - (Y * v.X));
         }
 
         public static float DotProduct(Vector4 va, Vector4 vb)
         {
-            return va.X * vb.X + va.Y * vb.Y + va.Z * vb.Z;
+            return (va.X * vb.X) + (va.Y * vb.Y) + (va.Z * vb.Z);
         }
 
         public static Vector4 CrossProduct(Vector4 va, Vector4 vb)
         {
-            return new Vector4(va.Y * vb.Z - va.Z * vb.Y, va.Z * vb.X
-                                                          - va.X * vb.Z, va.X * vb.Y - va.Y * vb.X);
+            return new Vector4((va.Y * vb.Z) - (va.Z * vb.Y), (va.Z * vb.X)
+                                                          - (va.X * vb.Z), (va.X * vb.Y) - (va.Y * vb.X));
         }
 
         public void Normalize()
@@ -91,7 +89,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 
         public float Length()
         {
-            return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
+            return (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
         }
     }
 
@@ -184,8 +182,8 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         public void Identity()
         {
             for (var i = 0; i < 4; i++)
-            for (var j = 0; j < 4; j++)
-                m_matrix[i, j] = 0.0f;
+                for (var j = 0; j < 4; j++)
+                    m_matrix[i, j] = 0.0f;
             m_matrix[0, 0] = 1.0f;
             m_matrix[1, 1] = 1.0f;
             m_matrix[2, 2] = 1.0f;
@@ -194,22 +192,22 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 
         public static Matrix4 Multiply(Matrix4 left, Matrix4 right)
         {
-            var result = new Matrix4();
+            Matrix4 result = new();
             for (var i = 0; i < 4; i++)
-            for (var j = 0; j < 4; j++)
-                result[i, j] = left[i, 0] * right[0, j] + left[i, 1] * right[1, j]
-                                                        + left[i, 2] * right[2, j] + left[i, 3] * right[3, j];
+                for (var j = 0; j < 4; j++)
+                    result[i, j] = (left[i, 0] * right[0, j]) + (left[i, 1] * right[1, j])
+                                                            + (left[i, 2] * right[2, j]) + (left[i, 3] * right[3, j]);
             return result;
         }
 
         public Vector4 Transform(Vector4 point)
         {
-            return new Vector4(point.X * this[0, 0] + point.Y * this[1, 0]
-                                                    + point.Z * this[2, 0] + point.W * this[3, 0],
-                point.X * this[0, 1] + point.Y * this[1, 1]
-                                     + point.Z * this[2, 1] + point.W * this[3, 1],
-                point.X * this[0, 2] + point.Y * this[1, 2]
-                                     + point.Z * this[2, 2] + point.W * this[3, 2]);
+            return new Vector4((point.X * this[0, 0]) + (point.Y * this[1, 0])
+                                                    + (point.Z * this[2, 0]) + (point.W * this[3, 0]),
+                (point.X * this[0, 1]) + (point.Y * this[1, 1])
+                                     + (point.Z * this[2, 1]) + (point.W * this[3, 1]),
+                (point.X * this[0, 2]) + (point.Y * this[1, 2])
+                                     + (point.Z * this[2, 2]) + (point.W * this[3, 2]));
         }
 
         /// <summary>
@@ -235,25 +233,15 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 
         public Matrix4 Inverse()
         {
-            switch (m_type)
+            return m_type switch
             {
-                case MatrixType.Rotation:
-                    return RotationInverse();
-
-                case MatrixType.Translation:
-                    return TranslationInverse();
-
-                case MatrixType.RotationAndTranslation:
-                    return Multiply(TranslationInverse(), RotationInverse());
-
-                case MatrixType.Scale:
-                    return ScaleInverse();
-
-                case MatrixType.Normal:
-                    return new Matrix4();
-
-                default: return null;
-            }
+                MatrixType.Rotation => RotationInverse(),
+                MatrixType.Translation => TranslationInverse(),
+                MatrixType.RotationAndTranslation => Multiply(TranslationInverse(), RotationInverse()),
+                MatrixType.Scale => ScaleInverse(),
+                MatrixType.Normal => new Matrix4(),
+                _ => null,
+            };
         }
 
         /// <summary>

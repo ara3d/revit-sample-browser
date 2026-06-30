@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 {
     public class SpaceManager
@@ -37,11 +36,11 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
                 }
 
                 if (elements == null || elements.Count == 0)
-                    DialogHelper.ShowMessage( $"There is no enclosed loop in {level.Name}");
+                    DialogHelper.ShowMessage($"There is no enclosed loop in {level.Name}");
             }
             catch (Exception ex)
             {
-                DialogHelper.ShowMessage( ex.Message);
+                DialogHelper.ShowMessage(ex.Message);
             }
         }
     }

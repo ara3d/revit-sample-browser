@@ -1,15 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators;
-using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
-using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
@@ -54,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
         /// </summary>
         private void InitializeTypes()
         {
-            var objects = new List<object>();
+            List<object> objects = [];
             object selected = null;
             foreach (var obj in m_creationData.Creator.AllTypes)
             {
@@ -79,14 +78,14 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
         {
             var creator = m_creationData.Creator;
 
-            var rootNode = new TreeNode
+            TreeNode rootNode = new()
             {
                 StateImageIndex = (int)CheckState.Unchecked
             };
             foreach (var pair in creator.SupportEdges)
             {
                 var elem = pair.Key;
-                var elemNode = new TreeNode($"[Id:{elem.Id}] {elem.Name}")
+                TreeNode elemNode = new($"[Id:{elem.Id}] {elem.Name}")
                 {
                     StateImageIndex = (int)CheckState.Unchecked
                 };
@@ -95,7 +94,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
                 var i = 1;
                 foreach (var edge in pair.Value)
                 {
-                    var edgeNode = new TreeNode($"Edge {i}")
+                    TreeNode edgeNode = new($"Edge {i}")
                     {
                         StateImageIndex = (int)CheckState.Unchecked,
                         Tag = edge
@@ -297,7 +296,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
         {
             TreeNode result = null;
             var root = treeViewHost.Nodes[0];
-            var todo = new Stack<TreeNode>();
+            Stack<TreeNode> todo = new();
             todo.Push(root);
             while (todo.Count > 0)
             {
@@ -423,23 +422,23 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
                     pictureBoxPreview.Refresh();
                     break;
                 case MouseButtons.None:
-                {
-                    ClearAllHighLight();
-                    pictureBoxPreview.Refresh();
-                    var mat = m_centerMatrix.Clone();
-                    mat.Invert();
-                    var pts = new PointF[1] { e.Location };
-                    mat.TransformPoints(pts);
-                    var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
-                    foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
                     {
-                        if (elemGeom.EdgeBindingDic.ContainsKey(edge))
-                            if (elemGeom.EdgeBindingDic[edge].HighLight(pts[0].X, pts[0].Y))
-                                pictureBoxPreview.Refresh();
-                    }
+                        ClearAllHighLight();
+                        pictureBoxPreview.Refresh();
+                        var mat = m_centerMatrix.Clone();
+                        mat.Invert();
+                        var pts = new PointF[1] { e.Location };
+                        mat.TransformPoints(pts);
+                        var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
+                        foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
+                        {
+                            if (elemGeom.EdgeBindingDic.ContainsKey(edge))
+                                if (elemGeom.EdgeBindingDic[edge].HighLight(pts[0].X, pts[0].Y))
+                                    pictureBoxPreview.Refresh();
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
@@ -481,7 +480,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             ClearAllHighLight();
             ActiveNode(node);
             pictureBoxPreview.Refresh();
-            if (m_activeElem == null || node.Tag == null || !(node.Tag is Edge tag)) return;
+            if (m_activeElem == null || node.Tag == null || node.Tag is not Edge tag) return;
 
             var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
             elemGeom.EdgeBindingDic[tag].IsHighLighted = true;

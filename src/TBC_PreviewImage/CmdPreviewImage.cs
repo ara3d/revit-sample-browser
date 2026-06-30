@@ -12,13 +12,13 @@
 
 #region Namespaces
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Size = System.Drawing.Size;
 
 #endregion // Namespaces
@@ -37,8 +37,8 @@ namespace BuildingCoder
             var uidoc = uiapp.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var collector
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector collector
+                = new(doc);
 
             collector.OfClass(typeof(FamilyInstance));
 
@@ -52,12 +52,12 @@ namespace BuildingCoder
                 var type = doc.GetElement(typeId)
                     as ElementType;
 
-                var imgSize = new Size(200, 200);
+                Size imgSize = new(200, 200);
 
                 var image = type.GetPreviewImage(imgSize);
 
-                var encoder
-                    = new JpegBitmapEncoder();
+                JpegBitmapEncoder encoder
+                    = new();
 
                 encoder.Frames.Add(BitmapFrame.Create(
                     Util.ConvertBitmapToBitmapSource(image)));
@@ -66,7 +66,7 @@ namespace BuildingCoder
 
                 var filename = "a.jpg";
 
-                var file = new FileStream(
+                FileStream file = new(
                     filename, FileMode.Create, FileAccess.Write);
 
                 encoder.Save(file);

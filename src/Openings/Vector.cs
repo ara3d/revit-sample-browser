@@ -10,58 +10,33 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
     /// </summary>
     public struct Vector
     {
-        private double m_x;
+        public double X { get; set; }
 
-        private double m_y;
+        public double Y { get; set; }
 
-        private double m_z;
-
-        public double X
-        {
-            get => m_x;
-            set => m_x = value;
-        }
-
-        public double Y
-        {
-            get => m_y;
-            set => m_y = value;
-        }
-
-        public double Z
-        {
-            get => m_z;
-            set => m_z = value;
-        }
+        public double Z { get; set; }
 
         public double this[int index]
         {
-            get
+            get => index switch
             {
-                switch (index)
-                {
-                    case 0:
-                        return m_x;
-                    case 1:
-                        return m_y;
-                    case 2:
-                        return m_z;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
+                0 => X,
+                1 => Y,
+                2 => Z,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
             set
             {
                 switch (index)
                 {
                     case 0:
-                        m_x = value;
+                        X = value;
                         break;
                     case 1:
-                        m_y = value;
+                        Y = value;
                         break;
                     case 2:
-                        m_z = value;
+                        Z = value;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -71,31 +46,31 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         public Vector(Vector rhs)
         {
-            m_x = rhs.X;
-            m_y = rhs.Y;
-            m_z = rhs.Z;
+            X = rhs.X;
+            Y = rhs.Y;
+            Z = rhs.Z;
         }
 
         public Vector(double x, double y, double z)
         {
-            m_x = x;
-            m_y = y;
-            m_z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         public Vector GetNormal()
         {
-            var direct = new Vector();
+            Vector direct = new();
             var len = GetLength();
-            direct.X = m_x / len;
-            direct.Y = m_y / len;
-            direct.Z = m_z / len;
+            direct.X = X / len;
+            direct.Y = Y / len;
+            direct.Z = Z / len;
             return direct;
         }
 
         public static Vector operator +(Vector lhs, Vector rhs)
         {
-            var result = new Vector(lhs);
+            Vector result = new(lhs);
             result.X += rhs.X;
             result.Y += rhs.Y;
             result.Z += rhs.Z;
@@ -104,7 +79,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         public static Vector operator -(Vector lhs, Vector rhs)
         {
-            var result = new Vector(lhs);
+            Vector result = new(lhs);
             result.X -= rhs.X;
             result.Y -= rhs.Y;
             result.Z -= rhs.Z;
@@ -113,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         public static Vector operator -(Vector lhs)
         {
-            var result = new Vector(lhs)
+            Vector result = new(lhs)
             {
                 X = -lhs.X,
                 Y = -lhs.Y,
@@ -132,16 +107,16 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             var u2 = rhs.Y;
             var u3 = rhs.Z;
 
-            var x = v2 * u3 - v3 * u2;
-            var y = v3 * u1 - v1 * u3;
-            var z = v1 * u2 - v2 * u1;
+            var x = (v2 * u3) - (v3 * u2);
+            var y = (v3 * u1) - (v1 * u3);
+            var z = (v1 * u2) - (v2 * u1);
 
             return new Vector(x, y, z);
         }
 
         public static double operator *(Vector lhs, Vector rhs)
         {
-            return lhs.X * rhs.X + lhs.Y * rhs.Y + lhs.Z * rhs.Z;
+            return (lhs.X * rhs.X) + (lhs.Y * rhs.Y) + (lhs.Z * rhs.Z);
         }
 
         public static Vector operator *(Vector lhs, double rhs)
@@ -166,7 +141,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         public static Vector operator /(Vector lhs, double rhs)
         {
-            return new Vector(lhs.m_x / rhs, lhs.m_y / rhs, lhs.m_z / rhs);
+            return new Vector(lhs.X / rhs, lhs.Y / rhs, lhs.Z / rhs);
         }
 
         public static double GetAngleOf2Vectors(Vector lhs, Vector rhs, bool acuteAngleDesired)
@@ -192,12 +167,12 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         public override int GetHashCode()
         {
-            return m_x.GetHashCode() ^ m_y.GetHashCode() ^ m_z.GetHashCode();
+            return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
         }
 
         public double GetLength()
         {
-            return Math.Sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+            return Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
         }
 
         private static bool IsEqual(Vector lhs, Vector rhs)

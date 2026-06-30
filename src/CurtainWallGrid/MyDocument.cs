@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
 
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
@@ -17,7 +16,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         // the length unit type for the active Revit document
 
-        private KeyValuePair<string /*msgText*/, bool /*is warningOrError*/> m_message;
 
         public MyDocument(ExternalCommandData commandData)
         {
@@ -26,8 +24,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 CommandData = commandData;
                 UiDocument = CommandData.Application.ActiveUIDocument;
                 Document = UiDocument.Document;
-                Views = new List<View>();
-                WallTypes = new List<WallType>();
+                Views = [];
+                WallTypes = [];
                 WallGeometry = new WallGeometry(this);
                 WallCreated = false;
                 GridGeometry = new GridGeometry(this);
@@ -81,10 +79,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         public KeyValuePair<string /*msgText*/, bool /*is warningOrError*/> Message
         {
-            get => m_message;
+            get;
             set
             {
-                m_message = value;
+                field = value;
                 MessageChanged?.Invoke();
             }
         }
@@ -112,21 +110,21 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         private void InitializeData()
         {
             // get all the wall types
-            var filteredElementCollector = new FilteredElementCollector(Document);
+            FilteredElementCollector filteredElementCollector = new(Document);
             filteredElementCollector.OfClass(typeof(WallType));
             // just get all the curtain wall type
             WallTypes = filteredElementCollector.Cast<WallType>().Where(wallType => wallType.Kind == WallKind.Curtain)
                 .ToList();
 
             // sort them alphabetically
-            var wallComp = new WallTypeComparer();
+            WallTypeComparer wallComp = new();
             WallTypes.Sort(wallComp);
 
             // get all the ViewPlans
             Views = SkipTemplateViews(GetElements<View>());
 
             // sort them alphabetically
-            var viewComp = new ViewComparer();
+            ViewComparer viewComp = new();
             Views.Sort(viewComp);
 
             // get one of the mullion types
@@ -148,8 +146,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         protected List<T> GetElements<T>() where T : Element
         {
-            var returns = new List<T>();
-            var collector = new FilteredElementCollector(Document);
+            List<T> returns = new();
+            FilteredElementCollector collector = new(Document);
             ICollection<Element> founds = collector.OfClass(typeof(T)).ToElements();
             foreach (var elem in founds)
             {
@@ -161,7 +159,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         private List<T> SkipTemplateViews<T>(List<T> views) where T : View
         {
-            var returns = new List<T>();
+            List<T> returns = new();
             foreach (View curView in views)
             {
                 if (null != curView && !curView.IsTemplate)

@@ -22,11 +22,11 @@ namespace BuildingCoder
         internal static StringBuilder GetStatusTextMadmed(
             IntPtr mainWindow)
         {
-            var s = new StringBuilder();
+            StringBuilder s = new();
             if (mainWindow != IntPtr.Zero)
             {
                 var length = GetWindowTextLength(mainWindow);
-                var sb = new StringBuilder(length + 1);
+                StringBuilder sb = new(length + 1);
                 GetWindowText(mainWindow, sb, sb.Capacity);
                 sb.Replace("Autodesk Revit Architecture 2013 - ", "");
                 return sb;
@@ -41,7 +41,7 @@ namespace BuildingCoder
                 throw new ArgumentException(
                     "Expected valid window handle.");
             var len = GetWindowTextLength(mainWindow);
-            var sb = new StringBuilder(len + 1);
+            StringBuilder sb = new(len + 1);
             GetWindowText(mainWindow, sb, sb.Capacity);
             return sb.ToString();
         }

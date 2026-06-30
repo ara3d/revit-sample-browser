@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Mep;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Fabrication;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Mep;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -31,11 +30,11 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var doc = uidoc.Document;
                 var collection = uidoc.Selection.GetElementIds();
 
-                using (var trans = new Transaction(doc, "Part Renumber"))
+                using (Transaction trans = new(doc, "Part Renumber"))
                 {
                     trans.Start();
 
-                    var fabParts = new List<FabricationPart>();
+                    List<FabricationPart> fabParts = new();
                     foreach (var elementId in collection)
                     {
                         if (doc.GetElement(elementId) is FabricationPart part)
@@ -52,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     }
 
                     // Notes, order, and service differ between duplicates we still want to match.
-                    var ignoreFields = new List<FabricationPartCompareType>
+                    List<FabricationPartCompareType> ignoreFields = new()
                     {
                         FabricationPartCompareType.Notes,
                         FabricationPartCompareType.OrderNo,
@@ -66,25 +65,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         {
                             if (FabricationPartHelper.IsADuct(part1))
                             {
-                                if (SampleBrowserUtils.IsACoupling(part1))
-                                    part1.ItemNumber = $"DUCT COUPLING: {m_ductCouplingNum++}";
-                                else
-                                    part1.ItemNumber = $"DUCT: {m_ductNum++}";
-                            }
-                            else if (FabricationPartHelper.IsAPipe(part1))
-                            {
-                                if (SampleBrowserUtils.IsACoupling(part1))
-                                    part1.ItemNumber = $"PIPE COUPLING: {m_pipeCouplingNum++}";
-                                else
-                                    part1.ItemNumber = $"PIPE: {m_pipeNum++}";
-                            }
-                            else if (part1.IsAHanger())
-                            {
-                                part1.ItemNumber = $"HANGER: {m_hangerNum++}";
+                                part1.ItemNumber = SampleBrowserUtils.IsACoupling(part1) ? $"DUCT COUPLING: {m_ductCouplingNum++}" : $"DUCT: {m_ductNum++}";
                             }
                             else
                             {
-                                part1.ItemNumber = $"MISC: {m_otherNum++}";
+                                part1.ItemNumber = FabricationPartHelper.IsAPipe(part1)
+                                    ? SampleBrowserUtils.IsACoupling(part1) ? $"PIPE COUPLING: {m_pipeCouplingNum++}" : $"PIPE: {m_pipeNum++}"
+                                    : part1.IsAHanger() ? $"HANGER: {m_hangerNum++}" : $"MISC: {m_otherNum++}";
                             }
                         }
 
@@ -100,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     trans.Commit();
                 }
 
-                var td = new TaskDialog("Fabrication Part Renumber")
+                TaskDialog td = new("Fabrication Part Renumber")
                 {
                     MainIcon = TaskDialogIcon.TaskDialogIconInformation,
                     TitleAutoPrefix = false,

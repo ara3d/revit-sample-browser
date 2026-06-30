@@ -1,9 +1,9 @@
+using Autodesk.Revit.DB;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Autodesk.Revit.DB;
-using OfficeOpenXml;
 
 namespace ExcelExporterImporter.Common
 {
@@ -31,7 +31,7 @@ namespace ExcelExporterImporter.Common
         public void ImportLineStyles(Document doc, ExcelWorksheet worksheet, Progress progress)
         {
             var c = doc.Settings.Categories.get_Item(BuiltInCategory.OST_Lines);
-            ImportWorksheetAsCategories(doc, new List<Category> {c}, worksheet, progress);
+            ImportWorksheetAsCategories(doc, [c], worksheet, progress);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace ExcelExporterImporter.Common
             var rows = worksheet.Dimension.Rows;
             var changedSharedParameters = new Dictionary<Guid, Parameter>();
             var appliedParameters = parametersSettings.ParametersTranslations
-                .Where(p => p.Location == "*" || p.Location == "Project Information").ToList();
+                .Where(p => p.Location is "*" or "Project Information").ToList();
 
             if (cols == 3 && rows >= FirstDataRow)
             {
@@ -206,7 +206,7 @@ namespace ExcelExporterImporter.Common
 
                             var importCategory =
                                 doc.Settings.Categories.get_Item(
-                                    (BuiltInCategory) Convert.ToInt32(worksheet.Cells[rowIndex, 1].Value));
+                                    (BuiltInCategory)Convert.ToInt32(worksheet.Cells[rowIndex, 1].Value));
                             if (importCategory != null)
                             {
                                 var projectionLineWeight = Convert.ToInt32(worksheet.Cells[rowIndex, 3].Value);

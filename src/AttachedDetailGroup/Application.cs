@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS.Properties;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS.Properties;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
 using Size = System.Drawing.Size;
 
 namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
@@ -33,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
         {
             var rp = application.CreateRibbonPanel("Attached Detail Group");
 
-            var pbdShowAllDetailGroups = new PushButtonData("ShowAttachedDetailGroups", "Show Attached\nDetail Groups",
+            PushButtonData pbdShowAllDetailGroups = new("ShowAttachedDetailGroups", "Show Attached\nDetail Groups",
                 AddAssemblyPath,
                 typeof(AttachedDetailGroupShowAllCommand).FullName)
             {
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
             var pbShowAllDetailGroups = rp.AddItem(pbdShowAllDetailGroups) as PushButton;
             SetIconsForPushButton(pbShowAllDetailGroups, Resources.ShowAllDetailGroupsIcon);
 
-            var pbdHideAllDetailGroups = new PushButtonData("HideAttachedDetailGroups", "Hide Attached\nDetail Groups",
+            PushButtonData pbdHideAllDetailGroups = new("HideAttachedDetailGroups", "Hide Attached\nDetail Groups",
                 AddAssemblyPath,
                 typeof(AttachedDetailGroupHideAllCommand).FullName)
             {
@@ -70,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
 
         private static BitmapSource GetSmallIcon(Icon icon)
         {
-            var smallIcon = new Icon(icon, new Size(16, 16));
+            Icon smallIcon = new(icon, new Size(16, 16));
             return Imaging.CreateBitmapSourceFromHIcon(
                 smallIcon.Handle,
                 Int32Rect.Empty,

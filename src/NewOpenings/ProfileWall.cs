@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
     /// <summary>
@@ -24,8 +23,8 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         public override void DrawOpening(List<Vector4> points, ToolType type)
         {
             //get the rectangle two points
-            var p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
-            var p2 = new XYZ(points[2].X, points[2].Y, points[2].Z);
+            XYZ p1 = new(points[0].X, points[0].Y, points[0].Z);
+            XYZ p2 = new(points[2].X, points[2].Y, points[2].Z);
 
             //draw opening on wall
             DocCreator.NewOpening(m_data, p1, p2);

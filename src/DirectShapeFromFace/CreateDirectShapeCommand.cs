@@ -2,14 +2,14 @@
 // Adapted from DirectShapeFromFace by Frode Tørresdal and Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/DirectShapeFromFace
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 namespace Ara3D.RevitSampleBrowser.DirectShapeFromFace.CS

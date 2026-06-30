@@ -1,8 +1,8 @@
 #region Namespaces
 
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
 
 #endregion // Namespaces
 
@@ -15,8 +15,8 @@ namespace BuildingCoder
                 Document doc,
                 FilteredElementCollector elements)
         {
-            var dict =
-                new Dictionary<ElementId, List<ElementId>>();
+            Dictionary<ElementId, List<ElementId>> dict =
+                [];
 
             var fmt = "{0} is hosted by {1}";
 
@@ -29,7 +29,7 @@ namespace BuildingCoder
                     ElementDescription(fi),
                     ElementDescription(doc.GetElement(idHost)));
 
-                if (!dict.ContainsKey(idHost)) dict.Add(idHost, new List<ElementId>());
+                if (!dict.ContainsKey(idHost)) dict.Add(idHost, []);
                 dict[idHost].Add(id);
             }
 

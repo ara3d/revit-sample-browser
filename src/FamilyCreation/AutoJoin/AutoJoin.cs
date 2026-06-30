@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 {
@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 
         public AutoJoin()
         {
-            m_elements = new List<CombinableElement>();
+            m_elements = [];
         }
 
         public int Join(Document document)
@@ -19,7 +19,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
             var combinated = 0;
 
             // CombinableElement exists in the API but not in Revit's native object model; collect GenericForm and GeomCombination instead.
-            var filter = new LogicalOrFilter(
+            LogicalOrFilter filter = new(
                 new ElementClassFilter(typeof(GenericForm)),
                 new ElementClassFilter(typeof(GeomCombination)));
 
@@ -30,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                 if (itor.Current is GenericForm gf && !gf.IsSolid)
                     continue;
 
-                if (!(itor.Current is CombinableElement ce))
+                if (itor.Current is not CombinableElement ce)
                     continue;
                 m_elements.Add(ce);
             }
@@ -48,7 +48,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 
         public GeomCombination JoinOverlapping(List<CombinableElement> elements, Document document)
         {
-            var joinedElements = new CombinableElementArray();
+            CombinableElementArray joinedElements = new();
 
             foreach (var aElement in elements)
             {
@@ -73,7 +73,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                     joinedElements.Append(aElement);
             }
 
-            var allCanJoin = new List<CombinableElement>();
+            List<CombinableElement> allCanJoin = new();
             var isNew = false;
             do
             {

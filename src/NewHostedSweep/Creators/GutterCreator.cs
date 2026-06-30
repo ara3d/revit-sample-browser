@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
@@ -33,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         {
             get
             {
-                var filteredElementCollector = new FilteredElementCollector(RvtDoc);
+                FilteredElementCollector filteredElementCollector = new(RvtDoc);
                 filteredElementCollector.OfClass(typeof(GutterType));
                 return filteredElementCollector;
             }
@@ -48,9 +49,9 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
             {
                 if (m_roofGutterEdges == null)
                 {
-                    m_roofGutterEdges = new Dictionary<Element, List<Edge>>();
+                    m_roofGutterEdges = [];
 
-                    var collector = new FilteredElementCollector(RvtDoc);
+                    FilteredElementCollector collector = new(RvtDoc);
                     collector.OfClass(typeof(FootPrintRoof));
                     var elements = collector.ToElements();
 
@@ -68,7 +69,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
                             var solid = ExtractGeom(elem);
                             if (solid != null)
                             {
-                                m_roofGutterEdges.Add(elem, new List<Edge>());
+                                m_roofGutterEdges.Add(elem, []);
                                 ElemGeom.Add(elem, solid);
                                 FilterEdgesForGutter(elem);
                             }
@@ -86,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// <param name="elem"></param>
         private void FilterEdgesForGutter(Element elem)
         {
-            var transaction = new Transaction(RvtDocument, "FilterEdgesForGutter");
+            Transaction transaction = new(RvtDocument, "FilterEdgesForGutter");
             transaction.Start();
 
             // Note: This method will create a Gutter with no reference.

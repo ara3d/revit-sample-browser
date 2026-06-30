@@ -1,5 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -11,7 +12,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
     /// </summary>
     public class PictureBox3D : Button
     {
-        private IGraphicsData m_sourceData; //datasource
         private Matrix m_transform; //transform matrix between origin data and display data
 
         /// <summary>
@@ -19,16 +19,16 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
         /// </summary>
         public IGraphicsData DataSource
         {
-            get => m_sourceData;
+            get;
             set
             {
                 if (null != value)
                 {
-                    m_sourceData = value;
-                    var rec = m_sourceData.Region;
+                    field = value;
+                    var rec = field.Region;
                     var plgpts = GetDisplayRegion();
                     m_transform = new Matrix(rec, plgpts);
-                    m_sourceData.UpdateViewEvent += Invalidate;
+                    field.UpdateViewEvent += Invalidate;
                 }
             }
         }
@@ -37,16 +37,16 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
         {
             base.OnPaint(pe);
 
-            if (null == m_sourceData) return;
+            if (null == DataSource) return;
 
             //prepare data
             var g = pe.Graphics;
             g.Clear(Color.White);
-            var pen = new Pen(Color.DarkGreen);
-            var path = new GraphicsPath();
+            Pen pen = new(Color.DarkGreen);
+            GraphicsPath path = new();
 
             //draw curves one by one
-            var curves = m_sourceData.PointCurves();
+            var curves = DataSource.PointCurves();
             foreach (var curve in curves)
             {
                 path.Reset();
@@ -58,44 +58,32 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 
         public void Scale(bool zoomIn)
         {
-            var ratio = 1.0f;
-            if (zoomIn)
-                ratio = 10.0f / 11.0f;
-            else
-                ratio = 11.0f / 10.0f;
+            var ratio = zoomIn ? 10.0f / 11.0f : 11.0f / 10.0f;
             m_transform.Scale(ratio, ratio, MatrixOrder.Append);
             Invalidate();
         }
 
         public void MoveX(bool left)
         {
-            var len = 0.0f;
-            if (left)
-                len = -5.0f;
-            else
-                len = 5.0f;
+            var len = left ? -5.0f : 5.0f;
             m_transform.Translate(len, 0, MatrixOrder.Append);
             Invalidate();
         }
 
         public void MoveY(bool up)
         {
-            var len = 0.0f;
-            if (up)
-                len = 5.0f;
-            else
-                len = -5.0f;
+            var len = up ? 5.0f : -5.0f;
             m_transform.Translate(0, len, MatrixOrder.Append);
             Invalidate();
         }
 
         private PointF[] GetDisplayRegion()
         {
-            var rec = m_sourceData.Region;
+            var rec = DataSource.Region;
             const float margin = 8.0f;
 
-            var realWidth = Width - margin * 2;
-            var realHeight = Height - margin * 2;
+            var realWidth = Width - (margin * 2);
+            var realHeight = Height - (margin * 2);
             var minX = margin;
             var minY = margin;
             var ratioRec = rec.Height / rec.Width;

@@ -1,7 +1,7 @@
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -15,8 +15,8 @@ namespace BuildingCoder
             var bip
                 = BuiltInParameter.VIEW_NAME;
 
-            var provider
-                = new ParameterValueProvider(
+            ParameterValueProvider provider
+                = new(
                     new ElementId(bip));
 
             FilterStringRuleEvaluator evaluator
@@ -25,14 +25,14 @@ namespace BuildingCoder
             FilterRule rule = new FilterStringRule(
                 provider, evaluator, view.Name);
 
-            var name_filter
-                = new ElementParameterFilter(rule);
+            ElementParameterFilter name_filter
+                = new(rule);
 
             var bic
                 = BuiltInCategory.OST_Viewports;
 
-            var viewports
-                = new List<Element>(
+            List<Element> viewports
+                = new(
                     new FilteredElementCollector(doc)
                         .OfCategory(bic)
                         .WherePasses(name_filter)
@@ -58,7 +58,7 @@ namespace BuildingCoder
 
             var result = $"Total of {n} sheet sets in this project.\n\n";
 
-            var stopWatch = new Stopwatch();
+            Stopwatch stopWatch = new();
             stopWatch.Start();
 
             foreach (ViewSheetSet set in sheetSets)

@@ -2,10 +2,8 @@
 
 
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 using Document = Autodesk.Revit.DB.Document;
-using RevitView = Autodesk.Revit.DB.View;
 
 namespace Ara3D.RevitSampleBrowser.Common.Views
 {
@@ -13,11 +11,14 @@ namespace Ara3D.RevitSampleBrowser.Common.Views
     {
         public const string SampleSettingsName = "sample";
 
-        public static ExportPDFSettings FindSampleSettings(Document doc) =>
-                    ExportPDFSettings.FindByName(doc, SampleSettingsName);
+        public static ExportPDFSettings FindSampleSettings(Document doc)
+        {
+            return ExportPDFSettings.FindByName(doc, SampleSettingsName);
+        }
 
-        public static void MyMessageBox(string text) =>
-                    TaskDialog.Show("View Printer", text);
-
+        public static void MyMessageBox(string text)
+        {
+            TaskDialog.Show("View Printer", text);
+        }
     }
 }

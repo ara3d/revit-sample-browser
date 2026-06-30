@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using Color = System.Drawing.Color;
 
 namespace Ara3D.RevitSampleBrowser.Massing.ParameterValuesFromImage.CS
@@ -14,21 +14,21 @@ namespace Ara3D.RevitSampleBrowser.Massing.ParameterValuesFromImage.CS
     [Regeneration(RegenerationOption.Manual)]
     public class SetParameterValueWithImageData : IExternalCommand
     {
-        private static AddInId _appId = new AddInId(new Guid("9F405E24-3799-4b56-828F-14842ABE4802"));
+        private static readonly AddInId _appId = new(new Guid("9F405E24-3799-4b56-828F-14842ABE4802"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var trans = new Transaction(doc, "Ara3D.RevitSampleBrowser.ParameterValuesFromImage");
+            Transaction trans = new(doc, "Ara3D.RevitSampleBrowser.ParameterValuesFromImage");
             trans.Start();
-            var image = new Bitmap($"{doc.PathName}_grayscale.bmp");
-            var collector = new FilteredElementCollector(doc);
+            Bitmap image = new($"{doc.PathName}_grayscale.bmp");
+            FilteredElementCollector collector = new(doc);
             ICollection<Element> collection = collector.OfClass(typeof(DividedSurface)).ToElements();
             foreach (var element in collection)
             {
                 var ds = element as DividedSurface;
-                var gn = new GridNode();
+                GridNode gn = new();
                 for (var u = 0; u < ds.NumberOfUGridlines; u++)
                 {
                     gn.UIndex = u;
@@ -47,11 +47,11 @@ namespace Ara3D.RevitSampleBrowser.Massing.ParameterValuesFromImage.CS
                                     throw new Exception("Panel family must have a Grayscale instance parameter");
                                 }
 
-                                var pixelColor = new Color();
+                                Color pixelColor = new();
                                 try
                                 {
                                     pixelColor = image.GetPixel(image.Width - v, image.Height - u);
-                                    double grayscale = 255 - (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+                                    double grayscale = 255 - ((pixelColor.R + pixelColor.G + pixelColor.B) / 3);
                                     if (grayscale == 0)
                                         doc.Delete(familyinstance.Id);
                                     else

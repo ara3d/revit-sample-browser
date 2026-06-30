@@ -2,9 +2,9 @@
 // Adapted from CustomExporterAdnMeshJson by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CustomExporterAdnMeshJson
 
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 {
@@ -13,20 +13,20 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
         readonly Document _doc;
 
         readonly Stack<Transform> _transformationStack
-            = new Stack<Transform>();
+            = new();
 
-        readonly VertexLookupInt _vertices = new VertexLookupInt();
+        readonly VertexLookupInt _vertices = [];
 
-        readonly List<int> _triangles = new List<int>();
+        readonly List<int> _triangles = [];
 
         /// <summary>
         ///     List of normal vectors, defined by an index into the normal lookup for each triangle vertex.
         /// </summary>
-        readonly List<int> _normalIndices = new List<int>();
+        readonly List<int> _normalIndices = [];
 
-        readonly NormalLookupXyz _normals = new NormalLookupXyz();
+        readonly NormalLookupXyz _normals = [];
 
-        readonly CentroidVolume _centroidVolume = new CentroidVolume();
+        readonly CentroidVolume _centroidVolume = new();
 
         Color _color;
         double _transparency;
@@ -35,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
         public ExportContextAdnMesh(Document doc)
         {
             _doc = doc;
-            _data = new List<AdnMeshData>();
+            _data = [];
             _transformationStack.Push(Transform.Identity);
         }
 

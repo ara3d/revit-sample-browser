@@ -1,19 +1,17 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-
 using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Ara3D.RevitSampleBrowser.Common.Structural;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+using System.Collections.Generic;
+using System.Linq;
 namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 {
     public class GeomHelper
     {
-        private Document m_currentDoc; //active document
+        private readonly Document m_currentDoc; //active document
 
         public GeomHelper()
         {
@@ -45,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                    if (associatedElement is not null and AnalyticalPanel panel)
                         model = panel;
                 }
             }
@@ -62,7 +60,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
         private IList<Curve> AddInlaidCurves(IList<Curve> curves, double scale)
         {
             //because curves is readonly, can't use method Curve.Append(Curve)
-            var lines = new List<Line>();
+            List<Line> lines = new();
             for (var i = 0; i < 4; i++)
             {
                 var temp = curves[i] as Line;
@@ -82,7 +80,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
                 lines.Add(movedLine1);
 
                 //width line
-                var tempLine2 = lines[i * 2 + 1];
+                var tempLine2 = lines[(i * 2) + 1];
                 var scaledLine2 = XyzMath.GetScaledLine(tempLine2, scale);
                 var distance2 = scale / 2 * length;
                 var movedLine2 = ParameterAccess.GetXyParallelLine(scaledLine2, distance2);
@@ -90,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             }
 
             //add all 8 lines into return array
-            IList<Curve> allLines = new List<Curve>();
+            IList<Curve> allLines = [];
             for (var i = 0; i < 8; i++) allLines.Add(lines[i]);
             return allLines;
         }

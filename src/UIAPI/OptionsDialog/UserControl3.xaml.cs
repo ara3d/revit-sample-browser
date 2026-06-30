@@ -1,12 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Drawing;
-using System.Windows;
-using System.Windows.Controls;
-using Autodesk.Revit.UI;
-
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System.Windows.Controls;
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
 {
     public partial class UserControl3 : UserControl
@@ -22,10 +17,19 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
             image1.Source = BitmapHelper.GetBitmapAsImageSource(Properties.Resources.autodesk);
         }
 
-        public void OnOK() => TaskDialog.Show("OK", m_name);
+        public void OnOK()
+        {
+            TaskDialog.Show("OK", m_name);
+        }
 
-        public void OnCancel() => TaskDialog.Show("OnCancel", m_name);
+        public void OnCancel()
+        {
+            TaskDialog.Show("OnCancel", m_name);
+        }
 
-        public void OnRestoreDefaults() => TaskDialog.Show("OnRestoreDefaults", m_name);
+        public void OnRestoreDefaults()
+        {
+            TaskDialog.Show("OnRestoreDefaults", m_name);
+        }
     }
 }

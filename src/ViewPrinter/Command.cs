@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System;
+using System.Windows.Forms;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     /// <summary>
@@ -28,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
                 newTran = new Transaction(commandData.Application.ActiveUIDocument.Document, "ViewPrinter");
                 newTran.Start();
 
-                var pMgr = new PrintMgr(commandData);
+                PrintMgr pMgr = new(commandData);
 
                 if (null == pMgr.InstalledPrinterNames)
                 {
@@ -36,16 +35,14 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
                     return Result.Cancelled;
                 }
 
-                using (var pmDlg = new PrintMgrForm(pMgr))
+                using PrintMgrForm pmDlg = new(pMgr);
+                if (pmDlg.ShowDialog() != DialogResult.Cancel)
                 {
-                    if (pmDlg.ShowDialog() != DialogResult.Cancel)
-                    {
-                        newTran.Commit();
-                        return Result.Succeeded;
-                    }
-
-                    newTran.RollBack();
+                    newTran.Commit();
+                    return Result.Succeeded;
                 }
+
+                newTran.RollBack();
             }
             catch (Exception ex)
             {

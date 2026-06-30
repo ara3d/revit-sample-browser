@@ -1,8 +1,8 @@
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 
 namespace BuildingCoder
 {
@@ -33,8 +33,8 @@ namespace BuildingCoder
             }
             else
             {
-                var opt
-                    = new SpatialElementBoundaryOptions();
+                SpatialElementBoundaryOptions opt
+                    = new();
 
                 var segs
                     = room.GetBoundarySegments(opt);
@@ -59,7 +59,7 @@ namespace BuildingCoder
         public static List<XYZ> GetRoomBoundaryPoints(
             IList<IList<BoundarySegment>> boundary)
         {
-            var pts = new List<XYZ>();
+            List<XYZ> pts = new();
 
             var n = boundary.Count;
 
@@ -99,39 +99,38 @@ namespace BuildingCoder
         public static BoundingBoxXYZ GetRoomBoundaryBoundingBox(
             IList<IList<BoundarySegment>> boundary)
         {
-            var bb = new BoundingBoxXYZ();
+            BoundingBoxXYZ bb = new();
             bb.Clear();
 
             foreach (var loop in boundary)
-            foreach (var seg in loop)
-            {
-                var c = seg.GetCurve();
-                var pts = c.Tessellate();
-                foreach (var p in pts) bb.ExpandToContain(p);
-            }
+                foreach (var seg in loop)
+                {
+                    var c = seg.GetCurve();
+                    var pts = c.Tessellate();
+                    foreach (var p in pts) bb.ExpandToContain(p);
+                }
 
             return bb;
         }
         public static List<XYZ> GetConvexHullOfRoomBoundary(
             IList<IList<BoundarySegment>> boundary)
         {
-            var convex_hull = new List<XYZ>();
+            List<XYZ> convex_hull = new();
 
             if (0 < boundary.Count)
             {
-                var pts = new List<XYZ>();
+                List<XYZ> pts = new();
 
                 foreach (var loop in boundary)
-                foreach (var seg in loop)
-                {
-                    var c = seg.GetCurve();
-                    pts.AddRange(c.Tessellate());
-                }
+                    foreach (var seg in loop)
+                    {
+                        var c = seg.GetCurve();
+                        pts.AddRange(c.Tessellate());
+                    }
 
                 var n = pts.Count;
 
-                pts = new List<XYZ>(
-                    pts.Distinct(new XyzEqualityComparer(1.0e-4)));
+                pts = [.. pts.Distinct(new XyzEqualityComparer(1.0e-4))];
 
                 Debug.Print(
                     "{0} points from tessellated room boundaries, "

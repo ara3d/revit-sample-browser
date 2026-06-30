@@ -1,10 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
@@ -32,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         {
             get
             {
-                var filteredElementCollector = new FilteredElementCollector(RvtDoc);
+                FilteredElementCollector filteredElementCollector = new(RvtDoc);
                 filteredElementCollector.OfClass(typeof(SlabEdgeType));
                 return filteredElementCollector;
             }
@@ -47,9 +48,9 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
             {
                 if (m_floorSlabEdges == null)
                 {
-                    m_floorSlabEdges = new Dictionary<Element, List<Edge>>();
+                    m_floorSlabEdges = [];
 
-                    var collector = new FilteredElementCollector(RvtDoc);
+                    FilteredElementCollector collector = new(RvtDoc);
                     collector.OfClass(typeof(Floor));
                     foreach (var elem in collector.ToElements())
                     {
@@ -58,7 +59,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
                             var solid = ExtractGeom(elem);
                             if (solid != null)
                             {
-                                m_floorSlabEdges.Add(elem, new List<Edge>());
+                                m_floorSlabEdges.Add(elem, []);
                                 ElemGeom.Add(elem, solid);
                                 FilterEdgesForSlabEdge(elem);
                             }
@@ -76,7 +77,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// <param name="elem"></param>
         private void FilterEdgesForSlabEdge(Element elem)
         {
-            var transaction = new Transaction(RvtDocument, "FilterEdgesForSlabEdge");
+            Transaction transaction = new(RvtDocument, "FilterEdgesForSlabEdge");
             transaction.Start();
 
             // Note: This method will create a SlabEdge with no reference.

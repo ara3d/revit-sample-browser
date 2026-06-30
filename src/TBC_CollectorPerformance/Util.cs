@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using View = Autodesk.Revit.DB.View;
 
 namespace BuildingCoder
@@ -218,9 +215,10 @@ namespace BuildingCoder
                     // so start a new level.
 
                     var categoriesOnLevel
-                        = new List<ElementId>(1);
-
-                    categoriesOnLevel.Add(cat.Id);
+                        = new List<ElementId>(1)
+                        {
+                            cat.Id
+                        };
 
                     mapLevelToCategories.Add(lev.Id,
                         categoriesOnLevel);
@@ -269,7 +267,7 @@ namespace BuildingCoder
             string paramGroup,
             string paramValue)
         {
-            IList<Element> elems = new List<Element>();
+            IList<Element> elems = [];
 
             // Determine if definition for parameter binding exists
 
@@ -420,11 +418,12 @@ namespace BuildingCoder
         private static void F3(Document doc)
         {
             var a
-                = new List<ElementFilter>(3);
-
-            a.Add(new ElementClassFilter(typeof(Family)));
-            a.Add(new ElementClassFilter(typeof(Duct)));
-            a.Add(new ElementClassFilter(typeof(Pipe)));
+                = new List<ElementFilter>(3)
+                {
+                    new ElementClassFilter(typeof(Family)),
+                    new ElementClassFilter(typeof(Duct)),
+                    new ElementClassFilter(typeof(Pipe))
+                };
 
             var collector
                 = new FilteredElementCollector(doc)
@@ -621,9 +620,11 @@ namespace BuildingCoder
                 false_positive_ids.Select(
                     id => id.Value.ToString()));
 
-            var dlg = new Autodesk.Revit.UI.TaskDialog("False Positives");
-            dlg.MainInstruction = "False filtered walls ids: ";
-            dlg.MainContent = s;
+            var dlg = new Autodesk.Revit.UI.TaskDialog("False Positives")
+            {
+                MainInstruction = "False filtered walls ids: ",
+                MainContent = s
+            };
             dlg.Show();
         }
 
@@ -678,10 +679,10 @@ namespace BuildingCoder
                 = new FilteredElementCollector(doc)
                     .OfClass(typeof(IndependentTag));
 
-            return new List<string>(tags
+            return [.. tags
                 .Cast<IndependentTag>()
                 .Select(
-                    t => t.TagText));
+                    t => t.TagText)];
         }
 
         #endregion // Pull Text from Annotation Tags
@@ -691,9 +692,8 @@ namespace BuildingCoder
         // https://forums.autodesk.com/t5/revit-api-forum/filter-fabrication-rectangular-ducts-and-the-tag-associated-with/m-p/10971268
         private static bool IsRectangularFabricationPart(Element e)
         {
-            FabricationPart f = e as FabricationPart;
-            return (null != f)
-                && ((int) BuiltInCategory.OST_FabricationDuctwork 
+            return (e is FabricationPart f)
+                && ((int)BuiltInCategory.OST_FabricationDuctwork
                     == f.Category.Id.Value)
                 && f.ConnectorManager.Connectors.Cast<Connector>().Any(
                     conn => conn.Shape == ConnectorProfileType.Rectangular);
@@ -701,15 +701,15 @@ namespace BuildingCoder
 
         private static bool IsRectangularFabricationPartTag(IndependentTag t)
         {
-            bool rc = false;
+            var rc = false;
             double tagValue;
-            Element f = t.GetTaggedLocalElements().First();
-            if(IsRectangularFabricationPart(f))
+            var f = t.GetTaggedLocalElements().First();
+            if (IsRectangularFabricationPart(f))
             {
-                Parameter p = f.LookupParameter("Length");
-                if( null != p)
+                var p = f.LookupParameter("Length");
+                if (null != p)
                 {
-                    double length = p.AsDouble();
+                    var length = p.AsDouble();
                     rc = double.TryParse(t.TagText, out tagValue)
                         && (Math.Round(length, 4) == Math.Round(tagValue, 4));
                 }
@@ -776,7 +776,7 @@ namespace BuildingCoder
 
             // Return a count of all pipe instances
 
-            int nPipes = new FilteredElementCollector(doc)
+            var nPipes = new FilteredElementCollector(doc)
                 .OfClass(typeof(Pipe))
                 .GetElementCount();
 
@@ -812,16 +812,16 @@ namespace BuildingCoder
         /// </summary>
         private static IEnumerable<Element> GetFittingTypesOfPartType(
             Document doc,
-            PartType parttype )
+            PartType parttype)
         {
-            BuiltInParameter bip = BuiltInParameter.FAMILY_CONTENT_PART_TYPE;
+            var bip = BuiltInParameter.FAMILY_CONTENT_PART_TYPE;
 
             return new FilteredElementCollector(doc)
                 .WhereElementIsElementType()
                 .OfCategory(BuiltInCategory.OST_PipeFitting)
                 .OfClass(typeof(FamilySymbol))
                 .Cast<FamilySymbol>()
-                .Where(f => f.Family.get_Parameter(bip)?.AsInteger() == (int) parttype);
+                .Where(f => f.Family.get_Parameter(bip)?.AsInteger() == (int)parttype);
         }
 
         #endregion // Retrieve fitting types with a specific part type
@@ -1276,7 +1276,7 @@ namespace BuildingCoder
                 else
                 {
                     mapCatToFam.Add(catName,
-                        new List<Element> {f});
+                        [f]);
 
                     categoryList.Add(catName,
                         f.Category);
@@ -1418,7 +1418,7 @@ namespace BuildingCoder
         {
             var provider
                 = new ParameterValueProvider(new ElementId(
-                    (long) BuiltInParameter.ID_PARAM));
+                    (long)BuiltInParameter.ID_PARAM));
 
             var rule
                 = new FilterElementIdRule(provider,
@@ -1501,7 +1501,7 @@ namespace BuildingCoder
                 var idTyp = e.GetTypeId()
                             ?? ElementId.InvalidElementId;
 
-                if (!map.ContainsKey(idCat)) map.Add(idCat, new Dictionary<ElementId, int>());
+                if (!map.ContainsKey(idCat)) map.Add(idCat, []);
                 if (!map[idCat].ContainsKey(idTyp)) map[idCat].Add(idTyp, 0);
                 ++map[idCat][idTyp];
             }
@@ -1600,7 +1600,7 @@ namespace BuildingCoder
             Debug.Assert(null != p, "expected wall type "
                                     + "to have wall function parameter");
 
-            var f = (WallFunction) p.AsInteger();
+            var f = (WallFunction)p.AsInteger();
 
             return WallFunction.Exterior == f;
         }
@@ -1637,7 +1637,7 @@ namespace BuildingCoder
                 : doc.GetElement(ids.First()).Category;
 
             return null != cat
-                   && cat.Id.Value.Equals((int) bic);
+                   && cat.Id.Value.Equals((int)bic);
         }
 
         private static void GetFamiliesOfCategory(
@@ -1697,7 +1697,7 @@ namespace BuildingCoder
                     familyInstanceFilter).ToElements();
 
             IList<Element> modelElements
-                = new List<Element>();
+                = [];
 
             foreach (var e in elementsCollection)
                 if (null != e.Category
@@ -1817,7 +1817,7 @@ namespace BuildingCoder
         /// </summary>
         private static string GetAreaSchemeNameFromArea(Element e)
         {
-            if (!(e is Area))
+            if (e is not Area)
                 throw new ArgumentException(
                     "Expected Area element input argument.");
 
@@ -1835,11 +1835,10 @@ namespace BuildingCoder
             p = areaScheme.get_Parameter(
                 BuiltInParameter.AREA_SCHEME_NAME);
 
-            if (null == p)
-                throw new ArgumentException(
-                    "area scheme lacks AREA_SCHEME_NAME parameter");
-
-            return p.AsString();
+            return null == p
+                ? throw new ArgumentException(
+                    "area scheme lacks AREA_SCHEME_NAME parameter")
+                : p.AsString();
         }
 
         /// <summary>
@@ -1971,7 +1970,7 @@ namespace BuildingCoder
 
             var filter_type
                 = new ElementParameterFilter(
-                    new List<FilterRule> {frule_typeId});
+                    [frule_typeId]);
 
             IEnumerable<Element> lines
                 = new FilteredElementCollector(doc)
@@ -2069,8 +2068,8 @@ namespace BuildingCoder
         {
             return !v.IsTemplate
                    && (v.CanUseTemporaryVisibilityModes()
-                       || ViewType.Schedule == v.ViewType
-                       && !((ViewSchedule) v).IsTitleblockRevisionSchedule);
+                       || (ViewType.Schedule == v.ViewType
+                       && !((ViewSchedule)v).IsTitleblockRevisionSchedule));
         }
 
         /// <summary>
@@ -2524,7 +2523,7 @@ TaskDialog.Show( "Revit", collector.Count() +
 
             var pvp
                 = new ParameterValueProvider(
-                    new ElementId((Int64) testParam));
+                    new ElementId((Int64)testParam));
 
             FilterNumericRuleEvaluator fnrv
                 = new FilterNumericGreater();
@@ -2553,7 +2552,7 @@ TaskDialog.Show( "Revit", collector.Count() +
             testParam = BuiltInParameter.VIEWER_CROP_REGION;
 
             pvp = new ParameterValueProvider(
-                new ElementId((Int64) testParam));
+                new ElementId((Int64)testParam));
 
             fnrv = new FilterNumericEquals();
 
@@ -2576,7 +2575,7 @@ TaskDialog.Show( "Revit", collector.Count() +
                 BuiltInParameter.VIEWER_BOUND_OFFSET_TOP;
 
             pvp = new ParameterValueProvider(
-                new ElementId((Int64) testParam));
+                new ElementId((Int64)testParam));
 
             fnrv = new FilterNumericGreater();
 
@@ -2596,7 +2595,7 @@ TaskDialog.Show( "Revit", collector.Count() +
             testParam = BuiltInParameter.VIEW_NAME;
 
             pvp = new ParameterValueProvider(
-                new ElementId((Int64) testParam));
+                new ElementId((Int64)testParam));
 
             FilterStringRuleEvaluator fnrvStr
                 = new FilterStringContains();
@@ -2872,25 +2871,22 @@ TaskDialog.Show( "Revit", collector.Count() +
             double.TryParse(mark2[1], out d2);
             if (Math.Round(d1 - d2, 4) != 0)
             {
-                if ((d1 < 0) ^ (d2 < 0))
-                    return d1 < 0 ? 1 : -1;
-                return Math.Abs(d1) < Math.Abs(d2)
+                return (d1 < 0) ^ (d2 < 0)
+                    ? d1 < 0 ? 1 : -1
+                    : Math.Abs(d1) < Math.Abs(d2)
                     ? -1
                     : 1;
             }
 
             double.TryParse(mark1[3], out d1);
             double.TryParse(mark2[3], out d2);
-            if (Math.Round(d1 - d2, 4) != 0)
-            {
-                if ((d1 < 0) ^ (d2 < 0))
-                    return d1 < 0 ? 1 : -1;
-                return Math.Abs(d1) < Math.Abs(d2)
+            return Math.Round(d1 - d2, 4) != 0
+                ? (d1 < 0) ^ (d2 < 0)
+                    ? d1 < 0 ? 1 : -1
+                    : Math.Abs(d1) < Math.Abs(d2)
                     ? -1
-                    : 1;
-            }
-
-            return 0;
+                    : 1
+                : 0;
         }
     }
 }

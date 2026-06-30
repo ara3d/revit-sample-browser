@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
 {
@@ -19,10 +19,8 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             try
             {
                 // process data from Revit and show dialog
-                using (var transactionFrm = new TransactionForm(commandData))
-                {
-                    if (transactionFrm.ShowDialog() == DialogResult.OK) return Result.Succeeded;
-                }
+                using TransactionForm transactionFrm = new(commandData);
+                if (transactionFrm.ShowDialog() == DialogResult.OK) return Result.Succeeded;
             }
             catch (Exception ex)
             {

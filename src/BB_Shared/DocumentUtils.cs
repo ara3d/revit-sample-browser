@@ -10,20 +10,28 @@ namespace Ara3D.Bowerbird.RevitSamples;
 public static class DocumentUtils
 {
     public static IEnumerable<RevitLinkInstance> GetLinks(this Document doc)
-        => new FilteredElementCollector(doc)
-            .OfClass(typeof(RevitLinkInstance))
-            .Cast<RevitLinkInstance>();
+    {
+        return new FilteredElementCollector(doc)
+                .OfClass(typeof(RevitLinkInstance))
+                .Cast<RevitLinkInstance>();
+    }
 
     public static IEnumerable<Document> GetLinkedDocuments(this Document doc)
-        => doc.GetLinks()
-            .Select(li => li.GetLinkDocument())
-            .WhereNotNull();
+    {
+        return doc.GetLinks()
+                .Select(li => li.GetLinkDocument())
+                .WhereNotNull();
+    }
 
     public static IEnumerable<Element> GetElementsThatAreNotTypes(this Document doc)
-        => new FilteredElementCollector(doc).WhereElementIsNotElementType();
+    {
+        return new FilteredElementCollector(doc).WhereElementIsNotElementType();
+    }
 
     public static IEnumerable<Element> GetElementsThatAreTypes(this Document doc)
-        => new FilteredElementCollector(doc).WhereElementIsElementType();
+    {
+        return new FilteredElementCollector(doc).WhereElementIsElementType();
+    }
 
     /// <summary>
     /// Saves an opened document as an upgraded model in the current Revit version.
@@ -46,7 +54,7 @@ public static class DocumentUtils
         var fullTargetPath = Path.GetFullPath(targetPath);
         Directory.CreateDirectory(Path.GetDirectoryName(fullTargetPath)!);
 
-        var sao = new SaveAsOptions
+        SaveAsOptions sao = new()
         {
             OverwriteExistingFile = overwrite,
             Compact = compact
@@ -57,7 +65,7 @@ public static class DocumentUtils
         //  - Save as a NEW central (makeCentral=true) at the target path.
         if (doc.IsWorkshared && makeCentral)
         {
-            var wso = new WorksharingSaveAsOptions
+            WorksharingSaveAsOptions wso = new()
             {
                 SaveAsCentral = true
             };

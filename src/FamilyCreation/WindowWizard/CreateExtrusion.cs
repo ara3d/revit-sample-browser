@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Diagnostics;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
+using System;
+using System.Diagnostics;
 using Document = Autodesk.Revit.DB.Document;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
@@ -26,10 +26,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var curveArray = m_appCreator.NewCurveArray();
             try
             {
-                var p0 = new XYZ(left, yCoordinate, top);
-                var p1 = new XYZ(right, yCoordinate, top);
-                var p2 = new XYZ(right, yCoordinate, bottom);
-                var p3 = new XYZ(left, yCoordinate, bottom);
+                XYZ p0 = new(left, yCoordinate, top);
+                XYZ p1 = new(right, yCoordinate, top);
+                XYZ p2 = new(right, yCoordinate, bottom);
+                XYZ p3 = new(left, yCoordinate, bottom);
                 var line1 = Line.CreateBound(p0, p1);
                 var line2 = Line.CreateBound(p1, p2);
                 var line3 = Line.CreateBound(p2, p3);
@@ -51,12 +51,12 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         {
             var counter = 0;
             var curveArr = m_appCreator.NewCurveArray();
-            var offsetx = new XYZ(offset, 0, 0);
-            var offsetz = new XYZ(0, 0, offset);
-            var p0 = new XYZ();
-            var p1 = new XYZ();
-            var p2 = new XYZ();
-            var p3 = new XYZ();
+            XYZ offsetx = new(offset, 0, 0);
+            XYZ offsetz = new(0, 0, offset);
+            XYZ p0 = new();
+            XYZ p1 = new();
+            XYZ p2 = new();
+            XYZ p3 = new();
             foreach (Curve curve in origin)
             {
                 var temp = curve as Line;
@@ -98,7 +98,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         {
             try
             {
-                var subTransaction = new SubTransaction(m_document);
+                SubTransaction subTransaction = new(m_document);
                 subTransaction.Start();
                 var sketch = SketchPlane.Create(m_document, workPlane.GetPlane());
                 var rectExtrusion =

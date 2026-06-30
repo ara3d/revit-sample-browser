@@ -12,10 +12,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 {
@@ -24,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
     /// </summary>
     public class IssueMarkerTracking
     {
-        private readonly HashSet<IssueMarker> m_issueMarkerSet = new HashSet<IssueMarker>();
+        private readonly HashSet<IssueMarker> m_issueMarkerSet = [];
 
         private int m_selectedIndex;
 

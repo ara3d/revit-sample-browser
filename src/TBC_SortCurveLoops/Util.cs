@@ -1,9 +1,9 @@
 #region Namespaces
 
+using Autodesk.Revit.DB;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 #endregion // Namespaces
 
@@ -37,10 +37,10 @@ namespace BuildingCoder
                 }
             } while (somethingHasChanged);
 
-            var result = new List<List<CurveLoop>>();
+            List<List<CurveLoop>> result = [];
             foreach (var outerLoop in outerLoops)
             {
-                var list = new List<CurveLoop> {outerLoop.Loop3d};
+                List<CurveLoop> list = [outerLoop.Loop3d];
 
                 for (var i = innerLoops.Count - 1; i >= 0; i--)
                 {

@@ -15,12 +15,12 @@
 
 #region Namespaces
 
+using Autodesk.Revit.Creation;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.Creation;
-using Autodesk.Revit.DB;
 using Document = Autodesk.Revit.Creation.Document;
 
 #endregion // Namespaces
@@ -36,7 +36,7 @@ namespace BuildingCoder
         // these are
         // Autodesk.Revit.Creation
         // objects!
-        private Application _creapp;
+        private readonly Application _creapp;
 
         public Creator(Autodesk.Revit.DB.Document doc)
         {
@@ -168,13 +168,7 @@ namespace BuildingCoder
         {
             var p = line.GetEndPoint(0);
             var q = line.GetEndPoint(1);
-            XYZ norm;
-            if (p.X == q.X)
-                norm = XYZ.BasisX;
-            else if (p.Y == q.Y)
-                norm = XYZ.BasisY;
-            else
-                norm = XYZ.BasisZ;
+            var norm = p.X == q.X ? XYZ.BasisX : p.Y == q.Y ? XYZ.BasisY : XYZ.BasisZ;
             //Plane plane = _creapp.NewPlane( norm, p ); // 2016
             var plane = Plane.CreateByNormalAndOrigin(norm, p); // 2017
 
@@ -210,14 +204,16 @@ namespace BuildingCoder
             var plane = Plane.CreateByNormalAndOrigin(normal, p); // 2017
 
 #if DEBUG
-            if (!(curve is Line))
+            if (curve is not Line)
             {
                 //CurveArray a = _creapp.NewCurveArray();
                 //a.Append( curve );
                 //Plane plane2 = _creapp.NewPlane( a ); // 2016
 
-                var a = new List<Curve>(1);
-                a.Add(curve);
+                var a = new List<Curve>(1)
+                {
+                    curve
+                };
                 var b = CurveLoop.Create(a);
                 var plane2 = b.GetPlane(); // 2017
 

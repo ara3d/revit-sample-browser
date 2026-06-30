@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
 {
@@ -31,8 +32,8 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
         {
             try
             {
-                var guid1 = new Guid("0C3F66B5-3E26-4d24-A228-7A8358C76D39");
-                var guid2 = new Guid("93382A45-89A9-4cfe-8B94-E0B0D9542D34");
+                Guid guid1 = new("0C3F66B5-3E26-4d24-A228-7A8358C76D39");
+                Guid guid2 = new("93382A45-89A9-4cfe-8B94-E0B0D9542D34");
                 new Guid("A16D08E2-7D06-4bca-96B0-C4E4CC0512F8");
                 IdWarning = new FailureDefinitionId(guid1);
                 IdError = new FailureDefinitionId(guid2);
@@ -77,13 +78,13 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
                 // Demo 1: post a custom warning; resolved in IFailuresPreprocessor.
                 try
                 {
-                    var transaction = new Transaction(m_doc, "Warning_FailurePreproccessor");
+                    Transaction transaction = new(m_doc, "Warning_FailurePreproccessor");
                     var options = transaction.GetFailureHandlingOptions();
-                    var preproccessor = new FailurePreproccessor();
+                    FailurePreproccessor preproccessor = new();
                     options.SetFailuresPreprocessor(preproccessor);
                     transaction.SetFailureHandlingOptions(options);
                     transaction.Start();
-                    var fm = new FailureMessage(IdWarning);
+                    FailureMessage fm = new(IdWarning);
                     m_doc.PostFailure(fm);
                     transaction.Commit();
                 }
@@ -96,9 +97,9 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
                 // Demo 2: dismiss overlapped-wall warning in IFailuresPreprocessor.
                 try
                 {
-                    var transaction = new Transaction(m_doc, "Warning_FailurePreproccessor_OverlappedWall");
+                    Transaction transaction = new(m_doc, "Warning_FailurePreproccessor_OverlappedWall");
                     var options = transaction.GetFailureHandlingOptions();
-                    var preproccessor = new FailurePreproccessor();
+                    FailurePreproccessor preproccessor = new();
                     options.SetFailuresPreprocessor(preproccessor);
                     transaction.SetFailureHandlingOptions(options);
                     transaction.Start();
@@ -120,14 +121,14 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
                 try
                 {
                     m_revitApp.FailuresProcessing += FailuresProcessing;
-                    var transaction = new Transaction(m_doc, "Error_FailuresProcessingEvent");
+                    Transaction transaction = new(m_doc, "Error_FailuresProcessingEvent");
                     transaction.Start();
 
                     var line = Line.CreateBound(new XYZ(0, 10, 0), new XYZ(20, 10, 0));
                     var wall = Wall.Create(m_doc, line, level1.Id, false);
                     m_doc.Regenerate();
 
-                    var fm = new FailureMessage(IdError);
+                    FailureMessage fm = new(IdError);
                     var fr = DeleteElements.Create(m_doc, wall.Id);
                     fm.AddResolution(FailureResolutionType.DeleteElements, fr);
                     m_doc.PostFailure(fm);
@@ -142,16 +143,16 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
                 // Demo 4: post a custom error; resolved in IFailuresProcessor.
                 try
                 {
-                    var processor = new FailuresProcessor();
+                    FailuresProcessor processor = new();
                     Application.RegisterFailuresProcessor(processor);
-                    var transaction = new Transaction(m_doc, "Error_FailuresProcessor");
+                    Transaction transaction = new(m_doc, "Error_FailuresProcessor");
                     transaction.Start();
 
                     var line = Line.CreateBound(new XYZ(0, 20, 0), new XYZ(20, 20, 0));
                     var wall = Wall.Create(m_doc, line, level1.Id, false);
                     m_doc.Regenerate();
 
-                    var fm = new FailureMessage(IdError);
+                    FailureMessage fm = new(IdError);
                     var fr = DeleteElements.Create(m_doc, wall.Id);
                     fm.AddResolution(FailureResolutionType.DeleteElements, fr);
                     m_doc.PostFailure(fm);
@@ -203,8 +204,8 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
         {
             Level level1 = null;
 
-            var collector = new FilteredElementCollector(m_doc);
-            var filter = new ElementClassFilter(typeof(Level));
+            FilteredElementCollector collector = new(m_doc);
+            ElementClassFilter filter = new(typeof(Level));
             var levels = collector.WherePasses(filter).ToElements();
 
             foreach (Level level in levels)
@@ -231,25 +232,25 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
             switch (transactionName)
             {
                 case "Warning_FailurePreproccessor":
-                {
-                    foreach (var fma in fmas)
                     {
-                        var id = fma.GetFailureDefinitionId();
-                        if (id == Command.IdWarning) failuresAccessor.DeleteWarning(fma);
-                    }
+                        foreach (var fma in fmas)
+                        {
+                            var id = fma.GetFailureDefinitionId();
+                            if (id == Command.IdWarning) failuresAccessor.DeleteWarning(fma);
+                        }
 
-                    return FailureProcessingResult.ProceedWithCommit;
-                }
+                        return FailureProcessingResult.ProceedWithCommit;
+                    }
                 case "Warning_FailurePreproccessor_OverlappedWall":
-                {
-                    foreach (var fma in fmas)
                     {
-                        var id = fma.GetFailureDefinitionId();
-                        if (id == BuiltInFailures.OverlapFailures.WallsOverlap) failuresAccessor.DeleteWarning(fma);
-                    }
+                        foreach (var fma in fmas)
+                        {
+                            var id = fma.GetFailureDefinitionId();
+                            if (id == BuiltInFailures.OverlapFailures.WallsOverlap) failuresAccessor.DeleteWarning(fma);
+                        }
 
-                    return FailureProcessingResult.ProceedWithCommit;
-                }
+                        return FailureProcessingResult.ProceedWithCommit;
+                    }
                 default:
                     return FailureProcessingResult.Continue;
             }

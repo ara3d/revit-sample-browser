@@ -66,7 +66,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         public bool AllowReference(Reference refer, XYZ point)
         {
             var geoObject = m_doc.GetElement(refer).GetGeometryObjectFromReference(refer);
-            return geoObject != null && geoObject is Face;
+            return geoObject is not null and Face;
         }
     }
 
@@ -103,7 +103,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         public bool AllowReference(Reference refer, XYZ point)
         {
             var geoObject = m_doc.GetElement(refer).GetGeometryObjectFromReference(refer);
-            return geoObject != null && geoObject is PlanarFace;
+            return geoObject is not null and PlanarFace;
         }
     }
 }

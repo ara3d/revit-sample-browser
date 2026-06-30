@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
 {
@@ -127,15 +127,15 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
                 var youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD1);
                 if (null != youngModuleAttribute)
                     LayerYoungModulusX =
-                        $"{(youngModuleAttribute.AsDouble() / ToMetricYoungmodulus):F2} MPa";
+                        $"{youngModuleAttribute.AsDouble() / ToMetricYoungmodulus:F2} MPa";
                 youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD2);
                 if (null != youngModuleAttribute)
                     LayerYoungModulusY =
-                        $"{(youngModuleAttribute.AsDouble() / ToMetricYoungmodulus):F2} MPa";
+                        $"{youngModuleAttribute.AsDouble() / ToMetricYoungmodulus:F2} MPa";
                 youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD3);
                 if (null != youngModuleAttribute)
                     LayerYoungModulusZ =
-                        $"{(youngModuleAttribute.AsDouble() / ToMetricYoungmodulus):F2} MPa";
+                        $"{youngModuleAttribute.AsDouble() / ToMetricYoungmodulus:F2} MPa";
             }
             else
             {

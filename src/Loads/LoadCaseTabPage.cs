@@ -2,7 +2,6 @@
 
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Loads.CS
 {
@@ -163,7 +162,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
             var cellTemp = loadCasesDataGridView.CurrentCell;
             if (null == cellTemp) return;
-            if (!(cellTemp.Value is string nameTemp))
+            if (cellTemp.Value is not string nameTemp)
             {
                 e.Cancel = false;
                 return;

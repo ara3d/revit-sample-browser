@@ -1,18 +1,18 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Document = Autodesk.Revit.DB.Document;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
     public class CurvedStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
     {
-        private Application m_appCreate;
+        private readonly Application m_appCreate;
         private readonly XYZ m_center;
         private readonly double m_desiredTreadDepth;
         private readonly double m_includedAngle;
@@ -20,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
         private readonly double m_innerRadius;
         private double m_outerRadius;
 
-        private int m_riserNumber;
+        private readonly int m_riserNumber;
         private StairsRun m_stairsRun;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             RunElevation = bottomElevation;
             m_innerRadius = innerRadius;
             m_outerRadius = innerRadius + width;
-            m_incrementAngle = desiredTreadDepth / (m_innerRadius + width / 2.0);
+            m_incrementAngle = desiredTreadDepth / (m_innerRadius + (width / 2.0));
             m_desiredTreadDepth = desiredTreadDepth;
             m_includedAngle = m_incrementAngle * (riserNumber - 1);
 
@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             RunElevation = bottomElevation;
             m_innerRadius = innerRadius;
             m_outerRadius = innerRadius + width;
-            m_incrementAngle = desiredTreadDepth / (m_innerRadius + width / 2.0);
+            m_incrementAngle = desiredTreadDepth / (m_innerRadius + (width / 2.0));
             m_includedAngle = m_incrementAngle * (riserNumber - 1);
             m_desiredTreadDepth = desiredTreadDepth;
             m_center = new XYZ(0, 0, bottomElevation);
@@ -79,14 +79,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 
         public double RunElevation { get; }
 
-        public double TopElevation
-        {
-            get
-            {
-                if (m_stairsRun == null) throw new NotSupportedException("Stairs run hasn't been constructed yet.");
-                return m_stairsRun.TopElevation;
-            }
-        }
+        public double TopElevation => m_stairsRun == null ? throw new NotSupportedException("Stairs run hasn't been constructed yet.") : m_stairsRun.TopElevation;
 
         public IList<Curve> GetStairsPath()
         {
@@ -128,7 +121,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
                 if (m_stairsRun != null)
                 {
                     m_stairsRun.ActualRunWidth = m_outerRadius - m_innerRadius;
-                    m_incrementAngle = m_desiredTreadDepth / (m_innerRadius + value / 2.0);
+                    m_incrementAngle = m_desiredTreadDepth / (m_innerRadius + (value / 2.0));
                 }
             }
         }

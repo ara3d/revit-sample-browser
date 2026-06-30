@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
@@ -17,10 +17,8 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         {
             try
             {
-                using (var infoForm = new ViewFiltersForm(commandData))
-                {
-                    infoForm.ShowDialog();
-                }
+                using ViewFiltersForm infoForm = new(commandData);
+                infoForm.ShowDialog();
 
                 return Result.Succeeded;
             }

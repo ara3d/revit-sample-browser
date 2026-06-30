@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using TextBox = System.Windows.Forms.TextBox;
 
 namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
@@ -51,7 +50,7 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
         private void CoordinateTextBox_Validating(object sender, CancelEventArgs e)
         {
             // Check whether the sender is a TextBox reference
-            if (!(sender is TextBox numberTextBox))
+            if (sender is not TextBox numberTextBox)
                 // If it is not a TextBox, just return
                 return;
 

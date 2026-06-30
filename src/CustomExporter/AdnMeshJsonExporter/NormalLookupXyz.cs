@@ -2,8 +2,8 @@
 // Adapted from CustomExporterAdnMeshJson by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CustomExporterAdnMeshJson
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 {

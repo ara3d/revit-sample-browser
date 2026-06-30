@@ -23,12 +23,9 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
-            if (radioButtonPoint.Checked)
-                BaseType = BasedType.Point;
-            else if (radioButtonLine.Checked)
-                BaseType = BasedType.Line;
-            else
-                throw new Exception("An error occured in selecting based type.");
+            BaseType = radioButtonPoint.Checked
+                ? BasedType.Point
+                : radioButtonLine.Checked ? BasedType.Line : throw new Exception("An error occured in selecting based type.");
             Close();
             DialogResult = DialogResult.OK;
         }

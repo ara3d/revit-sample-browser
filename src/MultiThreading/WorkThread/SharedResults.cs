@@ -12,9 +12,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
@@ -23,9 +23,9 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
     {
         private bool m_completed;
         private int m_numberWhenLastRead;
-        private readonly IList<UV> m_points = new List<UV>();
-        private readonly IList<ValueAtPoint> m_values = new List<ValueAtPoint>();
-        private readonly object m_mylock = new object();
+        private readonly IList<UV> m_points = [];
+        private readonly IList<ValueAtPoint> m_values = [];
+        private readonly object m_mylock = new();
 
         // Called by the analyzer when it no longer needs results; AddResult then returns false.
         public void SetCompleted()
@@ -66,7 +66,8 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
             {
                 if (!m_completed)
                 {
-                    var doubleList = new List<double> { value };
+                    List<double> doubleList = new()
+                    { value };
                     m_values.Add(new ValueAtPoint(doubleList));
                     m_points.Add(point);
                     accepted = true;

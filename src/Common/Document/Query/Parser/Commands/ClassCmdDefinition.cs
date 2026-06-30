@@ -2,25 +2,23 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Structure;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class ClassCmdDefinition : ICommandDefinition, INeedInitialization, IOfferArgumentAutocompletion
     {
-        private static readonly HashSet<string> ClassesBlackList = new()
-        {
+        private static readonly HashSet<string> ClassesBlackList =
+        [
             //typeof(Material),
             //typeof(CurveElement).FullName,
             //typeof(ConnectorElement).FullName,
@@ -44,9 +42,9 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
             typeof(TrussType).FullName,
             typeof(Element).FullName,
             typeof(ElementType).FullName,
-        };
-        private static readonly AutocompleteItem AutocompleteItem = new AutocompleteItem("t: ", "t:[class]", "select elements of given class", AutocompleteItemGroups.Commands);
-        private readonly DataBucket<ClassCmdArgument> dataBucket = new DataBucket<ClassCmdArgument>(0.61);
+        ];
+        private static readonly AutocompleteItem AutocompleteItem = new("t: ", "t:[class]", "select elements of given class", AutocompleteItemGroups.Commands);
+        private readonly DataBucket<ClassCmdArgument> dataBucket = new(0.61);
 
 
         public void Init()
@@ -63,12 +61,16 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
         }
 
 
-        public IAutocompleteItem GetCommandAutocompleteItem() => AutocompleteItem;
+        public IAutocompleteItem GetCommandAutocompleteItem()
+        {
+            return AutocompleteItem;
+        }
+
         public IEnumerable<IAutocompleteItem> GetAutocompleteItems(string prefix)
         {
-          
+
             return dataBucket.ProvideAutoCompletion(prefix);
-        
+
         }
 
 
@@ -83,12 +85,18 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
         {
             yield break;
         }
-        public bool CanRecognizeArgument(string argument) => false;
-        public bool CanParticipateInGenericSearch() => true;
+        public bool CanRecognizeArgument(string argument)
+        {
+            return false;
+        }
 
+        public bool CanParticipateInGenericSearch()
+        {
+            return true;
+        }
 
         public ICommand Create(string cmdText, string argument)
-        {           
+        {
             var args = dataBucket.FuzzySearch(argument);
             return new ClassCmd(cmdText, args);
         }
@@ -98,7 +106,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
     public class ClassCmdArgument : CommandArgument<Type>
     {
         public ClassCmdArgument(Type value) : base(value)
-        {           
+        {
             Name = $"typeof({value.Name})";
             Label = value.Name;
         }

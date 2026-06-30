@@ -12,11 +12,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -38,7 +38,7 @@ namespace BuildingCoder
                 = new FilteredElementCollector(doc)
                     .WhereElementIsNotElementType();
 
-            var ids = new List<ElementId>();
+            List<ElementId> ids = new();
 
             foreach (var e in col)
                 if (Util.ElementNameMayIndicateImageFileReference(e))

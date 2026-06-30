@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
 {
@@ -33,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
         {
             m_app = app;
             m_manager = doc.FamilyManager;
-            m_familyParams = new Dictionary<string, FamilyParam>();
+            m_familyParams = [];
             m_assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             m_paramLoaded = false;
         }

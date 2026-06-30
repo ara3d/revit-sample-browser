@@ -1,17 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.Journaling.CS
 {
     public class Journaling
@@ -37,8 +35,8 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
             m_canReadData = commandData.JournalData.Count > 0;
 
             // Initialize the two list data members
-            m_levelList = new List<Level>();
-            m_wallTypeList = new List<WallType>();
+            m_levelList = [];
+            m_wallTypeList = [];
             InitializeListData();
         }
 
@@ -46,12 +44,12 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
         /// <summary>
         ///     Give all levels in revit, and this information can be showed in UI
         /// </summary>
-        public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levelList);
+        public ReadOnlyCollection<Level> Levels => new(m_levelList);
 
         /// <summary>
         ///     Give all wall types in revit, and this information can be showed in UI
         /// </summary>
-        public ReadOnlyCollection<WallType> WallTypes => new ReadOnlyCollection<WallType>(m_wallTypeList);
+        public ReadOnlyCollection<WallType> WallTypes => new(m_wallTypeList);
 
         /// <summary>
         ///     This is the main deal method in this sample.
@@ -91,12 +89,12 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
 
             // Get all wall types from revit
             var document = m_commandData.Application.ActiveUIDocument.Document;
-            var filteredElementCollector = new FilteredElementCollector(document);
+            FilteredElementCollector filteredElementCollector = new(document);
             filteredElementCollector.OfClass(typeof(WallType));
             m_wallTypeList = filteredElementCollector.Cast<WallType>().ToList();
 
             // Sort the wall type list by the name property
-            var comparer = new WallTypeComparer();
+            WallTypeComparer comparer = new();
             m_wallTypeList.Sort(comparer);
 
             // Get all levels from revit 
@@ -104,7 +102,7 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
             iter.Reset();
             while (iter.MoveNext())
             {
-                if (!(iter.Current is Level level)) continue;
+                if (iter.Current is not Level level) continue;
                 m_levelList.Add(level);
             }
         }
@@ -120,7 +118,7 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
             var dataMap = m_commandData.JournalData;
 
             var dataValue = // store the journal data value temporarily
-                // Get the wall type from the journal
+                            // Get the wall type from the journal
                 SampleBrowserUtils.GetSpecialData(dataMap, "Wall Type Name"); // get wall type name
             foreach (var type in m_wallTypeList) // get the wall type by the name
             {
@@ -161,13 +159,9 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
         private bool DisplayUi()
         {
             // Display the form and allow the user to input some information for wall creation
-            using (var displayForm = new JournalingForm(this))
-            {
-                displayForm.ShowDialog();
-                if (DialogResult.OK != displayForm.DialogResult) return false;
-            }
-
-            return true;
+            using JournalingForm displayForm = new(this);
+            displayForm.ShowDialog();
+            return DialogResult.OK == displayForm.DialogResult;
         }
 
         private void CreateWall()
@@ -205,8 +199,10 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
 
         private class WallTypeComparer : IComparer<WallType>
         {
-            int IComparer<WallType>.Compare(WallType first, WallType second) =>
-                string.Compare(first.Name, second.Name);
+            int IComparer<WallType>.Compare(WallType first, WallType second)
+            {
+                return string.Compare(first.Name, second.Name);
+            }
         }
     }
 }

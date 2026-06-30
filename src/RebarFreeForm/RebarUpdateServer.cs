@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.DB.Structure;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 {
     public class TargetFace
@@ -41,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
     public class RebarUpdateServer : IRebarUpdateServer
     {
         /// <summary>Pass to Rebar.CreateFreeForm to bind this external server.</summary>
-        public static Guid SampleGuid = new Guid("64D176BA-EB3E-4E96-877D-46A3B0C17B93");
+        public static Guid SampleGuid = new("64D176BA-EB3E-4E96-877D-46A3B0C17B93");
 
         public Guid GetServerId()
         {
@@ -114,9 +113,9 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 
         public bool GenerateCurves(RebarCurvesData data)
         {
-            var firstFace = new TargetFace();
-            var secondFace = new TargetFace();
-            var thirdFace = new TargetFace();
+            TargetFace firstFace = new();
+            TargetFace secondFace = new();
+            TargetFace thirdFace = new();
             var constraints = data.GetRebarUpdateCurvesData().GetCustomConstraints();
             foreach (var constraint in constraints)
             {
@@ -130,23 +129,23 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 switch ((BarHandle)constraint.GetCustomHandleTag())
                 {
                     case BarHandle.FirstHandle:
-                    {
-                        var face = constraint.GetTargetHostFaceAndTransform(0, tempTrf);
-                        firstFace = new TargetFace { Face = face, Transform = tempTrf, Offset = dfOffset };
-                        break;
-                    }
+                        {
+                            var face = constraint.GetTargetHostFaceAndTransform(0, tempTrf);
+                            firstFace = new TargetFace { Face = face, Transform = tempTrf, Offset = dfOffset };
+                            break;
+                        }
                     case BarHandle.SecondHandle:
-                    {
-                        var face = constraint.GetTargetHostFaceAndTransform(0, tempTrf);
-                        secondFace = new TargetFace { Face = face, Transform = tempTrf, Offset = dfOffset };
-                        break;
-                    }
+                        {
+                            var face = constraint.GetTargetHostFaceAndTransform(0, tempTrf);
+                            secondFace = new TargetFace { Face = face, Transform = tempTrf, Offset = dfOffset };
+                            break;
+                        }
                     case BarHandle.ThirdHandle:
-                    {
-                        var face = constraint.GetTargetHostFaceAndTransform(0, tempTrf);
-                        thirdFace = new TargetFace { Face = face, Transform = tempTrf, Offset = dfOffset };
-                        break;
-                    }
+                        {
+                            var face = constraint.GetTargetHostFaceAndTransform(0, tempTrf);
+                            thirdFace = new TargetFace { Face = face, Transform = tempTrf, Offset = dfOffset };
+                            break;
+                        }
                 }
             }
 
@@ -156,7 +155,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             var thisBar = GetCurrentRebar(data.GetRebarUpdateCurvesData());
             // Selected model curve overrides intersection geometry for bar shapes.
             var selectedCurve = GetSelectedCurveElement(thisBar, data.GetRebarUpdateCurvesData());
-            var curves = new List<Curve>();
+            List<Curve> curves = new();
             Curve originalBar = null;
             var singleBar = GetOffsetCurveAtIntersection(firstFace, secondFace);
             if (selectedCurve != null)
@@ -206,7 +205,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             if (curves.Count <= 0)
                 return false;
 
-            var distribPath = new List<Curve>();
+            List<Curve> distribPath = new();
             for (var ii = 0; ii < curves.Count - 1; ii++)
                 distribPath.Add(Line.CreateBound(curves[ii].Evaluate(0.5, true), curves[ii + 1].Evaluate(0.5, true)));
             if (distribPath.Count > 0)
@@ -214,7 +213,8 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 
             for (var ii = 0; ii < curves.Count; ii++)
             {
-                var barCurve = new List<Curve> { curves[ii] };
+                List<Curve> barCurve = new()
+                { curves[ii] };
                 data.AddBarGeometry(barCurve);
 
                 // Hook normals set here are reset when TrimExtendCurves replaces bar geometry.
@@ -238,14 +238,14 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                     data.GetRebarUpdateCurvesData()) != null)
                 return true;
 
-            IList<Curve> allbars = new List<Curve>();
+            IList<Curve> allbars = [];
             for (var ii = 0; ii < data.GetRebarUpdateCurvesData().GetBarsNumber(); ii++)
                 allbars.Add(data.GetRebarUpdateCurvesData().GetBarGeometry(ii)[0]);
-            var hostFaces = new List<TargetFace>();
+            List<TargetFace> hostFaces = new();
 
             for (var iBarEnd = 0; iBarEnd < 2; iBarEnd++)
             {
-                var faces = new List<TargetFace>();
+                List<TargetFace> faces = new();
                 var constraint = iBarEnd == 0
                     ? data.GetRebarUpdateCurvesData().GetStartConstraint()
                     : data.GetRebarUpdateCurvesData().GetEndConstraint();
@@ -255,7 +255,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                     if (hostFaces.Count <= 0)
                     {
                         // ComputeReferences required so found faces can become constraint targets.
-                        var geomOptions = new Options
+                        Options geomOptions = new()
                         {
                             ComputeReferences = true
                         };
@@ -271,7 +271,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         faces.Add(SearchForFace(bar, hostFaces, iBarEnd));
                     }
 
-                    var refs = new List<Reference>();
+                    List<Reference> refs = new();
                     foreach (var face in faces)
                     {
                         if (face.Face.Reference != null && !refs.Contains(face.Face.Reference))
@@ -306,7 +306,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 {
                     XYZ intersection;
                     var barCurve = allbars[idx];
-                    if (!(barCurve is Line)) // Straight bars only.
+                    if (barCurve is not Line) // Straight bars only.
                         return false;
                     var tangent = Line.CreateUnbound(barCurve.GetEndPoint(iBarEnd),
                         barCurve.ComputeDerivatives(iBarEnd, true).BasisX.Normalize() * (iBarEnd == 0 ? -1 : 1));
@@ -318,10 +318,9 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         try
                         {
                             var barDir = (barCurve.GetEndPoint(1) - barCurve.GetEndPoint(0)).Normalize();
-                            if (iBarEnd == 0)
-                                newCurve = Line.CreateBound(intersection - barDir * dfOffset, barCurve.GetEndPoint(1));
-                            else
-                                newCurve = Line.CreateBound(barCurve.GetEndPoint(0), intersection + barDir * dfOffset);
+                            newCurve = iBarEnd == 0
+                                ? Line.CreateBound(intersection - (barDir * dfOffset), barCurve.GetEndPoint(1))
+                                : Line.CreateBound(barCurve.GetEndPoint(0), intersection + (barDir * dfOffset));
                         }
                         catch
                         {
@@ -333,7 +332,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 }
             }
 
-            var firstFace = new TargetFace();
+            TargetFace firstFace = new();
             var constraints = data.GetRebarUpdateCurvesData().GetCustomConstraints();
             foreach (var constraint in constraints)
             {
@@ -345,7 +344,8 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         return false;
                     firstFace = new TargetFace
                     {
-                        Face = constraint.GetTargetHostFaceAndTransform(0, tempTrf), Transform = tempTrf,
+                        Face = constraint.GetTargetHostFaceAndTransform(0, tempTrf),
+                        Transform = tempTrf,
                         Offset = dfOffset
                     };
                     break;
@@ -354,7 +354,8 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 
             for (var ii = 0; ii < allbars.Count; ii++)
             {
-                var barCurve = new List<Curve> { allbars[ii] };
+                List<Curve> barCurve = new()
+                { allbars[ii] };
                 data.AddBarGeometry(barCurve);
                 // Hook normals reset when bar geometry is replaced.
                 for (var i = 0; i < 2; i++)
@@ -386,7 +387,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 
         private TargetFace SearchForFace(Curve curve, List<TargetFace> faces, int iEnd)
         {
-            var bestFace = new TargetFace();
+            TargetFace bestFace = new();
             var minDistance = double.MaxValue;
             var tangent = Line.CreateUnbound(curve.GetEndPoint(iEnd),
                 curve.ComputeDerivatives(iEnd, true).BasisX.Normalize() * (iEnd == 0 ? -1 : 1));
@@ -516,20 +517,20 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             Curve firstCurve;
             var result = firstFace.Face.Intersect(secondFace.Face, out firstCurve);
             // if faces do not intersect, or do not return a Line, then consider the input invalid and return error
-            if (result == FaceIntersectionFaceResult.NonIntersecting || !(firstCurve is Line))
+            if (result == FaceIntersectionFaceResult.NonIntersecting || firstCurve is not Line)
                 return null;
             var pointOnCurve = firstCurve.Evaluate(0, true);
             var firstOffsetVec = firstFace.Face.ComputeNormal(firstFace.Face.Project(pointOnCurve).UVPoint).Normalize();
             var secondOffsetVec = secondFace.Face.ComputeNormal(secondFace.Face.Project(pointOnCurve).UVPoint)
                 .Normalize();
-            var offsetVec = firstOffsetVec * firstFace.Offset + secondOffsetVec * secondFace.Offset;
+            var offsetVec = (firstOffsetVec * firstFace.Offset) + (secondOffsetVec * secondFace.Offset);
             var offsetTrf = Transform.CreateTranslation(offsetVec);
             return firstCurve.CreateTransformed(offsetTrf.Multiply(firstFace.Transform));
         }
 
         private List<TargetFace> GetFacesFromElement(GeometryElement geometryElement, Transform trf = null)
         {
-            var result = new List<TargetFace>();
+            List<TargetFace> result = new();
             if (geometryElement != null)
                 foreach (var geometryObject in geometryElement)
                 {
@@ -554,7 +555,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         foreach (Face face in solid.Faces)
                         {
                             result.Add(new TargetFace
-                                { Face = face, Transform = trf == null ? Transform.Identity : trf });
+                            { Face = face, Transform = trf ?? Transform.Identity });
                         }
                     }
                 }

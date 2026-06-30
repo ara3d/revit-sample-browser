@@ -3,14 +3,14 @@
 // Adapted from StlImport by Scott Conover, Autodesk Inc. (MIT).
 // https://github.com/jeremytammik/StlImport
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using QuantumConcepts.Formats.StereoLithography;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.StlImport.CS
 {

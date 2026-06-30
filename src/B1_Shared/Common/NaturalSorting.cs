@@ -18,7 +18,7 @@ namespace ExcelExporterImporter.Common
         public static DataTable DataTableSort(DataTable dt, string sSort, out string sMsgError)
         {
             sMsgError = string.Empty;
-            var dtNew = new DataTable();
+            DataTable dtNew = new();
             try
             {
                 dtNew = dt.Clone();
@@ -48,8 +48,8 @@ namespace ExcelExporterImporter.Common
                                         SecondRow[ItemSort.ColumnIndex].ToString(), out sMsgError);
                                     if (string.IsNullOrEmpty(sMsgError))
                                     {
-                                        if (ResultCompare == "less" && ItemSort.OrderBy == "desc" ||
-                                            ResultCompare == "greater" && ItemSort.OrderBy == "asc")
+                                        if ((ResultCompare == "less" && ItemSort.OrderBy == "desc") ||
+                                            (ResultCompare == "greater" && ItemSort.OrderBy == "asc"))
                                         {
                                             bFindPosition = true;
                                             break;
@@ -144,23 +144,20 @@ namespace ExcelExporterImporter.Common
         /// <returns>Return the list or an empty list</returns>
         private static List<SortClass> CreateSortClassList(DataTable dt, string sSort, out string sMsgError)
         {
-            var ListClass = new List<SortClass>();
+            List<SortClass> ListClass = [];
             sMsgError = string.Empty;
             try
             {
-                char[] Separator = {','};
-                char[] Separator2 = {' '};
+                char[] Separator = { ',' };
+                char[] Separator2 = { ' ' };
                 var TableOrder = sSort.Split(Separator);
                 foreach (var sElementOrder in TableOrder)
                 {
-                    var ItemClass = new SortClass();
+                    SortClass ItemClass = new();
                     var iStartIndex = sElementOrder.IndexOf('[');
                     var iEndIndex = sElementOrder.IndexOf(']');
                     ItemClass.ColunmName = sElementOrder.Substring(iStartIndex + 1, iEndIndex - iStartIndex - 1);
-                    if (sElementOrder.ToLower().Contains("desc"))
-                        ItemClass.OrderBy = "desc";
-                    else
-                        ItemClass.OrderBy = "asc";
+                    ItemClass.OrderBy = sElementOrder.ToLower().Contains("desc") ? "desc" : "asc";
                     //We are looking for the index linked to the column
                     ItemClass.ColumnIndex = 0;
                     var bColumnFound = false;
@@ -261,7 +258,7 @@ namespace ExcelExporterImporter.Common
         /// <returns>Returns the list with the result</returns>
         private static List<string> GetSeparateLettersAndNumbersList(string sString)
         {
-            var ListItem = new List<string>();
+            List<string> ListItem = [];
             var sTemp = string.Empty;
             for (var x = 0; x < sString.Length; x++)
             {

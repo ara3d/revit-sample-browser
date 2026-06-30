@@ -1,15 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using View = Autodesk.Revit.DB.View;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -26,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
                 var activeView = uiDoc.ActiveView;
                 if (!IsExportableView(activeView))
                 {
-                    var td = new TaskDialog("Cannot export view.")
+                    TaskDialog td = new("Cannot export view.")
                     {
                         MainInstruction = "Only plans, elevations and sections can be exported."
                     };
@@ -36,24 +34,22 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
                     return Result.Succeeded;
                 }
 
-                using (var exportForm = new Export2DView())
+                using Export2DView exportForm = new();
+                if (DialogResult.OK == exportForm.ShowDialog())
                 {
-                    if (DialogResult.OK == exportForm.ShowDialog())
-                    {
-                        IList<XYZ> points = null;
-                        ResultsSummary resSummary = null;
-                        ExportView(activeView,
-                            activeView.DisplayStyle /*display with current display style*/,
-                            true /* always export some geometry */,
-                            exportForm.ViewExportOptions.ExportAnnotationObjects,
-                            exportForm.ViewExportOptions.ExportPatternLines,
-                            out points,
-                            out resSummary);
+                    IList<XYZ> points = null;
+                    ResultsSummary resSummary = null;
+                    ExportView(activeView,
+                        activeView.DisplayStyle /*display with current display style*/,
+                        true /* always export some geometry */,
+                        exportForm.ViewExportOptions.ExportAnnotationObjects,
+                        exportForm.ViewExportOptions.ExportPatternLines,
+                        out points,
+                        out resSummary);
 
-                        CustomExportHelper.DisplayExport(activeView, points);
+                    CustomExportHelper.DisplayExport(activeView, points);
 
-                        ShowResults(resSummary);
-                    }
+                    ShowResults(resSummary);
                 }
 
                 return Result.Succeeded;
@@ -96,8 +92,8 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             out IList<XYZ> points,
             out ResultsSummary resultsSummary)
         {
-            var context = new TessellatedGeomAndText2DExportContext(out points);
-            var exporter = new Autodesk.Revit.DB.CustomExporter(exportableView.Document, context)
+            TessellatedGeomAndText2DExportContext context = new(out points);
+            Autodesk.Revit.DB.CustomExporter exporter = new(exportableView.Document, context)
             {
                 IncludeGeometricObjects = includeGeometricObjects,
                 Export2DIncludingAnnotationObjects = export2DIncludingAnnotationObjects,
@@ -117,7 +113,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 
         private static void ShowResults(ResultsSummary resultsSummary)
         {
-            var td = new TaskDialog("Results of 2D export")
+            TaskDialog td = new("Results of 2D export")
             {
                 MainInstruction = $"2D exporter exported {resultsSummary.NumElements} elements"
             };

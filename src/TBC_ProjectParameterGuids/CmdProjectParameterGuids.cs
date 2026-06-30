@@ -16,11 +16,12 @@
 
 #region Namespaces
 
-using System.Text;
-using System.Windows;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
 
 #endregion // Namespaces
 
@@ -70,8 +71,8 @@ namespace BuildingCoder
                     categories = projectParameterData.Binding.Categories;
                     if (!categories.Contains(projectInfoElement.Category))
                     {
-                        using var tempTransaction
-                            = new Transaction(doc);
+                        using Transaction tempTransaction
+                            = new(doc);
                         tempTransaction.Start("Temporary");
 
                         if (Util.AddProjectParameterBinding(
@@ -144,7 +145,7 @@ namespace BuildingCoder
                     }
                 }
 
-            var sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.AppendLine("PARAMETER NAME\tIS SHARED?\tGUID");
 
@@ -172,15 +173,16 @@ namespace BuildingCoder
             Clipboard.Clear();
             Clipboard.SetText(sb.ToString());
 
-            var resultsDialog = new TaskDialog(
-                "Results are in the Clipboard");
+            TaskDialog resultsDialog = new(
+                "Results are in the Clipboard")
+            {
+                MainInstruction
+                = "Results are in the Clipboard",
 
-            resultsDialog.MainInstruction
-                = "Results are in the Clipboard";
-
-            resultsDialog.MainContent
+                MainContent
                 = "Paste the clipboard into a spreadsheet "
-                  + "program to see the results.";
+                      + "program to see the results."
+            };
 
             resultsDialog.Show();
 

@@ -2,11 +2,11 @@
 // Adapted from CreateAndPrintSheetsAndViews by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CreateAndPrintSheetsAndViews
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
 {
@@ -236,9 +236,11 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             string content)
         {
             Debug.WriteLine($"{instruction}\r\n{content}");
-            var d = new TaskDialog(_caption);
-            d.MainInstruction = instruction;
-            d.MainContent = content;
+            var d = new TaskDialog(_caption)
+            {
+                MainInstruction = instruction,
+                MainContent = content
+            };
             d.Show();
         }
 
@@ -246,23 +248,27 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             string instruction,
             IList<string> content)
         {
-            string s = string.Join("\r\n", content);
+            var s = string.Join("\r\n", content);
             Debug.WriteLine($"{instruction}\r\n{s}");
-            var d = new TaskDialog(_caption);
-            d.MainInstruction = instruction;
-            d.MainContent = s;
+            var d = new TaskDialog(_caption)
+            {
+                MainInstruction = instruction,
+                MainContent = s
+            };
             d.Show();
         }
 
         public static bool AskYesNoQuestion(string question)
         {
-            TaskDialog taskDialog = new TaskDialog("Please answer Yes or No");
-            taskDialog.MainContent = question;
-            TaskDialogCommonButtons buttons
+            TaskDialog taskDialog = new("Please answer Yes or No")
+            {
+                MainContent = question
+            };
+            var buttons
                 = TaskDialogCommonButtons.Yes
                   | TaskDialogCommonButtons.No;
             taskDialog.CommonButtons = buttons;
-            TaskDialogResult result = taskDialog.Show();
+            var result = taskDialog.Show();
             return result == TaskDialogResult.Yes;
         }
         #endregion
@@ -271,7 +277,7 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
         {
             const BuiltInParameter _bip_product_code
                 = BuiltInParameter.FABRICATION_PRODUCT_CODE;
-            Parameter p = e.get_Parameter(_bip_product_code);
+            var p = e.get_Parameter(_bip_product_code);
             return (null != p)
                 ? p.AsString()
                 : null;

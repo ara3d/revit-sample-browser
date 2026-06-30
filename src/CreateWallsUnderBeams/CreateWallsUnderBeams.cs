@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
 {
@@ -26,8 +26,8 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
 
         public CreateWallsUnderBeams()
         {
-            WallTypes = new List<WallType>();
-            m_beamCollection = new ArrayList();
+            WallTypes = [];
+            m_beamCollection = [];
             IsSturctual = true;
         }
 
@@ -47,7 +47,7 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
             var project = revit.ActiveUIDocument;
 
             // Find the selection of beams in Revit
-            var selection = new ElementSet();
+            ElementSet selection = new();
             foreach (var elementId in project.Selection.GetElementIds())
             {
                 selection.Insert(project.Document.GetElement(elementId));
@@ -75,12 +75,12 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
             }
 
             // Search all the wall types in the Revit
-            var filteredElementCollector = new FilteredElementCollector(project.Document);
+            FilteredElementCollector filteredElementCollector = new(project.Document);
             filteredElementCollector.OfClass(typeof(WallType));
             WallTypes = filteredElementCollector.Cast<WallType>().ToList();
 
             // Show the dialog for the user select the wall style
-            using (var displayForm = new CreateWallsUnderBeamsForm(this))
+            using (CreateWallsUnderBeamsForm displayForm = new(this))
             {
                 if (DialogResult.OK != displayForm.ShowDialog()) return Result.Failed;
             }
@@ -100,14 +100,14 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
             foreach (var beam in m_beamCollection)
             {
                 // Get each selected beam.
-                if (!(beam is FamilyInstance m))
+                if (beam is not FamilyInstance m)
                 {
                     m_errorInformation = "The program should not go here.";
                     return false;
                 }
 
                 // the wall will be created using beam's model line as path.   
-                if (!(m.Location is LocationCurve curve))
+                if (m.Location is not LocationCurve curve)
                 {
                     m_errorInformation = "The beam should have location curve.";
                     return false;
@@ -123,7 +123,7 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
                     return false;
                 }
 
-                var t = new Transaction(project, Guid.NewGuid().GetHashCode().ToString());
+                Transaction t = new(project, Guid.NewGuid().GetHashCode().ToString());
                 t.Start();
                 var createdWall = Wall.Create(project, beamCurve, m_selectedWallType.Id,
                     m_level.Id, 10, 0, true, IsSturctual);
@@ -135,7 +135,7 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
 
                 var offset = beamCurve.GetEndPoint(0).Z - m_level.Elevation;
                 createdWall.get_Parameter(BuiltInParameter.WALL_BASE_CONSTRAINT).Set(levelId);
-                createdWall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET).Set(offset - 3000 / 304.8);
+                createdWall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET).Set(offset - (3000 / 304.8));
                 createdWall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE).Set(levelId);
                 t.Commit();
             }
@@ -156,8 +156,7 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
                     return false;
                 }
 
-                if (Precision <= beamCurve.GetEndPoint(0).Z - beamCurve.GetEndPoint(1).Z
-                    || -Precision >= beamCurve.GetEndPoint(0).Z - beamCurve.GetEndPoint(1).Z)
+                if (beamCurve.GetEndPoint(0).Z - beamCurve.GetEndPoint(1).Z is >= Precision or <= -Precision)
                 {
                     m_errorInformation = "Please only select horizontal beams.";
                     return false;

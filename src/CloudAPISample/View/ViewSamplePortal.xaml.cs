@@ -12,9 +12,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Autodesk.Revit.UI;
 using System.Windows;
 using System.Windows.Controls;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 {
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 
         public void AddTab(string title, UserControl control)
         {
-            var item = new TabItem { Header = title };
+            TabItem item = new() { Header = title };
             ContentTabs.Items.Add(item);
             item.Content = control;
         }

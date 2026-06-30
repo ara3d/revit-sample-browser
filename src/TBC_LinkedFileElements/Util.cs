@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BuildingCoder
 {
@@ -12,9 +12,9 @@ namespace BuildingCoder
     {
         public static void AddFaceBasedFamilyToLinks(Document doc)
         {
-            var alignedLinkId = new ElementId((Int64)125929);
+            ElementId alignedLinkId = new((Int64)125929);
 
-            var symbolId = new ElementId((long)126580);
+            ElementId symbolId = new((long)126580);
 
             var fs = doc.GetElement(symbolId)
                 as FamilySymbol;
@@ -25,8 +25,8 @@ namespace BuildingCoder
             var linkDocument = linkInstance
                 .GetLinkDocument();
 
-            var wallCollector
-                = new FilteredElementCollector(linkDocument);
+            FilteredElementCollector wallCollector
+                = new(linkDocument);
 
             wallCollector.OfClass(typeof(Wall));
 
@@ -48,7 +48,7 @@ namespace BuildingCoder
             var wallVector = (wallLine.GetEndPoint(1)
                               - wallLine.GetEndPoint(0)).Normalize();
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Add to face");
 
             doc.Create.NewFamilyInstance(
@@ -59,7 +59,7 @@ namespace BuildingCoder
         }
         public static void TagAllLinkedWalls(Document doc)
         {
-            var xyz = new XYZ(-20, 20, 0);
+            XYZ xyz = new(-20, 20, 0);
 
             var collector
                 = new FilteredElementCollector(doc)
@@ -87,7 +87,7 @@ namespace BuildingCoder
                         var newRef = new Reference(wall)
                             .CreateLinkReference(instance);
 
-                        using var tx = new Transaction(doc);
+                        using Transaction tx = new(doc);
                         tx.Start("Create tags");
 
                         var newTag = IndependentTag.Create(

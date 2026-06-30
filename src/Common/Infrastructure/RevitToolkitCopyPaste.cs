@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.DB;
 using Nice3point.Revit.Toolkit.Options;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
 {
@@ -15,12 +15,14 @@ namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
             new DuplicateTypeNamesHandler(DuplicateTypeAction.Abort);
 
         public static IDuplicateTypeNamesHandler Custom(
-            Func<DuplicateTypeNamesHandlerArgs, DuplicateTypeAction> actionHandler) =>
-            new DuplicateTypeNamesHandler(actionHandler);
+            Func<DuplicateTypeNamesHandlerArgs, DuplicateTypeAction> actionHandler)
+        {
+            return new DuplicateTypeNamesHandler(actionHandler);
+        }
 
         public static CopyPasteOptions CreateOptions(IDuplicateTypeNamesHandler handler = null)
         {
-            var options = new CopyPasteOptions();
+            CopyPasteOptions options = new();
             options.SetDuplicateTypeNamesHandler(handler ?? UseDestinationTypes);
             return options;
         }

@@ -1,9 +1,9 @@
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -13,7 +13,7 @@ namespace BuildingCoder
     {
         public static IList<Curve> GetRebarCurves(Document doc)
         {
-            IList<Curve> curves = new List<Curve>();
+            IList<Curve> curves = [];
 
             var rebars
                 = new FilteredElementCollector(doc)

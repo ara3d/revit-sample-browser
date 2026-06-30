@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Units;
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
     public class AngleConverter : TypeConverter
@@ -57,13 +57,9 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             Type destinationType)
         {
             if (destinationType == null) throw new ArgumentNullException(nameof(destinationType));
-            if (destinationType == typeof(string))
-            {
-                if (value == null) return string.Empty;
-                return ValueFormatting.DoubleToAngleString((double)value);
-            }
-
-            return base.ConvertTo(context, culture, value, destinationType);
+            return destinationType == typeof(string)
+                ? value == null ? string.Empty : ValueFormatting.DoubleToAngleString((double)value)
+                : base.ConvertTo(context, culture, value, destinationType);
         }
     }
 }

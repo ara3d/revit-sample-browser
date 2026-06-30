@@ -22,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.N3P_Display.CS
             N3POutput.Line("BuiltInCategory.OST_Walls ToLabel()",
                 BuiltInCategory.OST_Walls.ToLabel());
 
-            var red = new Color(255, 0, 0);
+            Color red = new(255, 0, 0);
             N3POutput.Line("Color.ToHex()", red.ToHex());
             N3POutput.Line("Color.ToRgb()", red.ToRgb());
 

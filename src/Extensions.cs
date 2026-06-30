@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Structure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser
 {
@@ -28,22 +28,29 @@ namespace Ara3D.RevitSampleBrowser
             if (typeof(PathReinforcementType).IsAssignableFrom(t)) return collector.OfClass(typeof(ElementType));
             if (typeof(AnnotationSymbolType).IsAssignableFrom(t)) return collector.OfClass(typeof(FamilyType));
             if (typeof(RoomTagType).IsAssignableFrom(t)) return collector.OfClass(typeof(FamilySymbol));
-            if (typeof(SpaceTagType).IsAssignableFrom(t)) return collector.OfClass(typeof(FamilySymbol));
-            if (typeof(TrussType).IsAssignableFrom(t)) return collector.OfClass(typeof(FamilySymbol));
-            return collector.OfClass(t);
+            return typeof(SpaceTagType).IsAssignableFrom(t)
+                ? collector.OfClass(typeof(FamilySymbol))
+                : typeof(TrussType).IsAssignableFrom(t) ? collector.OfClass(typeof(FamilySymbol)) : collector.OfClass(t);
         }
 
         public static IEnumerable<T> GetElements<T>(this Document doc) where T : Element
-            => new FilteredElementCollector(doc).GetCollector(typeof(T)).OfType<T>();
+        {
+            return new FilteredElementCollector(doc).GetCollector(typeof(T)).OfType<T>();
+        }
 
         public static T GetElement<T>(this Document doc, ElementId id) where T : class
-            => doc.GetElement(id) as T;
+        {
+            return doc.GetElement(id) as T;
+        }
 
         public static IEnumerable<T> GetElements<T>(this Document doc, IEnumerable<ElementId> ids) where T : class
-            => ids.Select(doc.GetElement<T>).Where(e => e != null);
+        {
+            return ids.Select(doc.GetElement<T>).Where(e => e != null);
+        }
 
         public static View GetNamedView(this Document doc, string name)
-            => doc.GetElements<View>().FirstOrDefault(v => v.Name == name);
-
+        {
+            return doc.GetElements<View>().FirstOrDefault(v => v.Name == name);
+        }
     }
 }

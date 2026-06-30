@@ -23,270 +23,260 @@
 #endregion // Header
 
 #region Namespaces
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using TreeNode = System.Windows.Forms.TreeNode;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 #endregion // Namespaces
 
 namespace AdnRme
 {
-  #region MapParentToChildren
-  /// <summary>
-  /// Parent ElementId to child elements for the electrical hierarchy tree (null id = root panels).
-  /// Uses element ids as keys because Element instances do not compare reliably as dictionary keys.
-  /// </summary>
-  public class MapParentToChildren : Dictionary<ElementId, List<Element>>
-  {
-    public void Add( ElementId parentId, Element child )
+    #region MapParentToChildren
+    /// <summary>
+    /// Parent ElementId to child elements for the electrical hierarchy tree (null id = root panels).
+    /// Uses element ids as keys because Element instances do not compare reliably as dictionary keys.
+    /// </summary>
+    public class MapParentToChildren : Dictionary<ElementId, List<Element>>
     {
-      if( !this.ContainsKey( parentId ) )
-      {
-        this.Add( parentId, new List<Element>() );
-      }
-      if( null != child )
-      {
-        this[parentId].Add( child );
-      }
-    }
-  }
-
-  #region Using Element as Key
-  // Element keys failed comparison; kept for reference.
-  public class MapParentToChildren2 : Dictionary<Element, List<Element>>
-  {
-    Element _root;
-
-    public MapParentToChildren2( Element root )
-    {
-      _root = root;
-    }
-
-    public Element Root
-    {
-      get
-      {
-        return _root;
-      }
-    }
-
-    public void Add( Element parent, Element child )
-    {
-      if( !this.ContainsKey( parent ) )
-      {
-        this.Add( parent, new List<Element>() );
-      }
-      this[parent].Add( child );
-    }
-  }
-  #endregion // Using Element as Key
-  #endregion // MapParentToChildren
-
-  #region CmdElectricalHierarchy2
-  // Parameter-based electrical hierarchy browser; prefer CmdElectricalConnectors (connector API).
-  [Transaction( TransactionMode.ReadOnly )]
-  public class CmdElectricalHierarchy2 : IExternalCommand
-  {
-    public Result Execute(
-      ExternalCommandData commandData,
-      ref String message,
-      ElementSet elements )
-    {
-      try
-      {
-        //
-        // dictionary defining tree view info displayed in modeless
-        // dialogue mapping parent node to all its circuit elements:
-        // null --> root panels
-        // panel  --> systems
-        // system --> circuit elements, panels, ...
-        // 
-        MapParentToChildren mapParentToChildren = new MapParentToChildren();
-        ElementId electricalEquipmentCategoryId = ElementId.InvalidElementId;
-        List<Element> equipment;
+        public void Add(ElementId parentId, Element child)
         {
-          //
-          // run the analysis in its own scope, so the wait cursor
-          // disappears before we display the modeless dialogue:
-          //
-          WaitCursor waitCursor = new WaitCursor();
-          UIApplication app = commandData.Application;
-          Document doc = app.ActiveUIDocument.Document;
-          ElementId nullId = ElementId.InvalidElementId;
-          //
-          // retrieve electrical equipment instances:
-          //
-          equipment = Util.GetElectricalEquipment( doc );
-          int n = equipment.Count;
-          Debug.WriteLine( string.Format( "Retrieved {0} electrical equipment instance{1}{2}",
-            n, Util.PluralSuffix( n ), Util.DotOrColon( n ) ) );
-          Dictionary<string, FamilyInstance> mapPanel = new Dictionary<string, FamilyInstance>();
-          foreach( FamilyInstance e in equipment )
-          {
-            //
-            // ensure that every panel shows up in the list, 
-            // even if it does not have children:
-            //
-            mapParentToChildren.Add( e.Id, null );
-            mapPanel[e.Name] = e;
-            MEPModel mepModel = e.MEPModel;
-            //ElectricalSystemSet systems2 = mepModel.ElectricalSystems; // 2020
-            ISet<ElectricalSystem> systems2 = mepModel.GetElectricalSystems(); // 2021
-            string panelAndSystem = string.Empty;
-            if( null == systems2 )
+            if (!this.ContainsKey(parentId))
             {
-              panelAndSystem = CmdElectricalSystemBrowser.Unassigned; // this is a root node
+                this.Add(parentId, []);
             }
-            else
+            if (null != child)
             {
-              Debug.Assert( 1 == systems2.Count, 
-                "expected equipment to belong to one single panel and system" );
-
-              foreach( ElectricalSystem system in systems2 )
-              {
-                if( 0 < panelAndSystem.Length )
-                {
-                  panelAndSystem += ", ";
-                }
-                panelAndSystem += system.PanelName + ":" + system.Name + ":" + system.Id.Value.ToString();
-              }
+                this[parentId].Add(child);
             }
-            Debug.WriteLine( "  " + Util.ElementDescriptionAndId( e ) + " " + panelAndSystem );
-          }
-          //
-          // retrieve electrical systems:
-          // these are also returned by Util.GetCircuitElements(), by the way, 
-          // since they have the parameters RBS_ELEC_CIRCUIT_PANEL_PARAM and
-          // RBS_ELEC_CIRCUIT_NUMBER that we use to identify those.
-          //
-          FilteredElementCollector c = new FilteredElementCollector( doc );
-          IList<Element> systems = c.OfClass( typeof( ElectricalSystem ) ).ToElements();
-          n = systems.Count;
-          Debug.WriteLine( string.Format( "Retrieved {0} electrical system{1}{2}",
-            n, Util.PluralSuffix( n ), Util.DotOrColon( n ) ) );
-          foreach( ElectricalSystem system in systems )
-          {
-            string panelName = system.PanelName;
-            if( 0 == panelName.Length )
-            {
-              panelName = CmdElectricalSystemBrowser.Unassigned; // will not appear in tree
-            }
-            else
-            {
-              //
-              // todo: is there a more direct way to identify 
-              // what panel a system belongs to? this seems error
-              // prone ... what if a panel name occurs multiple times?
-              // how do we identify which one to use?
-              //
-              FamilyInstance panel = mapPanel[panelName];
-              mapParentToChildren.Add( panel.Id, system );
-            }
-            string panelAndSystem = panelName + ":" + system.Name + ":" + system.Id.Value.ToString();
-            Debug.WriteLine( "  " + Util.ElementDescriptionAndId( system ) + " " + panelAndSystem );
-            Debug.Assert( system.ConnectorManager.Owner.Id.Equals( system.Id ), "expected electrical system's connector manager owner to be system itself" );
-          }
-          //
-          // now we have the equipment and systems, 
-          // we can build the non-leaf levels of the tree:
-          //
-          foreach( FamilyInstance e in equipment )
-          {
-            MEPModel mepModel = e.MEPModel;
-            //ElectricalSystemSet systems2 = mepModel.ElectricalSystems; // 2020
-            ISet<ElectricalSystem> systems2 = mepModel.GetElectricalSystems(); // 2021
-            if( null == systems2 )
-            {
-              mapParentToChildren.Add( nullId, e ); // root node
-            }
-            else
-            {
-              Debug.Assert( 1 == systems2.Count, "expected equipment to belong to one single panel and system" );
-              foreach( ElectricalSystem system in systems2 )
-              {
-                mapParentToChildren.Add( system.Id, e );
-              }
-            }
-          }
-          //
-          // list all circuit elements:
-          //
-          BuiltInParameter bipPanel = BuiltInParameter.RBS_ELEC_CIRCUIT_PANEL_PARAM;
-          BuiltInParameter bipCircuit = BuiltInParameter.RBS_ELEC_CIRCUIT_NUMBER;
-          IList<Element> circuitElements = Util.GetCircuitElements( doc );
-          n = circuitElements.Count;
-          Debug.WriteLine( string.Format( "Retrieved {0} circuit element{1}...",
-            n, Util.PluralSuffix( n ) ) );
-          n = 0;
-          foreach( Element e in circuitElements )
-          {
-            if( e is ElectricalSystem )
-            {
-              ++n;
-            }
-            else
-            {
-              string circuitName = e.get_Parameter( bipCircuit ).AsString();
-              string panelName = e.get_Parameter( bipPanel ).AsString();
-              string key = panelName + ":" + circuitName;
-              string panelAndSystem = string.Empty;
-              FamilyInstance inst = e as FamilyInstance;
-              Debug.Assert( null != inst, "expected all circuit elements to be family instances" );
-              MEPModel mepModel = inst.MEPModel;
-              //ElectricalSystemSet systems2 = mepModel.ElectricalSystems; // 2020
-              ISet<ElectricalSystem> systems2 = mepModel.GetElectricalSystems(); // 2021
-              Debug.Assert( null != systems2, "expected circuit element to belong to an electrical system" );
-              Debug.Assert( 0 < systems2.Count, "expected circuit element to belong to an electrical system" );
-
-              // this fails in "2341_MEP - 2009 Central.rvt", says martin:
-              //
-              // a circuit element can belong to several systems ... imagine 
-              // a piece of telephone equipment which hooks up to a phone line 
-              // and also requires power ... so i removed this assertion:
-              //
-              //Debug.Assert( 1 == systems2.Size, "expected circuit element to belong to one single system" );
-
-              foreach( ElectricalSystem system in systems2 )
-              {
-                if( 0 < panelAndSystem.Length )
-                {
-                  panelAndSystem += ", ";
-                }
-                panelAndSystem += system.PanelName + ":" + system.Name + ":" + system.Id.Value.ToString();
-                Debug.Assert( system.PanelName == panelName, "expected same panel name in parameter and electrical system" );
-                // this fails in "2341_MEP - 2009 Central.rvt", says martin:
-                //Debug.Assert( system.Name == circuitName, "expected same name in circuit parameter and system" );
-                mapParentToChildren.Add( system.Id, e );
-              }
-              Debug.WriteLine( string.Format( "  {0} panel:circuit {1}", Util.ElementDescriptionAndId( e ), panelAndSystem ) );
-            }
-          }
-          Debug.WriteLine( string.Format( "{0} circuit element{1} were the electrical systems.",
-            n, Util.PluralSuffix( n ) ) );
-          //
-          // get the electrical equipment category id:
-          //
-          Categories categories = doc.Settings.Categories;
-          electricalEquipmentCategoryId = categories.get_Item( BuiltInCategory.OST_ElectricalEquipment ).Id;
         }
-        //
-        // we have assembled the entire required tree view structure, so let us display it:
-        //
-        CmdInspectElectricalForm2 dialog = new CmdInspectElectricalForm2( mapParentToChildren, electricalEquipmentCategoryId, equipment );
-        dialog.Show();
-        return Result.Succeeded;
-      }
-      catch( Exception ex )
-      {
-        message = ex.Message;
-        return Result.Failed;
-      }
     }
-  }
-  #endregion // CmdElectricalHierarchy2
+
+    #region Using Element as Key
+    // Element keys failed comparison; kept for reference.
+    public class MapParentToChildren2 : Dictionary<Element, List<Element>>
+    {
+        public MapParentToChildren2(Element root)
+        {
+            Root = root;
+        }
+
+        public Element Root { get; }
+
+        public void Add(Element parent, Element child)
+        {
+            if (!this.ContainsKey(parent))
+            {
+                this.Add(parent, []);
+            }
+            this[parent].Add(child);
+        }
+    }
+    #endregion // Using Element as Key
+    #endregion // MapParentToChildren
+
+    #region CmdElectricalHierarchy2
+    // Parameter-based electrical hierarchy browser; prefer CmdElectricalConnectors (connector API).
+    [Transaction(TransactionMode.ReadOnly)]
+    public class CmdElectricalHierarchy2 : IExternalCommand
+    {
+        public Result Execute(
+          ExternalCommandData commandData,
+          ref String message,
+          ElementSet elements)
+        {
+            try
+            {
+                //
+                // dictionary defining tree view info displayed in modeless
+                // dialogue mapping parent node to all its circuit elements:
+                // null --> root panels
+                // panel  --> systems
+                // system --> circuit elements, panels, ...
+                // 
+                MapParentToChildren mapParentToChildren = [];
+                var electricalEquipmentCategoryId = ElementId.InvalidElementId;
+                List<Element> equipment;
+                {
+                    //
+                    // run the analysis in its own scope, so the wait cursor
+                    // disappears before we display the modeless dialogue:
+                    //
+                    WaitCursor waitCursor = new();
+                    var app = commandData.Application;
+                    var doc = app.ActiveUIDocument.Document;
+                    var nullId = ElementId.InvalidElementId;
+                    //
+                    // retrieve electrical equipment instances:
+                    //
+                    equipment = Util.GetElectricalEquipment(doc);
+                    var n = equipment.Count;
+                    Debug.WriteLine(string.Format("Retrieved {0} electrical equipment instance{1}{2}",
+                      n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+                    Dictionary<string, FamilyInstance> mapPanel = [];
+                    foreach (FamilyInstance e in equipment)
+                    {
+                        //
+                        // ensure that every panel shows up in the list, 
+                        // even if it does not have children:
+                        //
+                        mapParentToChildren.Add(e.Id, null);
+                        mapPanel[e.Name] = e;
+                        var mepModel = e.MEPModel;
+                        //ElectricalSystemSet systems2 = mepModel.ElectricalSystems; // 2020
+                        var systems2 = mepModel.GetElectricalSystems(); // 2021
+                        var panelAndSystem = string.Empty;
+                        if (null == systems2)
+                        {
+                            panelAndSystem = CmdElectricalSystemBrowser.Unassigned; // this is a root node
+                        }
+                        else
+                        {
+                            Debug.Assert(1 == systems2.Count,
+                              "expected equipment to belong to one single panel and system");
+
+                            foreach (var system in systems2)
+                            {
+                                if (0 < panelAndSystem.Length)
+                                {
+                                    panelAndSystem += ", ";
+                                }
+                                panelAndSystem += system.PanelName + ":" + system.Name + ":" + system.Id.Value.ToString();
+                            }
+                        }
+                        Debug.WriteLine("  " + Util.ElementDescriptionAndId(e) + " " + panelAndSystem);
+                    }
+                    //
+                    // retrieve electrical systems:
+                    // these are also returned by Util.GetCircuitElements(), by the way, 
+                    // since they have the parameters RBS_ELEC_CIRCUIT_PANEL_PARAM and
+                    // RBS_ELEC_CIRCUIT_NUMBER that we use to identify those.
+                    //
+                    FilteredElementCollector c = new(doc);
+                    var systems = c.OfClass(typeof(ElectricalSystem)).ToElements();
+                    n = systems.Count;
+                    Debug.WriteLine(string.Format("Retrieved {0} electrical system{1}{2}",
+                      n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+                    foreach (ElectricalSystem system in systems)
+                    {
+                        var panelName = system.PanelName;
+                        if (0 == panelName.Length)
+                        {
+                            panelName = CmdElectricalSystemBrowser.Unassigned; // will not appear in tree
+                        }
+                        else
+                        {
+                            //
+                            // todo: is there a more direct way to identify 
+                            // what panel a system belongs to? this seems error
+                            // prone ... what if a panel name occurs multiple times?
+                            // how do we identify which one to use?
+                            //
+                            var panel = mapPanel[panelName];
+                            mapParentToChildren.Add(panel.Id, system);
+                        }
+                        var panelAndSystem = panelName + ":" + system.Name + ":" + system.Id.Value.ToString();
+                        Debug.WriteLine("  " + Util.ElementDescriptionAndId(system) + " " + panelAndSystem);
+                        Debug.Assert(system.ConnectorManager.Owner.Id.Equals(system.Id), "expected electrical system's connector manager owner to be system itself");
+                    }
+                    //
+                    // now we have the equipment and systems, 
+                    // we can build the non-leaf levels of the tree:
+                    //
+                    foreach (FamilyInstance e in equipment)
+                    {
+                        var mepModel = e.MEPModel;
+                        //ElectricalSystemSet systems2 = mepModel.ElectricalSystems; // 2020
+                        var systems2 = mepModel.GetElectricalSystems(); // 2021
+                        if (null == systems2)
+                        {
+                            mapParentToChildren.Add(nullId, e); // root node
+                        }
+                        else
+                        {
+                            Debug.Assert(1 == systems2.Count, "expected equipment to belong to one single panel and system");
+                            foreach (var system in systems2)
+                            {
+                                mapParentToChildren.Add(system.Id, e);
+                            }
+                        }
+                    }
+                    //
+                    // list all circuit elements:
+                    //
+                    var bipPanel = BuiltInParameter.RBS_ELEC_CIRCUIT_PANEL_PARAM;
+                    var bipCircuit = BuiltInParameter.RBS_ELEC_CIRCUIT_NUMBER;
+                    var circuitElements = Util.GetCircuitElements(doc);
+                    n = circuitElements.Count;
+                    Debug.WriteLine(string.Format("Retrieved {0} circuit element{1}...",
+                      n, Util.PluralSuffix(n)));
+                    n = 0;
+                    foreach (var e in circuitElements)
+                    {
+                        if (e is ElectricalSystem)
+                        {
+                            ++n;
+                        }
+                        else
+                        {
+                            var circuitName = e.get_Parameter(bipCircuit).AsString();
+                            var panelName = e.get_Parameter(bipPanel).AsString();
+                            var key = panelName + ":" + circuitName;
+                            var panelAndSystem = string.Empty;
+                            var inst = e as FamilyInstance;
+                            Debug.Assert(null != inst, "expected all circuit elements to be family instances");
+                            var mepModel = inst.MEPModel;
+                            //ElectricalSystemSet systems2 = mepModel.ElectricalSystems; // 2020
+                            var systems2 = mepModel.GetElectricalSystems(); // 2021
+                            Debug.Assert(null != systems2, "expected circuit element to belong to an electrical system");
+                            Debug.Assert(0 < systems2.Count, "expected circuit element to belong to an electrical system");
+
+                            // this fails in "2341_MEP - 2009 Central.rvt", says martin:
+                            //
+                            // a circuit element can belong to several systems ... imagine 
+                            // a piece of telephone equipment which hooks up to a phone line 
+                            // and also requires power ... so i removed this assertion:
+                            //
+                            //Debug.Assert( 1 == systems2.Size, "expected circuit element to belong to one single system" );
+
+                            foreach (var system in systems2)
+                            {
+                                if (0 < panelAndSystem.Length)
+                                {
+                                    panelAndSystem += ", ";
+                                }
+                                panelAndSystem += system.PanelName + ":" + system.Name + ":" + system.Id.Value.ToString();
+                                Debug.Assert(system.PanelName == panelName, "expected same panel name in parameter and electrical system");
+                                // this fails in "2341_MEP - 2009 Central.rvt", says martin:
+                                //Debug.Assert( system.Name == circuitName, "expected same name in circuit parameter and system" );
+                                mapParentToChildren.Add(system.Id, e);
+                            }
+                            Debug.WriteLine(string.Format("  {0} panel:circuit {1}", Util.ElementDescriptionAndId(e), panelAndSystem));
+                        }
+                    }
+                    Debug.WriteLine(string.Format("{0} circuit element{1} were the electrical systems.",
+                      n, Util.PluralSuffix(n)));
+                    //
+                    // get the electrical equipment category id:
+                    //
+                    var categories = doc.Settings.Categories;
+                    electricalEquipmentCategoryId = categories.get_Item(BuiltInCategory.OST_ElectricalEquipment).Id;
+                }
+                //
+                // we have assembled the entire required tree view structure, so let us display it:
+                //
+                CmdInspectElectricalForm2 dialog = new(mapParentToChildren, electricalEquipmentCategoryId, equipment);
+                dialog.Show();
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+        }
+    }
+    #endregion // CmdElectricalHierarchy2
 }

@@ -32,9 +32,9 @@ namespace BuildingCoder
             var doc = commandData.Application
                 .ActiveUIDocument.Document;
 
-            using var t = new Transaction(doc);
-            var collector
-                = new FilteredElementCollector(doc);
+            using Transaction t = new(doc);
+            FilteredElementCollector collector
+                = new(doc);
 
             collector.OfClass(typeof(Level));
             var level = collector.FirstElement() as Level;

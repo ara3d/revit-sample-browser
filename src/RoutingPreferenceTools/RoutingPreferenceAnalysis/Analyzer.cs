@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Units;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Plumbing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Plumbing;
-
-using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAnalysis
 {
     /// <summary>
@@ -37,8 +36,8 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
 
         public XDocument GetSpecificSizeQuery()
         {
-            var xReportDoc = new XDocument();
-            var xroot = new XElement(XName.Get("RoutingPreferenceAnalysisSizeQuery"));
+            XDocument xReportDoc = new();
+            XElement xroot = new(XName.Get("RoutingPreferenceAnalysisSizeQuery"));
             xroot.Add(GetHeaderInformation());
 
             foreach (var partId in GetPreferredFittingsAndSegments())
@@ -53,7 +52,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
         public static List<double> GetAvailableSegmentSizes(RoutingPreferenceManager routingPreferenceManager,
             Document document)
         {
-            var sizes = new HashSet<double>();
+            HashSet<double> sizes = [];
             var segmentCount = routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Segments);
             for (var index = 0; index != segmentCount; ++index)
             {
@@ -73,10 +72,10 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
 
         public XDocument GetWarnings()
         {
-            var xReportDoc = new XDocument();
-            var xroot = new XElement(XName.Get("RoutingPreferenceAnalysis"));
+            XDocument xReportDoc = new();
+            XElement xroot = new(XName.Get("RoutingPreferenceAnalysis"));
             xroot.Add(GetHeaderInformation());
-            var xWarnings = new XElement(XName.Get("Warnings"));
+            XElement xWarnings = new(XName.Get("Warnings"));
 
             //None-range-warnings         
             foreach (var groupType in Enum.GetValues(typeof(RoutingPreferenceRuleGroupType))
@@ -84,7 +83,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             {
                 if (IsRuleSetToRangeNone(m_routingPreferenceManager, groupType, 0))
                 {
-                    var xNoRangeSet = new XElement(XName.Get("NoRangeSet"));
+                    XElement xNoRangeSet = new(XName.Get("NoRangeSet"));
                     xNoRangeSet.Add(new XAttribute(XName.Get("groupType"), groupType.ToString()));
 
                     if (IsGroupSetToRangeNone(m_routingPreferenceManager, groupType))
@@ -99,7 +98,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
 
             if (!IsPreferredJunctionTypeValid(m_routingPreferenceManager))
             {
-                var xJunctionFittingsNotDefined = new XElement(XName.Get("FittingsNotDefinedForPreferredJunction"));
+                XElement xJunctionFittingsNotDefined = new(XName.Get("FittingsNotDefinedForPreferredJunction"));
                 xWarnings.Add(xJunctionFittingsNotDefined);
             }
 
@@ -125,7 +124,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
 
         private XElement GetHeaderInformation()
         {
-            var xHeader = new XElement(XName.Get("PipeType"));
+            XElement xHeader = new(XName.Get("PipeType"));
             var pipeTypeName = m_document.GetElement(m_routingPreferenceManager.OwnerId).Name;
 
             xHeader.Add(new XAttribute(XName.Get("name"), pipeTypeName));
@@ -150,14 +149,14 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
                 var psc = rule.GetCriterion(0) as PrimarySizeCriterion;
 
                 var segment = m_document.GetElement(rule.MEPPartId) as PipeSegment;
-                var sizesNotCovered = new List<double>();
+                List<double> sizesNotCovered = [];
                 var isCovered = CheckSegmentForValidCoverage(routingPreferenceManager, psc.MinimumSize, psc.MaximumSize,
                     rule.MEPPartId, groupType, sizesNotCovered);
                 if (!isCovered)
                 {
-                    var xSegmentNotCovered = new XElement(XName.Get("SegmentRangeNotCovered"));
+                    XElement xSegmentNotCovered = new(XName.Get("SegmentRangeNotCovered"));
                     xSegmentNotCovered.Add(new XAttribute(XName.Get("name"), segment.Name));
-                    var sBuilder = new StringBuilder();
+                    StringBuilder sBuilder = new();
 
                     foreach (var size in sizesNotCovered)
                     {
@@ -196,7 +195,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
                 if (size.NominalDiameter > upperBound)
                     break;
 
-                var conditions = new RoutingConditions(RoutingPreferenceErrorLevel.None);
+                RoutingConditions conditions = new(RoutingPreferenceErrorLevel.None);
                 conditions.AppendCondition(new RoutingCondition(size.NominalDiameter));
                 var foundFitting = routingPreferenceManager.GetMEPPartId(groupType, conditions);
                 if (foundFitting == ElementId.InvalidElementId)
@@ -301,9 +300,9 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
 
         private List<PartIdInfo> GetPreferredFittingsAndSegments()
         {
-            var partIdInfoList = new List<PartIdInfo>();
+            List<PartIdInfo> partIdInfoList = [];
 
-            var conditions = new RoutingConditions(RoutingPreferenceErrorLevel.None);
+            RoutingConditions conditions = new(RoutingPreferenceErrorLevel.None);
 
             conditions.AppendCondition(new RoutingCondition(m_mepSize));
             foreach (RoutingPreferenceRuleGroupType groupType in Enum.GetValues(typeof(RoutingPreferenceRuleGroupType)))
@@ -311,7 +310,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
                 if (groupType == RoutingPreferenceRuleGroupType.Undefined)
                     continue;
 
-                IList<ElementId> preferredTypes = new List<ElementId>();
+                IList<ElementId> preferredTypes = [];
                 var preferredType = m_routingPreferenceManager.GetMEPPartId(groupType, conditions);
                 //GetMEPPartId is the main "query" method of the
                 //routing preferences API that evaluates conditions and criteria and returns segment and fitting elementIds that meet

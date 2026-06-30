@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.IO;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
 {
@@ -50,12 +51,12 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
         private static double GetReadonlyCostFromId(Element elem, int seed)
         {
             var costRoot = elem.Id.Value % 100;
-            return costRoot * 100.0 + 0.99;
+            return (costRoot * 100.0) + 0.99;
         }
 
         private static double GetReadonlyCostFromIncrements(Element elem, int seed)
         {
-            return seed * 100.0 + 0.88;
+            return (seed * 100.0) + 0.88;
         }
 
         private static void SetReadonlyCosts(Document doc, Func<Element, int, double> valueGetter)
@@ -68,18 +69,16 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
 
             var increment = 1;
 
-            using (var t = new Transaction(doc, "Apply ReadonlyCost"))
+            using var t = new Transaction(doc, "Apply ReadonlyCost");
+            t.Start();
+            foreach (var elem in collector)
             {
-                t.Start();
-                foreach (var elem in collector)
-                {
-                    var p = elem.LookupParameter("ReadonlyCost");
-                    p?.Set(valueGetter(elem, increment));
-                    increment++;
-                }
-
-                t.Commit();
+                var p = elem.LookupParameter("ReadonlyCost");
+                p?.Set(valueGetter(elem, increment));
+                increment++;
             }
+
+            t.Commit();
         }
     }
 
@@ -140,17 +139,15 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
             var filter = new ElementParameterFilter(rule);
             collector.WherePasses(filter);
 
-            using (var t = new Transaction(doc, "Apply ReadonlyId"))
+            using var t = new Transaction(doc, "Apply ReadonlyId");
+            t.Start();
+            foreach (var elem in collector)
             {
-                t.Start();
-                foreach (var elem in collector)
-                {
-                    var p = elem.LookupParameter("ReadonlyId");
-                    p?.Set(idGetter(elem));
-                }
-
-                t.Commit();
+                var p = elem.LookupParameter("ReadonlyId");
+                p?.Set(idGetter(elem));
             }
+
+            t.Commit();
         }
     }
 
@@ -216,17 +213,15 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
             var dFile = app.OpenSharedParameterFile();
             var dGroup = dFile.Groups.Create("Demo group");
             var managers = BuildSharedParametersToCreate();
-            using (var t = new Transaction(doc, "Bind parameters"))
+            using var t = new Transaction(doc, "Bind parameters");
+            t.Start();
+            foreach (var manager in managers)
             {
-                t.Start();
-                foreach (var manager in managers)
-                {
-                    manager.Definition = dGroup.Definitions.Create(manager.GetCreationOptions());
-                    manager.AddBindings(doc);
-                }
-
-                t.Commit();
+                manager.Definition = dGroup.Definitions.Create(manager.GetCreationOptions());
+                manager.AddBindings(doc);
             }
+
+            t.Commit();
         }
 
         private string GetRandomSharedParameterFileName()

@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem;
 using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
 using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
 {
@@ -97,11 +97,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
         {
             //if it's an error / warning message, set the color of the text to red
             var message = m_mydocument.Message;
-            if (message.Value)
-                operationStatusLabel.ForeColor = Color.Red;
-            // it's a common hint message, set the color to black
-            else
-                operationStatusLabel.ForeColor = Color.Black;
+            operationStatusLabel.ForeColor = message.Value
+                ? Color.Red
+                // it's a common hint message, set the color to black
+                : Color.Black;
             operationStatusLabel.Text = message.Key;
             statusStrip.Refresh();
         }
@@ -111,10 +110,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             Hide();
 
             // show the "create curtain system" dialog
-            using (var dlg = new CreateCurtainSystemDialog(m_mydocument))
-            {
-                dlg.ShowDialog(this);
-            }
+            using CreateCurtainSystemDialog dlg = new(m_mydocument);
+            dlg.ShowDialog(this);
         }
 
         private void deleteCSButton_Click(object sender, EventArgs e)
@@ -128,7 +125,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
                 return;
             }
 
-            var checkedIndices = new List<int>();
+            List<int> checkedIndices = new();
             for (var i = 0; i < csListBox.Items.Count; i++)
             {
                 var itemChecked = csListBox.GetItemChecked(i);
@@ -162,14 +159,14 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             cgCheckedListBox.Items.Clear();
             foreach (var index in csInfo.GridFacesIndices)
             {
-                var gridFaceInfo = new GridFaceInfo(index);
+                GridFaceInfo gridFaceInfo = new(index);
                 cgCheckedListBox.Items.Add(gridFaceInfo);
             }
 
             facesCheckedListBox.Items.Clear();
             foreach (var index in csInfo.UncoverFacesIndices)
             {
-                var uncoverFaceInfo = new UncoverFaceInfo(index);
+                UncoverFaceInfo uncoverFaceInfo = new(index);
                 facesCheckedListBox.Items.Add(uncoverFaceInfo);
             }
 
@@ -191,17 +188,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             else
             {
                 // enable the buttons
-                if (null == facesCheckedListBox.Items ||
-                    0 == facesCheckedListBox.Items.Count)
-                    addCGButton.Enabled = false;
-                else
-                    addCGButton.Enabled = true;
+                addCGButton.Enabled = null != facesCheckedListBox.Items &&
+                    0 != facesCheckedListBox.Items.Count;
                 // at least one curtain grid must be kept
-                if (null == cgCheckedListBox.Items ||
-                    2 > cgCheckedListBox.Items.Count)
-                    removeCGButton.Enabled = false;
-                else
-                    removeCGButton.Enabled = true;
+                removeCGButton.Enabled = null != cgCheckedListBox.Items &&
+                    2 <= cgCheckedListBox.Items.Count;
                 facesCheckedListBox.Enabled = true;
                 cgCheckedListBox.Enabled = true;
                 var hint = "";
@@ -226,7 +217,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             // if the curtain system is created by face array, it's forbidden to make other operations on it
             if (csInfo.ByFaceArray) return;
             // step 2: find out the faces to be covered
-            var faceIndices = new List<int>();
+            List<int> faceIndices = new();
             for (var i = 0; i < facesCheckedListBox.Items.Count; i++)
             {
                 var itemChecked = facesCheckedListBox.GetItemChecked(i);
@@ -269,7 +260,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             // if the curtain system is created by face array, it's forbidden to make other operations on it
             if (csInfo.ByFaceArray) return;
             // step 2: find out the curtain grids to be removed
-            var faceIndices = new List<int>();
+            List<int> faceIndices = new();
             for (var i = 0; i < cgCheckedListBox.Items.Count; i++)
             {
                 var itemChecked = cgCheckedListBox.GetItemChecked(i);
@@ -297,7 +288,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
 
         private void cgCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            var indices = new List<int>();
+            List<int> indices = new();
             // get all the unchecked curtain grids
             for (var i = 0; i < cgCheckedListBox.Items.Count; i++)
             {

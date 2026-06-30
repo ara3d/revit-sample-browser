@@ -13,12 +13,12 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -52,8 +52,8 @@ namespace BuildingCoder
             }
             else
             {
-                var a1 = (JoinType[]) Enum.GetValues(typeof(JoinType));
-                var a = new List<JoinType>((JoinType[]) Enum.GetValues(typeof(JoinType)));
+                var a1 = (JoinType[])Enum.GetValues(typeof(JoinType));
+                var a = new List<JoinType>((JoinType[])Enum.GetValues(typeof(JoinType)));
                 var n = a.Count;
 
                 var lc = wall.Location as LocationCurve;
@@ -78,10 +78,10 @@ namespace BuildingCoder
 
                 for (var i = 0; i < 2; ++i)
                 {
-                    var jt = ((LocationCurve) wall.Location).get_JoinType(i);
+                    var jt = ((LocationCurve)wall.Location).get_JoinType(i);
                     var j = a.IndexOf(jt) + 1;
                     var jtnew = a[j < n ? j : 0];
-                    ((LocationCurve) wall.Location).set_JoinType(j, jtnew);
+                    ((LocationCurve)wall.Location).set_JoinType(j, jtnew);
                     s += $"\nChanged join type at {(0 == i ? "start" : "end")} from {jt} to {jtnew}.";
                 }
 

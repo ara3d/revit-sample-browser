@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
@@ -24,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
         {
             try
             {
-                var coll = new FilteredElementCollector(m_currentDoc);
+                FilteredElementCollector coll = new(m_currentDoc);
                 var families = coll.OfClass(typeof(Family)).ToElements();
 
                 var count = 0;
@@ -35,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
 
                     var famDoc = m_currentDoc.EditFamily(fam);
 
-                    using (var trans = new Transaction(famDoc, "Sort parameters."))
+                    using (Transaction trans = new(famDoc, "Sort parameters."))
                     {
                         trans.Start();
                         famDoc.FamilyManager.SortParameters(order);
@@ -51,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
                     famDoc.SaveAs(tmpFile);
                     famDoc.Close(false);
 
-                    using (var trans = new Transaction(m_currentDoc, "Load family."))
+                    using (Transaction trans = new(m_currentDoc, "Load family."))
                     {
                         trans.Start();
                         m_currentDoc.LoadFamily(tmpFile, new FamilyLoadOptions(), out _);

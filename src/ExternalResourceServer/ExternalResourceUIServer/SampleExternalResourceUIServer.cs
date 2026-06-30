@@ -1,19 +1,19 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServer.CS;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServer.CS
 {
     public class SampleExternalResourceUiServer : IExternalResourceUIServer
     {
-        private static readonly Guid MyServerId = new Guid("E9B6C194-62DE-4134-900D-BA8DF7AD33FA");
-        private static readonly Guid MyDbServerId = new Guid("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");
+        private static readonly Guid MyServerId = new("E9B6C194-62DE-4134-900D-BA8DF7AD33FA");
+        private static readonly Guid MyDbServerId = new("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");
 
         public Guid GetServerId()
         {
@@ -60,30 +60,21 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
 
                 var loadType = loadContext.LoadOperationType;
 
-                switch (loadType)
+                myMessage = loadType switch
                 {
-                    case LoadOperationType.Automatic:
-                        myMessage = "This is an Automatic load operation. ";
-                        break;
-
-                    case LoadOperationType.Explicit:
-                        myMessage = "This is an Explicit load operation. ";
-                        break;
-
-                    default:
-                        myMessage = "There is no load type information!! ";
-                        break;
-                }
-
+                    LoadOperationType.Automatic => "This is an Automatic load operation. ",
+                    LoadOperationType.Explicit => "This is an Explicit load operation. ",
+                    _ => "There is no load type information!! ",
+                };
                 var bUnrecognizedStatus = false;
                 switch (data.LoadStatus)
                 {
                     case ExternalResourceLoadStatus.ResourceAlreadyCurrent when data.GetLoadContext().LoadOperationType == LoadOperationType.Explicit:
-                    {
-                        var resourcePath = currentlyLoadedRef.InSessionPath;
-                        myMessage += $"\n No new changes to load for link: {resourcePath}";
-                        break;
-                    }
+                        {
+                            var resourcePath = currentlyLoadedRef.InSessionPath;
+                            myMessage += $"\n No new changes to load for link: {resourcePath}";
+                            break;
+                        }
                     case ExternalResourceLoadStatus.ResourceAlreadyCurrent:
                         continue;
                     case ExternalResourceLoadStatus.Uninitialized:
@@ -93,25 +84,25 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
                         myMessage += "\n The load failed and the reason is unknown.";
                         break;
                     case ExternalResourceLoadStatus.Success when resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable:
-                    {
-                        var resourcePath = data.GetExternalResourceReference().InSessionPath;
-                        myMessage +=
-                            $"\n Version {data.GetLoadContent().Version} of keynote data '{resourcePath}' has been loaded successfully";
-                        break;
-                    }
-                    case ExternalResourceLoadStatus.Success:
-                    {
-                        if (resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.RevitLink)
                         {
                             var resourcePath = data.GetExternalResourceReference().InSessionPath;
-                            var ldrlc = (LinkLoadContent)data.GetLoadContent();
-                            var destinationPath = ModelPathUtils.ConvertModelPathToUserVisiblePath(ldrlc.GetLinkDataPath());
                             myMessage +=
-                                $"\n Version {data.GetLoadContent().Version} of the file: {resourcePath} has been downloaded into the cached folder: {destinationPath} for this Revit Link.";
+                                $"\n Version {data.GetLoadContent().Version} of keynote data '{resourcePath}' has been loaded successfully";
+                            break;
                         }
+                    case ExternalResourceLoadStatus.Success:
+                        {
+                            if (resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.RevitLink)
+                            {
+                                var resourcePath = data.GetExternalResourceReference().InSessionPath;
+                                var ldrlc = (LinkLoadContent)data.GetLoadContent();
+                                var destinationPath = ModelPathUtils.ConvertModelPathToUserVisiblePath(ldrlc.GetLinkDataPath());
+                                myMessage +=
+                                    $"\n Version {data.GetLoadContent().Version} of the file: {resourcePath} has been downloaded into the cached folder: {destinationPath} for this Revit Link.";
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
                     default:
                         myMessage += "Unrecognized external resource load status.";
                         bUnrecognizedStatus = true;
@@ -148,7 +139,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
                 return;
             }
 
-            if (!(externalResourceService.GetServer(GetDBServerId()) is SampleExternalResourceDbServer myDbServer))
+            if (externalResourceService.GetServer(GetDBServerId()) is not SampleExternalResourceDbServer myDbServer)
             {
                 MessageBox.Show("Cannot get SampleExternalResourceDBServer from ExternalResourceService.");
                 return;

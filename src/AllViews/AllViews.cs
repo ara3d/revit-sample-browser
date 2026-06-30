@@ -1,16 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.AllViews.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -24,9 +23,9 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             if (null == commandData) throw new ArgumentNullException(nameof(commandData));
 
             var doc = commandData.Application.ActiveUIDocument.Document;
-            var view = new ViewsMgr(doc);
+            ViewsMgr view = new(doc);
 
-            var dlg = new AllViewsForm(view);
+            AllViewsForm dlg = new(view);
 
             try
             {
@@ -45,12 +44,12 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
     public class ViewsMgr
     {
         private readonly double m_goldensection = 0.618;
-        private IList<Element> m_allTitleBlocks = new List<Element>();
-        private readonly ViewSet m_allViews = new ViewSet();
+        private IList<Element> m_allTitleBlocks = [];
+        private readonly ViewSet m_allViews = new();
 
         private readonly Document m_doc;
         private double m_rows;
-        private readonly ViewSet m_selectedViews = new ViewSet();
+        private readonly ViewSet m_selectedViews = new();
         private FamilySymbol m_titleBlock;
 
         private Viewport m_vp;
@@ -66,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
 
         public TreeNode AllViewsNames { get; } = new TreeNode("Views (all)");
 
-        public ArrayList AllTitleBlocksNames { get; } = new ArrayList();
+        public ArrayList AllTitleBlocksNames { get; } = [];
 
         public string SheetName { get; set; }
 
@@ -91,8 +90,8 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             form.InvalidViewport = true;
 
             var viewSheet = m_doc.GetElements<ViewSheet>()
-                .FirstOrDefault(vp => !vp.IsTemplate 
-                                      && vp.ViewType == ViewType.DrawingSheet 
+                .FirstOrDefault(vp => !vp.IsTemplate
+                                      && vp.ViewType == ViewType.DrawingSheet
                                       && vp.Name == selectSheetName);
 
             if (viewSheet != null)
@@ -115,44 +114,38 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
         public void SetLabelOffset(AllViewsForm form,
             double labelOffsetX, double labelOffsetY)
         {
-            using (var t = new Transaction(m_doc, "Change label offset"))
-            {
-                t.Start();
+            using Transaction t = new(m_doc, "Change label offset");
+            t.Start();
 
-                m_vp.LabelOffset = new XYZ(labelOffsetX, labelOffsetY, 0.0);
+            m_vp.LabelOffset = new XYZ(labelOffsetX, labelOffsetY, 0.0);
 
-                t.Commit();
+            t.Commit();
 
-                UpdateViewportProperties(form);
-            }
+            UpdateViewportProperties(form);
         }
 
         public void SetLabelLength(AllViewsForm form, double labelLineLength)
         {
-            using (var t = new Transaction(m_doc, "Change label length"))
-            {
-                t.Start();
+            using Transaction t = new(m_doc, "Change label length");
+            t.Start();
 
-                m_vp.LabelLineLength = labelLineLength;
+            m_vp.LabelLineLength = labelLineLength;
 
-                t.Commit();
+            t.Commit();
 
-                UpdateViewportProperties(form);
-            }
+            UpdateViewportProperties(form);
         }
 
         public void SetRotation(AllViewsForm form, ViewportRotation rotation)
         {
-            using (var t = new Transaction(m_doc, "Change label orientation"))
-            {
-                t.Start();
+            using Transaction t = new(m_doc, "Change label orientation");
+            t.Start();
 
-                m_vp.Rotation = rotation;
+            m_vp.Rotation = rotation;
 
-                t.Commit();
+            t.Commit();
 
-                UpdateViewportProperties(form);
-            }
+            UpdateViewportProperties(form);
         }
 
         private void GetAllViews(Document doc)
@@ -160,7 +153,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             foreach (var view in doc.GetElements<View>())
             {
                 // skip view templates because they're invisible in project browser
-                if (!(doc.GetElement(view.GetTypeId()) is ElementType objType) 
+                if (doc.GetElement(view.GetTypeId()) is not ElementType objType
                     || objType.Name.Equals("Schedule")
                     || objType.Name.Equals("Drawing Sheet"))
                     continue;
@@ -181,21 +174,18 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
                 }
             }
 
-            var categoryNode = new TreeNode(type)
+            TreeNode categoryNode = new(type)
             {
-                Tag = type
+                Tag = type,
+                Text = type.Equals("Building Elevation") ? $"Elevations [{type}]" : $"{type}s"
             };
-            if (type.Equals("Building Elevation"))
-                categoryNode.Text = $"Elevations [{type}]";
-            else
-                categoryNode.Text = $"{type}s";
             categoryNode.Nodes.Add(new TreeNode(view));
             AllViewsNames.Nodes.Add(categoryNode);
         }
 
         public void SelectViews()
         {
-            var names = new ArrayList();
+            ArrayList names = new();
             foreach (TreeNode t in AllViewsNames.Nodes)
             {
                 foreach (TreeNode n in t.Nodes)
@@ -227,7 +217,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
 
             var result = Result.Succeeded;
 
-            using (var newTran = new Transaction(doc, "AllViews_Sample"))
+            using (Transaction newTran = new(doc, "AllViews_Sample"))
             {
                 newTran.Start();
 
@@ -272,7 +262,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
 
         private void GetTitleBlocks(Document doc)
         {
-            var filteredElementCollector = new FilteredElementCollector(doc);
+            FilteredElementCollector filteredElementCollector = new(doc);
             filteredElementCollector.OfClass(typeof(FamilySymbol));
             filteredElementCollector.OfCategory(BuiltInCategory.OST_TitleBlocks);
             m_allTitleBlocks = filteredElementCollector.ToElements();
@@ -299,7 +289,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             var n = 1;
             foreach (View v in views)
             {
-                var location = new UV(tempU, tempV);
+                UV location = new(tempU, tempV);
                 var view = v;
                 SampleBrowserUtils.Rescale(view, xDistance, yDistance);
                 try
@@ -327,7 +317,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
 
         private UV GetOffSet(BoundingBoxUV bBox, double x, double y)
         {
-            return new UV(bBox.Min.U + x * m_goldensection, bBox.Min.V + y * m_goldensection);
+            return new UV(bBox.Min.U + (x * m_goldensection), bBox.Min.V + (y * m_goldensection));
         }
 
         private void CalculateDistance(BoundingBoxUV bBox, int amount, ref double x, ref double y)

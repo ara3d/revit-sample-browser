@@ -15,12 +15,12 @@
 
 #region Namespaces
 
-using System;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -69,16 +69,14 @@ namespace BuildingCoder
 
             foreach (ElementType s in symbols)
             {
-                var fs = s as FamilySymbol;
-
                 Debug.Print(
                     "Family name={0}, symbol name={1},"
                     + " category={2}",
-                    null == fs ? "<none>" : fs.Family.Name,
+                    s is not FamilySymbol fs ? "<none>" : fs.Family.Name,
                     s.Name,
                     s.Category.Name);
 
-                if (null == sym && s is ElementType)
+                if (null == sym && s is not null)
                     sym = s as FamilySymbol;
             }
 
@@ -88,11 +86,11 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Create New Railing");
 
-            var p1 = new XYZ(17, 0, 0);
-            var p2 = new XYZ(33, 0, 0);
+            XYZ p1 = new(17, 0, 0);
+            XYZ p2 = new(33, 0, 0);
             var line = Line.CreateBound(p1, p2);
 
 

@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
 {
@@ -20,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
 
         public void GetInstanceGeometry()
         {
-            var instanceCollector = new FilteredElementCollector(m_revitDoc);
+            FilteredElementCollector instanceCollector = new(m_revitDoc);
             instanceCollector.OfClass(typeof(FamilyInstance));
 
             var view3DId = ElementId.InvalidElementId;
@@ -35,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
             }
 
             var instanceView = View3D.CreateIsometric(m_revitDoc, view3DId);
-            var instanceViewOrientation3D = new ViewOrientation3D(
+            ViewOrientation3D instanceViewOrientation3D = new(
                 new XYZ(-30.8272352809007, -2.44391067967133, 18.1013736367246),
                 new XYZ(0.577350269189626, 0.577350269189626, -0.577350269189626),
                 new XYZ(0.408248290463863, 0.408248290463863, 0.816496580927726));
@@ -44,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
             instanceView.Name = "InstanceGeometry";
 
             var originalView = View3D.CreateIsometric(m_revitDoc, view3DId);
-            var originalViewOrientation3D = new ViewOrientation3D(
+            ViewOrientation3D originalViewOrientation3D = new(
                 new XYZ(-19.0249866627872, -5.09536632799455, 20.7528292850478),
                 new XYZ(0, 0.707106781186547, -0.707106781186547), new XYZ(0, 0.707106781186548, 0.707106781186548));
             originalView.SetOrientation(originalViewOrientation3D);
@@ -52,8 +52,8 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
             originalView.Name = "OriginalGeometry";
 
             var transView = View3D.CreateIsometric(m_revitDoc, view3DId);
-            var transViewOrientation3D =
-                new ViewOrientation3D(new XYZ(-19.0249866627872, -5.09536632799455, 20.7528292850478),
+            ViewOrientation3D transViewOrientation3D =
+                new(new XYZ(-19.0249866627872, -5.09536632799455, 20.7528292850478),
                     new XYZ(0, 0.707106781186547, -0.707106781186547),
                     new XYZ(0, 0.707106781186548, 0.707106781186548));
             transView.SetOrientation(transViewOrientation3D);
@@ -107,7 +107,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
         private void PaintSolid(Solid solid, View view)
         {
             var viewName = view.Name;
-            var sfm = SpatialFieldManager.GetSpatialFieldManager(view) 
+            var sfm = SpatialFieldManager.GetSpatialFieldManager(view)
                       ?? SpatialFieldManager.CreateSpatialFieldManager(view, 1);
 
             if (m_schemaId != -1)
@@ -119,7 +119,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
 
             if (m_schemaId == -1)
             {
-                var resultSchema1 = new AnalysisResultSchema($"PaintedSolid {viewName}", "Description");
+                AnalysisResultSchema resultSchema1 = new($"PaintedSolid {viewName}", "Description");
 
                 var displayStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(m_revitDoc,
                     $"Real_Color_Surface{viewName}", new AnalysisDisplayColoredSurfaceSettings(),
@@ -136,8 +136,8 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
             {
                 var idx = sfm.AddSpatialFieldPrimitive(face, trf);
                 ComputeValueAtPointForFace(face, out var uvPts, out var valList, 1);
-                var pnts = new FieldDomainPointsByUV(uvPts);
-                var vals = new FieldValues(valList);
+                FieldDomainPointsByUV pnts = new(uvPts);
+                FieldValues vals = new(valList);
                 sfm.UpdateSpatialFieldPrimitive(idx, pnts, vals, m_schemaId);
             }
         }
@@ -145,21 +145,21 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
         private void ComputeValueAtPointForFace(Face face, out IList<UV> uvPts,
             out IList<ValueAtPoint> valList, int measurementNo)
         {
-            var doubleList = new List<double>();
-            uvPts = new List<UV>();
-            valList = new List<ValueAtPoint>();
+            List<double> doubleList = [];
+            uvPts = [];
+            valList = [];
             var bb = face.GetBoundingBox();
             for (var u = bb.Min.U; u < bb.Max.U + 0.0000001; u += (bb.Max.U - bb.Min.U) / 1)
-            for (var v = bb.Min.V; v < bb.Max.V + 0.0000001; v += (bb.Max.V - bb.Min.V) / 1)
-            {
-                var uvPnt = new UV(u, v);
-                uvPts.Add(uvPnt);
-                var faceXyz = face.Evaluate(uvPnt);
-                for (var ii = 1; ii <= measurementNo; ii++)
-                    doubleList.Add(faceXyz.DistanceTo(XYZ.Zero) * ii);
-                valList.Add(new ValueAtPoint(doubleList));
-                doubleList.Clear();
-            }
+                for (var v = bb.Min.V; v < bb.Max.V + 0.0000001; v += (bb.Max.V - bb.Min.V) / 1)
+                {
+                    UV uvPnt = new(u, v);
+                    uvPts.Add(uvPnt);
+                    var faceXyz = face.Evaluate(uvPnt);
+                    for (var ii = 1; ii <= measurementNo; ii++)
+                        doubleList.Add(faceXyz.DistanceTo(XYZ.Zero) * ii);
+                    valList.Add(new ValueAtPoint(doubleList));
+                    doubleList.Clear();
+                }
         }
     }
 }

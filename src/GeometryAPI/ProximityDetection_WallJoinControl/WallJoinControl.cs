@@ -1,18 +1,18 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinControl.CS
 {
     public class WallJoinControl
     {
         private static WallJoinControl _instance;
-        private Application m_app;
-        private Document m_doc;
+        private readonly Application m_app;
+        private readonly Document m_doc;
 
         private WallJoinControl(
             Application app,
@@ -26,29 +26,29 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
             Application app,
             Document doc)
         {
-            return _instance ?? (_instance = new WallJoinControl(app, doc));
+            return _instance ??= new WallJoinControl(app, doc);
         }
 
         public XElement CheckJoinedWalls(IEnumerable<Wall> walls)
         {
-            var wallsNode = new XElement("Walls", new XAttribute("Name", "Walls"));
+            XElement wallsNode = new("Walls", new XAttribute("Name", "Walls"));
 
             try
             {
                 foreach (var wall in walls)
                 {
-                    var wallNode = new XElement("Wall",
+                    XElement wallNode = new("Wall",
                         new XAttribute("name", wall.Name),
                         new XAttribute("Type", wall.WallType.Kind.ToString()));
 
-                    if (!(wall.Location is LocationCurve locationCurve))
+                    if (wall.Location is not LocationCurve locationCurve)
                     {
                         wallNode.Add(new XElement("Error",
                             new XAttribute("Exception", "This wall has not a LocationCurve!")));
                     }
                     else
                     {
-                        var endNode = new XElement("Start", new XAttribute("Name", "Start"));
+                        XElement endNode = new("Start", new XAttribute("Name", "Start"));
                         wallNode.Add(CheckWallEnd(wall, locationCurve, 0, endNode));
 
                         endNode = new XElement("End", new XAttribute("Name", "End"));
@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
         private XElement CheckWallEnd(Wall wall, LocationCurve locationCurve, int end, XElement endnode)
         {
-            var stateNode = new XElement("Initial", new XAttribute("Name", "Initial"));
+            XElement stateNode = new("Initial", new XAttribute("Name", "Initial"));
             endnode.Add(GetState(wall, locationCurve, end, stateNode));
 
             WallUtils.DisallowWallJoinAtEnd(wall, end);
@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
         private XElement GetGeometryInfo(LocationCurve locationCurve, int end)
         {
-            var geometryinfoNode = new XElement("GeometryInfo");
+            XElement geometryinfoNode = new("GeometryInfo");
             var endpoint = locationCurve.Curve.GetEndPoint(end);
             geometryinfoNode.Add(new XElement("PointCoordinate",
                 new XAttribute("X", Math.Round(endpoint.X, 9).ToString()),
@@ -117,7 +117,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
         {
             var array = locationCurve.get_ElementsAtJoin(end);
 
-            var joinedwallsNode = new XElement("JoinedWalls",
+            XElement joinedwallsNode = new("JoinedWalls",
                 new XAttribute("Count", array.Size.ToString()));
 
             foreach (Element ele in array)

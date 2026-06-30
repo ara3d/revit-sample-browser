@@ -13,12 +13,14 @@
 
 #region Namespaces
 
-using System;
-using System.Diagnostics;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -36,7 +38,7 @@ namespace BuildingCoder
             var uidoc = uiapp.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("NewExtrusionRoof");
 
             var fs
@@ -53,7 +55,7 @@ namespace BuildingCoder
 
             double x = 1;
 
-            var origin = new XYZ(x, 0, 0);
+            XYZ origin = new(x, 0, 0);
             var vx = XYZ.BasisY;
             var vy = XYZ.BasisZ;
 
@@ -62,7 +64,7 @@ namespace BuildingCoder
                 Plane.CreateByOriginAndBasis(origin, vx, vy)); // 2017
             //Plane.CreateByOriginAndBasis( origin, vy, vx ) ); // 2019
 
-            var ca = new CurveArray();
+            CurveArray ca = new();
 
             // This stair shape causes NewExtrusionRoof to
             // throw an exception in Revit 2019.1.
@@ -148,7 +150,7 @@ namespace BuildingCoder
             var footprint = application.Create
                 .NewCurveArray();
 
-            var uidoc = new UIDocument(doc);
+            UIDocument uidoc = new(doc);
 
             var selectedIds
                 = uidoc.Selection.GetElementIds();
@@ -160,11 +162,11 @@ namespace BuildingCoder
                     switch (element)
                     {
                         case Wall wall:
-                        {
-                            var wallCurve = wall.Location as LocationCurve;
-                            footprint.Append(wallCurve.Curve);
-                            continue;
-                        }
+                            {
+                                var wallCurve = wall.Location as LocationCurve;
+                                footprint.Append(wallCurve.Curve);
+                                continue;
+                            }
                         case ModelCurve modelCurve:
                             footprint.Append(modelCurve.GeometryCurve);
                             break;
@@ -176,8 +178,8 @@ namespace BuildingCoder
                     + "combination of walls and curves to "
                     + "create a footprint roof.");
 
-            var footPrintToModelCurveMapping
-                = new ModelCurveArray();
+            ModelCurveArray footPrintToModelCurveMapping
+                = new();
 
             var footprintRoof
                 = doc.Create.NewFootPrintRoof(

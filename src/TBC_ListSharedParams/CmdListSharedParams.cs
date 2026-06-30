@@ -13,13 +13,13 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 
 #endregion // Namespaces
@@ -114,7 +114,7 @@ namespace BuildingCoder
                     {
                         Debug.Assert(d is InternalDefinition);
 
-                        var bip = ((InternalDefinition) d).BuiltInParameter;
+                        var bip = ((InternalDefinition)d).BuiltInParameter;
                         Debug.Print($"{d.Name}: {bip}");
 
                         mapDefToGuid.Add(d, null);
@@ -143,7 +143,7 @@ namespace BuildingCoder
 
                         var p = null == o
                             ? wall.get_Parameter(d)
-                            : wall.get_Parameter((Guid) o);
+                            : wall.get_Parameter((Guid)o);
 
                         var s = null == p
                             ? "<null>"

@@ -8,7 +8,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
     public partial class SpringModulusForm : Form
     {
         // member
-        private ConversionValue m_conversion; //conversion rule of current SpringModulus
 
         public SpringModulusForm()
         {
@@ -16,11 +15,7 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
         }
 
         // property
-        public ConversionValue Conversion
-        {
-            get => m_conversion;
-            set => m_conversion = value;
-        }
+        public ConversionValue Conversion { get; set; }
 
         public double StringModulus { get; private set; }
 
@@ -32,13 +27,13 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             StringModulus = OldStringModulus;
 
             // conversion the inside value into display value
-            var displaySpringModulus = OldStringModulus / m_conversion.Ratio;
+            var displaySpringModulus = OldStringModulus / Conversion.Ratio;
 
             // deal with the diaplay value with the special percision
-            displaySpringModulus = Math.Round(displaySpringModulus, m_conversion.Precision);
+            displaySpringModulus = Math.Round(displaySpringModulus, Conversion.Precision);
 
             // display the value and show user the unit of the value
-            springModulusTextBox.Text = displaySpringModulus + m_conversion.UnitName;
+            springModulusTextBox.Text = displaySpringModulus + Conversion.UnitName;
             springModulusTextBox.Focus();
             springModulusTextBox.SelectAll();
         }
@@ -66,10 +61,10 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             var springModulusText = allText;
 
             // parse the text to get the valid springModulus
-            if (allText.Contains(m_conversion.UnitName))
+            if (allText.Contains(Conversion.UnitName))
             {
                 // removes the unit
-                var index = allText.IndexOf(m_conversion.UnitName);
+                var index = allText.IndexOf(Conversion.UnitName);
                 springModulusText = allText.Substring(0, index);
 
                 // removes all white chatracters from the beginning and end of this string 
@@ -82,13 +77,13 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
                 var temp = double.Parse(springModulusText);
 
                 // deal with the input with the given precision
-                temp = Math.Round(temp, m_conversion.Precision);
+                temp = Math.Round(temp, Conversion.Precision);
 
                 // add corresponding unit
-                springModulusTextBox.Text = temp + m_conversion.UnitName;
+                springModulusTextBox.Text = temp + Conversion.UnitName;
 
                 // convert the display value into the inside value
-                StringModulus = temp * m_conversion.Ratio;
+                StringModulus = temp * Conversion.Ratio;
 
                 // the value must be a positive number
                 if (0 >= StringModulus)

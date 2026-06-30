@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 {
@@ -91,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             var firstPanelName = "Ribbon Sample";
             var ribbonSamplePanel = application.CreateRibbonPanel(firstPanelName);
 
-            var splitButtonData = new SplitButtonData("NewWallSplit", "Create Wall");
+            SplitButtonData splitButtonData = new("NewWallSplit", "Create Wall");
             var splitButton = ribbonSamplePanel.AddItem(splitButtonData) as SplitButton;
             var pushButton = splitButton.AddPushButton(new PushButtonData("WallPush", "Wall", AddInPath,
                 "Ara3D.RevitSampleBrowser.Ribbon.CS.CreateWall"));
@@ -111,16 +111,16 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 
             ribbonSamplePanel.AddSeparator();
 
-            var pushButtonData =
-                new PushButtonData("Reset", "Reset", AddInPath, "Ara3D.RevitSampleBrowser.Ribbon.CS.ResetSetting");
-            var comboBoxDataLevel = new ComboBoxData("LevelsSelector");
-            var comboBoxDataShape = new ComboBoxData("WallShapeComboBox");
+            PushButtonData pushButtonData =
+                new("Reset", "Reset", AddInPath, "Ara3D.RevitSampleBrowser.Ribbon.CS.ResetSetting");
+            ComboBoxData comboBoxDataLevel = new("LevelsSelector");
+            ComboBoxData comboBoxDataShape = new("WallShapeComboBox");
             var ribbonItemsStacked =
                 ribbonSamplePanel.AddStackedItems(pushButtonData, comboBoxDataLevel, comboBoxDataShape);
             ((PushButton)ribbonItemsStacked[0]).Image =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Reset.png"), UriKind.Absolute));
             var comboboxWallShape = (ComboBox)ribbonItemsStacked[2];
-            var comboBoxMemberData = new ComboBoxMemberData("RectangleWall", "RectangleWall");
+            ComboBoxMemberData comboBoxMemberData = new("RectangleWall", "RectangleWall");
             var comboboxMember = comboboxWallShape.AddItem(comboBoxMemberData);
             comboboxMember.Image =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "RectangleWall.png"), UriKind.Absolute));
@@ -139,7 +139,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 
             ribbonSamplePanel.AddSeparator();
 
-            var radioButtonGroupData = new RadioButtonGroupData("WallTypeSelector");
+            RadioButtonGroupData radioButtonGroupData = new("WallTypeSelector");
             var radioButtonGroup = (RadioButtonGroup)ribbonSamplePanel.AddItem(radioButtonGroupData);
             var toggleButton = radioButtonGroup.AddItem(new ToggleButtonData("Generic8", "Generic - 8\"", AddInPath,
                 "Ara3D.RevitSampleBrowser.Ribbon.CS.Dummy"));
@@ -157,7 +157,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             //slide-out panel:
             ribbonSamplePanel.AddSlideOut();
 
-            var testBoxData = new TextBoxData("WallMark");
+            TextBoxData testBoxData = new("WallMark");
             var textBox = (TextBox)ribbonSamplePanel.AddItem(testBoxData);
             textBox.Value = "new wall"; //default wall mark
             textBox.Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "WallMark.png"), UriKind.Absolute));
@@ -167,14 +167,14 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 
             ribbonSamplePanel.AddSeparator();
 
-            var deleteWallsButtonData = new PushButtonData("deleteWalls", "Delete Walls", AddInPath,
+            PushButtonData deleteWallsButtonData = new("deleteWalls", "Delete Walls", AddInPath,
                 "Ara3D.RevitSampleBrowser.Ribbon.CS.DeleteWalls")
             {
                 ToolTip = "Delete all the walls created by the Create Wall tool.",
                 Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "DeleteWalls.png"), UriKind.Absolute))
             };
 
-            var moveWallsButtonData = new PulldownButtonData("moveWalls", "Move Walls")
+            PulldownButtonData moveWallsButtonData = new("moveWalls", "Move Walls")
             {
                 ToolTip = "Move all the walls in X or Y direction",
                 Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "MoveWalls.png"), UriKind.Absolute))
@@ -212,12 +212,12 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 
             var comboboxLevel = (ComboBox)myPanels[0].GetItems()[2];
             if (null == comboboxLevel) return;
-            var collector = new FilteredElementCollector(_uiApplication.ActiveUIDocument.Document);
+            FilteredElementCollector collector = new(_uiApplication.ActiveUIDocument.Document);
             ICollection<Element> founds = collector.OfClass(typeof(Level)).ToElements();
             foreach (var elem in founds)
             {
                 var level = elem as Level;
-                var comboBoxMemberData = new ComboBoxMemberData(level.Name, level.Name);
+                ComboBoxMemberData comboBoxMemberData = new(level.Name, level.Name);
                 var comboboxMember = comboboxLevel.AddItem(comboBoxMemberData);
                 comboboxMember.Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "LevelsSelector.png"),
                     UriKind.Absolute));
@@ -233,8 +233,8 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         /// <param name="evnetArgs">Autodesk.Revit.UI.Events.ComboBoxDropDownOpenedEventArgs</param>
         public void AddNewLevels(object sender, ComboBoxDropDownOpenedEventArgs args)
         {
-            if (!(sender is ComboBox comboboxLevel)) return;
-            var collector = new FilteredElementCollector(_uiApplication.ActiveUIDocument.Document);
+            if (sender is not ComboBox comboboxLevel) return;
+            FilteredElementCollector collector = new(_uiApplication.ActiveUIDocument.Document);
             ICollection<Element> founds = collector.OfClass(typeof(Level)).ToElements();
             foreach (var elem in founds)
             {
@@ -248,7 +248,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 
                 if (!alreadyContained)
                 {
-                    var comboBoxMemberData = new ComboBoxMemberData(level.Name, level.Name);
+                    ComboBoxMemberData comboBoxMemberData = new(level.Name, level.Name);
                     var comboboxMember = comboboxLevel.AddItem(comboBoxMemberData);
                     comboboxMember.Image =
                         new BitmapImage(

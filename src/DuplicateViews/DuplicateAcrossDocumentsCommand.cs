@@ -10,14 +10,14 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -48,14 +48,14 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
             }
 
             // Collect schedules and drafting views
-            var collector = new FilteredElementCollector(doc);
+            FilteredElementCollector collector = new(doc);
 
-            var viewTypes = new List<Type>
+            List<Type> viewTypes = new()
             {
                 typeof(ViewSchedule),
                 typeof(ViewDrafting)
             };
-            var filter = new ElementMulticlassFilter(viewTypes);
+            ElementMulticlassFilter filter = new(viewTypes);
             collector.WherePasses(filter);
 
             collector.WhereElementIsViewIndependent(); // skip view-specfic schedules (e.g. Revision Schedules);

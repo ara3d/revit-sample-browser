@@ -3,11 +3,10 @@
 // Adapted from SpatialElementGeometryCalculator by Jeremy Tammik et al.
 // https://github.com/jeremytammik/SpatialElementGeometryCalculator (MIT License)
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using BuildingCoder;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 {
@@ -24,7 +23,8 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
             options.ComputeReferences = true;
             options.IncludeNonVisibleObjects = true;
 
-            var walls = new List<Wall> { wallAsOpening };
+            List<Wall> walls = new()
+            { wallAsOpening };
 
             var polygons = GetWallProfilePolygons(walls, options);
             var solidProfile = XYZAsCurveloop(polygons.First());
@@ -50,13 +50,11 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 
             if (DebugHandler.EnableSolidUtilityVolumes)
             {
-                using (var t = new Transaction(doc))
-                {
-                    t.Start("Test1");
-                    ShapeCreator.CreateDirectShape(doc,
-                        intersectSolid, "namesolid");
-                    t.Commit();
-                }
+                using Transaction t = new(doc);
+                t.Start("Test1");
+                ShapeCreator.CreateDirectShape(doc,
+                    intersectSolid, "namesolid");
+                t.Commit();
             }
 
             var openingArea = GetLargestFaceArea(intersectSolid);
@@ -72,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 
         public IList<CurveLoop> XYZAsCurveloop(List<XYZ> polyPoints)
         {
-            var curveLoop = new CurveLoop();
+            CurveLoop curveLoop = new();
 
             for (var i = 0; i < polyPoints.Count - 1; i++)
             {
@@ -83,8 +81,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
             curveLoop.Append(Line.CreateBound(
                 polyPoints[polyPoints.Count - 1], polyPoints[0]));
 
-            IList<CurveLoop> curveLoops = new List<CurveLoop>();
-            curveLoops.Add(curveLoop);
+            IList<CurveLoop> curveLoops = [curveLoop];
 
             return curveLoops;
         }
@@ -93,13 +90,11 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
             List<Wall> walls,
             Options opt)
         {
-            var polygons = new List<List<XYZ>>();
+            List<List<XYZ>> polygons = new();
 
             foreach (var wall in walls)
             {
-                var curve = wall.Location as LocationCurve;
-
-                if (null == curve)
+                if (wall.Location is not LocationCurve curve)
                 {
                     return null;
                 }
@@ -159,9 +154,9 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 
                 foreach (EdgeArray loop in loops)
                 {
-                    var vertices = new List<XYZ>();
+                    List<XYZ> vertices = new();
                     var first = true;
-                    XYZ q = XYZ.Zero;
+                    var q = XYZ.Zero;
 
                     foreach (Edge e in loop)
                     {
@@ -256,7 +251,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
                 var extrusionDistance = extrusionVector.GetLength();
                 var extrusionDirection = extrusionVector.Normalize();
 
-                var baseLoop = new CurveLoop();
+                CurveLoop baseLoop = new();
 
                 for (var i = 0; i < 4; i++)
                 {
@@ -264,17 +259,13 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
                         profilePts[i], profilePts[(i + 1) % 4]));
                 }
 
-                IList<CurveLoop> baseLoops = new List<CurveLoop>();
-                baseLoops.Add(baseLoop);
+                IList<CurveLoop> baseLoops = [baseLoop];
 
-                if (solidOptions == null)
-                {
-                    return GeometryCreationUtilities
+                return solidOptions == null
+                    ? GeometryCreationUtilities
                         .CreateExtrusionGeometry(baseLoops,
-                            extrusionDirection, extrusionDistance);
-                }
-
-                return GeometryCreationUtilities
+                            extrusionDirection, extrusionDistance)
+                    : GeometryCreationUtilities
                     .CreateExtrusionGeometry(baseLoops,
                         extrusionDirection, extrusionDistance,
                         solidOptions);

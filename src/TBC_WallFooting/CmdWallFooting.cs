@@ -13,11 +13,11 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -44,7 +44,7 @@ namespace BuildingCoder
 
             ICollection<ElementId> delIds = null;
 
-            using (var t = new Transaction(doc))
+            using (Transaction t = new(doc))
             {
                 try
                 {

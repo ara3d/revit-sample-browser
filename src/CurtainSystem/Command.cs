@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem;
 using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
 using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties;
@@ -8,6 +7,7 @@ using Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS
 {
@@ -21,9 +21,9 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS
             // data verification
             if (null == commandData.Application.ActiveUIDocument) return Result.Failed;
 
-            var mydocument = new MyDocument(commandData);
+            MyDocument mydocument = new(commandData);
 
-            var checker = new MassChecker(mydocument);
+            MassChecker checker = new(mydocument);
             var validMass = checker.CheckSelectedMass();
 
             if (!validMass)
@@ -33,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS
             }
 
             CurtainForm curtainForm = null;
-            var transactionGroup = new TransactionGroup(commandData.Application.ActiveUIDocument.Document);
+            TransactionGroup transactionGroup = new(commandData.Application.ActiveUIDocument.Document);
             try
             {
                 transactionGroup.Start("CurtainSystemOperation");

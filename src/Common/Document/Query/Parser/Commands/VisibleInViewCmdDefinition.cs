@@ -2,37 +2,41 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Autodesk.Revit.DB;
-
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using System.Collections.Generic;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class VisibleInViewCmdDefinition : ICommandDefinition
     {
-        private static readonly AutocompleteItem AutocompleteItem = new AutocompleteItem("visible", "visible", "select visible elements from the active view", AutocompleteItemGroups.Commands);
+        private static readonly AutocompleteItem AutocompleteItem = new("visible", "visible", "select visible elements from the active view", AutocompleteItemGroups.Commands);
 
 
-        public IAutocompleteItem GetCommandAutocompleteItem() => AutocompleteItem;  
-                    
+        public IAutocompleteItem GetCommandAutocompleteItem()
+        {
+            return AutocompleteItem;
+        }
 
         public IEnumerable<string> GetClassifiers()
         {
             yield break;
         }
         public IEnumerable<string> GetKeywords()
-        {            
+        {
             yield return "visible";
-            yield return "visible in view";       
+            yield return "visible in view";
             yield return "visible in active view";
         }
-        public bool CanRecognizeArgument(string argument) => false;
-        public bool CanParticipateInGenericSearch() => false;
+        public bool CanRecognizeArgument(string argument)
+        {
+            return false;
+        }
 
+        public bool CanParticipateInGenericSearch()
+        {
+            return false;
+        }
 
         public ICommand Create(string cmdText, string argument)
         {

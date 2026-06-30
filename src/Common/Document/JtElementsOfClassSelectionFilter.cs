@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
+using System.Linq;
 
 namespace BuildingCoder
 {

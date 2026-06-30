@@ -54,7 +54,7 @@ namespace BuildingCoder
             output = "Circuits without rooms:"
                      + "\n  Number of Sides : Area";
 
-            using (var t = new Transaction(doc))
+            using (Transaction t = new(doc))
             {
                 t.Start("Create New Rooms");
 

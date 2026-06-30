@@ -1,11 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Drawing;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System.Collections.Generic;
+using System.Drawing;
 namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 {
     /// <summary>
@@ -73,7 +71,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         public EdgeArray GetFloorEdges()
         {
-            var edges = new EdgeArray();
+            EdgeArray edges = new();
             var options = m_commandData.Application.Application.Create.NewGeometryOptions();
             options.DetailLevel = ViewDetailLevel.Medium;
             //make sure references to geometric objects are computed.
@@ -108,12 +106,12 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         public Matrix4 GetTo2DMatrix()
         {
-            var xAxis = new Vector4(1, 0, 0);
+            Vector4 xAxis = new(1, 0, 0);
             //Because Y axis in windows UI is downward, so we should Multiply(-1) here
-            var yAxis = new Vector4(0, -1, 0);
-            var zAxis = new Vector4(0, 0, 1);
+            Vector4 yAxis = new(0, -1, 0);
+            Vector4 zAxis = new(0, 0, 1);
 
-            var result = new Matrix4(xAxis, yAxis, zAxis);
+            Matrix4 result = new(xAxis, yAxis, zAxis);
             return result;
         }
 
@@ -135,7 +133,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             var bounds = GetBoundsPoints();
             var min = bounds[0];
             var max = bounds[1];
-            var center = new PointF((min.X + max.X) / 2, (min.Y + max.Y) / 2);
+            PointF center = new((min.X + max.X) / 2, (min.Y + max.Y) / 2);
             return new Matrix4(new Vector4(center.X, center.Y, 0));
         }
 
@@ -176,7 +174,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             double minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
 
-            var points = new List<XYZ>();
+            List<XYZ> points = [];
             foreach (Edge edge in m_edges)
             {
                 var edgexyzs = edge.Tessellate() as List<XYZ>;
@@ -188,7 +186,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
             foreach (var point in points)
             {
-                var v = new Vector4(point);
+                Vector4 v = new(point);
                 var v1 = inverseMatrix.Transform(v);
 
                 if (bFirstPoint)
@@ -212,7 +210,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             //return an array with max and min value of all points
             var resultPoints = new PointF[2]
             {
-                new PointF((float)minX, (float)minY), new PointF((float)maxX, (float)maxY)
+                new((float)minX, (float)minY), new((float)maxX, (float)maxY)
             };
             return resultPoints;
         }
@@ -245,8 +243,8 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
                 var point1 = points[i];
                 var point2 = points[i + 1];
 
-                var v1 = new Vector4(point1);
-                var v2 = new Vector4(point2);
+                Vector4 v1 = new(point1);
+                Vector4 v2 = new(point2);
 
                 v1 = m_transformMatrix.Transform(v1);
                 v2 = m_transformMatrix.Transform(v2);
@@ -293,7 +291,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// </summary>
         public void ResetSlabShape()
         {
-            var transaction = new Transaction(
+            Transaction transaction = new(
                 m_commandData.Application.ActiveUIDocument.Document, "ResetSlabShape");
             transaction.Start();
             m_slabShapeEditor.ResetSlabShape();
@@ -309,10 +307,10 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// <returns>new created vertex</returns>
         public SlabShapeVertex AddVertex(PointF point)
         {
-            var transaction = new Transaction(
+            Transaction transaction = new(
                 m_commandData.Application.ActiveUIDocument.Document, "AddVertex");
             transaction.Start();
-            var v1 = new Vector4(new XYZ(point.X, point.Y, 0));
+            Vector4 v1 = new(new XYZ(point.X, point.Y, 0));
             v1 = m_restoreMatrix.Transform(v1);
             var vertex = m_slabShapeEditor.DrawPoint(new XYZ(v1.X, v1.Y, v1.Z));
             transaction.Commit();
@@ -330,13 +328,13 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// <returns>new created Crease</returns>
         public SlabShapeCrease AddCrease(PointF point1, PointF point2)
         {
-            var transaction = new Transaction(
+            Transaction transaction = new(
                 m_commandData.Application.ActiveUIDocument.Document, "AddCrease");
             transaction.Start();
-            var v1 = new Vector4(new XYZ(point1.X, point1.Y, 0));
+            Vector4 v1 = new(new XYZ(point1.X, point1.Y, 0));
             v1 = m_restoreMatrix.Transform(v1);
             var vertex1 = m_slabShapeEditor.DrawPoint(new XYZ(v1.X, v1.Y, v1.Z));
-            var v2 = new Vector4(new XYZ(point2.X, point2.Y, 0));
+            Vector4 v2 = new(new XYZ(point2.X, point2.Y, 0));
             v2 = m_restoreMatrix.Transform(v2);
             var vertex2 = m_slabShapeEditor.DrawPoint(new XYZ(v2.X, v2.Y, v2.Z));
             var creases = m_slabShapeEditor.DrawSplitLine(vertex1, vertex2);
@@ -356,10 +354,10 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         public bool CanCreateVertex(PointF pointF)
         {
             var createSuccess = false;
-            var transaction = new Transaction(
+            Transaction transaction = new(
                 m_commandData.Application.ActiveUIDocument.Document, "CanCreateVertex");
             transaction.Start();
-            var v1 = new Vector4(new XYZ(pointF.X, pointF.Y, 0));
+            Vector4 v1 = new(new XYZ(pointF.X, pointF.Y, 0));
             v1 = m_restoreMatrix.Transform(v1);
             var vertex = m_slabShapeEditor.DrawPoint(new XYZ(v1.X, v1.Y, v1.Z));
             if (null != vertex) createSuccess = true;

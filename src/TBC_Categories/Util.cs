@@ -1,7 +1,8 @@
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -36,19 +37,20 @@ namespace BuildingCoder
             var group = sharedParametersFile
                 .Groups.Create("Reinforcement");
 
-            var opt
-                = new ExternalDefinitionCreationOptions(
+            ExternalDefinitionCreationOptions opt
+                = new(
                     "ReinforcementParameter", SpecTypeId.String.Text);
 
             var def = group.Definitions.Create(opt);
 
-            var bics
-                = new List<BuiltInCategory>();
+            List<BuiltInCategory> bics
+                = new()
+                {
+                    BuiltInCategory
+                .OST_IOSRebarSystemSpanSymbolCtrl
+                };
 
-            bics.Add(BuiltInCategory
-                .OST_IOSRebarSystemSpanSymbolCtrl);
-
-            var catset = new CategorySet();
+            CategorySet catset = new();
 
             foreach (var bic in bics)
                 catset.Insert(

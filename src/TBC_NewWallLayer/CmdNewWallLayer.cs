@@ -16,6 +16,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -78,7 +79,7 @@ namespace BuildingCoder
       }
 #endif // _2011
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create New Wall Layer");
 
 
@@ -106,8 +107,8 @@ namespace BuildingCoder
                     var function = oldLayer.Function;
                     var materialId = oldLayer.MaterialId;
 
-                    var newLayer
-                        = new CompoundStructureLayer(width, function, materialId);
+                    CompoundStructureLayer newLayer
+                        = new(width, function, materialId);
 
                     layers.Add(newLayer);
                     structure.SetLayers(layers);

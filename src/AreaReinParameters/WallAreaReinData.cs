@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.ComponentModel;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
-
-using Ara3D.RevitSampleBrowser.Common.Parameters;
+using System.ComponentModel;
 namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 {
     public class WallAreaReinData : IAreaReinData

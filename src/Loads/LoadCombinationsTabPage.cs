@@ -3,7 +3,6 @@
 using System;
 using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Loads.CS
 {
@@ -185,7 +184,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
         private void usageAddButton_Click(object sender, EventArgs e)
         {
-            var usageString = new StringBuilder("Usage");
+            StringBuilder usageString = new("Usage");
             var i = 1;
             var needFind = true; // need to find another name which is not used
 
@@ -282,7 +281,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         private void newCombinationButton_Click(object sender, EventArgs e)
         {
             // First get the combination name
-            if (null == combinationNameTextBox.Text || "" == combinationNameTextBox.Text)
+            if (combinationNameTextBox.Text is null or "")
             {
                 TaskDialog.Show("Revit", "Combination name should be input.");
                 return;

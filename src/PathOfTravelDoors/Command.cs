@@ -2,14 +2,14 @@
 // Adapted from PathOfTravelDoors by Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/PathOfTravelDoors
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 using PathOfTravelElement = Autodesk.Revit.DB.Analysis.PathOfTravel;
 
@@ -25,9 +25,15 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelDoors.CS
     {
         class PathOfTravelSelectionFilter : ISelectionFilter
         {
-            public bool AllowElement(Element e) => e is PathOfTravelElement;
+            public bool AllowElement(Element e)
+            {
+                return e is PathOfTravelElement;
+            }
 
-            public bool AllowReference(Reference r, XYZ p) => true;
+            public bool AllowReference(Reference r, XYZ p)
+            {
+                return true;
+            }
         }
 
         public Result Execute(
@@ -45,10 +51,10 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelDoors.CS
             }
 
             var view3D = ElementQuery.Get3DView(doc)
-                ?? new FilteredElementCollector(doc)
-                    .OfClass(typeof(View3D))
-                    .Cast<View3D>()
-                    .FirstOrDefault(view => !view.IsTemplate);
+                         ?? new FilteredElementCollector(doc)
+                             .OfClass(typeof(View3D))
+                             .Cast<View3D>()
+                             .FirstOrDefault(view => !view.IsTemplate);
 
             if (view3D == null)
             {
@@ -68,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelDoors.CS
                 return Result.Failed;
             }
 
-            var report = new StringBuilder();
+            StringBuilder report = new();
             foreach (var path in paths)
             {
                 var doors = PathOfTravelDoorFinder.FindDoorsInTraversalOrder(path, viewPlan, view3D);

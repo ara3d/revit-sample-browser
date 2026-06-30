@@ -13,15 +13,16 @@
 
 #region Namespaces
 
-using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 #endregion // Namespaces
@@ -73,12 +74,12 @@ namespace BuildingCoder
 
             em_size += 2.5f;
 
-            var font = new Font("Arial", em_size,
+            Font font = new("Arial", em_size,
                 FontStyle.Regular);
 
             TextNote txNote = null;
 
-            using (var t = new Transaction(doc))
+            using (Transaction t = new(doc))
             {
                 t.Start("Create TextNote");
 
@@ -119,7 +120,7 @@ namespace BuildingCoder
                 t.Commit();
             }
 
-            using (var t = new Transaction(doc))
+            using (Transaction t = new(doc))
             {
                 t.Start("Change Text Colour");
 
@@ -224,17 +225,11 @@ namespace BuildingCoder
 
                     var textHeight = paramTextSize.AsDouble();
 
-                    var textBold = paramTextBold.AsInteger() == 1
-                        ? true
-                        : false;
+                    var textBold = paramTextBold.AsInteger() == 1;
 
-                    var textItalic = paramTextItalic.AsInteger() == 1
-                        ? true
-                        : false;
+                    var textItalic = paramTextItalic.AsInteger() == 1;
 
-                    var textUnderline = paramTextUnderline.AsInteger() == 1
-                        ? true
-                        : false;
+                    var textUnderline = paramTextUnderline.AsInteger() == 1;
 
                     var textBorder = paramBorderSize.AsDouble();
 
@@ -248,17 +243,17 @@ namespace BuildingCoder
 
                     if (textUnderline) textStyle |= FontStyle.Underline;
 
-                    var fontHeightInch = (float) textHeight * 12.0f;
+                    var fontHeightInch = (float)textHeight * 12.0f;
                     var displayDpiX = Util.GetDpiX();
 
                     var fontDpi = 96.0f;
-                    var pointSize = (float) (textHeight * 12.0 * fontDpi);
+                    var pointSize = (float)(textHeight * 12.0 * fontDpi);
 
-                    var font = new Font(fontName, pointSize, textStyle);
+                    Font font = new(fontName, pointSize, textStyle);
 
                     var viewScale = view.Scale;
 
-                    using (var t = new Transaction(dbDoc))
+                    using (Transaction t = new(dbDoc))
                     {
                         t.Start("Test TextNote lineWidth calculation");
 
@@ -274,8 +269,8 @@ namespace BuildingCoder
 
                         var stringWidthFt = stringWidthIn / 12.0;
 
-                        var lineWidth = (stringWidthFt * textWidthScale
-                                         + textBorder * 2.0) * viewScale;
+                        var lineWidth = ((stringWidthFt * textWidthScale)
+                                         + (textBorder * 2.0)) * viewScale;
 
                         var textNote = TextNote.Create(dbDoc,
                             view.Id, pLoc, textString, textType.Id);
@@ -287,7 +282,7 @@ namespace BuildingCoder
 
 
                     pLoc += view.UpDirection.Multiply(
-                        (textHeight + 5.0 / 304.8)
+                        (textHeight + (5.0 / 304.8))
                         * viewScale).Negate();
                 }
             }

@@ -12,14 +12,14 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Linq;
-using System.Reflection;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 {
     /// <summary>
@@ -90,12 +90,12 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-            var trans = new Transaction(doc, "Create ExportPDFSettings");
+            Transaction trans = new(doc, "Create ExportPDFSettings");
             trans.Start();
 
             try
             {
-                var options = new PDFExportOptions();
+                PDFExportOptions options = new();
                 var name = "sample";
                 ExportPDFSettings.Create(doc, name, options);
             }
@@ -117,7 +117,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-            var trans = new Transaction(doc, "Modify ExportPDFSettings");
+            Transaction trans = new(doc, "Modify ExportPDFSettings");
             trans.Start();
 
             try
@@ -154,7 +154,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-            var trans = new Transaction(doc, "Add a naming rule");
+            Transaction trans = new(doc, "Add a naming rule");
             trans.Start();
 
             try
@@ -181,7 +181,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
                 var param = BuiltInParameter.SHEET_APPROVED_BY;
                 var categoryId = Category.GetCategory(doc, BuiltInCategory.OST_Sheets).Id;
-                var paramId = new ElementId(param);
+                ElementId paramId = new(param);
                 var itemSheetApprovedBy = TableCellCombinedParameterData.Create();
                 itemSheetApprovedBy.CategoryId = categoryId;
                 itemSheetApprovedBy.ParamId = paramId;
@@ -210,7 +210,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-            var trans = new Transaction(doc, "Modify a naming rule");
+            Transaction trans = new(doc, "Modify a naming rule");
             trans.Start();
 
             try
@@ -236,7 +236,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
                 var param = BuiltInParameter.SHEET_APPROVED_BY;
                 var categoryId = Category.GetCategory(doc, BuiltInCategory.OST_Sheets).Id;
-                var paramId = new ElementId(param);
+                ElementId paramId = new(param);
                 var rule = namingRule.SingleOrDefault(r => r.CategoryId == categoryId && r.ParamId == paramId);
                 if (rule == null)
                 {
@@ -270,7 +270,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-            var trans = new Transaction(doc, "Delete a naming rule");
+            Transaction trans = new(doc, "Delete a naming rule");
             trans.Start();
 
             try
@@ -296,7 +296,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
                 var param = BuiltInParameter.SHEET_APPROVED_BY;
                 var categoryId = Category.GetCategory(doc, BuiltInCategory.OST_Sheets).Id;
-                var paramId = new ElementId(param);
+                ElementId paramId = new(param);
                 var rule = namingRule.SingleOrDefault(r => r.CategoryId == categoryId && r.ParamId == paramId);
 
                 namingRule.Remove(rule);

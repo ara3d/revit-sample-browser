@@ -14,13 +14,13 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -44,11 +44,10 @@ namespace BuildingCoder
         {
             // Retrieve all T elements in the entire model.
 
-            _a = new List<T>(
-                new FilteredElementCollector(_doc)
+            _a = [.. new FilteredElementCollector(_doc)
                     .OfClass(typeof(T))
                     .ToElements()
-                    .Cast<T>());
+                    .Cast<T>()];
 
             var n = _a.Count;
 

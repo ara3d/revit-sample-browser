@@ -1,10 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using Autodesk.Revit.DB;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
@@ -16,11 +17,7 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 
         static ProjectLocationConverter()
         {
-            ProjectLocations = new List<ProjectLocation>();
-            foreach (ProjectLocation city in RevitStartInfo.RevitDoc.ProjectLocations)
-            {
-                ProjectLocations.Add(city);
-            }
+            ProjectLocations = [.. RevitStartInfo.RevitDoc.ProjectLocations.Cast<ProjectLocation>()];
         }
 
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)

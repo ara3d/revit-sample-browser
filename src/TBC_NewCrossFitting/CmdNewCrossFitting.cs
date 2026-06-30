@@ -12,14 +12,15 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 
 #endregion // Namespaces
@@ -123,65 +124,65 @@ namespace BuildingCoder
                     doc.Create.NewElbowFitting(c1, c2);
                     break;
                 case 3:
-                {
-                    var pipe3 = pipes[2] as Pipe;
+                    {
+                        var pipe3 = pipes[2] as Pipe;
 
-                    var v1 = Util.GetPipeDirection(pipe1);
-                    var v2 = Util.GetPipeDirection(pipe2);
-                    var v3 = Util.GetPipeDirection(pipe3);
+                        var v1 = Util.GetPipeDirection(pipe1);
+                        var v2 = Util.GetPipeDirection(pipe2);
+                        var v3 = Util.GetPipeDirection(pipe3);
 
-                    var c3 = Util.GetConnectorClosestTo(
+                        var c3 = Util.GetConnectorClosestTo(
                         pipe3, pt);
 
-                    if (Math.Sin(v1.AngleTo(v2)) < 0.01) //平行
-                    {
-                        doc.Create.NewTeeFitting(c1, c2, c3);
-                    }
-                    else //v1, 和v2 垂直.
-                    {
-                        if (Math.Sin(v3.AngleTo(v1)) < 0.01) //v3, V1 平行
-                            doc.Create.NewTeeFitting(c3, c1, c2);
-                        else //v3, v2 平行
-                            doc.Create.NewTeeFitting(c3, c2, c1);
-                    }
+                        if (Math.Sin(v1.AngleTo(v2)) < 0.01) //平行
+                        {
+                            doc.Create.NewTeeFitting(c1, c2, c3);
+                        }
+                        else //v1, 和v2 垂直.
+                        {
+                            if (Math.Sin(v3.AngleTo(v1)) < 0.01) //v3, V1 平行
+                                doc.Create.NewTeeFitting(c3, c1, c2);
+                            else //v3, v2 平行
+                                doc.Create.NewTeeFitting(c3, c2, c1);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case 4:
-                {
-                    var pipe3 = pipes[2] as Pipe;
-                    var pipe4 = pipes[3] as Pipe;
+                    {
+                        var pipe3 = pipes[2] as Pipe;
+                        var pipe4 = pipes[3] as Pipe;
 
-                    var c3 = Util.GetConnectorClosestTo(
+                        var c3 = Util.GetConnectorClosestTo(
                         pipe3, pt);
 
-                    var c4 = Util.GetConnectorClosestTo(
+                        var c4 = Util.GetConnectorClosestTo(
                         pipe4, pt);
 
-                    // The required connection order for a cross 
-                    // fitting is main – main – side - side.
+                        // The required connection order for a cross 
+                        // fitting is main – main – side - side.
 
-                    if (Util.IsPipeParallel(pipe1, pipe2))
-                        doc.Create.NewCrossFitting(
-                            c1, c2, c3, c4);
-                    else if (Util.IsPipeParallel(pipe1, pipe3))
-                        try
-                        {
+                        if (Util.IsPipeParallel(pipe1, pipe2))
                             doc.Create.NewCrossFitting(
-                                c1, c3, c2, c4);
-                        }
-                        catch (Exception ex)
-                        {
-                            TaskDialog.Show(
-                                "Cannot insert cross fitting",
-                                ex.Message);
-                        }
-                    else if (Util.IsPipeParallel(pipe1, pipe4))
-                        doc.Create.NewCrossFitting(
-                            c1, c4, c2, c3);
+                                c1, c2, c3, c4);
+                        else if (Util.IsPipeParallel(pipe1, pipe3))
+                            try
+                            {
+                                doc.Create.NewCrossFitting(
+                                    c1, c3, c2, c4);
+                            }
+                            catch (Exception ex)
+                            {
+                                TaskDialog.Show(
+                                    "Cannot insert cross fitting",
+                                    ex.Message);
+                            }
+                        else if (Util.IsPipeParallel(pipe1, pipe4))
+                            doc.Create.NewCrossFitting(
+                                c1, c4, c2, c3);
 
-                    break;
-                }
+                        break;
+                    }
             }
 
             tx.Commit();

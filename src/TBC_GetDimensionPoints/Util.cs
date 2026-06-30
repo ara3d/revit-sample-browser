@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BuildingCoder
 {
@@ -41,7 +40,7 @@ namespace BuildingCoder
         {
             var dimLine = dim.Curve as Line;
             if (dimLine == null) return null;
-            var pts = new List<XYZ>();
+            List<XYZ> pts = [];
 
             dimLine.MakeBound(0, 1);
             var pt1 = dimLine.GetEndPoint(0);
@@ -50,7 +49,7 @@ namespace BuildingCoder
 
             if (0 == dim.Segments.Size)
             {
-                var v = 0.5 * (double) dim.Value * direction;
+                var v = 0.5 * (double)dim.Value * direction;
                 pts.Add(pStart - v);
                 pts.Add(pStart + v);
             }
@@ -59,8 +58,8 @@ namespace BuildingCoder
                 var p = pStart;
                 foreach (DimensionSegment seg in dim.Segments)
                 {
-                    var v = (double) seg.Value * direction;
-                    if (0 == pts.Count) pts.Add(p = pStart - 0.5 * v);
+                    var v = (double)seg.Value * direction;
+                    if (0 == pts.Count) pts.Add(p = pStart - (0.5 * v));
                     pts.Add(p = p.Add(v));
                 }
             }
@@ -74,7 +73,7 @@ namespace BuildingCoder
             SketchPlane sketchPlane)
         {
             size *= 0.5;
-            var v = new XYZ(size, size, 0);
+            XYZ v = new(size, size, 0);
             var doc = sketchPlane.Document;
             doc.Create.NewModelCurve(Line.CreateBound(
                 p - v, p + v), sketchPlane);

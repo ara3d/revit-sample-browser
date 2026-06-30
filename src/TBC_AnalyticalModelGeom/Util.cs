@@ -7,20 +7,17 @@ namespace BuildingCoder
     {
         internal static ElementId GetAnalyticalElementId(Element e)
         {
-            Document doc = e.Document;
+            var doc = e.Document;
 
-            AnalyticalToPhysicalAssociationManager m
+            var m
                 = AnalyticalToPhysicalAssociationManager
                   .GetAnalyticalToPhysicalAssociationManager(
                     doc);
 
-            if (null == m)
-            {
-                throw new System.ArgumentException(
-                    "No AnalyticalToPhysicalAssociationManager found");
-            }
-
-            return m.GetAssociatedElementId(e.Id);
+            return null == m
+                ? throw new System.ArgumentException(
+                    "No AnalyticalToPhysicalAssociationManager found")
+                : m.GetAssociatedElementId(e.Id);
         }
     }
 }

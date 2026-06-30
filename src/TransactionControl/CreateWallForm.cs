@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
@@ -12,8 +13,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
     {
         private readonly ExternalCommandData m_commandData;
 
-        private Wall m_createdWall;
-
         public CreateWallForm(ExternalCommandData commandData)
         {
             InitializeComponent();
@@ -21,15 +20,15 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             Initialize();
         }
 
-        public Wall CreatedWall => m_createdWall;
+        public Wall CreatedWall { get; private set; }
 
         private void Initialize()
         {
             //add levels to combo box levelsComboBox
             var document = m_commandData.Application.ActiveUIDocument.Document;
 
-            var collector = new FilteredElementCollector(document);
-            var filter = new ElementClassFilter(typeof(Level));
+            FilteredElementCollector collector = new(document);
+            ElementClassFilter filter = new(typeof(Level));
             var levels = collector.WherePasses(filter).ToElements();
 
             foreach (var element in levels)
@@ -44,11 +43,11 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             }
 
             //add wall types to combo box wallTypesComboBox
-            var filteredElementCollector = new FilteredElementCollector(document);
+            FilteredElementCollector filteredElementCollector = new(document);
             filteredElementCollector.OfClass(typeof(WallType));
             foreach (var element in filteredElementCollector)
             {
-                if (!(element is WallType wallType)) continue;
+                if (element is not WallType wallType) continue;
                 wallTypesComboBox.Items.Add(wallType);
             }
 
@@ -102,9 +101,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
 
                 var line = Line.CreateBound(sPoint, ePoint);
 
-                var level = levelsComboBox.SelectedItem as Level;
-                var wallType = wallTypesComboBox.SelectedItem as WallType;
-
                 //check whether parameters used to create wall are not null
                 if (null == line)
                 {
@@ -112,13 +108,13 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
                     return;
                 }
 
-                if (null == level || null == wallType)
+                if (levelsComboBox.SelectedItem is not Level level || wallTypesComboBox.SelectedItem is not WallType wallType)
                 {
                     TaskDialog.Show("Revit", "Please select a level and a wall type.");
                     return;
                 }
 
-                m_createdWall = Wall.Create(document, line, wallType.Id, level.Id, 10, 0, true, true);
+                CreatedWall = Wall.Create(document, line, wallType.Id, level.Id, 10, 0, true, true);
                 document.Regenerate();
                 DialogResult = DialogResult.OK;
                 Close();

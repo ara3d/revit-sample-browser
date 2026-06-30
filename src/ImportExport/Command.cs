@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS
 {
@@ -24,10 +24,8 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
                     return Result.Failed;
                 }
 
-                using (var mainForm = new MainForm(new MainData(commandData)))
-                {
-                    if (mainForm.ShowDialog() == DialogResult.Cancel) return Result.Cancelled;
-                }
+                using MainForm mainForm = new(new MainData(commandData));
+                if (mainForm.ShowDialog() == DialogResult.Cancel) return Result.Cancelled;
             }
             catch (Exception ex)
             {

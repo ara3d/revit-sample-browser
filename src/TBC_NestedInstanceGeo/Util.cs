@@ -1,7 +1,6 @@
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -13,8 +12,8 @@ namespace BuildingCoder
             Debug.Assert(0 < s.Edges.Size,
                 "expected a non-empty solid");
 
-            var a
-                = new Dictionary<XYZ, int>(
+            Dictionary<XYZ, int> a
+                = new(
                     new XyzEqualityComparer());
 
             foreach (Face f in s.Faces)
@@ -27,7 +26,7 @@ namespace BuildingCoder
                         ++a[p];
             }
 
-            var keys = new List<XYZ>(a.Keys);
+            List<XYZ> keys = [.. a.Keys];
 
             Debug.Assert(8 == keys.Count,
                 "expected eight vertices for a rectangular column");

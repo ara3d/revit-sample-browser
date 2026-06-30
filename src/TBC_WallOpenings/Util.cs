@@ -1,7 +1,7 @@
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -45,17 +45,17 @@ namespace BuildingCoder
             wallDirection = wallDirection.Normalize();
             var offsetOut = _wallOpeningOffset * new UV(wallDirection.X, wallDirection.Y);
 
-            var rayStart = new XYZ(wallOrigin.X - offsetOut.U,
+            XYZ rayStart = new(wallOrigin.X - offsetOut.U,
                 wallOrigin.Y - offsetOut.V, elevation + _wallOpeningOffset);
 
-            var intersector
-                = new ReferenceIntersector(wall.Id,
+            ReferenceIntersector intersector
+                = new(wall.Id,
                     FindReferenceTarget.Face, view);
 
             var refs
                 = intersector.Find(rayStart, wallDirection);
 
-            var pointList = new List<XYZ>(refs
+            List<XYZ> pointList = new(refs
                 .Where(r => IsSurface(
                     r.GetReference()))
                 .Where(r => r.Proximity
@@ -66,7 +66,7 @@ namespace BuildingCoder
                     => r.GetReference().GlobalPoint)
                 .Distinct(new XyzEqualityComparer()));
 
-            var q = wallOrigin + _wallOpeningOffset * XYZ.BasisZ;
+            var q = wallOrigin + (_wallOpeningOffset * XYZ.BasisZ);
 
             var wallHasFaceAtStart = IsEqual(
                 pointList[0], q);
@@ -77,7 +77,7 @@ namespace BuildingCoder
             else
                 pointList.Insert(0, wallOrigin);
 
-            q = wallEndPoint + _wallOpeningOffset * XYZ.BasisZ;
+            q = wallEndPoint + (_wallOpeningOffset * XYZ.BasisZ);
 
             var wallHasFaceAtEnd = IsEqual(
                 pointList.Last(), q);
@@ -93,7 +93,7 @@ namespace BuildingCoder
             Debug.Assert(IsEven(n),
                 "expected an even number of opening sides");
 
-            var wallOpenings = new List<WallOpening2d>(
+            List<WallOpening2d> wallOpenings = new(
                 n / 2);
 
             for (var i = 0; i < n; i += 2)

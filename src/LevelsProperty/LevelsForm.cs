@@ -1,13 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Units;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
-
-using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
 {
     public partial class LevelsForm : Form
@@ -105,7 +103,7 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
                 newLevelElevation = 0;
             }
 
-            var newLevel = new LevelsDataSource
+            LevelsDataSource newLevel = new()
             {
                 Name = newLevelName,
                 Elevation = newLevelElevation
@@ -167,11 +165,11 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
                 var newNameArray = new char[newName.Length];
                 newNameArray = newName.ToCharArray();
                 for (var i = 0; i < newName.Length; ++i)
-                    if ('\\' == newNameArray[i] || ':' == newNameArray[i] || '{' == newNameArray[i] ||
-                        '}' == newNameArray[i] || '[' == newNameArray[i] || ']' == newNameArray[i] ||
-                        '|' == newNameArray[i] || ';' == newNameArray[i] || '<' == newNameArray[i] ||
-                        '>' == newNameArray[i] || '?' == newNameArray[i] || '`' == newNameArray[i] ||
-                        '~' == newNameArray[i])
+                    if (newNameArray[i] is '\\' or ':' or '{' or
+                                                '}' or '[' or ']' or
+                                                '|' or ';' or '<' or
+                                                '>' or '?' or '`' or
+                                                '~')
                     {
                         TaskDialog.Show("Revit", "Name cannot contain any of the following characters:\r\n\\ "
                                                  + ": { } [ ] | ; < > ? ` ~ \r\nor any of the non-printable characters.");
@@ -224,7 +222,7 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
             for (var i = 0; i < m_deleteExistLevelTotal; i++)
                 m_objectReference.DeleteLevel(m_deleteExistLevelIdValue[i]);
 
-            var tempLevels = new List<LevelsDataSource>();
+            List<LevelsDataSource> tempLevels = [];
 
             //Set all changed Levels' name and elevation
             if (1 == m_systemLevelChangedFlag)

@@ -1,14 +1,14 @@
-using System;
-using System.Globalization;
-using System.Reflection;
-using System.Threading;
-using System.Windows.Interop;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Windows;
 using ExcelExporterImporter.Views;
 using log4net;
+using System;
+using System.Globalization;
+using System.Reflection;
+using System.Threading;
+using System.Windows.Interop;
 
 namespace ExcelExporterImporter
 {
@@ -31,8 +31,8 @@ namespace ExcelExporterImporter
                 if (doc == null)
                     return Result.Cancelled;
 
-                var dlg = new ImportWindow(doc);
-                var window = new WindowInteropHelper(dlg)
+                ImportWindow dlg = new(doc);
+                WindowInteropHelper window = new(dlg)
                 {
                     Owner = ComponentManager.ApplicationWindow
                 };

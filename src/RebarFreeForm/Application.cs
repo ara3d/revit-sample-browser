@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        private readonly RebarUpdateServer m_server = new RebarUpdateServer();
+        private readonly RebarUpdateServer m_server = new();
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -21,9 +21,9 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
         public Result OnStartup(UIControlledApplication application)
         {
             // Register CurveElement updater with revit to trigger regen in rebar for selected lines
-            var updater = new CurveElementRegenUpdater(application.ActiveAddInId);
+            CurveElementRegenUpdater updater = new(application.ActiveAddInId);
             UpdaterRegistry.RegisterUpdater(updater);
-            var modelLineFilter = new ElementClassFilter(typeof(CurveElement));
+            ElementClassFilter modelLineFilter = new(typeof(CurveElement));
             UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), modelLineFilter, Element.GetChangeTypeAny());
 
             //Register the RebarUpdateServer

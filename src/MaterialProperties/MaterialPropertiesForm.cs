@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
@@ -282,7 +281,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             if (null == m_dataBuffer.CurrentMaterial || (m_dataBuffer.CurrentType != StructuralAssetClass.Metal
                                                          && m_dataBuffer.CurrentType != StructuralAssetClass.Concrete))
                 return;
-            if (!(m_dataBuffer.CurrentMaterial is Material tmp))
+            if (m_dataBuffer.CurrentMaterial is not Material tmp)
                 return;
 
             m_subTypeComboBox.SelectedValue = tmp;

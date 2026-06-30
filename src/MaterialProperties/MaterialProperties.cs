@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Data;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Data;
 
 namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
 {
@@ -33,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
         private const double ChangedUnitWeight = 14.5; //the value of unit weight of selected component to be set
 
         private readonly Hashtable
-            m_allMaterialMap = new Hashtable(); //hashtable contains all materials with index of their ElementId
+            m_allMaterialMap = []; //hashtable contains all materials with index of their ElementId
 
         private Material m_cacheMaterial;
         private Parameter m_currentMaterial; //current material of selected beam, column or brace
@@ -45,9 +45,8 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
         {
             get
             {
-                var material = CurrentMaterial as Material;
                 var materialId = ElementId.InvalidElementId;
-                if (material != null) materialId = material.Id;
+                if (CurrentMaterial is Material material) materialId = material.Id;
                 if (materialId == ElementId.InvalidElementId) return StructuralAssetClass.Generic;
                 var materialElem = (Material)m_allMaterialMap[materialId];
                 return null == materialElem ? StructuralAssetClass.Generic : GetMaterialType(materialElem);
@@ -66,19 +65,19 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
         /// <summary>
         ///     arraylist of all materials belonging to steel type
         /// </summary>
-        public ArrayList SteelCollection { get; } = new ArrayList();
+        public ArrayList SteelCollection { get; } = [];
 
         /// <summary>
         ///     arraylist of all materials belonging to concrete type
         /// </summary>
-        public ArrayList ConcreteCollection { get; } = new ArrayList();
+        public ArrayList ConcreteCollection { get; } = [];
 
         public ArrayList MaterialTypes
         {
             get
             {
-                var typeAl = new ArrayList
-                {
+                ArrayList typeAl =
+                [
                     "Undefined",
                     "Basic",
                     "Generic",
@@ -88,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
                     "Liquid",
                     "Gas",
                     "Plastic"
-                };
+                ];
                 return typeAl;
             }
         }
@@ -105,9 +104,9 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
                 return Result.Failed;
             }
 
-            var documentTransaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
+            Transaction documentTransaction = new(commandData.Application.ActiveUIDocument.Document, "Document");
             documentTransaction.Start();
-            var displayForm = new MaterialPropertiesForm(this);
+            MaterialPropertiesForm displayForm = new(this);
             try
             {
                 displayForm.ShowDialog();
@@ -127,7 +126,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             //create an empty datatable
             var parameterTable = CreateTable();
             //if failed to convert object
-            if (!(o is Material material)) return parameterTable;
+            if (o is not Material material) return parameterTable;
 
             //- Behavior
             var temporaryAttribute =
@@ -335,7 +334,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
 
         private void GetSelectedComponent()
         {
-            var componentCollection = new ElementSet();
+            ElementSet componentCollection = new();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
             {
                 componentCollection.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
@@ -346,18 +345,18 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             //if the selection is a beam, column or brace, find out its parameters for display
             foreach (var o in componentCollection)
             {
-                if (!(o is FamilyInstance component)) continue;
+                if (o is not FamilyInstance component) continue;
 
-                if (component.StructuralType == StructuralType.Beam
-                    || component.StructuralType == StructuralType.Brace
-                    || component.StructuralType == StructuralType.Column)
+                if (component.StructuralType is StructuralType.Beam
+                    or StructuralType.Brace
+                    or StructuralType.Column)
                     //get selected beam, column or brace
                     m_selectedComponent = component;
 
                 //selection is a beam, column or brace, find out its parameters
                 foreach (var p in component.Parameters)
                 {
-                    if (!(p is Parameter attribute)) continue;
+                    if (p is not Parameter attribute) continue;
 
                     var parameterName = attribute.Definition.Name;
                     // The "Beam Material" and "Column Material" family parameters have been replaced
@@ -375,13 +374,13 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
 
         private void GetAllMaterial()
         {
-            var collector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
+            FilteredElementCollector collector = new(m_revit.ActiveUIDocument.Document);
             var i = collector.OfClass(typeof(Material)).GetElementIterator();
             i.Reset();
             var moreValue = i.MoveNext();
             while (moreValue)
             {
-                if (!(i.Current is Material material))
+                if (i.Current is not Material material)
                 {
                     moreValue = i.MoveNext();
                     continue;
@@ -394,15 +393,15 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
                 switch (materialType)
                 {
                     case StructuralAssetClass.Metal:
-                    {
-                        SteelCollection.Add(new MaterialMap(material));
-                        break;
-                    }
+                        {
+                            SteelCollection.Add(new MaterialMap(material));
+                            break;
+                        }
                     case StructuralAssetClass.Concrete:
-                    {
-                        ConcreteCollection.Add(new MaterialMap(material));
-                        break;
-                    }
+                        {
+                            ConcreteCollection.Add(new MaterialMap(material));
+                            break;
+                        }
                 }
 
                 //map between materials and their elementId
@@ -414,10 +413,10 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
         private DataTable CreateTable()
         {
             // Create a new DataTable.
-            var propDataTable = new DataTable("ParameterTable");
+            DataTable propDataTable = new("ParameterTable");
 
             // Create parameter column and add to the DataTable.
-            var paraDataColumn = new DataColumn
+            DataColumn paraDataColumn = new()
             {
                 DataType = Type.GetType("System.String"),
                 ColumnName = "Parameter",
@@ -428,7 +427,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             propDataTable.Columns.Add(paraDataColumn);
 
             // Create value column and add to the DataTable.
-            var valueDataColumn = new DataColumn
+            DataColumn valueDataColumn = new()
             {
                 DataType = Type.GetType("System.String"),
                 ColumnName = "Value",

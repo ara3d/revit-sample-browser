@@ -1,20 +1,16 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 {
     public class ColumnFramReinMaker : FramReinMaker
     {
         private readonly ColumnGeometrySupport m_geometry; // The geometry support for column rebar creation
-        private double m_transverseCenterSpacing; //the space value of center transverse rebar
-
-        private double m_transverseEndSpacing; //the space value of end transverse rebar
-        private int m_verticalRebarNumber; //the number of the vertical rebar
 
         public ColumnFramReinMaker(ExternalCommandData commandData, FamilyInstance hostObject)
             : base(commandData, hostObject)
@@ -33,34 +29,34 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 
         public double TransverseEndSpacing
         {
-            get => m_transverseEndSpacing;
+            get;
             set
             {
                 if (0 > value) // spacing data must be above 0
                     throw new Exception("Transverse end spacing should be above zero");
-                m_transverseEndSpacing = value;
+                field = value;
             }
         }
 
         public double TransverseCenterSpacing
         {
-            get => m_transverseCenterSpacing;
+            get;
             set
             {
                 if (0 > value) // spacing data must be above 0
                     throw new Exception("Transverse center spacing should be above zero");
-                m_transverseCenterSpacing = value;
+                field = value;
             }
         }
 
         public int VerticalRebarNumber
         {
-            get => m_verticalRebarNumber;
+            get;
             set
             {
                 if (4 > value) // vertical rebar number must be above 3
                     throw new Exception("The minimum of vertical rebar number shouble be four.");
-                m_verticalRebarNumber = value;
+                field = value;
             }
         }
 
@@ -74,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         protected override bool DisplayForm()
         {
             // Display ColumnFramReinMakerForm for the user input information 
-            using (var displayForm = new ColumnFramReinMakerForm(this))
+            using (ColumnFramReinMakerForm displayForm = new(this))
             {
                 if (DialogResult.OK != displayForm.ShowDialog()) return false;
             }
@@ -115,17 +111,17 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         public Rebar FillTransverseBar(TransverseRebarLocation location)
         {
             // Get the geometry information which support rebar creation
-            var geomInfo = new RebarGeometry();
+            RebarGeometry geomInfo = new();
             RebarBarType barType = null;
             switch (location)
             {
                 case TransverseRebarLocation.Start: // start transverse rebar
                 case TransverseRebarLocation.End: // end transverse rebar
-                    geomInfo = m_geometry.GetTransverseRebar(location, m_transverseEndSpacing);
+                    geomInfo = m_geometry.GetTransverseRebar(location, TransverseEndSpacing);
                     barType = TransverseEndType;
                     break;
                 case TransverseRebarLocation.Center: // center transverse rebar   
-                    geomInfo = m_geometry.GetTransverseRebar(location, m_transverseCenterSpacing);
+                    geomInfo = m_geometry.GetTransverseRebar(location, TransverseCenterSpacing);
                     barType = TransverseCenterType;
                     break;
             }
@@ -143,17 +139,17 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         public Rebar FillVerticalBar(VerticalRebarLocation location)
         {
             //calculate the rebar number in different location
-            var rebarNubmer = m_verticalRebarNumber / 4;
+            var rebarNubmer = VerticalRebarNumber / 4;
             switch (location)
             {
                 case VerticalRebarLocation.East: // the east vertical rebar
-                    if (0 < m_verticalRebarNumber % 4) rebarNubmer++;
+                    if (0 < VerticalRebarNumber % 4) rebarNubmer++;
                     break;
                 case VerticalRebarLocation.North: // the north vertical rebar
-                    if (2 < m_verticalRebarNumber % 4) rebarNubmer++;
+                    if (2 < VerticalRebarNumber % 4) rebarNubmer++;
                     break;
                 case VerticalRebarLocation.West: // the west vertical rebar
-                    if (1 < m_verticalRebarNumber % 4) rebarNubmer++;
+                    if (1 < VerticalRebarNumber % 4) rebarNubmer++;
                     break;
                 case VerticalRebarLocation.South: // the south vertical rebar
                     break;

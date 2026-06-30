@@ -70,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
     {
         public GridLine2D()
         {
-            Segments = new List<SegmentLine2D>();
+            Segments = [];
             Locked = false;
             RemovedNumber = 0;
             IsUGridLine = false;
@@ -79,7 +79,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         public GridLine2D(Point startPoint, Point endPoint)
             : base(startPoint, endPoint)
         {
-            Segments = new List<SegmentLine2D>();
+            Segments = [];
             Locked = false;
             RemovedNumber = 0;
             IsUGridLine = false;
@@ -88,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         public GridLine2D(GridLine2D gridLine2D)
             : base(gridLine2D)
         {
-            Segments = new List<SegmentLine2D>();
+            Segments = [];
             Locked = gridLine2D.Locked;
             RemovedNumber = gridLine2D.RemovedNumber;
             IsUGridLine = gridLine2D.IsUGridLine;

@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.IO;
-using System.Reflection;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Ara3D.RevitSampleBrowser.InvisibleParam.CS
 {
@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.InvisibleParam.CS
         public Result Execute(
             ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
+            Transaction transaction = new(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
             {
                 transaction.Start();
@@ -56,8 +56,8 @@ namespace Ara3D.RevitSampleBrowser.InvisibleParam.CS
                 var apiGroup = parafile.Groups.Create("APIGroup");
 
                 //Create a visible "VisibleParam" of text type.
-                var externalDefinitionCreationOptions1 =
-                    new ExternalDefinitionCreationOptions("VisibleParam", SpecTypeId.String.Text);
+                ExternalDefinitionCreationOptions externalDefinitionCreationOptions1 =
+                    new("VisibleParam", SpecTypeId.String.Text);
                 var visibleParamDef = apiGroup.Definitions.Create
                     (externalDefinitionCreationOptions1);
                 ;
@@ -65,8 +65,8 @@ namespace Ara3D.RevitSampleBrowser.InvisibleParam.CS
                 bindingMap.Insert(visibleParamDef, binding);
 
                 //Create a invisible "InvisibleParam" of text type.
-                var externalDefinitionCreationOptions2 =
-                    new ExternalDefinitionCreationOptions("InvisibleParam", SpecTypeId.String.Text);
+                ExternalDefinitionCreationOptions externalDefinitionCreationOptions2 =
+                    new("InvisibleParam", SpecTypeId.String.Text);
                 var invisibleParamDef = apiGroup.Definitions.Create
                     (externalDefinitionCreationOptions2);
                 bindingMap.Insert(invisibleParamDef, binding);

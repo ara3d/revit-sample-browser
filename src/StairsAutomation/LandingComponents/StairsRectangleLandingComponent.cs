@@ -1,9 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
 {
     public class StairsRectangleLandingComponent : IStairsLandingComponent
@@ -42,9 +41,14 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
             return curveLoop;
         }
 
-        public double GetLandingBaseElevation() => m_elevation;
+        public double GetLandingBaseElevation()
+        {
+            return m_elevation;
+        }
 
-        public StairsLanding CreateLanding(Document document, ElementId stairsElementId) =>
-            StairsLanding.CreateSketchedLanding(document, stairsElementId, GetLandingBoundary(), GetLandingBaseElevation());
+        public StairsLanding CreateLanding(Document document, ElementId stairsElementId)
+        {
+            return StairsLanding.CreateSketchedLanding(document, stairsElementId, GetLandingBoundary(), GetLandingBaseElevation());
+        }
     }
 }

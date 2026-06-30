@@ -1,22 +1,22 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
     public class StraightStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
     {
-        private double m_desiredTreadDepth;
+        private readonly double m_desiredTreadDepth;
 
-        private int m_riserNumber;
+        private readonly int m_riserNumber;
         private readonly XYZ m_runOffset;
         private StairsRun m_stairsRun;
         private double m_width;
-        private XYZ m_widthOffset;
+        private readonly XYZ m_widthOffset;
 
         public StraightStairsRunComponent(int riserNumber, double bottomElevation, double desiredTreadDepth,
             double width)
@@ -44,14 +44,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 
         public double RunElevation { get; }
 
-        public double TopElevation
-        {
-            get
-            {
-                if (m_stairsRun == null) throw new NotSupportedException("Stairs run hasn't been constructed yet.");
-                return m_stairsRun.TopElevation;
-            }
-        }
+        public double TopElevation => m_stairsRun == null ? throw new NotSupportedException("Stairs run hasn't been constructed yet.") : m_stairsRun.TopElevation;
 
         public IList<Curve> GetStairsPath()
         {
@@ -101,7 +94,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 
         public Line GetRunStairsPath()
         {
-            var start = new XYZ(m_width / 2.0, 0, RunElevation);
+            XYZ start = new(m_width / 2.0, 0, RunElevation);
             var end = start + m_runOffset;
             var curve1 = Line.CreateBound(start, end);
 

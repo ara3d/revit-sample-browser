@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using Autodesk.Revit.DB;
+using System.Diagnostics;
 
 namespace BuildingCoder
 {
@@ -14,7 +14,7 @@ namespace BuildingCoder
             switch (fp.StorageType)
             {
                 case StorageType.Double:
-                    value = $"{RealString((double) t.AsDouble(fp))} (double)";
+                    value = $"{RealString((double)t.AsDouble(fp))} (double)";
                     break;
 
                 case StorageType.ElementId:

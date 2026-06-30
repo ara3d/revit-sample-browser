@@ -1,26 +1,22 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using Autodesk.Revit.Creation;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
 {
     public class SlabData
     {
         private readonly UIApplication m_revit;
-        private readonly List<RegularSlab> m_allBaseSlabList = new List<RegularSlab>();
-        private readonly List<Floor> m_floorList = new List<Floor>();
+        private readonly List<RegularSlab> m_allBaseSlabList = [];
+        private readonly List<Floor> m_floorList = [];
         private FloorType m_foundationSlabType;
-        private readonly SortedList<double, Level> m_levelList = new SortedList<double, Level>();
-        private readonly List<FloorType> m_slabTypeList = new List<FloorType>();
-        private readonly List<View> m_viewList = new List<View>();
+        private readonly SortedList<double, Level> m_levelList = [];
+        private readonly List<FloorType> m_slabTypeList = [];
+        private readonly List<View> m_viewList = [];
 
         public SlabData(UIApplication revit)
         {
@@ -30,10 +26,10 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
                 throw new NullReferenceException("No planar slabs at the base of the building.");
         }
 
-        public Collection<RegularSlab> BaseSlabList => new Collection<RegularSlab>(m_allBaseSlabList);
+        public Collection<RegularSlab> BaseSlabList => new(m_allBaseSlabList);
 
         public ReadOnlyCollection<FloorType> FoundationSlabTypeList =>
-            new ReadOnlyCollection<FloorType>(m_slabTypeList);
+            new(m_slabTypeList);
 
         public object FoundationSlabType
         {
@@ -65,23 +61,24 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
             {
                 if (!slab.Selected) continue;
 
-                var t = new Transaction(m_revit.ActiveUIDocument.Document, Guid.NewGuid().GetHashCode().ToString());
+                Transaction t = new(m_revit.ActiveUIDocument.Document, Guid.NewGuid().GetHashCode().ToString());
                 t.Start();
 
-                var loop = new CurveLoop();
+                CurveLoop loop = new();
                 foreach (Curve curve in slab.OctagonalProfile)
                 {
                     loop.Append(curve);
                 }
 
-                var floorLoops = new List<CurveLoop> { loop };
+                List<CurveLoop> floorLoops = new()
+                { loop };
                 var foundationSlab = Floor.Create(m_revit.ActiveUIDocument.Document, floorLoops,
                     m_foundationSlabType.Id, m_levelList.Values[0].Id, true, null, 0.0);
 
                 t.Commit();
                 if (null == foundationSlab) return false;
 
-                var t2 = new Transaction(m_revit.ActiveUIDocument.Document, Guid.NewGuid().GetHashCode().ToString());
+                Transaction t2 = new(m_revit.ActiveUIDocument.Document, Guid.NewGuid().GetHashCode().ToString());
                 t2.Start();
                 var deleteSlabId = slab.Id;
                 m_revit.ActiveUIDocument.Document.Delete(deleteSlabId);
@@ -93,16 +90,16 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
 
         private void FindElements()
         {
-            IList<ElementFilter> filters = new List<ElementFilter>(4)
-            {
+            IList<ElementFilter> filters =
+            [
                 new ElementClassFilter(typeof(Level)),
                 new ElementClassFilter(typeof(View)),
                 new ElementClassFilter(typeof(Floor)),
                 new ElementClassFilter(typeof(FloorType))
-            };
+            ];
 
-            var orFilter = new LogicalOrFilter(filters);
-            var collector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
+            LogicalOrFilter orFilter = new(filters);
+            FilteredElementCollector collector = new(m_revit.ActiveUIDocument.Document);
             var iterator = collector.WherePasses(orFilter).GetElementIterator();
             while (iterator.MoveNext())
             {
@@ -119,7 +116,7 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
                         continue;
                 }
 
-                if (!(iterator.Current is FloorType floorType)) continue;
+                if (iterator.Current is not FloorType floorType) continue;
                 if ("Structural Foundations" == floorType.Category.Name) m_slabTypeList.Add(floorType);
             }
         }
@@ -149,7 +146,7 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
                         continue;
 
                     var floorProfile = SampleBrowserUtils.GetFloorProfile(floor, m_revit);
-                    var regularSlab = new RegularSlab(floor, floorProfile, bbXyz);
+                    RegularSlab regularSlab = new(floor, floorProfile, bbXyz);
                     m_allBaseSlabList.Add(regularSlab);
                 }
             }

@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Units;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Plumbing;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Plumbing;
-
-using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder
 {
     /// <summary>
@@ -333,7 +332,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             if (existingPipeSegmentId != ElementId.InvalidElementId)
                 return; //Segment found, no need to create.
 
-            ICollection<MEPSize> sizes = new List<MEPSize>();
+            ICollection<MEPSize> sizes = [];
             foreach (var sizeNode in segmentXElement.Nodes())
             {
                 if (sizeNode is XElement node)
@@ -534,10 +533,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
 
             var description = xaDescription.Value;
 
-            if (groupType == RoutingPreferenceRuleGroupType.Segments)
-                partId = GetSegmentByName(xaPartName.Value);
-            else
-                partId = GetFittingByName(xaPartName.Value);
+            partId = groupType == RoutingPreferenceRuleGroupType.Segments ? GetSegmentByName(xaPartName.Value) : GetFittingByName(xaPartName.Value);
 
             if (partId == ElementId.InvalidElementId)
                 throw new RoutingPreferenceDataException(

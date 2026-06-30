@@ -15,14 +15,14 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Forms;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 #endregion // Namespaces
@@ -36,7 +36,7 @@ namespace BuildingCoder
             = true;
 
         private readonly List<ElementId> _added_element_ids
-            = new();
+            = [];
         private IntPtr _revit_window;
 
         public Result Execute(
@@ -51,8 +51,8 @@ namespace BuildingCoder
 
             _revit_window = uiapp.MainWindowHandle;
 
-            var collector
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector collector
+                = new(doc);
 
             collector.OfCategory(BuiltInCategory.OST_Doors);
             collector.OfClass(typeof(FamilySymbol));
@@ -107,12 +107,12 @@ namespace BuildingCoder
             {
 
                 Press.PostMessage(_revit_window,
-                    (uint) Press.KEYBOARD_MSG.WM_KEYDOWN,
-                    (uint) Keys.Escape, 0);
+                    (uint)Press.KEYBOARD_MSG.WM_KEYDOWN,
+                    (uint)Keys.Escape, 0);
 
                 Press.PostMessage(_revit_window,
-                    (uint) Press.KEYBOARD_MSG.WM_KEYDOWN,
-                    (uint) Keys.Escape, 0);
+                    (uint)Press.KEYBOARD_MSG.WM_KEYDOWN,
+                    (uint)Keys.Escape, 0);
             }
         }
     }

@@ -2467,7 +2467,6 @@
     <EmbeddedResource Include="StringSearch\HelpDlg.resx">
       <DependentUpon>HelpDlg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StringSearch\help_text.rtf" />
     <EmbeddedResource Include="StringSearch\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

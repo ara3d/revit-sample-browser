@@ -1,8 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 {
@@ -25,11 +26,11 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 var modifiedIds = data.GetModifiedElementIds();
                 if (modifiedIds.Count > 0)
                 {
-                    var collector = new FilteredElementCollector(data.GetDocument());
+                    FilteredElementCollector collector = new(data.GetDocument());
                     var elemBars = collector.OfClass(typeof(Rebar)).ToElements();
                     foreach (var elem in elemBars)
                     {
-                        if (!(elem is Rebar bar))
+                        if (elem is not Rebar bar)
                             continue;
                         if (!bar.IsRebarFreeForm())
                             continue;

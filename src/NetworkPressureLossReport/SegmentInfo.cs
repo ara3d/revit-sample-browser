@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
@@ -88,8 +88,8 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
         {
             // A simple way to combine the element id and segment id into one hash code.
             var hash = 17;
-            hash = hash * 31 + idSeg.ElementId.GetHashCode();
-            hash = hash * 31 + idSeg.SegmentId.GetHashCode();
+            hash = (hash * 31) + idSeg.ElementId.GetHashCode();
+            hash = (hash * 31) + idSeg.SegmentId.GetHashCode();
             return hash;
         }
     }

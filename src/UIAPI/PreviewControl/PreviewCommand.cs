@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
 {
@@ -16,12 +16,12 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
         {
             m_dbdocument = commandData.Application.ActiveUIDocument.Document;
 
-            var outerGroup = new TransactionGroup(m_dbdocument, "preview control");
+            TransactionGroup outerGroup = new(m_dbdocument, "preview control");
             outerGroup.Start();
 
             try
             {
-                var form = new PreviewModel(commandData.Application.Application, ElementId.InvalidElementId);
+                PreviewModel form = new(commandData.Application.Application, ElementId.InvalidElementId);
                 form.ShowDialog();
             }
             catch (Exception e)

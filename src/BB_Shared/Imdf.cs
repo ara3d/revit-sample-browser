@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Ara3D.Utils;
+﻿using Ara3D.Utils;
+using System.Collections.Generic;
 
 /*
  * Indoor Mapping Data Format (IMDF)
@@ -36,25 +36,27 @@ public class ImdfUnit
     public string type { get; set; } = "Feature";
     public string feature_type { get; set; } = "unit";
     public string id { get; set; }
-    public Dictionary<string, object> properties { get; set; } 
+    public Dictionary<string, object> properties { get; set; }
     public GeoJsonPolygon geometry { get; set; }
 
     public ImdfUnit SetProperties(ImdfUnitProperties props)
     {
         if (props == null)
             return this;
-        properties ??= new();
+        properties ??= [];
         foreach (var kv in props.PropertiesToDictionary())
             properties.Add(kv.Key, kv.Value);
         return this;
     }
 
     public static ImdfUnit Create(string id, GeoJsonPolygon geometry, ImdfUnitProperties props = null)
-        => new ImdfUnit()
+    {
+        return new ImdfUnit()
         {
             id = id,
             geometry = geometry
         }.SetProperties(props);
+    }
 }
 
 public class ImdfUnitProperties
@@ -65,7 +67,7 @@ public class ImdfUnitProperties
     public string accessibility { get; set; }
     public string name { get; set; }
     public string alt_name { get; set; }
-    public GeoJsonPoint DisplayGeoJsonPoint { get; set; } 
+    public GeoJsonPoint DisplayGeoJsonPoint { get; set; }
 
     // Additional non-standard properties
     public double? level_elevation { get; set; }
@@ -87,18 +89,20 @@ public class ImdfOpening
     {
         if (props == null)
             return this;
-        properties ??= new();
+        properties ??= [];
         foreach (var kv in props.PropertiesToDictionary())
             properties.Add(kv.Key, kv.Value);
         return this;
     }
 
     public static ImdfOpening Create(string id, GeoJsonLineString geometry, ImdfOpeningProperties props = null)
-        => new ImdfOpening()
+    {
+        return new ImdfOpening()
         {
             id = id,
             geometry = geometry
         }.SetProperties(props);
+    }
 }
 
 public class ImdfOpeningProperties

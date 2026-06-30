@@ -12,12 +12,13 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -38,7 +39,7 @@ namespace BuildingCoder
             // Retrieve selected multistory stairs, or all 
             // such elements, if nothing is pre-selected:
 
-            var msss = new List<Element>();
+            List<Element> msss = new();
 
             if (!Util.GetSelectedElementsOrAll(
                 msss, uidoc, typeof(MultistoryStairs)))

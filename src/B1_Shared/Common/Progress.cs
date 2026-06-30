@@ -1,11 +1,11 @@
 ﻿#region Using
 
+using ExcelExporterImporter.ViewModels;
+using ExcelExporterImporter.Views;
 using System;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using ExcelExporterImporter.Views;
-using ExcelExporterImporter.ViewModels;
 
 #endregion
 
@@ -68,7 +68,7 @@ namespace ExcelExporterImporter.Common
         public void Start(int maxValue)
         {
             _started = false;
-            var thread = new Thread(ThreadWorker);
+            Thread thread = new(ThreadWorker);
             thread.SetApartmentState(ApartmentState.STA);
             thread.IsBackground = false;
 
@@ -95,12 +95,14 @@ namespace ExcelExporterImporter.Common
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
             _progressViewModel = new ProgressViewModel();
-            _progressWindow = new ProgressWindow(_progressViewModel);
-            _progressWindow.Title = _title;
+            _progressWindow = new ProgressWindow(_progressViewModel)
+            {
+                Title = _title
+            };
             _progressViewModel.ProcessCanceled += OnProcessCanceled;
 
 
-            _progressViewModel.Start((int) param);
+            _progressViewModel.Start((int)param);
             _progressWindow.Show();
             _started = true;
             Dispatcher.Run();

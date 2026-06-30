@@ -1,24 +1,20 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Structural;
+using System;
+using System.Windows.Forms;
 using RebarGeomHelper = Ara3D.RevitSampleBrowser.Common.Structural.RebarGeometry;
 namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 {
     public class BeamFramReinMaker : FramReinMaker
     {
         private readonly BeamGeometrySupport m_geometry; // The geometry support for beam rebar creation
-        private double m_transverseCenterSpacing; //the spacing value of center transverse rebar
 
         // The rebar type, hook type and spacing information
 
-        private double m_transverseEndSpacing; //the spacing value of end transverse rebar
 
         public BeamFramReinMaker(ExternalCommandData commandData, FamilyInstance hostObject)
             : base(commandData, hostObject)
@@ -39,21 +35,21 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 
         public double TransverseEndSpacing
         {
-            get => m_transverseEndSpacing;
+            get;
             set
             {
                 if (0 > value) throw new Exception("Transverse end spacing should be above zero");
-                m_transverseEndSpacing = value;
+                field = value;
             }
         }
 
         public double TransverseCenterSpacing
         {
-            get => m_transverseCenterSpacing;
+            get;
             set
             {
                 if (0 > value) throw new Exception("Transverse center spacing should be above zero");
-                m_transverseCenterSpacing = value;
+                field = value;
             }
         }
 
@@ -69,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         protected override bool DisplayForm()
         {
             // Display BeamFramReinMakerForm for the user to input information 
-            using (var displayForm = new BeamFramReinMakerForm(this))
+            using (BeamFramReinMakerForm displayForm = new(this))
             {
                 if (DialogResult.OK != displayForm.ShowDialog()) return false;
             }
@@ -124,15 +120,15 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         public Rebar FillTransverseBar(TransverseRebarLocation location)
         {
             // Get the geometry information which support rebar creation
-            var geomInfo = new RebarGeometry();
+            RebarGeometry geomInfo = new();
             switch (location)
             {
                 case TransverseRebarLocation.Start: // start transverse rebar
                 case TransverseRebarLocation.End: // end transverse rebar
-                    geomInfo = m_geometry.GetTransverseRebar(location, m_transverseEndSpacing);
+                    geomInfo = m_geometry.GetTransverseRebar(location, TransverseEndSpacing);
                     break;
                 case TransverseRebarLocation.Center: // center transverse rebar
-                    geomInfo = m_geometry.GetTransverseRebar(location, m_transverseCenterSpacing);
+                    geomInfo = m_geometry.GetTransverseRebar(location, TransverseCenterSpacing);
                     break;
             }
 

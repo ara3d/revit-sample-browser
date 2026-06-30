@@ -13,10 +13,10 @@
 
 #region Namespaces
 
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -43,7 +43,7 @@ namespace BuildingCoder
             var doc = uidoc.Document;
             var rc = Result.Failed;
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Place a New Sprinkler Instance");
 
 
@@ -97,7 +97,7 @@ namespace BuildingCoder
 
             if (null == ceiling
                 || !ceiling.Category.Id.Value.Equals(
-                    (int) BuiltInCategory.OST_Ceilings))
+                    (int)BuiltInCategory.OST_Ceilings))
             {
                 message = "No ceiling selected.";
                 return rc;

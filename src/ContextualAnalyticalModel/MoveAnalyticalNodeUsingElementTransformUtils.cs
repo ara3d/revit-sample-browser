@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -28,12 +28,10 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 var eRef = activeDoc.Selection.PickObject(ObjectType.PointOnElement, "Select an Analytical Node");
 
                 // Move the Analytical Panel using ElementTransformUtils
-                using (var transaction = new Transaction(document, "Move panel with ElementTransformUtils"))
-                {
-                    transaction.Start();
-                    ElementTransformUtils.MoveElement(document, eRef.ElementId, new XYZ(-5, -5, 0));
-                    transaction.Commit();
-                }
+                using Transaction transaction = new(document, "Move panel with ElementTransformUtils");
+                transaction.Start();
+                ElementTransformUtils.MoveElement(document, eRef.ElementId, new XYZ(-5, -5, 0));
+                transaction.Commit();
 
                 return Result.Succeeded;
             }

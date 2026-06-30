@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
 {
     public class SharedParameterBindingManager
     {
-        private readonly List<BuiltInCategory> m_categories = new List<BuiltInCategory>();
+        private readonly List<BuiltInCategory> m_categories = [];
 
         public SharedParameterBindingManager()
         {
@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
 
         public ExternalDefinitionCreationOptions GetCreationOptions()
         {
-            var options = new ExternalDefinitionCreationOptions(Name, Type)
+            ExternalDefinitionCreationOptions options = new(Name, Type)
             {
                 UserModifiable = UserModifiable,
                 Description = Description
@@ -53,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
         {
             var categories = doc.Settings.Categories;
 
-            var categorySet = new CategorySet();
+            CategorySet categorySet = new();
 
             foreach (var bic in m_categories)
             {
@@ -65,11 +65,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
 
         public void AddBindings(Document doc)
         {
-            Binding binding;
-            if (Instance)
-                binding = new InstanceBinding(GetCategories(doc));
-            else
-                binding = new TypeBinding(GetCategories(doc));
+            Binding binding = Instance ? new InstanceBinding(GetCategories(doc)) : new TypeBinding(GetCategories(doc));
             // assumes transaction open
             doc.ParameterBindings.Insert(Definition, binding, ParameterGroup);
         }

@@ -1,15 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
@@ -50,11 +49,11 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
         private readonly Document m_activeDocument;
 
-        private readonly List<string> m_columnNames = new List<string>();
+        private readonly List<string> m_columnNames = [];
 
-        private readonly List<BuiltInParameter> m_parameters = new List<BuiltInParameter>();
+        private readonly List<BuiltInParameter> m_parameters = [];
 
-        private List<Room> m_rooms = new List<Room>();
+        private List<Room> m_rooms = [];
 
         public RoomsData(Document activeDocument)
         {
@@ -65,7 +64,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             GetAllRooms(activeDocument);
         }
 
-        public ReadOnlyCollection<Room> Rooms => new ReadOnlyCollection<Room>(m_rooms);
+        public ReadOnlyCollection<Room> Rooms => new(m_rooms);
 
         /// <summary>
         ///     Update rooms data after room creation happens in Revit
@@ -108,10 +107,10 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             if (m_rooms.Count == 0) return null;
 
             // generate columns by all parameters            
-            var newTable = new DataTable();
+            DataTable newTable = new();
             foreach (var col in m_columnNames)
             {
-                var column = new DataColumn
+                DataColumn column = new()
                 {
                     ColumnName = col,
                     ReadOnly = true,
@@ -120,7 +119,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 newTable.Columns.Add(column);
             }
 
-            var constantCol = new DataColumn
+            DataColumn constantCol = new()
             {
                 ColumnName = SharedParam,
                 ReadOnly = true,
@@ -139,10 +138,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
                     Parameter param = null;
                     var bExist = ParameterAccess.ShareParameterExists(room, SharedParam, ref param);
-                    if (bExist && null != param && false == string.IsNullOrEmpty(param.AsString()))
-                        dataRow[m_parameters.Count] = param.AsString();
-                    else
-                        dataRow[m_parameters.Count] = "<null>";
+                    dataRow[m_parameters.Count] = bExist && null != param && false == string.IsNullOrEmpty(param.AsString()) ? param.AsString() : "<null>";
 
                     newTable.Rows.Add(dataRow);
                 }
@@ -154,8 +150,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         private void GetAllRooms(Document activeDoc)
         {
             // try to find all rooms in the project and add to the list
-            var filter = new RoomFilter();
-            var collector = new FilteredElementCollector(activeDoc);
+            RoomFilter filter = new();
+            FilteredElementCollector collector = new(activeDoc);
             m_rooms = collector.WherePasses(filter).ToElements().Cast<Room>().ToList();
             // sort rooms by number
             m_rooms.Sort(CompRoomByNumber);
@@ -163,8 +159,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
         private static int CompRoomByNumber(Room room1, Room room2)
         {
-            if (null == room1 || null == room2) return -1;
-            return room1.Number.CompareTo(room2.Number);
+            return null == room1 || null == room2 ? -1 : room1.Number.CompareTo(room2.Number);
         }
 
         private void InitializeParameters()

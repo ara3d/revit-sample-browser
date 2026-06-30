@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.UI;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
@@ -84,18 +84,16 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             var initialDirectory = folderRevit;
             if (Directory.Exists(folderAcadInterop)) initialDirectory = folderAcadInterop;
 
-            using (var openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Title = "Specify seed file";
-                openFileDialog.InitialDirectory = initialDirectory;
-                openFileDialog.Filter = "DGN Files |*.dgn";
-                openFileDialog.RestoreDirectory = true;
+            using var openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Specify seed file";
+            openFileDialog.InitialDirectory = initialDirectory;
+            openFileDialog.Filter = "DGN Files |*.dgn";
+            openFileDialog.RestoreDirectory = true;
 
-                var result = openFileDialog.ShowDialog();
-                if (result != DialogResult.Cancel) returnFileName = openFileDialog.FileName;
+            var result = openFileDialog.ShowDialog();
+            if (result != DialogResult.Cancel) returnFileName = openFileDialog.FileName;
 
-                return result;
-            }
+            return result;
         }
 
         private void button3DSeedFile_Click(object sender, EventArgs e)

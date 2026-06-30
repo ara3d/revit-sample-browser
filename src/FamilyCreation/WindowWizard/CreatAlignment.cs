@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 pFace2 = face;
             if (pFace1 != null && pFace2 != null)
             {
-                var subTransaction = new SubTransaction(m_document);
+                SubTransaction subTransaction = new(m_document);
                 subTransaction.Start();
                 m_familyCreator.NewAlignment(view, pFace1.Reference, pFace2.Reference);
                 subTransaction.Commit();

@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 {
@@ -24,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
                 var doc = commandData.Application.ActiveUIDocument;
 
                 // must select a element first
-                var elementSet = new ElementSet();
+                ElementSet elementSet = new();
                 foreach (var elementId in doc.Selection.GetElementIds())
                 {
                     elementSet.Insert(doc.Document.GetElement(elementId));
@@ -37,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
                     return Result.Cancelled;
                 }
 
-                var tran = new Transaction(doc.Document, "BoundaryConditions");
+                Transaction tran = new(doc.Document, "BoundaryConditions");
                 tran.Start();
 
                 // deal with the selected element
@@ -53,22 +53,20 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
                     }
 
                     // prepare the relative data
-                    var dataBuffer = new BoundaryConditionsData(element);
+                    BoundaryConditionsData dataBuffer = new(element);
 
                     // show UI
-                    using (var displayForm = new BoundaryConditionsForm(dataBuffer))
+                    using BoundaryConditionsForm displayForm = new(dataBuffer);
+                    var result = displayForm.ShowDialog();
+                    switch (result)
                     {
-                        var result = displayForm.ShowDialog();
-                        switch (result)
-                        {
-                            case DialogResult.OK:
-                                tran.Commit();
-                                return Result.Succeeded;
-                            case DialogResult.Retry:
-                                message = "failed to create BoundaryConditions.";
-                                tran.RollBack();
-                                return Result.Failed;
-                        }
+                        case DialogResult.OK:
+                            tran.Commit();
+                            return Result.Succeeded;
+                        case DialogResult.Retry:
+                            message = "failed to create BoundaryConditions.";
+                            tran.RollBack();
+                            return Result.Failed;
                     }
                 }
 
@@ -96,25 +94,18 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = element.Document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalElement analyticalElement)
+                    if (associatedElement is not null and AnalyticalElement analyticalElement)
                         elemAnalytical = analyticalElement;
                 }
             }
 
-            if (null == elemAnalytical) return false;
-            switch (element)
+            return null != elemAnalytical && element switch
             {
-                case FamilyInstance familyInstance when StructuralType.Footing ==
-                                                        familyInstance.StructuralType:
-                    return false; // if selected a isolated foundation not create BC
-                case FamilyInstance _:
-                case Wall _:
-                case Floor _:
-                case WallFoundation _:
-                    return true;
-                default:
-                    return false;
-            }
+                FamilyInstance familyInstance when StructuralType.Footing ==
+                                                                        familyInstance.StructuralType => false,// if selected a isolated foundation not create BC
+                FamilyInstance _ or Wall _ or Floor _ or WallFoundation _ => true,
+                _ => false,
+            };
         }
     }
 }

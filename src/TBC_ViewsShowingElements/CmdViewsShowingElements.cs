@@ -18,10 +18,11 @@
 
 #region Namespaces
 
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -53,7 +54,7 @@ namespace BuildingCoder
 
             var targets
                 = from id in ids
-                select doc.GetElement(id);
+                  select doc.GetElement(id);
 
             var views = targets
                 .FindAllViewsWhereAllElementsVisible();
@@ -67,9 +68,10 @@ namespace BuildingCoder
             var nViews = names.Count(
                 c => ',' == c) + 1;
 
-            var dlg = new TaskDialog($"{nElems} element{Util.PluralSuffix(nElems)} are visible in {nViews} view{Util.PluralSuffix(nViews)}");
-
-            dlg.MainInstruction = names;
+            var dlg = new TaskDialog($"{nElems} element{Util.PluralSuffix(nElems)} are visible in {nViews} view{Util.PluralSuffix(nViews)}")
+            {
+                MainInstruction = names
+            };
 
             dlg.Show();
 

@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Electrical;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Electrical;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
     /// <summary>

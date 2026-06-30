@@ -1,13 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 {
@@ -26,10 +27,10 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             m_revit = revit.Application;
             m_elements = elements;
 
-            var tran = new Transaction(m_revit.ActiveUIDocument.Document, "BeamAndSlabNewParameter");
+            Transaction tran = new(m_revit.ActiveUIDocument.Document, "BeamAndSlabNewParameter");
             tran.Start();
 
-            using (var displayForm = new BeamAndSlabParametersForm(this))
+            using (BeamAndSlabParametersForm displayForm = new(this))
             {
                 displayForm.ShowDialog();
             }
@@ -60,8 +61,8 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 
             if (null == information)
             {
-                var externalDefinitionCreationOptions =
-                    new ExternalDefinitionCreationOptions("Unique ID", SpecTypeId.String.Text);
+                ExternalDefinitionCreationOptions externalDefinitionCreationOptions =
+                    new("Unique ID", SpecTypeId.String.Text);
                 informationCollection.Definitions.Create(externalDefinitionCreationOptions);
                 information = informationCollection.Definitions.get_Item("Unique ID");
             }
@@ -85,19 +86,19 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 
         public void SetValueToUniqueIdParameter()
         {
-            var beamClassFilter = new ElementClassFilter(typeof(FamilyInstance));
-            var slabClassFilter = new ElementClassFilter(typeof(Floor));
-            var beamTypeFilter = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFraming);
-            var slabTypeFilter = new ElementCategoryFilter(BuiltInCategory.OST_Floors);
+            ElementClassFilter beamClassFilter = new(typeof(FamilyInstance));
+            ElementClassFilter slabClassFilter = new(typeof(Floor));
+            ElementCategoryFilter beamTypeFilter = new(BuiltInCategory.OST_StructuralFraming);
+            ElementCategoryFilter slabTypeFilter = new(BuiltInCategory.OST_Floors);
 
-            var beamFilter = new LogicalAndFilter(beamClassFilter, beamTypeFilter);
-            var slabFilter = new LogicalAndFilter(slabClassFilter, slabTypeFilter);
+            LogicalAndFilter beamFilter = new(beamClassFilter, beamTypeFilter);
+            LogicalAndFilter slabFilter = new(slabClassFilter, slabTypeFilter);
 
-            var beamandslabFilter = new LogicalOrFilter(beamFilter, slabFilter);
+            LogicalOrFilter beamandslabFilter = new(beamFilter, slabFilter);
             var elems = from elem in
                     new FilteredElementCollector(m_revit.ActiveUIDocument.Document).WherePasses(beamandslabFilter)
                         .ToElements()
-                select elem;
+                                         select elem;
 
             foreach (var elem in elems)
             {
@@ -122,7 +123,7 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 
         public ArrayList SendValueToListBox()
         {
-            var elements = new ElementSet();
+            ElementSet elements = new();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
             {
                 elements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
@@ -130,7 +131,7 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 
             var i = elements.GetEnumerator();
 
-            var parameterValueArrangeBox = new ArrayList();
+            ArrayList parameterValueArrangeBox = [];
 
             i.Reset();
             var moreElements = i.MoveNext();
@@ -138,7 +139,7 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             while (moreElements)
             {
 
-                if (!(i.Current is Element component))
+                if (i.Current is not Element component)
                 {
                     moreElements = i.MoveNext();
                     continue;
@@ -150,8 +151,8 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
                     continue;
                 }
 
-                if ("Structural Framing" != component.Category.Name &&
-                    "Floors" != component.Category.Name)
+                if (component.Category.Name is not "Structural Framing" and
+                    not "Floors")
                 {
                     moreElements = i.MoveNext();
                     continue;
@@ -181,7 +182,7 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 
         public void FindElement(string uniqueIdValue)
         {
-            var seleElements = new ElementSet();
+            ElementSet seleElements = new();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
             {
                 seleElements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
@@ -196,7 +197,7 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             while (moreElements)
             {
 
-                if (!(i.Current is Element component))
+                if (i.Current is not Element component)
                 {
                     moreElements = i.MoveNext();
                     continue;
@@ -208,8 +209,8 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
                     continue;
                 }
 
-                if ("Structural Framing" != component.Category.Name &&
-                    "Floors" != component.Category.Name)
+                if (component.Category.Name is not "Structural Framing" and
+                    not "Floors")
                 {
                     moreElements = i.MoveNext();
                     continue;
@@ -251,7 +252,7 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             sharedParameterFile += "\\MySharedParameters.txt";
 
 
-            var documentMessage = new FileInfo(sharedParameterFile);
+            FileInfo documentMessage = new(sharedParameterFile);
             var fileExist = documentMessage.Exists;
 
             if (!fileExist)

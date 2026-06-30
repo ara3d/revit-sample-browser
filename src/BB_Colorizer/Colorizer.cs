@@ -2,7 +2,6 @@
 using Autodesk.Revit.DB.DirectContext3D;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
-using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace Ara3D.Bowerbird.RevitSamples;
 public class Colorizer : NamedCommand
 {
     public override string Name => "Colorizer";
-    
+
     private static StairsDc3dServer _server;
     private static UIApplication _uiapp;
 
@@ -66,7 +65,7 @@ public static class UiHelpers
 {
     public static void ShowOneButtonWindow(string label, Action onClosed)
     {
-        var form = new Form
+        Form form = new()
         {
             Text = label,
             StartPosition = FormStartPosition.CenterScreen,
@@ -75,7 +74,7 @@ public static class UiHelpers
             FormBorderStyle = FormBorderStyle.FixedDialog
         };
 
-        var btn = new Button
+        Button btn = new()
         {
             Text = label,
             Dock = DockStyle.Fill
@@ -83,7 +82,7 @@ public static class UiHelpers
 
         btn.Click += (_, __) => form.Close();
 
-        bool fired = false;
+        var fired = false;
         form.FormClosed += (_, __) =>
         {
             if (fired) return;
@@ -99,37 +98,69 @@ public static class UiHelpers
 
 public class StairsDc3dServer : IDirectContext3DServer
 {
-    private readonly Guid _id = new Guid("7966705D-19AC-49F4-8BCC-02624D25AC12");
+    private readonly Guid _id = new("7966705D-19AC-49F4-8BCC-02624D25AC12");
 
-    public Guid GetServerId() => _id;
-    public string GetName() => "Stairs Highlighter (DC3D)";
-    public string GetDescription() => "Draws translucent purple quads over stairs in floor plan views.";
-    public string GetVendorId() => "Ara 3D";
-    public string GetSourceId() => "";       // recommended to keep empty for third-party servers
-    public string GetApplicationId() => "";  // recommended to keep empty for third-party servers
-    public ExternalServiceId GetServiceId() => ExternalServices.BuiltInExternalServices.DirectContext3DService;
-    public bool UsesHandles() => false;      // classic third-party usage – no handle elements. :contentReference[oaicite:3]{index=3}
+    public Guid GetServerId()
+    {
+        return _id;
+    }
+
+    public string GetName()
+    {
+        return "Stairs Highlighter (DC3D)";
+    }
+
+    public string GetDescription()
+    {
+        return "Draws translucent purple quads over stairs in floor plan views.";
+    }
+
+    public string GetVendorId()
+    {
+        return "Ara 3D";
+    }
+
+    public string GetSourceId()
+    {
+        return "";       // recommended to keep empty for third-party servers
+    }
+
+    public string GetApplicationId()
+    {
+        return "";  // recommended to keep empty for third-party servers
+    }
+
+    public ExternalServiceId GetServiceId()
+    {
+        return ExternalServices.BuiltInExternalServices.DirectContext3DService;
+    }
+
+    public bool UsesHandles()
+    {
+        return false;      // classic third-party usage – no handle elements. :contentReference[oaicite:3]{index=3}
+    }
 
     public bool CanExecute(View view)
     {
-        var plan = view as ViewPlan;
-        return plan != null && plan.ViewType == ViewType.FloorPlan;
+        return view is ViewPlan plan && plan.ViewType == ViewType.FloorPlan;
     }
 
-    public bool UseInTransparentPass(View view) => true; // we draw translucent geometry
+    public bool UseInTransparentPass(View view)
+    {
+        return true; // we draw translucent geometry
+    }
 
     public Outline GetBoundingBox(View view)
     {
         // Coarse, view-space bounding box of all stairs in this plan
-        var plan = view as ViewPlan;
-        if (plan == null) return null;
+        if (view is not ViewPlan plan) return null;
 
         var stairs = new FilteredElementCollector(view.Document, view.Id)
             .OfCategory(BuiltInCategory.OST_Stairs)
             .WhereElementIsNotElementType()
             .ToElements();
 
-        bool any = false;
+        var any = false;
         XYZ min = null, max = null;
 
         foreach (var e in stairs)
@@ -144,10 +175,10 @@ public class StairsDc3dServer : IDirectContext3DServer
                     tf.OfPoint(new XYZ(bb.Min.X, bb.Min.Y, bb.Min.Z)),
                     tf.OfPoint(new XYZ(bb.Max.X, bb.Max.Y, bb.Max.Z))
                 };
-            var bmin = new XYZ(Math.Min(corners[0].X, corners[1].X),
+            XYZ bmin = new(Math.Min(corners[0].X, corners[1].X),
                                Math.Min(corners[0].Y, corners[1].Y),
                                Math.Min(corners[0].Z, corners[1].Z));
-            var bmax = new XYZ(Math.Max(corners[0].X, corners[1].X),
+            XYZ bmax = new(Math.Max(corners[0].X, corners[1].X),
                                Math.Max(corners[0].Y, corners[1].Y),
                                Math.Max(corners[0].Z, corners[1].Z));
 
@@ -166,8 +197,7 @@ public class StairsDc3dServer : IDirectContext3DServer
     {
         if (!DrawContext.IsTransparentPass()) return; // only draw once in the transparent pass. :contentReference[oaicite:4]{index=4}
 
-        var plan = view as ViewPlan;
-        if (plan == null) return;
+        if (view is not ViewPlan plan) return;
 
         var doc = plan.Document;
 
@@ -178,7 +208,7 @@ public class StairsDc3dServer : IDirectContext3DServer
             .ToElements();
 
         // Build quads from each stair's view bbox
-        var quads = new List<XYZ[]>(capacity: stairs.Count);
+        List<XYZ[]> quads = new(capacity: stairs.Count);
 
         foreach (var e in stairs)
         {
@@ -189,7 +219,7 @@ public class StairsDc3dServer : IDirectContext3DServer
 
             // Lift slightly toward the camera to avoid z-fighting.
             // Plan view looks down -Z; lift +0.10' above the top of bbox.
-            double z = bb.Max.Z + 0.10;
+            var z = bb.Max.Z + 0.10;
 
             var p0 = tf.OfPoint(new XYZ(bb.Min.X, bb.Min.Y, z));
             var p1 = tf.OfPoint(new XYZ(bb.Max.X, bb.Min.Y, z));
@@ -202,16 +232,16 @@ public class StairsDc3dServer : IDirectContext3DServer
         if (quads.Count == 0) return;
 
         // Each quad = 4 vertices, 2 triangles = 6 indices (shorts)
-        int vertexCount = quads.Count * 4;
-        int triCount = quads.Count * 2;
-        int indexCount = triCount * 3;
+        var vertexCount = quads.Count * 4;
+        var triCount = quads.Count * 2;
+        var indexCount = triCount * 3;
 
         // Allocate buffers
         var vfBits = VertexFormatBits.PositionColored; // per-vertex color with alpha. :contentReference[oaicite:5]{index=5}
-        using var vformat = new VertexFormat(vfBits);
-        using var vbuf = new VertexBuffer(vertexCount * VertexPositionColored.GetSizeInFloats()); // floats. :contentReference[oaicite:6]{index=6}
-        using var ibuf = new IndexBuffer(indexCount * IndexTriangle.GetSizeInShortInts());        // shorts. :contentReference[oaicite:7]{index=7}
-        using var effect = new EffectInstance(vfBits);
+        using VertexFormat vformat = new(vfBits);
+        using VertexBuffer vbuf = new(vertexCount * VertexPositionColored.GetSizeInFloats()); // floats. :contentReference[oaicite:6]{index=6}
+        using IndexBuffer ibuf = new(indexCount * IndexTriangle.GetSizeInShortInts());        // shorts. :contentReference[oaicite:7]{index=7}
+        using EffectInstance effect = new(vfBits);
         // We rely on per-vertex alpha + transparent pass, no global transparency needed.
         // effect.SetTransparency(0.0); // optional; would multiply with vertex alpha. :contentReference[oaicite:8]{index=8}
 
@@ -219,7 +249,7 @@ public class StairsDc3dServer : IDirectContext3DServer
         vbuf.Map(vertexCount * VertexPositionColored.GetSizeInFloats());
         var vstream = vbuf.GetVertexStreamPositionColored();
 
-        var purple = new ColorWithTransparency(128, 0, 128, 160); // RGBA (alpha 160/255 ~ 0.63) :contentReference[oaicite:9]{index=9}
+        ColorWithTransparency purple = new(128, 0, 128, 160); // RGBA (alpha 160/255 ~ 0.63) :contentReference[oaicite:9]{index=9}
         foreach (var q in quads)
         {
             vstream.AddVertex(new VertexPositionColored(q[0], purple));
@@ -235,7 +265,7 @@ public class StairsDc3dServer : IDirectContext3DServer
 
         for (short i = 0; i < quads.Count; ++i)
         {
-            short baseV = (short)(i * 4);
+            var baseV = (short)(i * 4);
             // two triangles: (0,1,2) and (0,2,3)
             istream.AddTriangle(new IndexTriangle(baseV, (short)(baseV + 1), (short)(baseV + 2)));
             istream.AddTriangle(new IndexTriangle(baseV, (short)(baseV + 2), (short)(baseV + 3)));

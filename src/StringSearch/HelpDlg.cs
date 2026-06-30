@@ -26,28 +26,27 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using System.Text;
 #endregion
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 {
-  public partial class HelpDlg : Form
-  {
-    static readonly string HelpTextResourceName =
-      "Ara3D.RevitSampleBrowser.StringSearch.help_text.rtf";
-
-    public HelpDlg()
+    public partial class HelpDlg : Form
     {
-      InitializeComponent();
+        static readonly string HelpTextResourceName =
+          "Ara3D.RevitSampleBrowser.StringSearch.help_text.rtf";
+
+        public HelpDlg()
+        {
+            InitializeComponent();
+        }
+
+        private void HelpDlg_Load(object sender, EventArgs e)
+        {
+            var exe = AboutBox.ExecutingAssembly;
+
+            var s = exe.GetManifestResourceStream(HelpTextResourceName);
+
+            richTextBox1.LoadFile(s, RichTextBoxStreamType.RichText);
+        }
     }
-
-    private void HelpDlg_Load( object sender, EventArgs e )
-    {
-      Assembly exe = AboutBox.ExecutingAssembly;
-
-      Stream s = exe.GetManifestResourceStream(HelpTextResourceName);
-
-      richTextBox1.LoadFile( s, RichTextBoxStreamType.RichText );
-    }
-  }
 }

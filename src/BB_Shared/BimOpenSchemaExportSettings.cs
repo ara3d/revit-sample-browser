@@ -51,7 +51,9 @@ public sealed class BimOpenSchemaExportSettings
         };
 
     public string ToJsonString()
-        => JsonSerializer.Serialize(this, JsonOptions);
+    {
+        return JsonSerializer.Serialize(this, JsonOptions);
+    }
 
     // -----------------------------
     // Non-serialized properties
@@ -71,7 +73,7 @@ public sealed class BimOpenSchemaExportSettings
     public bool IncludeGeometry { get; set; } = true;
     public bool IncludeParameters { get; set; } = true;
     public bool IncludeAnnotationElements { get; set; } = false;
-    
+
     public DetailLevelEnum DetailLevel { get; set; } = DetailLevelEnum.Fine;
 
     // -----------------------------
@@ -82,8 +84,7 @@ public sealed class BimOpenSchemaExportSettings
     /// Wildcard patterns (e.g. "*Line*", "HVAC*") for class names to skip.
     /// </summary>
     public List<string> SkippedClassNames { get; set; } =
-        new()
-        {
+        [
             "*Line*",
             "*Point*",
             "Hub",
@@ -99,14 +100,13 @@ public sealed class BimOpenSchemaExportSettings
             "*Reference*",
             "*Style*",
             "*Origin*"
-        };
+        ];
 
     /// <summary>
     /// Explicit overrides that force inclusion even if skipped.
     /// </summary>
     public List<string> IncludedClassNamesOverride { get; set; } =
-        new()
-        {
+        [
             "Phase",
             "Level",
             "Grid",
@@ -116,15 +116,14 @@ public sealed class BimOpenSchemaExportSettings
             "SurveyPoint",
             "DesignOption",
             "Workset",
-        };
+        ];
 
     // -----------------------------
     // Category filters
     // -----------------------------
 
     public List<string> SkippedCategories { get; set; } =
-        new()
-        {
+        [
             "*Line*",
             "*AnalyticalSurfaces*",
             "OST_WeakDims",
@@ -141,10 +140,10 @@ public sealed class BimOpenSchemaExportSettings
             "*Symbol*",
             "*Label*",
             "OST_SunStudy"
-        };
+        ];
 
     public List<string> IncludedCategoriesOverride { get; set; } =
-        new();
+        [];
 
     // -----------------------------
     // Defaults
@@ -156,7 +155,7 @@ public sealed class BimOpenSchemaExportSettings
     // -----------------------------
     // Load / Save helpers
     // -----------------------------
-        
+
     public static BimOpenSchemaExportSettings Load(string jsonPath)
     {
         if (!File.Exists(jsonPath))

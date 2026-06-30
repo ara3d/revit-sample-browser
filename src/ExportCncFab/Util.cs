@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.ExportCncFab.CS
     {
         public static bool BrowseDirectory(ref string path, bool allowCreate)
         {
-            var browseDlg = new FolderBrowserDialog
+            FolderBrowserDialog browseDlg = new()
             {
                 SelectedPath = path,
                 ShowNewFolderButton = allowCreate

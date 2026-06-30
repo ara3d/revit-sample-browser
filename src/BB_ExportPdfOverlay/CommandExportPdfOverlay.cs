@@ -1,21 +1,21 @@
-﻿using Autodesk.Revit.DB;
+﻿using Ara3D.Utils;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ara3D.Utils;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
 public class CommandExportPdfOverlay : NamedCommand
 {
-    public override string Name=> "Export PDF Overlay";
+    public override string Name => "Export PDF Overlay";
 
     public UIApplication app { get; set; }
 
     public override void Execute(object arg)
     {
-        app = (arg as UIApplication);
+        app = arg as UIApplication;
         if (app == null)
             throw new Exception($"Passed argument {arg} is either null or not a UI application");
 
@@ -190,7 +190,7 @@ public sealed class PdfElementOverlayRecord
     public string ViewUniqueId { get; set; }
     public string ViewName { get; set; }
     public string ViewType { get; set; }
-    
+
     public string PdfFileName { get; set; }
 
     public double X { get; set; }
@@ -248,10 +248,7 @@ public static class RevitPdfOverlay
         if (clampToPage)
             normalized = Clamp01(normalized);
 
-        if (normalized.Width <= 0 || normalized.Height <= 0)
-            return null;
-
-        return normalized;
+        return normalized.Width <= 0 || normalized.Height <= 0 ? null : normalized;
     }
 
     public static Rect2D? GetExportedViewBox2D(View view)
@@ -316,7 +313,9 @@ public static class RevitPdfOverlay
     }
 
     public static double Clamp(double x, double min, double max)
-        => x < min ? min : x > max ? max : x;
+    {
+        return x < min ? min : x > max ? max : x;
+    }
 }
 
 
@@ -340,7 +339,9 @@ public readonly struct Rect2D
     public bool IsValid => Width > 0 && Height > 0;
 
     public Rect2D Inflate(double amount)
-        => new Rect2D(MinX - amount, MinY - amount, MaxX + amount, MaxY + amount);
+    {
+        return new Rect2D(MinX - amount, MinY - amount, MaxX + amount, MaxY + amount);
+    }
 }
 
 public static class RevitViewProjection
@@ -601,7 +602,7 @@ public static class RevitPdfViewIndex
 
                 if (!result.TryGetValue(id, out var list))
                 {
-                    list = new List<ElementId>();
+                    list = [];
                     result[id] = list;
                 }
 
@@ -625,24 +626,11 @@ public static class RevitPdfViewIndex
 
     public static bool Is2DView(View v)
     {
-        if (v == null) return false;
-
-        switch (v.ViewType)
+        return v != null && v.ViewType switch
         {
-            case ViewType.FloorPlan:
-            case ViewType.CeilingPlan:
-            case ViewType.Elevation:
-            case ViewType.Section:
-            case ViewType.Detail:
-            case ViewType.DraftingView:
-            case ViewType.AreaPlan:
-            case ViewType.EngineeringPlan:
-            case ViewType.Legend:
-                return true;
-
-            default:
-                return false;
-        }
+            ViewType.FloorPlan or ViewType.CeilingPlan or ViewType.Elevation or ViewType.Section or ViewType.Detail or ViewType.DraftingView or ViewType.AreaPlan or ViewType.EngineeringPlan or ViewType.Legend => true,
+            _ => false,
+        };
     }
 
     public static bool IsLikelyModelElement(Element e)

@@ -12,6 +12,8 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExtensibleStorage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,8 +21,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS
 {
@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
 
         public static SchemaWrapper FromSchema(Schema schema)
         {
-            var swReturn = new SchemaWrapper(schema);
+            SchemaWrapper swReturn = new(schema);
 
             foreach (var currentField in schema.ListFields())
             {
@@ -77,24 +77,17 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
                     new[] { typeof(string), typeof(ForgeTypeId), typeof(SchemaWrapper) });
                 Type[] methodGenericParameters = null;
 
-                switch (currentField.ContainerType)
+                methodGenericParameters = currentField.ContainerType switch
                 {
-                    case ContainerType.Simple:
-                        methodGenericParameters = new[] { currentField.ValueType };
-                        break;
-                    case ContainerType.Array:
-                        methodGenericParameters = new[]
-                            { typeof(IList<int>).GetGenericTypeDefinition().MakeGenericType(currentField.ValueType) };
-                        break;
-                    default:
-                        methodGenericParameters = new[]
-                        {
+                    ContainerType.Simple => new[] { currentField.ValueType },
+                    ContainerType.Array => new[]
+                                                { typeof(IList<int>).GetGenericTypeDefinition().MakeGenericType(currentField.ValueType) },
+                    _ => new[]
+                                            {
                             typeof(Dictionary<int, int>).GetGenericTypeDefinition()
                                 .MakeGenericType(currentField.KeyType, currentField.ValueType)
-                        };
-                        break;
-                }
-
+                        },
+                };
                 var genericAddFieldMethodInstantiated = addFieldmethod.MakeGenericMethod(methodGenericParameters);
                 SchemaWrapper swSub = null;
                 if (currentField.ValueType == typeof(Entity))
@@ -119,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
 
         public static SchemaWrapper FromXml(string xmlDataPath)
         {
-            var sampleSchemaInXml = new XmlSerializer(typeof(SchemaWrapper));
+            XmlSerializer sampleSchemaInXml = new(typeof(SchemaWrapper));
             Stream streamXmlIn = new FileStream(xmlDataPath, FileMode.Open, FileAccess.Read, FileShare.Read);
             SchemaWrapper wrapperIn = null;
             try
@@ -198,13 +191,11 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
                     var iListType = typeof(IList<int>).GetGenericTypeDefinition();
 
                     genericParams = fieldType.GetGenericArguments();
-                    if (tGeneric == iDictionaryType)
-                        currentFieldBuilder =
-                            m_schemaBuilder.AddMapField(currentFieldData.Name, genericParams[0], genericParams[1]);
-                    else if (tGeneric == iListType)
-                        currentFieldBuilder = m_schemaBuilder.AddArrayField(currentFieldData.Name, genericParams[0]);
-                    else
-                        throw new Exception("Generic type is neither IList<> nor IDictionary<>, cannot process.");
+                    currentFieldBuilder = tGeneric == iDictionaryType
+                        ? m_schemaBuilder.AddMapField(currentFieldData.Name, genericParams[0], genericParams[1])
+                        : tGeneric == iListType
+                        ? m_schemaBuilder.AddArrayField(currentFieldData.Name, genericParams[0])
+                        : throw new Exception("Generic type is neither IList<> nor IDictionary<>, cannot process.");
                 }
                 else
                 {
@@ -238,7 +229,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
 
         public void ToXml(string xmlDataPath)
         {
-            var sampleSchemaOutXml = new XmlSerializer(typeof(SchemaWrapper));
+            XmlSerializer sampleSchemaOutXml = new(typeof(SchemaWrapper));
             Stream streamXmlOut = new FileStream(xmlDataPath, FileMode.OpenOrCreate, FileAccess.ReadWrite,
                 FileShare.ReadWrite);
             sampleSchemaOutXml.Serialize(streamXmlOut, this);
@@ -247,7 +238,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
 
         public override string ToString()
         {
-            var strBuilder = new StringBuilder();
+            StringBuilder strBuilder = new();
             strBuilder.AppendLine(
                 $"--Start Schema--   Name: {Data.Name}, Description: {Data.Documentation}, Id: {Data.SchemaId}, ReadAccess: {Data.ReadAccess}, WriteAccess: {Data.WriteAccess}");
             foreach (var fd in Data.DataList)
@@ -261,7 +252,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
 
         public string GetSchemaEntityData(Entity entity)
         {
-            var swBuilder = new StringBuilder();
+            StringBuilder swBuilder = new();
             DumpAllSchemaEntityData(entity, entity.Schema, swBuilder);
             return swBuilder.ToString();
         }
@@ -282,18 +273,11 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
 
                 // Key type is only used for maps; pass int as placeholder for simple/array fields.
                 Type[] methodGenericParameters = null;
-                switch (currentField.ContainerType)
+                methodGenericParameters = currentField.ContainerType switch
                 {
-                    case ContainerType.Simple:
-                    case ContainerType.Array:
-                        methodGenericParameters =
-                            new[] { typeof(int), currentField.ValueType };
-                        break;
-                    default:
-                        methodGenericParameters = new[] { currentField.KeyType, currentField.ValueType };
-                        break;
-                }
-
+                    ContainerType.Simple or ContainerType.Array => new[] { typeof(int), currentField.ValueType },
+                    _ => new[] { currentField.KeyType, currentField.ValueType },
+                };
                 var genericGetFieldDataAsStringmethodInstantiated =
                     getFieldDataAsStringMethod.MakeGenericMethod(methodGenericParameters);
                 genericGetFieldDataAsStringmethodInstantiated.Invoke(this,
@@ -310,25 +294,18 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
             Type[] methodGenericParameters = null;
             object[] invokeParams = null;
             Type[] methodOverloadSelectionParams = null;
-            switch (field.ContainerType)
+            methodGenericParameters = field.ContainerType switch
             {
-                case ContainerType.Simple:
-                    methodGenericParameters = new[] { field.ValueType };
-                    break;
-                case ContainerType.Array:
-                    methodGenericParameters = new[]
-                        { typeof(IList<int>).GetGenericTypeDefinition().MakeGenericType(field.ValueType) };
-                    break;
+                ContainerType.Simple => new[] { field.ValueType },
+                ContainerType.Array => new[]
+                                        { typeof(IList<int>).GetGenericTypeDefinition().MakeGenericType(field.ValueType) },
                 //map
-                default:
-                    methodGenericParameters = new[]
-                    {
+                _ => new[]
+                                    {
                         typeof(IDictionary<int, int>).GetGenericTypeDefinition()
                             .MakeGenericType(field.KeyType, field.ValueType)
-                    };
-                    break;
-            }
-
+                    },
+            };
             if (fieldUnit.Empty())
             {
                 methodOverloadSelectionParams = new[] { typeof(Field) };
@@ -345,78 +322,78 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
             switch (field.ContainerType)
             {
                 case ContainerType.Simple:
-                {
-                    var retval = (TFieldType)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
-                    if (fieldType == typeof(Entity))
                     {
-                        var subSchema = Schema.Lookup(field.SubSchemaGUID);
-                        strBuilder.AppendLine(
-                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{SubEntity}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
-                        DumpAllSchemaEntityData(retval, subSchema, strBuilder);
-                    }
-                    else
-                    {
-                        strBuilder.AppendLine(
-                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value: {retval}, Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
-                    }
+                        var retval = (TFieldType)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
+                        if (fieldType == typeof(Entity))
+                        {
+                            var subSchema = Schema.Lookup(field.SubSchemaGUID);
+                            strBuilder.AppendLine(
+                                $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{SubEntity}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
+                            DumpAllSchemaEntityData(retval, subSchema, strBuilder);
+                        }
+                        else
+                        {
+                            strBuilder.AppendLine(
+                                $"Field: {field.FieldName}, Type: {field.ValueType}, Value: {retval}, Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case ContainerType.Array:
-                {
-                    var listRetval = (IList<TFieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
-                    if (fieldType == typeof(Entity))
                     {
-                        strBuilder.AppendLine(
-                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{SubEntity}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
-
-                        foreach (var fa in listRetval)
+                        var listRetval = (IList<TFieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
+                        if (fieldType == typeof(Entity))
                         {
-                            strBuilder.Append("  Array Value: ");
-                            DumpAllSchemaEntityData(fa, Schema.Lookup(field.SubSchemaGUID), strBuilder);
-                        }
-                    }
-                    else
-                    {
-                        strBuilder.AppendLine(
-                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{Array}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
-                        foreach (var fa in listRetval)
-                        {
-                            strBuilder.AppendLine($"  Array value: {fa}");
-                        }
-                    }
+                            strBuilder.AppendLine(
+                                $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{SubEntity}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
 
-                    break;
-                }
+                            foreach (var fa in listRetval)
+                            {
+                                strBuilder.Append("  Array Value: ");
+                                DumpAllSchemaEntityData(fa, Schema.Lookup(field.SubSchemaGUID), strBuilder);
+                            }
+                        }
+                        else
+                        {
+                            strBuilder.AppendLine(
+                                $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{Array}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
+                            foreach (var fa in listRetval)
+                            {
+                                strBuilder.AppendLine($"  Array value: {fa}");
+                            }
+                        }
+
+                        break;
+                    }
                 //Map
                 default:
-                {
-                    strBuilder.AppendLine(
-                        $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{Map}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
-                    var mapRetval =
-                        (IDictionary<TKeyType, TFieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
-                    if (fieldType == typeof(Entity))
-                    {
-                        strBuilder.AppendLine(
-                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{SubEntity}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
-                        foreach (var fa in mapRetval.Values)
-                        {
-                            strBuilder.Append("  Map Value: ");
-                            DumpAllSchemaEntityData(fa, Schema.Lookup(field.SubSchemaGUID), strBuilder);
-                        }
-                    }
-                    else
                     {
                         strBuilder.AppendLine(
                             $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{Map}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
-                        foreach (var fa in mapRetval.Values)
+                        var mapRetval =
+                        (IDictionary<TKeyType, TFieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
+                        if (fieldType == typeof(Entity))
                         {
-                            strBuilder.AppendLine($"  Map value: {fa}");
+                            strBuilder.AppendLine(
+                                $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{SubEntity}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
+                            foreach (var fa in mapRetval.Values)
+                            {
+                                strBuilder.Append("  Map Value: ");
+                                DumpAllSchemaEntityData(fa, Schema.Lookup(field.SubSchemaGUID), strBuilder);
+                            }
                         }
-                    }
+                        else
+                        {
+                            strBuilder.AppendLine(
+                                $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{Map}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
+                            foreach (var fa in mapRetval.Values)
+                            {
+                                strBuilder.AppendLine($"  Map value: {fa}");
+                            }
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 

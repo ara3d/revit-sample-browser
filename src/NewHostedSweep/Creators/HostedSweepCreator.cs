@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections;
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
@@ -15,10 +15,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
     /// </summary>
     public abstract class HostedSweepCreator
     {
-        /// <summary>
-        ///     List of Modification to store all the created hosted-sweep by this.
-        /// </summary>
-        private readonly List<ModificationData> m_createdHostedSweeps;
 
         /// <summary>
         ///     Dictionary to store element's geometry which this creator can be used.
@@ -37,8 +33,8 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         {
             RvtUiDoc = rvtDoc;
             RvtDoc = rvtDoc.Document;
-            ElemGeom = new Dictionary<Element, ElementGeometry>();
-            m_createdHostedSweeps = new List<ModificationData>();
+            ElemGeom = [];
+            CreatedHostedSweeps = [];
         }
 
         /// <summary>
@@ -61,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// <summary>
         ///     A list to store all the created hosted-sweep by this creator.
         /// </summary>
-        public List<ModificationData> CreatedHostedSweeps => m_createdHostedSweeps;
+        public List<ModificationData> CreatedHostedSweeps { get; }
 
         public Document RvtDocument => RvtDoc;
 
@@ -69,14 +65,14 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 
         public ModificationData Create(CreationData creationData)
         {
-            var refArr = new ReferenceArray();
+            ReferenceArray refArr = new();
             foreach (var edge in creationData.EdgesForHostedSweep)
             {
                 refArr.Append(edge.Reference);
             }
 
             ModificationData modificationData = null;
-            var transaction = new Transaction(RvtDoc, "CreateHostedSweep");
+            Transaction transaction = new(RvtDoc, "CreateHostedSweep");
             try
             {
                 transaction.Start();
@@ -89,7 +85,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
                     // just only end transaction return true, we will create the hosted sweep.                    
                     modificationData =
                         new ModificationData(createdHostedSweep, creationData);
-                    m_createdHostedSweeps.Add(modificationData);
+                    CreatedHostedSweeps.Add(modificationData);
                 }
             }
             catch
@@ -116,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         protected ElementGeometry ExtractGeom(Element elem)
         {
             Solid result = null;
-            var options = new Options
+            Options options = new()
             {
                 ComputeReferences = true
             };

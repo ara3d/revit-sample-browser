@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.ComponentModel;
-using System.Drawing.Design;
 using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System.ComponentModel;
+using System.Drawing.Design;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
 {
@@ -14,8 +14,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
     /// </summary>
     public class ModificationData
     {
-        private readonly CreationData m_creationData;
-
         private readonly HostedSweep m_elemToModify;
 
         private readonly Document m_rvtDoc;
@@ -37,19 +35,19 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             m_rvtDoc = creationData.Creator.RvtDocument;
             m_rvtUiDoc = creationData.Creator.RvtUiDocument;
             m_elemToModify = elem;
-            m_creationData = creationData;
+            AddOrRemoveSegments = creationData;
 
             m_transaction = new Transaction(m_rvtDoc, "External Tool");
 
-            m_creationData.EdgeAdded +=
+            AddOrRemoveSegments.EdgeAdded +=
                 m_creationData_EdgeAdded;
-            m_creationData.EdgeRemoved +=
+            AddOrRemoveSegments.EdgeRemoved +=
                 m_creationData_EdgeRemoved;
-            m_creationData.SymbolChanged +=
+            AddOrRemoveSegments.SymbolChanged +=
                 m_creationData_SymbolChanged;
         }
 
-        public string CreatorName => m_creationData.Creator.Name;
+        public string CreatorName => AddOrRemoveSegments.Creator.Name;
 
         /// <summary>
         ///     Name will be displayed in property grid.
@@ -70,9 +68,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             get
             {
                 var angle = GetParameter("Angle");
-                if (angle != null)
-                    return angle.AsValueString();
-                return m_elemToModify.Angle.ToString();
+                return angle != null ? angle.AsValueString() : m_elemToModify.Angle.ToString();
             }
             set
             {
@@ -101,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
         [Editor(typeof(EdgeFormUiTypeEditor), typeof(UITypeEditor))]
         [Category("Profile")]
         [DisplayName("Profile Edges")]
-        public CreationData AddOrRemoveSegments => m_creationData;
+        public CreationData AddOrRemoveSegments { get; }
 
         [Category("Dimensions")]
         public string Length

@@ -15,7 +15,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
         {
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-            var dlg = new NetworkDialog(activeDoc);
+            NetworkDialog dlg = new(activeDoc);
             dlg.ShowDialog();
 
             return Result.Succeeded;

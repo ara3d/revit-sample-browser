@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     public enum VisibleType
@@ -48,8 +47,8 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
         {
             get
             {
-                var names = new List<string>();
-                var filteredElementCollector = new FilteredElementCollector(m_doc);
+                List<string> names = [];
+                FilteredElementCollector filteredElementCollector = new(m_doc);
                 filteredElementCollector.OfClass(typeof(ViewSheetSet));
                 foreach (var element in filteredElementCollector)
                 {
@@ -78,7 +77,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
                     return;
                 }
 
-                var filteredElementCollector = new FilteredElementCollector(m_doc);
+                FilteredElementCollector filteredElementCollector = new(m_doc);
                 filteredElementCollector.OfClass(typeof(ViewSheetSet));
                 var viewSheetSets = filteredElementCollector.Cast<ViewSheetSet>()
                     .Where(viewSheetSet => viewSheetSet.Name.Equals(value));
@@ -159,7 +158,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             if (visibleType == VisibleType.VtNone)
                 return null;
 
-            var views = new List<View>();
+            List<View> views = [];
             foreach (View view in m_viewSheetSetting.AvailableViews)
             {
                 if (view.ViewType == ViewType.DrawingSheet
@@ -188,7 +187,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
         public void ChangeCurrentViewSheetSet(List<string> names)
         {
-            var selectedViews = new ViewSet();
+            ViewSet selectedViews = new();
 
             if (null != names && 0 < names.Count)
                 foreach (View view in m_viewSheetSetting.AvailableViews)

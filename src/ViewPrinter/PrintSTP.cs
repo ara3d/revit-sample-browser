@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Control = System.Windows.Forms.Control;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     /// <summary>
@@ -34,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
         {
             get
             {
-                var names = new List<string>();
+                List<string> names = [];
                 //foreach (Element printSetting in m_commandData.Application.ActiveUIDocument.Document.PrintSettings)
                 var printSettingIds = m_commandData.Application.ActiveUIDocument.Document.GetPrintSettingIds();
                 foreach (var eid in printSettingIds)
@@ -52,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
         {
             get
             {
-                var names = new List<string>();
+                List<string> names = [];
                 foreach (PaperSize ps in m_printMgr.PaperSizes)
                 {
                     names.Add(ps.Name);
@@ -92,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
         {
             get
             {
-                var names = new List<string>();
+                List<string> names = [];
                 foreach (PaperSource ps in m_printMgr.PaperSources)
                 {
                     names.Add(ps.Name);

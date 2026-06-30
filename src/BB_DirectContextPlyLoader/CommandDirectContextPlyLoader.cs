@@ -5,8 +5,8 @@ using Autodesk.Revit.DB.DirectContext3D;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows.Forms;
 using View = Autodesk.Revit.DB.View;
 
@@ -29,7 +29,7 @@ public sealed class CommandDirectContextPlyLoader : NamedCommand, IDirectContext
             return;
 
         _boundingBox = Mesh.Bounds;
-        
+
         var svc = ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.DirectContext3DService);
         svc.AddServer(this);
 
@@ -45,17 +45,60 @@ public sealed class CommandDirectContextPlyLoader : NamedCommand, IDirectContext
         app.ActiveUIDocument?.UpdateAllOpenViews();
     }
 
-    public Guid GetServerId() => Guid;
-    public ExternalServiceId GetServiceId() => ExternalServices.BuiltInExternalServices.DirectContext3DService;
-    public string GetName() => Name;
-    public string GetVendorId() => "Ara 3D Inc.";
-    public string GetDescription() => "Demonstrates using the DirectContext3D API";
-    public bool CanExecute(View dBView) => dBView.ViewType == ViewType.ThreeD;
-    public string GetApplicationId() => "Bowerbird";
-    public string GetSourceId() => "";
-    public bool UsesHandles() => false;
-    public Outline GetBoundingBox(View dBView) => _boundingBox;
-    public bool UseInTransparentPass(View dBView) => true;
+    public Guid GetServerId()
+    {
+        return Guid;
+    }
+
+    public ExternalServiceId GetServiceId()
+    {
+        return ExternalServices.BuiltInExternalServices.DirectContext3DService;
+    }
+
+    public string GetName()
+    {
+        return Name;
+    }
+
+    public string GetVendorId()
+    {
+        return "Ara 3D Inc.";
+    }
+
+    public string GetDescription()
+    {
+        return "Demonstrates using the DirectContext3D API";
+    }
+
+    public bool CanExecute(View dBView)
+    {
+        return dBView.ViewType == ViewType.ThreeD;
+    }
+
+    public string GetApplicationId()
+    {
+        return "Bowerbird";
+    }
+
+    public string GetSourceId()
+    {
+        return "";
+    }
+
+    public bool UsesHandles()
+    {
+        return false;
+    }
+
+    public Outline GetBoundingBox(View dBView)
+    {
+        return _boundingBox;
+    }
+
+    public bool UseInTransparentPass(View dBView)
+    {
+        return true;
+    }
 
     public RenderMesh? Mesh { get; private set; }
     private BufferStorage? _faceBuffers;
@@ -84,12 +127,12 @@ public sealed class CommandDirectContextPlyLoader : NamedCommand, IDirectContext
 
         var plyFile = _plyOpenFileDialog.FileName;
         //var plyFile = @"C:\Users\cdigg\git\draco\testdata\bun_zipper.ply";
-        
+
         var mesh = PlyImporter.LoadMesh(plyFile);
 
         // Assuming your extension exists:
         Mesh = mesh.ToRenderMesh(new Color32());
-        
+
 
         Debug.Assert(Mesh.VertexCount > 0);
         Debug.Assert(Mesh.IndexCount > 0);

@@ -21,7 +21,9 @@ public sealed class ExportDecider
     public readonly ConcurrentDictionary<BuiltInCategory, bool> LookupBuiltInCategory = new();
 
     public ExportDecider(BimOpenSchemaExportSettings cfg)
-        => Cfg = cfg ?? new BimOpenSchemaExportSettings();
+    {
+        Cfg = cfg ?? new BimOpenSchemaExportSettings();
+    }
 
     public bool ShouldExport(Element e)
     {
@@ -48,21 +50,17 @@ public sealed class ExportDecider
             return false;
 
         // 3) Apply skips (both must pass)
-        if (!ShouldExportDotNetType(dotNetType))
-            return false;
-
-        if (!ShouldExportBuiltInCategory(bic))
-            return false;
-
-        return true;
+        return ShouldExportDotNetType(dotNetType) && ShouldExportBuiltInCategory(bic);
     }
 
-    private bool ShouldExportCategoryType(CategoryType ct) =>
-        ct switch
+    private bool ShouldExportCategoryType(CategoryType ct)
+    {
+        return ct switch
         {
             CategoryType.Annotation => Cfg.IncludeAnnotationElements,
             _ => true,  // permissive by default
         };
+    }
 
     // -------------------------
     // DotNet type decisions
@@ -81,13 +79,7 @@ public sealed class ExportDecider
             var className = t.Name;
 
             // explicit include overrides local skips
-            if (MatchesAnyNormalized(Cfg.IncludedClassNamesOverride, className))
-                return true;
-
-            if (MatchesAnyNormalized(Cfg.SkippedClassNames, className))
-                return false;
-
-            return true;
+            return MatchesAnyNormalized(Cfg.IncludedClassNamesOverride, className) || !MatchesAnyNormalized(Cfg.SkippedClassNames, className);
         });
     }
 
@@ -97,7 +89,7 @@ public sealed class ExportDecider
 
     private bool IsBuiltInCategoryExplicitlyIncluded(BuiltInCategory bic)
     {
-        var bicName = (Enum.GetName(typeof(BuiltInCategory), bic) ?? "");
+        var bicName = Enum.GetName(typeof(BuiltInCategory), bic) ?? "";
         var bicNoOst = TrimOstPrefix(bicName);
 
         return MatchesAnyCategory(Cfg.IncludedCategoriesOverride, bicName, bicNoOst);
@@ -107,22 +99,18 @@ public sealed class ExportDecider
     {
         return LookupBuiltInCategory.GetOrAdd(bic, b =>
         {
-            var bicName = (Enum.GetName(typeof(BuiltInCategory), b) ?? "");
+            var bicName = Enum.GetName(typeof(BuiltInCategory), b) ?? "";
             var bicNoOst = TrimOstPrefix(bicName);
 
             // explicit include overrides local skips
-            if (MatchesAnyCategory(Cfg.IncludedCategoriesOverride, bicName, bicNoOst))
-                return true;
-
-            if (MatchesAnyCategory(Cfg.SkippedCategories, bicName, bicNoOst))
-                return false;
-
-            return true;
+            return MatchesAnyCategory(Cfg.IncludedCategoriesOverride, bicName, bicNoOst) || !MatchesAnyCategory(Cfg.SkippedCategories, bicName, bicNoOst);
         });
     }
 
     private static string TrimOstPrefix(string s)
-        => s.StartsWith("OST_", StringComparison.OrdinalIgnoreCase) ? s.Substring(4) : s;
+    {
+        return s.StartsWith("OST_", StringComparison.OrdinalIgnoreCase) ? s.Substring(4) : s;
+    }
 
     private static bool MatchesAnyCategory(IReadOnlyList<string>? patterns, string bicName, string bicNoOst)
     {
@@ -153,7 +141,7 @@ public sealed class ExportDecider
         // but without allocating unless needed.
         var valueNoOst = TrimOstPrefix(value);
 
-        for (int i = 0; i < patterns.Count; i++)
+        for (var i = 0; i < patterns.Count; i++)
         {
             var p = patterns[i];
             if (string.IsNullOrWhiteSpace(p)) continue;

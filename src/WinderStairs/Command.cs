@@ -1,17 +1,16 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms;
 using Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -25,14 +24,14 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
             {
                 var rvtDoc = commandData.Application.ActiveUIDocument.Document;
                 var selectionIds = commandData.Application.ActiveUIDocument.Selection.GetElementIds();
-                if (selectionIds.Count != 2 && selectionIds.Count != 3)
+                if (selectionIds.Count is not 2 and not 3)
                 {
                     message +=
                         "Please select two (or three) connected line elements. E.g. two (or three) connected straight Walls or Model Lines.";
                     return Result.Cancelled;
                 }
 
-                var selectedIds = new List<ElementId>();
+                List<ElementId> selectedIds = new();
                 selectedIds.AddRange(selectionIds);
 
                 // Generate the winder creation parameters from selected elements.
@@ -46,9 +45,8 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
                 {
                     // Create L-Winder
                     case 2:
-                    {
-                        using (var options = new LWinderOptions())
                         {
+                            using LWinderOptions options = new();
                             options.NumStepsAtStart = maxCount[0];
                             options.NumStepsAtEnd = maxCount[1];
                             options.NumStepsInCorner = numStepsInCorner;
@@ -57,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
                             options.CenterOffsetF = centerOffset;
                             if (options.ShowDialog() == DialogResult.OK)
                             {
-                                var lwinder = new LWinder
+                                LWinder lwinder = new()
                                 {
                                     NumStepsAtStart = options.NumStepsAtStart,
                                     NumStepsInCorner = options.NumStepsInCorner,
@@ -71,15 +69,13 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
                                 new WinderUpdater(lwinder,
                                     selectedIds, rvtDoc, activeid, options.Sketch);
                             }
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                     // Create U-Winder
                     case 3:
-                    {
-                        using (var options = new UWinderOptions())
                         {
+                            using UWinderOptions options = new();
                             options.NumStepsAtStart = maxCount[0];
                             options.NumStepsInMiddle = maxCount[1];
                             options.NumStepsAtEnd = maxCount[2];
@@ -92,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
                             options.CenterOffsetF2 = centerOffset;
                             if (options.ShowDialog() == DialogResult.OK)
                             {
-                                var uwinder = new UWinder
+                                UWinder uwinder = new()
                                 {
                                     NumStepsAtStart = options.NumStepsAtStart,
                                     NumStepsInCorner1 = options.NumStepsInCorner1,
@@ -110,10 +106,9 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
                                 new WinderUpdater(uwinder,
                                     selectedIds, rvtDoc, activeid, options.Sketch);
                             }
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
 
                 return Result.Succeeded;
@@ -133,18 +128,16 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
         /// <param name="treadDepth">Stairs tread depth</param>
         private void GetStairsData(Document rvtDoc, out double runWidth, out double treadDepth)
         {
-            var filterLevels = new FilteredElementCollector(rvtDoc);
+            FilteredElementCollector filterLevels = new(rvtDoc);
             var levels = filterLevels.OfClass(typeof(Level)).ToElements();
             if (levels.Count < 2) throw new InvalidOperationException("Need two Levels to create Stairs.");
             var levelList = levels.Cast<Level>().OrderBy(level => level.Elevation).Cast<Element>().ToList();
-            using (var stairsMode = new StairsEditScope(rvtDoc, "DUMMY STAIRS SCOPE"))
-            {
-                var stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);
-                var stairs = rvtDoc.GetElement(stairsId) as Stairs;
-                var stairsType = rvtDoc.GetElement(stairs.GetTypeId()) as StairsType;
-                runWidth = stairsType.MinRunWidth;
-                treadDepth = stairs.ActualTreadDepth;
-            }
+            using StairsEditScope stairsMode = new(rvtDoc, "DUMMY STAIRS SCOPE");
+            var stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);
+            var stairs = rvtDoc.GetElement(stairsId) as Stairs;
+            var stairsType = rvtDoc.GetElement(stairs.GetTypeId()) as StairsType;
+            runWidth = stairsType.MinRunWidth;
+            treadDepth = stairs.ActualTreadDepth;
         }
     }
 }

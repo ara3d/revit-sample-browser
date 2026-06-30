@@ -3,10 +3,10 @@
 // Adapted from CableTraySample by Gavin_WS / Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/CableTraySample
 
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
 {

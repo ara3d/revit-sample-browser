@@ -1,27 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
-
-
 namespace BuildingCoder
 {
     internal static partial class Util
@@ -30,9 +8,9 @@ namespace BuildingCoder
         // Shared by Julian Wandzilak in the Revit API discussion thread
         // https://forums.autodesk.com/t5/revit-api-forum/doc-enableworksharing-amp-language-versions/m-p/11845252#M70159
         static bool GetDefaultWorksetNames(
-            string sLanguage, 
-            out string wsnLevelsAndGrids, 
-            out string wsnWorkset1 )
+            string sLanguage,
+            out string wsnLevelsAndGrids,
+            out string wsnWorkset1)
         {
             wsnLevelsAndGrids = string.Empty;
             wsnWorkset1 = string.Empty;

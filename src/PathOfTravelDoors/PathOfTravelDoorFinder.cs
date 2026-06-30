@@ -2,11 +2,11 @@
 // Adapted from PathOfTravelDoors by Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/PathOfTravelDoors
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.IFC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.IFC;
 using PathOfTravelElement = Autodesk.Revit.DB.Analysis.PathOfTravel;
 
 namespace Ara3D.RevitSampleBrowser.PathOfTravelDoors.CS
@@ -89,7 +89,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelDoors.CS
         {
             if (view3D == null)
             {
-                return new List<FamilyInstance>();
+                return [];
             }
 
             var doc = view3D.Document;
@@ -107,14 +107,11 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelDoors.CS
             var forwardDoor = FindDoorOnRay(intersector, doc, start, direction, length);
             var reverseDoor = FindDoorOnRay(intersector, doc, end, direction.Negate(), length);
 
-            if (forwardDoor != null
+            return forwardDoor != null
                 && reverseDoor != null
-                && forwardDoor.Id == reverseDoor.Id)
-            {
-                return new List<FamilyInstance> { forwardDoor };
-            }
-
-            return new List<FamilyInstance>();
+                && forwardDoor.Id == reverseDoor.Id
+                ? [forwardDoor]
+                : [];
         }
 
         static FamilyInstance FindDoorOnRay(
@@ -125,12 +122,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelDoors.CS
             double maxDistance)
         {
             var hit = intersector.FindNearest(origin, direction);
-            if (hit == null || hit.Proximity > maxDistance + ProximityTolerance)
-            {
-                return null;
-            }
-
-            return doc.GetElement(hit.GetReference()) as FamilyInstance;
+            return hit == null || hit.Proximity > maxDistance + ProximityTolerance ? null : doc.GetElement(hit.GetReference()) as FamilyInstance;
         }
 
         static List<FamilyInstance> FindDoorsByGeometry(
@@ -142,7 +134,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelDoors.CS
             var planSegment = ToPlanLine(segment, elevation);
             if (planSegment == null)
             {
-                return new List<FamilyInstance>();
+                return [];
             }
 
             var doors = new FilteredElementCollector(doc, viewPlan.Id)
@@ -287,12 +279,9 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelDoors.CS
             }
 
             var bbox = door.get_BoundingBox(null);
-            if (bbox == null)
-            {
-                return XYZ.Zero;
-            }
-
-            return new XYZ(
+            return bbox == null
+                ? XYZ.Zero
+                : new XYZ(
                 (bbox.Min.X + bbox.Max.X) / 2.0,
                 (bbox.Min.Y + bbox.Max.Y) / 2.0,
                 elevation);

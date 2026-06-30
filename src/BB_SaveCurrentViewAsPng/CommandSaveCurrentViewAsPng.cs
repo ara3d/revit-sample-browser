@@ -24,15 +24,17 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public static FilePath ExportCurrentViewToPng(Document doc, FilePath filePath)
         {
-            var img = new ImageExportOptions();
-            img.ZoomType = ZoomFitType.FitToPage;
-            img.PixelSize = 1024;
-            img.ImageResolution = ImageResolution.DPI_600;
-            img.FitDirection = FitDirectionType.Horizontal;
-            img.ExportRange = ExportRange.CurrentView;
-            img.HLRandWFViewsFileType = ImageFileType.PNG;
-            img.FilePath = filePath;
-            img.ShadowViewsFileType = ImageFileType.PNG;
+            ImageExportOptions img = new()
+            {
+                ZoomType = ZoomFitType.FitToPage,
+                PixelSize = 1024,
+                ImageResolution = ImageResolution.DPI_600,
+                FitDirection = FitDirectionType.Horizontal,
+                ExportRange = ExportRange.CurrentView,
+                HLRandWFViewsFileType = ImageFileType.PNG,
+                FilePath = filePath,
+                ShadowViewsFileType = ImageFileType.PNG
+            };
             doc.ExportImage(img);
             return filePath;
         }

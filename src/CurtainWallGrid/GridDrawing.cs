@@ -1,18 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Units;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Units;
-using Ara3D.RevitSampleBrowser.CreateBeamSystem.CS;
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     public class GridDrawing
@@ -69,14 +66,14 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             {
                 Geometry = geometry;
                 Coordinates = new GridCoordinates(myDoc, this);
-                UGridLines2D = new List<GridLine2D>();
-                VGridLines2D = new List<GridLine2D>();
-                BoundLines2D = new List<GridLine2D>();
-                ULinePathList = new List<GraphicsPath>();
-                USegLinePathListList = new List<List<GraphicsPath>>();
-                VSegLinePathListList = new List<List<GraphicsPath>>();
-                VLinePathList = new List<GraphicsPath>();
-                m_boundPath = new List<GraphicsPath>();
+                UGridLines2D = [];
+                VGridLines2D = [];
+                BoundLines2D = [];
+                ULinePathList = [];
+                USegLinePathListList = [];
+                VSegLinePathListList = [];
+                VLinePathList = [];
+                m_boundPath = [];
                 DrawObject = new DrawObject();
             }
         }
@@ -183,13 +180,9 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
             MouseLocationValid = true;
             // get a parallel U line first
-            GridLine2D uLine2D;
+            var uLine2D = null == UGridLines2D || 0 == UGridLines2D.Count ? BoundLines2D[0] : UGridLines2D[0];
             // for "Curtain Wall: Curtain Wall 1", there's no initial U/V grid lines, so we use the boundary
             // line instead (the same result)
-            if (null == UGridLines2D || 0 == UGridLines2D.Count)
-                uLine2D = BoundLines2D[0];
-            else
-                uLine2D = UGridLines2D[0];
 
             var startPoint = uLine2D.StartPoint;
             var endPoint = uLine2D.EndPoint;
@@ -259,13 +252,9 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
             MouseLocationValid = true;
             // get a parallel V line first
-            GridLine2D vLine2D;
+            var vLine2D = null == VGridLines2D || 0 == VGridLines2D.Count ? BoundLines2D[1] : VGridLines2D[0];
             // for "Curtain Wall: Curtain Wall 1", there's no initial U/V grid lines, so we use the boundary
             // line instead (the same result)
-            if (null == VGridLines2D || 0 == VGridLines2D.Count)
-                vLine2D = BoundLines2D[1];
-            else
-                vLine2D = VGridLines2D[0];
             var startPoint = vLine2D.StartPoint;
             var endPoint = vLine2D.EndPoint;
 
@@ -481,24 +470,24 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                             // the operation is add segment, but the selected segment hasn't been removed
                             // so skip this segment
                             case LineOperationType.AddSegment when false == segLine2D.Removed:
-                            {
-                                var msg = "It's only allowed to add segment on a removed segment";
-                                var statusMsg = new KeyValuePair<string, bool>(msg, true);
-                                m_myDocument.Message = statusMsg;
-                                return;
-                            }
+                                {
+                                    var msg = "It's only allowed to add segment on a removed segment";
+                                    var statusMsg = new KeyValuePair<string, bool>(msg, true);
+                                    m_myDocument.Message = statusMsg;
+                                    return;
+                                }
                             // the operation is remove segment, but the selected segment has been removed
                             // so skip this segment
                             case LineOperationType.RemoveSegment when segLine2D.Removed:
                                 return;
                             // if there's only segment existing, forbid to delete it
                             case LineOperationType.RemoveSegment when gridLine2D.RemovedNumber == gridLine2D.Segments.Count - 1:
-                            {
-                                var msg = "It's not allowed to delete the last segment";
-                                var statusMsg = new KeyValuePair<string, bool>(msg, true);
-                                m_myDocument.Message = statusMsg;
-                                return;
-                            }
+                                {
+                                    var msg = "It's not allowed to delete the last segment";
+                                    var statusMsg = new KeyValuePair<string, bool>(msg, true);
+                                    m_myDocument.Message = statusMsg;
+                                    return;
+                                }
                         }
 
                         SelectedUIndex = i;
@@ -544,24 +533,24 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                             // the operation is add segment, but the selected segment hasn't been removed
                             // so skip this segment
                             case LineOperationType.AddSegment when false == segLine2D.Removed:
-                            {
-                                var msg = "It's only allowed to add segment on a removed segment";
-                                var statusMsg = new KeyValuePair<string, bool>(msg, true);
-                                m_myDocument.Message = statusMsg;
-                                return;
-                            }
+                                {
+                                    var msg = "It's only allowed to add segment on a removed segment";
+                                    var statusMsg = new KeyValuePair<string, bool>(msg, true);
+                                    m_myDocument.Message = statusMsg;
+                                    return;
+                                }
                             // the operation is remove segment, but the selected segment has been removed
                             // so skip this segment
                             case LineOperationType.RemoveSegment when segLine2D.Removed:
                                 return;
                             // if there's only segment existing, forbid to delete it
                             case LineOperationType.RemoveSegment when gridLine2D.RemovedNumber == gridLine2D.Segments.Count - 1:
-                            {
-                                var msg = "It's not allowed to delete the last segment";
-                                var statusMsg = new KeyValuePair<string, bool>(msg, true);
-                                m_myDocument.Message = statusMsg;
-                                return;
-                            }
+                                {
+                                    var msg = "It's not allowed to delete the last segment";
+                                    var statusMsg = new KeyValuePair<string, bool>(msg, true);
+                                    m_myDocument.Message = statusMsg;
+                                    return;
+                                }
                         }
 
                         SelectedVIndex = i;
@@ -827,7 +816,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 // won't draw the grid lines at GridLine2D level, draw them at SegmentLine2D level
                 // at the skipped segments in the grid line won't be painted to the canvas
                 foreach (var segLine2D in line2D.Segments)
-                    // skip the removed segments, won't draw them
+                // skip the removed segments, won't draw them
                 {
                     if (segLine2D.Removed)
                         continue;
@@ -848,7 +837,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 // won't draw the grid lines at GridLine2D level, draw them at SegmentLine2D level
                 // at the skipped segments in the grid line won't be painted to the canvas
                 foreach (var segLine2D in line2D.Segments)
-                    // skip the removed segments, won't draw them
+                // skip the removed segments, won't draw them
                 {
                     if (segLine2D.Removed)
                         continue;
@@ -900,7 +889,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var pen = new Pen(Color.Red, m_lockedPenWidth);
 
             foreach (var path in paths)
-                // the point is in the outline of the path, so the isOverlapped is true
+            // the point is in the outline of the path, so the isOverlapped is true
             {
                 if (path.IsOutlineVisible(point, pen))
                     return true;
@@ -954,25 +943,25 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 // TODO: improve the comments
                 // there's only 1 v segment contains the point and no u segment, so the segment is an isolated one
                 case 0 when 1 == vSegIndexes.Count:
-                {
-                    var seg = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
-                    seg.Isolated = true;
+                    {
+                        var seg = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
+                        seg.Isolated = true;
 
-                    // recursive check
-                    IsPointIsolate(seg.StartPoint);
-                    IsPointIsolate(seg.EndPoint);
-                    break;
-                }
+                        // recursive check
+                        IsPointIsolate(seg.StartPoint);
+                        IsPointIsolate(seg.EndPoint);
+                        break;
+                    }
                 case 1 when 0 == vSegIndexes.Count:
-                {
-                    var seg = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
-                    seg.Isolated = true;
+                    {
+                        var seg = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
+                        seg.Isolated = true;
 
-                    // recursive check
-                    IsPointIsolate(seg.StartPoint);
-                    IsPointIsolate(seg.EndPoint);
-                    break;
-                }
+                        // recursive check
+                        IsPointIsolate(seg.StartPoint);
+                        IsPointIsolate(seg.EndPoint);
+                        break;
+                    }
             }
 
             return false;
@@ -1009,7 +998,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var bx = pb.X;
             var by = pb.Y;
 
-            float result = (ax - bx) * (ax - bx) + (ay - by) * (ay - by);
+            float result = ((ax - bx) * (ax - bx)) + ((ay - by) * (ay - by));
 
             // the distance of the 2 points is greater than 0, they're not equal
             return result == 0;
@@ -1048,21 +1037,21 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             switch (uSegIndexes.Count)
             {
                 case 0 when 1 == vSegIndexes.Count:
-                {
-                    // the source segment is an V segment, and the result segment is a V segment too.
-                    // they're connected and in one line, so the result V segment should be removed, 
-                    // according to the UI rule
-                    if (false == isUSegment) removeSegLine = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
-                    break;
-                }
+                    {
+                        // the source segment is an V segment, and the result segment is a V segment too.
+                        // they're connected and in one line, so the result V segment should be removed, 
+                        // according to the UI rule
+                        if (false == isUSegment) removeSegLine = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
+                        break;
+                    }
                 case 1 when 0 == vSegIndexes.Count:
-                {
-                    // the source segment is an U segment, and the result segment is a U segment too.
-                    // they're connected and in one line, so the result U segment should be removed, 
-                    // according to the UI rule
-                    if (isUSegment) removeSegLine = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
-                    break;
-                }
+                    {
+                        // the source segment is an U segment, and the result segment is a U segment too.
+                        // they're connected and in one line, so the result U segment should be removed, 
+                        // according to the UI rule
+                        if (isUSegment) removeSegLine = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
+                        break;
+                    }
             }
         }
     } // end of class
@@ -1078,14 +1067,14 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         public DrawObject()
         {
-            Lines2D = new List<KeyValuePair<Line2D, Pen>>();
+            Lines2D = [];
             Text = string.Empty;
             m_textPosition = Point.Empty;
         }
 
         public DrawObject(Line2D line, Pen pen)
         {
-            Lines2D = new List<KeyValuePair<Line2D, Pen>> { new KeyValuePair<Line2D, Pen>(new Line2D(line), pen) };
+            Lines2D = [new KeyValuePair<Line2D, Pen>(new Line2D(line), pen)];
             Text = string.Empty;
             m_textPosition = Point.Empty;
         }

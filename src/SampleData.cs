@@ -1,9 +1,9 @@
-using System;
-using System.Diagnostics;
-using System.IO;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Diagnostics;
+using System.IO;
 
 namespace Ara3D.RevitSampleBrowser
 {
@@ -110,7 +110,7 @@ namespace Ara3D.RevitSampleBrowser
             {
                 var command = Activator.CreateInstance(Type) as IExternalCommand;
                 var message = "";
-                var elementSet = new ElementSet();
+                ElementSet elementSet = new();
                 command?.Execute(commandData, ref message, elementSet);
             }
             else if (IsApplication)

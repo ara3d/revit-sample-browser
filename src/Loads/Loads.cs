@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Ara3D.RevitSampleBrowser.Loads.CS
@@ -21,18 +21,18 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
         public Loads()
         {
-            LoadUsageNames = new List<string>();
-            LoadCombinationNames = new List<string>();
-            LoadCombinationMap = new List<LoadCombinationMap>();
-            LoadUsages = new List<LoadUsage>();
-            FormulaMap = new List<FormulaMap>();
-            UsageMap = new List<UsageMap>();
+            LoadUsageNames = [];
+            LoadCombinationNames = [];
+            LoadCombinationMap = [];
+            LoadUsages = [];
+            FormulaMap = [];
+            UsageMap = [];
 
-            LoadCaseCategories = new List<Category>();
-            LoadCases = new List<LoadCase>();
-            LoadNatures = new List<LoadNature>();
-            LoadCasesMap = new List<LoadCasesMap>();
-            LoadNaturesMap = new List<LoadNaturesMap>();
+            LoadCaseCategories = [];
+            LoadCases = [];
+            LoadNatures = [];
+            LoadCasesMap = [];
+            LoadNaturesMap = [];
         }
 
         // Define the data mainly used in LoadCombinationDeal class
@@ -105,7 +105,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             ref string message, ElementSet elements)
         {
             RevitApplication = commandData.Application.Application;
-            var documentTransaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
+            Transaction documentTransaction = new(commandData.Application.ActiveUIDocument.Document, "Document");
             documentTransaction.Start();
             // Initialize the helper classes.
             m_combinationDeal = new LoadCombinationDeal(this);
@@ -118,7 +118,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             // This class give some public methods to add or delete LoadUsage and delete LoadCombination
             // The form will use these methods to add or delete dynamically.
             // If the user press cancel button, return Cancelled to roll back All the changes.
-            using (var displayForm = new LoadsForm(this))
+            using (LoadsForm displayForm = new(this))
             {
                 if (DialogResult.OK != displayForm.ShowDialog())
                 {
@@ -148,7 +148,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         {
             // In order to refresh the combination DataGridView,
             // We should do like as follow
-            LoadCombinationMap = new List<LoadCombinationMap>(LoadCombinationMap);
+            LoadCombinationMap = [.. LoadCombinationMap];
 
             // Just go to run NewLoadCombination method of LoadCombinationDeal class
             return m_combinationDeal.NewLoadCombination(name, typeId, stateId);
@@ -164,7 +164,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         {
             // In order to refresh the usage DataGridView,
             // We should do like as follow
-            UsageMap = new List<UsageMap>(UsageMap);
+            UsageMap = [.. UsageMap];
 
             // Just go to run NewLoadUsage method of LoadCombinationDeal class
             return m_combinationDeal.NewLoadUsage(usageName);
@@ -177,7 +177,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
             // In order to refresh the usage DataGridView,
             // We should do like as follow
-            if (0 == UsageMap.Count) UsageMap = new List<UsageMap>();
+            if (0 == UsageMap.Count) UsageMap = [];
             return true;
         }
 
@@ -211,7 +211,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
             // In order to refresh the formula DataGridView,
             // We should do like as follow
-            FormulaMap = new List<FormulaMap>(FormulaMap);
+            FormulaMap = [.. FormulaMap];
 
             // Run AddFormula method of LoadCombinationDeal class
             return m_combinationDeal.AddFormula(caseName);

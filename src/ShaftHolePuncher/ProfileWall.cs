@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
     /// <summary>
@@ -28,12 +27,12 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 
         public override List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
-            var needFace = new List<Edge>();
-            var needPoints = new List<List<XYZ>>();
+            List<Edge> needFace = new();
+            List<List<XYZ>> needPoints = new();
             var location = m_data.Location as LocationCurve;
             var curve = location.Curve;
             var xyzs = curve.Tessellate() as List<XYZ>;
-            var zAxis = new Vector4(0, 0, 1);
+            Vector4 zAxis = new(0, 0, 1);
 
             //if Location curve of wall is line, then return first face
             if (xyzs.Count == 2) needFace = faces[0];
@@ -67,16 +66,15 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 
         public override Matrix4 GetTo2DMatrix()
         {
-            var location = m_data.Location as LocationCurve;
-            var xAxis = new Vector4(1, 0, 0);
-            var yAxis = new Vector4(0, 1, 0);
-            var zAxis = new Vector4(0, 0, 1);
-            var origin = new Vector4(0, 0, 0);
-            if (location != null)
+            Vector4 xAxis = new(1, 0, 0);
+            Vector4 yAxis = new(0, 1, 0);
+            Vector4 zAxis = new(0, 0, 1);
+            Vector4 origin = new(0, 0, 0);
+            if (m_data.Location is LocationCurve location)
             {
                 var curve = location.Curve;
 
-                if (!(curve is Line)) throw new Exception("Opening cannot build on this Wall");
+                if (curve is not Line) throw new Exception("Opening cannot build on this Wall");
 
                 var start = curve.GetEndPoint(0);
                 var end = curve.GetEndPoint(1);
@@ -100,8 +98,8 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 
         public override Opening CreateOpening(List<Vector4> points)
         {
-            var p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
-            var p2 = new XYZ(points[1].X, points[1].Y, points[1].Z);
+            XYZ p1 = new(points[0].X, points[0].Y, points[0].Z);
+            XYZ p2 = new(points[1].X, points[1].Y, points[1].Z);
             return DocCreator.NewOpening(m_data, p1, p2);
         }
     }

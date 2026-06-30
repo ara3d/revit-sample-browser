@@ -1,11 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Linq;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System;
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
 {
     public class StairsAutomationUtility
@@ -26,8 +24,10 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             m_stairsNumber = stairsNumber;
         }
 
-        public static StairsAutomationUtility Create(Document document, int stairsNumber) =>
-            new StairsAutomationUtility(document, stairsNumber);
+        public static StairsAutomationUtility Create(Document document, int stairsNumber)
+        {
+            return new StairsAutomationUtility(document, stairsNumber);
+        }
 
         private void SetupLevels()
         {
@@ -83,58 +83,58 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             {
                 // Straight run 1 level
                 case 0:
-                {
-                    var run = new StairsSingleStraightRun(Stairs, BottomLevel,
-                        Transform.CreateTranslation(new XYZ(100, 0, 0)));
-                    run.SetRunWidth(15.0);
-                    return run;
-                }
+                    {
+                        StairsSingleStraightRun run = new(Stairs, BottomLevel,
+                            Transform.CreateTranslation(new XYZ(100, 0, 0)));
+                        run.SetRunWidth(15.0);
+                        return run;
+                    }
                 // Curved run 1 level
                 case 1:
-                {
-                    var run = new StairsSingleCurvedRun(Stairs, BottomLevel, 6.0);
-                    run.SetRunWidth(10.0);
-                    return run;
-                }
+                    {
+                        StairsSingleCurvedRun run = new(Stairs, BottomLevel, 6.0);
+                        run.SetRunWidth(10.0);
+                        return run;
+                    }
                 // Curve run 2 level
                 case 2:
                     return new StairsSingleCurvedRun(Stairs, BottomLevel, 3.0,
                         Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI, new XYZ(10, -20, 0)));
                 // Standard stair 1 level
                 case 3:
-                {
-                    var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 1,
-                        Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI / 4.0, new XYZ(-20, -20, 0)))
- {
-     EqualizeRuns = true
- };
-                    configuration.Initialize();
-                    return configuration;
-                }
+                    {
+                        StairsStandardConfiguration configuration = new(Stairs, BottomLevel, 1,
+                            Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI / 4.0, new XYZ(-20, -20, 0)))
+                        {
+                            EqualizeRuns = true
+                        };
+                        configuration.Initialize();
+                        return configuration;
+                    }
                 // Standard stair multi-level
                 case 4:
-                {
-                    var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 3,
-                        Transform.CreateRotationAtPoint(XYZ.BasisZ, 7.0 * Math.PI / 6.0, new XYZ(15, 10, 0)))
- {
-     RunWidth = 6.0,
-     RunOffset = 8.0 / 12.0,
-     LandingWidth = 4.0,
-     EqualizeRuns = true
- };
-                    configuration.Initialize();
-                    return configuration;
-                }
+                    {
+                        StairsStandardConfiguration configuration = new(Stairs, BottomLevel, 3,
+                            Transform.CreateRotationAtPoint(XYZ.BasisZ, 7.0 * Math.PI / 6.0, new XYZ(15, 10, 0)))
+                        {
+                            RunWidth = 6.0,
+                            RunOffset = 8.0 / 12.0,
+                            LandingWidth = 4.0,
+                            EqualizeRuns = true
+                        };
+                        configuration.Initialize();
+                        return configuration;
+                    }
                 case 100:
-                {
-                    return new StairsSingleSketchedStraightRun(Stairs, BottomLevel,
-                        Transform.CreateTranslation(new XYZ(50, 0, 0)));
-                }
+                    {
+                        return new StairsSingleSketchedStraightRun(Stairs, BottomLevel,
+                            Transform.CreateTranslation(new XYZ(50, 0, 0)));
+                    }
                 case 101:
-                {
-                    return new StairsSingleSketchedCurvedRun(Stairs, BottomLevel, 6.0,
-                        Transform.CreateTranslation(new XYZ(-10, 0, 0)));
-                }
+                    {
+                        return new StairsSingleSketchedCurvedRun(Stairs, BottomLevel, 6.0,
+                            Transform.CreateTranslation(new XYZ(-10, 0, 0)));
+                    }
             }
 
             return null;
@@ -145,38 +145,36 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             SetupLevels();
 
             // Prepare and maintain StairsEditScope for stairs creation activities
-            using (var editScope = new StairsEditScope(Document, "Stairs Automation"))
+            using StairsEditScope editScope = new(Document, "Stairs Automation");
+            // Instantiate the new stairs element.
+            var stairsElementId = editScope.Start(BottomLevel.Id, TopLevel.Id);
+
+            // Remember the stairs for use in creation of the run and landing configurations.
+            Stairs = Document.GetElement(stairsElementId) as Stairs;
+
+            // Setup a transaction for use during the run and landing creation
+            using (Transaction t = new(Document, "Stairs Automation"))
             {
-                // Instantiate the new stairs element.
-                var stairsElementId = editScope.Start(BottomLevel.Id, TopLevel.Id);
+                t.Start();
 
-                // Remember the stairs for use in creation of the run and landing configurations.
-                Stairs = Document.GetElement(stairsElementId) as Stairs;
+                // Setup the configuration
+                var configuration = SetupHardcodedConfiguration();
+                if (configuration == null)
+                    return;
 
-                // Setup a transaction for use during the run and landing creation
-                using (var t = new Transaction(Document, "Stairs Automation"))
-                {
-                    t.Start();
+                // Create each run
+                var numberOfRuns = configuration.GetNumberOfRuns();
+                for (var i = 0; i < numberOfRuns; i++) configuration.CreateStairsRun(Document, stairsElementId, i);
 
-                    // Setup the configuration
-                    var configuration = SetupHardcodedConfiguration();
-                    if (configuration == null)
-                        return;
+                // Create each landing
+                var numberOfLandings = configuration.GetNumberOfLandings();
+                for (var i = 0; i < numberOfLandings; i++)
+                    configuration.CreateLanding(Document, stairsElementId, i);
 
-                    // Create each run
-                    var numberOfRuns = configuration.GetNumberOfRuns();
-                    for (var i = 0; i < numberOfRuns; i++) configuration.CreateStairsRun(Document, stairsElementId, i);
-
-                    // Create each landing
-                    var numberOfLandings = configuration.GetNumberOfLandings();
-                    for (var i = 0; i < numberOfLandings; i++)
-                        configuration.CreateLanding(Document, stairsElementId, i);
-
-                    t.Commit();
-                }
-
-                editScope.Commit(new StairsEditScopeFailuresPreprocessor());
+                t.Commit();
             }
+
+            editScope.Commit(new StairsEditScopeFailuresPreprocessor());
         }
     }
 

@@ -26,6 +26,6 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents
             var dotProduct = first.Normalize().DotProduct(second.Normalize());
 
             return Math.Abs(dotProduct - 1.0) < 1e-6;
-        }       
+        }
     }
 }

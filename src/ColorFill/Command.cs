@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ColorFill.CS
 {
@@ -17,8 +17,8 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
             try
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
-                var colorFillMgr = new ColorFillMgr(document, commandData);
-                var form = new ColorFillForm(colorFillMgr);
+                ColorFillMgr colorFillMgr = new(document, commandData);
+                ColorFillForm form = new(colorFillMgr);
                 form.ShowDialog();
 
                 return Result.Succeeded;

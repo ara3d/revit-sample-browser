@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Resources;
 using Ara3D.RevitSampleBrowser.GridCreation.CS.Properties;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Resources;
 using Document = Autodesk.Revit.Creation.Document;
 
 namespace Ara3D.RevitSampleBrowser.GridCreation.CS
@@ -27,12 +27,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         ///     Document Creation object to create new elements
         /// </summary>
         protected Document DocCreator;
-
-        /// <summary>
-        ///     Array list contains all grid labels in current document
-        /// </summary>
-        private readonly ArrayList m_labelsList;
-
         protected readonly Autodesk.Revit.DB.Document RevitDoc;
 
         protected readonly ForgeTypeId m_unit;
@@ -42,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             RevitDoc = application.ActiveUIDocument.Document;
             AppCreator = application.Application.Create;
             DocCreator = application.ActiveUIDocument.Document.Create;
-            m_labelsList = labels;
+            LabelsList = labels;
         }
 
         public CreateGridsData(UIApplication application, ArrayList labels, ForgeTypeId unit)
@@ -50,13 +44,13 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             RevitDoc = application.ActiveUIDocument.Document;
             AppCreator = application.Application.Create;
             DocCreator = application.ActiveUIDocument.Document.Create;
-            m_labelsList = labels;
+            LabelsList = labels;
             m_unit = unit;
         }
 
         public ForgeTypeId Unit => m_unit;
 
-        public ArrayList LabelsList => m_labelsList;
+        public ArrayList LabelsList { get; }
 
         /// <summary>
         ///     Get the line to create grid according to the specified bubble location
@@ -106,16 +100,16 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                 {
                     // Handle the case that the arc is clockwise
                     case true when startDegree > 0 && endDegree > 0:
-                        startDegree = 2 * Values.Pi - startDegree;
-                        endDegree = 2 * Values.Pi - endDegree;
+                        startDegree = (2 * Values.Pi) - startDegree;
+                        endDegree = (2 * Values.Pi) - endDegree;
                         break;
                     case true when startDegree < 0:
-                    {
-                        var temp = endDegree;
-                        endDegree = -1 * startDegree;
-                        startDegree = -1 * temp;
-                        break;
-                    }
+                        {
+                            var temp = endDegree;
+                            endDegree = -1 * startDegree;
+                            startDegree = -1 * temp;
+                            break;
+                        }
                 }
 
                 var sumDegree = (startDegree + endDegree) / 2;
@@ -123,8 +117,8 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
                 while (sumDegree < -2 * Values.Pi) sumDegree += 2 * Values.Pi;
 
-                var midPoint = new XYZ(arc.Center.X + arc.Radius * Math.Cos(sumDegree),
-                    arc.Center.Y + arc.Radius * Math.Sin(sumDegree), 0);
+                var midPoint = new XYZ(arc.Center.X + (arc.Radius * Math.Cos(sumDegree)),
+                    arc.Center.Y + (arc.Radius * Math.Sin(sumDegree)), 0);
 
                 arcToCreate = Arc.Create(endPoint, startPoint, midPoint);
             }
@@ -137,17 +131,14 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         {
             Arc arcToCreate;
             // Get start point and end point of the arc and the middle point on the arc
-            var startPoint = new XYZ(origin.X + radius * Math.Cos(startDegree),
-                origin.Y + radius * Math.Sin(startDegree), origin.Z);
-            var midPoint = new XYZ(origin.X + radius * Math.Cos((startDegree + endDegree) / 2),
-                origin.Y + radius * Math.Sin((startDegree + endDegree) / 2), origin.Z);
-            var endPoint = new XYZ(origin.X + radius * Math.Cos(endDegree),
-                origin.Y + radius * Math.Sin(endDegree), origin.Z);
+            var startPoint = new XYZ(origin.X + (radius * Math.Cos(startDegree)),
+                origin.Y + (radius * Math.Sin(startDegree)), origin.Z);
+            var midPoint = new XYZ(origin.X + (radius * Math.Cos((startDegree + endDegree) / 2)),
+                origin.Y + (radius * Math.Sin((startDegree + endDegree) / 2)), origin.Z);
+            var endPoint = new XYZ(origin.X + (radius * Math.Cos(endDegree)),
+                origin.Y + (radius * Math.Sin(endDegree)), origin.Z);
 
-            if (bubLoc == BubbleLocation.StartPoint)
-                arcToCreate = Arc.Create(startPoint, endPoint, midPoint);
-            else
-                arcToCreate = Arc.Create(endPoint, startPoint, midPoint);
+            arcToCreate = bubLoc == BubbleLocation.StartPoint ? Arc.Create(startPoint, endPoint, midPoint) : Arc.Create(endPoint, startPoint, midPoint);
 
             return arcToCreate;
         }

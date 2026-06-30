@@ -3,8 +3,8 @@
 // Adapted from StlImport by Scott Conover, Autodesk Inc. (MIT).
 // https://github.com/jeremytammik/StlImport
 
-using System.Linq;
 using Autodesk.Revit.DB;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.StlImport.CS
 {

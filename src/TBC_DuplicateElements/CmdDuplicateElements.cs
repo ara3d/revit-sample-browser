@@ -13,10 +13,10 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -34,7 +34,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Duplicate Elements");
 
             //Group group = doc.Create.NewGroup( // 2012
@@ -49,7 +49,7 @@ namespace BuildingCoder
                 as LocationPoint;
 
             var p = location.Point;
-            var newPoint = new XYZ(p.X, p.Y + 10, p.Z);
+            XYZ newPoint = new(p.X, p.Y + 10, p.Z);
 
             var newGroup = doc.Create.PlaceGroup(
                 newPoint, group.GroupType);

@@ -39,7 +39,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                 case MouseButtons.Right when m_points.Count > 2:
                     m_finished = true;
                     break;
-                case MouseButtons.Left when !m_finished 
+                case MouseButtons.Left when !m_finished
                                             && GetDistance(PreDownPoint, e.Location) > 2:
                     PreDownPoint = e.Location;
                     m_points.Add(e.Location);

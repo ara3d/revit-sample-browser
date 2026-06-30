@@ -1,9 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System;
 namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 {
     /// <summary>
@@ -95,13 +93,13 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// <param name="v"> the result vector </param>
         public double DotProduct(Vector4 v)
         {
-            return X * v.X + Y * v.Y + Z * v.Z;
+            return (X * v.X) + (Y * v.Y) + (Z * v.Z);
         }
 
         public Vector4 CrossProduct(Vector4 v)
         {
-            return new Vector4(Y * v.Z - Z * v.Y, Z * v.X
-                                                  - X * v.Z, X * v.Y - Y * v.X);
+            return new Vector4((Y * v.Z) - (Z * v.Y), (Z * v.X)
+                                                  - (X * v.Z), (X * v.Y) - (Y * v.X));
         }
 
         /// <summary>
@@ -111,13 +109,13 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// <param name="vb">second vector</param>
         public static double DotProduct(Vector4 va, Vector4 vb)
         {
-            return va.X * vb.X + va.Y * vb.Y + va.Z * vb.Z;
+            return (va.X * vb.X) + (va.Y * vb.Y) + (va.Z * vb.Z);
         }
 
         public static Vector4 CrossProduct(Vector4 va, Vector4 vb)
         {
-            return new Vector4(va.Y * vb.Z - va.Z * vb.Y, va.Z * vb.X
-                                                          - va.X * vb.Z, va.X * vb.Y - va.Y * vb.X);
+            return new Vector4((va.Y * vb.Z) - (va.Z * vb.Y), (va.Z * vb.X)
+                                                          - (va.X * vb.Z), (va.X * vb.Y) - (va.Y * vb.X));
         }
 
         public void Normalize()
@@ -134,7 +132,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// </summary>
         public double Length()
         {
-            return Math.Sqrt(X * X + Y * Y + Z * Z);
+            return Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
         }
     }
 
@@ -246,7 +244,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         public static Matrix4 RotateX(double angle)
         {
-            var rotateX = new Matrix4
+            Matrix4 rotateX = new()
             {
                 Type = MatrixType.Rotation
             };
@@ -263,7 +261,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         public static Matrix4 RotateY(double angle)
         {
-            var rotateX = new Matrix4
+            Matrix4 rotateX = new()
             {
                 Type = MatrixType.Rotation
             };
@@ -280,7 +278,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         public static Matrix4 RotateZ(double angle)
         {
-            var rotateX = new Matrix4
+            Matrix4 rotateX = new()
             {
                 Type = MatrixType.Rotation
             };
@@ -301,8 +299,8 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         public void Identity()
         {
             for (var i = 0; i < 4; i++)
-            for (var j = 0; j < 4; j++)
-                Matrix[i, j] = 0.0f;
+                for (var j = 0; j < 4; j++)
+                    Matrix[i, j] = 0.0f;
             Matrix[0, 0] = 1.0f;
             Matrix[1, 1] = 1.0f;
             Matrix[2, 2] = 1.0f;
@@ -317,11 +315,11 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// <returns></returns>
         public static Matrix4 Multiply(Matrix4 left, Matrix4 right)
         {
-            var result = new Matrix4();
+            Matrix4 result = new();
             for (var i = 0; i < 4; i++)
-            for (var j = 0; j < 4; j++)
-                result[i, j] = left[i, 0] * right[0, j] + left[i, 1] * right[1, j]
-                                                        + left[i, 2] * right[2, j] + left[i, 3] * right[3, j];
+                for (var j = 0; j < 4; j++)
+                    result[i, j] = (left[i, 0] * right[0, j]) + (left[i, 1] * right[1, j])
+                                                            + (left[i, 2] * right[2, j]) + (left[i, 3] * right[3, j]);
             return result;
         }
 
@@ -332,12 +330,12 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// <returns>transform result</returns>
         public Vector4 Transform(Vector4 point)
         {
-            return new Vector4(point.X * this[0, 0] + point.Y * this[1, 0]
-                                                    + point.Z * this[2, 0] + point.W * this[3, 0],
-                point.X * this[0, 1] + point.Y * this[1, 1]
-                                     + point.Z * this[2, 1] + point.W * this[3, 1],
-                point.X * this[0, 2] + point.Y * this[1, 2]
-                                     + point.Z * this[2, 2] + point.W * this[3, 2]);
+            return new Vector4((point.X * this[0, 0]) + (point.Y * this[1, 0])
+                                                    + (point.Z * this[2, 0]) + (point.W * this[3, 0]),
+                (point.X * this[0, 1]) + (point.Y * this[1, 1])
+                                     + (point.Z * this[2, 1]) + (point.W * this[3, 1]),
+                (point.X * this[0, 2]) + (point.Y * this[1, 2])
+                                     + (point.Z * this[2, 2]) + (point.W * this[3, 2]));
         }
 
         /// <summary>
@@ -363,21 +361,15 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         public Matrix4 Inverse()
         {
-            switch (Type)
+            return Type switch
             {
-                case MatrixType.Rotation: return RotationInverse();
-
-                case MatrixType.Translation: return TranslationInverse();
-
-                case MatrixType.RotationAndTranslation:
-                    return Multiply(TranslationInverse(), RotationInverse());
-
-                case MatrixType.Scale: return ScaleInverse();
-
-                case MatrixType.Normal: return new Matrix4();
-
-                default: return null;
-            }
+                MatrixType.Rotation => RotationInverse(),
+                MatrixType.Translation => TranslationInverse(),
+                MatrixType.RotationAndTranslation => Multiply(TranslationInverse(), RotationInverse()),
+                MatrixType.Scale => ScaleInverse(),
+                MatrixType.Normal => new Matrix4(),
+                _ => null,
+            };
         }
 
         /// <summary>

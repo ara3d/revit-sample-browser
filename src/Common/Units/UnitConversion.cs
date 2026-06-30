@@ -1,8 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
-
+using System.Collections.Generic;
 using ConversionValue = Ara3D.RevitSampleBrowser.BoundaryConditions.CS.ConversionValue;
 
 namespace Ara3D.RevitSampleBrowser.Common.Units
@@ -13,7 +12,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Units
 
         static UnitConversion()
         {
-            UnitDictionary = new Dictionary<string, ConversionValue>();
+            UnitDictionary = [];
             var degree = (char)0xb0;
             var square = (char)0xB2;
             var cube = (char)0xB3;
@@ -25,14 +24,20 @@ namespace Ara3D.RevitSampleBrowser.Common.Units
             AddNewUnit(1, 14593.9029372064, $"kip/ft{cube}", "ATSpringModulusConver");
         }
 
-        private static void AddNewUnit(int precision, double ratio, string unitName, string key) =>
+        private static void AddNewUnit(int precision, double ratio, string unitName, string key)
+        {
             UnitDictionary.Add(key, new ConversionValue(precision, ratio, unitName));
+        }
 
-        public static double CovertFromApi(ForgeTypeId to, double value) =>
-            value *= ImperialDutRatio(to);
+        public static double CovertFromApi(ForgeTypeId to, double value)
+        {
+            return value *= ImperialDutRatio(to);
+        }
 
-        public static double CovertToApi(double value, ForgeTypeId from) =>
-            value /= ImperialDutRatio(from);
+        public static double CovertToApi(double value, ForgeTypeId from)
+        {
+            return value /= ImperialDutRatio(from);
+        }
 
         private static double ImperialDutRatio(ForgeTypeId unitTypeId)
         {
@@ -42,14 +47,12 @@ namespace Ara3D.RevitSampleBrowser.Common.Units
             if (unitTypeId == UnitTypeId.FractionalInches) return 12;
             if (unitTypeId == UnitTypeId.Meters) return 0.3048;
             if (unitTypeId == UnitTypeId.Centimeters) return 30.48;
-            if (unitTypeId == UnitTypeId.Millimeters) return 304.8;
-            if (unitTypeId == UnitTypeId.MetersCentimeters) return 0.3048;
-            return 1;
+            return unitTypeId == UnitTypeId.Millimeters ? 304.8 : unitTypeId == UnitTypeId.MetersCentimeters ? 0.3048 : 1;
         }
 
         public static string GetUnitLabel(ForgeTypeId unitTypeId)
         {
-            var unitLabels = new Dictionary<ForgeTypeId, string>
+            Dictionary<ForgeTypeId, string> unitLabels = new()
             {
                 { UnitTypeId.Centimeters, "cm" },
                 { UnitTypeId.Feet, "'" },

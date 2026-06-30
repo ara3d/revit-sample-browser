@@ -1,10 +1,10 @@
 #region Namespaces
 
-using System;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Text;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 #endregion // Namespaces
@@ -44,7 +44,7 @@ namespace BuildingCoder
 
             area = Math.Round(area, 2);
 
-            if (area < 0) area = area * -1;
+            if (area < 0) area *= -1;
 
             TaskDialog.Show("Area", area.ToString());
         }

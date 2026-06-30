@@ -12,14 +12,14 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS.Properties;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
 using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS.Properties;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
@@ -46,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             var rp = application.CreateRibbonPanel("Create ExternallyTaggedBRep",
                 "Create Geometry with persistent tags");
 
-            var pbd1 = new PushButtonData("CreateTaggedBRep", "Create tagged BRep",
+            PushButtonData pbd1 = new("CreateTaggedBRep", "Create tagged BRep",
                 AddinAssemblyPath,
                 "Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS.CreateBRep")
             {
@@ -55,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             };
             _ = rp.AddItem(pbd1) as PushButton;
 
-            var pbd2 = new PushButtonData("UpdateTaggedBRep", "Update tagged BRep",
+            PushButtonData pbd2 = new("UpdateTaggedBRep", "Update tagged BRep",
                 AddinAssemblyPath,
                 "Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS.UpdateBRep")
             {

@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 
@@ -39,11 +38,9 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
                 comboBoxFamily.Items.Add(symbolName);
             }
 
-            if (m_creator.DefaultFamilySymbolIndex < 0)
-                comboBoxFamily.SelectedItem = m_creator.FamilySymbolNameList[0];
-            else
-                comboBoxFamily.SelectedItem =
-                    m_creator.FamilySymbolNameList[m_creator.DefaultFamilySymbolIndex];
+            comboBoxFamily.SelectedItem = m_creator.DefaultFamilySymbolIndex < 0
+                ? m_creator.FamilySymbolNameList[0]
+                : m_creator.FamilySymbolNameList[m_creator.DefaultFamilySymbolIndex];
 
             // set UI display according to baseType
             switch (m_baseType)

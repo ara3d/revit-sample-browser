@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 using AppCreation = Autodesk.Revit.Creation.Application;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
@@ -18,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+            Transaction trans = new(commandData.Application.ActiveUIDocument.Document,
                 "Ara3D.RevitSampleBrowser.AutoJoin");
             trans.Start();
             if (null == SAppCreation)
@@ -26,10 +26,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                 SAppCreation = commandData.Application.Application.Create;
 
             var doc = commandData.Application.ActiveUIDocument;
-            var solids
-                = new CombinableElementArray();
+            CombinableElementArray solids
+                = new();
 
-            var es = new ElementSet();
+            ElementSet es = new();
             foreach (ElementId elemId in es)
             {
                 es.Insert(doc.Document.GetElement(elemId));
@@ -65,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                 return Result.Succeeded;
             }
 
-            var autojoin = new AutoJoin();
+            AutoJoin autojoin = new();
             autojoin.Join(doc.Document);
             trans.Commit();
             return Result.Succeeded;

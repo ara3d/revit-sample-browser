@@ -9,7 +9,7 @@ namespace ExcelExporterImporter
         #region Constructor/Destructor
 
         public DelegateCommand(Action<T> executeMethod, Func<T, bool> canExecuteMethod)
-            : base(o => executeMethod((T) o), o => canExecuteMethod((T) o))
+            : base(o => executeMethod((T)o), o => canExecuteMethod((T)o))
         {
         }
 
@@ -51,12 +51,12 @@ namespace ExcelExporterImporter
         /// </value>
         public bool IsActive
         {
-            get => _isActive;
+            get;
             set
             {
-                if (_isActive != value)
+                if (field != value)
                 {
-                    _isActive = value;
+                    field = value;
                     OnIsActiveChanged();
                 }
             }
@@ -73,7 +73,6 @@ namespace ExcelExporterImporter
 
         private readonly Func<object, bool> _canExecuteMethod;
         private readonly Action<object> _executeMethod;
-        private bool _isActive;
 
         #endregion
 

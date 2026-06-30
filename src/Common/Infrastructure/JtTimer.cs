@@ -81,13 +81,13 @@ namespace BuildingCoder
             {
 
                 var strReportPath = Path.Combine(Path.GetTempPath(), "PerformanceReport.txt");
-                var fs = new FileStream(strReportPath, FileMode.OpenOrCreate, FileAccess.Write);
-                var streamWriter = new StreamWriter(fs);
+                FileStream fs = new(strReportPath, FileMode.OpenOrCreate, FileAccess.Write);
+                StreamWriter streamWriter = new(fs);
                 streamWriter.BaseStream.Seek(0, SeekOrigin.End);
 
                 // Sort output by percentage of total time used:
 
-                var lines = new List<string>(_collection.Count);
+                List<string> lines = new(_collection.Count);
                 foreach (var pair in _collection)
                 {
                     var e = pair.Value;
@@ -98,7 +98,7 @@ namespace BuildingCoder
 
                 var header = " Percentage   Seconds   Calls   Process";
                 var n = Math.Max(header.Length, lines.Max(x => x.Length));
-                if (description is {Length: > 0})
+                if (description is { Length: > 0 })
                 {
                     n = Math.Max(n, description.Length);
                     header = $"{description}\r\n{header}";
@@ -126,7 +126,7 @@ namespace BuildingCoder
                 public int Calls { get; set; }
             }
 
-            private static readonly Dictionary<string, Entry> _collection = new();
+            private static readonly Dictionary<string, Entry> _collection = [];
 
             private static double GetPercent(double value, double totalTime)
             {

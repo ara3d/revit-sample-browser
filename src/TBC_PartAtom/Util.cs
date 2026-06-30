@@ -1,9 +1,9 @@
 #region Namespaces
 
+using Autodesk.Revit.ApplicationServices;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using Autodesk.Revit.ApplicationServices;
 
 #endregion // Namespaces
 
@@ -37,7 +37,7 @@ namespace BuildingCoder
                 }
                 else
                 {
-                    end = end + 7;
+                    end += 7;
 
                     var length = end - start;
 

@@ -1,15 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -54,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
                     return Result.Failed;
                 }
 
-                var transaction = new Transaction(m_project.Document, "CreateSectionView");
+                Transaction transaction = new(m_project.Document, "CreateSectionView");
                 transaction.Start();
                 //ViewSection section = m_project.Document.Create.NewViewSection(m_box);
                 var detailViewId = ElementId.InvalidElementId;
@@ -91,7 +90,7 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 
         private bool GetSelectedElement()
         {
-            var collection = new ElementSet();
+            ElementSet collection = new();
             foreach (var elementId in m_project.Selection.GetElementIds())
             {
                 collection.Insert(m_project.Document.GetElement(elementId));
@@ -112,22 +111,22 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             switch (m_currentComponent)
             {
                 case Wall _:
-                {
-                    if (!(m_currentComponent.Location is LocationCurve location))
                     {
+                        if (m_currentComponent.Location is not LocationCurve location)
+                        {
+                            m_errorInformation = "The selected wall should be linear.";
+                            return false;
+                        }
+
+                        if (location.Curve is Line)
+                        {
+                            m_type = SelectType.Wall;
+                            return true;
+                        }
+
                         m_errorInformation = "The selected wall should be linear.";
                         return false;
                     }
-
-                    if (location.Curve is Line)
-                    {
-                        m_type = SelectType.Wall;
-                        return true;
-                    }
-
-                    m_errorInformation = "The selected wall should be linear.";
-                    return false;
-                }
                 case FamilyInstance beam when StructuralType.Beam == beam.StructuralType:
                     m_type = SelectType.Beam;
                     return true;
@@ -142,14 +141,14 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 
         private bool GenerateBoundingBoxXyz()
         {
-            var transaction = new Transaction(m_project.Document, "GenerateBoundingBox");
+            Transaction transaction = new(m_project.Document, "GenerateBoundingBox");
             transaction.Start();
             m_box = new BoundingBoxXYZ
             {
                 Enabled = true
             };
-            var maxPoint = new XYZ(Length, Length, 0);
-            var minPoint = new XYZ(-Length, -Length, -Height);
+            XYZ maxPoint = new(Length, Length, 0);
+            XYZ minPoint = new(-Length, -Length, -Height);
             m_box.Max = maxPoint;
             m_box.Min = minPoint;
 
@@ -189,7 +188,7 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 
             var mPoint = ElementQuery.FindMidPoint(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
             // Offset Z from location curve to wall vertical midpoint.
-            var midPoint = new XYZ(mPoint.X, mPoint.Y, mPoint.Z + GetWallMidOffsetFromLocation(wall));
+            XYZ midPoint = new(mPoint.X, mPoint.Y, mPoint.Z + GetWallMidOffsetFromLocation(wall));
 
             transform.Origin = midPoint;
 
@@ -210,13 +209,13 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 
             var startOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END0_ELEVATION).AsDouble();
             var endOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END1_ELEVATION).AsDouble();
-            if (-Precision > startOffset - endOffset || Precision < startOffset - endOffset)
+            if (startOffset - endOffset is < -Precision or > Precision)
             {
                 m_errorInformation = "Please select a horizontal beam.";
                 return transform;
             }
 
-            if (!(instance.Location is LocationCurve locationCurve))
+            if (instance.Location is not LocationCurve locationCurve)
             {
                 m_errorInformation = "The program should never go here.";
                 return transform;
@@ -261,7 +260,7 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                    if (associatedElement is not null and AnalyticalPanel panel)
                         model = panel;
                 }
             }
@@ -307,7 +306,7 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             var height = wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble();
 
             // Wall location Z is at the base constraint level.
-            var midOffset = baseOffset + height / 2;
+            var midOffset = baseOffset + (height / 2);
             return midOffset;
         }
 
@@ -332,11 +331,11 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             try
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
-                var transaction = new Transaction(doc, "CreateDraftingView");
+                Transaction transaction = new(doc, "CreateDraftingView");
                 transaction.Start();
 
                 ViewFamilyType viewFamilyType = null;
-                var collector = new FilteredElementCollector(doc);
+                FilteredElementCollector collector = new(doc);
                 var viewFamilyTypes = collector.OfClass(typeof(ViewFamilyType)).ToElements();
                 foreach (var e in viewFamilyTypes)
                 {

@@ -1,6 +1,6 @@
-﻿using System.Drawing;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using System.Drawing;
 
 namespace ExcelExporterImporter.Common
 {

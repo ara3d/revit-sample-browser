@@ -2,12 +2,10 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
@@ -16,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
 
 
     public class Group : QueryItem
-    {      
+    {
         public LogicalOperator Operator { get; init; } = LogicalOperator.Or;
         public IEnumerable<QueryItem> Items { get; init; } = Enumerable.Empty<QueryItem>();
 
@@ -27,20 +25,15 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
             Items = items;
 
             var filterName = logicalOperator == LogicalOperator.Or ? "LogicalOrFilter" : "LogicalAndFilter";
-                          
+
             FilterSyntax = $"new {filterName}(new [] {{" + String.Join(", ", Items.Select(x => Environment.NewLine + "        " + x.FilterSyntax)) + Environment.NewLine + "    })";
         }
 
         public override ElementFilter CreateElementFilter(Document document)
         {
-            if (Operator == LogicalOperator.Or)
-            {
-                return new LogicalOrFilter(Items.Select(x => x.CreateElementFilter(document)).ToList());
-            }
-            else
-            {
-                return new LogicalAndFilter(Items.Select(x => x.CreateElementFilter(document)).ToList());
-            }
+            return Operator == LogicalOperator.Or
+                ? new LogicalOrFilter(Items.Select(x => x.CreateElementFilter(document)).ToList())
+                : new LogicalAndFilter(Items.Select(x => x.CreateElementFilter(document)).ToList());
         }
     }
 }

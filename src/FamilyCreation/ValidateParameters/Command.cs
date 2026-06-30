@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
 {
@@ -25,12 +25,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
             {
                 m_familyManager = document.FamilyManager;
                 var errorMessages = ValidateParameters(m_familyManager);
-                using (var msgForm = new MessageForm(errorMessages.ToArray()))
-                {
-                    msgForm.StartPosition = FormStartPosition.CenterParent;
-                    msgForm.ShowDialog();
-                    return Result.Succeeded;
-                }
+                using MessageForm msgForm = new(errorMessages.ToArray());
+                msgForm.StartPosition = FormStartPosition.CenterParent;
+                msgForm.ShowDialog();
+                return Result.Succeeded;
             }
 
             message = "please make sure you have opened a family document!";
@@ -39,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
 
         public static List<string> ValidateParameters(FamilyManager familyManager)
         {
-            var errorInfo = new List<string>();
+            List<string> errorInfo = new();
             foreach (FamilyType type in familyManager.Types)
             {
                 var right = true;
@@ -51,7 +49,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
                             switch (para.StorageType)
                             {
                                 case StorageType.Double:
-                                    if (!(type.AsDouble(para) is double))
+                                    if (type.AsDouble(para) is not double)
                                         right = false;
                                     break;
                                 case StorageType.ElementId:
@@ -66,11 +64,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
 
                                     break;
                                 case StorageType.Integer:
-                                    if (!(type.AsInteger(para) is int))
+                                    if (type.AsInteger(para) is not int)
                                         right = false;
                                     break;
                                 case StorageType.String:
-                                    if (!(type.AsString(para) is string))
+                                    if (type.AsString(para) is null)
                                         right = false;
                                     break;
                             }

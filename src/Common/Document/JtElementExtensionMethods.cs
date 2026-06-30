@@ -1,59 +1,39 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
+using System.Diagnostics;
 
 
 namespace BuildingCoder
 {
     public static class JtElementExtensionMethods
+    {
+        public static bool IsPhysicalElement(
+            this Element e)
         {
-            public static bool IsPhysicalElement(
-                this Element e)
-            {
-                if (e.Category == null)
-                    return false;
-                // does this produce same result as 
-                // WhereElementIsViewIndependent ?
-                if (e.ViewSpecific)
-                    return false;
-                // exclude specific unwanted categories
-                if ((BuiltInCategory) e.Category.Id.Value
-                    == BuiltInCategory.OST_HVAC_Zones)
-                    return false;
-                return e.Category.CategoryType == CategoryType.Model
+            if (e.Category == null)
+                return false;
+            // does this produce same result as 
+            // WhereElementIsViewIndependent ?
+            if (e.ViewSpecific)
+                return false;
+            // exclude specific unwanted categories
+            return (BuiltInCategory)e.Category.Id.Value
+                    != BuiltInCategory.OST_HVAC_Zones && e.Category.CategoryType == CategoryType.Model
                        && e.Category.CanAddSubcategory;
-            }
-    
-            public static Curve GetCurve(this Element e)
-            {
-                Debug.Assert(null != e.Location,
-                    "expected an element with a valid Location");
-    
-                var lc = e.Location as LocationCurve;
-    
-                Debug.Assert(null != lc,
-                    "expected an element with a valid LocationCurve");
-    
-                return lc.Curve;
-            }
         }
+
+        public static Curve GetCurve(this Element e)
+        {
+            Debug.Assert(null != e.Location,
+                "expected an element with a valid Location");
+
+            var lc = e.Location as LocationCurve;
+
+            Debug.Assert(null != lc,
+                "expected an element with a valid LocationCurve");
+
+            return lc.Curve;
+        }
+    }
 }

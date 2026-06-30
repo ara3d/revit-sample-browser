@@ -4,7 +4,6 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 {

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
@@ -12,8 +12,8 @@ public static class ParameterUtils
     /// </summary>
     public static Dictionary<string, string> GetParameterMap(this Element elem)
     {
-        var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        
+        Dictionary<string, string> map = new(StringComparer.OrdinalIgnoreCase);
+
         if (elem == null || !elem.IsValidObject)
             return map;
 

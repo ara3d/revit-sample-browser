@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Form = System.Windows.Forms.Form;
 
@@ -22,12 +21,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
         /// <summary>
         ///     Binding source for constraints ListBox.
         /// </summary>
-        private readonly BindingSource m_constraintsListBoxBinding = new BindingSource();
+        private readonly BindingSource m_constraintsListBoxBinding = [];
 
         /// <summary>
         ///     Binding source for parameters ListBox.
         /// </summary>
-        private readonly BindingSource m_parametersListBoxBinding = new BindingSource();
+        private readonly BindingSource m_parametersListBoxBinding = [];
 
         /// <summary>
         ///     RebarShapeDef object.
@@ -96,7 +95,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
 
                     // Fill Schema data of Revit shared parameter file.
                     // If no this schema data, OpenSharedParameterFile may alway return null.
-                    var contents = new StringBuilder();
+                    StringBuilder contents = new();
                     contents.AppendLine("# This is a Revit shared parameter file.");
                     contents.AppendLine("# Do not edit manually.");
                     contents.AppendLine("*META	VERSION	MINVERSION");
@@ -126,25 +125,23 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
         /// <param name="e"></param>
         private void addParameterButton_Click(object sender, EventArgs e)
         {
-            using (var addParam = new AddParameter(m_rebarShapeDef.Parameters))
+            using AddParameter addParam = new(m_rebarShapeDef.Parameters);
+            if (DialogResult.OK == addParam.ShowDialog())
             {
-                if (DialogResult.OK == addParam.ShowDialog())
-                {
-                    var paramType = addParam.IsFormula
-                        ? typeof(RebarShapeParameterFormula)
-                        : typeof(RebarShapeParameterDouble);
+                var paramType = addParam.IsFormula
+                    ? typeof(RebarShapeParameterFormula)
+                    : typeof(RebarShapeParameterDouble);
 
-                    object paramName = addParam.ParamName;
-                    object paramValue = addParam.ParamValue;
-                    if (!addParam.IsFormula)
-                        paramValue = double.Parse(addParam.ParamValue);
+                object paramName = addParam.ParamName;
+                object paramValue = addParam.ParamValue;
+                if (!addParam.IsFormula)
+                    paramValue = double.Parse(addParam.ParamValue);
 
-                    // Add the parameter to RebarShapeDef.
-                    var param = m_rebarShapeDef.AddParameter(paramType, paramName, paramValue);
-                    propertyGrid.SelectedObject = param;
-                    m_parametersListBoxBinding.ResetBindings(false);
-                    parameterListBox.SelectedItem = param;
-                }
+                // Add the parameter to RebarShapeDef.
+                var param = m_rebarShapeDef.AddParameter(paramType, paramName, paramValue);
+                propertyGrid.SelectedObject = param;
+                m_parametersListBoxBinding.ResetBindings(false);
+                parameterListBox.SelectedItem = param;
             }
         }
 
@@ -155,18 +152,16 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
         /// <param name="e"></param>
         private void addConstraintButton_Click(object sender, EventArgs e)
         {
-            using (var addConstraint = new AddConstraint(m_rebarShapeDef.AllowedConstraintTypes()))
+            using AddConstraint addConstraint = new(m_rebarShapeDef.AllowedConstraintTypes());
+            if (DialogResult.OK == addConstraint.ShowDialog())
             {
-                if (DialogResult.OK == addConstraint.ShowDialog())
-                {
-                    var constraintType = addConstraint.ConstraintType;
+                var constraintType = addConstraint.ConstraintType;
 
-                    // Add the constraint to RebarShapeDef.
-                    var constraint = m_rebarShapeDef.AddConstraint(constraintType);
-                    propertyGrid.SelectedObject = constraint;
-                    m_constraintsListBoxBinding.ResetBindings(false);
-                    constraintListBox.SelectedItem = constraint;
-                }
+                // Add the constraint to RebarShapeDef.
+                var constraint = m_rebarShapeDef.AddConstraint(constraintType);
+                propertyGrid.SelectedObject = constraint;
+                m_constraintsListBoxBinding.ResetBindings(false);
+                constraintListBox.SelectedItem = constraint;
             }
         }
 

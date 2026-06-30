@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Text;
 using Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents;
 using Autodesk.Revit.UI;
+using System;
+using System.Text;
 
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility
 {
@@ -30,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility
                 return "Invalid Guid";
             }
 
-            var paneId = new DockablePaneId(paneGuid);
+            DockablePaneId paneId = new(paneGuid);
             return GetPaneSummary(paneId);
         }
 
@@ -49,14 +49,14 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility
 
         public static string GetPaneSummary(DockablePane pane)
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"-RevitDockablePane- Title: {pane.GetTitle()}, Id-Guid: {pane.Id.Guid}");
             return sb.ToString();
         }
 
         public static string GetDockStateSummary(DockablePaneState paneState)
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine(" -DockablePaneState-");
             sb.AppendLine($" Left: {paneState.FloatingRectangle.Left}");
             sb.AppendLine($" Right: {paneState.FloatingRectangle.Right}");

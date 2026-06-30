@@ -1,25 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
+using System;
+using System.Diagnostics;
 
 
 namespace BuildingCoder
@@ -109,10 +92,10 @@ namespace BuildingCoder
             {
                 // Compare distance of unbounded line to origin
 
-                var da = (qa.X * pa.Y - qa.Y * pa.Y)
+                var da = ((qa.X * pa.Y) - (qa.Y * pa.Y))
                          / va.GetLength();
 
-                var db = (qb.X * pb.Y - qb.Y * pb.Y)
+                var db = ((qb.X * pb.Y) - (qb.Y * pb.Y))
                          / vb.GetLength();
 
                 d = Compare(da, db);
@@ -237,7 +220,7 @@ namespace BuildingCoder
 
         public static bool PointsUpwards(XYZ v)
         {
-            var horizontalLength = v.X * v.X + v.Y * v.Y;
+            var horizontalLength = (v.X * v.X) + (v.Y * v.Y);
             var verticalLength = v.Z * v.Z;
 
             return 0 < v.Z

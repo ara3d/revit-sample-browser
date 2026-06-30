@@ -15,10 +15,11 @@
 
 #region Namespaces
 
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 
 #endregion // Namespaces
@@ -109,11 +110,9 @@ namespace BuildingCoder
 
             foreach (ElementType s in symbols)
             {
-                var fs = s as FamilySymbol;
-
                 Debug.Print(
                     "Family name={0}, symbol name={1}",
-                    null == fs ? "<none>" : fs.Family.Name,
+                    s is not FamilySymbol fs ? "<none>" : fs.Family.Name,
                     s.Name);
             }
 

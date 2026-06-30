@@ -1,6 +1,6 @@
-using System;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
+using System;
 
 namespace BuildingCoder
 {
@@ -30,7 +30,7 @@ namespace BuildingCoder
 
             var line = Line.CreateUnbound(center, direction);
 
-            c.Intersect(line, out IntersectionResultArray results);
+            c.Intersect(line, out var results);
 
             foreach (IntersectionResult result in results)
             {

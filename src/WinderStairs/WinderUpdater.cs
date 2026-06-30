@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
 {
     /// <summary>
@@ -54,8 +53,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
                     m_curveElements, Element.GetChangeTypeAny());
 
                 // Add deletion trigger
-                var deleteParents = new List<ElementId>();
-                deleteParents.AddRange(crvElements);
+                List<ElementId> deleteParents = [.. crvElements];
                 var stairRun = rvtDoc.GetElement(m_winderRunId) as StairsRun;
                 deleteParents.Add(stairRun.GetStairs().Id);
                 UpdaterRegistry.AddTrigger(m_updaterId, rvtDoc,

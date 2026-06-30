@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents;
 using Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using System;
+using System.Collections.Generic;
 using Document = Autodesk.Revit.DB.Document;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
@@ -18,16 +18,12 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
     public class StairsStandardConfiguration : IStairsConfiguration
     {
         private readonly double m_bottomElevation;
-        private readonly List<IStairsLandingComponent> m_landingConfigurations = new List<IStairsLandingComponent>();
-        private double m_landingWidth;
+        private readonly List<IStairsLandingComponent> m_landingConfigurations = [];
         private bool m_landingWidthOverride;
         private readonly int m_numberOfLandings;
         private int m_riserIncrement = 1;
-        private readonly List<IStairsRunComponent> m_runConfigurations = new List<IStairsRunComponent>();
-        private double m_runOffset;
+        private readonly List<IStairsRunComponent> m_runConfigurations = [];
         private bool m_runOffsetOverride;
-
-        private double m_runWidth;
         private bool m_runWidthOverride;
         private readonly Stairs m_stairs;
         private readonly StairsType m_stairsType;
@@ -70,14 +66,10 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         /// </summary>
         public double LandingWidth
         {
-            get
-            {
-                if (m_landingWidthOverride) return m_landingWidth;
-                return RunWidth;
-            }
+            get => m_landingWidthOverride ? (field) : RunWidth;
             set
             {
-                m_landingWidth = value;
+                field = value;
                 m_landingWidthOverride = true;
             }
         }
@@ -87,13 +79,10 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         /// </summary>
         public double RunWidth
         {
-            get
-            {
-                return m_runWidthOverride ? m_runWidth : m_stairsType.MinRunWidth;
-            }
+            get => m_runWidthOverride ? field : m_stairsType.MinRunWidth;
             set
             {
-                m_runWidth = value;
+                field = value;
                 m_runWidthOverride = true;
             }
         }
@@ -103,13 +92,10 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         /// </summary>
         public double RunOffset
         {
-            get
-            {
-                return m_runOffsetOverride ? m_runOffset : 2.0;
-            }
+            get => m_runOffsetOverride ? field : 2.0;
             set
             {
-                m_runOffset = value;
+                field = value;
                 m_runOffsetOverride = true;
             }
         }
@@ -137,7 +123,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
 
             // Setup number of risers for the run.
             var runNumberOfRisers = m_riserIncrement;
-            if (runIndex == m_numberOfLandings) runNumberOfRisers = RiserNumber - m_numberOfLandings * m_riserIncrement;
+            if (runIndex == m_numberOfLandings) runNumberOfRisers = RiserNumber - (m_numberOfLandings * m_riserIncrement);
 
             // Setup the transform for the run.  Every second run must be reversed in direction and start point generated from
             // the offet to the previous run.

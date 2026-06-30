@@ -1,9 +1,9 @@
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -18,11 +18,11 @@ namespace BuildingCoder
                     .WhereElementIsNotElementType()
                     .OfCategory(BuiltInCategory.OST_Rooms);
 
-            var map_wall_to_rooms
-                = new Dictionary<ElementId, List<string>>();
+            Dictionary<ElementId, List<string>> map_wall_to_rooms
+                = new();
 
-            var opts
-                = new SpatialElementBoundaryOptions();
+            SpatialElementBoundaryOptions opts
+                = new();
 
             foreach (Room room in rooms)
             {
@@ -30,24 +30,24 @@ namespace BuildingCoder
                     = room.GetBoundarySegments(opts);
 
                 foreach (var loop in loops)
-                foreach (var seg in loop)
-                {
-                    var idWall = seg.ElementId;
-
-                    if (ElementId.InvalidElementId != idWall)
+                    foreach (var seg in loop)
                     {
-                        if (!map_wall_to_rooms.ContainsKey(idWall))
-                            map_wall_to_rooms.Add(
-                                idWall, new List<string>());
+                        var idWall = seg.ElementId;
 
-                        var room_name = room.Name;
+                        if (ElementId.InvalidElementId != idWall)
+                        {
+                            if (!map_wall_to_rooms.ContainsKey(idWall))
+                                map_wall_to_rooms.Add(
+                                    idWall, []);
 
-                        if (!map_wall_to_rooms[idWall].Contains(room_name)) map_wall_to_rooms[idWall].Add(room_name);
+                            var room_name = room.Name;
+
+                            if (!map_wall_to_rooms[idWall].Contains(room_name)) map_wall_to_rooms[idWall].Add(room_name);
+                        }
                     }
-                }
             }
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Add list of adjacent rooms to wall comments");
 
             var ids

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
 {
@@ -30,13 +30,8 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
                     return Result.Cancelled;
                 }
 
-                using (var displayForm = new FoundationSlabForm(revitDatas))
-                {
-                    if (displayForm.ShowDialog() == DialogResult.OK)
-                        return Result.Succeeded;
-                }
-
-                return Result.Cancelled;
+                using FoundationSlabForm displayForm = new(revitDatas);
+                return displayForm.ShowDialog() == DialogResult.OK ? Result.Succeeded : Result.Cancelled;
             }
             catch (Exception e)
             {

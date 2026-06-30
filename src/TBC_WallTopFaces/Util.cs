@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.DB;
 
 namespace BuildingCoder
@@ -17,7 +15,7 @@ namespace BuildingCoder
             var b = f.GetBoundingBox();
             var p = b.Min;
             var q = b.Max;
-            var midpoint = p + 0.5 * (q - p);
+            var midpoint = p + (0.5 * (q - p));
             var normal = f.ComputeNormal(midpoint);
             return PointsUpwards(normal);
         }

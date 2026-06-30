@@ -12,14 +12,15 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
 
 #endregion // Namespaces
 
@@ -72,8 +73,8 @@ namespace BuildingCoder
             ref int numErr,
             ref int numWarn)
         {
-            var rooms
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector rooms
+                = new(doc);
 
             rooms.WherePasses(new RoomFilter());
 
@@ -93,8 +94,8 @@ namespace BuildingCoder
         }
         private void ListRoomData(Room room)
         {
-            var opt
-                = new SpatialElementBoundaryOptions();
+            SpatialElementBoundaryOptions opt
+                = new();
 
             var nr = room.Number;
             var name = room.Name;

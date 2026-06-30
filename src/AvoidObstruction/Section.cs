@@ -1,43 +1,35 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
     public class Section
     {
-        private readonly XYZ m_dir;
-
         private double m_endFactor;
-
-        private readonly List<Pipe> m_pipes;
-
-        private readonly List<ReferenceWithContext> m_refs;
-
         private double m_startFactor;
 
         private Section(XYZ dir)
         {
-            m_dir = dir;
+            PipeCenterLineDirection = dir;
             m_startFactor = 0;
             m_endFactor = 0;
-            m_refs = new List<ReferenceWithContext>();
-            m_pipes = new List<Pipe>();
+            Refs = [];
+            Pipes = [];
         }
 
-        public XYZ PipeCenterLineDirection => m_dir;
+        public XYZ PipeCenterLineDirection { get; }
 
-        public List<Pipe> Pipes => m_pipes;
+        public List<Pipe> Pipes { get; }
 
-        public XYZ Start => m_refs[0].GetReference().GlobalPoint + m_dir * m_startFactor;
+        public XYZ Start => Refs[0].GetReference().GlobalPoint + (PipeCenterLineDirection * m_startFactor);
 
-        public XYZ End => m_refs[m_refs.Count - 1].GetReference().GlobalPoint + m_dir * m_endFactor;
+        public XYZ End => Refs[Refs.Count - 1].GetReference().GlobalPoint + (PipeCenterLineDirection * m_endFactor);
 
-        public List<ReferenceWithContext> Refs => m_refs;
+        public List<ReferenceWithContext> Refs { get; }
 
         public void Inflate(int index, double value)
         {
@@ -56,8 +48,8 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 
         public static List<Section> BuildSections(List<ReferenceWithContext> allrefs, XYZ dir)
         {
-            var buildStack = new List<ReferenceWithContext>();
-            var sections = new List<Section>();
+            List<ReferenceWithContext> buildStack = [];
+            List<Section> sections = [];
             Section current = null;
             foreach (var geoRef in allrefs)
             {

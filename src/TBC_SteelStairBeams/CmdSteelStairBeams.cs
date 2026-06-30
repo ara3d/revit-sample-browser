@@ -12,12 +12,13 @@
 
 #region Namespaces
 
-using System;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -109,7 +110,7 @@ namespace BuildingCoder
             var app = uiapp.Application;
             var doc = uidoc.Document;
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create Steel Stair Beams");
 
             var collector
@@ -134,7 +135,7 @@ namespace BuildingCoder
 
             try
             {
-                var s = new BeamCreator(doc);
+                BeamCreator s = new(doc);
 
                 s.Run();
 

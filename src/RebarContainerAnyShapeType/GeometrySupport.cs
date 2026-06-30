@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 using RebarGeomHelper = Ara3D.RevitSampleBrowser.Common.Structural.RebarGeometry;
 namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 {
@@ -20,9 +19,9 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 
         protected readonly XYZ DrivingVector;
 
-        private List<Line> m_edges = new List<Line>();
+        private List<Line> m_edges = [];
 
-        protected readonly List<XYZ> Points = new List<XYZ>();
+        protected readonly List<XYZ> Points = [];
 
         private readonly Transform m_transform;
 
@@ -40,7 +39,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
                 throw new Exception("Can't get the geometry of selected element.");
 
             var swProfile = element.GetSweptProfile();
-            if (swProfile == null || !(swProfile.GetDrivingCurve() is Line))
+            if (swProfile == null || swProfile.GetDrivingCurve() is not Line)
                 throw new Exception("The selected element driving curve is not a line.");
 
             // get the driving path and vector of the beam or column
@@ -104,7 +103,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         protected List<XYZ> GetRelatedVectors(XYZ point)
         {
             // Initialize the return vector list.
-            var vectors = new List<XYZ>();
+            List<XYZ> vectors = new();
 
             // Get all the edge which contain this point.
             // And get the vector from this point to another point
@@ -124,9 +123,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             }
 
             // only two vector(direction) should be found
-            if (2 != vectors.Count) throw new Exception("a point on swept profile should have only two direction.");
-
-            return vectors;
+            return 2 != vectors.Count ? throw new Exception("a point on swept profile should have only two direction.") : vectors;
         }
 
         /// <summary>
@@ -137,7 +134,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         protected List<XYZ> OffsetPoints(double offset)
         {
             // Initialize the offset point list.
-            var points = new List<XYZ>();
+            List<XYZ> points = new();
 
             // Get all points of the swept profile, and offset it in two related direction
             foreach (var point in Points)
@@ -187,7 +184,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         private Face GetSweptProfileFace(Solid solid)
         {
             // Get a point on the swept profile from all points in solid
-            var refPoint = new XYZ(); // the point on swept profile
+            XYZ refPoint = new(); // the point on swept profile
             foreach (Edge edge in solid.Edges)
             {
                 var points = edge.Tessellate() as List<XYZ>; //get end points of the edge
@@ -239,7 +236,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         private List<Line> ChangeEdgeToLine(EdgeArray edges)
         {
             // create the line list instance.
-            var edgeLines = new List<Line>();
+            List<Line> edgeLines = new();
 
             // get each edge from swept profile,
             // and changed the geometry information in line list

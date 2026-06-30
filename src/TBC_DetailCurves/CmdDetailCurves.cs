@@ -13,10 +13,12 @@
 
 #region Namespaces
 
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -51,7 +53,7 @@ namespace BuildingCoder
                     var lc = e.Location as LocationCurve;
                     var curve = lc.Curve;
 
-                    using var tx = new Transaction(doc);
+                    using Transaction tx = new(doc);
                     tx.Start("Create Detail Line in Wall Centre");
                     creDoc.NewDetailCurve(view, curve);
                     tx.Commit();
@@ -64,8 +66,8 @@ namespace BuildingCoder
 
             // Create a geometry line
 
-            var startPoint = new XYZ(0, 0, 0);
-            var endPoint = new XYZ(10, 10, 0);
+            XYZ startPoint = new(0, 0, 0);
+            XYZ endPoint = new(10, 10, 0);
 
             //Line geomLine = creApp.NewLine( startPoint, endPoint, true ); // 2013
 
@@ -73,9 +75,9 @@ namespace BuildingCoder
 
             // Create a geometry arc
 
-            var end0 = new XYZ(0, 0, 0);
-            var end1 = new XYZ(10, 0, 0);
-            var pointOnCurve = new XYZ(5, 5, 0);
+            XYZ end0 = new(0, 0, 0);
+            XYZ end1 = new(10, 0, 0);
+            XYZ pointOnCurve = new(5, 5, 0);
 
             //Arc geomArc = creApp.NewArc( end0, end1, pointOnCurve ); // 2013
 
@@ -96,7 +98,7 @@ namespace BuildingCoder
         geomPlane );
 #endif // NEED_PLANE
 
-            using (var tx = new Transaction(doc))
+            using (Transaction tx = new(doc))
             {
                 tx.Start("Create Detail Line and Arc");
 

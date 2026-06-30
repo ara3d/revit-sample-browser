@@ -40,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 
         public static ResourceProvider GetInstance()
         {
-            return _provider ?? (_provider = new ResourceProvider());
+            return _provider ??= new ResourceProvider();
         }
     }
 }

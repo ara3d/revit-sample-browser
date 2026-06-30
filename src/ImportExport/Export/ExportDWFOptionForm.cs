@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.DB;
+using System;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
@@ -34,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
         private void buttonOK_Click(object sender, EventArgs e)
         {
             m_data.ExportObjectData = checkBoxModelElements.Checked;
-            m_data.ExportAreas = checkBoxRoomsAndAreas.Enabled ? checkBoxRoomsAndAreas.Checked : false;
+            m_data.ExportAreas = checkBoxRoomsAndAreas.Enabled && checkBoxRoomsAndAreas.Checked;
             m_data.ExportMergeFiles = checkBoxMergeViews.Checked;
             if (radioButtonStandardFormat.Checked)
             {
@@ -50,7 +50,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 
         private void checkBoxModelElements_CheckedChanged(object sender, EventArgs e)
         {
-            checkBoxRoomsAndAreas.Enabled = checkBoxModelElements.Checked ? true : false;
+            checkBoxRoomsAndAreas.Enabled = checkBoxModelElements.Checked;
         }
 
         private void radioButtonCompressedFormat_CheckedChanged(object sender, EventArgs e)

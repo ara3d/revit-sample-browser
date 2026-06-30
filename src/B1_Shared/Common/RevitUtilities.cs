@@ -1,21 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.DB.Mechanical;
-using OfficeOpenXml;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
-using OfficeOpenXml.Style;
-using Floor = Autodesk.Revit.DB.Floor;
+using Autodesk.Revit.DB;using Autodesk.Revit.DB.Architecture;using Autodesk.Revit.DB.Mechanical;using OfficeOpenXml;using OfficeOpenXml.Style;using System;using System.Collections;using System.Collections.Generic;using System.Linq;using System.Reflection;using Floor = Autodesk.Revit.DB.Floor;
 
 namespace ExcelExporterImporter.Common
 {
     public static class RevitUtilities
     {
-        private const ScheduleFieldType CountHost = (ScheduleFieldType) 23; //<Add type 23 which is a host account
+        private const ScheduleFieldType CountHost = (ScheduleFieldType)23; //<Add type 23 which is a host account
 
         /// <summary>
         /// </summary>
@@ -37,23 +26,66 @@ namespace ExcelExporterImporter.Common
             var materials = e.GetMaterialIds(false);
 
             return materials.Sum(materialId => e.GetMaterialArea(materialId, false));
-        }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #if REVIT2021
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="doc"></param>
-            /// <param name="unitType"></param>
-            /// <param name="value"></param>
-            /// <returns></returns>
-            private static double ConvertToDisplayUnit(Document doc, ForgeTypeId unitType, double value)
-            {
-                var fo = doc.GetUnits().GetFormatOptions(unitType);
-
-                var dut = fo.GetUnitTypeId();
-
-                return UnitUtils.ConvertFromInternalUnits(value, dut);
-            }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="unitType"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static double ConvertToDisplayUnit(Document doc, ForgeTypeId unitType, double value)
+
+        {
+
+            var fo = doc.GetUnits().GetFormatOptions(unitType);
+
+
+
+            var dut = fo.GetUnitTypeId();
+
+
+
+            return UnitUtils.ConvertFromInternalUnits(value, dut);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #else
         /// <summary>
         /// </summary>
@@ -71,37 +103,46 @@ namespace ExcelExporterImporter.Common
         }
 #endif
 #if REVIT2021
-            /// <summary>
-            /// Get display format
-            /// </summary>
-            /// <param name="doc"></param>
-            /// <param name="ForgeTypeId"></param>
-            /// <returns>Returns the display format</returns>
-            public static string GetUnitTypeSymbol(Document doc, ForgeTypeId unitType)
-            {
-                if (unitType.Empty())
-                {
-                    return "";
-                }
-                var fo = doc.GetUnits().GetFormatOptions(unitType);
-                
-                if (fo.GetSymbolTypeId().Empty())
-                {
-                    return "";
-                }
-                var formatValueOptions = new FormatValueOptions();
-                formatValueOptions.SetFormatOptions(fo);
-                string sResult;
-                if(fo.GetUnitTypeId() == UnitTypeId.Celsius && fo.GetSymbolTypeId() == SymbolTypeId.DegreeC)//Problem with format for degrees, replace error with the correct format
-                {
-                    sResult = "0.00 C";
-                }
-                else
-                {
-                    sResult = UnitFormatUtils.Format(doc.GetUnits(), unitType, 0, true, formatValueOptions);
-                }
-                return sResult;
-            }
+        /// <summary>
+        /// Get display format
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="ForgeTypeId"></param>
+        /// <returns>Returns the display format</returns>
+        public static string GetUnitTypeSymbol(Document doc, ForgeTypeId unitType)
+
+        {
+
+            if (unitType.Empty())
+
+            {
+
+                return "";
+
+            }
+
+            var fo = doc.GetUnits().GetFormatOptions(unitType);
+
+
+
+            if (fo.GetSymbolTypeId().Empty())
+
+            {
+
+                return "";
+
+            }
+
+            FormatValueOptions formatValueOptions = new();
+
+            formatValueOptions.SetFormatOptions(fo);
+
+            var sResult = fo.GetUnitTypeId() == UnitTypeId.Celsius && fo.GetSymbolTypeId() == SymbolTypeId.DegreeC
+                ? "0.00 C"
+                : UnitFormatUtils.Format(doc.GetUnits(), unitType, 0, true, formatValueOptions);
+            return sResult;
+
+        }
 #else
         /// <summary>
         ///     Get display format
@@ -133,15 +174,14 @@ namespace ExcelExporterImporter.Common
         /// <param name="parameter"></param>
         /// <returns>Parameter</returns>
         private static Parameter GetFamilySymbol(Element element, ElementId parameterId, Parameter parameter)
-        {
-            Parameter parameter2 = null;
-            var FIelement = element as FamilyInstance;
-            if (FIelement != null)
+        {            Parameter parameter2 = null;
+
+            if (element is FamilyInstance FIelement)
             {
                 var familysymbol = FIelement.Symbol;
                 if (familysymbol != null)
                 {
-                    parameter2 = familysymbol.get_Parameter((BuiltInParameter) parameterId.Value);
+                    parameter2 = familysymbol.get_Parameter((BuiltInParameter)parameterId.Value);
                     if (parameter2 != null) parameter = parameter2;
                 }
             }
@@ -157,15 +197,14 @@ namespace ExcelExporterImporter.Common
         /// <param name="parameter"></param>
         /// <returns>Parameter</returns>
         private static Parameter GetWallType(Element element, ElementId parameterId, Parameter parameter)
-        {
-            Parameter parameter2 = null;
-            var Welement = element as Wall;
-            if (Welement != null)
+        {            Parameter parameter2 = null;
+
+            if (element is Wall Welement)
             {
                 var walltype = Welement.WallType;
                 if (walltype != null)
                 {
-                    parameter2 = walltype.get_Parameter((BuiltInParameter) parameterId.Value);
+                    parameter2 = walltype.get_Parameter((BuiltInParameter)parameterId.Value);
                     if (parameter2 != null) parameter = parameter2;
                 }
             }
@@ -187,8 +226,7 @@ namespace ExcelExporterImporter.Common
             var parameterId = scheduleField.ParameterId;
             //
             var sColName11 = scheduleField.GetName(); //Ligne pour facilit le dbugage
-            var vName11 = (BuiltInParameter) parameterId.Value; //Ligne pour facilit le dbugage
-            var sStop121 = "asdfasdf";
+            var vName11 = (BuiltInParameter)parameterId.Value; //Ligne pour facilit le dbugage
             //Il va chercher les paramtres du champs pour permettre l'affichage du bon format
             //----Action selon le type de champ / Action according to the type of field----
             switch (scheduleField.FieldType)
@@ -205,7 +243,7 @@ namespace ExcelExporterImporter.Common
                         var ElementType = doc.GetElement(element.GetTypeId());
                         if (ElementType != null)
                         {
-                            parameter = ElementType.get_Parameter((BuiltInParameter) parameterId.Value);
+                            parameter = ElementType.get_Parameter((BuiltInParameter)parameterId.Value);
                             if (parameter != null)
                             {
                                 var tTypeParameter = parameter.Element.GetType();
@@ -225,12 +263,10 @@ namespace ExcelExporterImporter.Common
                     }
 
                     break;
-                case ScheduleFieldType.Space:
-                    var familyInstanceSpace = element as FamilyInstance;
-                    if (familyInstanceSpace != null)
+                case ScheduleFieldType.Space:                    if (element is FamilyInstance familyInstanceSpace)
                     {
                         var space = familyInstanceSpace.Space;
-                        if (space != null) parameter = space.get_Parameter((BuiltInParameter) parameterId.Value);
+                        if (space != null) parameter = space.get_Parameter((BuiltInParameter)parameterId.Value);
                     }
 
                     break;
@@ -239,53 +275,40 @@ namespace ExcelExporterImporter.Common
                 case ScheduleFieldType.ProjectInfo:
                     var vProjectInfo = doc.ProjectInformation;
                     if (vProjectInfo != null)
-                        parameter = vProjectInfo.get_Parameter((BuiltInParameter) parameterId.Value);
+                        parameter = vProjectInfo.get_Parameter((BuiltInParameter)parameterId.Value);
                     break;
                 case ScheduleFieldType.FromRoom:
                 case ScheduleFieldType.ToRoom:
-                case ScheduleFieldType.Room:
-                    var familyInstance = element as FamilyInstance;
-                    if (familyInstance != null)
+                case ScheduleFieldType.Room:                    if (element is FamilyInstance familyInstance)
                     {
                         var room = GetFamillyRoom(familyInstance, pElement, scheduleField.FieldType);
-                        if (room != null) parameter = room.get_Parameter((BuiltInParameter) parameterId.Value);
+                        if (room != null) parameter = room.get_Parameter((BuiltInParameter)parameterId.Value);
                     }
                     else
-                    {
-                        var sElement = element as Space;
-                        if (sElement != null)
+                    {                        if (element is Space sElement)
                         {
                             var sRoom = sElement.Room;
                             if (sRoom != null)
-                                parameter = sRoom.get_Parameter((BuiltInParameter) parameterId.Value);
+                                parameter = sRoom.get_Parameter((BuiltInParameter)parameterId.Value);
                         }
                     }
 
                     break;
                 case ScheduleFieldType.MaterialQuantity:
-                    parameter = element.get_Parameter((BuiltInParameter) parameterId.Value);
+                    parameter = element.get_Parameter((BuiltInParameter)parameterId.Value);
                     break;
                 case ScheduleFieldType.PhysicalInstance:
-                    parameter = element.get_Parameter((BuiltInParameter) parameterId.Value);
+                    parameter = element.get_Parameter((BuiltInParameter)parameterId.Value);
                     break;
-                case ScheduleFieldType.StructuralMaterial:
-                    var SM_familyInstance = element as FamilyInstance;
-                    var SM_Wall = element as Wall;
-                    var SM_FloorElement = element as Floor;
-
-                    if (SM_familyInstance != null)
-                    {
-                        var Material_FamilyInstance =
-                            doc.GetElement(SM_familyInstance.StructuralMaterialId) as Material;
-                        if (Material_FamilyInstance != null)
+                case ScheduleFieldType.StructuralMaterial:                    if (element is FamilyInstance SM_familyInstance)
+                    {                        if (doc.GetElement(SM_familyInstance.StructuralMaterialId) is Material Material_FamilyInstance)
                         {
                             var SAI_Material_FamilyInstance = doc.GetElement(Material_FamilyInstance.StructuralAssetId);
                             if (SAI_Material_FamilyInstance != null)
                                 parameter = SAI_Material_FamilyInstance.get_Parameter(
-                                    (BuiltInParameter) parameterId.Value);
-                            if (parameter == null)
-                                parameter = Material_FamilyInstance.get_Parameter(
-                                    (BuiltInParameter) parameterId.Value);
+                                    (BuiltInParameter)parameterId.Value);
+                            parameter ??= Material_FamilyInstance.get_Parameter(
+                                    (BuiltInParameter)parameterId.Value);
                         }
                         else
                         {
@@ -296,42 +319,34 @@ namespace ExcelExporterImporter.Common
                                 var ParameterFamilySymbol =
                                     SM_FamilySymbol.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
                                 if (ParameterFamilySymbol != null)
-                                {
-                                    var SM_Material_FamilySymbol =
-                                        doc.GetElement(ParameterFamilySymbol.AsElementId()) as Material;
-                                    if (SM_Material_FamilySymbol != null)
+                                {                                    if (doc.GetElement(ParameterFamilySymbol.AsElementId()) is Material SM_Material_FamilySymbol)
                                     {
                                         var SAI_Material_FamilySymbol =
                                             doc.GetElement(SM_Material_FamilySymbol.StructuralAssetId);
                                         if (SAI_Material_FamilySymbol != null)
                                             parameter = SAI_Material_FamilySymbol.get_Parameter(
-                                                (BuiltInParameter) parameterId.Value);
-                                        if (parameter == null)
-                                            parameter = SM_Material_FamilySymbol.get_Parameter(
-                                                (BuiltInParameter) parameterId.Value);
+                                                (BuiltInParameter)parameterId.Value);
+                                        parameter ??= SM_Material_FamilySymbol.get_Parameter(
+                                                (BuiltInParameter)parameterId.Value);
                                     }
                                 }
                             }
                         }
                     }
 
-                    if (SM_FloorElement != null && parameter == null)
-                    {
-                        var Material_FloorType =
-                            doc.GetElement(SM_FloorElement.FloorType.StructuralMaterialId) as Material;
-                        if (Material_FloorType != null)
+                    if (element is Floor SM_FloorElement && parameter == null)
+                    {                        if (doc.GetElement(SM_FloorElement.FloorType.StructuralMaterialId) is Material Material_FloorType)
                         {
                             var SAI_Material_FloorType = doc.GetElement(Material_FloorType.StructuralAssetId);
                             if (SAI_Material_FloorType != null)
                                 parameter = SAI_Material_FloorType.get_Parameter(
-                                    (BuiltInParameter) parameterId.Value);
-                            if (parameter == null)
-                                parameter = Material_FloorType.get_Parameter(
-                                    (BuiltInParameter) parameterId.Value);
+                                    (BuiltInParameter)parameterId.Value);
+                            parameter ??= Material_FloorType.get_Parameter(
+                                    (BuiltInParameter)parameterId.Value);
                         }
                     }
 
-                    if (SM_Wall != null && parameter == null)
+                    if (element is Wall SM_Wall && parameter == null)
                     {
                         var SM_WallType = doc.GetElement(SM_Wall.GetTypeId());
                         if (SM_WallType != null)
@@ -339,48 +354,39 @@ namespace ExcelExporterImporter.Common
                             var ParameterWallType =
                                 SM_WallType.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
                             if (ParameterWallType != null)
-                            {
-                                var Material_WallType = doc.GetElement(ParameterWallType.AsElementId()) as Material;
-                                if (Material_WallType != null)
+                            {                                if (doc.GetElement(ParameterWallType.AsElementId()) is Material Material_WallType)
                                 {
                                     var SAI_Material_WallType = doc.GetElement(Material_WallType.StructuralAssetId);
                                     if (SAI_Material_WallType != null)
                                         parameter = SAI_Material_WallType.get_Parameter(
-                                            (BuiltInParameter) parameterId.Value);
-                                    if (parameter == null)
-                                        parameter = Material_WallType.get_Parameter(
-                                            (BuiltInParameter) parameterId.Value);
+                                            (BuiltInParameter)parameterId.Value);
+                                    parameter ??= Material_WallType.get_Parameter(
+                                            (BuiltInParameter)parameterId.Value);
                                 }
                             }
                         }
                     }
 #if REVIT2016 || REVIT2017 || REVIT2018 || REVIT2019 || REVIT2020 || REVIT2021
-                    var SM_WallFoundation = element as WallFoundation;
-                    if(SM_WallFoundation != null && parameter == null)
+
+                    if (element is WallFoundation SM_WallFoundation && parameter == null)
                     {
-                        Element SM_WallFoundationType = doc.GetElement(SM_WallFoundation.GetTypeId());
+                        var SM_WallFoundationType = doc.GetElement(SM_WallFoundation.GetTypeId());
                         if (SM_WallFoundationType != null)
                         {
-                            Autodesk.Revit.DB.Parameter ParameterWallFoundationType =
+                            var ParameterWallFoundationType =
  SM_WallFoundationType.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
-                            if(ParameterWallFoundationType != null)
-                            {
-                                Material Material_WallFoundationType =
- doc.GetElement(ParameterWallFoundationType.AsElementId()) as Material;
-                                if(Material_WallFoundationType != null)
+                            if (ParameterWallFoundationType != null)
+                            {                                if (doc.GetElement(ParameterWallFoundationType.AsElementId()) is Material Material_WallFoundationType)
                                 {
-                                    Element SAI_Material_WallFoundationType =
+                                    var SAI_Material_WallFoundationType =
  doc.GetElement(Material_WallFoundationType.StructuralAssetId);
-                                    if(SAI_Material_WallFoundationType != null)
+                                    if (SAI_Material_WallFoundationType != null)
                                     {
                                         parameter =
  SAI_Material_WallFoundationType.get_Parameter((BuiltInParameter)parameterId.Value);
                                     }
-                                    if(parameter == null)
-                                    {
-                                        parameter =
+                                    parameter ??=
  Material_WallFoundationType.get_Parameter((BuiltInParameter)parameterId.Value);
-                                    }
                                 }
                             }
                         }
@@ -393,7 +399,7 @@ namespace ExcelExporterImporter.Common
                         var ElementType = doc.GetElement(element.GetTypeId());
                         if (ElementType != null)
                         {
-                            parameter = ElementType.get_Parameter((BuiltInParameter) parameterId.Value);
+                            parameter = ElementType.get_Parameter((BuiltInParameter)parameterId.Value);
                             if (parameter != null)
                             {
                                 var tTypeParameter = parameter.Element.GetType();
@@ -413,7 +419,7 @@ namespace ExcelExporterImporter.Common
 
                         if (parameter == null || !parameter.HasValue)
                         {
-                            parameter = element.get_Parameter((BuiltInParameter) parameterId.Value);
+                            parameter = element.get_Parameter((BuiltInParameter)parameterId.Value);
 
                             if (parameter != null)
                             {
@@ -432,7 +438,7 @@ namespace ExcelExporterImporter.Common
                     }
                     else //Ce n'est pas un paramtre partag
                     {
-                        parameter = element.get_Parameter((BuiltInParameter) parameterId.Value);
+                        parameter = element.get_Parameter((BuiltInParameter)parameterId.Value);
                         if (!ValidValue(parameter))
                         {
                             if (parameter != null)
@@ -456,9 +462,8 @@ namespace ExcelExporterImporter.Common
                     try
                     {
                         var sColName = scheduleField.GetName(); //Ligne pour facilit le dbugage
-                        var vName = (BuiltInParameter) parameterId.Value; //Ligne pour facilit le dbugage
-                        if (parameter == null)
-                            parameter = element.get_Parameter((BuiltInParameter) parameterId.Value);
+                        var vName = (BuiltInParameter)parameterId.Value; //Ligne pour facilit le dbugage
+                        parameter ??= element.get_Parameter((BuiltInParameter)parameterId.Value);
                         if (parameter != null) //Pour obtenir les valeurs des paramtres partag
                         {
                             var tTypeParameter = parameter.Element.GetType();
@@ -483,7 +488,7 @@ namespace ExcelExporterImporter.Common
                             var ElementType2 = doc.GetElement(element.GetTypeId());
                             if (ElementType2 != null)
                             {
-                                parameter = ElementType2.get_Parameter((BuiltInParameter) parameterId.Value);
+                                parameter = ElementType2.get_Parameter((BuiltInParameter)parameterId.Value);
                                 if (parameter != null)
                                 {
                                     var tTypeParameter = parameter.Element.GetType();
@@ -557,18 +562,8 @@ namespace ExcelExporterImporter.Common
             }
 
             //----End of the action according to the type of field----
-            if (parameter == null)
-            {
-                readonlyParameter = true;
-            }
-            else
-            {
-                if (readonlyParameters.ContainsKey(scheduleField.ParameterId.Value) || parameter.IsReadOnly ||
-                    bExtSchedule)
-                    readonlyParameter = true;
-                else
-                    readonlyParameter = false;
-            }
+            readonlyParameter = parameter == null || readonlyParameters.ContainsKey(scheduleField.ParameterId.Value) || parameter.IsReadOnly ||
+                    bExtSchedule;
 
             return readonlyParameter;
         }
@@ -597,45 +592,49 @@ namespace ExcelExporterImporter.Common
                     cellVal = "1";
                     break;
                 case ScheduleFieldType.MaterialQuantity:
-                    if (parameterId.Value == (int) BuiltInParameter.MATERIAL_AREA)
-                    {
+                    if (parameterId.Value == (int)BuiltInParameter.MATERIAL_AREA)
+                    {
+
+
+
 #if REVIT2021
-                                cellVal =
- RevitUtilities.ConvertToDisplayUnit(doc, scheduleField.GetSpecTypeId(), RevitUtilities.GetMaterialAreaOfElement(element));
+                        cellVal =
+
+RevitUtilities.ConvertToDisplayUnit(doc, scheduleField.GetSpecTypeId(), RevitUtilities.GetMaterialAreaOfElement(element));
 #else
                         cellVal = ConvertToDisplayUnit(doc, scheduleField.UnitType, GetMaterialAreaOfElement(element));
 #endif
                     }
-                    else if (parameterId.Value == (int) BuiltInParameter.MATERIAL_VOLUME)
-                    {
+                    else if (parameterId.Value == (int)BuiltInParameter.MATERIAL_VOLUME)
+                    {
+
+
+
 #if REVIT2021
-                                cellVal =
- RevitUtilities.ConvertToDisplayUnit(doc, scheduleField.GetSpecTypeId(), RevitUtilities.GetMaterialValumeOfElement(element));
+                        cellVal =
+
+RevitUtilities.ConvertToDisplayUnit(doc, scheduleField.GetSpecTypeId(), RevitUtilities.GetMaterialValumeOfElement(element));
 #else
                         cellVal = ConvertToDisplayUnit(doc, scheduleField.UnitType,
                             GetMaterialValumeOfElement(element));
 #endif
                     }
-                    else if (parameterId.Value == (int) BuiltInParameter.MATERIAL_ASPAINT)
+                    else if (parameterId.Value == (int)BuiltInParameter.MATERIAL_ASPAINT)
                     {
                         cellVal = "No";
                         if (element.GetMaterialIds(true).Count > 0) cellVal = "Yes";
                     }
-                    else if (parameterId.Value == (int) BuiltInParameter.PHY_MATERIAL_PARAM_UNIT_WEIGHT)
+                    else if (parameterId.Value == (int)BuiltInParameter.PHY_MATERIAL_PARAM_UNIT_WEIGHT)
                     {
                         double dCellVal = 0;
                         var materials = element.GetMaterialIds(false);
                         if (materials.Count > 0)
                             foreach (var Item in materials)
-                            {
-                                var eMaterial = doc.GetElement(Item) as Material;
-                                if (eMaterial != null)
-                                {
-                                    var pseProperty = doc.GetElement(eMaterial.StructuralAssetId) as PropertySetElement;
-                                    if (pseProperty != null)
+                            {                                if (doc.GetElement(Item) is Material eMaterial)
+                                {                                    if (doc.GetElement(eMaterial.StructuralAssetId) is PropertySetElement pseProperty)
                                     {
                                         parameter = pseProperty.get_Parameter(
-                                            (BuiltInParameter) parameterId.Value);
+                                            (BuiltInParameter)parameterId.Value);
                                         if (parameter != null)
                                         {
                                             dCellVal += Convert.ToDouble(GetParameterValue(doc, parameter,
@@ -681,16 +680,12 @@ namespace ExcelExporterImporter.Common
                 case StorageType.Double:
                     var dVal = parameter.AsProjectUnitTypeDouble(scheduleField);
                     try
-                    {
+                    {
+
+
+
 #if REVIT2021
-                            if (parameter.GetUnitTypeId() == UnitTypeId.Percentage)
-                            {
-                                val = dVal / 100.0;
-                            }
-                            else
-                            {
-                                val = dVal;
-                            }
+                        val = parameter.GetUnitTypeId() == UnitTypeId.Percentage ? dVal / 100.0 : dVal;
 #else
                         if (parameter.DisplayUnitType == DisplayUnitType.DUT_PERCENTAGE)
                             val = dVal / 100.0;
@@ -706,33 +701,27 @@ namespace ExcelExporterImporter.Common
                     break;
                 case StorageType.String:
                     val = parameter.AsString();
-                    if (val == null) //Adding an empty string to replace null solved sorting problems
-                        val = string.Empty;
+                    val ??= string.Empty;
                     break;
                 case StorageType.Integer:
                     val = parameter.AsInteger();
                     if (B1ParameterCompat.IsYesNo(parameter.Definition))
-                        val = (int) val == 0 ? "False" : "True";
+                        val = (int)val == 0 ? "False" : "True";
                     break;
                 case StorageType.ElementId:
                     var elementId = parameter.AsElementId();
                     if (elementId.Value < 0)
                     {
-                        var cat = doc.Settings.Categories.get_Item((BuiltInCategory) elementId.Value);
+                        var cat = doc.Settings.Categories.get_Item((BuiltInCategory)elementId.Value);
                         if (cat != null) val = cat.Name;
                     }
                     else
                     {
-                        if (parameter.Id.Value == -1002051 || parameter.Id.Value == -1002052)
-                        {
-                            var elementType = doc.GetElement(elementId) as ElementType;
-                            if (elementType != null)
+                        if (parameter.Id.Value is -1002051 or -1002052)
+                        {                            if (doc.GetElement(elementId) is ElementType elementType)
                             {
                                 var familyName = GetElementFamilyName(doc, elementType);
-                                if (parameter.Id.Value == -1002052)
-                                    val = familyName + ": " + elementType.Name;
-                                else
-                                    val = familyName;
+                                val = parameter.Id.Value == -1002052 ? familyName + ": " + elementType.Name : familyName;
                             }
                         }
                         else if (parameter.Id.Value == -1012701) //Pour un type area
@@ -759,7 +748,7 @@ namespace ExcelExporterImporter.Common
         /// <returns>Returns the list</returns>
         public static Hashtable GetListReadOnlyParamater(ParametersSettings parametersSettings)
         {
-            var readonlyParameters = new Hashtable();
+            Hashtable readonlyParameters = new();
             foreach (var parameter in parametersSettings.ReadonlyParameters) readonlyParameters[parameter.Id] = true;
             //============================================Added column to manually lock==========================================================
             /*
@@ -848,16 +837,22 @@ namespace ExcelExporterImporter.Common
             switch (parameter.StorageType)
             {
                 case StorageType.Double:
-                    if (value == null) value = 0;
+                    value ??= 0;
                     var dVal = double.Parse(value.ToString());
                     var dValueAct = parameter.AsProjectUnitTypeDouble(scheduleField);
                     try
-                    {
+                    {
+
+
+
 #if REVIT2021
-                            if (parameter.GetUnitTypeId() == UnitTypeId.Percentage)
-                            {
-                                dVal *= 100.0;
-                            }
+                        if (parameter.GetUnitTypeId() == UnitTypeId.Percentage)
+
+                        {
+
+                            dVal *= 100.0;
+
+                        }
 #else
                         if (parameter.DisplayUnitType == DisplayUnitType.DUT_PERCENTAGE) dVal *= 100.0;
 #endif
@@ -897,10 +892,7 @@ namespace ExcelExporterImporter.Common
 
                 case StorageType.Integer:
                     int iVal;
-                    if (B1ParameterCompat.IsYesNo(parameter.Definition))
-                        iVal = Convert.ToBoolean(value) ? 1 : 0;
-                    else
-                        iVal = Convert.ToInt32(value);
+                    iVal = B1ParameterCompat.IsYesNo(parameter.Definition) ? Convert.ToBoolean(value) ? 1 : 0 : Convert.ToInt32(value);
 
                     if (iVal != parameter.AsInteger())
                         //if (!parameter.SetValueString(iVal.ToString()))//Insertion de la valeur
@@ -915,13 +907,13 @@ namespace ExcelExporterImporter.Common
                     FilteredElementCollector collector = null;
                     Element newElement = null;
 
-                    if (parameter.Id.Value == (int) BuiltInParameter.ELEM_TYPE_PARAM)
+                    if (parameter.Id.Value == (int)BuiltInParameter.ELEM_TYPE_PARAM)
                     {
                         collector = new FilteredElementCollector(doc).WhereElementIsElementType();
                         newElement =
                             collector.FirstOrDefault(e => e.Name.Trim().Equals(Convert.ToString(value).Trim()));
                     }
-                    else if (parameter.Id.Value == (int) BuiltInParameter.ELEM_FAMILY_PARAM)
+                    else if (parameter.Id.Value == (int)BuiltInParameter.ELEM_FAMILY_PARAM)
                     {
                         collector = new FilteredElementCollector(doc).WhereElementIsElementType();
                         newElement = collector.Cast<ElementType>().FirstOrDefault(elementType =>
@@ -943,7 +935,7 @@ namespace ExcelExporterImporter.Common
                     }
                     else if (newElement != null)
                     {
-                        if (originalElement != null && originalElement.Id.Value != newElement.Id.Value ||
+                        if ((originalElement != null && originalElement.Id.Value != newElement.Id.Value) ||
                             originalElement == null)
                             if (!parameter.Set(newElement.Id)) //Insertion de la valeur
                                 throw new TargetInvocationException(
@@ -1021,10 +1013,13 @@ namespace ExcelExporterImporter.Common
         /// <returns>Result translate</returns>
         public static string TranslateValueToText(string value, List<ParameterTranslation> parameters)
         {
-            foreach (var parameter in parameters)
-            foreach (var translation in parameter.Translations)
-                if (translation.Value.ToLower().Trim() == value.ToLower().Trim())
-                    return translation.Text.ToLower().Trim();
+            foreach (var parameter in parameters)
+
+                foreach (var translation in parameter.Translations)
+
+                    if (translation.Value.ToLower().Trim() == value.ToLower().Trim())
+
+                        return translation.Text.ToLower().Trim();
             return value;
         }
 
@@ -1036,10 +1031,13 @@ namespace ExcelExporterImporter.Common
         /// <returns>Result value</returns>
         public static string TranslateTextToValue(string text, List<ParameterTranslation> parameters)
         {
-            foreach (var parameter in parameters)
-            foreach (var translation in parameter.Translations)
-                if (translation.Text.ToLower().Trim() == text.ToLower().Trim())
-                    return translation.Value.ToLower().Trim();
+            foreach (var parameter in parameters)
+
+                foreach (var translation in parameter.Translations)
+
+                    if (translation.Text.ToLower().Trim() == text.ToLower().Trim())
+
+                        return translation.Value.ToLower().Trim();
 
             throw new ArgumentOutOfRangeException("text", string.Format(Resources.UnableFindCorrespondingValue, text));
         }
@@ -1054,15 +1052,9 @@ namespace ExcelExporterImporter.Common
         public static bool CanExportParameter(Parameter parameter, List<IgnoredParameters> ignoredParameters,
             string location)
         {
-            if (ignoredParameters.Any(p => (p.Location == "*" || p.Location.ToLower() == location.ToLower()) &&
+            return !ignoredParameters.Any(p => (p.Location == "*" || p.Location.ToLower() == location.ToLower()) &&
                                            p.Parameter.Any(pr =>
-                                               pr.Name.ToLower() == parameter.Definition.Name.ToLower())))
-                return false;
-
-            if (parameter.Definition.Name.ToLower().Contains("none")) return false;
-
-            return true;
-        }
+                                               pr.Name.ToLower() == parameter.Definition.Name.ToLower())) && !parameter.Definition.Name.ToLower().Contains("none");        }
 
         /// <summary>
         ///     Valid if the parameter can be exported
@@ -1074,13 +1066,10 @@ namespace ExcelExporterImporter.Common
         public static bool CanExportParameter(ScheduleField scheduleField, List<IgnoredParameters> ignoredParameters,
             string location)
         {
-            if (ignoredParameters.Any(p =>
+            return !ignoredParameters.Any(p =>
                 (p.Location == "*" || p.Location.Equals(location, StringComparison.InvariantCultureIgnoreCase)) &&
                 p.Parameter.Any(pr =>
-                    pr.Name.Equals(scheduleField.GetName(), StringComparison.InvariantCultureIgnoreCase))))
-                return false;
-
-            return true;
+                    pr.Name.Equals(scheduleField.GetName(), StringComparison.InvariantCultureIgnoreCase)));
         }
 
         /// <summary>
@@ -1554,12 +1543,18 @@ namespace ExcelExporterImporter.Common
                     var bValueFind = false;
                     var sFilterItem = "[" + sField.GetName() + "]" + sOperator;
                     if (sFilter.IsDoubleValue)
-                    {
+                    {
+
+
+
 #if REVIT2021
-                            var foItem = doc.GetUnits().GetFormatOptions(sField.GetSpecTypeId());
-                            var dut = foItem.GetUnitTypeId();
-                            double dValue = UnitUtils.ConvertFromInternalUnits(sFilter.GetDoubleValue(), dut);
-                            sFilterItem += dValue.ToString();
+                        var foItem = doc.GetUnits().GetFormatOptions(sField.GetSpecTypeId());
+
+                        var dut = foItem.GetUnitTypeId();
+
+                        var dValue = UnitUtils.ConvertFromInternalUnits(sFilter.GetDoubleValue(), dut);
+
+                        sFilterItem += dValue.ToString();
 #else
                         var foItem = doc.GetUnits().GetFormatOptions(sField.UnitType);
                         var dut = foItem.DisplayUnits;
@@ -1605,9 +1600,7 @@ namespace ExcelExporterImporter.Common
 
         public static Parameter GetElementParameter(Element assetElement, string parameterName)
         {
-            if (assetElement == null) return null;
-
-            return assetElement.LookupParameter(parameterName);
+            return assetElement == null ? null : assetElement.LookupParameter(parameterName);
         }
     }
 }

@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Data;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Data;
 
 namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
 {
@@ -16,34 +17,22 @@ namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
     {
         private static ControlledApplication _ctrlApp;
 
-        private static DataTable _changesInfoTable;
+        public static DataTable ChangesInfoTable { get; set; }
 
-        private static ChangesInformationForm _infoForm;
-
-        public static DataTable ChangesInfoTable
-        {
-            get => _changesInfoTable;
-            set => _changesInfoTable = value;
-        }
-
-        public static ChangesInformationForm InfoForm
-        {
-            get => _infoForm;
-            set => _infoForm = value;
-        }
+        public static ChangesInformationForm InfoForm { get; set; }
 
         public Result OnStartup(UIControlledApplication application)
         {
             // initialize member variables.
             _ctrlApp = application.ControlledApplication;
-            _changesInfoTable = CreateChangeInfoTable();
-            _infoForm = new ChangesInformationForm(ChangesInfoTable);
+            ChangesInfoTable = CreateChangeInfoTable();
+            InfoForm = new ChangesInformationForm(ChangesInfoTable);
 
             // register the DocumentChanged event
             _ctrlApp.DocumentChanged += CtrlApp_DocumentChanged;
 
             // show dialog
-            _infoForm.Show();
+            InfoForm.Show();
 
             return Result.Succeeded;
         }
@@ -51,8 +40,8 @@ namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
         public Result OnShutdown(UIControlledApplication application)
         {
             _ctrlApp.DocumentChanged -= CtrlApp_DocumentChanged;
-            _infoForm = null;
-            _changesInfoTable = null;
+            InfoForm = null;
+            ChangesInfoTable = null;
             return Result.Succeeded;
         }
 
@@ -85,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
             // retrieve the changed element
             var elem = doc.GetElement(id);
 
-            var newRow = _changesInfoTable.NewRow();
+            var newRow = ChangesInfoTable.NewRow();
 
             if (elem == null)
             {
@@ -105,38 +94,38 @@ namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
                 newRow["Document"] = doc.Title;
             }
 
-            _changesInfoTable.Rows.Add(newRow);
+            ChangesInfoTable.Rows.Add(newRow);
         }
 
         private DataTable CreateChangeInfoTable()
         {
-            var changesInfoTable = new DataTable("ChangesInfoTable");
+            DataTable changesInfoTable = new("ChangesInfoTable");
 
-            var styleColumn = new DataColumn("ChangeType", typeof(string))
+            DataColumn styleColumn = new("ChangeType", typeof(string))
             {
                 Caption = "ChangeType"
             };
             changesInfoTable.Columns.Add(styleColumn);
 
-            var idColum = new DataColumn("Id", typeof(string))
+            DataColumn idColum = new("Id", typeof(string))
             {
                 Caption = "Id"
             };
             changesInfoTable.Columns.Add(idColum);
 
-            var nameColum = new DataColumn("Name", typeof(string))
+            DataColumn nameColum = new("Name", typeof(string))
             {
                 Caption = "Name"
             };
             changesInfoTable.Columns.Add(nameColum);
 
-            var categoryColum = new DataColumn("Category", typeof(string))
+            DataColumn categoryColum = new("Category", typeof(string))
             {
                 Caption = "Category"
             };
             changesInfoTable.Columns.Add(categoryColum);
 
-            var docColum = new DataColumn("Document", typeof(string))
+            DataColumn docColum = new("Document", typeof(string))
             {
                 Caption = "Document"
             };
@@ -153,8 +142,7 @@ namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            if (ExternalApplication.InfoForm == null)
-                ExternalApplication.InfoForm = new ChangesInformationForm(ExternalApplication.ChangesInfoTable);
+            ExternalApplication.InfoForm ??= new ChangesInformationForm(ExternalApplication.ChangesInfoTable);
             ExternalApplication.InfoForm.Show();
 
             return Result.Succeeded;

@@ -12,15 +12,14 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     /// <summary>
@@ -52,17 +51,13 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var doc = uiDoc.Document;
 
             // Find toposurfaces
-            var tsCollector = new FilteredElementCollector(doc);
+            FilteredElementCollector tsCollector = new(doc);
             tsCollector.OfClass(typeof(TopographySurface));
             var tsEnumerable = tsCollector.Cast<TopographySurface>().Where(ts => !ts.IsSiteSubRegion);
             var count = tsEnumerable.Count();
 
             // If there is only on surface, use it.  If there is more than one, let the user select the target.
-            TopographySurface targetSurface = null;
-            if (count > 1) // tmp
-                targetSurface = SiteTopographyHelper.PickTopographySurface(uiDoc);
-            else
-                targetSurface = tsEnumerable.First();
+            var targetSurface = count > 1 ? SiteTopographyHelper.PickTopographySurface(uiDoc) : tsEnumerable.First();
 
             // Pick point and project to plane at toposurface average elevation
             var point = SiteTopographyHelper.PickPointNearToposurface(uiDoc, targetSurface, "Pick point for center of pond.");
@@ -70,67 +65,66 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
 
 
             // Find material "Water"
-            var collector = new FilteredElementCollector(doc);
+            FilteredElementCollector collector = new(doc);
             collector.OfClass(typeof(Material));
             var mat = collector.Cast<Material>().FirstOrDefault(m => m.Name == "Water");
 
-            var curves = new List<Curve>
+            List<Curve> curves = new()
             {
                 Arc.Create(point, pondRadius, 0, Math.PI, XYZ.BasisX, XYZ.BasisY),
                 Arc.Create(point, pondRadius, Math.PI, 2 * Math.PI, XYZ.BasisX, XYZ.BasisY)
             };
 
             var curveLoop = CurveLoop.Create(curves);
-            var curveLoops = new List<CurveLoop> { curveLoop };
+            List<CurveLoop> curveLoops = new()
+            { curveLoop };
 
             // All changes are added to one transaction group - will create one undo item
-            using (var addGroup = new TransactionGroup(doc, "Add pond group"))
+            using TransactionGroup addGroup = new(doc, "Add pond group");
+            addGroup.Start();
+
+            IList<XYZ> existingPoints = null;
+            // Transacton for adding subregion.
+            using (Transaction t2 = new(doc, "Add subregion"))
             {
-                addGroup.Start();
+                t2.Start();
+                var region = SiteSubRegion.Create(doc, curveLoops, targetSurface.Id);
+                if (mat != null) region.TopographySurface.MaterialId = mat.Id;
+                t2.Commit();
 
-                IList<XYZ> existingPoints = null;
-                // Transacton for adding subregion.
-                using (var t2 = new Transaction(doc, "Add subregion"))
-                {
-                    t2.Start();
-                    var region = SiteSubRegion.Create(doc, curveLoops, targetSurface.Id);
-                    if (mat != null) region.TopographySurface.MaterialId = mat.Id;
-                    t2.Commit();
+                // The boundary points for the subregion cannot be deleted, since they are generated
+                // to represent the subregion boundary rather than representing real points in the host.
+                // Get non-boundary points only to be deleted.
+                existingPoints = SiteTopographyHelper.GetNonBoundaryPoints(region.TopographySurface);
 
-                    // The boundary points for the subregion cannot be deleted, since they are generated
-                    // to represent the subregion boundary rather than representing real points in the host.
-                    // Get non-boundary points only to be deleted.
-                    existingPoints = SiteTopographyHelper.GetNonBoundaryPoints(region.TopographySurface);
-
-                    // Average elevation of all points in the subregion to use as base elevation for the pond topography
-                    elevation = SiteTopographyHelper.GetAverageElevation(region.TopographySurface.GetPoints());
-                }
-
-                using (var editScope = new TopographyEditScope(doc, "Edit TS"))
-                {
-                    editScope.Start(targetSurface.Id);
-
-                    // Transaction for points changes
-                    using (var t = new Transaction(doc, "Add points"))
-                    {
-                        t.Start();
-
-                        // Delete existing points first to avoid conflict
-                        if (existingPoints.Count > 0) targetSurface.DeletePoints(existingPoints);
-
-                        // Generate list of points to add
-                        var points =
-                            SiteTopographyHelper.GeneratePondPointsSurrounding(new XYZ(point.X, point.Y, elevation - 3),
-                                pondRadius);
-                        targetSurface.AddPoints(points);
-                        t.Commit();
-                    }
-
-                    editScope.Commit(new TopographyEditFailuresPreprocessor());
-                }
-
-                addGroup.Assimilate();
+                // Average elevation of all points in the subregion to use as base elevation for the pond topography
+                elevation = SiteTopographyHelper.GetAverageElevation(region.TopographySurface.GetPoints());
             }
+
+            using (TopographyEditScope editScope = new(doc, "Edit TS"))
+            {
+                editScope.Start(targetSurface.Id);
+
+                // Transaction for points changes
+                using (Transaction t = new(doc, "Add points"))
+                {
+                    t.Start();
+
+                    // Delete existing points first to avoid conflict
+                    if (existingPoints.Count > 0) targetSurface.DeletePoints(existingPoints);
+
+                    // Generate list of points to add
+                    var points =
+                        SiteTopographyHelper.GeneratePondPointsSurrounding(new XYZ(point.X, point.Y, elevation - 3),
+                            pondRadius);
+                    targetSurface.AddPoints(points);
+                    t.Commit();
+                }
+
+                editScope.Commit(new TopographyEditFailuresPreprocessor());
+            }
+
+            addGroup.Assimilate();
         }
     }
 }

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
@@ -22,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part to flip.");
 
-                if (!(doc.GetElement(refObj) is FabricationPart part))
+                if (doc.GetElement(refObj) is not FabricationPart part)
                 {
                     message = "The selected element is not a fabrication part.";
                     return Result.Failed;
@@ -34,14 +34,12 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Failed;
                 }
 
-                using (var trans = new Transaction(doc, "flip part"))
-                {
-                    trans.Start();
+                using Transaction trans = new(doc, "flip part");
+                trans.Start();
 
-                    part.Flip();
+                part.Flip();
 
-                    trans.Commit();
-                }
+                trans.Commit();
 
                 return Result.Succeeded;
             }

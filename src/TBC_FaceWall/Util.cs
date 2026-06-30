@@ -1,10 +1,11 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Diagnostics;
+using System.Linq;
 
 namespace BuildingCoder
 {
@@ -37,10 +38,10 @@ namespace BuildingCoder
 
         internal static void CreateMassExtrusion(Document doc)
         {
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Create Mass");
 
-            var refar = new ReferenceArray();
+            ReferenceArray refar = new();
 
             var pts = new[]
             {
@@ -63,7 +64,7 @@ namespace BuildingCoder
                 refar.Append(c.GeometryCurve.Reference);
             }
 
-            var direction = new XYZ(0, 0, 20);
+            XYZ direction = new(0, 0, 20);
 
             doc.FamilyCreate.NewExtrusionForm(true, refar, direction);
 
@@ -79,14 +80,14 @@ namespace BuildingCoder
 
             CreateMassExtrusion(massDoc);
 
-            var opt = new SaveAsOptions
+            SaveAsOptions opt = new()
             {
                 OverwriteExistingFile = true
             };
 
             massDoc.SaveAs(FaceWallFamilyPath, opt);
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Create FaceWall");
 
             if (!doc.LoadFamily(FaceWallFamilyPath))
@@ -159,22 +160,22 @@ namespace BuildingCoder
                 .Cast<WallType>().FirstOrDefault(q
                     => q.Name == "Generic - 6\" Masonry");
 
-            var opt = new Options
+            Options opt = new()
             {
                 ComputeReferences = true
             };
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create Face Walls & Mass Floors");
 
             foreach (var solid in fi.get_Geometry(opt)
                 .Where(q => q is Solid).Cast<Solid>())
-            foreach (Face f in solid.Faces)
-                if (FaceWall.IsValidFaceReferenceForFaceWall(
-                    doc, f.Reference))
-                    FaceWall.Create(doc, wType.Id,
-                        WallLocationLine.CoreExterior,
-                        f.Reference);
+                foreach (Face f in solid.Faces)
+                    if (FaceWall.IsValidFaceReferenceForFaceWall(
+                        doc, f.Reference))
+                        FaceWall.Create(doc, wType.Id,
+                            WallLocationLine.CoreExterior,
+                            f.Reference);
 
             var levels
                 = new FilteredElementCollector(doc)

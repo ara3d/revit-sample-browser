@@ -2,14 +2,12 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
@@ -17,19 +15,14 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
     public class ClassFilter : Filter
     {
         private readonly List<ClassCmdArgument> types;
-        
+
 
         public ClassFilter(List<ClassCmdArgument> types)
         {
             this.types = types;
-            if (types.Count == 1)
-            {               
-                FilterSyntax = $".OfClass({types.First().Name})";
-            }
-            else
-            {                
-                FilterSyntax = "new ElementMulticlassFilter(new [] {" + String.Join(", ", types.Select(x => x.Name)) + "})";
-            }           
+            FilterSyntax = types.Count == 1
+                ? $".OfClass({types.First().Name})"
+                : "new ElementMulticlassFilter(new [] {" + String.Join(", ", types.Select(x => x.Name)) + "})";
         }
 
 
@@ -46,5 +39,5 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
         {
             return new ElementMulticlassFilter(types.Select(x => x.Value).ToList());
         }
-    }    
+    }
 }

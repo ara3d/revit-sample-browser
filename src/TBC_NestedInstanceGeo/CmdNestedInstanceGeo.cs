@@ -14,12 +14,13 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -37,7 +38,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var a = new List<Element>();
+            List<Element> a = new();
 
             if (!Util.GetSelectedElementsOrAll(a, uidoc,
                 typeof(FamilyInstance)))
@@ -77,7 +78,7 @@ namespace BuildingCoder
                         var s = o2 as Solid;
                         if (null != s && 0 < s.Edges.Size)
                         {
-                            var vertices = new List<XYZ>();
+                            List<XYZ> vertices = new();
                             Util.GetVertices(vertices, s);
                             n = vertices.Count;
 
@@ -91,8 +92,8 @@ namespace BuildingCoder
 
             var fdoc = doc.EditFamily(inst.Symbol.Family);
 
-            var collector
-                = new FilteredElementCollector(fdoc);
+            FilteredElementCollector collector
+                = new(fdoc);
 
             collector.OfClass(typeof(FamilyInstance));
             var components = collector.ToElements();

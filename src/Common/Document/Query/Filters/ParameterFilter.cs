@@ -2,14 +2,12 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
@@ -30,7 +28,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
 
             var argForSyntax = $"\"{argument.String.Trim('*', '%')}\"";
 
-            if (parameterMatch.StorageType == StorageType.Integer )
+            if (parameterMatch.StorageType == StorageType.Integer)
             {
                 argForSyntax = argument.Int.ToString();
             }
@@ -43,10 +41,10 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
                 argForSyntax = argument.Double.ToString(CultureInfo.InvariantCulture);
             }
 
-            string parameterName = $"new ElementId({(parameterMatch.IsBuiltInParameter ? parameterMatch.Name : parameterMatch.Value)})";
-            string ruleName = "";
-            string secondArg = $", {argForSyntax}";
-            string thirdArg = $"";
+            var parameterName = $"new ElementId({(parameterMatch.IsBuiltInParameter ? parameterMatch.Name : parameterMatch.Value)})";
+            var ruleName = "";
+            var secondArg = $", {argForSyntax}";
+            var thirdArg = $"";
 
             if (rule is FilterNumericValueRule numericValueRule)
             {
@@ -55,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
             }
             if (rule is FilterDoubleRule)
             {
-                double epsilon = 1e-6;
+                var epsilon = 1e-6;
                 thirdArg = $", {epsilon}";
             }
             if (rule is FilterStringRule stringRule)
@@ -83,12 +81,12 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
             var parameterCmds = commands.OfType<ParameterCmd>().ToList();
             var filters = parameterCmds.Select(x => Create(x)).Where(x => x != null).ToList();
             if (filters.Count == 1)
-            {                
-                 yield return filters.First();                
+            {
+                yield return filters.First();
             }
             if (filters.Count > 1)
-            { 
-                yield return new Group(filters, LogicalOperator.And);                
+            {
+                yield return new Group(filters, LogicalOperator.And);
             }
         }
 
@@ -102,22 +100,14 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
             var arguments = command.Arguments.OfType<ParameterArgument>().ToList();
             var rules = arguments.SelectMany(x => CreateFilterRule(x, command.Operator)).ToList();
             var filters = rules.Select(x => new ParameterFilter(x.Item2, x.Item1, x.Item3)).ToList();
-            if (filters.Count == 1)
-            {              
-                return filters.First();
-            }
-            if (filters.Count > 1)
-            {
-                return new Group(filters, LogicalOperator.Or);
-            }
-            return null;
+            return filters.Count == 1 ? filters.First() : filters.Count > 1 ? new Group(filters, LogicalOperator.Or) : (QueryItem)null;
         }
 
         private static IEnumerable<(FilterRule, ParameterArgument, OperatorWithArgument)> CreateFilterRule(ParameterArgument parameterMatch, OperatorWithArgument @operator)
         {
             var parameter = parameterMatch.Value;
             var storageType = parameterMatch.StorageType;
-            var argument = @operator.Evaluate(parameterMatch.DataType);  
+            var argument = @operator.Evaluate(parameterMatch.DataType);
 
             FilterRule rule = null;
 
@@ -136,11 +126,11 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
             }
 
 
-            if (storageType == StorageType.String || storageType == StorageType.None|| (storageType == (StorageType.ElementId) && !argument.IsArgumentInt))
+            if (storageType == StorageType.String || storageType == StorageType.None || (storageType == StorageType.ElementId && !argument.IsArgumentInt))
             {
                 var argAsString = argument.String;
-                bool startsWithWildcard = argAsString.StartsWith("*") || argAsString.StartsWith("%");
-                bool endsWithWildcard = argAsString.EndsWith("*") || argAsString.EndsWith("%");
+                var startsWithWildcard = argAsString.StartsWith("*") || argAsString.StartsWith("%");
+                var endsWithWildcard = argAsString.EndsWith("*") || argAsString.EndsWith("%");
                 var serchTerm = argAsString.Trim('*', '%');
 
                 rule = @operator.Type switch
@@ -149,7 +139,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
                     OperatorType.GreaterOrEqual => ParameterFilterRuleFactory.CreateGreaterOrEqualRule(parameter, argAsString),
                     OperatorType.Less => ParameterFilterRuleFactory.CreateLessRule(parameter, argAsString),
                     OperatorType.LessOrEqual => ParameterFilterRuleFactory.CreateLessOrEqualRule(parameter, argAsString),
-_ => null
+                    _ => null
                 };
 
                 if (@operator.Type == OperatorType.Equals)
@@ -158,21 +148,21 @@ _ => null
                     if (startsWithWildcard == true && endsWithWildcard == false) rule = ParameterFilterRuleFactory.CreateEndsWithRule(parameter, serchTerm);
                     if (startsWithWildcard == false && endsWithWildcard == true) rule = ParameterFilterRuleFactory.CreateBeginsWithRule(parameter, serchTerm);
                     if (startsWithWildcard == false && endsWithWildcard == false) rule = ParameterFilterRuleFactory.CreateEqualsRule(parameter, serchTerm);
-}
+                }
                 if (@operator.Type == OperatorType.NotEquals)
                 {
                     if (startsWithWildcard == true && endsWithWildcard == true) rule = ParameterFilterRuleFactory.CreateNotContainsRule(parameter, serchTerm);
                     if (startsWithWildcard == true && endsWithWildcard == false) rule = ParameterFilterRuleFactory.CreateNotEndsWithRule(parameter, serchTerm);
                     if (startsWithWildcard == false && endsWithWildcard == true) rule = ParameterFilterRuleFactory.CreateNotBeginsWithRule(parameter, serchTerm);
                     if (startsWithWildcard == false && endsWithWildcard == false) rule = ParameterFilterRuleFactory.CreateNotEqualsRule(parameter, serchTerm);
-}
+                }
 
             }
 
-            
-            if (storageType == (StorageType.Double))
+
+            if (storageType == StorageType.Double)
             {
-                double epsilon = 1e-5;
+                var epsilon = 1e-5;
                 rule = @operator.Type switch
                 {
                     OperatorType.Equals => ParameterFilterRuleFactory.CreateEqualsRule(parameter, argument.Double, epsilon),
@@ -186,8 +176,8 @@ _ => null
             }
 
 
-            if (storageType == (StorageType.ElementId) && argument.IsArgumentInt)
-            {              
+            if (storageType == StorageType.ElementId && argument.IsArgumentInt)
+            {
                 rule = @operator.Type switch
                 {
                     OperatorType.Equals => ParameterFilterRuleFactory.CreateEqualsRule(parameter, argument.ElementId),
@@ -214,7 +204,7 @@ _ => null
             if (@operator.Type == OperatorType.Exists)
             {
                 yield return (ParameterFilterRuleFactory.CreateHasValueParameterRule(parameter), parameterMatch, @operator);
-                yield return (ParameterFilterRuleFactory.CreateHasNoValueParameterRule(parameter), parameterMatch, @operator);              
+                yield return (ParameterFilterRuleFactory.CreateHasNoValueParameterRule(parameter), parameterMatch, @operator);
             }
         }
     }

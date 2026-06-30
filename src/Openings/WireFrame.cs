@@ -42,8 +42,8 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         private PointF[] CalculateCanvasRegion(float previewWidth, float previewHeigh)
         {
             // get the area without margin
-            var realWidth = previewWidth * (1 - 2 * Marginratio);
-            var realHeight = previewHeigh * (1 - 2 * Marginratio);
+            var realWidth = previewWidth * (1 - (2 * Marginratio));
+            var realHeight = previewHeigh * (1 - (2 * Marginratio));
             var minX = previewWidth * Marginratio;
             var minY = previewHeigh * Marginratio;
             // ratio of width to height

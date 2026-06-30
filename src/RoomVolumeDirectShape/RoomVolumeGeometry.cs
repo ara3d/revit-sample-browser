@@ -3,9 +3,9 @@
 // Adapted from RoomVolumeDirectShape by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/RoomVolumeDirectShape
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.RoomVolumeDirectShape.CS
 {
@@ -27,12 +27,12 @@ namespace Ara3D.RevitSampleBrowser.RoomVolumeDirectShape.CS
                     continue;
                 }
 
-                var builder = new TessellatedShapeBuilder();
-                var vertices = new List<XYZ>(3);
+                TessellatedShapeBuilder builder = new();
+                List<XYZ> vertices = new(3);
 
                 builder.OpenConnectedFaceSet(false);
 
-                var controls = new SolidOrShellTessellationControls
+                SolidOrShellTessellationControls controls = new()
                 {
                     Accuracy = 0.03,
                     LevelOfDetail = 0.1,
@@ -57,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.RoomVolumeDirectShape.CS
                     vertices.Add(component.GetVertex(triangle.VertexIndex1));
                     vertices.Add(component.GetVertex(triangle.VertexIndex2));
 
-                    var face = new TessellatedFace(vertices, materialId);
+                    TessellatedFace face = new(vertices, materialId);
                     if (builder.DoesFaceHaveEnoughLoopsAndVertices(face))
                     {
                         builder.AddFace(face);

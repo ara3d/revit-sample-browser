@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
 {
     public static class LogManager
@@ -28,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
         }
 
         /// <summary>True when ExpectedOutPut.log is present (regression test mode).</summary>
-        public static bool RegressionTestNow 
+        public static bool RegressionTestNow
             => File.Exists(Path.Combine(AssemblyLocation, "ExpectedOutPut.log"));
 
         public static void LogFinalize()
@@ -45,6 +44,9 @@ namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
             Trace.WriteLine($"[Event] {EventLoggingHelper.GetRevitDbEventName(args.GetType())}: {EventLoggingHelper.TitleNoExt(doc.Title)}");
         }
 
-        public static void WriteLog(string message) => Trace.WriteLine(message);
+        public static void WriteLog(string message)
+        {
+            Trace.WriteLine(message);
+        }
     }
 }

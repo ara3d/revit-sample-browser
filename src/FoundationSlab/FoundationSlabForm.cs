@@ -1,18 +1,17 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using System;
 using System.Windows.Forms;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
 {
     public partial class FoundationSlabForm : Form
     {
-        private readonly DataGridViewTextBoxColumn m_levelNameColumn = new DataGridViewTextBoxColumn();
+        private readonly DataGridViewTextBoxColumn m_levelNameColumn = new();
         private readonly SlabData m_datas;
-        private readonly DataGridViewTextBoxColumn m_markColumn = new DataGridViewTextBoxColumn();
-        private readonly DataGridViewCheckBoxColumn m_selectedColumn = new DataGridViewCheckBoxColumn();
-        private readonly DataGridViewTextBoxColumn m_slabTypeNameColumn = new DataGridViewTextBoxColumn();
+        private readonly DataGridViewTextBoxColumn m_markColumn = new();
+        private readonly DataGridViewCheckBoxColumn m_selectedColumn = new();
+        private readonly DataGridViewTextBoxColumn m_slabTypeNameColumn = new();
 
         public FoundationSlabForm(SlabData datas)
         {
@@ -47,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
             m_levelNameColumn.HeaderText = "Level";
             m_levelNameColumn.Name = "levelNameColumn";
             m_levelNameColumn.ReadOnly = true;
-            m_levelNameColumn.Width = remainWidth / 2 - 2;
+            m_levelNameColumn.Width = (remainWidth / 2) - 2;
 
             m_slabTypeNameColumn.DataPropertyName = "SlabTypeName";
             m_slabTypeNameColumn.HeaderText = "Slab Type";
@@ -79,7 +78,7 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
         {
             if (e.ColumnIndex >= 0 && "CheckBoxes" == dataGridView.Columns[e.ColumnIndex].Name)
             {
-                var newE = new EventArgs();
+                EventArgs newE = new();
                 dataGridView_CurrentCellDirtyStateChanged(this, newE);
             }
         }
@@ -98,10 +97,7 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
         private void okButton_Click(object sender, EventArgs e)
         {
             var isSuccess = m_datas.CreateFoundationSlabs();
-            if (isSuccess)
-                DialogResult = DialogResult.OK;
-            else
-                DialogResult = DialogResult.Cancel;
+            DialogResult = isSuccess ? DialogResult.OK : DialogResult.Cancel;
             Close();
         }
 

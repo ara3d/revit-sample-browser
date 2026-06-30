@@ -1,9 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.Journaling.CS
@@ -59,13 +58,13 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
                 return;
             }
 
-            if (!(levelComboBox.SelectedItem is Level level)) // assert it isn't null
+            if (levelComboBox.SelectedItem is not Level level) // assert it isn't null
             {
                 TaskDialog.Show("Revit", "The selected level is null or incorrect.");
                 return;
             }
 
-            if (!(typeComboBox.SelectedItem is WallType type)) // assert it isn't null
+            if (typeComboBox.SelectedItem is not WallType type) // assert it isn't null
             {
                 TaskDialog.Show("Revit", "The selected wall type is null or incorrect.");
                 return;

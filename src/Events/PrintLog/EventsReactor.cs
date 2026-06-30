@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Events;
 
 namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
 {
@@ -25,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
 
         public EventsReactor()
         {
-            m_docEventsWatches = new Dictionary<int, EventsWatches>();
+            m_docEventsWatches = [];
             m_assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         }
 

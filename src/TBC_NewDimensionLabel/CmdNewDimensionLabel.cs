@@ -14,6 +14,7 @@
 #region Namespaces
 
 using Autodesk.Revit.Attributes;
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -44,7 +45,7 @@ namespace BuildingCoder
             var creApp = app.Application.Create;
             var creDoc = doc.Create;
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("New Dimension Label");
 
 
@@ -72,7 +73,7 @@ namespace BuildingCoder
                 = doc.FamilyCreate.NewModelCurve(
                     line, skplane);
 
-            var ra = new ReferenceArray();
+            ReferenceArray ra = new();
 
             ra.Append(modelCurve.GeometryCurve.Reference);
 
@@ -100,7 +101,7 @@ namespace BuildingCoder
                     "length",
                     //BuiltInParameterGroup.PG_IDENTITY_DATA, // 2021
                     GroupTypeId.IdentityData, // 2022
-                    //ParameterType.Length, // 2021 
+                                              //ParameterType.Length, // 2021 
                     SpecTypeId.Length, // 2022
                     false);
 

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.ComponentModel;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.TypeConverter;
 using Autodesk.Revit.DB.Structure;
+using System.ComponentModel;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
 {
@@ -13,11 +13,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// </summary>
     public abstract class ConstraintOnArcShape : ConstraintOnRebarShape
     {
-        /// <summary>
-        ///     Dimension to constrain the arc shape.
-        /// </summary>
-        private RebarShapeParameter m_rebarShapeParameter;
-
         protected ConstraintOnArcShape(RebarShapeDefByArc def)
             : base(def)
         {
@@ -34,7 +29,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
             get
             {
                 UpdateParameterTypeConverter();
-                return m_rebarShapeParameter;
+                return field;
             }
         }
 

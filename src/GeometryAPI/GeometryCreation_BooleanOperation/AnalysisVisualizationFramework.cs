@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation.CS
 {
@@ -12,7 +12,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         private static AnalysisVisualizationFramework _instance;
         private static int _schemaId = -1;
         private readonly Document m_doc;
-        private readonly List<string> m_viewNameList = new List<string>();
+        private readonly List<string> m_viewNameList = [];
 
         private AnalysisVisualizationFramework(Document doc)
         {
@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
 
         public static AnalysisVisualizationFramework GetInstance(Document doc)
         {
-            return _instance ?? (_instance = new AnalysisVisualizationFramework(doc));
+            return _instance ??= new AnalysisVisualizationFramework(doc);
         }
 
         public void PaintSolid(Solid s, string viewName)
@@ -38,7 +38,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
                 }
 
                 view = View3D.CreateIsometric(m_doc, view3DId);
-                var viewOrientation3D = new ViewOrientation3D(new XYZ(1, -1, -1), new XYZ(1, 1, 1), new XYZ(1, 1, -2));
+                ViewOrientation3D viewOrientation3D = new(new XYZ(1, -1, -1), new XYZ(1, 1, 1), new XYZ(1, 1, -2));
                 (view as View3D).SetOrientation(viewOrientation3D);
                 (view as View3D).SaveOrientation();
                 view.Name = viewName;
@@ -61,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
 
             if (_schemaId == -1)
             {
-                var resultSchema1 = new AnalysisResultSchema($"PaintedSolid{viewName}", "Description");
+                AnalysisResultSchema resultSchema1 = new($"PaintedSolid{viewName}", "Description");
 
                 var displayStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(
                     m_doc,
@@ -84,9 +84,9 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
 
                 ComputeValueAtPointForFace(face, out var uvPts, out var valList, 1);
 
-                var pnts = new FieldDomainPointsByUV(uvPts);
+                FieldDomainPointsByUV pnts = new(uvPts);
 
-                var vals = new FieldValues(valList);
+                FieldValues vals = new(valList);
 
                 sfm.UpdateSpatialFieldPrimitive(idx, pnts, vals, _schemaId);
             }
@@ -95,21 +95,21 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         private static void ComputeValueAtPointForFace(Face face, out IList<UV> uvPts, out IList<ValueAtPoint> valList,
             int measurementNo)
         {
-            var doubleList = new List<double>();
-            uvPts = new List<UV>();
-            valList = new List<ValueAtPoint>();
+            List<double> doubleList = new();
+            uvPts = [];
+            valList = [];
             var bb = face.GetBoundingBox();
             for (var u = bb.Min.U; u < bb.Max.U + 0.0000001; u += (bb.Max.U - bb.Min.U) / 1)
-            for (var v = bb.Min.V; v < bb.Max.V + 0.0000001; v += (bb.Max.V - bb.Min.V) / 1)
-            {
-                var uvPnt = new UV(u, v);
-                uvPts.Add(uvPnt);
-                var faceXyz = face.Evaluate(uvPnt);
-                for (var ii = 1; ii <= measurementNo; ii++)
-                    doubleList.Add(faceXyz.DistanceTo(XYZ.Zero) * ii);
-                valList.Add(new ValueAtPoint(doubleList));
-                doubleList.Clear();
-            }
+                for (var v = bb.Min.V; v < bb.Max.V + 0.0000001; v += (bb.Max.V - bb.Min.V) / 1)
+                {
+                    UV uvPnt = new(u, v);
+                    uvPts.Add(uvPnt);
+                    var faceXyz = face.Evaluate(uvPnt);
+                    for (var ii = 1; ii <= measurementNo; ii++)
+                        doubleList.Add(faceXyz.DistanceTo(XYZ.Zero) * ii);
+                    valList.Add(new ValueAtPoint(doubleList));
+                    doubleList.Clear();
+                }
         }
     }
 }

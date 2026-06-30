@@ -24,14 +24,14 @@
 
 namespace AdnRme
 {
-  class ParameterName
-  {
-    public const string CalculatedSupplyAirFlow = "Calculated Supply Air Flow";
-    // Project parameter; no BuiltInParameter enum value.
-    public const string CfmPerSf = "CFM per SF";
-    // Family parameter mapped to the connector Flow, not the instance BuiltInParameter.
-    public const string Flow = "Flow";
-    public const string MaxFlow = "Max Flow";
-    public const string MinFlow = "Min Flow";
-  }
+    class ParameterName
+    {
+        public const string CalculatedSupplyAirFlow = "Calculated Supply Air Flow";
+        // Project parameter; no BuiltInParameter enum value.
+        public const string CfmPerSf = "CFM per SF";
+        // Family parameter mapped to the connector Flow, not the instance BuiltInParameter.
+        public const string Flow = "Flow";
+        public const string MaxFlow = "Max Flow";
+        public const string MinFlow = "Min Flow";
+    }
 }

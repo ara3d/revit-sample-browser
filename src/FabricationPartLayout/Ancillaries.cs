@@ -1,13 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Fabrication;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
@@ -49,7 +50,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             }
 
             var ancillaries = fabPart.GetPartAncillaryUsage();
-            var ancillaryDescriptions = new List<string>();
+            List<string> ancillaryDescriptions = new();
 
             foreach (var ancillaryUsage in ancillaries)
             {
@@ -64,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             if (ancillaryDescriptions.Count > 0)
             {
                 ancillaryDescriptions.Sort();
-                var resultsBuilder = new StringBuilder();
+                StringBuilder resultsBuilder = new();
                 var currentAncillary = string.Empty;
 
                 foreach (var ancillaryName in ancillaryDescriptions)
@@ -80,7 +81,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 results = resultsBuilder.ToString();
             }
 
-            var td = new TaskDialog("Ancillaries")
+            TaskDialog td = new("Ancillaries")
             {
                 MainIcon = TaskDialogIcon.TaskDialogIconInformation,
                 TitleAutoPrefix = false,

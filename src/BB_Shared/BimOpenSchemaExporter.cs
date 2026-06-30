@@ -1,8 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-using Ara3D.Logging;
+﻿using Ara3D.Logging;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using FilePath = Ara3D.Utils.FilePath;
 
 namespace Ara3D.Bowerbird.RevitSamples;
@@ -22,9 +23,9 @@ public class BimOpenSchemaExporter
     {
         UIApp = app;
 
-        var decider = new ExportDecider(settings);
+        ExportDecider decider = new(settings);
 
-        var options = new Options()
+        Options options = new()
         {
             ComputeReferences = false,
             DetailLevel = (ViewDetailLevel)settings.DetailLevel,
@@ -78,7 +79,7 @@ public class BimOpenSchemaExporter
 
     public bool ProcessInBackground(ILogger logger)
     {
-        var processor = new BackgroundProcessor<(BosDocumentBuilder, long)>(
+        BackgroundProcessor<(BosDocumentBuilder, long)> processor = new(
             pair => DoWork(pair.Item1, pair.Item2), UIApp);
 
         foreach (var db in BosRevitBuilder.DocumentBuilders)
@@ -128,7 +129,7 @@ public class BimOpenSchemaExporter
             // Only add geometry for objects that are not types.
             if (db.NonTypeElementIds.Contains(id))
             {
-                var eid = new ElementId(id);
+                ElementId eid = new(id);
                 var e = db.Document.GetElement(eid);
                 BosRevitBuilder.MeshGatherer.AddElement(db, e);
             }

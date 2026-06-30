@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 {
     /// <summary>
@@ -14,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
     /// </summary>
     public class BeamGeometrySupport : GeometrySupport
     {
-        private double m_beamHeight; //the height of the beam
+        private readonly double m_beamHeight; //the height of the beam
 
         // Private members
         private readonly double m_beamLength; //the length of the beam
@@ -36,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         public RebarGeometry GetTopRebar(TopRebarLocation location)
         {
             // sort the points of the swept profile
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             // Get the normal parameter for reinforcement creation
@@ -57,8 +56,8 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
                     break;
                 case TopRebarLocation.Center: // top center reinforcement
                     offset = BeamRebarData.TopCenterOffset;
-                    startPointOffset = m_beamLength / 3 - 0.5;
-                    rebarLength = m_beamLength / 3 + 1;
+                    startPointOffset = (m_beamLength / 3) - 0.5;
+                    rebarLength = (m_beamLength / 3) + 1;
                     break;
                 case TopRebarLocation.End: // top end reinforcement
                     offset = BeamRebarData.TopEndOffset;
@@ -76,13 +75,13 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             startPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, startPointOffset);
             // get the coordinate of endpoint 
             var endPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, rebarLength);
-            IList<Curve> curves = new List<Curve>
-            {
+            IList<Curve> curves =
+            [
                 Line.CreateBound(startPoint, endPoint)
-            }; //the profile of the top reinforcement
+            ]; //the profile of the top reinforcement
 
             // the spacing of the reinforcement
-            double spacing = spacing = (m_beamWidth - 2 * offset) / (rebarNumber - 1);
+            double spacing = spacing = (m_beamWidth - (2 * offset)) / (rebarNumber - 1);
 
             // return the reinforcement geometry information
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
@@ -91,7 +90,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         public RebarGeometry GetBottomRebar()
         {
             // sort the points of the swept profile
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             // Get the normal parameter for bottom reinforcement creation
@@ -102,7 +101,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var offset = BeamRebarData.BottomOffset; //offset value of the reinforcement
             var rebarNumber = BeamRebarData.BottomRebarNumber; //the number of the reinforcement
             // the spacing of the reinforcement
-            var spacing = (m_beamWidth - 2 * offset) / (rebarNumber - 1);
+            var spacing = (m_beamWidth - (2 * offset)) / (rebarNumber - 1);
 
             // Get the curve which define the shape of the bottom reinforcement curve
             var movedPoints = OffsetPoints(offset);
@@ -110,10 +109,10 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             //get the coordinate of endpoint  
             var endPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, m_beamLength);
 
-            IList<Curve> curves = new List<Curve>
-            {
+            IList<Curve> curves =
+            [
                 Line.CreateBound(startPoint, endPoint)
-            }; //the profile of the bottom reinforcement
+            ]; //the profile of the bottom reinforcement
 
             // return the reinforcement geometry information
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
@@ -122,7 +121,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         public RebarGeometry GetTransverseRebar(TransverseRebarLocation location, double spacing)
         {
             // sort the points of the swept profile
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             // the offset from the beam surface to the reinforcement
@@ -132,7 +131,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             // the offset between two transverses
             var betweenOffset = BeamRebarData.TransverseSpaceBetween;
             // the length of the transverse reinforcement
-            var rebarLength = (m_beamLength - 2 * endOffset - 2 * betweenOffset) / 3;
+            var rebarLength = (m_beamLength - (2 * endOffset) - (2 * betweenOffset)) / 3;
             // the number of the transverse reinforcement
             var rebarNumber = (int)(rebarLength / spacing) + 1;
 
@@ -151,7 +150,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
                     curveOffset += rebarLength % spacing / 2;
                     break;
                 case TransverseRebarLocation.End: // end transverse reinforcement
-                    curveOffset = m_beamLength - endOffset - rebarLength + rebarLength % spacing;
+                    curveOffset = m_beamLength - endOffset - rebarLength + (rebarLength % spacing);
                     break;
                 default:
                     throw new Exception("The program should never go here.");
@@ -161,13 +160,13 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var movedPoints = OffsetPoints(offset);
 
             // Translate curves points
-            var translatedPoints = new List<XYZ>();
+            List<XYZ> translatedPoints = [];
             foreach (var point in movedPoints)
             {
                 translatedPoints.Add(XyzMath.OffsetPoint(point, DrivingVector, curveOffset));
             }
 
-            IList<Curve> curves = new List<Curve>();
+            IList<Curve> curves = [];
             var first = translatedPoints[0];
             var second = translatedPoints[1];
             var third = translatedPoints[2];
@@ -184,7 +183,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 
         public XYZ GetDownDirection()
         {
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             var refPoint = Points[3];
@@ -196,7 +195,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 
         private double GetBeamWidth()
         {
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             var refPoint = Points[0];
@@ -208,7 +207,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 
         private double GetBeamHeight()
         {
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             var refPoint = Points[0];

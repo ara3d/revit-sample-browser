@@ -13,11 +13,12 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -35,7 +36,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var rooms = new List<Element>();
+            List<Element> rooms = new();
             if (!Util.GetSelectedElementsOrAll(
                 rooms, uidoc, typeof(Room)))
             {
@@ -46,7 +47,7 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Bump Room Occupancy");
 
             foreach (Room room in rooms) Util.BumpOccupancy(room);

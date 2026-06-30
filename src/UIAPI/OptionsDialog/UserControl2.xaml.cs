@@ -2,7 +2,6 @@
 
 using System.Windows;
 using System.Windows.Controls;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
 {

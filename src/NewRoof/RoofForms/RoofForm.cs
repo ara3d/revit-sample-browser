@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager;
+using Autodesk.Revit.DB;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
@@ -83,10 +82,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             selectFootPrintButton.Click += selectFootPrintButton_Click;
             selectProfileButton.Click += selectProfileButton_Click;
 
-            if (m_roofsManager.RoofKind == CreateRoofKind.FootPrintRoof)
-                roofsTabControl.SelectedTab = footprintRoofTabPage;
-            else
-                roofsTabControl.SelectedTab = extrusionRoofTabPage;
+            roofsTabControl.SelectedTab = m_roofsManager.RoofKind == CreateRoofKind.FootPrintRoof ? footprintRoofTabPage : extrusionRoofTabPage;
 
             footPrintRoofsListView.MultiSelect = false;
             footPrintRoofsListView.FullRowSelect = true;
@@ -147,12 +143,9 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             if (footPrintRoofsListView.SelectedItems.Count != 0
                 || extrusionRoofsListView.SelectedItems.Count != 0)
             {
-                RoofItem item = null;
-                if (roofsTabControl.SelectedTab == footprintRoofTabPage)
-                    item = footPrintRoofsListView.SelectedItems[0] as RoofItem;
-                else
-                    item = extrusionRoofsListView.SelectedItems[0] as RoofItem;
-
+                var item = roofsTabControl.SelectedTab == footprintRoofTabPage
+                    ? footPrintRoofsListView.SelectedItems[0] as RoofItem
+                    : extrusionRoofsListView.SelectedItems[0] as RoofItem;
                 if (item != null) EditRoofItem(item.ListView, item);
             }
             else
@@ -236,7 +229,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             {
                 m_roofsManager.BeginTransaction();
                 var result = DialogResult.None;
-                using (var editorForm = new RoofEditorForm(m_roofsManager, item.Roof))
+                using (RoofEditorForm editorForm = new(m_roofsManager, item.Roof))
                 {
                     result = editorForm.ShowDialog();
                 }
@@ -283,12 +276,9 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         {
             if (e.Button == MouseButtons.Left)
             {
-                RoofItem item = null;
-                if (roofsTabControl.SelectedTab == footprintRoofTabPage)
-                    item = footPrintRoofsListView.GetItemAt(e.X, e.Y) as RoofItem;
-                else
-                    item = extrusionRoofsListView.GetItemAt(e.X, e.Y) as RoofItem;
-
+                var item = roofsTabControl.SelectedTab == footprintRoofTabPage
+                    ? footPrintRoofsListView.GetItemAt(e.X, e.Y) as RoofItem
+                    : extrusionRoofsListView.GetItemAt(e.X, e.Y) as RoofItem;
                 if (item != null) EditRoofItem(sender, item);
             }
         }

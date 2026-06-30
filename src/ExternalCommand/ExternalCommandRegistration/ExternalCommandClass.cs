@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistration
 {
     [Transaction(TransactionMode.Manual)]
@@ -17,7 +15,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistratio
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+            Transaction trans = new(commandData.Application.ActiveUIDocument.Document,
                 "Ara3D.RevitSampleBrowser.ExternalCommandRegistration");
             trans.Start();
             var uiDoc = commandData.Application.ActiveUIDocument;

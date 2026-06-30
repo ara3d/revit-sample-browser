@@ -3,12 +3,12 @@
 // Adapted from RoomVolumeDirectShape by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/RoomVolumeDirectShape
 
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.RoomVolumeDirectShape.CS
 {

@@ -1,14 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
     /// <summary>
@@ -17,7 +15,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
     /// </summary>
     public class LevelConverter : TypeConverter
     {
-        private static readonly Dictionary<string, Level> Levels = new Dictionary<string, Level>();
+        private static readonly Dictionary<string, Level> Levels = [];
 
         public static void SetStandardValues(ReadOnlyCollection<Level> levels)
         {
@@ -56,12 +54,9 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {
-            if (destinationType == typeof(string) && value is Level level)
-            {
-                return $"{level.Name}[{level.Id}]";
-            }
-
-            return base.ConvertTo(context, culture, value, destinationType);
+            return destinationType == typeof(string) && value is Level level
+                ? $"{level.Name}[{level.Id}]"
+                : base.ConvertTo(context, culture, value, destinationType);
         }
 
         /// <summary>
@@ -126,7 +121,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
     {
         // To store the FootPrintRoofLines data.
         private static readonly Dictionary<string, FootPrintRoofLine> FootPrintLines =
-            new Dictionary<string, FootPrintRoofLine>();
+            [];
 
         public static void SetStandardValues(List<FootPrintRoofLine> footPrintRoofLines)
         {
@@ -162,12 +157,9 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {
-            if (destinationType == typeof(string) && value is FootPrintRoofLine footPrintLine)
-            {
-                return $"{footPrintLine.Name}[{footPrintLine.Id}]";
-            }
-
-            return base.ConvertTo(context, culture, value, destinationType);
+            return destinationType == typeof(string) && value is FootPrintRoofLine footPrintLine
+                ? $"{footPrintLine.Name}[{footPrintLine.Id}]"
+                : base.ConvertTo(context, culture, value, destinationType);
         }
 
         /// <summary>

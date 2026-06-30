@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-using System.Windows.Media.Media3D;
-using Ara3D.Utils;
+﻿using Ara3D.Utils;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.DirectContext3D;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
+using System.Windows.Media.Media3D;
 using Enumerable = System.Linq.Enumerable;
 using View = Autodesk.Revit.DB.View;
 
@@ -21,16 +21,16 @@ namespace Ara3D.Bowerbird.RevitSamples
         public Document Document;
         //public BackgroundUI Background;
 
-        public List<RoomData> Rooms = new List<RoomData>();
+        public List<RoomData> Rooms = [];
         public DirectoryPath InputFolder = Path.GetTempPath(); // BowerbirdGeoJsonExporter.OutputFolder;
 
         public static IReadOnlyList<Vector3D> GetPointList(List<List<double>> values)
         {
-            var pts = new List<Vector3D>();
+            List<Vector3D> pts = [];
             for (var i = 0; i < values.Count; i++)
             {
                 var p0 = values[i];
-                var v0 = new Vector3D(p0[0], p0[1], p0[2]);
+                Vector3D v0 = new(p0[0], p0[1], p0[2]);
                 pts.Add(v0);
             }
 
@@ -39,7 +39,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public override void Execute(object arg)
         {
-            var uiapp = (arg as UIApplication);
+            var uiapp = arg as UIApplication;
             Document = uiapp.ActiveUIDocument.Document;
 
             if (!InputFolder.Exists())
@@ -60,7 +60,7 @@ namespace Ara3D.Bowerbird.RevitSamples
             {
                 var text = System.IO.File.ReadAllText(file);
                 var geoJson = JsonConvert.DeserializeObject<GeoJsonDocument>(text);
-                var roomData = new RoomData();
+                RoomData roomData = new();
                 Rooms.Add(roomData);
 
                 /*
@@ -90,8 +90,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                 ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.DirectContext3DService);
             directContext3DService.AddServer(this);
 
-            var msDirectContext3DService = directContext3DService as MultiServerService;
-            if (msDirectContext3DService == null)
+            if (directContext3DService is not MultiServerService msDirectContext3DService)
                 throw new Exception("Expected a MultiServerService");
 
             // Get current list 
@@ -109,17 +108,60 @@ namespace Ara3D.Bowerbird.RevitSamples
         public RenderMesh Mesh;
         public BufferStorage FaceBufferStorage;
 
-        public Guid GetServerId() => Guid;
-        public ExternalServiceId GetServiceId() => ExternalServices.BuiltInExternalServices.DirectContext3DService;
-        public string GetName() => Name;
-        public string GetVendorId() => "Ara 3D Inc.";
-        public string GetDescription() => "Demonstrates using the DirectContext3D API";
-        public bool CanExecute(View dBView) => dBView.ViewType == ViewType.ThreeD;
-        public string GetApplicationId() => "Bowerbird";
-        public string GetSourceId() => "";
-        public bool UsesHandles() => false;
-        public Outline GetBoundingBox(View dBView) => m_boundingBox;
-        public bool UseInTransparentPass(View dBView) => true;
+        public Guid GetServerId()
+        {
+            return Guid;
+        }
+
+        public ExternalServiceId GetServiceId()
+        {
+            return ExternalServices.BuiltInExternalServices.DirectContext3DService;
+        }
+
+        public string GetName()
+        {
+            return Name;
+        }
+
+        public string GetVendorId()
+        {
+            return "Ara 3D Inc.";
+        }
+
+        public string GetDescription()
+        {
+            return "Demonstrates using the DirectContext3D API";
+        }
+
+        public bool CanExecute(View dBView)
+        {
+            return dBView.ViewType == ViewType.ThreeD;
+        }
+
+        public string GetApplicationId()
+        {
+            return "Bowerbird";
+        }
+
+        public string GetSourceId()
+        {
+            return "";
+        }
+
+        public bool UsesHandles()
+        {
+            return false;
+        }
+
+        public Outline GetBoundingBox(View dBView)
+        {
+            return m_boundingBox;
+        }
+
+        public bool UseInTransparentPass(View dBView)
+        {
+            return true;
+        }
 
         public void UpdateMesh()
         {
@@ -167,12 +209,11 @@ namespace Ara3D.Bowerbird.RevitSamples
             if (Mesh == null) return;
             // NOTE: do not try to create the FaceBufferStorage when not in this call.
             // It will have undefined behavior. 
-            if (FaceBufferStorage == null)
-                FaceBufferStorage = new BufferStorage(Mesh);
+            FaceBufferStorage ??= new BufferStorage(Mesh);
             FaceBufferStorage.Render();
         }
     }
 
     // This class creates JSON files representing the room boundaries, openings, and doors.
-        // It uses the background processor to do work. 
+    // It uses the background processor to do work. 
 }

@@ -1,9 +1,10 @@
-using System.Linq;
 using Ara3D.RevitSampleBrowser.N3P_Shared.CS;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Nice3point.Revit.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.N3P_Element.CS
 {
@@ -33,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.N3P_Element.CS
 
                 var offset = wall.FindParameter(ParameterTypeId.WallBaseOffset);
                 if (offset != null)
-                    N3POutput.Line("  FindParameter(WallBaseOffset)", offset.AsDouble().ToMillimeters().Round(2));
+                    N3POutput.Line("  FindParameter(WallBaseOffset)", offset.AsDouble().ToMillimeters());
 
                 var comments = wall.FindParameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
                 N3POutput.Line("  FindParameter(BuiltInParameter)", comments?.AsString() ?? "(none)");

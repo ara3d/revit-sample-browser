@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Document = Autodesk.Revit.DB.Document;
 
@@ -58,7 +58,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
 
         public void CreateGenericModel()
         {
-            var transaction = new Transaction(m_familyDocument, "CreateGenericModel");
+            Transaction transaction = new(m_familyDocument, "CreateGenericModel");
             transaction.Start();
             CreateExtrusion();
             CreateBlend();
@@ -72,16 +72,16 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
         {
             try
             {
-                var curveArrArray = new CurveArrArray();
-                var curveArray1 = new CurveArray();
+                CurveArrArray curveArrArray = new();
+                CurveArray curveArray1 = new();
 
                 var normal = XYZ.BasisZ;
                 var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
 
                 var p0 = XYZ.Zero;
-                var p1 = new XYZ(10, 0, 0);
-                var p2 = new XYZ(10, 10, 0);
-                var p3 = new XYZ(0, 10, 0);
+                XYZ p1 = new(10, 0, 0);
+                XYZ p2 = new(10, 10, 0);
+                XYZ p3 = new(0, 10, 0);
                 var line1 = Line.CreateBound(p0, p1);
                 var line2 = Line.CreateBound(p1, p2);
                 var line3 = Line.CreateBound(p2, p3);
@@ -93,7 +93,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
 
                 curveArrArray.Append(curveArray1);
                 var rectExtrusion = m_creationFamily.NewExtrusion(true, curveArrArray, sketchPlane, 10);
-                var transPoint1 = new XYZ(-16, 0, 0);
+                XYZ transPoint1 = new(-16, 0, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, rectExtrusion.Id, transPoint1);
             }
             catch (Exception e)
@@ -107,16 +107,16 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
         {
             try
             {
-                var topProfile = new CurveArray();
-                var baseProfile = new CurveArray();
+                CurveArray topProfile = new();
+                CurveArray baseProfile = new();
 
                 var normal = XYZ.BasisZ;
                 var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
 
                 var p00 = XYZ.Zero;
-                var p01 = new XYZ(10, 0, 0);
-                var p02 = new XYZ(10, 10, 0);
-                var p03 = new XYZ(0, 10, 0);
+                XYZ p01 = new(10, 0, 0);
+                XYZ p02 = new(10, 10, 0);
+                XYZ p03 = new(0, 10, 0);
                 var line01 = Line.CreateBound(p00, p01);
                 var line02 = Line.CreateBound(p01, p02);
                 var line03 = Line.CreateBound(p02, p03);
@@ -127,10 +127,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 baseProfile.Append(line03);
                 baseProfile.Append(line04);
 
-                var p10 = new XYZ(5, 2, 10);
-                var p11 = new XYZ(8, 5, 10);
-                var p12 = new XYZ(5, 8, 10);
-                var p13 = new XYZ(2, 5, 10);
+                XYZ p10 = new(5, 2, 10);
+                XYZ p11 = new(8, 5, 10);
+                XYZ p12 = new(5, 8, 10);
+                XYZ p13 = new(2, 5, 10);
                 var line11 = Line.CreateBound(p10, p11);
                 var line12 = Line.CreateBound(p11, p12);
                 var line13 = Line.CreateBound(p12, p13);
@@ -141,7 +141,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 topProfile.Append(line13);
                 topProfile.Append(line14);
                 var blend = m_creationFamily.NewBlend(true, topProfile, baseProfile, sketchPlane);
-                var transPoint1 = new XYZ(0, 11, 0);
+                XYZ transPoint1 = new(0, 11, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, blend.Id, transPoint1);
             }
             catch (Exception e)
@@ -155,22 +155,22 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
         {
             try
             {
-                var curveArrArray = new CurveArrArray();
-                var curveArray = new CurveArray();
+                CurveArrArray curveArrArray = new();
+                CurveArray curveArray = new();
 
                 var normal = XYZ.BasisZ;
                 var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
 
                 var p0 = XYZ.Zero;
-                var p1 = new XYZ(10, 0, 0);
-                var p2 = new XYZ(10, 10, 0);
-                var p3 = new XYZ(0, 10, 0);
+                XYZ p1 = new(10, 0, 0);
+                XYZ p2 = new(10, 10, 0);
+                XYZ p3 = new(0, 10, 0);
                 var line1 = Line.CreateBound(p0, p1);
                 var line2 = Line.CreateBound(p1, p2);
                 var line3 = Line.CreateBound(p2, p3);
                 var line4 = Line.CreateBound(p3, p0);
 
-                var pp = new XYZ(1, -1, 0);
+                XYZ pp = new(1, -1, 0);
                 var axis1 = Line.CreateBound(XYZ.Zero, pp);
                 curveArray.Append(line1);
                 curveArray.Append(line2);
@@ -179,7 +179,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
 
                 curveArrArray.Append(curveArray);
                 var revolution1 = m_creationFamily.NewRevolution(true, curveArrArray, sketchPlane, axis1, -Math.PI, 0);
-                var transPoint1 = new XYZ(0, 32, 0);
+                XYZ transPoint1 = new(0, 32, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, revolution1.Id, transPoint1);
             }
             catch (Exception e)
@@ -193,29 +193,29 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
         {
             try
             {
-                var arrarr = new CurveArrArray();
-                var arr = new CurveArray();
+                CurveArrArray arrarr = new();
+                CurveArray arr = new();
 
                 var normal = XYZ.BasisZ;
                 var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
 
-                var pnt1 = new XYZ(0, 0, 0);
-                var pnt2 = new XYZ(2, 0, 0);
-                var pnt3 = new XYZ(1, 1, 0);
+                XYZ pnt1 = new(0, 0, 0);
+                XYZ pnt2 = new(2, 0, 0);
+                XYZ pnt3 = new(1, 1, 0);
                 arr.Append(Arc.Create(pnt2, 1.0d, 0.0d, 180.0d, XYZ.BasisX, XYZ.BasisY));
                 arr.Append(Arc.Create(pnt1, pnt3, pnt2));
                 arrarr.Append(arr);
                 SweepProfile profile = m_revit.Create.NewCurveLoopsProfile(arrarr);
 
-                var pnt4 = new XYZ(10, 0, 0);
-                var pnt5 = new XYZ(0, 10, 0);
+                XYZ pnt4 = new(10, 0, 0);
+                XYZ pnt5 = new(0, 10, 0);
                 Curve curve = Line.CreateBound(pnt4, pnt5);
 
-                var curves = new CurveArray();
+                CurveArray curves = new();
                 curves.Append(curve);
                 var sweep1 =
                     m_creationFamily.NewSweep(true, curves, sketchPlane, profile, 0, ProfilePlaneLocation.Start);
-                var transPoint1 = new XYZ(11, 0, 0);
+                XYZ transPoint1 = new(11, 0, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, sweep1.Id, transPoint1);
             }
             catch (Exception e)
@@ -229,26 +229,26 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
         {
             try
             {
-                var pnt1 = new XYZ(0, 0, 0);
-                var pnt2 = new XYZ(1, 0, 0);
-                var pnt3 = new XYZ(1, 1, 0);
-                var pnt4 = new XYZ(0, 1, 0);
+                XYZ pnt1 = new(0, 0, 0);
+                XYZ pnt2 = new(1, 0, 0);
+                XYZ pnt3 = new(1, 1, 0);
+                XYZ pnt4 = new(0, 1, 0);
                 new XYZ(0, 0, 1);
 
-                var arrarr1 = new CurveArrArray();
-                var arr1 = new CurveArray();
+                CurveArrArray arrarr1 = new();
+                CurveArray arr1 = new();
                 arr1.Append(Line.CreateBound(pnt1, pnt2));
                 arr1.Append(Line.CreateBound(pnt2, pnt3));
                 arr1.Append(Line.CreateBound(pnt3, pnt4));
                 arr1.Append(Line.CreateBound(pnt4, pnt1));
                 arrarr1.Append(arr1);
 
-                var pnt6 = new XYZ(0.5, 0, 0);
-                var pnt7 = new XYZ(1, 0.5, 0);
-                var pnt8 = new XYZ(0.5, 1, 0);
-                var pnt9 = new XYZ(0, 0.5, 0);
-                var arrarr2 = new CurveArrArray();
-                var arr2 = new CurveArray();
+                XYZ pnt6 = new(0.5, 0, 0);
+                XYZ pnt7 = new(1, 0.5, 0);
+                XYZ pnt8 = new(0.5, 1, 0);
+                XYZ pnt9 = new(0, 0.5, 0);
+                CurveArrArray arrarr2 = new();
+                CurveArray arr2 = new();
                 arr2.Append(Line.CreateBound(pnt6, pnt7));
                 arr2.Append(Line.CreateBound(pnt7, pnt8));
                 arr2.Append(Line.CreateBound(pnt8, pnt9));
@@ -258,15 +258,15 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 SweepProfile bottomProfile = m_revit.Create.NewCurveLoopsProfile(arrarr1);
                 SweepProfile topProfile = m_revit.Create.NewCurveLoopsProfile(arrarr2);
 
-                var pnt10 = new XYZ(5, 0, 0);
-                var pnt11 = new XYZ(0, 20, 0);
+                XYZ pnt10 = new(5, 0, 0);
+                XYZ pnt11 = new(0, 20, 0);
                 Curve curve = Line.CreateBound(pnt10, pnt11);
 
                 var normal = XYZ.BasisZ;
                 var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
                 var newSweptBlend1 =
                     m_creationFamily.NewSweptBlend(true, curve, sketchPlane, bottomProfile, topProfile);
-                var transPoint1 = new XYZ(11, 32, 0);
+                XYZ transPoint1 = new(11, 32, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, newSweptBlend1.Id, transPoint1);
             }
             catch (Exception e)
@@ -278,7 +278,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
 
         private T GetElement<T>(long eid) where T : Element
         {
-            var elementId = new ElementId(eid);
+            ElementId elementId = new(eid);
             return m_familyDocument.GetElement(elementId) as T;
         }
 
@@ -289,8 +289,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             if (null == geometryPlane)
                 throw new Exception("Create the geometry plane failed.");
             var plane = SketchPlane.Create(m_familyDocument, geometryPlane);
-            if (null == plane) throw new Exception("Create the sketch plane failed.");
-            return plane;
+            return plane ?? throw new Exception("Create the sketch plane failed.");
         }
     }
 }

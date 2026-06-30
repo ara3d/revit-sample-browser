@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
@@ -24,13 +24,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var refObj =
                     uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part straight to start.");
 
-                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAStraight() == false)
+                if (doc.GetElement(refObj) is not FabricationPart part || part.IsAStraight() == false)
                 {
                     message = "The selected element is not a fabrication part straight.";
                     return Result.Failed;
                 }
 
-                var connectors = new List<Connector>();
+                List<Connector> connectors = new();
                 foreach (Connector c in part.ConnectorManager.Connectors)
                 {
                     if (c.ConnectorType == ConnectorType.End)
@@ -50,7 +50,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var y = (conn1.Origin.Y + conn2.Origin.Y) / 2.0;
                 var z = (conn1.Origin.Z + conn2.Origin.Z) / 2.0;
 
-                var midpoint = new XYZ(x, y, z);
+                XYZ midpoint = new(x, y, z);
 
                 if (part.CanSplitStraight(midpoint) == false)
                 {
@@ -58,14 +58,12 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Failed;
                 }
 
-                using (var trans = new Transaction(doc, "split straight"))
-                {
-                    trans.Start();
+                using Transaction trans = new(doc, "split straight");
+                trans.Start();
 
-                    part.SplitStraight(midpoint);
+                part.SplitStraight(midpoint);
 
-                    trans.Commit();
-                }
+                trans.Commit();
 
                 return Result.Succeeded;
             }

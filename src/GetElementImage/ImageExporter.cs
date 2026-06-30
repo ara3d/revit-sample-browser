@@ -3,13 +3,13 @@
 // Adapted from GetElementImage by Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/GetElementImage
 
+using Autodesk.Revit.DB;
+using BuildingCoder;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Autodesk.Revit.DB;
-using BuildingCoder;
 
 namespace Ara3D.RevitSampleBrowser.GetElementImage.CS
 {
@@ -44,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.GetElementImage.CS
             var angleInXyPlane = yawDegrees * Math.PI / 180.0;
             var angleUpDown = pitchDegrees * Math.PI / 180.0;
 
-            var eye = new XYZ(
+            XYZ eye = new(
                 Math.Cos(angleInXyPlane),
                 Math.Sin(angleInXyPlane),
                 Math.Cos(angleUpDown));
@@ -120,7 +120,7 @@ namespace Ara3D.RevitSampleBrowser.GetElementImage.CS
                     .ToList();
 
                 v.HideElements(hideableElementIds);
-                v.UnhideElements(new List<ElementId> { e.Id });
+                v.UnhideElements([e.Id]);
             }
 
             doc.Regenerate();
@@ -131,7 +131,7 @@ namespace Ara3D.RevitSampleBrowser.GetElementImage.CS
             var fn = e.Id.Value.ToString();
             var filepath = Path.Combine(dir, $"{fn}.png");
 
-            var ieo = new ImageExportOptions
+            ImageExportOptions ieo = new()
             {
                 FilePath = filepath,
                 FitDirection = FitDirectionType.Horizontal,

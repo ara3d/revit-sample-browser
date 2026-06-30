@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurfaces.CS
 {
@@ -30,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
         private void DocOpen(object sender, DocumentOpenedEventArgs e)
         {
             var app = sender as Application;
-            var uiApp = new UIApplication(app);
+            UIApplication uiApp = new(app);
             var doc = uiApp.ActiveUIDocument.Document;
 
             var sphere = doc.GetElements<FamilyInstance>().FirstOrDefault(s => s.Name == "Sphere");
@@ -47,18 +47,18 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
                 return;
             }
 
-            var updater = new SpatialFieldUpdater(uiApp.ActiveAddInId, sphere.Id, view.Id);
+            SpatialFieldUpdater updater = new(uiApp.ActiveAddInId, sphere.Id, view.Id);
             if (!UpdaterRegistry.IsUpdaterRegistered(updater.GetUpdaterId())) UpdaterRegistry.RegisterUpdater(updater);
-            var wallFilter = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
-            var familyFilter = new ElementClassFilter(typeof(FamilyInstance));
-            var massFilter = new ElementCategoryFilter(BuiltInCategory.OST_Mass);
-            var filterList = new List<ElementFilter>
-            {
+            ElementCategoryFilter wallFilter = new(BuiltInCategory.OST_Walls);
+            ElementClassFilter familyFilter = new(typeof(FamilyInstance));
+            ElementCategoryFilter massFilter = new(BuiltInCategory.OST_Mass);
+            List<ElementFilter> filterList =
+            [
                 wallFilter,
                 familyFilter,
                 massFilter
-            };
-            var filter = new LogicalOrFilter(filterList);
+            ];
+            LogicalOrFilter filter = new(filterList);
 
             UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), filter, Element.GetChangeTypeGeometry());
             UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), filter, Element.GetChangeTypeElementDeletion());
@@ -92,44 +92,40 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
             var sfm = SpatialFieldManager.GetSpatialFieldManager(view) ?? SpatialFieldManager.CreateSpatialFieldManager(view, 3); // Three measurement values for each point
             sfm.Clear();
 
-            var collector = new FilteredElementCollector(doc, view.Id);
-            var wallFilter = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
-            var massFilter = new ElementCategoryFilter(BuiltInCategory.OST_Mass);
-            var filter = new LogicalOrFilter(wallFilter, massFilter);
+            FilteredElementCollector collector = new(doc, view.Id);
+            ElementCategoryFilter wallFilter = new(BuiltInCategory.OST_Walls);
+            ElementCategoryFilter massFilter = new(BuiltInCategory.OST_Mass);
+            LogicalOrFilter filter = new(wallFilter, massFilter);
             ICollection<Element> elements = collector.WherePasses(filter).WhereElementIsNotElementType().ToElements();
 
             foreach (Face face in GetFaces(elements))
             {
                 var idx = sfm.AddSpatialFieldPrimitive(face.Reference);
-                var doubleList = new List<double>();
-                IList<UV> uvPts = new List<UV>();
-                IList<ValueAtPoint> valList = new List<ValueAtPoint>();
+                List<double> doubleList = [];
+                IList<UV> uvPts = [];
+                IList<ValueAtPoint> valList = [];
                 var bb = face.GetBoundingBox();
                 for (var u = bb.Min.U; u < bb.Max.U; u += (bb.Max.U - bb.Min.U) / 15)
-                for (var v = bb.Min.V; v < bb.Max.V; v += (bb.Max.V - bb.Min.V) / 15)
-                {
-                    var uvPnt = new UV(u, v);
-                    uvPts.Add(uvPnt);
-                    var faceXyz = face.Evaluate(uvPnt);
-                    // Specify three values for each point
-                    doubleList.Add(faceXyz.DistanceTo(sphereXyz));
-                    doubleList.Add(-faceXyz.DistanceTo(sphereXyz));
-                    doubleList.Add(faceXyz.DistanceTo(sphereXyz) * 10);
-                    valList.Add(new ValueAtPoint(doubleList));
-                    doubleList.Clear();
-                }
+                    for (var v = bb.Min.V; v < bb.Max.V; v += (bb.Max.V - bb.Min.V) / 15)
+                    {
+                        UV uvPnt = new(u, v);
+                        uvPts.Add(uvPnt);
+                        var faceXyz = face.Evaluate(uvPnt);
+                        // Specify three values for each point
+                        doubleList.Add(faceXyz.DistanceTo(sphereXyz));
+                        doubleList.Add(-faceXyz.DistanceTo(sphereXyz));
+                        doubleList.Add(faceXyz.DistanceTo(sphereXyz) * 10);
+                        valList.Add(new ValueAtPoint(doubleList));
+                        doubleList.Clear();
+                    }
 
-                var pnts = new FieldDomainPointsByUV(uvPts);
-                var vals = new FieldValues(valList);
+                FieldDomainPointsByUV pnts = new(uvPts);
+                FieldValues vals = new(valList);
 
-                var resultSchema1 = new AnalysisResultSchema("Schema 1", "Schema 1 Description");
-                IList<int> registeredResults = new List<int>();
+                AnalysisResultSchema resultSchema1 = new("Schema 1", "Schema 1 Description");
+                IList<int> registeredResults = [];
                 registeredResults = sfm.GetRegisteredResults();
-                var idx1 = 0;
-                if (registeredResults.Count == 0)
-                    idx1 = sfm.RegisterResult(resultSchema1);
-                else
-                    idx1 = registeredResults.First();
+                var idx1 = registeredResults.Count == 0 ? sfm.RegisterResult(resultSchema1) : registeredResults.First();
                 sfm.UpdateSpatialFieldPrimitive(idx, pnts, vals, idx1);
             }
         }
@@ -156,8 +152,8 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
 
         private FaceArray GetFaces(ICollection<Element> elements)
         {
-            var faceArray = new FaceArray();
-            var options = new Options
+            FaceArray faceArray = new();
+            Options options = new()
             {
                 ComputeReferences = true
             };

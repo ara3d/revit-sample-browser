@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -21,92 +21,34 @@ namespace Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            using (var transaction = new Transaction(doc))
-            {
-                var selectedIds = uidoc.Selection.GetElementIds();
+            using Transaction transaction = new(doc);
+            var selectedIds = uidoc.Selection.GetElementIds();
 
-                if (0 == selectedIds.Count)
-                    TaskDialog.Show("Revit", "You haven't selected any elements.");
-                else
-                    foreach (var id in selectedIds)
+            if (0 == selectedIds.Count)
+                TaskDialog.Show("Revit", "You haven't selected any elements.");
+            else
+                foreach (var id in selectedIds)
+                {
+                    if (doc.GetElement(id) is Dimension dim)
                     {
-                        if (doc.GetElement(id) is Dimension dim)
+                        var dimLine = dim.Curve as Line;
+                        if (dimLine != null)
                         {
-                            var dimLine = dim.Curve as Line;
-                            if (dimLine != null)
-                            {
-                                transaction.Start("Set leader end position.");
-                                try
-                                {
-                                    var dir = dimLine.Direction;
-                                    if (dim.Segments.IsEmpty)
-                                    {
-                                        var leaderPos = SampleBrowserUtils.ComputeLeaderPosition(dir, dim.Origin, m_delta);
-                                        dim.LeaderEndPosition = leaderPos;
-                                    }
-                                    else
-                                    {
-                                        foreach (DimensionSegment ds in dim.Segments)
-                                        {
-                                            var leaderPos = SampleBrowserUtils.ComputeLeaderPosition(dir, ds.Origin, m_delta);
-                                            ds.LeaderEndPosition = leaderPos;
-                                        }
-                                    }
-
-                                    transaction.Commit();
-                                }
-                                catch (Exception ex)
-                                {
-                                    TaskDialog.Show("Can't set dimension leader end point: {0}", ex.Message);
-                                    transaction.RollBack();
-                                }
-                            }
-                        }
-                    }
-
-                return Result.Succeeded;
-            }
-        }
-    }
-
-    [Transaction(TransactionMode.Manual)]
-    [Regeneration(RegenerationOption.Manual)]
-    public class MoveToPickedPoint : IExternalCommand
-    {
-        public virtual Result Execute(ExternalCommandData commandData
-            , ref string message, ElementSet elements)
-        {
-            var uidoc = commandData.Application.ActiveUIDocument;
-            var doc = uidoc.Document;
-            using (var transaction = new Transaction(doc))
-            {
-                var selection = uidoc.Selection;
-                var selectedIds = uidoc.Selection.GetElementIds();
-
-                if (0 == selectedIds.Count)
-                    TaskDialog.Show("Revit", "You haven't selected any elements.");
-                else
-                    foreach (var id in selectedIds)
-                    {
-                        if (doc.GetElement(id) is Dimension dim)
-                        {
-                            var startPoint = selection.PickPoint(ObjectSnapTypes.None, "Pick start");
-                            transaction.Start("Set leader end point");
+                            transaction.Start("Set leader end position.");
                             try
                             {
+                                var dir = dimLine.Direction;
                                 if (dim.Segments.IsEmpty)
                                 {
-                                    dim.LeaderEndPosition = startPoint;
+                                    var leaderPos = SampleBrowserUtils.ComputeLeaderPosition(dir, dim.Origin, m_delta);
+                                    dim.LeaderEndPosition = leaderPos;
                                 }
                                 else
                                 {
-                                    var deltaVec = dim.Segments.get_Item(1).Origin
-                                        .Subtract(dim.Segments.get_Item(0).Origin);
-                                    var offset = new XYZ();
                                     foreach (DimensionSegment ds in dim.Segments)
                                     {
-                                        ds.LeaderEndPosition = startPoint.Add(offset);
-                                        offset = offset.Add(deltaVec);
+                                        var leaderPos = SampleBrowserUtils.ComputeLeaderPosition(dir, ds.Origin, m_delta);
+                                        ds.LeaderEndPosition = leaderPos;
                                     }
                                 }
 
@@ -119,9 +61,63 @@ namespace Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS
                             }
                         }
                     }
+                }
 
-                return Result.Succeeded;
-            }
+            return Result.Succeeded;
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class MoveToPickedPoint : IExternalCommand
+    {
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
+        {
+            var uidoc = commandData.Application.ActiveUIDocument;
+            var doc = uidoc.Document;
+            using Transaction transaction = new(doc);
+            var selection = uidoc.Selection;
+            var selectedIds = uidoc.Selection.GetElementIds();
+
+            if (0 == selectedIds.Count)
+                TaskDialog.Show("Revit", "You haven't selected any elements.");
+            else
+                foreach (var id in selectedIds)
+                {
+                    if (doc.GetElement(id) is Dimension dim)
+                    {
+                        var startPoint = selection.PickPoint(ObjectSnapTypes.None, "Pick start");
+                        transaction.Start("Set leader end point");
+                        try
+                        {
+                            if (dim.Segments.IsEmpty)
+                            {
+                                dim.LeaderEndPosition = startPoint;
+                            }
+                            else
+                            {
+                                var deltaVec = dim.Segments.get_Item(1).Origin
+                                    .Subtract(dim.Segments.get_Item(0).Origin);
+                                XYZ offset = new();
+                                foreach (DimensionSegment ds in dim.Segments)
+                                {
+                                    ds.LeaderEndPosition = startPoint.Add(offset);
+                                    offset = offset.Add(deltaVec);
+                                }
+                            }
+
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            TaskDialog.Show("Can't set dimension leader end point: {0}", ex.Message);
+                            transaction.RollBack();
+                        }
+                    }
+                }
+
+            return Result.Succeeded;
         }
     }
 }

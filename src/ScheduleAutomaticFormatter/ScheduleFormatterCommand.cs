@@ -12,11 +12,11 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
 {
@@ -44,16 +44,13 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
             var schema = GetOrCreateSchema();
 
             // Setup formatter for the schedule, if not setup. 
-            if (m_theFormatter == null)
+            m_theFormatter ??= new ScheduleFormatter
             {
-                m_theFormatter = new ScheduleFormatter
-                {
-                    Schema = schema,
-                    AddInId = commandData.Application.ActiveAddInId
-                };
-            }
+                Schema = schema,
+                AddInId = commandData.Application.ActiveAddInId
+            };
 
-            using (var t = new Transaction(viewSchedule.Document, "Format columns"))
+            using (Transaction t = new(viewSchedule.Document, "Format columns"))
             {
                 t.Start();
                 // Make formatting changes
@@ -86,12 +83,12 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
 
         private static Schema GetOrCreateSchema()
         {
-            var schemaId = new Guid("98017A5F-F4A7-451C-8807-EF137B587C50");
+            Guid schemaId = new("98017A5F-F4A7-451C-8807-EF137B587C50");
 
             var schema = Schema.Lookup(schemaId);
             if (schema == null)
             {
-                var builder = new SchemaBuilder(schemaId);
+                SchemaBuilder builder = new(schemaId);
                 builder.SetSchemaName("ScheduleFormatterFlag");
                 builder.AddSimpleField("Formatted", typeof(bool));
                 schema = builder.Finish();
@@ -106,9 +103,9 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
             if (!UpdaterRegistry.IsUpdaterRegistered(formatter.GetUpdaterId()))
             {
                 // Filter on: schedule type, and extensible storage entity of the target schema
-                var classFilter = new ElementClassFilter(typeof(ViewSchedule));
-                var esFilter = new ExtensibleStorageFilter(formatter.Schema.GUID);
-                var filter = new LogicalAndFilter(classFilter, esFilter);
+                ElementClassFilter classFilter = new(typeof(ViewSchedule));
+                ExtensibleStorageFilter esFilter = new(formatter.Schema.GUID);
+                LogicalAndFilter filter = new(classFilter, esFilter);
 
                 // Register and add trigger for updater.
                 UpdaterRegistry.RegisterUpdater(formatter);

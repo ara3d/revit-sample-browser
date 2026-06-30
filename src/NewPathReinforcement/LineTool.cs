@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
     {
         private readonly Pen m_backGroundPen; // background pen used to Erase the preview line
         private readonly Pen m_foreGroundPen; // foreground pen used to draw lines
-        private readonly List<Point> m_points = new List<Point>(); // Field used to store points of a line
+        private readonly List<Point> m_points = []; // Field used to store points of a line
         private Point m_preMovePoint; // store the mouse position when mouse move in pictureBox
 
         public LineTool()

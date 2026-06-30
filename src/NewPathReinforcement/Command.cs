@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 {
@@ -20,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
                 Wall wall = null;
                 Floor floor = null;
 
-                var elems = new ElementSet();
+                ElementSet elems = new();
                 foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
                 {
                     elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -57,16 +58,16 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
                 {
                     if (null != wall)
                     {
-                        var profileWall = new ProfileWall(wall, commandData);
-                        var newPathReinforcementForm =
-                            new NewPathReinforcementForm(profileWall);
+                        ProfileWall profileWall = new(wall, commandData);
+                        NewPathReinforcementForm newPathReinforcementForm =
+                            new(profileWall);
                         newPathReinforcementForm.ShowDialog();
                     }
                     else if (null != floor)
                     {
-                        var profileFloor = new ProfileFloor(floor, commandData);
-                        var newPathReinforcementForm =
-                            new NewPathReinforcementForm(profileFloor);
+                        ProfileFloor profileFloor = new(floor, commandData);
+                        NewPathReinforcementForm newPathReinforcementForm =
+                            new(profileFloor);
                         newPathReinforcementForm.ShowDialog();
                     }
                 }

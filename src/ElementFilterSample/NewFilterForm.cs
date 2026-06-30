@@ -9,7 +9,6 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
     public partial class NewFilterForm : Form
     {
-        private string m_filterName;
         private readonly ICollection<string> m_inUseFilterNames;
 
         public NewFilterForm(ICollection<string> inUseNames)
@@ -18,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             m_inUseFilterNames = inUseNames;
         }
 
-        public string FilterName => m_filterName;
+        public string FilterName { get; private set; }
 
         private void okButton_Click(object sender, EventArgs e)
         {
@@ -49,7 +48,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                 return;
             }
 
-            m_filterName = newName;
+            FilterName = newName;
             Close();
             DialogResult = DialogResult.OK;
         }

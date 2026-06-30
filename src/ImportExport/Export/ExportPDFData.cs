@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
@@ -24,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             base.Export();
 
             // Parameter: The list of view/sheet id to export
-            IList<ElementId> views = new List<ElementId>();
+            IList<ElementId> views = [];
             if (CurrentViewOnly)
             {
                 views.Add(ActiveDocument.ActiveView.Id);
@@ -39,7 +39,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             }
 
             // Parameter: The exporting options, including paper size, orientation, file name or naming rule and etc.
-            var options = new PDFExportOptions
+            PDFExportOptions options = new()
             {
                 FileName = ExportFileName,
                 Combine =

@@ -13,12 +13,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -59,7 +58,7 @@ namespace BuildingCoder
             var ids = uidoc.Selection
                 .GetElementIds(); // 2015
 
-            var walls = new List<Wall>(2);
+            List<Wall> walls = new(2);
 
             //foreach( Element e in sel.Elements ) // 2014
 
@@ -81,8 +80,8 @@ namespace BuildingCoder
             // and a point on each wall for distance
             // calculations:
 
-            var lines = new List<Line>(2);
-            var midpoints = new List<XYZ>(2);
+            List<Line> lines = new(2);
+            List<XYZ> midpoints = new(2);
             XYZ normal = null;
 
             foreach (var wall in walls)
@@ -90,7 +89,7 @@ namespace BuildingCoder
                 var lc = wall.Location as LocationCurve;
                 var curve = lc.Curve;
 
-                if (!(curve is Line line))
+                if (curve is not Line line)
                 {
                     message = _prompt;
                     return Result.Failed;
@@ -121,9 +120,11 @@ namespace BuildingCoder
 
             opt.ComputeReferences = true;
 
-            var faces = new List<Face>(2);
-            faces.Add(Util.GetClosestFace(walls[0], midpoints[1], normal, opt));
-            faces.Add(Util.GetClosestFace(walls[1], midpoints[0], normal, opt));
+            List<Face> faces = new(2)
+            {
+                Util.GetClosestFace(walls[0], midpoints[1], normal, opt),
+                Util.GetClosestFace(walls[1], midpoints[0], normal, opt)
+            };
 
             // create the dimensioning:
 
@@ -152,7 +153,7 @@ namespace BuildingCoder
 
                 var filledRegions = Util.FindFilledRegions(doc, view.Id);
 
-                using var transaction = new Transaction(doc,
+                using Transaction transaction = new(doc,
                     "filled regions dimensions");
                 transaction.Start();
 

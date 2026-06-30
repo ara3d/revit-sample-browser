@@ -3,11 +3,12 @@
 // Adapted from GetCentroid by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/GetCentroid
 
-using System.Text;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using BuildingCoder;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
 {
@@ -47,7 +48,7 @@ namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
             var options = commandData.Application.Application
                 .Create.NewGeometryOptions();
 
-            var report = new StringBuilder();
+            StringBuilder report = new();
             var compared = 0;
             var skipped = 0;
 

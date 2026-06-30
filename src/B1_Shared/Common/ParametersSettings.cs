@@ -133,7 +133,7 @@ namespace ExcelExporterImporter.Common
             try
             {
                 stringReader = new StringReader(input);
-                return (ParametersSettings) Serializer.Deserialize(XmlReader.Create(stringReader));
+                return (ParametersSettings)Serializer.Deserialize(XmlReader.Create(stringReader));
             }
             finally
             {

@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -17,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-                using var transaction = new Transaction(document, "Flip Analytical Member");
+                using Transaction transaction = new(document, "Flip Analytical Member");
                 transaction.Start();
                 CreateAnalyticalMember.CreateMember(document).FlipCurve();
                 transaction.Commit();

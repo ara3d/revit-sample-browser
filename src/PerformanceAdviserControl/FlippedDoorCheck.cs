@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS 
+namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
 {
     /// <summary>
     ///     A class that implements IPerformanceAdviserRule.  This class implements several methods that will be
@@ -18,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         /// <summary>
         ///     The ID of the failure definition for our API-based door flip check rule
         /// </summary>
-        private readonly FailureDefinitionId m_doorWarningId = new FailureDefinitionId(new Guid("25570B8FD4AD42baBD78469ED60FB9A3"));
+        private readonly FailureDefinitionId m_doorWarningId = new(new Guid("25570B8FD4AD42baBD78469ED60FB9A3"));
 
         /// <summary>
         ///     A list of all family instances in the document that have the FaceFlipped property set to true;
@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         /// <summary>
         ///     The rule ID for this rule;
         /// </summary>
-        public static PerformanceAdviserRuleId Id { get; } 
+        public static PerformanceAdviserRuleId Id { get; }
             = new PerformanceAdviserRuleId(new Guid("BC38854474284491BD03795675AC7386"));
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         public void InitCheck(Document document)
         {
             if (m_flippedDoors == null)
-                m_flippedDoors = new List<ElementId>();
+                m_flippedDoors = [];
             else
                 m_flippedDoors.Clear();
         }
@@ -89,9 +89,9 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
             else
             {
                 //Pass the element IDs of the flipped doors to the revit failure reporting APIs.
-                var fm = new FailureMessage(m_doorWarningId);
+                FailureMessage fm = new(m_doorWarningId);
                 fm.SetFailingElements(m_flippedDoors);
-                var failureReportingTransaction = new Transaction(document, "Failure reporting transaction");
+                Transaction failureReportingTransaction = new(document, "Failure reporting transaction");
                 failureReportingTransaction.Start();
                 PerformanceAdviser.GetPerformanceAdviser().PostWarning(fm);
                 failureReportingTransaction.Commit();

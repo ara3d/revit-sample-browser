@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
 {
@@ -77,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
 
             // Make sure Parameter name should be started with letter
             // And just contains letters, numbers and underlines 
-            var regex = new Regex("^[a-zA-Z]\\w*$");
+            Regex regex = new("^[a-zA-Z]\\w*$");
             if (!regex.IsMatch(ParamName))
             {
                 TaskDialog.Show("Revit",

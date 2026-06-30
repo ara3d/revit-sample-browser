@@ -13,17 +13,13 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Mechanical;
-using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -60,7 +56,7 @@ namespace BuildingCoder
             // Select two walls and the dimension line point:
 
             var sel = uidoc.Selection;
-            var refs = new ReferenceArray();
+            ReferenceArray refs = new();
 
             try
             {
@@ -94,7 +90,7 @@ namespace BuildingCoder
             // calculations:
 
             var walls = new Wall[2];
-            var ids = new List<long>(2);
+            List<long> ids = new(2);
             var pts = new XYZ[2];
             var lines = new Line[2];
             IntersectionResult ir;
@@ -228,8 +224,8 @@ namespace BuildingCoder
             // This method is deprecated in Revit 2014.  
             // Use the ReferenceIntersector class instead."
 
-            var ri
-                = new ReferenceIntersector(
+            ReferenceIntersector ri
+                = new(
                     walls[0].Id, FindReferenceTarget.Element, view);
 
             var ref2

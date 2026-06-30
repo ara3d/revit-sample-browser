@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -30,10 +31,10 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 if (analyticalPanel != null)
                 {
                     // Start a sketch edit scope
-                    var sketchEditScope = new SketchEditScope(document, "Replace line with an arc");
+                    SketchEditScope sketchEditScope = new(document, "Replace line with an arc");
                     sketchEditScope.StartWithNewSketch(analyticalPanel.Id);
 
-                    using (var transaction = new Transaction(document, "Modify sketch"))
+                    using (Transaction transaction = new(document, "Modify sketch"))
                     {
                         transaction.Start();
 

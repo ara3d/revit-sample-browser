@@ -1,9 +1,9 @@
-using System;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BuildingCoder
 {
@@ -37,7 +37,7 @@ namespace BuildingCoder
             var e2 = args
                 as TaskDialogShowingEventArgs;
 
-            e2.OverrideResult((int) TaskDialogResult.Ok);
+            e2.OverrideResult((int)TaskDialogResult.Ok);
         }
 
         internal static async void RunCommands(
@@ -60,7 +60,7 @@ namespace BuildingCoder
         internal static void TwinMotionExportFbx(Document doc)
         {
             var app = doc.Application;
-            var uiapp = new UIApplication(app);
+            UIApplication uiapp = new(app);
 
             try
             {

@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
@@ -28,8 +28,8 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
         public void Construct(double runWidth, double offset1, double offset2)
         {
             var bisectDir = (Direction2 - Direction1).Normalize();
-            var perpendicularDir1 = new XYZ(-Direction1.Y, Direction1.X, 0);
-            var perpendicularDir2 = new XYZ(-Direction2.Y, Direction2.X, 0);
+            XYZ perpendicularDir1 = new(-Direction1.Y, Direction1.X, 0);
+            XYZ perpendicularDir2 = new(-Direction2.Y, Direction2.X, 0);
             if (bisectDir.DotProduct(perpendicularDir1) < 0)
             {
                 perpendicularDir1 = perpendicularDir1.Negate();
@@ -37,9 +37,9 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
             }
 
             var line1Offset = Line.CreateUnbound(
-                CornerPoint + perpendicularDir1 * (runWidth + offset1), Direction1);
+                CornerPoint + (perpendicularDir1 * (runWidth + offset1)), Direction1);
             var line2Offset = Line.CreateUnbound(
-                CornerPoint + perpendicularDir2 * (runWidth + offset2), Direction2);
+                CornerPoint + (perpendicularDir2 * (runWidth + offset2)), Direction2);
 
             IntersectionResultArray xsect;
             line1Offset.Intersect(line2Offset, out xsect);
@@ -61,8 +61,8 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
         {
             // Calculate the bisect direction in the corner.
             var bisectDir = (Direction2 - Direction1).Normalize();
-            var perpendicularDir1 = new XYZ(-Direction1.Y, Direction1.X, 0);
-            var perpendicularDir2 = new XYZ(-Direction2.Y, Direction2.X, 0);
+            XYZ perpendicularDir1 = new(-Direction1.Y, Direction1.X, 0);
+            XYZ perpendicularDir2 = new(-Direction2.Y, Direction2.X, 0);
             if (bisectDir.DotProduct(perpendicularDir1) < 0)
             {
                 perpendicularDir1 = perpendicularDir1.Negate();
@@ -76,19 +76,19 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
             if (winderAngleSpan > Math.PI)
             {
                 zDir = zDir.Negate();
-                winderAngleSpan = Math.PI * 2.0 - winderAngleSpan;
+                winderAngleSpan = (Math.PI * 2.0) - winderAngleSpan;
             }
 
             // Calculate the corner points
             var diagonalDist = runwidth2 / Math.Cos(winderAngleSpan * 0.5);
-            var middleCornerPnt = CornerPoint + bisectDir * diagonalDist;
-            var innerCornerPnt = middleCornerPnt + bisectDir * diagonalDist;
-            var middleStart = StartPoint + perpendicularDir1 * runwidth2;
-            var innerStart = StartPoint + perpendicularDir1 * runWidth;
-            var middleEnd = EndPoint + perpendicularDir2 * runwidth2;
-            var innerEnd = EndPoint + perpendicularDir2 * runWidth;
-            var middleEnd0 = innerCornerPnt - perpendicularDir1 * runwidth2;
-            var middleEnd1 = innerCornerPnt - perpendicularDir2 * runwidth2;
+            var middleCornerPnt = CornerPoint + (bisectDir * diagonalDist);
+            var innerCornerPnt = middleCornerPnt + (bisectDir * diagonalDist);
+            var middleStart = StartPoint + (perpendicularDir1 * runwidth2);
+            var innerStart = StartPoint + (perpendicularDir1 * runWidth);
+            var middleEnd = EndPoint + (perpendicularDir2 * runwidth2);
+            var innerEnd = EndPoint + (perpendicularDir2 * runWidth);
+            var middleEnd0 = innerCornerPnt - (perpendicularDir1 * runwidth2);
+            var middleEnd1 = innerCornerPnt - (perpendicularDir2 * runwidth2);
 
             // Generate the two outer boundary lines
             var outerLine1 = Line.CreateBound(StartPoint, CornerPoint);
@@ -120,7 +120,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
             }
 
             // Generate the middle fillet arc
-            var middleCenter = innerCornerPnt - bisectDir * runwidth2;
+            var middleCenter = innerCornerPnt - (bisectDir * runwidth2);
             var middleArc = Arc.Create(middleEnd0, middleEnd1, middleCenter);
             walkPath.Add(middleArc);
 

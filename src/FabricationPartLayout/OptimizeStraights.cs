@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
@@ -29,21 +29,19 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         selIds.Add(id);
                     }
 
-                    using (var tr = new Transaction(doc, "Optimize Straights"))
+                    using Transaction tr = new(doc, "Optimize Straights");
+                    tr.Start();
+
+                    var affectedPartIds = FabricationPart.OptimizeLengths(doc, selIds);
+                    if (affectedPartIds.Count == 0)
                     {
-                        tr.Start();
-
-                        var affectedPartIds = FabricationPart.OptimizeLengths(doc, selIds);
-                        if (affectedPartIds.Count == 0)
-                        {
-                            message = "No fabrication straight parts were optimized.";
-                            return Result.Cancelled;
-                        }
-
-                        doc.Regenerate();
-
-                        tr.Commit();
+                        message = "No fabrication straight parts were optimized.";
+                        return Result.Cancelled;
                     }
+
+                    doc.Regenerate();
+
+                    tr.Commit();
 
                     return Result.Succeeded;
                 }

@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Mep;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Mep;
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAnalysis
 {
     /// <summary>
@@ -27,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
                 return Result.Succeeded;
             }
 
-            var mainWindow = new MainWindow(commandData.Application);
+            MainWindow mainWindow = new(commandData.Application);
             mainWindow.ShowDialog();
             return Result.Succeeded;
         }

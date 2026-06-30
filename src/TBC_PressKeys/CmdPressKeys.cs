@@ -12,12 +12,13 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 #endregion // Namespaces
 
@@ -43,7 +44,7 @@ namespace BuildingCoder
         public static void OneKey(IntPtr handle, char letter)
         {
             var scanCode = MapVirtualKey(letter,
-                (uint) MVK_MAP_TYPE.VKEY_TO_SCANCODE);
+                (uint)MVK_MAP_TYPE.VKEY_TO_SCANCODE);
 
             var keyDownCode = (uint)
                               WH_KEYBOARD_LPARAM.KEYDOWN
@@ -54,11 +55,11 @@ namespace BuildingCoder
                             | (scanCode << 16);
 
             PostMessage(handle,
-                (uint) KEYBOARD_MSG.WM_KEYDOWN,
+                (uint)KEYBOARD_MSG.WM_KEYDOWN,
                 letter, keyDownCode);
 
             PostMessage(handle,
-                (uint) KEYBOARD_MSG.WM_KEYUP,
+                (uint)KEYBOARD_MSG.WM_KEYUP,
                 letter, keyUpCode);
         }
         public static void Keys(
@@ -108,8 +109,10 @@ namespace BuildingCoder
             var wall = Util.GetFirstWallUsingType(
                 doc, wallType);
 
-            var ids = new List<ElementId>(1);
-            ids.Add(wall.Id);
+            var ids = new List<ElementId>(1)
+            {
+                wall.Id
+            };
             uidoc.Selection.SetElementIds(ids);
 
             if (0 == uidoc.Selection.GetElementIds().Count)

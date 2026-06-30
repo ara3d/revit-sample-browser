@@ -1,15 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Autodesk.Revit.Creation;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using Autodesk.Revit.Creation;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.DB.Document;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 {
     public class Data
@@ -39,7 +38,7 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 
             var doc = commandData.Application.ActiveUIDocument;
             m_document = doc.Document;
-            var es = new ElementSet();
+            ElementSet es = new();
             foreach (var elementId in doc.Selection.GetElementIds())
             {
                 es.Insert(doc.Document.GetElement(elementId));
@@ -64,13 +63,13 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 
         private void ObtainFloorTypes(FilteredElementIterator elements)
         {
-            m_floorTypes = new Hashtable();
-            FloorTypesName = new List<string>();
+            m_floorTypes = [];
+            FloorTypesName = [];
 
             elements.Reset();
             while (elements.MoveNext())
             {
-                if (!(elements.Current is FloorType ft) || null == ft.Category || !ft.Category.Name.Equals("Floors")) continue;
+                if (elements.Current is not FloorType ft || null == ft.Category || !ft.Category.Name.Equals("Floors")) continue;
 
                 m_floorTypes.Add(ft.Name, ft);
                 FloorTypesName.Add(ft.Name);
@@ -97,7 +96,7 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 
         private void ObtainProfile(ElementSet walls)
         {
-            var temp = new CurveArray();
+            CurveArray temp = new();
             foreach (Wall w in walls)
             {
                 var curve = w.Location as LocationCurve;
@@ -109,7 +108,7 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 
         private void Generate2D()
         {
-            var tempArray = new ArrayList();
+            ArrayList tempArray = new();
             double xMin = 0;
             double xMax = 0;
             double yMin = 0;
@@ -120,7 +119,7 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
                 var xyzArray = c.Tessellate() as List<XYZ>;
                 foreach (var xyz in xyzArray)
                 {
-                    var temp = new XYZ(xyz.X, -xyz.Y, xyz.Z);
+                    XYZ temp = new(xyz.X, -xyz.Y, xyz.Z);
                     ElementQuery.FindMinMax(temp, ref xMin, ref xMax, ref yMin, ref yMax);
                     tempArray.Add(temp);
                 }
@@ -128,7 +127,7 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 
             MaxLength = xMax - xMin > yMax - yMin ? xMax - xMin : yMax - yMin;
 
-            Points = new PointF[tempArray.Count / 2 + 1];
+            Points = new PointF[(tempArray.Count / 2) + 1];
             for (var i = 0; i < tempArray.Count; i += 2)
             {
                 var point = (XYZ)tempArray[i];
@@ -150,11 +149,10 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
             {
                 temCurve = GetNext(lines, temp, temCurve);
 
-                if (Math.Abs(temp.X - temCurve.GetEndPoint(0).X) < Precision
-                    && Math.Abs(temp.Y - temCurve.GetEndPoint(0).Y) < Precision)
-                    temp = temCurve.GetEndPoint(1);
-                else
-                    temp = temCurve.GetEndPoint(0);
+                temp = Math.Abs(temp.X - temCurve.GetEndPoint(0).X) < Precision
+                    && Math.Abs(temp.Y - temCurve.GetEndPoint(0).Y) < Precision
+                    ? temCurve.GetEndPoint(1)
+                    : temCurve.GetEndPoint(0);
 
                 Profile.Append(temCurve);
             }
@@ -190,20 +188,20 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
                     switch (c.GetType().Name)
                     {
                         case "Line":
-                        {
-                            var start = c.GetEndPoint(1);
-                            var end = c.GetEndPoint(0);
-                            return Line.CreateBound(start, end);
-                        }
+                            {
+                                var start = c.GetEndPoint(1);
+                                var end = c.GetEndPoint(0);
+                                return Line.CreateBound(start, end);
+                            }
                         case "Arc":
-                        {
-                            var size = c.Tessellate().Count;
-                            var start = c.Tessellate()[0];
-                            var middle = c.Tessellate()[size / 2];
-                            var end = c.Tessellate()[size];
+                            {
+                                var size = c.Tessellate().Count;
+                                var start = c.Tessellate()[0];
+                                var middle = c.Tessellate()[size / 2];
+                                var end = c.Tessellate()[size];
 
-                            return Arc.Create(start, end, middle);
-                        }
+                                return Arc.Create(start, end, middle);
+                            }
                     }
                 }
             }

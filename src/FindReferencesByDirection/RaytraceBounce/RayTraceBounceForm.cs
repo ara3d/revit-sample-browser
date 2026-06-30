@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
@@ -14,20 +14,20 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
     public partial class RayTraceBounceForm : Form
     {
         private static readonly string AssemblyName = Assembly.GetExecutingAssembly().Location;
-        private static string _assemblyDirectory = Path.GetDirectoryName(AssemblyName);
+        private static readonly string _assemblyDirectory = Path.GetDirectoryName(AssemblyName);
         private static readonly double Epsilon = 0.00000001;
         private static readonly int RayLimit = 100;
 
         private readonly UIApplication m_app;
-        private XYZ m_direction = new XYZ(0, 0, 0);
+        private XYZ m_direction = new(0, 0, 0);
         private readonly Document m_doc;
         private Face m_face;
         private int m_lineCount;
-        private XYZ m_origin = new XYZ(0, 0, 0);
-        private readonly List<string> m_outputInfo = new List<string>();
+        private XYZ m_origin = new(0, 0, 0);
+        private readonly List<string> m_outputInfo = [];
         private int m_rayCount;
         private ReferenceWithContext m_rClosest;
-        private readonly Stopwatch m_stopWatch = new Stopwatch();
+        private readonly Stopwatch m_stopWatch = new();
         private readonly TraceListener m_txtListener;
         private readonly View3D m_view;
 
@@ -53,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             if (!UpdateData(false)) return;
             m_outputInfo.Clear();
             m_stopWatch.Start();
-            var transaction = new Transaction(m_doc, "RayTraceBounce");
+            Transaction transaction = new(m_doc, "RayTraceBounce");
             transaction.Start();
             m_lineCount = 0;
             m_rayCount = 0;
@@ -61,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             m_outputInfo.Add("Start Find References By Direction: ");
             for (var ctr = 1; ctr <= RayLimit; ctr++)
             {
-                var referenceIntersector = new ReferenceIntersector(m_view);
+                ReferenceIntersector referenceIntersector = new(m_view);
                 var references = referenceIntersector.Find(startpt, m_direction);
                 m_rClosest = null;
                 FindClosestReference(references);
@@ -112,8 +112,8 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
                                 faceNormal);
                     var directionMirrored =
                         m_direction -
-                        2 * m_direction.DotProduct(faceNormal) *
-                        faceNormal;
+                        (2 * m_direction.DotProduct(faceNormal) *
+                        faceNormal);
                     m_direction = directionMirrored;
                     startpt = endpt;
                 }
@@ -264,16 +264,16 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
         {
             try
             {
-                var transaction = new SubTransaction(m_app.ActiveUIDocument.Document);
+                SubTransaction transaction = new(m_app.ActiveUIDocument.Document);
                 transaction.Start();
-                var list = new List<Element>();
-                var filter = new ElementClassFilter(typeof(CurveElement));
-                var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
+                List<Element> list = new();
+                ElementClassFilter filter = new(typeof(CurveElement));
+                FilteredElementCollector collector = new(m_app.ActiveUIDocument.Document);
                 list.AddRange(collector.WherePasses(filter).ToElements());
                 foreach (var e in list)
                 {
                     if (e is ModelCurve mc)
-                        if (mc.LineStyle.Name == "bounce" || mc.LineStyle.Name == "normal")
+                        if (mc.LineStyle.Name is "bounce" or "normal")
                             m_app.ActiveUIDocument.Document.Delete(e.Id);
                 }
 

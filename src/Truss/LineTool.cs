@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
 
         public LineTool()
         {
-            Points = new ArrayList();
+            Points = [];
         }
 
         public ArrayList Points { get; set; }

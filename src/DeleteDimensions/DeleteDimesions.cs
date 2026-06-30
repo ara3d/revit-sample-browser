@@ -3,6 +3,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.DeleteDimensions.CS
 {
@@ -22,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.DeleteDimensions.CS
                 return Result.Failed;
             }
 
-            var dimsToDelete = new ElementSet();
+            ElementSet dimsToDelete = new();
             foreach (var elementId in selectedIds)
             {
                 if (doc.GetElement(elementId) is Dimension dimension && !dimension.Pinned)
@@ -35,13 +36,11 @@ namespace Ara3D.RevitSampleBrowser.DeleteDimensions.CS
                 return Result.Failed;
             }
 
-            using (var transaction = new Transaction(doc, "External Tool"))
-            {
-                transaction.Start();
-                foreach (Element e in dimsToDelete)
-                    doc.Delete(e.Id);
-                transaction.Commit();
-            }
+            using Transaction transaction = new(doc, "External Tool");
+            transaction.Start();
+            foreach (Element e in dimsToDelete)
+                doc.Delete(e.Id);
+            transaction.Commit();
 
             return Result.Succeeded;
         }

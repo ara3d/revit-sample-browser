@@ -57,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         /// <param name="e"></param>
         private void GraphicsControl_Load(object sender, EventArgs e)
         {
-            var picturebox = new PictureBox
+            PictureBox picturebox = new()
             {
                 Dock = DockStyle.Fill
             };
@@ -71,10 +71,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             var tempscale1 = (float)(0.9 * picturebox.Width / size.X);
             var tempscale2 = (float)(0.9 * picturebox.Height / size.Y);
 
-            if (tempscale1 > tempscale2)
-                m_scale = tempscale2;
-            else
-                m_scale = tempscale1;
+            m_scale = tempscale1 > tempscale2 ? tempscale2 : tempscale1;
 
             // Book the OnFootPrintRoofLineChanged event to refresh the picture box
             m_footPrintRoofWrapper.OnFootPrintRoofLineChanged += m_footPrintRoofWrapper_OnFootPrintRoofLineChanged;

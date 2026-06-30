@@ -1,9 +1,8 @@
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
@@ -13,7 +12,7 @@ namespace BuildingCoder
             Document doc,
             View view = null)
         {
-            var bb = new BoundingBoxXYZ();
+            BoundingBoxXYZ bb = new();
 
             var walls
                 = new FilteredElementCollector(doc)
@@ -30,20 +29,20 @@ namespace BuildingCoder
                 Document doc,
                 Room room)
         {
-            var ids = new List<ElementId>();
+            List<ElementId> ids = [];
 
             var boundaries
                 = room.GetBoundarySegments(
                     new SpatialElementBoundaryOptions());
 
             foreach (var b in boundaries)
-            foreach (var s in b)
-            {
-                var neighbour = doc.GetElement(s.ElementId);
+                foreach (var s in b)
+                {
+                    var neighbour = doc.GetElement(s.ElementId);
 
-                if (neighbour is Wall wall)
-                    ids.Add(wall.Id);
-            }
+                    if (neighbour is Wall wall)
+                        ids.Add(wall.Id);
+                }
 
             return ids;
         }
@@ -64,7 +63,7 @@ namespace BuildingCoder
 
             var bottom_corners = GetBottomCorners(bb, 0);
 
-            var curves = new CurveArray();
+            CurveArray curves = new();
             for (var i = 0; i < 4; ++i)
             {
                 var j = i < 3 ? i + 1 : 0;
@@ -72,12 +71,12 @@ namespace BuildingCoder
                     bottom_corners[i], bottom_corners[j]));
             }
 
-            using var group = new TransactionGroup(doc);
+            using TransactionGroup group = new(doc);
             Room newRoom;
 
             group.Start("Find Outermost Walls");
 
-            using (var transaction = new Transaction(doc))
+            using (Transaction transaction = new(doc))
             {
                 transaction.Start("Create New Room Boundary Lines");
 
@@ -88,7 +87,7 @@ namespace BuildingCoder
                     sketchPlane, curves, view);
 
                 var d = MmToFoot(600);
-                var point = new UV(bb.Min.X + d, bb.Min.Y + d);
+                UV point = new(bb.Min.X + d, bb.Min.Y + d);
 
                 newRoom = doc.Create.NewRoom(view.GenLevel, point);
 
@@ -115,8 +114,8 @@ namespace BuildingCoder
 
         internal static List<ElementId> GetElementIdsFromString(string x)
         {
-            return new List<ElementId>(x.Split('\n')
-                .Select(s => new ElementId(Int64.Parse(s))));
+            return [.. x.Split('\n')
+                .Select(s => new ElementId(Int64.Parse(s)))];
         }
     }
 }

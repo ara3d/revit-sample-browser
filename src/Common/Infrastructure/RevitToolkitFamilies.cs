@@ -23,7 +23,9 @@ namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
             Document document,
             string path,
             out Family family,
-            IFamilyLoadOptions options = null) =>
-            document.LoadFamily(path, options ?? Default, out family);
+            IFamilyLoadOptions options = null)
+        {
+            return document.LoadFamily(path, options ?? Default, out family);
+        }
     }
 }

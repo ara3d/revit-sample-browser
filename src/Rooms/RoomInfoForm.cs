@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.Rooms.CS
@@ -111,14 +111,12 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
 
         private void exportButton_Click(object sender, EventArgs e)
         {
-            using (var sfdlg = new SaveFileDialog())
-            {
-                sfdlg.Title = "Export area of department to Excel file";
-                sfdlg.Filter = "CSV(command delimited)(*.csv)|*.csv";
-                sfdlg.RestoreDirectory = true;
+            using var sfdlg = new SaveFileDialog();
+            sfdlg.Title = "Export area of department to Excel file";
+            sfdlg.Filter = "CSV(command delimited)(*.csv)|*.csv";
+            sfdlg.RestoreDirectory = true;
 
-                if (DialogResult.OK == sfdlg.ShowDialog()) m_data.ExportFile(sfdlg.FileName);
-            }
+            if (DialogResult.OK == sfdlg.ShowDialog()) m_data.ExportFile(sfdlg.FileName);
         }
     }
 }

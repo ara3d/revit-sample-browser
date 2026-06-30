@@ -2,22 +2,21 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class CategoryCmdDefinition : ICommandDefinition, INeedInitializationWithDocument, IOfferArgumentAutocompletion
     {
-        private static readonly AutocompleteItem AutocompleteItem = new AutocompleteItem("c: ", "c:[category]", "select elements of given category", AutocompleteItemGroups.Commands);
-        private readonly DataBucket<CategoryCmdArgument> dataBucket = new DataBucket<CategoryCmdArgument>(0.59);
+        private static readonly AutocompleteItem AutocompleteItem = new("c: ", "c:[category]", "select elements of given category", AutocompleteItemGroups.Commands);
+        private readonly DataBucket<CategoryCmdArgument> dataBucket = new(0.59);
 
 
         public void Init(Document document)
@@ -25,11 +24,11 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
             dataBucket.Clear();
 
             var categories = document.Settings.Categories;
-           
+
             foreach (Category category in categories)
             {
                 var builtInCategory = category.BuiltInCategory;
-if (builtInCategory == BuiltInCategory.INVALID) continue;
+                if (builtInCategory == BuiltInCategory.INVALID) continue;
 
                 var label = LabelUtils.GetLabelFor(builtInCategory);
 
@@ -39,14 +38,18 @@ if (builtInCategory == BuiltInCategory.INVALID) continue;
                 {
                     continue;
                 }
-                dataBucket.Add(new AutocompleteItem(strCategory, strCategory, label), new CategoryCmdArgument(builtInCategory), label, strCategory);             
+                dataBucket.Add(new AutocompleteItem(strCategory, strCategory, label), new CategoryCmdArgument(builtInCategory), label, strCategory);
             }
 
             dataBucket.Rebuild();
         }
 
 
-        public IAutocompleteItem GetCommandAutocompleteItem() => AutocompleteItem;
+        public IAutocompleteItem GetCommandAutocompleteItem()
+        {
+            return AutocompleteItem;
+        }
+
         public IEnumerable<IAutocompleteItem> GetAutocompleteItems(string prefix)
         {
 
@@ -66,14 +69,12 @@ if (builtInCategory == BuiltInCategory.INVALID) continue;
         }
         public bool CanRecognizeArgument(string argument)
         {
-            if (argument.StartsWith(nameof(BuiltInCategory), StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-            return false;
+            return argument.StartsWith(nameof(BuiltInCategory), StringComparison.OrdinalIgnoreCase);
         }
-        public bool CanParticipateInGenericSearch() => true;
-
+        public bool CanParticipateInGenericSearch()
+        {
+            return true;
+        }
 
         public ICommand Create(string cmdText, string argument)
         {
@@ -87,7 +88,7 @@ if (builtInCategory == BuiltInCategory.INVALID) continue;
     public class CategoryCmdArgument : CommandArgument<BuiltInCategory>
     {
         public CategoryCmdArgument(BuiltInCategory value) : base(value)
-        {            
+        {
             Name = $"BuiltInCategory.{value}";
             Label = LabelUtils.GetLabelFor(value);
         }
@@ -105,6 +106,6 @@ if (builtInCategory == BuiltInCategory.INVALID) continue;
         public CategoryCmd(string text, IEnumerable<IFuzzySearchResult> matchedArguments) : base(text, matchedArguments, null)
         {
             IsBasedOnQuickFilter = true;
-        }        
+        }
     }
 }

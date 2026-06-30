@@ -14,12 +14,11 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -42,8 +41,10 @@ namespace BuildingCoder
             {
                 var s = Util.GetViewSheetSetViewsBenchmark(doc);
                 var td = new TaskDialog(
-                    "ViewSheetSet.Views Benchmark");
-                td.MainContent = s;
+                    "ViewSheetSet.Views Benchmark")
+                {
+                    MainContent = s
+                };
                 td.Show();
                 return Result.Succeeded;
             }
@@ -112,7 +113,7 @@ namespace BuildingCoder
 
                     if (!mapSheetToViewport.ContainsKey(idSheet))
                         mapSheetToViewport.Add(idSheet,
-                            new List<ElementId>());
+                            []);
                     mapSheetToViewport[idSheet].Add(v.Id);
 
                     Debug.Assert(

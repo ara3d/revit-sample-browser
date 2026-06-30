@@ -1,6 +1,5 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Visual;
-using System;
 using Color = Ara3D.Geometry.Color;
 using Material = Autodesk.Revit.DB.Material;
 
@@ -11,24 +10,22 @@ public static class MaterialExtensions
     public static PbrMaterialInfo? GetPbrInfo(this Document doc, long materialId)
     {
         // 1. Look up the Material
-        var mat = doc.GetElement(new ElementId(materialId)) as Material;
-        if (mat is null) return null;
-            
+        if (doc.GetElement(new ElementId(materialId)) is not Material mat) return null;
+
         // 2. Graphics transparency (0..100), convert to opacity (0..1)
         //    0   => fully opaque
         //    100 => fully transparent
-        var opacityGraphics = 1.0 - mat.Transparency / 100.0;
+        var opacityGraphics = 1.0 - (mat.Transparency / 100.0);
 
         // 3. Graphics shading colour (will be used as fallback / shading color)
-        var shadingColor = new Color(
+        Color shadingColor = new(
             mat.Color.Red / 255f,
             mat.Color.Green / 255f,
             mat.Color.Blue / 255f,
             1f); // alpha applied later
 
         // 4. Try to reach the rendering (appearance) asset
-        var assetEl = doc.GetElement(mat.AppearanceAssetId) as AppearanceAssetElement;
-        if (assetEl is null)
+        if (doc.GetElement(mat.AppearanceAssetId) is not AppearanceAssetElement assetEl)
         {
             // No appearance asset: fall back entirely to graphics
             var legacy = shadingColor.WithA((float)opacityGraphics);
@@ -118,11 +115,11 @@ public static class MaterialExtensions
             roughness = 1.0 - glossiness.Value;
 
         // 8. Combine graphics opacity with appearance opacity/transparency
-        double opacityAsset = 1.0;
+        var opacityAsset = 1.0;
 
         // generic_transparency: 0 = opaque, 1 = fully transparent
         if (transparency.HasValue)
-            opacityAsset *= (1.0 - transparency.Value);
+            opacityAsset *= 1.0 - transparency.Value;
 
         // generic_opacity / UnifiedOpacity: already opaque in [0..1]
         if (opacityPbr.HasValue)
@@ -158,32 +155,32 @@ public static class MaterialExtensions
     }
 
     public static Models.Material? ToAra3DMaterial(this PbrMaterialInfo pbr)
-        => pbr == null
-            ? null
-            : new Models.Material(
-                pbr.BaseColor ?? pbr.ShadingColor, 
-                (float)(pbr.Metallic ?? 0),
-                (float)(pbr.Roughness ?? 1));
+    {
+        return pbr == null
+                ? null
+                : new Models.Material(
+                    pbr.BaseColor ?? pbr.ShadingColor,
+                    (float)(pbr.Metallic ?? 0),
+                    (float)(pbr.Roughness ?? 1));
+    }
 
     public static Models.Material? ToAra3DMaterial(this Document doc, ElementId? materialId)
     {
         if (doc == null)
             return null;
-        if (materialId == null)
-            return null;
-        if (materialId == ElementId.InvalidElementId)
-            return null;
-        return (doc.GetElement(materialId) as Material).ToAra3DMaterial();
+        return materialId == null
+            ? null
+            : materialId == ElementId.InvalidElementId ? null : (doc.GetElement(materialId) as Material).ToAra3DMaterial();
     }
 
     public static Models.Material? ToAra3DMaterial(this Material mat)
     {
         if (mat == null)
             return null;
-        var alpha = 1f - mat.Transparency / 100f;
+        var alpha = 1f - (mat.Transparency / 100f);
         var metallic = 0f;
         var roughness = 1f;
-        var color = new Color(
+        Color color = new(
             mat.Color.Red / 255f,
             mat.Color.Green / 255f,
             mat.Color.Blue / 255f,
@@ -193,13 +190,19 @@ public static class MaterialExtensions
 
 
     public static Models.Material? GetAra3DMaterial(this Document self, Face f)
-        => f == null ? null : ToAra3DMaterial(self, f?.MaterialElementId);
+    {
+        return f == null ? null : ToAra3DMaterial(self, f?.MaterialElementId);
+    }
 
     public static Models.Material? GetAra3DMaterial(this Document self, Mesh m)
-        => m == null ? null : ToAra3DMaterial(self, m?.MaterialElementId);
+    {
+        return m == null ? null : ToAra3DMaterial(self, m?.MaterialElementId);
+    }
 
     public static Models.Material? ResolveFallbackMaterial(this Element e)
-        => e == null ? null : ToAra3DMaterial(e.Document, ResolveFallbackMaterialId(e));
+    {
+        return e == null ? null : ToAra3DMaterial(e.Document, ResolveFallbackMaterialId(e));
+    }
 
     public static ElementId ResolveFallbackMaterialId(Element e)
     {

@@ -1,9 +1,9 @@
-using System.Linq;
 using Ara3D.RevitSampleBrowser.N3P_Shared.CS;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Nice3point.Revit.Extensions;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.N3P_Parameters.CS
 {
@@ -22,8 +22,7 @@ namespace Ara3D.RevitSampleBrowser.N3P_Parameters.CS
             var isParam = bipId.IsParameter(BuiltInParameter.WALL_BASE_OFFSET);
             N3POutput.Line("ElementId.IsParameter()", isParam);
 
-            var wall = doc.CollectElements().OfClass<Wall>().FirstOrDefault() as Wall;
-            if (wall == null)
+            if (doc.CollectElements().OfClass<Wall>().FirstOrDefault() is not Wall wall)
             {
                 message = "No walls found for parameter demo.";
                 return Result.Failed;

@@ -12,11 +12,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -33,13 +33,13 @@ namespace BuildingCoder
             var app = commandData.Application;
             var doc = app.ActiveUIDocument.Document;
 
-            var collector
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector collector
+                = new(doc);
 
             collector.OfClass(typeof(FamilyInstance));
 
-            var instanceDataList
-                = new List<InstanceData>();
+            List<InstanceData> instanceDataList
+                = new();
 
             foreach (var e in collector)
                 instanceDataList.Add(
@@ -50,11 +50,11 @@ namespace BuildingCoder
             var i = 42;
 
             var found = from instance in instanceDataList
-                where
-                    instance.Param1.Equals(s)
-                    && b == instance.Param2
-                    && i < instance.Param3
-                select instance;
+                                              where
+                                                  instance.Param1.Equals(s)
+                                                  && b == instance.Param2
+                                                  && i < instance.Param3
+                                              select instance;
 
             foreach (var instance in found)
             {
@@ -78,7 +78,7 @@ namespace BuildingCoder
                 Param1 = p == null ? string.Empty : p.AsString();
 
                 p = m.get_Item("Param2");
-                Param2 = p == null ? false : 0 != p.AsInteger();
+                Param2 = p != null && 0 != p.AsInteger();
 
                 p = m.get_Item("Param3");
                 Param3 = p == null ? 0 : p.AsInteger();

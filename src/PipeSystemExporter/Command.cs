@@ -2,14 +2,14 @@
 // Adapted from PipeSystemExporter by Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/PipeSystemExporter
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
 {
@@ -70,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
             {
                 var pts = Util.GetConnectorPoints(fitting);
                 n = pts.Count;
-                Debug.Assert(1 == n || 2 == n || 3 == n, "expected one, two or three endpoints on fitting");
+                Debug.Assert(n is 1 or 2 or 3, "expected one, two or three endpoints on fitting");
                 var s = 1 == n ? "plug" : 2 == n ? "elbow" : "tee";
                 var t = string.Join(" ", pts.Select(p => Util.PointString(p)));
                 Debug.Print($"  {s} '{fitting.Symbol.FamilyName}' '{fitting.Name}' {t}");

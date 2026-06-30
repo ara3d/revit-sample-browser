@@ -2,40 +2,39 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
 {
     public static class CommandParser
     {
-        public static readonly List<ICommandDefinition> Definitions = new List<ICommandDefinition>()
-        {
+        public static readonly List<ICommandDefinition> Definitions =
+        [
             new NotElementTypeCmdDefinition(),
             new ElementTypeCmdDefinition(),
             new OwnerViewFilterCmdDefinition(),
             new SelectionCmdDefinition(),
-            new VisibleInViewCmdDefinition(),   
+            new VisibleInViewCmdDefinition(),
             new CategoryCmdDefinition(),
             new ClassCmdDefinition(),
-            new ElementIdCmdDefinition(),            
+            new ElementIdCmdDefinition(),
             new LevelCmdDefinition(),
-            new NameCmdDefinition(),          
+            new NameCmdDefinition(),
             new ParameterCmdDefinition(),
-            new RoomCmdDefinition(),          
+            new RoomCmdDefinition(),
             new RuleBasedFilterCmdDefinition(),
             new StructuralTypeCmdDefinition(),
             new UniqueIdCmdDefinition(),
             new WorksetCmdDefinition(),
-        };
-        private static readonly Dictionary<string, ICommandDefinition> classifierToDefinitionMap = new Dictionary<string, ICommandDefinition>();
-        private static readonly Dictionary<string, ICommandDefinition> keywordToDefinitionMap = new Dictionary<string, ICommandDefinition>();        
+        ];
+        private static readonly Dictionary<string, ICommandDefinition> classifierToDefinitionMap = [];
+        private static readonly Dictionary<string, ICommandDefinition> keywordToDefinitionMap = [];
 
 
         public static void Init()
@@ -45,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
         static CommandParser()
         {
             RegisterClassifiers();
-            RegisterKeywords();          
+            RegisterKeywords();
             InitDefinitions();
         }
         private static void RegisterClassifiers()
@@ -54,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
             {
                 foreach (var classifier in definition.GetClassifiers())
                 {
-                    string key = classifier.NormalizeForLookup();
+                    var key = classifier.NormalizeForLookup();
                     if (classifierToDefinitionMap.ContainsKey(key))
                     {
                         throw new Exception("Should it not be possible to be here, but here we are...");
@@ -69,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
             {
                 foreach (var keyword in definition.GetKeywords())
                 {
-                    string key = keyword.NormalizeForLookup();
+                    var key = keyword.NormalizeForLookup();
                     if (keywordToDefinitionMap.ContainsKey(key))
                     {
                         throw new Exception("Should it not be possible to be here, but here we are...");
@@ -77,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
                     keywordToDefinitionMap[key] = definition;
                 }
             }
-        }       
+        }
         private static void InitDefinitions()
         {
             foreach (var definition in Definitions.OfType<INeedInitialization>())
@@ -100,7 +99,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
         public static IEnumerable<ICommand> Parse(string cmdText)
         {
             var splittedByClassifier = cmdText.Split(Separators, 2, System.StringSplitOptions.None);
-           
+
             string argument = null;
             ICommandDefinition selectedDefinition = null;
 
@@ -108,7 +107,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
             {
                 var keyword = cmdText.NormalizeForLookup();
                 keywordToDefinitionMap.TryGetValue(keyword, out selectedDefinition);
-                argument = splittedByClassifier[0].Trim();                
+                argument = splittedByClassifier[0].Trim();
             }
             if (splittedByClassifier.Length == 2)
             {
@@ -130,19 +129,19 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
             }
 
             if (selectedDefinition != null)
-            {               
+            {
                 yield return selectedDefinition.Create(cmdText, argument);
-                yield break;                
+                yield break;
             }
 
-            if (string.IsNullOrEmpty(argument)) yield break;   
-          
+            if (string.IsNullOrEmpty(argument)) yield break;
+
             var genericSearchResult = DoGenericSearch(cmdText, argument);
             if (genericSearchResult.Any())
             {
                 var ordered = genericSearchResult.OrderByDescending(x => x.Score).ToArray();
 
-                double prevScore = ordered.First().Score;
+                var prevScore = ordered.First().Score;
 
                 foreach (var item in ordered)
                 {
@@ -160,8 +159,8 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
             }
 
             //
-          
-            yield return NameCmdDefinition.Instance.Create(cmdText, argument);                         
+
+            yield return NameCmdDefinition.Instance.Create(cmdText, argument);
         }
 
         private static IEnumerable<ICommand> DoGenericSearch(string cmdText, string argument)
@@ -172,7 +171,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
                 {
                     var result = definition.Create(cmdText, argument);
                     if (result.Arguments.Any())
-                    {                     
+                    {
                         yield return result;
                     }
                 }

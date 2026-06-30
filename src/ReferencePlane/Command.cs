@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
 {
@@ -17,27 +17,25 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
             ref string message,
             ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+            Transaction trans = new(commandData.Application.ActiveUIDocument.Document,
                 "Ara3D.RevitSampleBrowser.ReferencePlane");
             trans.Start();
             try
             {
                 // Generate an object of Revit reference plane management.
-                var refPlaneMgr = new ReferencePlaneMgr(commandData);
+                ReferencePlaneMgr refPlaneMgr = new(commandData);
 
-                using (var dlg = new ReferencePlaneForm(refPlaneMgr))
+                using ReferencePlaneForm dlg = new(refPlaneMgr);
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        // Done some actions, ask revit to execute it.
-                        trans.Commit();
-                        return Result.Succeeded;
-                    }
-
-                    // Revit need to do nothing.
-                    trans.RollBack();
-                    return Result.Cancelled;
+                    // Done some actions, ask revit to execute it.
+                    trans.Commit();
+                    return Result.Succeeded;
                 }
+
+                // Revit need to do nothing.
+                trans.RollBack();
+                return Result.Cancelled;
             }
             catch (Exception e)
             {

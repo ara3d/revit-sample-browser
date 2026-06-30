@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
 {
@@ -60,9 +60,9 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
         public RoofsManager(ExternalCommandData commandData)
         {
             m_commandData = commandData;
-            m_levels = new List<Level>();
-            m_roofTypes = new List<RoofType>();
-            m_referencePlanes = new List<Autodesk.Revit.DB.ReferencePlane>();
+            m_levels = [];
+            m_roofTypes = [];
+            m_referencePlanes = [];
 
             FootPrint = new CurveArray();
             Profile = new CurveArray();
@@ -77,12 +77,12 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             Initialize();
         }
 
-        public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levels);
+        public ReadOnlyCollection<Level> Levels => new(m_levels);
 
-        public ReadOnlyCollection<RoofType> RoofTypes => new ReadOnlyCollection<RoofType>(m_roofTypes);
+        public ReadOnlyCollection<RoofType> RoofTypes => new(m_roofTypes);
 
         public ReadOnlyCollection<Autodesk.Revit.DB.ReferencePlane> ReferencePlanes =>
-            new ReadOnlyCollection<Autodesk.Revit.DB.ReferencePlane>(m_referencePlanes);
+            new(m_referencePlanes);
 
         /// <summary>
         ///     Get all the footprint roofs in Revit.
@@ -105,7 +105,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             iter.Reset();
             while (iter.MoveNext()) m_levels.Add(iter.Current as Level);
 
-            var filteredElementCollector = new FilteredElementCollector(doc);
+            FilteredElementCollector filteredElementCollector = new(doc);
             filteredElementCollector.OfClass(typeof(RoofType));
             m_roofTypes = filteredElementCollector.Cast<RoofType>().ToList();
 
@@ -155,7 +155,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             FootPrint.Clear();
             while (true)
             {
-                var es = new ElementSet();
+                ElementSet es = new();
                 foreach (var elementId in m_selection.GetElementIds())
                 {
                     es.Insert(m_commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -180,11 +180,11 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
                         switch (element)
                         {
                             case Wall wall:
-                            {
-                                var wallCurve = wall.Location as LocationCurve;
-                                FootPrint.Append(wallCurve.Curve);
-                                continue;
-                            }
+                                {
+                                    var wallCurve = wall.Location as LocationCurve;
+                                    FootPrint.Append(wallCurve.Curve);
+                                    continue;
+                                }
                             case ModelCurve modelCurve:
                                 FootPrint.Append(modelCurve.GeometryCurve);
                                 break;

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.Massing.DividedSurfaceByIntersects.CS
 {
@@ -30,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.DividedSurfaceByIntersects.CS
             var planes = GetPlanes();
             var lines = GetLines();
 
-            var act = new Transaction(m_document);
+            Transaction act = new(m_document);
             act.Start("AddRemoveIntersects");
             try
             {

@@ -1,16 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using Autodesk.Revit.DB;
-
 using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 {
     public class TessellatedGeomAndText2DExportContext : IExportContext2D
     {
         private Element m_currentElem;
 
-        private readonly IList<XYZ> m_points = new List<XYZ>();
+        private readonly IList<XYZ> m_points = [];
 
         public TessellatedGeomAndText2DExportContext(out IList<XYZ> points)
         {
@@ -101,7 +100,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             // Customize tessellation of annotation curves
             if (m_currentElem.Category.CategoryType == CategoryType.Annotation)
             {
-                IList<XYZ> list = new List<XYZ>();
+                IList<XYZ> list = [];
 
                 var curve = node.GetCurve();
                 if (curve is Line line)
@@ -183,11 +182,11 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             var segmentStart = segment.StartPoint;
             var segmentEnd = segment.EndPoint;
 
-            IList<XYZ> list = new List<XYZ>
-            {
+            IList<XYZ> list =
+            [
                 segmentStart,
                 segmentEnd
-            };
+            ];
             CustomExportHelper.AddTo(m_points, list);
         }
 

@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-using Document = Autodesk.Revit.Creation.Document;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 {
@@ -23,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
         public Result Execute(ExternalCommandData revit,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
+            Transaction trans = new(revit.Application.ActiveUIDocument.Document,
                 "Ara3D.RevitSampleBrowser.CreateSimpleAreaRein");
             trans.Start();
             //initialize necessary data
@@ -58,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 
         private bool Create()
         {
-            var elems = new ElementSet();
+            ElementSet elems = new();
             foreach (var elementId in m_currentDoc.Selection.GetElementIds())
             {
                 elems.Insert(m_currentDoc.Document.GetElement(elementId));
@@ -77,16 +76,16 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
                 {
                     //create on floor
                     case Floor floor:
-                    {
-                        var flag = CreateAreaReinOnFloor(floor);
-                        return flag;
-                    }
+                        {
+                            var flag = CreateAreaReinOnFloor(floor);
+                            return flag;
+                        }
                     //create on wall
                     case Wall wall:
-                    {
-                        var flag = CreateAreaReinOnWall(wall);
-                        return flag;
-                    }
+                        {
+                            var flag = CreateAreaReinOnWall(wall);
+                            return flag;
+                        }
                     default:
                         //selected element is neither wall nor floor
                         TaskDialog.Show("Error", "Please select exactly one wall or floor.");
@@ -99,28 +98,28 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 
         private bool CreateAreaReinOnFloor(Floor floor)
         {
-            var helper = new GeomHelper();
+            GeomHelper helper = new();
             Reference refer = null;
-            IList<Curve> curves = new List<Curve>();
+            IList<Curve> curves = [];
 
             //and prepare necessary to create AreaReinforcement
             if (!helper.GetFloorGeom(floor, ref refer, ref curves))
             {
-                var appEx = new ApplicationException(
+                ApplicationException appEx = new(
                     "Your selection is not a horizontal rectangular slab.");
                 throw appEx;
             }
 
-            var dataOnFloor = new AreaReinDataOnFloor();
-            var createForm =
-                new CreateSimpleAreaReinForm(dataOnFloor);
+            AreaReinDataOnFloor dataOnFloor = new();
+            CreateSimpleAreaReinForm createForm =
+                new(dataOnFloor);
 
             //allow use select parameters to create
             if (createForm.ShowDialog() == DialogResult.OK)
             {
                 //we get direction of first Line on the Floor as the Major Direction
                 var firstLine = (Line)curves[0];
-                var majorDirection = new XYZ(
+                XYZ majorDirection = new(
                     firstLine.GetEndPoint(1).X - firstLine.GetEndPoint(0).X,
                     firstLine.GetEndPoint(1).Y - firstLine.GetEndPoint(0).Y,
                     firstLine.GetEndPoint(1).Z - firstLine.GetEndPoint(0).Z);
@@ -153,36 +152,32 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
                 return false;
             }
 
-            var helper = new GeomHelper();
+            GeomHelper helper = new();
             Reference refer = null;
-            IList<Curve> curves = new List<Curve>();
+            IList<Curve> curves = [];
             if (!helper.GetWallGeom(wall, ref refer, ref curves))
             {
-                var appEx = new ApplicationException(
+                ApplicationException appEx = new(
                     "Your selection is not a structural straight rectangular wall.");
                 throw appEx;
             }
 
-            var dataOnWall = new AreaReinDataOnWall();
-            var createForm = new
-                CreateSimpleAreaReinForm(dataOnWall);
+            AreaReinDataOnWall dataOnWall = new();
+            CreateSimpleAreaReinForm createForm = new
+(dataOnWall);
 
             //allow use select parameters to create
             if (createForm.ShowDialog() == DialogResult.OK)
             {
                 //we get direction of first Line on the Floor as the Major Direction
                 var firstLine = (Line)curves[0];
-                var majorDirection = new XYZ(
+                XYZ majorDirection = new(
                     firstLine.GetEndPoint(1).X - firstLine.GetEndPoint(0).X,
                     firstLine.GetEndPoint(1).Y - firstLine.GetEndPoint(0).Y,
                     firstLine.GetEndPoint(1).Z - firstLine.GetEndPoint(0).Z);
 
                 //create AreaReinforcement
-                IList<Curve> curveList = new List<Curve>();
-                foreach (var curve in curves)
-                {
-                    curveList.Add(curve);
-                }
+                IList<Curve> curveList = [.. curves];
 
                 var areaReinforcementTypeId =
                     AreaReinforcementType.CreateDefaultAreaReinforcementType(CommandData.Application.ActiveUIDocument

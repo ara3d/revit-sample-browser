@@ -41,7 +41,7 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
             // InCanvasControlData needs position and image path; all markers share one image in this sample.
             var elementTracked = document.GetElement(elementId);
 
-            var elementLocation = new XYZ();
+            XYZ elementLocation = new();
             switch (elementTracked.Location)
             {
                 case LocationPoint pointLoc:
@@ -52,7 +52,7 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
                     break;
             }
 
-            var inCanvasControlData = new InCanvasControlData(resourceProvider.IssueImage, elementLocation);
+            InCanvasControlData inCanvasControlData = new(resourceProvider.IssueImage, elementLocation);
 
             var manager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(document);
             var controlIndex = manager.AddControl(inCanvasControlData, ElementId.InvalidElementId);

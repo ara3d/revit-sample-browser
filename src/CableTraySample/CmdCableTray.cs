@@ -3,11 +3,11 @@
 // Adapted from CableTraySample by Gavin_WS / Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/CableTraySample
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
 {
@@ -32,27 +32,27 @@ namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
                 var idType = Util.FindCableTrayTypeId(doc, "Default");
                 var idLevel = Util.FindLevelId(doc, "Level 1");
 
-                using var transaction = new Transaction(doc, "Cable tray elbow fitting");
+                using Transaction transaction = new(doc, "Cable tray elbow fitting");
                 transaction.Start();
 
-                var start1 = new XYZ(-30.498257567, 38.420015690, 10.058014598);
-                var end1 = new XYZ(-20.435555001, 30.837225417, 10.058014598);
+                XYZ start1 = new(-30.498257567, 38.420015690, 10.058014598);
+                XYZ end1 = new(-20.435555001, 30.837225417, 10.058014598);
                 var tray1 = CableTray.Create(doc, idType, start1, end1, idLevel);
 
-                var start2 = new XYZ(-20.435555001, 30.837225417, 10.058014598);
-                var end2 = new XYZ(-20.435555001, 30.837225417, 13.338854493);
+                XYZ start2 = new(-20.435555001, 30.837225417, 10.058014598);
+                XYZ end2 = new(-20.435555001, 30.837225417, 13.338854493);
                 var tray2 = CableTray.Create(doc, idType, start2, end2, idLevel);
 
-                var start3 = new XYZ(-20.435555001, 30.837225417, 13.338854493);
-                var end3 = new XYZ(-11.525321413, 24.122882809, 13.338854493);
+                XYZ start3 = new(-20.435555001, 30.837225417, 13.338854493);
+                XYZ end3 = new(-11.525321413, 24.122882809, 13.338854493);
                 CableTray.Create(doc, idType, start3, end3, idLevel);
 
-                var start4 = new XYZ(-11.525321413, 24.122882809, 13.338854493);
-                var end4 = new XYZ(-11.525321413, 24.122882809, 10.058014598);
+                XYZ start4 = new(-11.525321413, 24.122882809, 13.338854493);
+                XYZ end4 = new(-11.525321413, 24.122882809, 10.058014598);
                 CableTray.Create(doc, idType, start4, end4, idLevel);
 
-                var start5 = new XYZ(-11.525321413, 24.122882809, 10.058014598);
-                var end5 = new XYZ(-2.001326892, 16.946038164, 10.058014598);
+                XYZ start5 = new(-11.525321413, 24.122882809, 10.058014598);
+                XYZ end5 = new(-2.001326892, 16.946038164, 10.058014598);
                 CableTray.Create(doc, idType, start5, end5, idLevel);
 
                 Connector c1end = null;

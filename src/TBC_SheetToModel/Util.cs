@@ -1,10 +1,9 @@
 #region Namespaces
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 #endregion // Namespaces
 
@@ -18,7 +17,7 @@ namespace BuildingCoder
         {
             var activeView = doc.ActiveView;
 
-            if (!(activeView is ViewSheet vs))
+            if (activeView is not ViewSheet vs)
             {
                 TaskDialog.Show("QTO",
                     "The current view must be a Sheet View with DWF markups");
@@ -32,7 +31,7 @@ namespace BuildingCoder
 
             var scale = vp.Parameters.Cast<Parameter>()
                 .First(x => x.Id.Value.Equals(
-                    (int) BuiltInParameter.VIEW_SCALE))
+                    (int)BuiltInParameter.VIEW_SCALE))
                 .AsInteger();
 
             var dwfMarkups
@@ -43,16 +42,16 @@ namespace BuildingCoder
                                 && x.OwnerViewId.Value.Equals(
                                     activeView.Id.Value));
 
-            using var tg = new TransactionGroup(doc);
+            using TransactionGroup tg = new(doc);
             tg.Start("DWF markups placeholders");
 
-            using (var t = new Transaction(doc))
+            using (Transaction t = new(doc))
             {
                 t.Start("DWF Transfer");
 
                 plan.Parameters.Cast<Parameter>()
                     .First(x => x.Id.Value.Equals(
-                        (int) BuiltInParameter.VIEWER_CROP_REGION))
+                        (int)BuiltInParameter.VIEWER_CROP_REGION))
                     .Set(1);
 
                 var vc = (plan.CropBox.Min + plan.CropBox.Max) / 2;
@@ -73,22 +72,22 @@ namespace BuildingCoder
 
                     foreach (var go in gei)
                     {
-                        var med = new XYZ();
+                        XYZ med = new();
 
                         if (go is PolyLine pl)
                         {
-                            var min = new XYZ(pl.GetCoordinates().Min(p => p.X),
+                            XYZ min = new(pl.GetCoordinates().Min(p => p.X),
                                 pl.GetCoordinates().Min(p => p.Y),
                                 pl.GetCoordinates().Min(p => p.Z));
 
-                            var max = new XYZ(pl.GetCoordinates().Max(p => p.X),
+                            XYZ max = new(pl.GetCoordinates().Max(p => p.X),
                                 pl.GetCoordinates().Max(p => p.Y),
                                 pl.GetCoordinates().Max(p => p.Z));
 
                             med = (min + max) / 2;
                         }
 
-                        med = med - bc;
+                        med -= bc;
 
                         var a = vc + new XYZ(med.X * scale, med.Y * scale, 0);
                     }
@@ -113,7 +112,7 @@ namespace BuildingCoder
 
                             var med = c.Evaluate(0.5, true);
 
-                            med = med - bc;
+                            med -= bc;
 
                             var a = vc + new XYZ(med.X * scale, med.Y * scale, 0);
 

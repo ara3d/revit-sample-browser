@@ -1,7 +1,6 @@
+using Autodesk.Revit.DB;
 using System;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
@@ -116,7 +115,7 @@ namespace BuildingCoder
 
             if (doc.IsFamilyDocument)
             {
-                if (doc.OwnerFamily is {FamilyCategory: { }})
+                if (doc.OwnerFamily is { FamilyCategory: { } })
                     if (!doc.OwnerFamily.FamilyCategory.Name.Contains("詳細"))
                     {
                         TaskDialog.Show("Dimension Detail Lines",
@@ -170,10 +169,12 @@ namespace BuildingCoder
         {
             Edge instEdge = null;
 
-            var gOptions = new Options();
-            gOptions.ComputeReferences = true;
-            gOptions.DetailLevel = ViewDetailLevel.Undefined;
-            gOptions.IncludeNonVisibleObjects = false;
+            var gOptions = new Options
+            {
+                ComputeReferences = true,
+                DetailLevel = ViewDetailLevel.Undefined,
+                IncludeNonVisibleObjects = false
+            };
 
             var elem = dbDoc.GetElement(symbolRef.ElementId);
 
@@ -233,7 +234,7 @@ namespace BuildingCoder
         {
             Reference indexRef = null;
 
-            var idx = (int) refType;
+            var idx = (int)refType;
 
             if (inst != null)
             {

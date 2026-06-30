@@ -15,7 +15,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         protected readonly Pen BackGroundPen; // background pen used to Erase the preview line
         protected bool m_finished; // indicate whether user have finished drawing
         protected readonly Pen ForeGroundPen; // foreground pen used to draw lines
-        protected readonly List<Point> m_points = new List<Point>(); // Field used to store points of a line
+        protected readonly List<Point> m_points = []; // Field used to store points of a line
         protected Point PreDownPoint; // store the mouse position when right mouse button clicked in pictureBox
         protected Point PreMovePoint; // store the mouse position when mouse move in pictureBox
 
@@ -42,7 +42,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         protected double GetDistance(Point p1, Point p2)
         {
             var distance = Math.Sqrt(
-                (p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y));
+                ((p2.X - p1.X) * (p2.X - p1.X)) + ((p2.Y - p1.Y) * (p2.Y - p1.Y)));
             return distance;
         }
 

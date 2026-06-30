@@ -12,9 +12,11 @@
 
 #region Namespaces
 
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -40,7 +42,7 @@ namespace BuildingCoder
             var app = uiapp.Application;
             var doc = uidoc.Document;
 
-            var location = new FilePath("C:/file.rvt");
+            FilePath location = new("C:/file.rvt");
 
             var transData
                 = TransmissionData.ReadTransmissionData(

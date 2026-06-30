@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {

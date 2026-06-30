@@ -1,16 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Autodesk.Revit.Creation;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Autodesk.Revit.Creation;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.ModelLines.CS
 {
     /// <summary>
@@ -51,17 +50,17 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             m_nurbArray = new ModelCurveArray();
 
             // Construct the sketch plane list data
-            m_sketchArray = new List<SketchPlane>();
+            m_sketchArray = [];
 
             // Construct the information list data
-            m_informationMap = new List<ModelCurveCounter>();
+            m_informationMap = [];
         }
 
         /// <summary>
         ///     The type-number map, store the number of each model line type
         /// </summary>
         public ReadOnlyCollection<ModelCurveCounter> InformationMap =>
-            new ReadOnlyCollection<ModelCurveCounter>(m_informationMap);
+            new(m_informationMap);
 
         /// <summary>
         ///     Get the id information of all ModelEllipses in revit,
@@ -72,11 +71,11 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             get
             {
                 // Create a new list
-                var idArray = new List<IdInfo>();
+                List<IdInfo> idArray = [];
                 // Add all ModelEllipses' id information into the list
                 foreach (ModelCurve ellipse in m_ellipseArray)
                 {
-                    var info = new IdInfo("ModelEllipse", ellipse.Id);
+                    IdInfo info = new("ModelEllipse", ellipse.Id);
                     idArray.Add(info);
                 }
 
@@ -94,11 +93,11 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             get
             {
                 // Create a new list
-                var idArray = new List<IdInfo>();
+                List<IdInfo> idArray = [];
                 // Add all ModelHermiteSplines' id information into the list
                 foreach (ModelCurve hermite in m_hermiteArray)
                 {
-                    var info = new IdInfo("ModelHermiteSpline", hermite.Id);
+                    IdInfo info = new("ModelHermiteSpline", hermite.Id);
                     idArray.Add(info);
                 }
 
@@ -116,11 +115,11 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             get
             {
                 // Create a new list
-                var idArray = new List<IdInfo>();
+                List<IdInfo> idArray = [];
                 // Add all ModelNurbSplines' id information into the list
                 foreach (ModelCurve nurb in m_nurbArray)
                 {
-                    var info = new IdInfo("ModelNurbSpline", nurb.Id);
+                    IdInfo info = new("ModelNurbSpline", nurb.Id);
                     idArray.Add(info);
                 }
 
@@ -137,11 +136,11 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             get
             {
                 // Create a new list
-                var idArray = new List<IdInfo>();
+                List<IdInfo> idArray = [];
                 // Add all SketchPlane' id information into the list
                 foreach (var sketch in m_sketchArray)
                 {
-                    var info = new IdInfo("SketchPlane", sketch.Id);
+                    IdInfo info = new("SketchPlane", sketch.Id);
                     idArray.Add(info);
                 }
 
@@ -165,10 +164,8 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             InitDisplayInformation();
 
             // Display the form and allow the user to create one of each model line in revit
-            using (var displayForm = new ModelLinesForm(this))
-            {
-                displayForm.ShowDialog();
-            }
+            using ModelLinesForm displayForm = new(this);
+            displayForm.ShowDialog();
         }
 
         public void CreateSketchPlane(XYZ normal, XYZ origin)
@@ -208,7 +205,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
                 if (null == geometryLine) // assert the creation is successful
                     throw new Exception("Create the geometry line failed.");
                 // create the ModelLine
-                if (!(m_createDoc.NewModelCurve(geometryLine, workPlane) is ModelLine line)) // assert the creation is successful
+                if (m_createDoc.NewModelCurve(geometryLine, workPlane) is not ModelLine line) // assert the creation is successful
                     throw new Exception("Create the ModelLine failed.");
                 // Add the created ModelLine into the line array
                 m_lineArray.Append(line);
@@ -239,7 +236,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
                 if (null == geometryArc) // assert the creation is successful
                     throw new Exception("Create the geometry arc failed.");
                 // create the ModelArc
-                if (!(m_createDoc.NewModelCurve(geometryArc, workPlane) is ModelArc arc)) // assert the creation is successful
+                if (m_createDoc.NewModelCurve(geometryArc, workPlane) is not ModelArc arc) // assert the creation is successful
                     throw new Exception("Create the ModelArc failed.");
                 // Add the created ModelArc into the arc array
                 m_arcArray.Append(arc);
@@ -266,7 +263,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             var curves = m_createApp.NewCurveArray(); // create a geometry curve array
 
             // Get the Autodesk.Revit.DB.ElementId which used to get the corresponding element
-            if (!(ElementQuery.GetElementById(m_revit.ActiveUIDocument.Document, elementId) is ModelCurve selected)) throw new Exception("Don't have the element you select");
+            if (ElementQuery.GetElementById(m_revit.ActiveUIDocument.Document, elementId) is not ModelCurve selected) throw new Exception("Don't have the element you select");
 
             // add the geometry curve of the element
             curves.Append(selected.GeometryCurve); // add the geometry ellipse
@@ -314,9 +311,9 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             // so use its base type to find all CurveElement and then process the results further to find modelline
             var modelCurves = from elem in new FilteredElementCollector(m_revit.ActiveUIDocument.Document)
                     .OfClass(typeof(CurveElement)).ToElements()
-                let modelCurve = elem as ModelCurve
-                where modelCurve != null
-                select modelCurve;
+                                                  let modelCurve = elem as ModelCurve
+                                                  where modelCurve != null
+                                                  select modelCurve;
             foreach (var modelCurve in modelCurves)
             {
                 // Get all the ModelLines references

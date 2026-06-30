@@ -12,12 +12,12 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 {
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 
         private readonly EventHandler<DocumentClosedEventArgs> m_closedHandler;
 
-        private readonly Dictionary<int, Guid> m_closingDocumentIdToIssueTrackingPairs = new Dictionary<int, Guid>();
+        private readonly Dictionary<int, Guid> m_closingDocumentIdToIssueTrackingPairs = [];
 
         private readonly EventHandler<DocumentClosingEventArgs> m_closingHandler;
 
@@ -82,14 +82,14 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 
         public Result OnStartup(UIControlledApplication application)
         {
-            var click = new IssueSelectHandler();
+            IssueSelectHandler click = new();
 
             //This registers a service. On success, we register a button or event as well.
             var service = ExternalServiceRegistry.GetService(click.GetServiceId());
             if (service != null)
             {
                 service.AddServer(click);
-                (service as MultiServerService).SetActiveServers(new List<Guid> { click.GetServerId() });
+                (service as MultiServerService).SetActiveServers([click.GetServerId()]);
 
                 var ribbonPanel = application.GetRibbonPanels(Tab.AddIns).Find(x => x.Name == TabLabel) ?? application.CreateRibbonPanel(Tab.AddIns, TabLabel);
 

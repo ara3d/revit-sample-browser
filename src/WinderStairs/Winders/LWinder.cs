@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
@@ -51,11 +51,11 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
             //
             // Construct two straight runs to connect to the winder corner.
             //
-            var startPnt = m_corner.StartPoint - TreadDepth * NumStepsAtStart * dir1;
-            var endPnt = m_corner.EndPoint + TreadDepth * NumStepsAtEnd * dir2;
+            var startPnt = m_corner.StartPoint - (TreadDepth * NumStepsAtStart * dir1);
+            var endPnt = m_corner.EndPoint + (TreadDepth * NumStepsAtEnd * dir2);
             var bisectDir = (dir2 - dir1).Normalize();
-            var perpendicularDir1 = new XYZ(-dir1.Y, dir1.X, 0);
-            var perpendicularDir2 = new XYZ(-dir2.Y, dir2.X, 0);
+            XYZ perpendicularDir1 = new(-dir1.Y, dir1.X, 0);
+            XYZ perpendicularDir2 = new(-dir2.Y, dir2.X, 0);
             if (bisectDir.DotProduct(perpendicularDir1) < 0)
             {
                 perpendicularDir1 = perpendicularDir1.Negate();

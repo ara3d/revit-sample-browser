@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -16,23 +15,21 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
         {
             var activeDoc = commandData.Application.ActiveUIDocument;
             var doc = activeDoc.Document;
-            using (var trans = new Transaction(doc, "ContextualAnalyticalModel.UpdateRelation"))
-            {
-                trans.Start();
+            using Transaction trans = new(doc, "ContextualAnalyticalModel.UpdateRelation");
+            trans.Start();
 
-                var selectedElementId = ElementQuery.GetSelectedObject(activeDoc,
-                    "Please select the element for which you want to break relation");
+            var selectedElementId = ElementQuery.GetSelectedObject(activeDoc,
+                "Please select the element for which you want to break relation");
 
-                var analyticalToPhysicalmanager =
-                    AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(doc);
-                if (analyticalToPhysicalmanager == null)
-                    return Result.Failed;
+            var analyticalToPhysicalmanager =
+                AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(doc);
+            if (analyticalToPhysicalmanager == null)
+                return Result.Failed;
 
-                //break relation
-                analyticalToPhysicalmanager.RemoveAssociation(selectedElementId);
+            //break relation
+            analyticalToPhysicalmanager.RemoveAssociation(selectedElementId);
 
-                trans.Commit();
-            }
+            trans.Commit();
 
             return Result.Succeeded;
         }

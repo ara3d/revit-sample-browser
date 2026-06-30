@@ -12,14 +12,14 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 #endregion // Namespaces
@@ -51,15 +51,15 @@ namespace BuildingCoder
                 var selectedIds = uidoc.Selection
                     .GetElementIds().ToList();
 
-                using var trans = new Transaction(doc);
+                using Transaction trans = new(doc);
                 trans.Start("Cmd: GetOpeningProfiles");
 
-                var newIds = new List<ElementId>();
+                List<ElementId> newIds = new();
 
                 foreach (var selectedId in selectedIds)
                     if (doc.GetElement(selectedId) is Wall wall)
                     {
-                        var faceList = new List<PlanarFace>();
+                        List<PlanarFace> faceList = new();
 
                         var insertIds = wall.FindInserts(
                             true, false, false, false).ToList();
@@ -71,20 +71,20 @@ namespace BuildingCoder
                             switch (elem)
                             {
                                 case FamilyInstance inst:
-                                {
-                                    var catType = inst.Category
+                                    {
+                                        var catType = inst.Category
                                         .CategoryType;
 
-                                    var cat = inst.Category;
+                                        var cat = inst.Category;
 
-                                    if (catType == CategoryType.Model
-                                        && (cat.Id == catDoorsId
-                                            || cat.Id == catWindowsId))
-                                        faceList.AddRange(
-                                            Util.GetWallOpeningPlanarFaces(
-                                                wall, insertId));
-                                    break;
-                                }
+                                        if (catType == CategoryType.Model
+                                            && (cat.Id == catDoorsId
+                                                || cat.Id == catWindowsId))
+                                            faceList.AddRange(
+                                                Util.GetWallOpeningPlanarFaces(
+                                                    wall, insertId));
+                                        break;
+                                    }
                                 case Opening:
                                     faceList.AddRange(
                                         Util.GetWallOpeningPlanarFaces(
@@ -108,13 +108,13 @@ namespace BuildingCoder
 
                             foreach (var curveLoop in
                                 face.GetEdgesAsCurveLoops())
-                            foreach (var curve in curveLoop)
-                            {
-                                var modelCurve = doc.Create
+                                foreach (var curve in curveLoop)
+                                {
+                                    var modelCurve = doc.Create
                                     .NewModelCurve(curve, sketchPlane);
 
-                                newIds.Add(modelCurve.Id);
-                            }
+                                    newIds.Add(modelCurve.Id);
+                                }
                         }
                     }
 

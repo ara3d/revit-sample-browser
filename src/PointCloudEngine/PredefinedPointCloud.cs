@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {

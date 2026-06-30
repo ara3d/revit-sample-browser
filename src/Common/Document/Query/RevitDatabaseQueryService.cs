@@ -2,19 +2,17 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters;
 using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
 using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
 using Ara3D.RevitSampleBrowser.Common.Documents.Query.Providers;
 using Ara3D.RevitSampleBrowser.Common.Documents.Query.Providers.Internals;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using VisibleInViewFilter = Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters.VisibleInViewFilter;
 
 
@@ -24,20 +22,20 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
     {
         public static void Init()
         {
-            CommandParser.Init();          
+            CommandParser.Init();
         }
 
 
         public static Result ParseAndExecute(Document document, string query)
         {
             RevitDatabaseQueryHost.Document = document;
-            if (document is null) return new Result(null, new List<ICommand>(), null);
+            if (document is null) return new Result(null, [], null);
 
             CommandParser.LoadDocumentSpecificData(document);
             var commands = QueryParser.Parse(query);
             commands.SelectMany(x => x.Arguments).OfType<ParameterArgument>().ToList().ForEach(x => x.ResolveStorageType(document));
 
-            var pipe = new List<QueryItem>();
+            List<QueryItem> pipe = new();
             pipe.AddRange(VisibleInViewFilter.Create(commands));
             pipe.AddRange(ElementTypeFilter.Create(commands));
             pipe.AddRange(ElementIdFilter.Create(commands));
@@ -51,11 +49,11 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
             pipe.AddRange(ParameterFilter.Create(commands));
             pipe.AddRange(Filters.WorksetFilter.Create(commands));
 
-            string providerSyntax = "";
-            string collectorSyntax = "";
+            var providerSyntax = "";
+            var collectorSyntax = "";
             QueryPipeExecutor queryExecutor = null;
 
-            var providers = new List<Provider>();
+            List<Provider> providers = new();
             providers.AddRange(SelectionProvider.Create(commands));
             providers.AddRange(UniqueIdProvider.Create(commands));
 
@@ -80,12 +78,12 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
 
                 foreach (var filter in pipe)
                 {
-                   collectorSyntax += Environment.NewLine + "    " + filter.CollectorSyntax;                    
+                    collectorSyntax += Environment.NewLine + "    " + filter.CollectorSyntax;
                 }
                 collectorSyntax += Environment.NewLine + "    .ToElements();";
 
                 queryExecutor = new QueryPipeExecutor(pipe, providers);
-            }           
+            }
 
             return new Result(providerSyntax + collectorSyntax, commands, queryExecutor);
         }
@@ -106,9 +104,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
             public IList<Element> Execute(UIApplication app)
             {
                 var uiDocument = app.ActiveUIDocument;
-                if (uiDocument?.Document == null)
-                    return Array.Empty<Element>();
-                return Execute(uiDocument.Document, uiDocument);
+                return uiDocument?.Document == null ? Array.Empty<Element>() : Execute(uiDocument.Document, uiDocument);
             }
 
             public IList<Element> Execute(Document document, UIDocument uiDocument)
@@ -120,10 +116,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
                     ? GatherInitialSeed(uiDocument).ToArray()
                     : Array.Empty<ElementId>();
 
-                if (seedPipe.Any() && elementIds.IsEmpty())
-                    return Array.Empty<Element>();
-
-                return BuildCollector(document, elementIds).ToElements();
+                return seedPipe.Any() && elementIds.IsEmpty() ? Array.Empty<Element>() : BuildCollector(document, elementIds).ToElements();
             }
 
             private IEnumerable<ElementId> GatherInitialSeed(UIDocument uiDocument)
@@ -138,22 +131,13 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
             }
             private FilteredElementCollector BuildCollector(Document document, ICollection<ElementId> elementIds)
             {
-                FilteredElementCollector collector;
-                if (elementIds?.Any() == true)
-                {
-                    collector = new FilteredElementCollector(document, elementIds);
-                }
-                else
-                {
-                    collector = new FilteredElementCollector(document);
-                }
-
+                var collector = elementIds?.Any() == true ? new FilteredElementCollector(document, elementIds) : new FilteredElementCollector(document);
                 foreach (var filter in filterPipe)
                 {
                     var elementFilter = filter.CreateElementFilter(document);
                     if (elementFilter != null)
                     {
-                        collector.WherePasses(elementFilter);                        
+                        collector.WherePasses(elementFilter);
                     }
                 }
 

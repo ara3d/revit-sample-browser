@@ -1,7 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
+using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -18,7 +21,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public override void Execute(object arg)
         {
-            app = (arg as UIApplication);
+            app = arg as UIApplication;
             if (app == null)
             {
                 throw new Exception($"Passed argument {arg} is either null or not a UI application");
@@ -46,7 +49,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Check that the form is non-null, visible, and not disposed 
-            if (TextForm == null || TextForm.IsDisposed || !TextForm.Visible) 
+            if (TextForm == null || TextForm.IsDisposed || !TextForm.Visible)
                 return;
 
             // Get the element IDs in the selection, retrieve elements and convert to JSON 

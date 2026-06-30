@@ -1,39 +1,20 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Xml;
+using Ara3D.RevitSampleBrowser.Common.Mep;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
-
-using Ara3D.RevitSampleBrowser.Common.Mep;
+using System.Collections.Generic;
+using System.Xml;
 namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
 {
     public class TreeNode
     {
-        private List<TreeNode> m_childNodes;
-
-        /// <summary>
-        ///     Flow direction of the node
-        ///     For the starting element of the traversal, the direction will be the same as the connector
-        ///     connected to its following element; Otherwise it will be the direction of the connector connected to
-        ///     its previous element
-        /// </summary>
-        private FlowDirectionType m_direction;
 
         /// <summary>
         ///     Active document of Revit
         /// </summary>
         private readonly Document m_document;
-
-        private readonly ElementId m_id;
-
-        /// <summary>
-        ///     The connector of the previous element to which current element is connected
-        /// </summary>
-        private Connector m_inputConnector;
-
-        private TreeNode m_parent;
 
         /// <summary>
         ///     Constructor
@@ -43,38 +24,22 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
         public TreeNode(Document doc, ElementId id)
         {
             m_document = doc;
-            m_id = id;
-            m_childNodes = new List<TreeNode>();
+            Id = id;
+            ChildNodes = [];
         }
 
-        public ElementId Id => m_id;
+        public ElementId Id { get; }
 
-        public FlowDirectionType Direction
-        {
-            get => m_direction;
-            set => m_direction = value;
-        }
+        public FlowDirectionType Direction { get; set; }
 
-        public TreeNode Parent
-        {
-            get => m_parent;
-            set => m_parent = value;
-        }
+        public TreeNode Parent { get; set; }
 
-        public List<TreeNode> ChildNodes
-        {
-            get => m_childNodes;
-            set => m_childNodes = value;
-        }
+        public List<TreeNode> ChildNodes { get; set; }
 
         /// <summary>
         ///     The connector of the previous element to which current element is connected
         /// </summary>
-        public Connector InputConnector
-        {
-            get => m_inputConnector;
-            set => m_inputConnector = value;
-        }
+        public Connector InputConnector { get; set; }
 
         private Element GetElementById(ElementId eid)
         {
@@ -84,7 +49,7 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
         public void DumpIntoXml(XmlWriter writer)
         {
             // Write node information
-            var element = GetElementById(m_id);
+            var element = GetElementById(Id);
             if (element is FamilyInstance fi)
             {
                 var mepModel = fi.MEPModel;
@@ -110,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
 
                 writer.WriteAttributeString("Name", element.Name);
                 writer.WriteAttributeString("Id", element.Id.ToString());
-                writer.WriteAttributeString("Direction", m_direction.ToString());
+                writer.WriteAttributeString("Direction", Direction.ToString());
                 writer.WriteEndElement();
             }
             else
@@ -120,17 +85,17 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
                 writer.WriteStartElement(type);
                 writer.WriteAttributeString("Name", element.Name);
                 writer.WriteAttributeString("Id", element.Id.ToString());
-                writer.WriteAttributeString("Direction", m_direction.ToString());
+                writer.WriteAttributeString("Direction", Direction.ToString());
                 writer.WriteEndElement();
             }
 
-            foreach (var node in m_childNodes)
+            foreach (var node in ChildNodes)
             {
-                if (m_childNodes.Count > 1) writer.WriteStartElement("Path");
+                if (ChildNodes.Count > 1) writer.WriteStartElement("Path");
 
                 node.DumpIntoXml(writer);
 
-                if (m_childNodes.Count > 1) writer.WriteEndElement();
+                if (ChildNodes.Count > 1) writer.WriteEndElement();
             }
         }
     }
@@ -184,10 +149,7 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             //
             // If the system has base equipment then get it;
             // Otherwise get the owner of the open connector in the system
-            if (equipment != null)
-                startingElementNode = new TreeNode(m_document, equipment.Id);
-            else
-                startingElementNode = new TreeNode(m_document, GetOwnerOfOpenConnector().Id);
+            startingElementNode = equipment != null ? new TreeNode(m_document, equipment.Id) : new TreeNode(m_document, GetOwnerOfOpenConnector().Id);
 
             startingElementNode.Parent = null;
             startingElementNode.InputConnector = null;
@@ -429,7 +391,7 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
 
             // Write HasBaseEquipment property
             writer.WriteStartElement("HasBaseEquipment");
-            var hasBaseEquipment = m_system.BaseEquipment == null ? false : true;
+            var hasBaseEquipment = m_system.BaseEquipment != null;
             writer.WriteValue(hasBaseEquipment);
             writer.WriteEndElement();
 

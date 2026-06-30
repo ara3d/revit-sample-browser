@@ -14,11 +14,12 @@
 
 #region Namespaces
 
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -77,14 +78,13 @@ namespace BuildingCoder
       }
 #endif // _2010
 
-            var f = Util.GetFirstElementOfTypeNamed(
-                doc, typeof(Family), _family_name) as Family;
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create Beam Type and Instance");
 
 
-            if (null == f)
+            if (Util.GetFirstElementOfTypeNamed(
+                doc, typeof(Family), _family_name) is not Family f)
                 if (!doc.LoadFamily(_path, out f))
                     message = $"Unable to load '{_path}'.";
 

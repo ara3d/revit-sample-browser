@@ -13,13 +13,11 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -71,7 +69,7 @@ namespace BuildingCoder
             }
             else
             {
-                using var tx = new Transaction(doc);
+                using Transaction tx = new(doc);
                 tx.Start("Draw Model Line Bounding Box Outline");
 
                 Debug.Assert(b.Transform.IsIdentity,
@@ -89,10 +87,9 @@ namespace BuildingCoder
                     Util.PointString(b.Min),
                     Util.PointString(b.Max)));
 
-                var creator = new Creator(doc);
+                Creator creator = new(doc);
 
-                creator.DrawPolygon(new List<XYZ>(
-                    Util.GetBottomCorners(b)));
+                creator.DrawPolygon([.. Util.GetBottomCorners(b)]);
 
                 var rotation = Transform.CreateRotation(
                     XYZ.BasisZ, 60 * Math.PI / 180.0);
@@ -105,8 +102,7 @@ namespace BuildingCoder
                     Util.PointString(b.Min),
                     Util.PointString(b.Max)));
 
-                creator.DrawPolygon(new List<XYZ>(
-                    Util.GetBottomCorners(b)));
+                creator.DrawPolygon([.. Util.GetBottomCorners(b)]);
 
                 tx.Commit();
             }

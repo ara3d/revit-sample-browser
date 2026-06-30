@@ -41,7 +41,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
         {
             var left = Screen.PrimaryScreen.WorkingArea.Right - Width - 5;
             var top = Screen.PrimaryScreen.WorkingArea.Bottom - Height;
-            var windowLocation = new Point(left, top);
+            Point windowLocation = new(left, top);
             Location = windowLocation;
         }
 

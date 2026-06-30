@@ -3,11 +3,11 @@
 // Adapted from RoomVolumeDirectShape by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/RoomVolumeDirectShape
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.RoomVolumeDirectShape.CS
 {
@@ -20,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.RoomVolumeDirectShape.CS
 
         static Dictionary<string, string> GetParamValues(Element element)
         {
-            var values = new Dictionary<string, string>(element.Parameters.Size);
+            Dictionary<string, string> values = new(element.Parameters.Size);
 
             foreach (Parameter parameter in element.Parameters)
             {
@@ -77,20 +77,17 @@ namespace Ara3D.RevitSampleBrowser.RoomVolumeDirectShape.CS
 
         static string ParameterToString(Parameter parameter)
         {
-            if (parameter == null)
-            {
-                return "null";
-            }
-
-            return parameter.StorageType switch
-            {
-                StorageType.Double => parameter.AsDouble().ToString("0.##"),
-                StorageType.Integer => parameter.AsInteger().ToString(),
-                StorageType.String => parameter.AsString(),
-                StorageType.ElementId => parameter.AsElementId().Value.ToString(),
-                StorageType.None => "none",
-                _ => "null"
-            };
+            return parameter == null
+                ? "null"
+                : parameter.StorageType switch
+                {
+                    StorageType.Double => parameter.AsDouble().ToString("0.##"),
+                    StorageType.Integer => parameter.AsInteger().ToString(),
+                    StorageType.String => parameter.AsString(),
+                    StorageType.ElementId => parameter.AsElementId().Value.ToString(),
+                    StorageType.None => "none",
+                    _ => "null"
+                };
         }
     }
 }

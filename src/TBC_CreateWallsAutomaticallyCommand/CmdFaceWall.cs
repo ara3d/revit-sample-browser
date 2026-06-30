@@ -16,10 +16,11 @@
 
 #region Namespaces
 
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -42,7 +43,7 @@ namespace BuildingCoder
 
             var cubes = Util.FindCubes(doc);
 
-            using var transaction = new Transaction(doc);
+            using Transaction transaction = new(doc);
             transaction.Start("create walls");
 
             foreach (var cube in cubes)

@@ -12,9 +12,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
 {
@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
 
         public AddInId AddInId { get; set; }
 
-        private static Guid UpdaterGuid => new Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
+        private static Guid UpdaterGuid => new("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
 
         /// <summary>
         ///     Implements IUpdater.Execute()
@@ -97,18 +97,14 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
             var definition = viewSchedule.Definition;
             var index = 0;
 
-            var white = new Color(0xFF, 0xFF, 0xFF);
-            var highlight = new Color(0xd8, 0xd8, 0xd8);
+            Color white = new(0xFF, 0xFF, 0xFF);
+            Color highlight = new(0xd8, 0xd8, 0xd8);
             var applyHighlight = false;
 
             foreach (var id in definition.GetFieldOrder())
             {
                 // Index 0, 2, etc use highlight color
-                if (index % 2 == 0)
-                    applyHighlight = true;
-                // Index 1, 3, etc use no background color
-                else
-                    applyHighlight = false;
+                applyHighlight = index % 2 == 0;
 
                 var field = definition.GetField(id);
                 var style = field.GetStyle();

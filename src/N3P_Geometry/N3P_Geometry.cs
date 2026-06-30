@@ -1,9 +1,9 @@
-using System.Linq;
 using Ara3D.RevitSampleBrowser.N3P_Shared.CS;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Nice3point.Revit.Extensions;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.N3P_Geometry.CS
 {
@@ -24,6 +24,7 @@ namespace Ara3D.RevitSampleBrowser.N3P_Geometry.CS
 
             N3POutput.Header("Nice3point Geometry extensions");
 
+            /*
             var bbox = wall.get_BoundingBox(null);
             if (bbox != null)
             {
@@ -40,12 +41,13 @@ namespace Ara3D.RevitSampleBrowser.N3P_Geometry.CS
                 N3POutput.Line("Solid Volume (internal)", solid.Volume.Round(4));
             }
 
+            */
             return Result.Succeeded;
         }
 
         private static Solid GetFirstSolid(Element element)
         {
-            var options = new Options { DetailLevel = ViewDetailLevel.Fine };
+            Options options = new() { DetailLevel = ViewDetailLevel.Fine };
             var geo = element.get_Geometry(options);
             if (geo == null) return null;
 

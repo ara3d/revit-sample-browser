@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Data;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System.Data;
 
 namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
 {
@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
         {
             m_revit = revit;
 
-            var selectedElements = new ElementSet();
+            ElementSet selectedElements = new();
             foreach (var elementId in m_revit.Application.ActiveUIDocument.Selection.GetElementIds())
             {
                 selectedElements.Insert(m_revit.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -31,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
 
             ElementInformation = StoreInformationInDataTable(selectedElements);
 
-            var displayForm = new AnalyticalSupportDataInfoForm(this);
+            AnalyticalSupportDataInfoForm displayForm = new(this);
             displayForm.ShowDialog();
 
             return Result.Succeeded;
@@ -53,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
                     if (associatedElementId != ElementId.InvalidElementId)
                     {
                         var associatedElement = document.GetElement(associatedElementId);
-                        if (associatedElement != null && associatedElement is AnalyticalElement analyticalElement)
+                        if (associatedElement is not null and AnalyticalElement analyticalElement)
                             analyticalModel = analyticalElement;
                     }
                 }
@@ -113,9 +113,9 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
 
         private DataTable CreatDataTable()
         {
-            var elementInformationTable = new DataTable("ElementInformationTable");
+            DataTable elementInformationTable = new("ElementInformationTable");
 
-            var idColumn = new DataColumn
+            DataColumn idColumn = new()
             {
                 DataType = typeof(string),
                 ColumnName = "Id",
@@ -124,7 +124,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
             };
             elementInformationTable.Columns.Add(idColumn);
 
-            var typeColumn = new DataColumn
+            DataColumn typeColumn = new()
             {
                 DataType = typeof(string),
                 ColumnName = "Element Type",
@@ -134,7 +134,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
             elementInformationTable.Columns.Add(typeColumn);
 
             // Create support column and add to the DataTable.
-            var supportColumn = new DataColumn
+            DataColumn supportColumn = new()
             {
                 DataType = typeof(string),
                 ColumnName = "Support Type",
@@ -143,7 +143,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
             };
             elementInformationTable.Columns.Add(supportColumn);
 
-            var remarkColumn = new DataColumn
+            DataColumn remarkColumn = new()
             {
                 DataType = typeof(string),
                 ColumnName = "Remark",

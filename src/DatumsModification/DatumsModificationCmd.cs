@@ -1,16 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -39,57 +38,55 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                 var view = commandData.Application.ActiveUIDocument.ActiveView;
                 if (datums == null || datums.Count == 0)
                     return Result.Cancelled;
-                using (var settingForm = new DatumStyleSetting())
-                {
-                    if (settingForm.ShowDialog() == DialogResult.OK)
-                        using (var tran = new Transaction(document, "StyleModification"))
+                using DatumStyleSetting settingForm = new();
+                if (settingForm.ShowDialog() == DialogResult.OK)
+                    using (Transaction tran = new(document, "StyleModification"))
+                    {
+                        tran.Start();
+                        foreach (var datumRef in datums)
                         {
-                            tran.Start();
-                            foreach (var datumRef in datums)
+                            var datum = document.GetElement(datumRef) as DatumPlane;
+                            if (ShowLeftBubble)
+                                datum.ShowBubbleInView(DatumEnds.End0, view);
+                            else
+                                datum.HideBubbleInView(DatumEnds.End0, view);
+                            if (ShowRightBubble)
+                                datum.ShowBubbleInView(DatumEnds.End1, view);
+                            else
+                                datum.HideBubbleInView(DatumEnds.End1, view);
+                            if (ChangeLeftEnd2D)
+                                datum.SetDatumExtentType(DatumEnds.End0, view, DatumExtentType.ViewSpecific);
+                            else
+                                datum.SetDatumExtentType(DatumEnds.End0, view, DatumExtentType.Model);
+                            if (ChangeRightEnd2D)
+                                datum.SetDatumExtentType(DatumEnds.End1, view, DatumExtentType.ViewSpecific);
+                            else
+                                datum.SetDatumExtentType(DatumEnds.End1, view, DatumExtentType.Model);
+                            if (AddLeftElbow && datum.GetLeader(DatumEnds.End0, view) == null)
                             {
-                                var datum = document.GetElement(datumRef) as DatumPlane;
-                                if (ShowLeftBubble)
-                                    datum.ShowBubbleInView(DatumEnds.End0, view);
-                                else
-                                    datum.HideBubbleInView(DatumEnds.End0, view);
-                                if (ShowRightBubble)
-                                    datum.ShowBubbleInView(DatumEnds.End1, view);
-                                else
-                                    datum.HideBubbleInView(DatumEnds.End1, view);
-                                if (ChangeLeftEnd2D)
-                                    datum.SetDatumExtentType(DatumEnds.End0, view, DatumExtentType.ViewSpecific);
-                                else
-                                    datum.SetDatumExtentType(DatumEnds.End0, view, DatumExtentType.Model);
-                                if (ChangeRightEnd2D)
-                                    datum.SetDatumExtentType(DatumEnds.End1, view, DatumExtentType.ViewSpecific);
-                                else
-                                    datum.SetDatumExtentType(DatumEnds.End1, view, DatumExtentType.Model);
-                                if (AddLeftElbow && datum.GetLeader(DatumEnds.End0, view) == null)
-                                {
-                                    datum.AddLeader(DatumEnds.End0, view);
-                                }
-                                else if (datum.GetLeader(DatumEnds.End0, view) != null)
-                                {
-                                    var leader = datum.GetLeader(DatumEnds.End0, view);
-                                    leader = SampleBrowserUtils.CalculateLeader(leader, AddLeftElbow);
-                                    datum.SetLeader(DatumEnds.End0, view, leader);
-                                }
-
-                                if (AddRightElbow && datum.GetLeader(DatumEnds.End1, view) == null)
-                                {
-                                    datum.AddLeader(DatumEnds.End1, view);
-                                }
-                                else if (datum.GetLeader(DatumEnds.End1, view) != null)
-                                {
-                                    var leader = datum.GetLeader(DatumEnds.End1, view);
-                                    leader = SampleBrowserUtils.CalculateLeader(leader, AddRightElbow);
-                                    datum.SetLeader(DatumEnds.End1, view, leader);
-                                }
+                                datum.AddLeader(DatumEnds.End0, view);
+                            }
+                            else if (datum.GetLeader(DatumEnds.End0, view) != null)
+                            {
+                                var leader = datum.GetLeader(DatumEnds.End0, view);
+                                leader = SampleBrowserUtils.CalculateLeader(leader, AddLeftElbow);
+                                datum.SetLeader(DatumEnds.End0, view, leader);
                             }
 
-                            tran.Commit();
+                            if (AddRightElbow && datum.GetLeader(DatumEnds.End1, view) == null)
+                            {
+                                datum.AddLeader(DatumEnds.End1, view);
+                            }
+                            else if (datum.GetLeader(DatumEnds.End1, view) != null)
+                            {
+                                var leader = datum.GetLeader(DatumEnds.End1, view);
+                                leader = SampleBrowserUtils.CalculateLeader(leader, AddRightElbow);
+                                datum.SetLeader(DatumEnds.End1, view, leader);
+                            }
                         }
-                }
+
+                        tran.Commit();
+                    }
 
                 return Result.Succeeded;
             }
@@ -105,7 +102,7 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
     [Regeneration(RegenerationOption.Manual)]
     public class DatumAlignment : IExternalCommand
     {
-        public static readonly Dictionary<string, DatumPlane> DatumDic = new Dictionary<string, DatumPlane>();
+        public static readonly Dictionary<string, DatumPlane> DatumDic = [];
 
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
@@ -125,32 +122,28 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                     if (!DatumDic.Keys.Contains(datum.Name)) DatumDic.Add(datum.Name, datum);
                 }
 
-                using (var settingForm = new AlignmentSetting())
+                using AlignmentSetting settingForm = new();
+                if (settingForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (settingForm.ShowDialog() == DialogResult.OK)
+                    var selectedDatum = DatumDic[settingForm.datumList.SelectedItem.ToString()];
+                    var baseCurve = selectedDatum.GetCurvesInView(DatumExtentType.ViewSpecific, view).ElementAt(0);
+                    var baseLine = baseCurve as Line;
+                    var baseDirect = baseLine.Direction;
+
+                    using Transaction tran = new(document, "DatumAlignment");
+                    tran.Start();
+
+                    foreach (var datum in DatumDic.Values)
                     {
-                        var selectedDatum = DatumDic[settingForm.datumList.SelectedItem.ToString()];
-                        var baseCurve = selectedDatum.GetCurvesInView(DatumExtentType.ViewSpecific, view).ElementAt(0);
-                        var baseLine = baseCurve as Line;
-                        var baseDirect = baseLine.Direction;
-
-                        using (var tran = new Transaction(document, "DatumAlignment"))
-                        {
-                            tran.Start();
-
-                            foreach (var datum in DatumDic.Values)
-                            {
-                                var curve = datum
-                                    .GetCurvesInView(datum.GetDatumExtentTypeInView(DatumEnds.End0, view), view)
-                                    .ElementAt(0);
-                                var newCurve = XyzMath.CalculateAlignedCurve(curve, baseLine, baseDirect);
-                                datum.SetCurveInView(datum.GetDatumExtentTypeInView(DatumEnds.End0, view), view,
-                                    newCurve);
-                            }
-
-                            tran.Commit();
-                        }
+                        var curve = datum
+                            .GetCurvesInView(datum.GetDatumExtentTypeInView(DatumEnds.End0, view), view)
+                            .ElementAt(0);
+                        var newCurve = XyzMath.CalculateAlignedCurve(curve, baseLine, baseDirect);
+                        datum.SetCurveInView(datum.GetDatumExtentTypeInView(DatumEnds.End0, view), view,
+                            newCurve);
                     }
+
+                    tran.Commit();
                 }
 
                 return Result.Succeeded;
@@ -167,7 +160,7 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
     [Regeneration(RegenerationOption.Manual)]
     public class DatumPropagation : IExternalCommand
     {
-        public static readonly Dictionary<string, ElementId> ViewDic = new Dictionary<string, ElementId>();
+        public static readonly Dictionary<string, ElementId> ViewDic = [];
 
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
@@ -190,24 +183,20 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                         ViewDic.Add($"{pView.ViewType} : {pView.Name}", id);
                 }
 
-                using (var settingForm = new PropogateSetting())
+                using PropogateSetting settingForm = new();
+                if (settingForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (settingForm.ShowDialog() == DialogResult.OK)
+                    var pViewList = new List<ElementId>() as ISet<ElementId>;
+                    foreach (var item in settingForm.propagationViewList.CheckedItems)
                     {
-                        var pViewList = new List<ElementId>() as ISet<ElementId>;
-                        foreach (var item in settingForm.propagationViewList.CheckedItems)
-                        {
-                            var selectedView = ViewDic[item.ToString()];
-                            pViewList.Add(selectedView);
-                        }
-
-                        using (var tran = new Transaction(document, "propagation"))
-                        {
-                            tran.Start();
-                            datum.PropagateToViews(view, pViewList);
-                            tran.Commit();
-                        }
+                        var selectedView = ViewDic[item.ToString()];
+                        pViewList.Add(selectedView);
                     }
+
+                    using Transaction tran = new(document, "propagation");
+                    tran.Start();
+                    datum.PropagateToViews(view, pViewList);
+                    tran.Commit();
                 }
 
                 return Result.Succeeded;

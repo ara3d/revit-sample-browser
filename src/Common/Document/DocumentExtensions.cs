@@ -17,14 +17,9 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents
             {
                 return element;
             }
-           
+
             var category = Category.GetCategory(document, id);
-            if (category != null)
-            {
-                return category;
-            }
-            
-            return null;
+            return category ?? (object)null;
         }
     }
 }

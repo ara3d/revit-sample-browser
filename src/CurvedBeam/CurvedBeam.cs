@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
 {
@@ -17,14 +17,14 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
     {
         private UIApplication m_revit;
 
-        public ArrayList BeamMaps { get; } = new ArrayList();
+        public ArrayList BeamMaps { get; } = [];
 
-        public ArrayList LevelMaps { get; } = new ArrayList();
+        public ArrayList LevelMaps { get; } = [];
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             m_revit = commandData.Application;
-            var tran = new Transaction(m_revit.ActiveUIDocument.Document, "CurvedBeam");
+            Transaction tran = new(m_revit.ActiveUIDocument.Document, "CurvedBeam");
             tran.Start();
 
             // if initialize failed return Result.Failed
@@ -32,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             if (!initializeOk) return Result.Failed;
 
             // pop up new beam form
-            var displayForm = new CurvedBeamForm(this);
+            CurvedBeamForm displayForm = new(this);
             displayForm.ShowDialog();
             tran.Commit();
 
@@ -43,10 +43,10 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
         {
             try
             {
-                var levelFilter = new ElementClassFilter(typeof(Level));
-                var famFilter = new ElementClassFilter(typeof(Family));
-                var orFilter = new LogicalOrFilter(levelFilter, famFilter);
-                var collector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
+                ElementClassFilter levelFilter = new(typeof(Level));
+                ElementClassFilter famFilter = new(typeof(Family));
+                LogicalOrFilter orFilter = new(levelFilter, famFilter);
+                FilteredElementCollector collector = new(m_revit.ActiveUIDocument.Document);
                 var i = collector.WherePasses(orFilter).GetElementIterator();
                 i.Reset();
                 var moreElement = i.MoveNext();
@@ -61,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
                         goto nextLoop;
                     }
 
-                    if (!(o is Family f)) goto nextLoop;
+                    if (o is not Family f) goto nextLoop;
 
                     foreach (var elementId in f.GetFamilySymbolIds())
                     {
@@ -88,22 +88,22 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
 
         public Arc CreateArc(double z)
         {
-            var center = new XYZ(0, 0, z);
+            XYZ center = new(0, 0, z);
             var radius = 20.0;
             var startAngle = 0.0;
             var endAngle = 5.0;
-            var xAxis = new XYZ(1, 0, 0);
-            var yAxis = new XYZ(0, 1, 0);
+            XYZ xAxis = new(1, 0, 0);
+            XYZ yAxis = new(0, 1, 0);
             return Arc.Create(center, radius, startAngle, endAngle, xAxis, yAxis);
         }
 
         public Curve CreateEllipse(double z)
         {
-            var center = new XYZ(0, 0, z);
+            XYZ center = new(0, 0, z);
             double radX = 30;
             double radY = 50;
-            var xVec = new XYZ(1, 0, 0);
-            var yVec = new XYZ(0, 1, 0);
+            XYZ xVec = new(1, 0, 0);
+            XYZ yVec = new(0, 1, 0);
             var param0 = 0.0;
             var param1 = 3.1415;
             var ellpise = Ellipse.CreateCurve(center, radX, radY, xVec, yVec, param0, param1);
@@ -114,25 +114,25 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
         public Curve CreateNurbSpline(double z)
         {
             // create control points with same z value
-            var ctrPoints = new List<XYZ>();
-            var xyz1 = new XYZ(-41.887503610431267, -9.0290629129782189, z);
-            var xyz2 = new XYZ(-9.27600019217055, 0.32213521486563046, z);
-            var xyz3 = new XYZ(9.27600019217055, 0.32213521486563046, z);
-            var xyz4 = new XYZ(41.887503610431267, 9.0290629129782189, z);
+            List<XYZ> ctrPoints = [];
+            XYZ xyz1 = new(-41.887503610431267, -9.0290629129782189, z);
+            XYZ xyz2 = new(-9.27600019217055, 0.32213521486563046, z);
+            XYZ xyz3 = new(9.27600019217055, 0.32213521486563046, z);
+            XYZ xyz4 = new(41.887503610431267, 9.0290629129782189, z);
 
             ctrPoints.Add(xyz1);
             ctrPoints.Add(xyz2);
             ctrPoints.Add(xyz3);
             ctrPoints.Add(xyz4);
 
-            IList<double> weights = new List<double>();
+            IList<double> weights = [];
             double w1 = 1, w2 = 1, w3 = 1, w4 = 1;
             weights.Add(w1);
             weights.Add(w2);
             weights.Add(w3);
             weights.Add(w4);
 
-            IList<double> knots = new List<double>();
+            IList<double> knots = [];
             double k0 = 0, k1 = 0, k2 = 0, k3 = 0, k4 = 34.425128, k5 = 34.425128, k6 = 34.425128, k7 = 34.425128;
 
             knots.Add(k0);
@@ -160,7 +160,7 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
                     StructuralType.Beam);
 
                 // get beam location curve
-                if (!(beam?.Location is LocationCurve beamCurve)) return false;
+                if (beam?.Location is not LocationCurve beamCurve) return false;
             }
             catch (Exception ex)
             {

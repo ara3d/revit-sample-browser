@@ -1,10 +1,11 @@
-using System.Linq;
 using Ara3D.RevitSampleBrowser.N3P_Shared.CS;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Nice3point.Revit.Extensions;
 using Nice3point.Revit.Extensions.UI;
+using System.Linq;
+using Nice3point.Revit.Extensions.Analysis;
 
 namespace Ara3D.RevitSampleBrowser.N3P_View.CS
 {

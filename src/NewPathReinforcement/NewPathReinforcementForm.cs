@@ -1,16 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 {
     /// <summary>
@@ -43,7 +41,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             m_moveToCenterMatrix = m_profile.ToCenterMatrix();
             m_tool = new LineTool();
             KeyPreview = true; //respond Form events first
-            m_pointsPreview = new List<List<XYZ>>();
+            m_pointsPreview = [];
             m_sizePictureBox = pictureBox.Size;
         }
 
@@ -90,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
                 1, 0, 0, 1, m_sizePictureBox.Width / 2, m_sizePictureBox.Height / 2);
 
             //get matrix
-            var scaleSize = new Size((int)(0.85 * m_sizePictureBox.Width),
+            Size scaleSize = new((int)(0.85 * m_sizePictureBox.Width),
                 (int)(0.85 * m_sizePictureBox.Height));
             m_scaleMatrix = ComputeScaleMatrix(scaleSize);
             m_transMatrix = Compute3DTo2DMatrix();
@@ -114,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             var ps3D = Transform2DTo3D(points.ToArray());
 
             //begin Transaction, so action here can be aborted.
-            var transaction = new Transaction(m_profile.CommandData.Application.ActiveUIDocument.Document,
+            Transaction transaction = new(m_profile.CommandData.Application.ActiveUIDocument.Document,
                 "CreatePathReinforcement");
             transaction.Start();
 
@@ -165,14 +163,14 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         {
             var points = m_tool.GetPoints();
 
-            if (0 == points.Count || 1 == points.Count)
+            if (points.Count is 0 or 1)
             {
                 TaskDialog.Show("Revit", "Please draw Path of Reinforcement before create!");
                 return;
             }
 
             //begin Transaction, so action here can be aborted.
-            var transaction = new Transaction(m_profile.CommandData.Application.ActiveUIDocument.Document,
+            Transaction transaction = new(m_profile.CommandData.Application.ActiveUIDocument.Document,
                 "CreatePathReinforcement");
             transaction.Start();
 
@@ -195,14 +193,14 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         /// <param name="ps">contain the points to be transformed</param>
         private List<Vector4> Transform2DTo3D(Point[] ps)
         {
-            var result = new List<Vector4>();
+            List<Vector4> result = new();
             TransformPoints(ps);
             var transformMatrix = Matrix4.Multiply(
                 m_scaleMatrix.Inverse(), m_moveToCenterMatrix);
             transformMatrix = Matrix4.Multiply(transformMatrix, m_to2DMatrix);
             foreach (var point in ps)
             {
-                var v = new Vector4(point.X, point.Y, 0);
+                Vector4 v = new(point.X, point.Y, 0);
                 v = transformMatrix.Transform(v);
                 result.Add(v);
             }
@@ -229,7 +227,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 
         private void TransformPoints(Point[] pts)
         {
-            var matrix = new Matrix(
+            Matrix matrix = new(
                 1, 0, 0, 1, pictureBox.Width / 2, pictureBox.Height / 2);
             matrix.Invert();
             matrix.TransformPoints(pts);
@@ -241,7 +239,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             options.DetailLevel = ViewDetailLevel.Medium;
             options.ComputeReferences = true;
             var geoElem = pathRein.get_Geometry(options);
-            var curvesList = new List<Curve>();
+            List<Curve> curvesList = new();
             //GeometryObjectArray gObjects = geoElem.Objects;
             var objects = geoElem.GetEnumerator();
             //foreach (GeometryObject geo in gObjects)
@@ -253,7 +251,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
                 curvesList.Add(curve);
             }
 
-            var pointsPreview = new List<List<XYZ>>();
+            List<List<XYZ>> pointsPreview = new();
             foreach (var curve in curvesList)
             {
                 pointsPreview.Add(curve.Tessellate() as List<XYZ>);
@@ -281,8 +279,8 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
                     var point1 = xyzArray[i];
                     var point2 = xyzArray[i + 1];
 
-                    var v1 = new Vector4(point1);
-                    var v2 = new Vector4(point2);
+                    Vector4 v1 = new(point1);
+                    Vector4 v2 = new(point2);
 
                     v1 = matrix4.Transform(v1);
                     v2 = matrix4.Transform(v2);

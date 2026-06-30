@@ -1,8 +1,9 @@
 #region Namespaces
 
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
 using System;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
 
 #endregion // Namespaces
 
@@ -14,26 +15,26 @@ namespace BuildingCoder
         internal static Sweep CreateSweepWithMultipleLoops(
             Document doc)
         {
-            var path = new CurveArray();
+            CurveArray path = new();
 
             path.Append(Line.CreateBound(XYZ.Zero,
                 new XYZ(0, 5, 0)));
 
-            var p1 = new XYZ(0, 0, 0);
-            var p2 = new XYZ(10, 0, 0);
-            var p3 = new XYZ(10, 15, 0);
-            var p4 = new XYZ(0, 15, 0);
-            var a1 = new XYZ(1, 5, 0);
-            var a2 = new XYZ(3, 5, 0);
-            var a3 = new XYZ(3, 10, 0);
-            var a4 = new XYZ(1, 10, 0);
-            var b1 = new XYZ(5, 5, 0);
-            var b2 = new XYZ(7, 5, 0);
-            var b3 = new XYZ(7, 10, 0);
-            var b4 = new XYZ(5, 10, 0);
+            XYZ p1 = new(0, 0, 0);
+            XYZ p2 = new(10, 0, 0);
+            XYZ p3 = new(10, 15, 0);
+            XYZ p4 = new(0, 15, 0);
+            XYZ a1 = new(1, 5, 0);
+            XYZ a2 = new(3, 5, 0);
+            XYZ a3 = new(3, 10, 0);
+            XYZ a4 = new(1, 10, 0);
+            XYZ b1 = new(5, 5, 0);
+            XYZ b2 = new(7, 5, 0);
+            XYZ b3 = new(7, 10, 0);
+            XYZ b4 = new(5, 10, 0);
 
-            var arrcurve = new CurveArrArray();
-            var curve = new CurveArray();
+            CurveArrArray arrcurve = new();
+            CurveArray curve = new();
             curve.Append(Line.CreateBound(p1, p2));
             curve.Append(Line.CreateBound(p2, p3));
             curve.Append(Line.CreateBound(p3, p4));
@@ -81,8 +82,7 @@ namespace BuildingCoder
             var plane = SketchPlane.Create(
                 doc, geometryPlane);
 
-            if (null == plane) throw new Exception("Sketch plane creation failed.");
-            return plane;
+            return plane ?? throw new Exception("Sketch plane creation failed.");
         }
         internal static void CreateNewSweptBlend(Document doc)
         {
@@ -97,7 +97,7 @@ namespace BuildingCoder
             var curvess0
                 = creapp.NewCurveArrArray();
 
-            var curves0 = new CurveArray();
+            CurveArray curves0 = new();
 
             var p00 = creapp.NewXYZ(0, 7.5, 0);
             var p01 = creapp.NewXYZ(0, 15, 0);
@@ -110,7 +110,7 @@ namespace BuildingCoder
             curvess0.Append(curves0);
 
             var curvess1 = creapp.NewCurveArrArray();
-            var curves1 = new CurveArray();
+            CurveArray curves1 = new();
 
             var p10 = creapp.NewXYZ(7.5, 0, 0);
             var p11 = creapp.NewXYZ(15, 0, 0);
@@ -128,8 +128,8 @@ namespace BuildingCoder
             SweepProfile sweepProfile1
                 = creapp.NewCurveLoopsProfile(curvess1);
 
-            var pnt10 = new XYZ(5, 0, 0);
-            var pnt11 = new XYZ(0, 20, 0);
+            XYZ pnt10 = new(5, 0, 0);
+            XYZ pnt11 = new(0, 20, 0);
             Curve curve = Line.CreateBound(pnt10, pnt11);
 
             var normal = XYZ.BasisZ;
@@ -164,10 +164,10 @@ namespace BuildingCoder
             var py = XYZ.BasisY;
             var arc1 = Arc.Create(-px, px, -py);
             var arc2 = Arc.Create(px, -px, py);
-            var arr1 = new CurveArray();
+            CurveArray arr1 = new();
             arr1.Append(arc1);
             arr1.Append(arc2);
-            var arrarr1 = new CurveArrArray();
+            CurveArrArray arrarr1 = new();
             arrarr1.Append(arr1);
 
             SweepProfile bottomProfile
@@ -177,10 +177,10 @@ namespace BuildingCoder
             py += py;
             var arc3 = Arc.Create(-px, px, -py);
             var arc4 = Arc.Create(px, -px, py);
-            var arr2 = new CurveArray();
+            CurveArray arr2 = new();
             arr2.Append(arc3);
             arr2.Append(arc4);
-            var arrarr2 = new CurveArrArray();
+            CurveArrArray arrarr2 = new();
             arrarr2.Append(arr2);
 
             SweepProfile topProfile
@@ -188,7 +188,7 @@ namespace BuildingCoder
 
             var p0 = XYZ.Zero;
             var p5 = 5 * XYZ.BasisY;
-            var pmid = new XYZ(2.5, 2.5, 0);
+            XYZ pmid = new(2.5, 2.5, 0);
             var testArc = Arc.Create(p0, p5, pmid);
 
             var geometryPlane = Plane.CreateByNormalAndOrigin(

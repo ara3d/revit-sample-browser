@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Structural;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Structural;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.Loads.CS
 {
     /// <summary>
@@ -25,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         {
             m_dataBuffer = dataBuffer;
             m_revit = dataBuffer.RevitApplication;
-            var uiapplication = new UIApplication(m_revit);
+            UIApplication uiapplication = new(m_revit);
             m_document = uiapplication.ActiveUIDocument.Document;
         }
 
@@ -45,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                     m_dataBuffer.LoadCombinationNames.Add(combination.Name);
 
                     // Create LoadCombinationMap object.
-                    var combinationMap = new LoadCombinationMap(combination);
+                    LoadCombinationMap combinationMap = new(combination);
 
                     // Add the LoadCombinationMap object to the array list.
                     m_dataBuffer.LoadCombinationMap.Add(combinationMap);
@@ -65,7 +64,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                     m_dataBuffer.LoadUsages.Add(usage);
 
                     // Add the Load Usage information to UsageMap.
-                    var usageMap = new UsageMap(m_dataBuffer, usage.Name);
+                    UsageMap usageMap = new(m_dataBuffer, usage.Name);
                     m_dataBuffer.UsageMap.Add(usageMap);
                 }
             }
@@ -81,8 +80,8 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         public bool NewLoadCombination(string name, int typeIndex, int stateIndex)
         {
             // Define some data for creation.
-            var usageIds = new List<ElementId>();
-            var components = new List<LoadComponent>();
+            List<ElementId> usageIds = [];
+            List<LoadComponent> components = [];
             var factorArray = new double[m_dataBuffer.FormulaMap.Count];
 
             // First check whether the name has been used
@@ -113,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                 var loadCase = AnalyticalModelHelper.FindLoadCaseByName(m_dataBuffer.LoadCases, formulaMap.Case);
                 if (null != loadCase)
                 {
-                    var component = new LoadComponent(loadCase.Id, formulaMap.Factor);
+                    LoadComponent component = new(loadCase.Id, formulaMap.Factor);
                     components.Add(component);
                 }
             }
@@ -134,7 +133,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
                 // Store this load combination information for further use
                 m_dataBuffer.LoadCombinationNames.Add(loadCombination.Name);
-                var combinationMap = new LoadCombinationMap(loadCombination);
+                LoadCombinationMap combinationMap = new(loadCombination);
                 m_dataBuffer.LoadCombinationMap.Add(combinationMap);
             }
             catch (Exception e)
@@ -215,7 +214,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                 m_dataBuffer.LoadUsages.Add(loadUsage);
 
                 // Add the Load Usage information to UsageMap.
-                var usageMap = new UsageMap(m_dataBuffer, loadUsage.Name);
+                UsageMap usageMap = new(m_dataBuffer, loadUsage.Name);
                 m_dataBuffer.UsageMap.Add(usageMap);
             }
             catch (Exception e)
@@ -261,10 +260,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                     continue;
                 }
 
-                if (0 == location)
-                    map.Usage = oldUsage.Remove(location, usageName.Length + 1);
-                else
-                    map.Usage = oldUsage.Remove(location - 1, usageName.Length + 1);
+                map.Usage = 0 == location ? oldUsage.Remove(location, usageName.Length + 1) : oldUsage.Remove(location - 1, usageName.Length + 1);
             }
 
             return true;
@@ -310,7 +306,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         {
             // New a FormulaMap, and add it to m_dataBuffer.FormulaMap
             // Note: the factor of the formula is always set 1 
-            var map = new FormulaMap(caseName);
+            FormulaMap map = new(caseName);
             m_dataBuffer.FormulaMap.Add(map);
             return true;
         }

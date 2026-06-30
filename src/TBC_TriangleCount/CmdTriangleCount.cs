@@ -14,12 +14,12 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -37,12 +37,12 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var context
-                = new TriangleCounterContext(
+            TriangleCounterContext context
+                = new(
                     doc, null, TriangleCountReport);
 
-            var exporter
-                = new CustomExporter(
+            CustomExporter exporter
+                = new(
                     doc, context);
 
             exporter.Export(doc.ActiveView);
@@ -68,9 +68,9 @@ namespace BuildingCoder
 
             private readonly bool includeMaterials = true;
 
-            private Document document;
+            private readonly Document document;
 
-            private Func<bool> isCanceled;
+            private readonly Func<bool> isCanceled;
 
             private List<ElementId> materialIds;
 
@@ -84,7 +84,7 @@ namespace BuildingCoder
                 this.isCanceled = isCanceled;
                 this.callback = callback;
                 this.document = document;
-                materialIds = new List<ElementId>();
+                materialIds = [];
             }
 
             public void OnPolymesh(PolymeshTopology polymesh)
@@ -104,7 +104,7 @@ namespace BuildingCoder
 
             public bool Start()
             {
-                materialIds = new List<ElementId>();
+                materialIds = [];
                 return true;
             }
 

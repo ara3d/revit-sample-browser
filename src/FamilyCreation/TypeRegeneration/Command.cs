@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
 {
@@ -33,12 +33,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
                 writer.WriteLine("Family Type     Result");
                 writer.WriteLine("-------------------------");
                 writer.Close();
-                using (var msgForm = new MessageForm())
-                {
-                    msgForm.StartPosition = FormStartPosition.Manual;
-                    CheckTypeRegeneration(msgForm);
-                    return Result.Succeeded;
-                }
+                using var msgForm = new MessageForm();
+                msgForm.StartPosition = FormStartPosition.Manual;
+                CheckTypeRegeneration(msgForm);
+                return Result.Succeeded;
             }
 
             message = "please make sure you have opened a family document!";

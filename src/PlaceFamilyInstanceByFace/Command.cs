@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
@@ -25,12 +25,12 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 
             try
             {
-                var creator = new FamilyInstanceCreator(commandData.Application);
+                FamilyInstanceCreator creator = new(commandData.Application);
 
-                var baseTypeform = new BasedTypeForm();
+                BasedTypeForm baseTypeform = new();
                 if (DialogResult.OK == baseTypeform.ShowDialog())
                 {
-                    var placeForm = new PlaceFamilyInstanceForm(creator
+                    PlaceFamilyInstanceForm placeForm = new(creator
                         , baseTypeform.BaseType);
                     placeForm.ShowDialog();
                 }

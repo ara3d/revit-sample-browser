@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using Autodesk.Revit.DB;
 using Color = System.Drawing.Color;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
@@ -15,8 +15,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 
         private readonly XYZ m_bBoxMin;
 
-        private readonly Dictionary<Edge, EdgeBinding> m_edgeBindinDic;
-
         /// <summary>
         ///     If the solid is transformed (includes translation, scale and rotation)
         ///     this flag should be true, otherwise false.
@@ -26,24 +24,21 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
         private Transform m_rotation;
 
         private double m_scale;
-
-        private readonly Solid m_solid;
-
         private XYZ m_translation;
 
         public ElementGeometry(Solid solid, BoundingBoxXYZ box)
         {
-            m_solid = solid;
+            Solid = solid;
             m_bBoxMin = box.Min;
             m_bBoxMax = box.Max;
             m_isDirty = true;
 
             // Initialize edge binding
-            m_edgeBindinDic = new Dictionary<Edge, EdgeBinding>();
-            foreach (Edge edge in m_solid.Edges)
+            EdgeBindingDic = [];
+            foreach (Edge edge in Solid.Edges)
             {
-                var edgeBingding = new EdgeBinding(edge);
-                m_edgeBindinDic.Add(edge, edgeBingding);
+                EdgeBinding edgeBingding = new(edge);
+                EdgeBindingDic.Add(edge, edgeBingding);
             }
         }
 
@@ -77,9 +72,9 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
             }
         }
 
-        public Solid Solid => m_solid;
+        public Solid Solid { get; }
 
-        public Dictionary<Edge, EdgeBinding> EdgeBindingDic => m_edgeBindinDic;
+        public Dictionary<Edge, EdgeBinding> EdgeBindingDic { get; }
 
         public void InitializeTransform(double width, double height)
         {
@@ -101,7 +96,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 
         public void ResetEdgeStates()
         {
-            foreach (var pair in m_edgeBindinDic)
+            foreach (var pair in EdgeBindingDic)
             {
                 pair.Value.Reset();
             }
@@ -111,7 +106,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
         {
             if (!m_isDirty) return;
 
-            foreach (var pair in m_edgeBindinDic)
+            foreach (var pair in EdgeBindingDic)
             {
                 pair.Value.Update(m_rotation, m_translation, m_scale);
             }
@@ -122,7 +117,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
         public void Draw(Graphics g)
         {
             Update();
-            foreach (var pair in m_edgeBindinDic)
+            foreach (var pair in EdgeBindingDic)
             {
                 pair.Value.Draw(g);
             }
@@ -132,11 +127,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
     public class EdgeBinding : IDisposable
     {
         private GraphicsPath m_gdiEdge;
-
-        private bool m_isHighLighted;
-
-        private bool m_isSelected;
-
         private readonly Pen m_pen;
 
         private readonly IList<XYZ> m_points;
@@ -150,17 +140,9 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
             Reset();
         }
 
-        public bool IsHighLighted
-        {
-            get => m_isHighLighted;
-            set => m_isHighLighted = value;
-        }
+        public bool IsHighLighted { get; set; }
 
-        public bool IsSelected
-        {
-            get => m_isSelected;
-            set => m_isSelected = value;
-        }
+        public bool IsSelected { get; set; }
 
         public void Dispose()
         {
@@ -171,8 +153,8 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 
         public void Reset()
         {
-            m_isHighLighted = false;
-            m_isSelected = false;
+            IsHighLighted = false;
+            IsSelected = false;
             m_region = null;
         }
 
@@ -198,12 +180,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
         public void Draw(Graphics g)
         {
             m_pen.Width = 2.0f;
-            if (m_isHighLighted)
-                m_pen.Color = Color.Yellow;
-            else if (m_isSelected)
-                m_pen.Color = Color.Red;
-            else
-                m_pen.Color = Color.Green;
+            m_pen.Color = IsHighLighted ? Color.Yellow : IsSelected ? Color.Red : Color.Green;
             g.DrawPath(m_pen, m_gdiEdge);
         }
 
@@ -211,9 +188,9 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
         {
             if (m_region == null)
             {
-                var tmpPath = new GraphicsPath();
+                GraphicsPath tmpPath = new();
                 tmpPath.AddLines(m_gdiEdge.PathPoints);
-                var tmpPen = new Pen(Color.White, 3.0f);
+                Pen tmpPen = new(Color.White, 3.0f);
                 tmpPath.Widen(tmpPen);
                 m_region = new Region(tmpPath);
             }
@@ -235,8 +212,8 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
         /// <returns></returns>
         public bool HighLight(float x, float y)
         {
-            m_isHighLighted = HitTest(x, y);
-            return m_isHighLighted;
+            IsHighLighted = HitTest(x, y);
+            return IsHighLighted;
         }
     }
 }

@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 using View = Autodesk.Revit.DB.View;
 
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS
@@ -27,19 +27,17 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS
             {
                 ActiveView = commandData.Application.ActiveUIDocument.Document.ActiveView;
 
-                var roofsManager = new RoofsManager.RoofsManager(commandData);
+                RoofsManager.RoofsManager roofsManager = new(commandData);
                 LevelConverter.SetStandardValues(roofsManager.Levels);
 
                 // Create a form to create and edit a roof.
                 var result = DialogResult.None;
-                while (result == DialogResult.None || result == DialogResult.Retry)
+                while (result is DialogResult.None or DialogResult.Retry)
                 {
                     if (result == DialogResult.Retry) roofsManager.WindowSelect();
 
-                    using (var mainForm = new RoofForm(roofsManager))
-                    {
-                        result = mainForm.ShowDialog();
-                    }
+                    using RoofForm mainForm = new(roofsManager);
+                    result = mainForm.ShowDialog();
                 }
 
                 return result == DialogResult.OK ? Result.Succeeded : Result.Cancelled;

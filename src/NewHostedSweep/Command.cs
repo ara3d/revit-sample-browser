@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
 {
@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
         {
             try
             {
-                var mgr = new CreationMgr(commandData.Application.ActiveUIDocument);
+                CreationMgr mgr = new(commandData.Application.ActiveUIDocument);
                 mgr.Execute();
             }
             catch (Exception e)

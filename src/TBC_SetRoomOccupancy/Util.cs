@@ -1,7 +1,7 @@
 #region Namespaces
 
-using System.Diagnostics;
 using Autodesk.Revit.DB;
+using System.Diagnostics;
 
 #endregion // Namespaces
 

@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
@@ -16,7 +16,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
         ///     Store all the divided surface selected by user or store all the divided surface in the document if user selects
         ///     nothing
         /// </summary>
-        private List<DividedSurface> m_dividedSurfaceList = new List<DividedSurface>();
+        private List<DividedSurface> m_dividedSurfaceList = [];
 
         /// <summary>
         ///     Record how many panels have an area larger than the maximum value
@@ -213,27 +213,27 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
                 {
                     // find area of partial border panels
                     case Solid object1:
-                    {
-                        solid = object1;
-                        if (null == solid) continue;
-                        break;
-                    }
+                        {
+                            solid = object1;
+                            if (null == solid) continue;
+                            break;
+                        }
                     // find area of non-partial panels
                     case GeometryInstance geomInst:
-                    {
-                        //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
-                        var objects1 = geomInst.SymbolGeometry.GetEnumerator();
-                        while (objects1.MoveNext())
                         {
-                            object geomObj = objects1.Current;
+                            //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
+                            var objects1 = geomInst.SymbolGeometry.GetEnumerator();
+                            while (objects1.MoveNext())
+                            {
+                                object geomObj = objects1.Current;
 
-                            solid = geomObj as Solid;
-                            if (solid != null)
-                                break;
+                                solid = geomObj as Solid;
+                                if (solid != null)
+                                    break;
+                            }
+
+                            break;
                         }
-
-                        break;
-                    }
                 }
 
                 if (null == solid.Faces || 0 == solid.Faces.Size) continue;
@@ -275,33 +275,33 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
 
             // find all the panels areas and compare with the range
             for (var u = 0; u < ds.NumberOfUGridlines; u++)
-            for (var v = 0; v < ds.NumberOfVGridlines; v++)
-            {
-                var gn = new GridNode(u, v);
-                if (false == ds.IsSeedNode(gn)) continue;
-
-                var familyinstance = ds.GetTileFamilyInstance(gn, 0);
-                if (familyinstance != null)
+                for (var v = 0; v < ds.NumberOfVGridlines; v++)
                 {
-                    var panelArea = GetAreaOfTileInstance(familyinstance);
-                    // identify the panels drop in different ranges with different types
-                    if (panelArea > m_maxValue)
+                    var gn = new GridNode(u, v);
+                    if (false == ds.IsSeedNode(gn)) continue;
+
+                    var familyinstance = ds.GetTileFamilyInstance(gn, 0);
+                    if (familyinstance != null)
                     {
-                        familyinstance.Symbol = fsMax;
-                        m_maxCounter++;
-                    }
-                    else if (panelArea < m_minValue)
-                    {
-                        familyinstance.Symbol = fsMin;
-                        m_minCounter++;
-                    }
-                    else
-                    {
-                        familyinstance.Symbol = fsMid;
-                        m_okCounter++;
+                        var panelArea = GetAreaOfTileInstance(familyinstance);
+                        // identify the panels drop in different ranges with different types
+                        if (panelArea > m_maxValue)
+                        {
+                            familyinstance.Symbol = fsMax;
+                            m_maxCounter++;
+                        }
+                        else if (panelArea < m_minValue)
+                        {
+                            familyinstance.Symbol = fsMin;
+                            m_minCounter++;
+                        }
+                        else
+                        {
+                            familyinstance.Symbol = fsMid;
+                            m_okCounter++;
+                        }
                     }
                 }
-            }
         }
 
         protected List<T> GetElements<T>() where T : Element

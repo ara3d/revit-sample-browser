@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 {
     public class DataManager
@@ -22,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         public DataManager(ExternalCommandData commandData)
         {
             m_commandData = commandData;
-            m_levels = new List<Level>();
+            m_levels = [];
             Initialize();
             m_currentLevel = m_levels[0];
             var para =
@@ -31,20 +30,20 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
             m_defaultPhase = commandData.Application.ActiveUIDocument.Document.GetElement(phaseId) as Phase;
         }
 
-        public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levels);
+        public ReadOnlyCollection<Level> Levels => new(m_levels);
 
         private void Initialize()
         {
-            var spaceDictionary = new Dictionary<ElementId, List<Space>>();
-            var zoneDictionary = new Dictionary<ElementId, List<Zone>>();
+            Dictionary<ElementId, List<Space>> spaceDictionary = new();
+            Dictionary<ElementId, List<Zone>> zoneDictionary = new();
 
             var activeDoc = m_commandData.Application.ActiveUIDocument.Document;
 
             foreach (var level in activeDoc.GetElements<Level>())
             {
                 m_levels.Add(level);
-                spaceDictionary.Add(level.Id, new List<Space>());
-                zoneDictionary.Add(level.Id, new List<Zone>());
+                spaceDictionary.Add(level.Id, []);
+                zoneDictionary.Add(level.Id, []);
             }
 
             foreach (var space in activeDoc.GetElements<Space>())
@@ -54,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 
             foreach (var zone in activeDoc.GetElements<Zone>())
             {
-                if (activeDoc.GetElement(zone.LevelId) != null) 
+                if (activeDoc.GetElement(zone.LevelId) != null)
                     zoneDictionary[zone.LevelId].Add(zone);
             }
 
@@ -66,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         {
             if (m_defaultPhase == null)
             {
-                DialogHelper.ShowMessage( "The phase of the active view is null, you can't create zone in a null phase");
+                DialogHelper.ShowMessage("The phase of the active view is null, you can't create zone in a null phase");
                 return;
             }
 
@@ -76,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
             }
             catch (Exception ex)
             {
-                DialogHelper.ShowMessage( ex.Message);
+                DialogHelper.ShowMessage(ex.Message);
             }
         }
 
@@ -94,11 +93,11 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
                 if (m_commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == ViewType.FloorPlan)
                     m_spaceManager.CreateSpaces(m_currentLevel, m_defaultPhase);
                 else
-                    DialogHelper.ShowMessage( "You can not create spaces in this plan view");
+                    DialogHelper.ShowMessage("You can not create spaces in this plan view");
             }
             catch (Exception ex)
             {
-                DialogHelper.ShowMessage( ex.Message);
+                DialogHelper.ShowMessage(ex.Message);
             }
         }
 

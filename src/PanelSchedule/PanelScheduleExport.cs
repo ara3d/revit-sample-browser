@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
@@ -19,8 +19,8 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var fec = new FilteredElementCollector(doc);
-            var panelScheduleViewsAreWanted = new ElementClassFilter(typeof(PanelScheduleView));
+            FilteredElementCollector fec = new(doc);
+            ElementClassFilter panelScheduleViewsAreWanted = new(typeof(PanelScheduleView));
             fec.WherePasses(panelScheduleViewsAreWanted);
             var psViews = fec.ToElements() as List<Element>;
 
@@ -33,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
                     continue;
                 noPanelScheduleInstance = false;
 
-                var alternativeDlg = new TaskDialog("Choose Format to export")
+                TaskDialog alternativeDlg = new("Choose Format to export")
                 {
                     MainContent = "Click OK to export in .CSV format, Cancel to export in HTML format.",
                     CommonButtons = TaskDialogCommonButtons.Ok | TaskDialogCommonButtons.Cancel,
@@ -41,9 +41,9 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
                 };
                 var exportToCsv = alternativeDlg.Show();
 
-                var translator = TaskDialogResult.Cancel == exportToCsv
+                Translator translator = TaskDialogResult.Cancel == exportToCsv
                     ? new HtmlTranslator(psView)
-                    : new CsvTranslator(psView) as Translator;
+                    : new CsvTranslator(psView);
                 var exported = translator.Export();
 
                 if (!string.IsNullOrEmpty(exported)) Process.Start(exported);
@@ -51,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 
             if (noPanelScheduleInstance)
             {
-                var messageDlg = new TaskDialog("Warnning Message")
+                TaskDialog messageDlg = new("Warnning Message")
                 {
                     MainIcon = TaskDialogIcon.TaskDialogIconWarning,
                     MainContent = "No panel schedule view is in the current document."

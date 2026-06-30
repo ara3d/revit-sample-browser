@@ -1,15 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
 {
     public class ReferencePlaneMgr
@@ -70,8 +68,8 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
         {
             m_referencePlanes = new DataTable("ReferencePlanes");
 
-            var column =
-                new DataColumn
+            DataColumn column =
+                new()
                 {
                     DataType = Type.GetType("System.Int32"),
                     ColumnName = "ID"
@@ -120,7 +118,7 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
             itor.Reset();
             while (itor.MoveNext())
             {
-                if (!(itor.Current is Autodesk.Revit.DB.ReferencePlane refPlane)) continue;
+                if (itor.Current is not Autodesk.Revit.DB.ReferencePlane refPlane) continue;
 
                 var row = m_referencePlanes.NewRow();
                 row["ID"] = refPlane.Id.Value;
@@ -136,9 +134,9 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
         private void OperateWall(Element host)
         {
             var wall = host as Wall;
-            var bubbleEnd = new XYZ();
-            var freeEnd = new XYZ();
-            var cutVec = new XYZ();
+            XYZ bubbleEnd = new();
+            XYZ freeEnd = new();
+            XYZ cutVec = new();
 
             LocateWall(wall, ref bubbleEnd, ref freeEnd, ref cutVec);
             m_document.Document.Create.NewReferencePlane(bubbleEnd, freeEnd, cutVec, m_document.Document.ActiveView);
@@ -147,9 +145,9 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
         private void OperateSlab(Element host)
         {
             var floor = host as Floor;
-            var bubbleEnd = new XYZ();
-            var freeEnd = new XYZ();
-            var thirdPnt = new XYZ();
+            XYZ bubbleEnd = new();
+            XYZ freeEnd = new();
+            XYZ thirdPnt = new();
             LocateSlab(floor, ref bubbleEnd, ref freeEnd, ref thirdPnt);
             m_document.Document.Create.NewReferencePlane2(bubbleEnd, freeEnd, thirdPnt, m_document.Document.ActiveView);
         }

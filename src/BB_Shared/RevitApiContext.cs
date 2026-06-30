@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Autodesk.Revit.UI;
+using System;
 using System.Runtime.InteropServices;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
@@ -36,12 +36,14 @@ public static class RevitApiContext
         }
 
         public string GetName()
-            => Name;
+        {
+            return Name;
+        }
     }
 
     public static ExternalEvent CreateEvent(Action<UIApplication> action, string name)
     {
-        var eeh = new ExternalEventHandler(action, name);
+        ExternalEventHandler eeh = new(action, name);
         return ExternalEvent.Create(eeh);
     }
 }

@@ -28,16 +28,16 @@ using Autodesk.Revit.DB;
 
 namespace AdnRme
 {
-  class Bip
-  {
-    // Short aliases for long BuiltInParameter names.
-    public const BuiltInParameter Airflow = BuiltInParameter.ROOM_ACTUAL_SUPPLY_AIRFLOW_PARAM;
-    public const BuiltInParameter Area = BuiltInParameter.ROOM_AREA;
-    public const BuiltInParameter CalculatedSupplyAirFlow = BuiltInParameter.ROOM_CALCULATED_SUPPLY_AIRFLOW_PARAM;
-    public const BuiltInParameter Flow = BuiltInParameter.RBS_DUCT_FLOW_PARAM;
-    public const BuiltInParameter Host = BuiltInParameter.INSTANCE_FREE_HOST_PARAM;
+    class Bip
+    {
+        // Short aliases for long BuiltInParameter names.
+        public const BuiltInParameter Airflow = BuiltInParameter.ROOM_ACTUAL_SUPPLY_AIRFLOW_PARAM;
+        public const BuiltInParameter Area = BuiltInParameter.ROOM_AREA;
+        public const BuiltInParameter CalculatedSupplyAirFlow = BuiltInParameter.ROOM_CALCULATED_SUPPLY_AIRFLOW_PARAM;
+        public const BuiltInParameter Flow = BuiltInParameter.RBS_DUCT_FLOW_PARAM;
+        public const BuiltInParameter Host = BuiltInParameter.INSTANCE_FREE_HOST_PARAM;
 
-    // RBS_SYSTEM_TYPE_PARAM was renamed to RBS_SYSTEM_CLASSIFICATION_PARAM in 2012.
-    public const BuiltInParameter SystemType = BuiltInParameter.RBS_SYSTEM_CLASSIFICATION_PARAM; // 2012
-  }
+        // RBS_SYSTEM_TYPE_PARAM was renamed to RBS_SYSTEM_CLASSIFICATION_PARAM in 2012.
+        public const BuiltInParameter SystemType = BuiltInParameter.RBS_SYSTEM_CLASSIFICATION_PARAM; // 2012
+    }
 }

@@ -100,8 +100,8 @@ namespace BuildingCoder
 
             #endregion // Obsolete inline code
 
-            var data
-                = new JtParamValuesForCats(doc, _categories);
+            JtParamValuesForCats data
+                = new(doc, _categories);
 
 #if DEBUG
             data.DebugPrint();

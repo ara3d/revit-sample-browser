@@ -2,14 +2,14 @@
 
 // DirectContext3D server that duplicates element graphics.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.DirectContext3D;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using View = Autodesk.Revit.DB.View;
 
 namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             {
                 var boundingBox = m_element.get_BoundingBox(null);
 
-                var outline = new Outline(boundingBox.Min + m_offset, boundingBox.Max + m_offset);
+                Outline outline = new(boundingBox.Min + m_offset, boundingBox.Max + m_offset);
 
                 return outline;
             }
@@ -123,7 +123,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                     m_transparentFaceBufferStorage.NeedsUpdate(displayStyle) ||
                     m_edgeBufferStorage == null || m_edgeBufferStorage.NeedsUpdate(displayStyle))
                 {
-                    var options = new Options();
+                    Options options = new();
                     var geomElem = m_element.get_Geometry(options);
 
                     CreateBufferStorageForElement(geomElem, displayStyle);
@@ -166,7 +166,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
 
         private void CreateBufferStorageForElement(GeometryElement geomElem, DisplayStyle displayStyle)
         {
-            var allSolids = new List<Solid>();
+            List<Solid> allSolids = new();
 
             foreach (var geomObj in geomElem)
             {
@@ -191,7 +191,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
 
                         var materialId = face.MaterialElementId;
                         var isTransparent = false;
-                        var cwt = new ColorWithTransparency(127, 127, 127, 0);
+                        ColorWithTransparency cwt = new(127, 127, 127, 0);
                         if (materialId != ElementId.InvalidElementId)
                         {
                             var material = m_element.Document.GetElement(materialId) as Material;
@@ -208,7 +208,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                         var center = 0.5 * (env.Min + env.Max);
                         var normal = face.ComputeNormal(center);
 
-                        var meshInfo = new MeshInfo(mesh, normal, cwt);
+                        MeshInfo meshInfo = new(mesh, normal, cwt);
 
                         if (isTransparent)
                         {
@@ -226,7 +226,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                 }
 
                 foreach (Edge edge in solid.Edges)
-                    // if (edge.Length > 1e-06)
+                // if (edge.Length > 1e-06)
                 {
                     var xyzs = edge.Tessellate();
 
@@ -244,11 +244,11 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
         private void ProcessFaces(RenderingPassBufferStorage bufferStorage)
         {
             var meshes = bufferStorage.Meshes;
-            var numVerticesInMeshesBefore = new List<int>();
+            List<int> numVerticesInMeshesBefore = new();
             if (meshes.Count == 0) return;
 
-            var useNormals = bufferStorage.DisplayStyle == DisplayStyle.Shading ||
-                             bufferStorage.DisplayStyle == DisplayStyle.ShadingWithEdges;
+            var useNormals = bufferStorage.DisplayStyle is DisplayStyle.Shading or
+                             DisplayStyle.ShadingWithEdges;
 
             // Vertex attributes are stored sequentially in vertex buffers. The attributes can include position, normal vector, and color.
             // All vertices within a vertex buffer must have the same format. Possible formats are enumerated by VertexFormatBits.
@@ -349,7 +349,8 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             bufferStorage.FormatBits = VertexFormatBits.Position;
 
             var edgeVertexBufferSizeInFloats = VertexPosition.GetSizeInFloats() * bufferStorage.VertexBufferCount;
-            var numVerticesInEdgesBefore = new List<int> { 0 };
+            List<int> numVerticesInEdgesBefore = new()
+            { 0 };
 
             bufferStorage.VertexBuffer = new VertexBuffer(edgeVertexBufferSizeInFloats);
             bufferStorage.VertexBuffer.Map(edgeVertexBufferSizeInFloats);
@@ -410,8 +411,8 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             public RenderingPassBufferStorage(DisplayStyle displayStyle)
             {
                 DisplayStyle = displayStyle;
-                Meshes = new List<MeshInfo>();
-                EdgeXyZs = new List<IList<XYZ>>();
+                Meshes = [];
+                EdgeXyZs = [];
             }
 
             public DisplayStyle DisplayStyle { get; }

@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB.Mechanical;
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.DB.Mechanical;
 
 namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 {
@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 
         private void addSpaceButton_Click(object sender, EventArgs e)
         {
-            var set = new SpaceSet();
+            SpaceSet set = new();
             foreach (SpaceItem item in availableSpacesListView.SelectedItems)
             {
                 set.Insert(item.Space);
@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 
         private void removeSpaceButton_Click(object sender, EventArgs e)
         {
-            var set = new SpaceSet();
+            SpaceSet set = new();
             foreach (SpaceItem item in currentSpacesListView.SelectedItems)
             {
                 set.Insert(item.Space);

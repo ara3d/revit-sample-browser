@@ -1,5 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.UI;
+using RvtSamples.Properties;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,8 +9,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Media.Imaging;
-using Autodesk.Revit.UI;
-using RvtSamples.Properties;
 
 namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
 {
@@ -118,15 +118,15 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
         private UIControlledApplication m_application;
 
         private readonly SortedList<string, List<SampleItem>> m_customizedMenus =
-            new SortedList<string, List<SampleItem>>();
+            [];
 
         private readonly SortedList<string, List<SampleItem>> m_defaultMenus =
-            new SortedList<string, List<SampleItem>>();
+            [];
 
         private RibbonPanel m_panelRvtSamples;
 
         private readonly SortedList<string, PulldownButton>
-            m_pulldownButtons = new SortedList<string, PulldownButton>();
+            m_pulldownButtons = [];
 
         /// <summary>
         ///     Implement this method to implement the external application which should be called when
@@ -236,32 +236,20 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
         private string GetEnumNameByDisplayName(string name)
         {
             string enumName = null;
-            switch (name)
+            enumName = name switch
             {
-                case "Rooms/Spaces":
-                    enumName = DefaultPulldownMenus.RoomsAndSpaces.ToString();
-                    break;
-                case "Data Exchange":
-                    enumName = DefaultPulldownMenus.DataExchange.ToString();
-                    break;
-                default:
-                    enumName = name;
-                    break;
-            }
-
+                "Rooms/Spaces" => DefaultPulldownMenus.RoomsAndSpaces.ToString(),
+                "Data Exchange" => DefaultPulldownMenus.DataExchange.ToString(),
+                _ => name,
+            };
             return enumName;
         }
 
         private string GetDisplayNameByEnumName(string enumName)
         {
-            string displayName = null;
-            if (enumName.Equals(DefaultPulldownMenus.RoomsAndSpaces.ToString()))
-                displayName = "Rooms/Spaces";
-            else if (enumName.Equals(DefaultPulldownMenus.DataExchange.ToString()))
-                displayName = "Data Exchange";
-            else
-                displayName = enumName;
-
+            var displayName = enumName.Equals(DefaultPulldownMenus.RoomsAndSpaces.ToString())
+                ? "Rooms/Spaces"
+                : enumName.Equals(DefaultPulldownMenus.DataExchange.ToString()) ? "Data Exchange" : enumName;
             return displayName;
         }
 
@@ -504,28 +492,28 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             switch (iCount)
             {
                 case 2:
-                {
-                    var name = m_customizedMenus.Keys[i++];
-                    var data1 = new PulldownButtonData(name, name);
-                    name = m_customizedMenus.Keys[i++];
-                    var data2 = new PulldownButtonData(name, name);
-                    var buttons = m_panelRvtSamples.AddStackedItems(data1, data2);
-                    AddSamplesToStackedButtons(buttons);
-                    break;
-                }
-                case 1:
-                {
-                    var name = m_customizedMenus.Keys[i];
-                    var pulldownButtonData = new PulldownButtonData(name, name);
-                    var button = m_panelRvtSamples.AddItem(pulldownButtonData) as PulldownButton;
-                    var sampleItems = m_customizedMenus.Values[m_customizedMenus.IndexOfKey(button.Name)];
-                    foreach (var item in sampleItems)
                     {
-                        AddSampleToPulldownMenu(button, item);
+                        var name = m_customizedMenus.Keys[i++];
+                        var data1 = new PulldownButtonData(name, name);
+                        name = m_customizedMenus.Keys[i++];
+                        var data2 = new PulldownButtonData(name, name);
+                        var buttons = m_panelRvtSamples.AddStackedItems(data1, data2);
+                        AddSamplesToStackedButtons(buttons);
+                        break;
                     }
+                case 1:
+                    {
+                        var name = m_customizedMenus.Keys[i];
+                        var pulldownButtonData = new PulldownButtonData(name, name);
+                        var button = m_panelRvtSamples.AddItem(pulldownButtonData) as PulldownButton;
+                        var sampleItems = m_customizedMenus.Values[m_customizedMenus.IndexOfKey(button.Name)];
+                        foreach (var item in sampleItems)
+                        {
+                            AddSampleToPulldownMenu(button, item);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 

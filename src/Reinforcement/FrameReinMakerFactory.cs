@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 {
@@ -66,7 +66,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 
         private bool GetHostObject()
         {
-            var selectedIds = new List<ElementId>();
+            List<ElementId> selectedIds = [];
             foreach (var elemId in m_commandData.Application.ActiveUIDocument.Selection.GetElementIds())
             {
                 var elem = m_commandData.Application.ActiveUIDocument.Document.GetElement(elemId);
@@ -82,16 +82,16 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             // . and it should be FamilyInstance
             //
             // Structural type filters firstly
-            var stFilter = new LogicalOrFilter(
+            LogicalOrFilter stFilter = new(
                 new ElementStructuralTypeFilter(StructuralType.Beam),
                 new ElementStructuralTypeFilter(StructuralType.Column));
             // StructuralMaterialType should be Concrete
-            var hostFilter = new LogicalAndFilter(stFilter,
+            LogicalAndFilter hostFilter = new(stFilter,
                 new StructuralMaterialTypeFilter(StructuralMaterialType.Concrete));
             //
             // Expected host object
-            var collector =
-                new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document, selectedIds);
+            FilteredElementCollector collector =
+                new(m_commandData.Application.ActiveUIDocument.Document, selectedIds);
             m_hostObject = collector
                 .OfClass(typeof(FamilyInstance)) // FamilyInstance
                 .WherePasses(hostFilter) // Filters

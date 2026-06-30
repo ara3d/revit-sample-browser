@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
 {
@@ -17,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
         {
             try
             {
-                using var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+                using Transaction trans = new(commandData.Application.ActiveUIDocument.Document,
                     "Ara3D.RevitSampleBrowser.ComputedSymbolGeometry");
                 trans.Start();
                 new ComputedSymbolGeometry(commandData.Application.ActiveUIDocument.Document).GetInstanceGeometry();

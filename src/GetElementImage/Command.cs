@@ -3,15 +3,14 @@
 // Adapted from GetElementImage by Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/GetElementImage
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 namespace Ara3D.RevitSampleBrowser.GetElementImage.CS
@@ -23,9 +22,15 @@ namespace Ara3D.RevitSampleBrowser.GetElementImage.CS
     {
         class ElementSelectionFilter : ISelectionFilter
         {
-            public bool AllowElement(Element e) => e is not View;
+            public bool AllowElement(Element e)
+            {
+                return e is not View;
+            }
 
-            public bool AllowReference(Reference r, XYZ p) => true;
+            public bool AllowReference(Reference r, XYZ p)
+            {
+                return true;
+            }
         }
 
         static Result GetSelectedElements(
@@ -79,13 +84,13 @@ namespace Ara3D.RevitSampleBrowser.GetElementImage.CS
             if (rc != Result.Succeeded)
                 return rc;
 
-            using (var tx = new Transaction(doc))
+            using (Transaction tx = new(doc))
             {
                 tx.Start("Export PNG Element Images");
 
-                uidoc.Selection.SetElementIds(new List<ElementId>());
+                uidoc.Selection.SetElementIds([]);
 
-                var ie = new ImageExporter(doc);
+                ImageExporter ie = new(doc);
                 var interactive = !app.IsJournalPlaying();
 
                 foreach (var id in ids)

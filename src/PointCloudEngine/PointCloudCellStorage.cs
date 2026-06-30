@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Xml.Linq;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Xml.Linq;
 namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
     public class PointCloudCellStorage
@@ -15,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         private const float SDelta = 0.1f;
 
         private readonly int m_color;
-        private readonly Random m_random = new Random();
+        private readonly Random m_random = new();
         private readonly bool m_randomize;
 
         public PointCloudCellStorage(XYZ lowerLeft, XYZ upperRight, int color, bool randomize)
@@ -103,7 +101,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 
             while (deltaX < distance)
             {
-                AddPoints(startPoint + direction * deltaX, directions);
+                AddPoints(startPoint + (direction * deltaX), directions);
                 deltaX += SDelta;
             }
 
@@ -112,7 +110,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 
         private void AddModifiedPoint(XYZ point, XYZ modification, double transverseDelta, int pointNumber)
         {
-            var cloudPointXyz = point + modification * Math.Pow(transverseDelta * pointNumber, 4.0);
+            var cloudPointXyz = point + (modification * Math.Pow(transverseDelta * pointNumber, 4.0));
             var cp = new CloudPoint((float)cloudPointXyz.X, (float)cloudPointXyz.Y, (float)cloudPointXyz.Z, m_color);
             PointsBuffer[NumberOfPoints] = cp;
             NumberOfPoints++;

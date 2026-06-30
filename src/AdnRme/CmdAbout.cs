@@ -23,36 +23,36 @@
 #endregion // Header
 
 #region Namespaces
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 using DialogResult = System.Windows.Forms.DialogResult;
 #endregion // Namespaces
 
 namespace AdnRme
 {
-  [Transaction( TransactionMode.ReadOnly )]
-  public class CmdAbout : IExternalCommand
-  {
-    #region Execute Command
-    public Result Execute(
-      ExternalCommandData commandData,
-      ref String message,
-      ElementSet elements )
+    [Transaction(TransactionMode.ReadOnly)]
+    public class CmdAbout : IExternalCommand
     {
-      try
-      {
-        AboutBox a = new AboutBox();
-        DialogResult r = a.ShowDialog();
-        return Result.Cancelled;
-      }
-      catch( Exception ex )
-      {
-        message = ex.Message;
-        return Result.Failed;
-      }
+        #region Execute Command
+        public Result Execute(
+          ExternalCommandData commandData,
+          ref String message,
+          ElementSet elements)
+        {
+            try
+            {
+                AboutBox a = new();
+                var r = a.ShowDialog();
+                return Result.Cancelled;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+        }
+        #endregion // Execute Command
     }
-    #endregion // Execute Command
-  }
 }

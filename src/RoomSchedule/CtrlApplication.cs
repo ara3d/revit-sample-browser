@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
@@ -21,17 +21,10 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         /// <summary>
         ///     Access the event reactor instance
         /// </summary>
-        public static EventsReactor EventReactor
-        {
-            get
-            {
-                if (null == _eventReactor)
-                    throw new ArgumentException(
+        public static EventsReactor EventReactor => _eventReactor
+?? throw new ArgumentException(
                         "External application was not loaded yet, please make sure you register external application by correct full path of dll.",
                         "EventReactor");
-                return _eventReactor;
-            }
-        }
 
         /// <summary>
         ///     Implement OnStartup method to subscribe related events.

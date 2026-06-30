@@ -1,10 +1,10 @@
 ﻿// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
@@ -21,14 +21,14 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
 
-                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
+                if (doc.GetElement(refObj) is not FabricationPart part || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;
                 }
 
                 var rodInfo = part.GetRodInfo();
-                using (var trans = new Transaction(doc, "Detach Rods"))
+                using (Transaction trans = new(doc, "Detach Rods"))
                 {
                     trans.Start();
 
@@ -61,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
 
-                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
+                if (doc.GetElement(refObj) is not FabricationPart part || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;
@@ -74,18 +74,16 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Failed;
                 }
 
-                using (var trans = new Transaction(doc, "Double Rod Length"))
+                using Transaction trans = new(doc, "Double Rod Length");
+                trans.Start();
+
+                for (var i = 0; i < rodInfo.RodCount; i++)
                 {
-                    trans.Start();
-
-                    for (var i = 0; i < rodInfo.RodCount; i++)
-                    {
-                        var originalLength = rodInfo.GetRodLength(i);
-                        rodInfo.SetRodLength(i, originalLength * 2.0);
-                    }
-
-                    trans.Commit();
+                    var originalLength = rodInfo.GetRodLength(i);
+                    rodInfo.SetRodLength(i, originalLength * 2.0);
                 }
+
+                trans.Commit();
 
                 return Result.Succeeded;
             }
@@ -110,7 +108,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
 
-                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
+                if (doc.GetElement(refObj) is not FabricationPart part || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;
@@ -123,18 +121,16 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Failed;
                 }
 
-                using (var trans = new Transaction(doc, "Halve Rod Length"))
+                using Transaction trans = new(doc, "Halve Rod Length");
+                trans.Start();
+
+                for (var i = 0; i < rodInfo.RodCount; i++)
                 {
-                    trans.Start();
-
-                    for (var i = 0; i < rodInfo.RodCount; i++)
-                    {
-                        var originalLength = rodInfo.GetRodLength(i);
-                        rodInfo.SetRodLength(i, originalLength / 2.0);
-                    }
-
-                    trans.Commit();
+                    var originalLength = rodInfo.GetRodLength(i);
+                    rodInfo.SetRodLength(i, originalLength / 2.0);
                 }
+
+                trans.Commit();
 
                 return Result.Succeeded;
             }
@@ -159,7 +155,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
 
-                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
+                if (doc.GetElement(refObj) is not FabricationPart part || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;
@@ -172,18 +168,16 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Failed;
                 }
 
-                using (var trans = new Transaction(doc, "Increase Rod Structure Extension"))
+                using Transaction trans = new(doc, "Increase Rod Structure Extension");
+                trans.Start();
+
+                for (var i = 0; i < rodInfo.RodCount; i++)
                 {
-                    trans.Start();
-
-                    for (var i = 0; i < rodInfo.RodCount; i++)
-                    {
-                        var originalExtension = rodInfo.GetRodStructureExtension(i);
-                        rodInfo.SetRodStructureExtension(i, originalExtension + 1.0);
-                    }
-
-                    trans.Commit();
+                    var originalExtension = rodInfo.GetRodStructureExtension(i);
+                    rodInfo.SetRodStructureExtension(i, originalExtension + 1.0);
                 }
+
+                trans.Commit();
 
                 return Result.Succeeded;
             }
@@ -208,7 +202,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
 
-                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
+                if (doc.GetElement(refObj) is not FabricationPart part || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;
@@ -221,18 +215,16 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Failed;
                 }
 
-                using (var trans = new Transaction(doc, "Increase Rod Structure Extension"))
+                using Transaction trans = new(doc, "Increase Rod Structure Extension");
+                trans.Start();
+
+                for (var i = 0; i < rodInfo.RodCount; i++)
                 {
-                    trans.Start();
-
-                    for (var i = 0; i < rodInfo.RodCount; i++)
-                    {
-                        var originalExtension = rodInfo.GetRodStructureExtension(i);
-                        rodInfo.SetRodStructureExtension(i, originalExtension - 1.0);
-                    }
-
-                    trans.Commit();
+                    var originalExtension = rodInfo.GetRodStructureExtension(i);
+                    rodInfo.SetRodStructureExtension(i, originalExtension - 1.0);
                 }
+
+                trans.Commit();
 
                 return Result.Succeeded;
             }

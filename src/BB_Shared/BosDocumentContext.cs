@@ -1,5 +1,4 @@
-﻿using Ara3D.BimOpenSchema;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +30,8 @@ public class BosDocumentContext
         Document = document;
         Parent = parent;
 
-        Transform = rli != null 
-            ? parent.Transform.Multiply(rli.GetTransform()) 
+        Transform = rli != null
+            ? parent.Transform.Multiply(rli.GetTransform())
             : Transform.Identity;
 
         LinkInstance = rli;
@@ -40,15 +39,15 @@ public class BosDocumentContext
         Path = document.PathName;
         Title = document.Title;
 
-        if (LinkInstance == null) 
+        if (LinkInstance == null)
             return;
-        
+
         IsLink = true;
         LinkName = LinkInstance.Name;
         var typeId = LinkInstance.GetTypeId();
         var extRef = ExternalFileUtils.GetExternalFileReference(Parent.Document, typeId);
         var modelPath = extRef.GetPath();
-        ExternalPath = modelPath == null 
+        ExternalPath = modelPath == null
             ? "" : ModelPathUtils.ConvertModelPathToUserVisiblePath(modelPath) ?? "";
     }
 
@@ -60,7 +59,7 @@ public class BosDocumentContext
 
     public List<BosDocumentContext> GatherLinkedDocuments()
     {
-        var r = new HashSet<BosDocumentContext>();
+        HashSet<BosDocumentContext> r = new();
         GatherLinkedDocuments(r);
         return r.ToList();
     }
@@ -80,8 +79,12 @@ public class BosDocumentContext
         => $"{Path}-{Title}-{ExternalPath}";
 
     public override int GetHashCode()
-        => Key.GetHashCode();
+    {
+        return Key.GetHashCode();
+    }
 
     public override bool Equals(object obj)
-        => obj is BosDocumentContext de && Key == de.Key;
+    {
+        return obj is BosDocumentContext de && Key == de.Key;
+    }
 }

@@ -14,8 +14,10 @@ namespace BuildingCoder
             bool computReferences = true,
             bool bottomFace = true)
         {
-            var opt = new Options();
-            opt.ComputeReferences = computReferences;
+            Options opt = new()
+            {
+                ComputeReferences = computReferences
+            };
 
             var geo = e.get_Geometry(opt);
 

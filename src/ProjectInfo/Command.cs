@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
@@ -25,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
             RevitStartInfo.RevitDoc = commandData.Application.ActiveUIDocument.Document;
             RevitStartInfo.RevitProduct = commandData.Application.Application.Product;
 
-            var transaction = new Transaction(RevitStartInfo.RevitDoc, "ProjectInfo");
+            Transaction transaction = new(RevitStartInfo.RevitDoc, "ProjectInfo");
             try
             {
                 // Start transaction
@@ -35,18 +35,16 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
                 var pi = commandData.Application.ActiveUIDocument.Document.ProjectInformation;
 
                 // show main form
-                using (var pif = new ProjectInfoForm(new ProjectInfoWrapper(pi)))
+                using ProjectInfoForm pif = new(new ProjectInfoWrapper(pi));
+                pif.StartPosition = FormStartPosition.CenterParent;
+                if (pif.ShowDialog() == DialogResult.OK)
                 {
-                    pif.StartPosition = FormStartPosition.CenterParent;
-                    if (pif.ShowDialog() == DialogResult.OK)
-                    {
-                        transaction.Commit();
-                        return Result.Succeeded;
-                    }
-
-                    transaction.RollBack();
-                    return Result.Cancelled;
+                    transaction.Commit();
+                    return Result.Succeeded;
                 }
+
+                transaction.RollBack();
+                return Result.Cancelled;
             }
             catch (Exception ex)
             {

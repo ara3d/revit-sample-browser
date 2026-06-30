@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var dialog = new UiCommand(commandData.Application.ActiveUIDocument.Document,
+            UiCommand dialog = new(commandData.Application.ActiveUIDocument.Document,
                 commandData.Application.ActiveAddInId.GetGUID().ToString());
             dialog.ShowDialog();
             return Result.Succeeded;

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.TypeConverter
 {

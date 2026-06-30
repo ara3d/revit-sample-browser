@@ -12,13 +12,13 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.SpatialFieldGradient.CS
 {
@@ -26,14 +26,14 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.SpatialFieldGr
     [Regeneration(RegenerationOption.Manual)]
     public class SpatialFieldGradient : IExternalCommand
     {
-        private static AddInId _appId = new AddInId(new Guid("CF099951-E66B-4a35-BF7F-2959CA87A42D"));
+        private static readonly AddInId _appId = new(new Guid("CF099951-E66B-4a35-BF7F-2959CA87A42D"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
             var uiDoc = commandData.Application.ActiveUIDocument;
 
-            var trans = new Transaction(doc, "Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework");
+            Transaction trans = new(doc, "Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework");
             trans.Start();
 
             var sfm = SpatialFieldManager.GetSpatialFieldManager(doc.ActiveView) ?? SpatialFieldManager.CreateSpatialFieldManager(doc.ActiveView, 1);
@@ -41,32 +41,32 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.SpatialFieldGr
             var refList = uiDoc.Selection.PickObjects(ObjectType.Face);
             foreach (var reference in refList)
             {
-                IList<UV> uvPts = new List<UV>();
+                IList<UV> uvPts = [];
 
-                var doubleList = new List<double>();
-                IList<ValueAtPoint> valList = new List<ValueAtPoint>();
+                List<double> doubleList = new();
+                IList<ValueAtPoint> valList = [];
                 var face = doc.GetElement(reference).GetGeometryObjectFromReference(reference) as Face;
                 var bb = face.GetBoundingBox();
                 var min = bb.Min;
                 var max = bb.Max;
 
                 for (var u = min.U; u < max.U; u += (max.U - min.U) / 10)
-                for (var v = min.V; v < max.V; v += (max.V - min.V) / 10)
-                {
-                    var uv = new UV(u, v);
-                    if (face.IsInside(uv))
+                    for (var v = min.V; v < max.V; v += (max.V - min.V) / 10)
                     {
-                        uvPts.Add(uv);
-                        doubleList.Add(v + DateTime.Now.Second);
-                        valList.Add(new ValueAtPoint(doubleList));
-                        doubleList.Clear();
+                        UV uv = new(u, v);
+                        if (face.IsInside(uv))
+                        {
+                            uvPts.Add(uv);
+                            doubleList.Add(v + DateTime.Now.Second);
+                            valList.Add(new ValueAtPoint(doubleList));
+                            doubleList.Clear();
+                        }
                     }
-                }
 
-                var pnts = new FieldDomainPointsByUV(uvPts);
-                var vals = new FieldValues(valList);
+                FieldDomainPointsByUV pnts = new(uvPts);
+                FieldValues vals = new(valList);
                 var idx = sfm.AddSpatialFieldPrimitive(reference);
-                var resultSchema = new AnalysisResultSchema("Schema 1", "Schema 1 Description");
+                AnalysisResultSchema resultSchema = new("Schema 1", "Schema 1 Description");
                 sfm.UpdateSpatialFieldPrimitive(idx, pnts, vals, sfm.RegisterResult(resultSchema));
             }
 

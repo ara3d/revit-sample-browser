@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Analysis;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Analysis;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 {
@@ -12,7 +12,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
     {
         private EnergyAnalysisDetailModel m_energyAnalysisDetailModel;
         private readonly Document m_revitDoc;
-        private EnergyAnalysisDetailModelOptions m_options;
 
         public EnergyAnalysisModel(Document doc)
         {
@@ -20,11 +19,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
             Options = new EnergyAnalysisDetailModelOptions();
         }
 
-        public EnergyAnalysisDetailModelOptions Options
-        {
-            get => m_options;
-            set => m_options = value;
-        }
+        public EnergyAnalysisDetailModelOptions Options { get; set; }
 
         public void Initialize()
         {
@@ -34,20 +29,20 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 
         public XElement GetAnalyticalOpenings()
         {
-            var openingsNode = new XElement("OpeningsModels");
+            XElement openingsNode = new("OpeningsModels");
             openingsNode.Add(new XAttribute("Name", "OpeningsModels"));
 
             var openings = m_energyAnalysisDetailModel.GetAnalyticalOpenings();
             foreach (var opening in openings)
             {
-                var openNode = new XElement("Open");
+                XElement openNode = new("Open");
                 openNode.Add(new XAttribute("Name", opening.Name));
                 openingsNode.Add(openNode);
 
                 var openingSurface = opening.GetAnalyticalSurface();
                 if (null == openingSurface)
                     continue;
-                var surfaceNode = new XElement("Surface");
+                XElement surfaceNode = new("Surface");
                 surfaceNode.Add(new XAttribute("Name", openingSurface.Name));
                 openNode.Add(surfaceNode);
             }
@@ -57,7 +52,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 
         public XElement GetAnalyticalShadingSurfaces()
         {
-            var shadingSurfacesNode = new XElement("ShadingSurfaces1");
+            XElement shadingSurfacesNode = new("ShadingSurfaces1");
             shadingSurfacesNode.Add(new XAttribute("Name", "ShadingSurfaces"));
 
             var shadingSurfaces = m_energyAnalysisDetailModel.GetAnalyticalShadingSurfaces();
@@ -68,12 +63,12 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 
         public XElement GetAnalyticalSpaces()
         {
-            var energyAnalysisSpacesNode = new XElement("AnalyticalSpaces");
+            XElement energyAnalysisSpacesNode = new("AnalyticalSpaces");
             energyAnalysisSpacesNode.Add(new XAttribute("Name", "AnalyticalSpaces"));
             var energyAnalysisSpaces = m_energyAnalysisDetailModel.GetAnalyticalSpaces();
             foreach (var space in energyAnalysisSpaces)
             {
-                var spaceNode = new XElement("Space");
+                XElement spaceNode = new("Space");
                 spaceNode.Add(new XAttribute("Name", space.ComposedName));
                 energyAnalysisSpacesNode.Add(spaceNode);
 
@@ -88,7 +83,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
         {
             foreach (var surface in analyticalSurfaces)
             {
-                var surfaceNode = new XElement("Surface");
+                XElement surfaceNode = new("Surface");
                 surfaceNode.Add(new XAttribute("Name", surface.Name));
                 node.Add(surfaceNode);
             }
@@ -98,7 +93,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
         {
             treeView.Nodes.Clear();
 
-            var node = new TreeNode("BuildingModel");
+            TreeNode node = new("BuildingModel");
             treeView.Nodes.Add(node);
 
             var spaceNode = XElementToTreeNode(GetAnalyticalSpaces());
@@ -115,7 +110,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
         {
             if (null == element.FirstAttribute)
                 return null;
-            var node = new TreeNode(element.FirstAttribute.Value);
+            TreeNode node = new(element.FirstAttribute.Value);
             if (!element.HasElements)
                 return node;
             foreach (var ele in element.Elements())
@@ -128,24 +123,14 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 
         public void SetTier(string tierValue)
         {
-            switch (tierValue)
+            Options.Tier = tierValue switch
             {
-                case "Final":
-                    Options.Tier = EnergyAnalysisDetailModelTier.Final;
-                    break;
-                case "FirstLevelBoundaries":
-                    Options.Tier = EnergyAnalysisDetailModelTier.FirstLevelBoundaries;
-                    break;
-                case "NotComputed":
-                    Options.Tier = EnergyAnalysisDetailModelTier.NotComputed;
-                    break;
-                case "SecondLevelBoundaries":
-                    Options.Tier = EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
-                    break;
-                default:
-                    Options.Tier = EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
-                    break;
-            }
+                "Final" => EnergyAnalysisDetailModelTier.Final,
+                "FirstLevelBoundaries" => EnergyAnalysisDetailModelTier.FirstLevelBoundaries,
+                "NotComputed" => EnergyAnalysisDetailModelTier.NotComputed,
+                "SecondLevelBoundaries" => EnergyAnalysisDetailModelTier.SecondLevelBoundaries,
+                _ => EnergyAnalysisDetailModelTier.SecondLevelBoundaries,
+            };
         }
     }
 }

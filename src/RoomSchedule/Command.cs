@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
@@ -26,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 tranSample = new Transaction(commandData.Application.ActiveUIDocument.Document, "Sample Start");
                 tranSample.Start();
                 // create a form to display the information of Revit rooms and xls based rooms
-                using (var infoForm = new RoomScheduleForm(commandData))
+                using (RoomScheduleForm infoForm = new(commandData))
                 {
                     infoForm.ShowDialog();
                 }

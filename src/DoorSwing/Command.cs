@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
@@ -19,31 +19,29 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         {
             var returnCode = Result.Cancelled;
 
-            var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Initialize Command");
+            Transaction tran = new(commandData.Application.ActiveUIDocument.Document, "Initialize Command");
             tran.Start();
 
             try
             {
                 // one instance of DoorSwingData class.
-                var databuffer = new DoorSwingData(commandData.Application);
+                DoorSwingData databuffer = new(commandData.Application);
 
-                using (var initForm = new InitializeForm(databuffer))
+                using InitializeForm initForm = new(databuffer);
+                // Show UI
+                var dialogResult = initForm.ShowDialog();
+
+                if (DialogResult.OK == dialogResult)
                 {
-                    // Show UI
-                    var dialogResult = initForm.ShowDialog();
+                    databuffer.DeleteTempDoorInstances();
 
-                    if (DialogResult.OK == dialogResult)
-                    {
-                        databuffer.DeleteTempDoorInstances();
+                    // update door type's opening feature based on family's actual geometry and 
+                    // country's standard.
+                    databuffer.UpdateDoorFamiliesOpeningFeature();
 
-                        // update door type's opening feature based on family's actual geometry and 
-                        // country's standard.
-                        databuffer.UpdateDoorFamiliesOpeningFeature();
-
-                        // update each door instance's Opening feature and public door flag
-                        returnCode = DoorSwingData.UpdateDoorsInfo(commandData.Application.ActiveUIDocument.Document,
-                            false, true, ref message);
-                    }
+                    // update each door instance's Opening feature and public door flag
+                    returnCode = DoorSwingData.UpdateDoorsInfo(commandData.Application.ActiveUIDocument.Document,
+                        false, true, ref message);
                 }
             }
             catch (Exception ex)
@@ -70,21 +68,20 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             var returnCode = Result.Succeeded;
             var app = commandData.Application;
             var doc = app.ActiveUIDocument;
-            var tran = new Transaction(doc.Document, "Update Parameters Command");
+            Transaction tran = new(doc.Document, "Update Parameters Command");
             tran.Start();
 
             try
             {
-                var elementSet = new ElementSet();
+                ElementSet elementSet = new();
                 foreach (var elementId in doc.Selection.GetElementIds())
                 {
                     elementSet.Insert(doc.Document.GetElement(elementId));
                 }
 
-                if (elementSet.IsEmpty)
-                    returnCode = DoorSwingData.UpdateDoorsInfo(doc.Document, false, true, ref message);
-                else
-                    returnCode = DoorSwingData.UpdateDoorsInfo(doc.Document, true, true, ref message);
+                returnCode = elementSet.IsEmpty
+                    ? DoorSwingData.UpdateDoorsInfo(doc.Document, false, true, ref message)
+                    : DoorSwingData.UpdateDoorsInfo(doc.Document, true, true, ref message);
             }
             catch (Exception ex)
             {
@@ -110,12 +107,12 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             var returnCode = Result.Succeeded;
             var app = commandData.Application;
             var doc = app.ActiveUIDocument;
-            var tran = new Transaction(doc.Document, "Update Geometry Command");
+            Transaction tran = new(doc.Document, "Update Geometry Command");
             tran.Start();
 
             try
             {
-                var elementSet = new ElementSet();
+                ElementSet elementSet = new();
                 foreach (var elementId in doc.Selection.GetElementIds())
                 {
                     elementSet.Insert(doc.Document.GetElement(elementId));

@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Parameters;
+using System;
+using System.Windows.Forms;
 namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
 {
     /// <summary>
@@ -40,11 +39,11 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
             var revit = commandData.Application;
 
             m_revit = revit;
-            var displayForm = new RotateFramingObjectsForm(this)
+            RotateFramingObjectsForm displayForm = new(this)
             {
                 StartPosition = FormStartPosition.CenterParent
             };
-            var selection = new ElementSet();
+            ElementSet selection = new();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
             {
                 selection.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
@@ -85,22 +84,22 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
                     {
                         case StructuralType.Beam:
                         case StructuralType.Brace:
-                        {
-                            // selection is a beam or brace
-                            var returnValue = ParameterAccess.FindParameter(AngleDefinitionName, familyComponent);
-                            displayForm.RotationTextBox.Text = returnValue;
-                            break;
-                        }
+                            {
+                                // selection is a beam or brace
+                                var returnValue = ParameterAccess.FindParameter(AngleDefinitionName, familyComponent);
+                                displayForm.RotationTextBox.Text = returnValue;
+                                break;
+                            }
                         case StructuralType.Column:
-                        {
-                            // selection is a column
-                            var columnLocation = familyComponent.Location;
-                            var pointLocation = columnLocation as LocationPoint;
-                            var temp = pointLocation.Rotation;
-                            var output = Math.Round(temp * 180 / Math.PI, 3).ToString();
-                            displayForm.RotationTextBox.Text = output;
-                            break;
-                        }
+                            {
+                                // selection is a column
+                                var columnLocation = familyComponent.Location;
+                                var pointLocation = columnLocation as LocationPoint;
+                                var temp = pointLocation.Rotation;
+                                var output = Math.Round(temp * 180 / Math.PI, 3).ToString();
+                                displayForm.RotationTextBox.Text = output;
+                                break;
+                            }
                         default:
                             // other familyInstance can not be rotated
                             message = "It is not a beam, brace or column.";
@@ -143,11 +142,11 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
         /// </summary>
         public void RotateElement()
         {
-            var transaction = new Transaction(m_revit.ActiveUIDocument.Document, "RotateElement");
+            Transaction transaction = new(m_revit.ActiveUIDocument.Document, "RotateElement");
             transaction.Start();
             try
             {
-                var selection = new ElementSet();
+                ElementSet selection = new();
                 foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
                 {
                     selection.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
@@ -155,7 +154,7 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
 
                 foreach (Element e in selection)
                 {
-                    if (!(e is FamilyInstance familyComponent))
+                    if (e is not FamilyInstance familyComponent)
                         //is not a familyInstance
                         continue;
                     switch (familyComponent.StructuralType)
@@ -163,47 +162,47 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
                         // if be familyInstance,judge the types of familyInstance
                         case StructuralType.Beam:
                         case StructuralType.Brace:
-                        {
-                            // selection is a beam or Brace
-                            var paraIterator = familyComponent.Parameters.ForwardIterator();
-                            paraIterator.Reset();
-
-                            while (paraIterator.MoveNext())
                             {
-                                var para = paraIterator.Current;
-                                var objectAttribute = para as Parameter;
-                                if (objectAttribute.Definition.Name.Equals(AngleDefinitionName))
-                                {
-                                    var originDegree = objectAttribute.AsDouble();
-                                    var rotateDegree = ReceiveRotationTextBox * SampleBrowserUtils.DegreesToRadians;
-                                    if (!IsAbsoluteChecked)
-                                        // absolute rotation
-                                        rotateDegree += originDegree;
-                                    objectAttribute.Set(rotateDegree);
-                                    // relative rotation
-                                }
-                            }
+                                // selection is a beam or Brace
+                                var paraIterator = familyComponent.Parameters.ForwardIterator();
+                                paraIterator.Reset();
 
-                            break;
-                        }
+                                while (paraIterator.MoveNext())
+                                {
+                                    var para = paraIterator.Current;
+                                    var objectAttribute = para as Parameter;
+                                    if (objectAttribute.Definition.Name.Equals(AngleDefinitionName))
+                                    {
+                                        var originDegree = objectAttribute.AsDouble();
+                                        var rotateDegree = ReceiveRotationTextBox * SampleBrowserUtils.DegreesToRadians;
+                                        if (!IsAbsoluteChecked)
+                                            // absolute rotation
+                                            rotateDegree += originDegree;
+                                        objectAttribute.Set(rotateDegree);
+                                        // relative rotation
+                                    }
+                                }
+
+                                break;
+                            }
                         case StructuralType.Column:
-                        {
-                            // rotate a column
-                            var columnLocation = familyComponent.Location;
-                            var pointLocation = columnLocation as LocationPoint;
-                            var insertPoint = pointLocation.Point;
-                            var temp = pointLocation.Rotation;
-                            //existing rotation
-                            var directionPoint = new XYZ(0, 0, 1);
-                            // define the vector of axis
-                            var rotateAxis = Line.CreateUnbound(insertPoint, directionPoint);
-                            var rotateDegree = ReceiveRotationTextBox * SampleBrowserUtils.DegreesToRadians;
-                            // rotate column by rotate method
-                            if (IsAbsoluteChecked) rotateDegree -= temp;
-                            var rotateResult = pointLocation.Rotate(rotateAxis, rotateDegree);
-                            if (rotateResult == false) TaskDialog.Show("Revit", "Rotate Failed.");
-                            break;
-                        }
+                            {
+                                // rotate a column
+                                var columnLocation = familyComponent.Location;
+                                var pointLocation = columnLocation as LocationPoint;
+                                var insertPoint = pointLocation.Point;
+                                var temp = pointLocation.Rotation;
+                                //existing rotation
+                                XYZ directionPoint = new(0, 0, 1);
+                                // define the vector of axis
+                                var rotateAxis = Line.CreateUnbound(insertPoint, directionPoint);
+                                var rotateDegree = ReceiveRotationTextBox * SampleBrowserUtils.DegreesToRadians;
+                                // rotate column by rotate method
+                                if (IsAbsoluteChecked) rotateDegree -= temp;
+                                var rotateResult = pointLocation.Rotate(rotateAxis, rotateDegree);
+                                if (rotateResult == false) TaskDialog.Show("Revit", "Rotate Failed.");
+                                break;
+                            }
                     }
                 }
 

@@ -1,5 +1,5 @@
-﻿using System;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
+using System;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -31,7 +31,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
             // Connectivity / topology is BIM-relevant even if you skip geometry.
             // Keep it unless you explicitly decide to remove it elsewhere.
-            bool isConnectivity =
+            var isConnectivity =
                 name.Contains("Connector", StringComparison.OrdinalIgnoreCase) ||
                 name.Contains("GraphicalWarning_OpenConnector", StringComparison.OrdinalIgnoreCase) ||
                 bic == BuiltInCategory.OST_ConnectorElem ||
@@ -42,10 +42,10 @@ namespace Ara3D.Bowerbird.RevitSamples
 
             // Point clouds are heavy, but valuable context.
             // Keep as "reference-only" (path/guid/transform/bounds) in your exporter.
-            bool isPointCloud = (bic == BuiltInCategory.OST_PointClouds);
+            var isPointCloud = bic == BuiltInCategory.OST_PointClouds;
 
             // Schedules/templates are “document-like” data. Keep only if you want non-geometry BIM docs.
-            bool isScheduleOrTemplate =
+            var isScheduleOrTemplate =
                 name.Contains("Schedule", StringComparison.OrdinalIgnoreCase) ||
                 name.Contains("Templates", StringComparison.OrdinalIgnoreCase) ||
                 bic == BuiltInCategory.OST_Schedules ||
@@ -53,15 +53,15 @@ namespace Ara3D.Bowerbird.RevitSamples
                 bic == BuiltInCategory.OST_ScheduleViewParamGroup;
 
             // View/presentation state (can be useful; gate behind skipViewItems)
-            bool isViewState =
-                bic == BuiltInCategory.OST_Views ||
-                bic == BuiltInCategory.OST_Viewports ||
-                bic == BuiltInCategory.OST_ViewportLabel ||
-                bic == BuiltInCategory.OST_Sheets ||
-                bic == BuiltInCategory.OST_Cameras ||
-                bic == BuiltInCategory.OST_Camera_Lines ||
-                bic == BuiltInCategory.OST_SectionBox ||
-                bic == BuiltInCategory.OST_Viewers;
+            var isViewState =
+                bic is BuiltInCategory.OST_Views or
+                BuiltInCategory.OST_Viewports or
+                BuiltInCategory.OST_ViewportLabel or
+                BuiltInCategory.OST_Sheets or
+                BuiltInCategory.OST_Cameras or
+                BuiltInCategory.OST_Camera_Lines or
+                BuiltInCategory.OST_SectionBox or
+                BuiltInCategory.OST_Viewers;
 
             // 2) Hard keep: core 3D model categories that must NEVER be skipped by heuristics
             switch (bic)
@@ -156,19 +156,19 @@ namespace Ara3D.Bowerbird.RevitSamples
                 return true;
 
             // 3c) Pure 2D annotation / drafting primitives
-            if (bic == BuiltInCategory.OST_TextNotes ||
-                bic == BuiltInCategory.OST_FilledRegion ||
-                bic == BuiltInCategory.OST_MaskingRegion ||
-                bic == BuiltInCategory.OST_GenericAnnotation ||
-                bic == BuiltInCategory.OST_RevisionClouds ||
-                bic == BuiltInCategory.OST_RevisionCloudTags ||
-                bic == BuiltInCategory.OST_SpotElevations ||
-                bic == BuiltInCategory.OST_SpotCoordinates ||
-                bic == BuiltInCategory.OST_SpotSlopes ||
-                bic == BuiltInCategory.OST_SpotElevSymbols ||
-                bic == BuiltInCategory.OST_SpotCoordinateSymbols ||
-                bic == BuiltInCategory.OST_SpotSlopesSymbols ||
-                bic == BuiltInCategory.OST_ElevationMarks)
+            if (bic is BuiltInCategory.OST_TextNotes or
+                BuiltInCategory.OST_FilledRegion or
+                BuiltInCategory.OST_MaskingRegion or
+                BuiltInCategory.OST_GenericAnnotation or
+                BuiltInCategory.OST_RevisionClouds or
+                BuiltInCategory.OST_RevisionCloudTags or
+                BuiltInCategory.OST_SpotElevations or
+                BuiltInCategory.OST_SpotCoordinates or
+                BuiltInCategory.OST_SpotSlopes or
+                BuiltInCategory.OST_SpotElevSymbols or
+                BuiltInCategory.OST_SpotCoordinateSymbols or
+                BuiltInCategory.OST_SpotSlopesSymbols or
+                BuiltInCategory.OST_ElevationMarks)
                 return skip2dItems;
 
             // 3d) Internal / UI / authoring artifacts (massive noise)

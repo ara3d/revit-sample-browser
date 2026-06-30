@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Drawing;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System.Collections.Generic;
+using System.Drawing;
 namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
     /// <summary>
@@ -40,7 +39,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 
         public override List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
-            var needPoints = new List<List<XYZ>>();
+            List<List<XYZ>> needPoints = new();
             foreach (var face in faces)
             {
                 foreach (var edge in face)
@@ -48,7 +47,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                     var edgexyzs = edge.Tessellate() as List<XYZ>;
                     if (false == m_haveOpening)
                     {
-                        var transformedPoints = new List<XYZ>();
+                        List<XYZ> transformedPoints = new();
                         for (var j = 0; j < edgexyzs.Count; j++)
                         {
                             var xyz = edgexyzs[j];
@@ -77,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             {
                 foreach (var point in points)
                 {
-                    var v = new Vector4(point);
+                    Vector4 v = new(point);
                     var v1 = inverseMatrix.Transform(v);
 
                     if (bFirstPoint)
@@ -102,23 +101,23 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             //return an array with max and min value of face
             var resultPoints = new PointF[2]
             {
-                new PointF(minX, minY), new PointF(maxX, maxY)
+                new(minX, minY), new(maxX, maxY)
             };
             return resultPoints;
         }
 
         public override Matrix4 GetTo2DMatrix()
         {
-            var xAxis = new Vector4(m_data.HandOrientation);
+            Vector4 xAxis = new(m_data.HandOrientation);
             xAxis.Normalize();
             //Because Y axis in windows UI is downward, so we should Multiply(-1) here
-            var yAxis = new Vector4(m_data.FacingOrientation.Multiply(-1));
+            Vector4 yAxis = new(m_data.FacingOrientation.Multiply(-1));
             yAxis.Normalize();
             var zAxis = yAxis.CrossProduct(xAxis);
             zAxis.Normalize();
 
-            var vOrigin = new Vector4(Points[0][0]);
-            var result = new Matrix4(xAxis, yAxis, zAxis, vOrigin);
+            Vector4 vOrigin = new(Points[0][0]);
+            Matrix4 result = new(xAxis, yAxis, zAxis, vOrigin);
             m_matrixZaxis = result;
 
             xAxis = new Vector4(m_data.HandOrientation);
@@ -134,7 +133,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 
         public override List<List<Edge>> GetFaces(Element elem)
         {
-            var faceEdges = new List<List<Edge>>();
+            List<List<Edge>> faceEdges = new();
             var options = AppCreator.NewGeometryOptions();
             options.DetailLevel = ViewDetailLevel.Medium;
             //make sure references to geometric objects are computed.
@@ -151,61 +150,61 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                     //if beam doesn't contain opening on it, then we can get edges from instance
                     //and the points we get should be transformed by instance.Tranceform
                     case GeometryInstance instance:
-                    {
-                        m_beamTransform = instance.Transform;
-                        var elemGeo = instance.SymbolGeometry;
-                        //GeometryObjectArray objectsGeo = elemGeo.Objects;
-                        var objects1 = elemGeo.GetEnumerator();
-                        while (objects1.MoveNext())
                         {
-                            var objGeo = objects1.Current;
-
-                            var solid = objGeo as Solid;
-                            if (null != solid)
+                            m_beamTransform = instance.Transform;
+                            var elemGeo = instance.SymbolGeometry;
+                            //GeometryObjectArray objectsGeo = elemGeo.Objects;
+                            var objects1 = elemGeo.GetEnumerator();
+                            while (objects1.MoveNext())
                             {
-                                var faces = solid.Faces;
-                                foreach (Face face in faces)
-                                {
-                                    var edgeArrarr = face.EdgeLoops;
-                                    foreach (EdgeArray edgeArr in edgeArrarr)
-                                    {
-                                        var edgesList = new List<Edge>();
-                                        foreach (Edge edge in edgeArr)
-                                        {
-                                            edgesList.Add(edge);
-                                        }
+                                var objGeo = objects1.Current;
 
-                                        faceEdges.Add(edgesList);
+                                var solid = objGeo as Solid;
+                                if (null != solid)
+                                {
+                                    var faces = solid.Faces;
+                                    foreach (Face face in faces)
+                                    {
+                                        var edgeArrarr = face.EdgeLoops;
+                                        foreach (EdgeArray edgeArr in edgeArrarr)
+                                        {
+                                            List<Edge> edgesList = new();
+                                            foreach (Edge edge in edgeArr)
+                                            {
+                                                edgesList.Add(edge);
+                                            }
+
+                                            faceEdges.Add(edgesList);
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                     //if beam contains opening on it, then we can get edges from solid
                     //and the points we get do not need transform anymore
                     case Solid solid:
-                    {
-                        m_haveOpening = true;
-                        var faces = solid.Faces;
-                        foreach (Face face in faces)
                         {
-                            var edgeArrarr = face.EdgeLoops;
-                            foreach (EdgeArray edgeArr in edgeArrarr)
+                            m_haveOpening = true;
+                            var faces = solid.Faces;
+                            foreach (Face face in faces)
                             {
-                                var edgesList = new List<Edge>();
-                                foreach (Edge edge in edgeArr)
+                                var edgeArrarr = face.EdgeLoops;
+                                foreach (EdgeArray edgeArr in edgeArrarr)
                                 {
-                                    edgesList.Add(edge);
+                                    List<Edge> edgesList = new();
+                                    foreach (Edge edge in edgeArr)
+                                    {
+                                        edgesList.Add(edge);
+                                    }
+
+                                    faceEdges.Add(edgesList);
                                 }
-
-                                faceEdges.Add(edgesList);
                             }
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
 
@@ -245,10 +244,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         public void ChangeTransformMatrix(bool isZaxis)
         {
             m_isZaxis = isZaxis;
-            if (isZaxis)
-                To2DMatrix = m_matrixZaxis;
-            else
-                To2DMatrix = m_matrixYaxis;
+            To2DMatrix = isZaxis ? m_matrixZaxis : m_matrixYaxis;
             //re-calculate matrix used to move points to center
             MoveToCenterMatrix = ToCenterMatrix();
         }

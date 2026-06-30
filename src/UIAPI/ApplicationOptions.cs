@@ -34,10 +34,7 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
 
         public static ApplicationOptions Get()
         {
-            if (_sOptions == null)
-                throw new Exception("Static options was not initialized");
-
-            return _sOptions;
+            return _sOptions ?? throw new Exception("Static options was not initialized");
         }
     }
 }

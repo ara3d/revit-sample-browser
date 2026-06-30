@@ -3,6 +3,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 {
@@ -21,8 +22,8 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
                 return Result.Failed;
             }
 
-            var slabShapeEditingForm =
-                new SlabShapeEditingForm(selectFloor, commandData);
+            SlabShapeEditingForm slabShapeEditingForm =
+                new(selectFloor, commandData);
             slabShapeEditingForm.ShowDialog();
 
             return Result.Succeeded;
@@ -30,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         private Floor GetSelectFloor(ExternalCommandData commandData)
         {
-            var eleSet = new ElementSet();
+            ElementSet eleSet = new();
             foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
             {
                 eleSet.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));

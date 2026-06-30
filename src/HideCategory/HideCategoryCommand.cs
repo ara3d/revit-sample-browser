@@ -3,12 +3,12 @@
 // Adapted from HideCategory by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/HideCategory
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
 using PickObjectsCanceled = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 namespace Ara3D.RevitSampleBrowser.HideCategory.CS
@@ -56,11 +56,11 @@ namespace Ara3D.RevitSampleBrowser.HideCategory.CS
             }
 
             var categoryId = category.Id;
-            var viewnameOk = new List<string>();
-            var viewnameBad = new List<string>();
-            var viewnameBadX = new List<string>();
+            List<string> viewnameOk = new();
+            List<string> viewnameBad = new();
+            List<string> viewnameBadX = new();
 
-            using (var tx = new Transaction(doc))
+            using (Transaction tx = new(doc))
             {
                 tx.Start($"Hide category '{category.Name}' in all views");
 
@@ -87,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.HideCategory.CS
                 tx.Commit();
             }
 
-            var dialog = new TaskDialog("Hide Category")
+            TaskDialog dialog = new("Hide Category")
             {
                 MainInstruction =
                     $"Category '{category.Name}' hidden in {viewnameOk.Count} views; "

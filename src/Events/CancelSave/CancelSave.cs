@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.RevitAddIns;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 
 namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
 {
@@ -20,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
     {
         private const string ThisAddinFileName = "CancelSave.addin";
 
-        private readonly Dictionary<int, string> m_documentOriginalStatusDic = new Dictionary<int, string>();
+        private readonly Dictionary<int, string> m_documentOriginalStatusDic = [];
         private int m_hashCodeOfCurrentClosingDoc;
 
         public Result OnStartup(UIControlledApplication application)

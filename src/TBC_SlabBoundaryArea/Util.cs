@@ -1,12 +1,11 @@
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -47,14 +46,16 @@ namespace BuildingCoder
             if (F == null)
                 return Result.Failed;
 
-            var CLoop
-                = new List<Tuple<PlanarFace, CurveLoop, int>>();
+            List<Tuple<PlanarFace, CurveLoop, int>> CLoop
+                = new();
 
             var Ix = 0;
             foreach (var item in F.GetEdgesAsCurveLoops())
             {
-                var CLL = new List<CurveLoop>();
-                CLL.Add(item);
+                List<CurveLoop> CLL = new()
+                {
+                    item
+                };
                 var S = GeometryCreationUtilities
                     .CreateExtrusionGeometry(CLL, F.FaceNormal, 1);
 
@@ -73,8 +74,8 @@ namespace BuildingCoder
                 }
             }
 
-            var OuterLoops = new List<CurveLoop>();
-            var InnerLoops = new List<CurveLoop>();
+            List<CurveLoop> OuterLoops = new();
+            List<CurveLoop> InnerLoops = new();
             foreach (var item in CLoop)
             {
                 var J = CLoop.ToList().FindAll(z
@@ -86,7 +87,7 @@ namespace BuildingCoder
                     InnerLoops.Add(item.Item2);
             }
 
-            using var Tx = new Transaction(IntDoc,
+            using Transaction Tx = new(IntDoc,
                 "Outer loops");
             if (Tx.Start() == TransactionStatus.Started)
             {
@@ -95,8 +96,8 @@ namespace BuildingCoder
                         F.Origin + F.XVector, F.Origin + F.YVector));
 
                 foreach (var Crv in OuterLoops)
-                foreach (var C in Crv)
-                    IntDoc.Create.NewModelCurve(C, SKP);
+                    foreach (var C in Crv)
+                        IntDoc.Create.NewModelCurve(C, SKP);
                 Tx.Commit();
             }
 

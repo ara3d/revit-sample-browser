@@ -3,7 +3,6 @@
 // Adapted from SpatialElementGeometryCalculator by Jeremy Tammik et al.
 // https://github.com/jeremytammik/SpatialElementGeometryCalculator (MIT License)
 
-using System;
 using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS

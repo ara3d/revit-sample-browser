@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 {
@@ -33,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 
         public Element HostElement { get; private set; }
 
-        public Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> BCs { get; } = new Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions>();
+        public Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> BCs { get; } = [];
 
         /// <summary>
         ///     According to the selected element create corresponding Boundary Conditions.
@@ -47,24 +46,24 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             {
                 // judge the type of the HostElement
                 case FamilyInstance familyInstance:
-                {
-                    var structuralType = familyInstance.StructuralType;
-
-                    switch (structuralType)
                     {
-                        // create Line BC for beam
-                        case StructuralType.Beam:
-                            createBch = CreateLineBc;
-                            break;
-                        case StructuralType.Brace:
-                        case StructuralType.Column:
-                        // create point BC for Column/brace
-                        case StructuralType.Footing:
-                            createBch = CreatePointBc;
-                            break;
+                        var structuralType = familyInstance.StructuralType;
+
+                        switch (structuralType)
+                        {
+                            // create Line BC for beam
+                            case StructuralType.Beam:
+                                createBch = CreateLineBc;
+                                break;
+                            case StructuralType.Brace:
+                            case StructuralType.Column:
+                            // create point BC for Column/brace
+                            case StructuralType.Footing:
+                                createBch = CreatePointBc;
+                                break;
+                        }
+                        break;
                     }
-                    break;
-                }
                 case Wall _:
                     // create line BC for wall
                     createBch = CreateLineBc;
@@ -119,20 +118,20 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
         {
             var document = element.Document;
             var assocManager = AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(document);
-            return assocManager == null 
+            return assocManager == null
                 ? null : document.GetElement<AnalyticalElement>(element.Id);
         }
 
         private Autodesk.Revit.DB.Structure.BoundaryConditions CreatePointBc(Element hostElement)
         {
-            if (!(hostElement is FamilyInstance)) return null;
+            if (hostElement is not FamilyInstance) return null;
 
             var analyticalModel = GetAnalyticalElement(hostElement);
-            
+
             var refCurve = analyticalModel.GetCurve();
             if (null == refCurve)
                 return null;
-            
+
             var endReference =
                 analyticalModel.GetReference(
                     new AnalyticalModelSelector(refCurve, AnalyticalCurveSelector.EndPoint));

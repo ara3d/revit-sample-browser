@@ -1,7 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
+using Nice3point.Revit.Extensions;
 
 namespace Ara3D.RevitSampleBrowser.N3P_Shared.CS
 {
@@ -12,19 +13,15 @@ namespace Ara3D.RevitSampleBrowser.N3P_Shared.CS
             var doc = uidoc.Document;
             var ids = uidoc.Selection.GetElementIds();
 
-            if (ids.Count > 0)
-            {
-                return ids
+            return ids.Count > 0
+                ? (IList<Element>)ids
                     .Select(id => doc.GetElement(id))
                     .Where(e => e != null && elementType.IsInstanceOfType(e))
                     .Take(maxCount)
-                    .ToList();
-            }
-
-            return doc.CollectElements()
+                    .ToList()
+                : doc.CollectElements()
                 .OfClass(elementType)
                 .Take(maxCount)
-                .ToElements()
                 .ToList();
         }
     }

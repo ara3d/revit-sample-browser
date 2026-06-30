@@ -3,10 +3,10 @@
 // Adapted from SpatialElementGeometryCalculator by Jeremy Tammik et al.
 // https://github.com/jeremytammik/SpatialElementGeometryCalculator (MIT License)
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.IFC;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 {
@@ -51,8 +51,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
             var curveLoop = ExporterIFCUtils.GetInstanceCutoutFromWall(
                 fi.Document, wall, fi, out var cutDir);
 
-            IList<CurveLoop> loops = new List<CurveLoop>(1);
-            loops.Add(curveLoop);
+            IList<CurveLoop> loops = [curveLoop];
 
             if (!wall.IsStackedWallMember)
             {
@@ -68,7 +67,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
                 optCompRef.DetailLevel = ViewDetailLevel.Medium;
             }
 
-            var geomElemHost = wall.get_Geometry(optCompRef) as GeometryElement;
+            var geomElemHost = wall.get_Geometry(optCompRef);
 
             var solidOpening = GeometryCreationUtilities
                 .CreateExtrusionGeometry(loops,
@@ -98,13 +97,11 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 
             if (DebugHandler.EnableSolidUtilityVolumes)
             {
-                using (var t = new Transaction(doc))
-                {
-                    t.Start("Stacked1");
-                    ShapeCreator.CreateDirectShape(doc,
-                        intersectSolid, "stackedOpening");
-                    t.Commit();
-                }
+                using var t = new Transaction(doc);
+                t.Start("Stacked1");
+                ShapeCreator.CreateDirectShape(doc,
+                    intersectSolid, "stackedOpening");
+                t.Commit();
             }
 
             return solHandler.GetLargestFaceArea(intersectSolid);

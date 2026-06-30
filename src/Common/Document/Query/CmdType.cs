@@ -2,22 +2,18 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Autodesk.Revit.DB;
-
 // (c) Revit Database Explorer https://github.com/NeVeSpl/RevitDBExplorer/blob/main/license.md
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
 {
     public enum CmdType
     {
-        WithoutArgument,    
+        WithoutArgument,
         DocumentSpecific,
-        ElementId,      
+        ElementId,
         Category,
-        Class,     
+        Class,
         Parameter,
-        EnumBased,      
+        EnumBased,
     }
 }

@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
@@ -38,11 +38,11 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             if (NetworkList.SelectedItems.Count <= 0)
                 return;
 
-            using (var tran = new Transaction(m_doc))
+            using (Transaction tran = new(m_doc))
             {
                 tran.Start("Create Analysis View");
 
-                var viewer = new AvfViewer(m_doc.ActiveView, ChxItemized.IsChecked);
+                AvfViewer viewer = new(m_doc.ActiveView, ChxItemized.IsChecked);
                 viewer.InitAvf();
 
                 foreach (var item in NetworkList.SelectedItems)
@@ -65,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             if (idx < 0 || m_networks.Count <= 0)
                 return;
 
-            var saveFileDialog1 = new SaveFileDialog
+            SaveFileDialog saveFileDialog1 = new()
             {
                 FileName = "PressureReport.csv",
                 Filter = "CSV Files | *.csv",
@@ -75,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             };
 
             if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                using (var ex = new CsvExporter(saveFileDialog1.FileName, ChxItemized.IsChecked))
+                using (CsvExporter ex = new(saveFileDialog1.FileName, ChxItemized.IsChecked))
                 {
                     // Pass over the document and domain type to the exporter.
                     var netInfo = m_networks[idx];

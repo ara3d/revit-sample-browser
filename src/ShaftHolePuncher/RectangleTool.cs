@@ -54,8 +54,8 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         {
             var points = new Point[5]
             {
-                p1, new Point(p1.X, p2.Y),
-                p2, new Point(p2.X, p1.Y), p1
+                p1, new(p1.X, p2.Y),
+                p2, new(p2.X, p1.Y), p1
             };
             graphic.DrawLines(pen, points);
         }

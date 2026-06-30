@@ -51,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_ExternalEvent.CS
             if (m_myForm == null || m_myForm.IsDisposed)
             {
                 // A new handler to handle request posting by the dialog
-                var handler = new RequestHandler();
+                RequestHandler handler = new();
 
                 // External Event for the dialog to use (to post requests)
                 var exEvent = ExternalEvent.Create(handler);

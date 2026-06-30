@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
@@ -55,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
                 roofEditorPropertyGrid.SelectedObject = m_footPrintRoofWrapper;
                 Size = new Size(814, 515);
 
-                var label = new Label
+                Label label = new()
                 {
                     Text = "Footprint roof lines:",
                     AutoSize = true,

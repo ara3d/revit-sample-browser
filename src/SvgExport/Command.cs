@@ -3,6 +3,11 @@
 // Adapted from SvgExport by Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/SvgExport
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,12 +15,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using BoundarySegment = Autodesk.Revit.DB.BoundarySegment;
 
 namespace Ara3D.RevitSampleBrowser.SvgExport.CS
@@ -29,9 +28,15 @@ namespace Ara3D.RevitSampleBrowser.SvgExport.CS
 
         class RoomSelectionFilter : ISelectionFilter
         {
-            public bool AllowElement(Element e) => e is Room;
+            public bool AllowElement(Element e)
+            {
+                return e is Room;
+            }
 
-            public bool AllowReference(Reference r, XYZ p) => true;
+            public bool AllowReference(Reference r, XYZ p)
+            {
+                return true;
+            }
         }
 
         static Result GetRoom(UIDocument uidoc, out Room room)
@@ -108,7 +113,7 @@ namespace Ara3D.RevitSampleBrowser.SvgExport.CS
             var pmin = bb.Min;
             var pmax = bb.Max;
             var vsize = pmax - pmin;
-            var pmid = pmin + 0.5 * vsize;
+            var pmid = pmin + (0.5 * vsize);
             var size = Math.Max(vsize.X, vsize.Y);
             var scale = TargetSquareSize / size;
 
@@ -164,17 +169,15 @@ namespace Ara3D.RevitSampleBrowser.SvgExport.CS
 
             if (interactive)
             {
-                using (var sfd = new SaveFileDialog())
-                {
-                    sfd.Title = "Export room boundary to SVG";
-                    sfd.Filter = "SVG files (*.svg)|*.svg";
-                    sfd.RestoreDirectory = true;
+                using var sfd = new SaveFileDialog();
+                sfd.Title = "Export room boundary to SVG";
+                sfd.Filter = "SVG files (*.svg)|*.svg";
+                sfd.RestoreDirectory = true;
 
-                    if (sfd.ShowDialog() != DialogResult.OK)
-                        return false;
+                if (sfd.ShowDialog() != DialogResult.OK)
+                    return false;
 
-                    filePath = sfd.FileName;
-                }
+                filePath = sfd.FileName;
             }
             else
             {
@@ -234,10 +237,7 @@ namespace Ara3D.RevitSampleBrowser.SvgExport.CS
             var pathData = GetSvgPathFrom(bb, loops[0]);
 
             var interactive = !app.IsJournalPlaying();
-            if (!SaveSvg(pathData, interactive, ref message))
-                return interactive ? Result.Cancelled : Result.Failed;
-
-            return Result.Succeeded;
+            return !SaveSvg(pathData, interactive, ref message) ? interactive ? Result.Cancelled : Result.Failed : Result.Succeeded;
         }
     }
 }

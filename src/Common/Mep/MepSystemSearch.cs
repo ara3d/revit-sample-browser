@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-﻿#region Header
+#region Header
 
 //
 // MepSystemSearch.cs - traverse MEP system connectors
@@ -16,12 +16,12 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -47,8 +47,8 @@ namespace BuildingCoder
 
         public void InitializeLists()
         {
-            m_lSelectedElts = new List<ElementId>();
-            m_lVistited = new List<ElementId>();
+            m_lSelectedElts = [];
+            m_lVistited = [];
         }
 
         public void RunStepThroughElements()

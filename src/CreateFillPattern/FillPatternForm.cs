@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
@@ -27,8 +27,8 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
         private List<T> GetAllElements<T>()
         {
-            var elementFilter = new ElementClassFilter(typeof(T));
-            var collector = new FilteredElementCollector(m_doc);
+            ElementClassFilter elementFilter = new(typeof(T));
+            FilteredElementCollector collector = new(m_doc);
             collector = collector.WherePasses(elementFilter);
             return collector.Cast<T>().ToList();
         }
@@ -41,13 +41,13 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
         private void IniTreeView()
         {
             treeViewLinePattern.Nodes.Clear();
-            var iniNode2 = new TreeNode("LinePatterns");
+            TreeNode iniNode2 = new("LinePatterns");
             treeViewLinePattern.Nodes.Add(iniNode2);
 
             var lstLinePatterns = GetAllElements<LinePatternElement>();
             foreach (var t in lstLinePatterns)
             {
-                var node = new TreeNode(t.Name)
+                TreeNode node = new(t.Name)
                 {
                     Name = t.Id.ToString()
                 };
@@ -55,13 +55,13 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             }
 
             treeViewFillPattern.Nodes.Clear();
-            var iniNode1 = new TreeNode("FillPatterns");
+            TreeNode iniNode1 = new("FillPatterns");
             treeViewFillPattern.Nodes.Add(iniNode1);
 
             var lstFillPatterns = GetAllElements<FillPatternElement>();
             for (var i = 0; i < lstFillPatterns.Count; i++)
             {
-                var node = new TreeNode(lstFillPatterns[i].Name)
+                TreeNode node = new(lstFillPatterns[i].Name)
                 {
                     Name = i.ToString()
                 };
@@ -76,10 +76,10 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
             if (fillPatternElement == null)
             {
-                var fillPattern = new FillPattern(patternName, target,
+                FillPattern fillPattern = new(patternName, target,
                     FillPatternHostOrientation.ToView, 0.5, 0.5, 0.5);
 
-                var trans = new Transaction(m_doc);
+                Transaction trans = new(m_doc);
                 trans.Start("Create a fillpattern element");
                 fillPatternElement = FillPatternElement.Create(m_doc, fillPattern);
                 trans.Commit();
@@ -95,23 +95,23 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
             if (fillPatternElement == null)
             {
-                var fillPattern = new FillPattern(patternName, target,
+                FillPattern fillPattern = new(patternName, target,
                     FillPatternHostOrientation.ToHost);
 
                 // Add grids
-                var grids = new List<FillGrid>
-                {
+                List<FillGrid> grids =
+                [
                     //Horizontal lines.  
                     CreateGrid(new UV(0, 0.1), 0.5, 0, 0.55, 1.0, 0.1),
                     CreateGrid(new UV(0, 0.5), 0.5, 0, 0.55, 1.0, 0.1),
                     // Vertical lines.  
                     CreateGrid(new UV(0, 0.1), 0.55, Math.PI / 2, 0.5, 0.4, 0.6),
                     CreateGrid(new UV(1.0, 0.1), 0.55, Math.PI / 2, 0.5, 0.4, 0.6)
-                };
+                ];
 
                 fillPattern.SetFillGrids(grids);
 
-                var t = new Transaction(m_doc, "Create fill pattern");
+                Transaction t = new(m_doc, "Create fill pattern");
                 t.Start();
                 fillPatternElement = FillPatternElement.Create(m_doc, fillPattern);
 
@@ -124,7 +124,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
         private FillGrid CreateGrid(UV origin, double offset, double angle,
             double shift, params double[] segments)
         {
-            var fillGrid = new FillGrid
+            FillGrid fillGrid = new()
             {
                 // The arguments: origin, offset (vertical distance between lines), 
                 // angle, shift (delta between location of start point per line)
@@ -135,11 +135,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
                 Angle = angle,
                 Shift = shift
             };
-            var segmentsList = new List<double>();
-            foreach (var d in segments)
-            {
-                segmentsList.Add(d);
-            }
+            List<double> segmentsList = [.. segments];
 
             fillGrid.SetSegments(segmentsList);
 
@@ -149,18 +145,18 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
         private LinePatternElement CreateLinePatternElement(string patternName)
         {
             //Create list of segments which define the line pattern
-            var lstSegments = new List<LinePatternSegment>
-            {
+            List<LinePatternSegment> lstSegments =
+            [
                 new LinePatternSegment(LinePatternSegmentType.Dot, 0.0),
                 new LinePatternSegment(LinePatternSegmentType.Space, 0.02),
                 new LinePatternSegment(LinePatternSegmentType.Dash, 0.03),
                 new LinePatternSegment(LinePatternSegmentType.Space, 0.02)
-            };
+            ];
 
-            var linePattern = new LinePattern(patternName);
+            LinePattern linePattern = new(patternName);
             linePattern.SetSegments(lstSegments);
 
-            var trans = new Transaction(m_doc);
+            Transaction trans = new(m_doc);
             trans.Start("Create a linepattern element");
             var linePatternElement = LinePatternElement.Create(m_doc, linePattern);
             trans.Commit();
@@ -180,7 +176,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
             var mySurfacePattern = GetOrCreateFacePattern("MySurfacePattern");
             var targetMaterial = m_doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
-            var trans = new Transaction(m_doc);
+            Transaction trans = new(m_doc);
             trans.Start("Apply fillpattern to surface");
             targetMaterial.SurfaceForegroundPatternId = mySurfacePattern.Id;
             trans.Commit();
@@ -189,7 +185,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
         private void buttonCreateLinePattern_Click(object sender, EventArgs e)
         {
-            var lstGridTypeIds = new List<ElementId>();
+            List<ElementId> lstGridTypeIds = [];
             GetSelectedGridTypeIds(lstGridTypeIds);
             if (lstGridTypeIds.Count == 0)
             {
@@ -215,7 +211,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             {
                 if (param.Definition.Name == paramName)
                 {
-                    var trans = new Transaction(m_doc);
+                    Transaction trans = new(m_doc);
                     trans.Start("Set parameter value");
                     param.Set(eid);
                     trans.Commit();
@@ -245,7 +241,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             var lstPatterns = GetAllElements<FillPatternElement>();
             var patternIndex = int.Parse(treeViewFillPattern.SelectedNode.Name);
             var targetMaterial = m_doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
-            var trans = new Transaction(m_doc);
+            Transaction trans = new(m_doc);
             trans.Start("Apply fillpattern to surface");
             targetMaterial.SurfaceForegroundPatternId = lstPatterns[patternIndex].Id;
             trans.Commit();
@@ -289,7 +285,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             var patternIndex = int.Parse(treeViewFillPattern.SelectedNode.Name);
             var targetMaterial = m_doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
 
-            var trans = new Transaction(m_doc);
+            Transaction trans = new(m_doc);
             trans.Start("Apply fillpattern to cutting surface");
             targetMaterial.CutForegroundPatternId = lstPatterns[patternIndex].Id;
             trans.Commit();
@@ -299,7 +295,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
         private void buttonApplyToGrids_Click(object sender, EventArgs e)
         {
-            var lstGridTypeIds = new List<ElementId>();
+            List<ElementId> lstGridTypeIds = [];
             GetSelectedGridTypeIds(lstGridTypeIds);
             if (lstGridTypeIds.Count == 0)
             {
@@ -353,7 +349,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
             var mySurfacePattern = GetOrCreateComplexFacePattern("MyComplexPattern");
             var targetMaterial = m_doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
-            var trans = new Transaction(m_doc);
+            Transaction trans = new(m_doc);
             trans.Start("Apply complex fillpattern to surface");
             targetMaterial.SurfaceForegroundPatternId = mySurfacePattern.Id;
             trans.Commit();

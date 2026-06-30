@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Autodesk.Revit.DB.Events;
 
 namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 {
@@ -24,58 +24,58 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
             switch (progressEvent.Stage)
             {
                 case ProgressStage.Started:
-                {
-                    var pi = new ProgressItem(progressEvent.Caption, progressEvent.LowerRange, progressEvent.UpperRange,
+                    {
+                        ProgressItem pi = new(progressEvent.Caption, progressEvent.LowerRange, progressEvent.UpperRange,
                         progressEvent.Position, progressEvent.Stage);
-                    ItemStack.Push(pi);
-                    currentProgressItem = pi;
-                    break;
-                }
+                        ItemStack.Push(pi);
+                        currentProgressItem = pi;
+                        break;
+                    }
                 case ProgressStage.PositionChanged:
-                {
-                    var pi = ItemStack.Peek();
-                    if (pi.Name != progressEvent.Caption) Debug.WriteLine("Name not matching?");
-                    pi.Position = progressEvent.Position;
-                    pi.Stage = progressEvent.Stage;
-                    currentProgressItem = pi;
-                    break;
-                }
+                    {
+                        var pi = ItemStack.Peek();
+                        if (pi.Name != progressEvent.Caption) Debug.WriteLine("Name not matching?");
+                        pi.Position = progressEvent.Position;
+                        pi.Stage = progressEvent.Stage;
+                        currentProgressItem = pi;
+                        break;
+                    }
 
                 case ProgressStage.RangeChanged:
-                {
-                    var pi = ItemStack.Peek();
-                    pi.Upper = progressEvent.UpperRange;
-                    pi.Stage = progressEvent.Stage;
-                    currentProgressItem = pi;
-                    break;
-                }
+                    {
+                        var pi = ItemStack.Peek();
+                        pi.Upper = progressEvent.UpperRange;
+                        pi.Stage = progressEvent.Stage;
+                        currentProgressItem = pi;
+                        break;
+                    }
 
                 case ProgressStage.Finished:
-                {
-                    var pi = ItemStack.Pop();
-                    pi.IsDone = true;
-                    pi.Stage = progressEvent.Stage;
-                    currentProgressItem = pi;
-                    break;
-                }
+                    {
+                        var pi = ItemStack.Pop();
+                        pi.IsDone = true;
+                        pi.Stage = progressEvent.Stage;
+                        currentProgressItem = pi;
+                        break;
+                    }
 
                 case ProgressStage.CaptionChanged:
-                {
-                    var pi = ItemStack.Peek();
-                    pi.Name = progressEvent.Caption;
-                    pi.Stage = progressEvent.Stage;
-                    Debug.WriteLine("Caption Change at top.");
-                    currentProgressItem = pi;
-                    break;
-                }
+                    {
+                        var pi = ItemStack.Peek();
+                        pi.Name = progressEvent.Caption;
+                        pi.Stage = progressEvent.Stage;
+                        Debug.WriteLine("Caption Change at top.");
+                        currentProgressItem = pi;
+                        break;
+                    }
 
                 case ProgressStage.Unchanged:
-                {
-                    Debug.WriteLine("Idle.");
-                    currentProgressItem = new ProgressItem(progressEvent.Caption, progressEvent.LowerRange,
-                        progressEvent.UpperRange, progressEvent.Position, progressEvent.Stage);
-                    break;
-                }
+                    {
+                        Debug.WriteLine("Idle.");
+                        currentProgressItem = new ProgressItem(progressEvent.Caption, progressEvent.LowerRange,
+                            progressEvent.UpperRange, progressEvent.Position, progressEvent.Stage);
+                        break;
+                    }
 
                 default:
                     throw new Exception("Unknown stage.");
@@ -91,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine("-ProgressBar Stack-");
             foreach (var pi in ItemStack)
             {
@@ -103,7 +103,7 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 
         public List<string> ToStringList(int padDepth = 0)
         {
-            var itemList = new List<string>();
+            List<string> itemList = [];
 
             if (padDepth != 0)
             {

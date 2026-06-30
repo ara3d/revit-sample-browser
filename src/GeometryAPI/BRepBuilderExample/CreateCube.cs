@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
@@ -23,19 +23,18 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
                 if (null == mySolid)
                     return Result.Failed;
 
-                using (var tran = new Transaction(m_dbdocument, "CreateCube"))
-                {
-                    tran.Start();
-                    var dsCubed = DirectShape.CreateElement(m_dbdocument, new ElementId(BuiltInCategory.OST_Walls));
-                    if (null == dsCubed)
-                        return Result.Failed;
-                    dsCubed.ApplicationId = "TestCreateCube";
-                    dsCubed.ApplicationDataId = "Cube";
-                    var shapes = new List<GeometryObject> { mySolid };
-                    dsCubed.SetShape(shapes, DirectShapeTargetViewType.Default);
+                using Transaction tran = new(m_dbdocument, "CreateCube");
+                tran.Start();
+                var dsCubed = DirectShape.CreateElement(m_dbdocument, new ElementId(BuiltInCategory.OST_Walls));
+                if (null == dsCubed)
+                    return Result.Failed;
+                dsCubed.ApplicationId = "TestCreateCube";
+                dsCubed.ApplicationDataId = "Cube";
+                List<GeometryObject> shapes = new()
+                { mySolid };
+                dsCubed.SetShape(shapes, DirectShapeTargetViewType.Default);
 
-                    tran.Commit();
-                }
+                tran.Commit();
             }
             catch (Exception ex)
             {
@@ -48,7 +47,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 
         private BRepBuilder CreateCubeImpl()
         {
-            var brepBuilder = new BRepBuilder(BRepType.Solid);
+            BRepBuilder brepBuilder = new(BRepType.Solid);
 
             // Cube 100x100x100 from (0,0,0) to (100,100,100).
             // Isometric view: X down-left, Y right, Z up; front/back along X, left/right along Y, top/bottom along Z.

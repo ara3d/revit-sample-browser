@@ -1,12 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Linq;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using ToolkitExternalCommand = Nice3point.Revit.Toolkit.External.ExternalCommand;
 using WinFormsForm = System.Windows.Forms.Form;
 
@@ -21,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.N3P_ExternalEvent.CS
         {
             if (_form == null || _form.IsDisposed)
             {
-                var actionEvent = new RevitActionEvent();
+                RevitActionEvent actionEvent = new();
                 _form = new N3PExternalEventForm(Application, actionEvent);
                 _form.Show();
             }
@@ -46,7 +47,7 @@ namespace Ara3D.RevitSampleBrowser.N3P_ExternalEvent.CS
             Width = 320;
             Height = 140;
 
-            var button = new Button
+            Button button = new()
             {
                 Text = "Tag selection (N3P Toolkit event)",
                 Dock = DockStyle.Fill
@@ -73,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.N3P_ExternalEvent.CS
                 return;
             }
 
-            using (var transaction = new Transaction(uidoc.Document, "N3P tag selection"))
+            using (Transaction transaction = new(uidoc.Document, "N3P tag selection"))
             {
                 transaction.Start();
                 foreach (var id in ids.Take(10))

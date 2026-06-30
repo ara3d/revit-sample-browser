@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
 {
@@ -23,13 +23,13 @@ namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
             m_uiDoc = m_uiApp.ActiveUIDocument;
 
             // get the target element to be used for the Distance computation
-            var collection = new ElementSet();
+            ElementSet collection = new();
             foreach (var elementId in m_uiDoc.Selection.GetElementIds())
             {
                 collection.Insert(m_uiDoc.Document.GetElement(elementId));
             }
 
-            var es = new ElementSet();
+            ElementSet es = new();
             foreach (var elementId in m_uiDoc.Selection.GetElementIds())
             {
                 es.Insert(m_uiDoc.Document.GetElement(elementId));
@@ -42,7 +42,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
 
             foreach (var ds in dsList)
             {
-                var gn = new GridNode();
+                GridNode gn = new();
                 var u = 0;
                 while (u < ds.NumberOfUGridlines)
                 {
@@ -108,8 +108,8 @@ namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
 
         protected List<T> GetElements<T>() where T : Element
         {
-            var returns = new List<T>();
-            var collector = new FilteredElementCollector(m_uiDoc.Document);
+            List<T> returns = [];
+            FilteredElementCollector collector = new(m_uiDoc.Document);
             ICollection<Element> founds = collector.OfClass(typeof(T)).ToElements();
             foreach (var elem in founds)
             {

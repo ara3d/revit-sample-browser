@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.UI;
 using System;
 using System.IO;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
@@ -33,15 +33,13 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                     buttonOptions.Visible = false;
                     break;
                 case ExportFormat.Image:
-                {
-                    Hide();
-                    using (var exportOptionsForm = new ExportImgOptionsForm(m_exportData))
                     {
+                        Hide();
+                        using ExportImgOptionsForm exportOptionsForm = new(m_exportData);
                         exportOptionsForm.ShowDialog();
-                    }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
@@ -51,98 +49,83 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             {
                 // Export dwg
                 case ExportFormat.Dwg:
-                {
-                    var contain3DView = false;
+                    {
+                        var contain3DView = false;
 
-                    if (radioButtonCurrentView.Checked)
-                    {
-                        if (m_exportData.Is3DView) contain3DView = true;
-                    }
-                    else
-                    {
-                        if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
-                    }
+                        if (radioButtonCurrentView.Checked)
+                        {
+                            if (m_exportData.Is3DView) contain3DView = true;
+                        }
+                        else
+                        {
+                            if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
+                        }
 
-                    var exportDwgData = m_exportData as ExportDwgData;
-                    using (var exportOptionsForm = new ExportBaseOptionsForm(exportDwgData.ExportOptionsData,
-                               contain3DView, "DWG"))
-                    {
+                        var exportDwgData = m_exportData as ExportDwgData;
+                        using ExportBaseOptionsForm exportOptionsForm = new(exportDwgData.ExportOptionsData,
+                                   contain3DView, "DWG");
                         exportOptionsForm.ShowDialog();
-                    }
 
-                    break;
-                }
+                        break;
+                    }
                 //Export dxf
                 case ExportFormat.Dxf:
-                {
-                    var contain3DView = false;
-
-                    if (radioButtonCurrentView.Checked)
                     {
-                        if (m_exportData.Is3DView) contain3DView = true;
-                    }
-                    else
-                    {
-                        if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
-                    }
+                        var contain3DView = false;
 
-                    var exportDxfData = m_exportData as ExportDxfData;
+                        if (radioButtonCurrentView.Checked)
+                        {
+                            if (m_exportData.Is3DView) contain3DView = true;
+                        }
+                        else
+                        {
+                            if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
+                        }
 
-                    using (var exportOptionsForm = new ExportBaseOptionsForm(exportDxfData.ExportOptionsData,
-                               contain3DView, "DXF"))
-                    {
+                        var exportDxfData = m_exportData as ExportDxfData;
+
+                        using ExportBaseOptionsForm exportOptionsForm = new(exportDxfData.ExportOptionsData,
+                                   contain3DView, "DXF");
                         exportOptionsForm.ShowDialog();
-                    }
 
-                    break;
-                }
+                        break;
+                    }
                 // Export dgn
                 case ExportFormat.Dgn:
-                {
-                    var exportDgnData = m_exportData as ExportDgnData;
-                    using (var exportOptionsForm = new ExportDgnOptionsForm(exportDgnData))
                     {
+                        var exportDgnData = m_exportData as ExportDgnData;
+                        using ExportDgnOptionsForm exportOptionsForm = new(exportDgnData);
                         exportOptionsForm.ShowDialog();
-                    }
 
-                    break;
-                }
+                        break;
+                    }
                 // Export PDF
                 case ExportFormat.Pdf:
-                {
-                    var exportPdfData = m_exportData as ExportPdfData;
-                    using (var exportOptionsForm = new ExportPdfOptionsForm(exportPdfData))
                     {
+                        var exportPdfData = m_exportData as ExportPdfData;
+                        using ExportPdfOptionsForm exportOptionsForm = new(exportPdfData);
                         exportOptionsForm.ShowDialog();
-                    }
 
-                    break;
-                }
+                        break;
+                    }
                 // Export DWF
                 default:
-                {
-                    var exportDwfData = m_exportData as ExportDwfData;
-                    using (var exportOptionsForm = new ExportDwfOptionForm(exportDwfData))
                     {
+                        var exportDwfData = m_exportData as ExportDwfData;
+                        using ExportDwfOptionForm exportOptionsForm = new(exportDwfData);
                         exportOptionsForm.ShowDialog();
-                    }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
         private void buttonSelectViews_Click(object sender, EventArgs e)
         {
-            using (var selectViewsForm = new SelectViewsForm(m_exportData.SelectViewsData))
-            {
-                m_exportData.SelectViewsData.SelectedViews.Clear();
-                selectViewsForm.ShowDialog();
-                if (m_exportData.SelectViewsData.SelectedViews.Size == 0)
-                    radioButtonCurrentView.Checked = true;
-                else
-                    radioButtonCurrentView.Checked = false;
-            }
+            using SelectViewsForm selectViewsForm = new(m_exportData.SelectViewsData);
+            m_exportData.SelectViewsData.SelectedViews.Clear();
+            selectViewsForm.ShowDialog();
+            radioButtonCurrentView.Checked = m_exportData.SelectViewsData.SelectedViews.Size == 0;
         }
 
         private void buttonBrowser_Click(object sender, EventArgs e)
@@ -157,17 +140,17 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                 switch (m_exportData.ExportFormat)
                 {
                     case ExportFormat.Dwg:
-                    {
-                        var exportDwgData = m_exportData as ExportDwgData;
-                        exportDwgData.ExportFileVersion = exportDwgData.EnumFileVersion[filterIndex - 1];
-                        break;
-                    }
+                        {
+                            var exportDwgData = m_exportData as ExportDwgData;
+                            exportDwgData.ExportFileVersion = exportDwgData.EnumFileVersion[filterIndex - 1];
+                            break;
+                        }
                     case ExportFormat.Dxf:
-                    {
-                        var exportDxfData = m_exportData as ExportDxfData;
-                        exportDxfData.ExportFileVersion = exportDxfData.EnumFileVersion[filterIndex - 1];
-                        break;
-                    }
+                        {
+                            var exportDxfData = m_exportData as ExportDxfData;
+                            exportDxfData.ExportFileVersion = exportDxfData.EnumFileVersion[filterIndex - 1];
+                            break;
+                        }
                 }
             }
         }

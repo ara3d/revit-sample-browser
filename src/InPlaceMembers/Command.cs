@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Windows.Forms;
 namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 {
     /// <summary>
@@ -25,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             ref string message, ElementSet elements)
         {
             _commandData = commandData;
-            var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
+            Transaction transaction = new(commandData.Application.ActiveUIDocument.Document, "External Tool");
 
             FamilyInstance inPlace = null;
 
@@ -41,8 +40,8 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
                 }
 
                 var graphicsData = SampleBrowserUtils.CreateGraphicsData(model);
-                var instanceProperties = new Properties(inPlace);
-                var form = new InPlaceMembersForm(instanceProperties, graphicsData);
+                Properties instanceProperties = new(inPlace);
+                InPlaceMembersForm form = new(instanceProperties, graphicsData);
                 return form.ShowDialog() == DialogResult.Abort ? Result.Failed : Result.Succeeded;
             }
             catch (Exception e)
@@ -65,7 +64,7 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
         /// <returns>Returns true if retrieved this data</returns>
         private bool PrepareData(ref FamilyInstance inPlaceMember, ref AnalyticalElement model)
         {
-            var selected = new ElementSet();
+            ElementSet selected = new();
             foreach (var elementId in _commandData.Application.ActiveUIDocument.Selection.GetElementIds())
             {
                 selected.Insert(_commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -87,7 +86,7 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalElement element)
+                    if (associatedElement is not null and AnalyticalElement element)
                         model = element;
                 }
             }

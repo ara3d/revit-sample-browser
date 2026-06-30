@@ -15,16 +15,16 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
         {
             var panel = application.CreateRibbonPanel("Shared parameters");
 
-            var data = new PushButtonData("BindSP", "Bind Shared\nParameters",
+            PushButtonData data = new("BindSP", "Bind Shared\nParameters",
                 GetType().Assembly.Location, typeof(BindNewReadonlySharedParametersToDocument).FullName);
             panel.AddItem(data);
 
             panel.AddSeparator();
 
-            var data1 = new PushButtonData("SetIds1", "Set ids: GUID",
+            PushButtonData data1 = new("SetIds1", "Set ids: GUID",
                 GetType().Assembly.Location, typeof(SetReadonlyId1).FullName);
 
-            var data2 = new PushButtonData("SetIds2", "Set ids: short",
+            PushButtonData data2 = new("SetIds2", "Set ids: short",
                 GetType().Assembly.Location, typeof(SetReadonlyId2).FullName);
 
             panel.AddStackedItems(data1, data2);

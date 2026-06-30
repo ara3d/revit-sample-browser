@@ -49,16 +49,12 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         /// <returns>The IPointCloudAccess implementation serving this point cloud.</returns>
         public IPointCloudAccess CreatePointCloudAccess(string identifier)
         {
-            switch (m_type)
+            return m_type switch
             {
-                case PointCloudEngineType.RandomizedPoints:
-                    return new PredefinedPointCloud(identifier, true);
-                case PointCloudEngineType.FileBased:
-                    return new FileBasedPointCloud(identifier);
-                case PointCloudEngineType.Predefined:
-                default:
-                    return new PredefinedPointCloud(identifier);
-            }
+                PointCloudEngineType.RandomizedPoints => new PredefinedPointCloud(identifier, true),
+                PointCloudEngineType.FileBased => new FileBasedPointCloud(identifier),
+                _ => new PredefinedPointCloud(identifier),
+            };
         }
 
         /// <summary>

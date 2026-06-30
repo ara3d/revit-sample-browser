@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text.RegularExpressions;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace BuildingCoder
 {
@@ -16,7 +15,7 @@ namespace BuildingCoder
 
         internal static class MepElementShapeV1
         {
-            private static RegexCache _regex_cache = new RegexCache();
+            private static readonly RegexCache _regex_cache = new();
 
             public static string GetElementShape(Element e)
             {
@@ -30,16 +29,12 @@ namespace BuildingCoder
                     var size = e.LookupParameter("Size")
                         .AsString();
 
-                    if (size.Split('x').Length == 2)
-                        return "rectangular";
-                    if (size.Split('/').Length == 2)
-                        return "oval";
-                    return "round";
+                    return size.Split('x').Length == 2 ? "rectangular" : size.Split('/').Length == 2 ? "oval" : "round";
                 }
 
                 if (MepElementShapeIsElementOfCategory(e,
                     BuiltInCategory.OST_DuctFitting))
-                    if (e is FamilyInstance {MEPModel: MechanicalFitting fitting})
+                    if (e is FamilyInstance { MEPModel: MechanicalFitting fitting })
                     {
                         var p = e.get_Parameter(
                             BuiltInParameter.RBS_CALCULATED_SIZE);
@@ -69,13 +64,13 @@ namespace BuildingCoder
                             if (_regex_cache.Match(
                                 "[0-9]+\"?[^0-9]-[0-9]+\"?/[0-9]+\"?", size))
                                 return "round2oval";
-                            if (_regex_cache.Match(
-                                "[0-9]+\"?/[0-9]+\"?-[0-9]+\"?[^0-9]", size))
-                                return "oval2round";
-                            if (_regex_cache.Match(
-                                "[0-9]+\"?[^0-9]-[0-9]+\"?[^0-9]", size))
-                                return "round2round";
-                            return "other case";
+                            return _regex_cache.Match(
+                                "[0-9]+\"?/[0-9]+\"?-[0-9]+\"?[^0-9]", size)
+                                ? "oval2round"
+                                : _regex_cache.Match(
+                                "[0-9]+\"?[^0-9]-[0-9]+\"?[^0-9]", size)
+                                ? "round2round"
+                                : "other case";
                         }
                     }
 
@@ -171,10 +166,7 @@ namespace BuildingCoder
                                 ++i;
                             }
 
-                            if (pe != null)
-                                return string.Join(" 2 ", tmp);
-
-                            return string.Join("-", tmp);
+                            return pe != null ? string.Join(" 2 ", tmp) : string.Join("-", tmp);
                         }
                         else if (partType is PartType.Tee or PartType.Cross or PartType.Pants or PartType.Wye)
                         {
@@ -195,10 +187,7 @@ namespace BuildingCoder
                                         to = c.Shape.ToString();
                                 }
 
-                                if (to != null)
-                                    return $"{from} 2 {to}";
-
-                                return $"{from} 2 {string.Join("-", unk.ToArray())}";
+                                return to != null ? $"{from} 2 {to}" : $"{from} 2 {string.Join("-", unk.ToArray())}";
                             }
 
                             foreach (Connector c in connectors)
@@ -220,13 +209,7 @@ namespace BuildingCoder
                                 unk.Add(c.Shape.ToString());
                             }
 
-                            if (to != null)
-                                return $"{from} 2 {to}";
-
-                            if (from != null)
-                                return $"{from} 2 {string.Join("-", unk.ToArray())}";
-
-                            return string.Join("-", unk.ToArray());
+                            return to != null ? $"{from} 2 {to}" : from != null ? $"{from} 2 {string.Join("-", unk.ToArray())}" : string.Join("-", unk.ToArray());
                         }
                     }
                 }
@@ -310,7 +293,7 @@ namespace BuildingCoder
                     }
                     else
                     {
-                        if (tmpSystem is PipingSystem {IsWellConnected: true}) systems.Add(tmpSystem);
+                        if (tmpSystem is PipingSystem { IsWellConnected: true }) systems.Add(tmpSystem);
                     }
                 }
 
@@ -342,7 +325,7 @@ namespace BuildingCoder
             {
                 var p = e.get_Parameter(bip);
 
-                return p is {StorageType: StorageType.ElementId} && ElementId.InvalidElementId == p.AsElementId();
+                return p is { StorageType: StorageType.ElementId } && ElementId.InvalidElementId == p.AsElementId();
             }
 
             public static string GetElementShape(
@@ -383,7 +366,7 @@ namespace BuildingCoder
             BuiltInCategory c)
         {
             return e.Category.Id.Value.Equals(
-                (int) c);
+                (int)c);
         }
 
         public static string GetElementShape4(

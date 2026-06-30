@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Document = Autodesk.Revit.DB.Document;
 
@@ -134,7 +134,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.CreateAirHandler.CS
             geoOptions.View = _document.ActiveView;
             geoOptions.ComputeReferences = true;
 
-            var planarFaces = new List<PlanarFace>();
+            List<PlanarFace> planarFaces = new();
             var geoElement = extrusion.get_Geometry(geoOptions);
             var objects = geoElement.GetEnumerator();
             while (objects.MoveNext())

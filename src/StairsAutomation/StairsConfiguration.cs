@@ -1,27 +1,37 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents;
 using Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
 {
     public class StairsConfiguration : IStairsConfiguration
     {
-        protected readonly List<IStairsLandingComponent> LandingConfigurations = new List<IStairsLandingComponent>();
+        protected readonly List<IStairsLandingComponent> LandingConfigurations = [];
 
-        protected readonly List<IStairsRunComponent> RunConfigurations = new List<IStairsRunComponent>();
+        protected readonly List<IStairsRunComponent> RunConfigurations = [];
 
-        public int GetNumberOfRuns() => RunConfigurations.Count;
+        public int GetNumberOfRuns()
+        {
+            return RunConfigurations.Count;
+        }
 
-        public void CreateStairsRun(Document document, ElementId stairsElementId, int runIndex) =>
+        public void CreateStairsRun(Document document, ElementId stairsElementId, int runIndex)
+        {
             RunConfigurations[runIndex].CreateStairsRun(document, stairsElementId);
+        }
 
-        public int GetNumberOfLandings() => LandingConfigurations.Count;
+        public int GetNumberOfLandings()
+        {
+            return LandingConfigurations.Count;
+        }
 
-        public void CreateLanding(Document document, ElementId stairsElementId, int landingIndex) =>
+        public void CreateLanding(Document document, ElementId stairsElementId, int landingIndex)
+        {
             LandingConfigurations[landingIndex].CreateLanding(document, stairsElementId);
+        }
 
         public void SetRunWidth(double width)
         {

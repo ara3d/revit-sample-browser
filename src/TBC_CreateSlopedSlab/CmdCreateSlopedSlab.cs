@@ -13,11 +13,9 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 #endregion // Namespaces
 
@@ -35,7 +33,7 @@ namespace BuildingCoder
             var uidoc = uiapp.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Create Sloped Slab");
 
             var width = 19.685039400;
@@ -101,7 +99,7 @@ namespace BuildingCoder
 
             // Build a floor profile for the floor creation
 
-            var profile = new CurveLoop();
+            CurveLoop profile = new();
             profile.Append(Line.CreateBound(pts[0], pts[1]));
             profile.Append(Line.CreateBound(pts[1], pts[2]));
             profile.Append(Line.CreateBound(pts[2], pts[3]));
@@ -114,7 +112,7 @@ namespace BuildingCoder
             // you need to set it explicitly.
 
             var floor = Floor.Create(doc,
-                new List<CurveLoop> {profile},
+                [profile],
                 floorTypeId, levelId);
 
             var param = floor.get_Parameter(

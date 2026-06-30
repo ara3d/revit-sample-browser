@@ -1,21 +1,22 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using Autodesk.Revit.DB;
-
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.Common.Units;
 using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
+using System;
+using System.Data;
+using System.Diagnostics;
 namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
 {
     public class SpotDimensionParams
     {
         private readonly Document m_document;
 
-        public SpotDimensionParams(Document document) => m_document = document;
+        public SpotDimensionParams(Document document)
+        {
+            m_document = document;
+        }
 
         public DataTable GetParameterTable(Autodesk.Revit.DB.SpotDimension spotDimension)
         {

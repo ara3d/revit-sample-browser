@@ -12,10 +12,10 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -43,10 +43,9 @@ namespace BuildingCoder
                 = BooleanOperationsUtils.ExecuteBooleanOperation(
                     cube, cylinder, BooleanOperationsType.Difference);
 
-            IList<GeometryObject> list = new List<GeometryObject>();
-            list.Add(difference);
+            IList<GeometryObject> list = [difference];
 
-            using var tr = new Transaction(doc);
+            using Transaction tr = new(doc);
             tr.Start("Create a DirectShape");
 
             var ds = DirectShape.CreateElement(doc,

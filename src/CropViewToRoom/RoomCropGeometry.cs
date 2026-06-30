@@ -2,11 +2,10 @@
 // Adapted from CropViewToRoom by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CropViewToRoom
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
 {
@@ -29,8 +28,8 @@ namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
 
             foreach (var boundaryLoop in boundaryLoops)
             {
-                var innerLoop = new CurveLoop();
-                var wallThicknesses = new List<double>();
+                CurveLoop innerLoop = new();
+                List<double> wallThicknesses = new();
 
                 if (!TryBuildInnerLoopAndThicknesses(
                         doc, boundaryLoop, innerLoop, wallThicknesses))
@@ -179,7 +178,7 @@ namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
             ref string previousOrientation,
             ref double previousWidth)
         {
-            var opt = new Options();
+            Options opt = new();
             var geometry = elem.get_Geometry(opt);
             if (geometry == null)
             {
@@ -225,7 +224,7 @@ namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
 
         static CurveLoop TessellateToLineLoop(CurveLoop offsetLoop)
         {
-            var lineLoop = new CurveLoop();
+            CurveLoop lineLoop = new();
 
             foreach (var curve in offsetLoop)
             {

@@ -1,15 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 namespace Ara3D.RevitSampleBrowser.Toposolid.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -29,29 +28,28 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
                 }
 
                 var pt1 = XYZ.Zero;
-                var pt2 = new XYZ(100, 0, 0);
-                var pt3 = new XYZ(100, 100, 0);
-                var pt4 = new XYZ(0, 100, 0);
-                var pt5 = new XYZ(20, 50, 20);
-                var pt6 = new XYZ(50, 150, 20);
-                var points = new List<XYZ> { pt1, pt2, pt3, pt4, pt5, pt6 };
+                XYZ pt2 = new(100, 0, 0);
+                XYZ pt3 = new(100, 100, 0);
+                XYZ pt4 = new(0, 100, 0);
+                XYZ pt5 = new(20, 50, 20);
+                XYZ pt6 = new(50, 150, 20);
+                List<XYZ> points = new()
+                { pt1, pt2, pt3, pt4, pt5, pt6 };
                 var l1 = Line.CreateBound(pt1, pt2);
                 var l2 = Line.CreateBound(pt2, pt3);
                 var l3 = Line.CreateBound(pt3, pt4);
                 var l4 = Line.CreateBound(pt4, pt1);
-                var profile = CurveLoop.Create(new List<Curve> { l1, l2, l3, l4 });
+                var profile = CurveLoop.Create([l1, l2, l3, l4]);
 
-                using (var transaction = new Transaction(doc, "create"))
-                {
-                    transaction.Start();
-                    //Toposolid topo = Toposolid.Create(doc, new List<CurveLoop> { m_Profile}, typeId, levelId);
-                    //Toposolid topo = Toposolid.Create(doc, m_Points, typeId, levelId);
-                    var topo = Autodesk.Revit.DB.Toposolid.Create(doc, new List<CurveLoop> { profile }, points, typeId,
-                        levelId);
-                    topo.CreateSubDivision(doc,
-                        new List<CurveLoop> { CurveLoop.CreateViaOffset(profile, -20, XYZ.BasisZ) });
-                    transaction.Commit();
-                }
+                using Transaction transaction = new(doc, "create");
+                transaction.Start();
+                //Toposolid topo = Toposolid.Create(doc, new List<CurveLoop> { m_Profile}, typeId, levelId);
+                //Toposolid topo = Toposolid.Create(doc, m_Points, typeId, levelId);
+                var topo = Autodesk.Revit.DB.Toposolid.Create(doc, [profile], points, typeId,
+                    levelId);
+                topo.CreateSubDivision(doc,
+                    [CurveLoop.CreateViaOffset(profile, -20, XYZ.BasisZ)]);
+                transaction.Commit();
 
                 return Result.Succeeded;
             }
@@ -87,7 +85,7 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
                 return Result.Failed;
             }
 
-            var ptList = new List<XYZ>();
+            List<XYZ> ptList = new();
             var element = doc.GetElement(sel
                 .PickObject(ObjectType.Element, new ImportInstanceFilter(), "pick an imported dwg file").ElementId);
 
@@ -118,16 +116,14 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
             }
 
             var xMin = ptList.Min(pt => pt.Z);
-            var offsetPtList = new List<XYZ>();
+            List<XYZ> offsetPtList = new();
             ptList.ForEach(pt => offsetPtList.Add(pt - new XYZ(0, 0, xMin)));
-            using (var transaction = new Transaction(doc, "create"))
-            {
-                transaction.Start();
-                var topo = Autodesk.Revit.DB.Toposolid.Create(doc, offsetPtList, typeId, levelId);
-                //Autodesk.Revit.DB.Toposolid topo = Autodesk.Revit.DB.Toposolid.Create(doc, new List<CurveLoop> { cl }, offsetPtList, typeId, levelId);
-                topo.get_Parameter(BuiltInParameter.TOPOSOLID_HEIGHTABOVELEVEL_PARAM).Set(xMin);
-                transaction.Commit();
-            }
+            using Transaction transaction = new(doc, "create");
+            transaction.Start();
+            var topo = Autodesk.Revit.DB.Toposolid.Create(doc, offsetPtList, typeId, levelId);
+            //Autodesk.Revit.DB.Toposolid topo = Autodesk.Revit.DB.Toposolid.Create(doc, new List<CurveLoop> { cl }, offsetPtList, typeId, levelId);
+            topo.get_Parameter(BuiltInParameter.TOPOSOLID_HEIGHTABOVELEVEL_PARAM).Set(xMin);
+            transaction.Commit();
 
             return Result.Succeeded;
         }
@@ -149,15 +145,13 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
             }
 
             var contourSetting = topoType.GetContourSetting();
-            using (var trans = new Transaction(doc, "contour"))
-            {
-                trans.Start();
-                contourSetting.AddContourRange(1.0, 9.0, 2.0, new ElementId(BuiltInCategory.OST_ToposolidContours));
-                contourSetting.AddSingleContour(10, new ElementId(BuiltInCategory.OST_ToposolidSecondaryContours));
-                contourSetting.AddSingleContour(11.5, new ElementId(BuiltInCategory.OST_ToposolidSplitLines));
-                contourSetting.AddSingleContour(13, new ElementId(BuiltInCategory.OST_ToposolidSplitLines));
-                trans.Commit();
-            }
+            using Transaction trans = new(doc, "contour");
+            trans.Start();
+            contourSetting.AddContourRange(1.0, 9.0, 2.0, new ElementId(BuiltInCategory.OST_ToposolidContours));
+            contourSetting.AddSingleContour(10, new ElementId(BuiltInCategory.OST_ToposolidSecondaryContours));
+            contourSetting.AddSingleContour(11.5, new ElementId(BuiltInCategory.OST_ToposolidSplitLines));
+            contourSetting.AddSingleContour(13, new ElementId(BuiltInCategory.OST_ToposolidSplitLines));
+            trans.Commit();
 
             return Result.Succeeded;
         }
@@ -186,14 +180,12 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
                 return Result.Failed;
             }
 
-            using (var trans = new Transaction(doc, "contour"))
-            {
-                trans.Start();
-                contourSetting.DisableItem(items[0]);
-                //contourSetting.EnableItem(items[0]);
-                //contourSetting.RemoveItem(items[1]);
-                trans.Commit();
-            }
+            using Transaction trans = new(doc, "contour");
+            trans.Start();
+            contourSetting.DisableItem(items[0]);
+            //contourSetting.EnableItem(items[0]);
+            //contourSetting.RemoveItem(items[1]);
+            trans.Commit();
 
             return Result.Succeeded;
         }
@@ -228,14 +220,12 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
                 doc.GetElement(sel.PickObject(ObjectType.Element, new TopographySurfaceFilter(),
                     "pick a topography surface")) as TopographySurface;
 
-            using (var transaction = new Transaction(doc, "create"))
-            {
-                transaction.Start();
-                var topo = Autodesk.Revit.DB.Toposolid.CreateFromTopographySurface(doc, surface.Id, typeId, levelId);
-                transaction.Commit();
-                topo.GetSubDivisionIds().ToList();
-                //TaskDialog.Show("test", ids.Count.ToString());
-            }
+            using Transaction transaction = new(doc, "create");
+            transaction.Start();
+            var topo = Autodesk.Revit.DB.Toposolid.CreateFromTopographySurface(doc, surface.Id, typeId, levelId);
+            transaction.Commit();
+            topo.GetSubDivisionIds().ToList();
+            //TaskDialog.Show("test", ids.Count.ToString());
 
             return Result.Succeeded;
         }
@@ -249,7 +239,7 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
         {
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
-            using (var transaction = new Transaction(doc, "modify"))
+            using (Transaction transaction = new(doc, "modify"))
             {
                 transaction.Start();
                 SSEPointVisibilitySettings.SetVisibility(doc, new ElementId(BuiltInCategory.OST_Toposolid), false);
@@ -276,17 +266,15 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
                 doc.GetElement(sel.PickObject(ObjectType.Element,
                     new ToposolidFilter())) as Autodesk.Revit.DB.Toposolid;
 
-            var curveList = new List<Curve>();
+            List<Curve> curveList = new();
             sel.PickObjects(ObjectType.Element, new ModelCurveFilter()).ToList()
                 .ForEach(x => curveList.Add((doc.GetElement(x) as ModelCurve).GeometryCurve));
             var cl = CurveLoop.Create(curveList);
 
-            using (var transaction = new Transaction(doc, "split"))
-            {
-                transaction.Start();
-                topo.Split(new List<CurveLoop> { cl });
-                transaction.Commit();
-            }
+            using Transaction transaction = new(doc, "split");
+            transaction.Start();
+            topo.Split([cl]);
+            transaction.Commit();
 
             return Result.Succeeded;
         }
@@ -306,12 +294,10 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
                 doc.GetElement(sel.PickObject(ObjectType.Element,
                     new ToposolidFilter())) as Autodesk.Revit.DB.Toposolid;
 
-            using (var transaction = new Transaction(doc, "simplify"))
-            {
-                transaction.Start();
-                topo.Simplify(0.6);
-                transaction.Commit();
-            }
+            using Transaction transaction = new(doc, "simplify");
+            transaction.Start();
+            topo.Simplify(0.6);
+            transaction.Commit();
 
             return Result.Succeeded;
         }

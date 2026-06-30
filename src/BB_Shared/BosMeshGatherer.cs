@@ -42,8 +42,8 @@ public class BosMeshGatherer
 
     public List<Mesh> MeshList { get; } = [];
     public List<Geometry> Geometries { get; } = [];
-  
-    private readonly Dictionary<string, IReadOnlyList<GeometryPart>> _symbolCache = new();
+
+    private readonly Dictionary<string, IReadOnlyList<GeometryPart>> _symbolCache = [];
 
     public BosMeshGatherer(BosRevitBuilder bldr)
     {
@@ -67,7 +67,7 @@ public class BosMeshGatherer
         if (BosDocumentBuilder.MaterialLookup.TryGetValue(matId.Value, out var r))
             return r;
 
-        var material = ge.MaterialElement.ToAra3DMaterial() 
+        var material = ge.MaterialElement.ToAra3DMaterial()
                        ?? e.Category?.Material?.ToAra3DMaterial();
 
         if (material == null) return null;
@@ -84,7 +84,7 @@ public class BosMeshGatherer
 
             var material = GetMaterial(e, geometryElement);
 
-            var parts = new List<GeometryPart>();
+            List<GeometryPart> parts = new();
             TraverseElementGeometry(geometryElement, transform, parts);
             if (parts.Count == 0) return null;
             var ei = BosDocumentBuilder.GetElementIndex(e.Id);
@@ -127,7 +127,7 @@ public class BosMeshGatherer
                     break;
             }
         }
-    }   
+    }
 
     public void ProcessInstanceWithCaching(GeometryInstance gi, Transform worldFromParent, List<GeometryPart> parts)
     {
@@ -143,7 +143,9 @@ public class BosMeshGatherer
     }
 
     public string GetSymbolCacheKey(SymbolGeometryId symbolId)
-        => symbolId?.AsUniqueIdentifier();
+    {
+        return symbolId?.AsUniqueIdentifier();
+    }
 
     private IReadOnlyList<GeometryPart> GetOrBuildSymbolTemplates(GeometryInstance gi)
     {
@@ -157,7 +159,7 @@ public class BosMeshGatherer
         if (_symbolCache.TryGetValue(key, out var existing))
             return existing;
 
-        var templates = new List<GeometryPart>();
+        List<GeometryPart> templates = new();
 
         var symbolGeom = gi.GetSymbolGeometry();
         BuildSymbolTemplates(symbolGeom, Transform.Identity, templates);
@@ -167,7 +169,7 @@ public class BosMeshGatherer
 
     public void BuildSymbolTemplates(GeometryElement geom, Transform transform, List<GeometryPart> templates)
     {
-        if (geom == null) 
+        if (geom == null)
             return;
         foreach (var obj in geom)
         {
@@ -185,7 +187,7 @@ public class BosMeshGatherer
 
                 case GeometryInstance nestedGi:
                     BuildSymbolTemplates(
-                        nestedGi.GetSymbolGeometry(), 
+                        nestedGi.GetSymbolGeometry(),
                         transform.Multiply(nestedGi.Transform), templates);
                     break;
 
@@ -206,7 +208,7 @@ public class BosMeshGatherer
     {
         foreach (Face face in solid.Faces)
             AddGeometryPart(
-                face?.Triangulate(), 
+                face?.Triangulate(),
                 transform,
                 parts,
                 CurrentDocument.GetAra3DMaterial(face));
@@ -220,7 +222,7 @@ public class BosMeshGatherer
                 return;
 
             var index = AddMesh(mesh);
-            var part = new GeometryPart(transform, index, mat);
+            GeometryPart part = new(transform, index, mat);
             parts.Add(part);
         }
         catch
@@ -230,7 +232,9 @@ public class BosMeshGatherer
     }
 
     private void AddMeshInstance(Mesh mesh, Transform transform, List<GeometryPart> parts)
-        => AddGeometryPart(mesh, transform, parts, CurrentDocument.GetAra3DMaterial(mesh));
+    {
+        AddGeometryPart(mesh, transform, parts, CurrentDocument.GetAra3DMaterial(mesh));
+    }
 
     public static bool ShouldKeep(Document doc, GeometryObject obj)
     {
@@ -238,8 +242,7 @@ public class BosMeshGatherer
         if (styleId == ElementId.InvalidElementId)
             return true;
 
-        var style = doc.GetElement(styleId) as GraphicsStyle;
-        if (style == null)
+        if (doc.GetElement(styleId) is not GraphicsStyle style)
             return true;
 
         var cat = style.GraphicsStyleCategory;
@@ -248,10 +251,7 @@ public class BosMeshGatherer
 
         // Explicitly skip light source subcategories
         var catName = cat.Name ?? string.Empty;
-        if (catName.Equals("Light Source", StringComparison.OrdinalIgnoreCase))
-            return false;
-
-        return true;
+        return !catName.Equals("Light Source", StringComparison.OrdinalIgnoreCase);
     }
 }
 

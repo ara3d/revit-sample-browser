@@ -9,11 +9,14 @@ namespace Ara3D.RevitSampleBrowser.Common.Views
     {
         public const string SampleName = "RevitView Template Creation sample";
 
-        public static void ShowWarningMessageBox(string message) =>
-                    MessageBox.Show(message, SampleName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        public static void ShowWarningMessageBox(string message)
+        {
+            MessageBox.Show(message, SampleName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
 
-        public static void ShowInformationMessageBox(string message) =>
-                    MessageBox.Show(message, SampleName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+        public static void ShowInformationMessageBox(string message)
+        {
+            MessageBox.Show(message, SampleName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

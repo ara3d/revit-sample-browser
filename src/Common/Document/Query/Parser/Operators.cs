@@ -2,10 +2,8 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using System.Linq;
 using Autodesk.Revit.DB;
+using System.Linq;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
@@ -26,8 +24,8 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
             new Operator(OperatorType.HasValue, "!!"),
             new Operator(OperatorType.Exists, "?!"),
             new Operator(OperatorType.Equals, "="),
-            new Operator(OperatorType.Greater, ">"),            
-            new Operator(OperatorType.Less, "<"), 
+            new Operator(OperatorType.Greater, ">"),
+            new Operator(OperatorType.Less, "<"),
         };
         private static readonly char[] usedSymbols = new char[0];
 
@@ -39,17 +37,17 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
 
 
         public static bool DoesContainAnyValidOperator(string text)
-        {            
+        {
             return GetOperator(text) != None;
         }
         private static Operator GetOperator(string text)
         {
             foreach (var op in operators)
-            {                
+            {
                 if (text.IndexOf(op.Symbol, System.StringComparison.Ordinal) >= 0)
                 {
                     return op;
-                }                
+                }
             }
             return None;
         }
@@ -105,7 +103,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
         public ElementId ElementId { get; init; }
 
         public bool IsArgumentInt { get; init; }
-     
+
 
 
         public ArgumentValue(string s, int i, double d)
@@ -119,26 +117,26 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
 
         public static ArgumentValue Create(string text, ForgeTypeId dataTypeSpecId)
         {
-            bool isInt = int.TryParse(text, out int intArg);
-            bool isDouble = double.TryParse(text, out double doubleArg);
+            var isInt = int.TryParse(text, out var intArg);
+            var isDouble = double.TryParse(text, out var doubleArg);
 
-            if ((dataTypeSpecId != null) && (SpecUtils.IsValidDataType(dataTypeSpecId) && UnitUtils.IsMeasurableSpec(dataTypeSpecId)))
+            if ((dataTypeSpecId != null) && SpecUtils.IsValidDataType(dataTypeSpecId) && UnitUtils.IsMeasurableSpec(dataTypeSpecId))
             {
                 var units = RevitDatabaseQueryHost.Document?.GetUnits();
                 if (units != null)
                 {
-                    bool isRevitDouble = UnitFormatUtils.TryParse(units, dataTypeSpecId, text, out double revitDoubleArg);
+                    var isRevitDouble = UnitFormatUtils.TryParse(units, dataTypeSpecId, text, out var revitDoubleArg);
                     if (isRevitDouble)
                     {
                         doubleArg = revitDoubleArg;
                     }
                 }
             }
-return new ArgumentValue(text, intArg, doubleArg) { IsArgumentInt = isInt };
+            return new ArgumentValue(text, intArg, doubleArg) { IsArgumentInt = isInt };
         }
     }
-    public class OperatorWithArgument 
-    {        
+    public class OperatorWithArgument
+    {
         private readonly Operator @operator;
         private readonly string opArgument;
 
@@ -159,14 +157,14 @@ return new ArgumentValue(text, intArg, doubleArg) { IsArgumentInt = isInt };
 
         public string ToLabel(StorageType storageType, ForgeTypeId dataTypeSpecId)
         {
-            if ((Type == OperatorType.HasValue) || (Type == OperatorType.HasNoValue) || (Type == OperatorType.Exists))
+            if (Type is OperatorType.HasValue or OperatorType.HasNoValue or OperatorType.Exists)
             {
                 return @operator.Symbol;
             }
 
             var evaluated = Evaluate(dataTypeSpecId);
 
-            string arg = $"\"{opArgument}\"";
+            var arg = $"\"{opArgument}\"";
 
             if (storageType == StorageType.Integer)
             {
@@ -177,10 +175,10 @@ return new ArgumentValue(text, intArg, doubleArg) { IsArgumentInt = isInt };
                 arg = $"new ElementId({evaluated.Int})";
             }
             if (storageType == StorageType.Double)
-            {                
+            {
                 arg = evaluated.Double.ToString();
             }
-                  
+
             return $"{@operator.Symbol} {arg}";
         }
     }

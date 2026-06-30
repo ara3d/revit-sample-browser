@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -18,19 +18,17 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
             {
                 var revitDoc = commandData.Application.ActiveUIDocument.Document;
 
-                using (var transaction = new Transaction(revitDoc, "Create Analytical Curved Panel"))
-                {
-                    transaction.Start();
+                using Transaction transaction = new(revitDoc, "Create Analytical Curved Panel");
+                transaction.Start();
 
-                    var arc = Arc.Create(new XYZ(10, 10, 0), new XYZ(0, 0, 0), new XYZ(15, 10, 0));
+                var arc = Arc.Create(new XYZ(10, 10, 0), new XYZ(0, 0, 0), new XYZ(15, 10, 0));
 
-                    var analyticalCrvPanel = AnalyticalPanel.Create(revitDoc, arc, new XYZ(0, 0, 1));
+                var analyticalCrvPanel = AnalyticalPanel.Create(revitDoc, arc, new XYZ(0, 0, 1));
 
-                    analyticalCrvPanel.StructuralRole = AnalyticalStructuralRole.StructuralRoleFloor;
-                    analyticalCrvPanel.AnalyzeAs = AnalyzeAs.SlabOneWay;
+                analyticalCrvPanel.StructuralRole = AnalyticalStructuralRole.StructuralRoleFloor;
+                analyticalCrvPanel.AnalyzeAs = AnalyzeAs.SlabOneWay;
 
-                    transaction.Commit();
-                }
+                transaction.Commit();
 
                 return Result.Succeeded;
             }

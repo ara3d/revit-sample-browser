@@ -1,25 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
 
 
 namespace BuildingCoder
@@ -56,7 +41,7 @@ namespace BuildingCoder
         public static int FootToMmInt(double length)
         {
             //return (int) ( _feet_to_mm * d + 0.5 );
-            return (int) Math.Round(_footToMm * length,
+            return (int)Math.Round(_footToMm * length,
                 MidpointRounding.AwayFromZero);
         }
 
@@ -130,7 +115,7 @@ namespace BuildingCoder
             // Sort properties alphabetically by name 
 
             Array.Sort(ps,
-                delegate(PropertyInfo p1, PropertyInfo p2) { return p1.Name.CompareTo(p2.Name); });
+                delegate (PropertyInfo p1, PropertyInfo p2) { return p1.Name.CompareTo(p2.Name); });
 
             Debug.Print("{0} properties:", ps.Length);
 
@@ -188,7 +173,7 @@ namespace BuildingCoder
         {
             double mm;
 
-#if (CONFIG_R2019 || CONFIG_R2020)
+#if CONFIG_R2019 || CONFIG_R2020
       mm = UnitUtils.ConvertFromInternalUnits(
         a, DisplayUnitType.DUT_MILLIMETERS );
 #else

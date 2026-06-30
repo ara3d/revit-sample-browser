@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Units;
+using Autodesk.Revit.DB;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 {
     public enum BcType
@@ -40,7 +39,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
     // Restricts decorated members to applicable boundary-condition types.
     public sealed class BcTypeAttribute : Attribute
     {
-        private BcType[] m_bcType;
         // Keep a variable internally ...
 
         public BcTypeAttribute(BcType[] bcTypes)
@@ -48,15 +46,11 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             BcType = bcTypes;
         }
 
-        public BcType[] BcType
-        {
-            get => m_bcType;
-            set => m_bcType = value;
-        }
+        public BcType[] BcType { get; set; }
 
         public override bool Equals(object obj)
         {
-            if (!(obj is BcTypeAttribute temp)) return false;
+            if (obj is not BcTypeAttribute temp) return false;
 
             foreach (var t1 in temp.BcType)
             {
@@ -108,21 +102,21 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
                 switch (BoundaryConditionsType)
                 {
                     case BcType.Area:
-                    {
-                        if (BcState.Fixed != value && BcState.Roller != value)
-                            SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
-                        break;
-                    }
-                    case BcType.Line:
-                    {
-                        if (BcState.Roller != value)
                         {
-                            SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
-                            ;
+                            if (value is not BcState.Fixed and not BcState.Roller)
+                                SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
+                            break;
                         }
+                    case BcType.Line:
+                        {
+                            if (BcState.Roller != value)
+                            {
+                                SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
+                                ;
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
                     case BcType.Point:
                         SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
                         ;
@@ -253,84 +247,82 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
         // Spring modulus must be positive; unit conversion depends on BC type and axis.
         public void SetSpringModulus(string gridItemLabel)
         {
-            using (var springModulusForm = new SpringModulusForm())
+            using SpringModulusForm springModulusForm = new();
+            switch (BoundaryConditionsType)
             {
-                switch (BoundaryConditionsType)
-                {
-                    // judge current conversion rule between the display value and inside value
-                    case BcType.Point when gridItemLabel.Contains("Translation"):
-                        springModulusForm.Conversion = UnitConversion.UnitDictionary["PTSpringModulusConver"];
-                        break;
-                    case BcType.Point:
+                // judge current conversion rule between the display value and inside value
+                case BcType.Point when gridItemLabel.Contains("Translation"):
+                    springModulusForm.Conversion = UnitConversion.UnitDictionary["PTSpringModulusConver"];
+                    break;
+                case BcType.Point:
                     {
                         if (gridItemLabel.Contains("Rotation"))
                             springModulusForm.Conversion = UnitConversion.UnitDictionary["PRSpringModulusConver"];
                         break;
                     }
-                    case BcType.Line when gridItemLabel.Contains("Translation"):
-                        springModulusForm.Conversion = UnitConversion.UnitDictionary["LTSpringModulusConver"];
-                        break;
-                    case BcType.Line:
+                case BcType.Line when gridItemLabel.Contains("Translation"):
+                    springModulusForm.Conversion = UnitConversion.UnitDictionary["LTSpringModulusConver"];
+                    break;
+                case BcType.Line:
                     {
                         if (gridItemLabel.Contains("Rotation"))
                             springModulusForm.Conversion = UnitConversion.UnitDictionary["LRSpringModulusConver"];
                         break;
                     }
-                    case BcType.Area when gridItemLabel.Contains("Translation"):
-                        springModulusForm.Conversion = UnitConversion.UnitDictionary["ATSpringModulusConver"];
-                        break;
-                }
+                case BcType.Area when gridItemLabel.Contains("Translation"):
+                    springModulusForm.Conversion = UnitConversion.UnitDictionary["ATSpringModulusConver"];
+                    break;
+            }
 
+            switch (gridItemLabel)
+            {
+                // get the old value
+                case "XTranslation":
+                    springModulusForm.OldStringModulus = XTranslationSpringModulus;
+                    break;
+                case "YTranslation":
+                    springModulusForm.OldStringModulus = YTranslationSpringModulus;
+                    break;
+                case "ZTranslation":
+                    springModulusForm.OldStringModulus = ZTranslationSpringModulus;
+                    break;
+                case "XRotation":
+                    springModulusForm.OldStringModulus = XRotationSpringModulus;
+                    break;
+                case "YRotation":
+                    springModulusForm.OldStringModulus = YRotationSpringModulus;
+                    break;
+                case "ZRotation":
+                    springModulusForm.OldStringModulus = ZRotationSpringModulus;
+                    break;
+            }
+
+            // show the spring modulus dialog to ask a positive number
+            var result = springModulusForm.ShowDialog();
+
+            // set the user input number as the new value
+            if (DialogResult.OK == result)
+            {
                 switch (gridItemLabel)
                 {
-                    // get the old value
                     case "XTranslation":
-                        springModulusForm.OldStringModulus = XTranslationSpringModulus;
+                        XTranslationSpringModulus = springModulusForm.StringModulus;
                         break;
                     case "YTranslation":
-                        springModulusForm.OldStringModulus = YTranslationSpringModulus;
+                        YTranslationSpringModulus = springModulusForm.StringModulus;
                         break;
                     case "ZTranslation":
-                        springModulusForm.OldStringModulus = ZTranslationSpringModulus;
+                        ZTranslationSpringModulus = springModulusForm.StringModulus;
                         break;
                     case "XRotation":
-                        springModulusForm.OldStringModulus = XRotationSpringModulus;
+                        XRotationSpringModulus = springModulusForm.StringModulus;
                         break;
                     case "YRotation":
-                        springModulusForm.OldStringModulus = YRotationSpringModulus;
+                        YRotationSpringModulus = springModulusForm.StringModulus;
                         break;
                     case "ZRotation":
-                        springModulusForm.OldStringModulus = ZRotationSpringModulus;
+                        ZRotationSpringModulus = springModulusForm.StringModulus;
                         break;
-                }
-
-                // show the spring modulus dialog to ask a positive number
-                var result = springModulusForm.ShowDialog();
-
-                // set the user input number as the new value
-                if (DialogResult.OK == result)
-                {
-                    switch (gridItemLabel)
-                    {
-                        case "XTranslation":
-                            XTranslationSpringModulus = springModulusForm.StringModulus;
-                            break;
-                        case "YTranslation":
-                            YTranslationSpringModulus = springModulusForm.StringModulus;
-                            break;
-                        case "ZTranslation":
-                            ZTranslationSpringModulus = springModulusForm.StringModulus;
-                            break;
-                        case "XRotation":
-                            XRotationSpringModulus = springModulusForm.StringModulus;
-                            break;
-                        case "YRotation":
-                            YRotationSpringModulus = springModulusForm.StringModulus;
-                            break;
-                        case "ZRotation":
-                            ZRotationSpringModulus = springModulusForm.StringModulus;
-                            break;
-                    }
                 }
             }
         }
@@ -346,21 +338,15 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
                     continue;
 
                 // get the parameter value
-                switch (parameter.StorageType)
+                return parameter.StorageType switch
                 {
-                    case StorageType.Double:
-                        return parameter.AsDouble();
-                    case StorageType.Integer:
-                        return parameter.AsInteger();
-                    case StorageType.ElementId:
-                        return parameter.AsElementId();
-                    case StorageType.String:
-                        return parameter.AsString();
-                    case StorageType.None:
-                        return parameter.AsValueString();
-                    default:
-                        return null;
-                }
+                    StorageType.Double => parameter.AsDouble(),
+                    StorageType.Integer => parameter.AsInteger(),
+                    StorageType.ElementId => parameter.AsElementId(),
+                    StorageType.String => parameter.AsString(),
+                    StorageType.None => parameter.AsValueString(),
+                    _ => null,
+                };
             }
 
             return null;

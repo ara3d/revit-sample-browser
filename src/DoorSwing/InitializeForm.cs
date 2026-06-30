@@ -53,12 +53,12 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             // Calculate the draw area according to the size of the sketch: Adjust the shrink to change borders
             if (doorGeoRectangleF.Width * displayRectangleF.Height > doorGeoRectangleF.Height * displayRectangleF.Width)
                 displayRectangleF.Inflate((float)(-0.1 * displayRectangleF.Width),
-                    (float)(-1 + doorGeoRectangleF.Height * 0.8 * displayRectangleF.Width /
-                        (doorGeoRectangleF.Width * displayRectangleF.Height)));
+                    (float)(-1 + (doorGeoRectangleF.Height * 0.8 * displayRectangleF.Width /
+                        (doorGeoRectangleF.Width * displayRectangleF.Height))));
             else
                 displayRectangleF.Inflate(
-                    (float)(-1 + doorGeoRectangleF.Width * 0.8 * displayRectangleF.Height /
-                        (doorGeoRectangleF.Height * displayRectangleF.Width)),
+                    (float)(-1 + (doorGeoRectangleF.Width * 0.8 * displayRectangleF.Height /
+                        (doorGeoRectangleF.Height * displayRectangleF.Width))),
                     (float)(-0.1 * displayRectangleF.Height));
 
             // Mapping the point in sketch to point in draw area.
@@ -70,14 +70,14 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             plgpts[2].X = displayRectangleF.Left;
             plgpts[2].Y = displayRectangleF.Top;
 
-            var matrix = new Matrix(doorGeoRectangleF, plgpts);
+            Matrix matrix = new(doorGeoRectangleF, plgpts);
 
             // Clear the object of graphics.
             graphics.Clear(previewPictureBox.BackColor);
             // Transform the object of graphics.
             graphics.Transform = matrix;
             // The pen for drawing profiles
-            var drawPen = new Pen(Color.Red, (float)0.05);
+            Pen drawPen = new(Color.Red, (float)0.05);
 
             // Draw profiles.
             m_currentGraphic.DrawGraphics(graphics, drawPen);

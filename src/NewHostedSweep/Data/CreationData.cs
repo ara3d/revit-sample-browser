@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
 {
@@ -25,42 +25,26 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
         /// <param name="sym">Symbol</param>
         public delegate void SymbolChangedEventHandler(ElementType sym);
 
-        private readonly List<Edge> m_backUpEdges = new List<Edge>();
+        private readonly List<Edge> m_backUpEdges = [];
 
         private ElementType m_backUpSymbol;
 
-        /// <summary>
-        ///     Creator contains the necessary data to fetch the edges and get the symbol.
-        /// </summary>
-        private readonly HostedSweepCreator m_creator;
-
-        /// <summary>
-        ///     Edges which contains references for HostedSweep creation.
-        /// </summary>
-        private readonly List<Edge> m_edgesForHostedSweep = new List<Edge>();
-
-        private ElementType m_symbol;
-
         public CreationData(HostedSweepCreator creator)
         {
-            m_creator = creator;
+            Creator = creator;
         }
 
         /// <summary>
         ///     Creator contains the necessary data to fetch the edges and get the symbol.
         /// </summary>
-        public HostedSweepCreator Creator => m_creator;
+        public HostedSweepCreator Creator { get; }
 
-        public ElementType Symbol
-        {
-            get => m_symbol;
-            set => m_symbol = value;
-        }
+        public ElementType Symbol { get; set; }
 
         /// <summary>
         ///     Edges which contains references for HostedSweep creation.
         /// </summary>
-        public List<Edge> EdgesForHostedSweep => m_edgesForHostedSweep;
+        public List<Edge> EdgesForHostedSweep { get; } = [];
 
         public event EdgeEventHandler EdgeAdded;
 
@@ -70,33 +54,33 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
 
         public void BackUp()
         {
-            m_backUpSymbol = m_symbol;
+            m_backUpSymbol = Symbol;
             m_backUpEdges.Clear();
-            m_backUpEdges.AddRange(m_edgesForHostedSweep);
+            m_backUpEdges.AddRange(EdgesForHostedSweep);
         }
 
         public void Restore()
         {
-            m_symbol = m_backUpSymbol;
-            m_edgesForHostedSweep.Clear();
-            m_edgesForHostedSweep.AddRange(m_backUpEdges);
+            Symbol = m_backUpSymbol;
+            EdgesForHostedSweep.Clear();
+            EdgesForHostedSweep.AddRange(m_backUpEdges);
         }
 
         public void Update()
         {
             if (SymbolChanged != null && m_backUpSymbol != null &&
-                m_backUpSymbol.Id != m_symbol.Id)
-                SymbolChanged(m_symbol);
+                m_backUpSymbol.Id != Symbol.Id)
+                SymbolChanged(Symbol);
 
             if (EdgeRemoved != null)
                 foreach (var edge in m_backUpEdges)
                 {
-                    if (m_edgesForHostedSweep.IndexOf(edge) == -1)
+                    if (EdgesForHostedSweep.IndexOf(edge) == -1)
                         EdgeRemoved(edge);
                 }
 
             if (EdgeAdded != null)
-                foreach (var edge in m_edgesForHostedSweep)
+                foreach (var edge in EdgesForHostedSweep)
                 {
                     if (m_backUpEdges.IndexOf(edge) == -1)
                         EdgeAdded(edge);

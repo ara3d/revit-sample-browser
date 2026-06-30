@@ -1,15 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Visual;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
+using System;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 {
     public class Application : IExternalApplication
@@ -64,13 +63,11 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 
         public void ModifySelectedMaterial(string text, bool lighter)
         {
-            using (var trans = new Transaction(m_document))
+            using Transaction trans = new(m_document);
+            if (trans.Start(text) == TransactionStatus.Started)
             {
-                if (trans.Start(text) == TransactionStatus.Started)
-                {
-                    EditMaterialTintColorProperty(lighter);
-                    trans.Commit();
-                }
+                EditMaterialTintColorProperty(lighter);
+                trans.Commit();
             }
         }
 
@@ -112,11 +109,11 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             if (m_currentAppearanceAssetElementId == ElementId.InvalidElementId)
                 return false;
 
-            if (!(m_document.GetElement(m_currentAppearanceAssetElementId) is AppearanceAssetElement assetElem))
+            if (m_document.GetElement(m_currentAppearanceAssetElementId) is not AppearanceAssetElement assetElem)
                 return false;
 
             var asset = assetElem.GetRenderingAsset();
-            if (!(asset.FindByName("common_Tint_color") is AssetPropertyDoubleArray4d tintColorProp))
+            if (asset.FindByName("common_Tint_color") is not AssetPropertyDoubleArray4d tintColorProp)
                 return false;
 
             // If the material supports tint but it is not enabled, it will be enabled first with a value (255 255 255)
@@ -127,26 +124,24 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 
         private void EnableTintColor()
         {
-            using (var transaction = new Transaction(m_document, "Enable tint color"))
+            using Transaction transaction = new(m_document, "Enable tint color");
+            transaction.Start();
+
+            using (AppearanceAssetEditScope editScope = new(m_document))
             {
-                transaction.Start();
+                var editableAsset = editScope.Start(m_currentAppearanceAssetElementId);
 
-                using (var editScope = new AppearanceAssetEditScope(m_document))
-                {
-                    var editableAsset = editScope.Start(m_currentAppearanceAssetElementId);
+                //  If the material supports tint but it is not enabled, it will be enabled first with a value (255 255 255)
+                var tintToggleProp = editableAsset.FindByName("common_Tint_color") as AssetPropertyBoolean;
+                var tintColorProp = editableAsset.FindByName("common_Tint_color") as AssetPropertyDoubleArray4d;
 
-                    //  If the material supports tint but it is not enabled, it will be enabled first with a value (255 255 255)
-                    var tintToggleProp = editableAsset.FindByName("common_Tint_color") as AssetPropertyBoolean;
-                    var tintColorProp = editableAsset.FindByName("common_Tint_color") as AssetPropertyDoubleArray4d;
+                tintToggleProp.Value = true;
+                tintColorProp.SetValueAsColor(new Color(255, 255, 255));
 
-                    tintToggleProp.Value = true;
-                    tintColorProp.SetValueAsColor(new Color(255, 255, 255));
-
-                    editScope.Commit(true);
-                }
-
-                transaction.Commit();
+                editScope.Commit(true);
             }
+
+            transaction.Commit();
         }
 
         public bool IsLighterEnabled()
@@ -154,13 +149,13 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             if (!SupportTintColor())
                 return false;
 
-            if (!(m_document.GetElement(m_currentAppearanceAssetElementId) is AppearanceAssetElement assetElem))
+            if (m_document.GetElement(m_currentAppearanceAssetElementId) is not AppearanceAssetElement assetElem)
                 return false;
 
             var asset = assetElem.GetRenderingAsset();
             var tintColorProp = asset.FindByName("common_Tint_color") as AssetPropertyDoubleArray4d;
             var tintColor = tintColorProp.GetValueAsColor();
-            var white = new Color(255, 255, 255);
+            Color white = new(255, 255, 255);
             return !BitmapHelper.ColorsEqual(tintColor, white);
         }
 
@@ -169,13 +164,13 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             if (!SupportTintColor())
                 return false;
 
-            if (!(m_document.GetElement(m_currentAppearanceAssetElementId) is AppearanceAssetElement assetElem))
+            if (m_document.GetElement(m_currentAppearanceAssetElementId) is not AppearanceAssetElement assetElem)
                 return false;
 
             var asset = assetElem.GetRenderingAsset();
             var tintColorProp = asset.FindByName("common_Tint_color") as AssetPropertyDoubleArray4d;
             var tintColor = tintColorProp.GetValueAsColor();
-            var black = new Color(0, 0, 0);
+            Color black = new(0, 0, 0);
             return !BitmapHelper.ColorsEqual(tintColor, black);
         }
 
@@ -211,38 +206,36 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 
         public void EditMaterialTintColorProperty(bool lighter)
         {
-            using (var editScope = new AppearanceAssetEditScope(m_document))
+            using AppearanceAssetEditScope editScope = new(m_document);
+            var editableAsset = editScope.Start(m_currentAppearanceAssetElementId);
+
+            var metalColorProp = editableAsset.FindByName("common_Tint_color") as AssetPropertyDoubleArray4d;
+
+            var color = metalColorProp.GetValueAsColor();
+            var red = color.Red;
+            var green = color.Green;
+            var blue = color.Blue;
+
+            // Increment factor  (value related to 255)
+            var factor = 25;
+
+            if (lighter)
             {
-                var editableAsset = editScope.Start(m_currentAppearanceAssetElementId);
-
-                var metalColorProp = editableAsset.FindByName("common_Tint_color") as AssetPropertyDoubleArray4d;
-
-                var color = metalColorProp.GetValueAsColor();
-                var red = color.Red;
-                var green = color.Green;
-                var blue = color.Blue;
-
-                // Increment factor  (value related to 255)
-                var factor = 25;
-
-                if (lighter)
-                {
-                    red = (byte)BitmapHelper.LimitValue(red + factor);
-                    green = (byte)BitmapHelper.LimitValue(green + factor);
-                    blue = (byte)BitmapHelper.LimitValue(blue + factor);
-                }
-                else
-                {
-                    red = (byte)BitmapHelper.LimitValue(red - factor);
-                    green = (byte)BitmapHelper.LimitValue(green - factor);
-                    blue = (byte)BitmapHelper.LimitValue(blue - factor);
-                }
-
-                if (metalColorProp.IsValidValue(color))
-                    metalColorProp.SetValueAsColor(new Color(red, green, blue));
-
-                editScope.Commit(true);
+                red = (byte)BitmapHelper.LimitValue(red + factor);
+                green = (byte)BitmapHelper.LimitValue(green + factor);
+                blue = (byte)BitmapHelper.LimitValue(blue + factor);
             }
+            else
+            {
+                red = (byte)BitmapHelper.LimitValue(red - factor);
+                green = (byte)BitmapHelper.LimitValue(green - factor);
+                blue = (byte)BitmapHelper.LimitValue(blue - factor);
+            }
+
+            if (metalColorProp.IsValidValue(color))
+                metalColorProp.SetValueAsColor(new Color(red, green, blue));
+
+            editScope.Commit(true);
         }
     }
 }

@@ -1,9 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using System;
 using System.Windows.Forms;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
     public partial class CreateWithSelectedCurvesForm : Form

@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.Journaling.CS
 {
@@ -18,10 +18,10 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
         {
             try
             {
-                var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Journaling");
+                Transaction tran = new(commandData.Application.ActiveUIDocument.Document, "Journaling");
                 tran.Start();
                 // Create a real operate class
-                var deal = new Journaling(commandData);
+                Journaling deal = new(commandData);
                 deal.Run(); // The main deal operation
                 tran.Commit();
 

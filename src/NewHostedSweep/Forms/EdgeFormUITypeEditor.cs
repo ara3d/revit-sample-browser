@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 using System;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
-using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
@@ -32,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 
             var creationData = value as CreationData;
             creationData.BackUp();
-            using (var form = new EdgeFetchForm(creationData))
+            using (EdgeFetchForm form = new(creationData))
             {
                 if (winSrv.ShowDialog(form) == DialogResult.OK)
                     creationData.Update();

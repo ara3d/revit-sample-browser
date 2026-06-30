@@ -18,6 +18,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -48,7 +49,7 @@ namespace BuildingCoder
             var gridCurves = grid.GetCurvesInView(
                 DatumExtentType.Model, view);
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Modify Grid Endpoints");
 
             foreach (var c in gridCurves)
@@ -56,8 +57,8 @@ namespace BuildingCoder
                 var start = c.GetEndPoint(0);
                 var end = c.GetEndPoint(1);
 
-                var newStart = start + 10 * XYZ.BasisY;
-                var newEnd = end - 10 * XYZ.BasisY;
+                var newStart = start + (10 * XYZ.BasisY);
+                var newEnd = end - (10 * XYZ.BasisY);
 
                 var newLine = Line.CreateBound(newStart, newEnd);
 

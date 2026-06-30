@@ -1,9 +1,10 @@
-using System.Linq;
 using Ara3D.RevitSampleBrowser.N3P_Shared.CS;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Nice3point.Revit.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.N3P_Families.CS
 {
@@ -24,14 +25,13 @@ namespace Ara3D.RevitSampleBrowser.N3P_Families.CS
             }
 
             var symbols = doc.CollectElements()
-                .FamilySymbols(family)
+                .FamilySymbols((Family)family)
                 .ToElements();
             N3POutput.Line($"Family '{family.Name}' symbol count", symbols.Count);
 
             var instances = doc.CollectElements()
                 .FamilyInstances(doc, family.Id)
-                .Take(3)
-                .ToElements();
+                .Take(3);
             N3POutput.Line("Sample instance ids", string.Join(", ", instances.Select(e => e.Id)));
 
             var wall = doc.CollectElements().OfClass<Wall>().FirstOrDefault();

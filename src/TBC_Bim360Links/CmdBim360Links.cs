@@ -13,10 +13,12 @@
 
 #region Namespaces
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+
 
 #endregion // Namespaces
 
@@ -49,8 +51,7 @@ namespace BuildingCoder
                     var elem = doc.GetElement(eid);
                     if (elem == null) continue;
 
-                    var link = elem as RevitLinkType;
-                    if (link == null) continue;
+                    if (elem is not RevitLinkType link) continue;
 
                     try
                     {

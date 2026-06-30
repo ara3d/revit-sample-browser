@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.UI;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.UI;
 using System.Threading;
-using System.Collections.Concurrent;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -29,7 +29,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         public Application App => UIApp.Application;
         public bool PauseProcessing { get; set; }
         public event EventHandler<Exception> ExceptionEvent;
-        public readonly Stopwatch WorkStopwatch = new Stopwatch();
+        public readonly Stopwatch WorkStopwatch = new();
         public int WorkProcessedCount = 0;
         private bool _enabled = false;
         public bool DoWorkDuringIdle { get; set; } = true;
@@ -42,10 +42,10 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public event EventHandler OnHeartbeat;
         public event EventHandler OnIdle;
-        public CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
+        public CancellationTokenSource CancellationTokenSource = new();
 
         // After the heartbeat, signals that there is 
-        public AutoResetEvent HeartbeatSignal = new AutoResetEvent(false);
+        public AutoResetEvent HeartbeatSignal = new(false);
 
         public BackgroundProcessor(Action<T> processor, UIApplication uiApp)
         {
@@ -55,8 +55,15 @@ namespace Ara3D.Bowerbird.RevitSamples
             Enable();
         }
         private int _processingWork = 0;
-        private bool TryEnterProcessWork() => Interlocked.CompareExchange(ref _processingWork, 1, 0) == 0;
-        private void ExitProcessWork() => Volatile.Write(ref _processingWork, 0);
+        private bool TryEnterProcessWork()
+        {
+            return Interlocked.CompareExchange(ref _processingWork, 1, 0) == 0;
+        }
+
+        private void ExitProcessWork()
+        {
+            Volatile.Write(ref _processingWork, 0);
+        }
 
         public bool Enabled
         {
@@ -94,10 +101,11 @@ namespace Ara3D.Bowerbird.RevitSamples
                     PokeRevit();
                     WaitHandle.WaitAny([HeartbeatSignal, token.WaitHandle], 10000);
                 }
-            });
-
-            PokeRevitThread.IsBackground = true;
-            PokeRevitThread.Priority = ThreadPriority.BelowNormal;
+            })
+            {
+                IsBackground = true,
+                Priority = ThreadPriority.BelowNormal
+            };
             PokeRevitThread.Start();
         }
 
@@ -182,14 +190,18 @@ namespace Ara3D.Bowerbird.RevitSamples
                 EnqueueWork(item);
         }
 
-        public void EnqueueWork(T item) 
-            => Queue.Enqueue(item);
+        public void EnqueueWork(T item)
+        {
+            Queue.Enqueue(item);
+        }
 
         public bool HasWork
             => !Queue.IsEmpty;
 
         public void ClearWork()
-            => Queue = new ConcurrentQueue<T>();
+        {
+            Queue = new ConcurrentQueue<T>();
+        }
 
         public void ResetStats()
         {
@@ -210,12 +222,12 @@ namespace Ara3D.Bowerbird.RevitSamples
                     if (!Queue.TryDequeue(out var item))
                         continue;
                     Processor(item);
-                    WorkProcessedCount++;   
-                    
+                    WorkProcessedCount++;
+
                     var elapsedTime = WorkStopwatch.ElapsedMilliseconds - startedTime;
                     if (elapsedTime > MaxMSecPerBatch && !doAllNow)
                         break;
-                } 
+                }
             }
             catch (Exception ex)
             {

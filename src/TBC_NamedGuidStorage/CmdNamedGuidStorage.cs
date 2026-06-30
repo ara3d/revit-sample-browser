@@ -12,10 +12,10 @@
 
 #region Namespaces
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 #endregion // Namespaces
 
@@ -42,7 +42,7 @@ namespace BuildingCoder
 
             if (rc)
             {
-                Util.InfoMsg($"This document already has a project identifier: {name} = {named_guid.ToString()}");
+                Util.InfoMsg($"This document already has a project identifier: {name} = {named_guid}");
 
                 rslt = Result.Succeeded;
             }
@@ -53,7 +53,7 @@ namespace BuildingCoder
 
                 if (rc)
                 {
-                    Util.InfoMsg($"Created a new project identifier for this document: {name} = {named_guid.ToString()}");
+                    Util.InfoMsg($"Created a new project identifier for this document: {name} = {named_guid}");
 
                     rslt = Result.Succeeded;
                 }

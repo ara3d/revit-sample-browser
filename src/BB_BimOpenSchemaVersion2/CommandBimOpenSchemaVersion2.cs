@@ -10,7 +10,7 @@ public class CommandBimOpenSchemaVersion2 : NamedCommand
     public override void Execute(object arg)
     {
         var app = arg as UIApplication;
-        var form = new BIMOpenSchemaExporterForm();
+        BIMOpenSchemaExporterForm form = new();
         form.Show(app);
     }
 }

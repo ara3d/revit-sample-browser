@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Linq;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.N3P_Shared.CS;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Nice3point.Revit.Toolkit.External;
+using System.Collections.Generic;
+using System.Linq;
 using ToolkitExternalCommand = Nice3point.Revit.Toolkit.External.ExternalCommand;
 
 namespace Ara3D.RevitSampleBrowser.N3P_Scopes.CS
@@ -35,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.N3P_Scopes.CS
 
             using (RevitToolkitScopes.BeginFailureSuppression())
             using (RevitToolkitScopes.BeginDialogSuppression(TaskDialogResult.Ok))
-            using (var transaction = new Transaction(doc, "N3P copy with suppressed failures"))
+            using (Transaction transaction = new(doc, "N3P copy with suppressed failures"))
             {
                 transaction.Start();
                 var copied = ElementTransformUtils.CopyElement(doc, sourceId, XYZ.BasisX * 5);

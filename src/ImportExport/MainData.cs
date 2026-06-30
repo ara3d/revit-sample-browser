@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.IO;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.ImportExport.CS.Export;
 using Ara3D.RevitSampleBrowser.ImportExport.CS.Import;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS
 {
@@ -49,10 +49,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
         public MainData(ExternalCommandData commandData)
         {
             CommandData = commandData;
-            if (commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == ViewType.ThreeD)
-                Is3DView = true;
-            else
-                Is3DView = false;
+            Is3DView = commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == ViewType.ThreeD;
         }
         public ExternalCommandData CommandData { get; }
 
@@ -108,24 +105,24 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
                 switch (format)
                 {
                     case ExportFormat.Dwg:
-                        var exportDwgData = new ExportDwgData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportDwgData))
+                        ExportDwgData exportDwgData = new(CommandData, format);
+                        using (ExportWithViewsForm exportForm = new(exportDwgData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
 
                         break;
                     case ExportFormat.Dxf:
-                        var exportDxfData = new ExportDxfData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportDxfData))
+                        ExportDxfData exportDxfData = new(CommandData, format);
+                        using (ExportWithViewsForm exportForm = new(exportDxfData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
 
                         break;
                     case ExportFormat.Sat:
-                        var exportSatData = new ExportSatData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportSatData))
+                        ExportSatData exportSatData = new(CommandData, format);
+                        using (ExportWithViewsForm exportForm = new(exportSatData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
@@ -133,31 +130,31 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
                         break;
                     case ExportFormat.Dwf:
                     case ExportFormat.DwFx:
-                        var exportDwfData = new ExportDwfData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportDwfData))
+                        ExportDwfData exportDwfData = new(CommandData, format);
+                        using (ExportWithViewsForm exportForm = new(exportDwfData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
 
                         break;
                     case ExportFormat.Gbxml:
-                        var exportGbxmlData = new ExportGbxmlData(CommandData, format);
+                        ExportGbxmlData exportGbxmlData = new(CommandData, format);
                         dialogResult = Export(exportGbxmlData);
                         break;
                     case ExportFormat.Fbx:
-                        var exportFbxData = new ExportFbxData(CommandData, format);
+                        ExportFbxData exportFbxData = new(CommandData, format);
                         dialogResult = Export(exportFbxData);
                         break;
                     case ExportFormat.Dgn:
-                        var exportDgnData = new ExportDgnData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportDgnData))
+                        ExportDgnData exportDgnData = new(CommandData, format);
+                        using (ExportWithViewsForm exportForm = new(exportDgnData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
 
                         break;
                     case ExportFormat.Image:
-                        var exportImGdata = new ExportImgData(CommandData, format);
+                        ExportImgData exportImGdata = new(CommandData, format);
                         using (new ExportWithViewsForm(exportImGdata))
                         {
                             dialogResult = DialogResult.OK;
@@ -165,8 +162,8 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
 
                         break;
                     case ExportFormat.Pdf:
-                        var exportPdfData = new ExportPdfData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportPdfData))
+                        ExportPdfData exportPdfData = new(CommandData, format);
+                        using (ExportWithViewsForm exportForm = new(exportPdfData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
@@ -205,24 +202,22 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
         public static DialogResult ShowSaveDialog(ExportData exportData, ref string returnFileName,
             ref int filterIndex)
         {
-            using (var saveDialog = new SaveFileDialog())
+            using SaveFileDialog saveDialog = new();
+            saveDialog.Title = exportData.Title;
+            saveDialog.InitialDirectory = exportData.ExportFolder;
+            saveDialog.FileName = exportData.ExportFileName;
+            saveDialog.Filter = exportData.Filter;
+            saveDialog.FilterIndex = 1;
+            saveDialog.RestoreDirectory = true;
+
+            var result = saveDialog.ShowDialog();
+            if (result != DialogResult.Cancel)
             {
-                saveDialog.Title = exportData.Title;
-                saveDialog.InitialDirectory = exportData.ExportFolder;
-                saveDialog.FileName = exportData.ExportFileName;
-                saveDialog.Filter = exportData.Filter;
-                saveDialog.FilterIndex = 1;
-                saveDialog.RestoreDirectory = true;
-
-                var result = saveDialog.ShowDialog();
-                if (result != DialogResult.Cancel)
-                {
-                    returnFileName = saveDialog.FileName;
-                    filterIndex = saveDialog.FilterIndex;
-                }
-
-                return result;
+                returnFileName = saveDialog.FileName;
+                filterIndex = saveDialog.FilterIndex;
             }
+
+            return result;
         }
 
         private static ImportFormat GetSelectedImportFormat(string selectedFormat)
@@ -257,19 +252,19 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
                 switch (format)
                 {
                     case ImportFormat.Dwg:
-                        var importDwgData = new ImportDwgData(CommandData, format);
-                        using (var importForm = new ImportDwgForm(importDwgData))
+                        ImportDwgData importDwgData = new(CommandData, format);
+                        using (ImportDwgForm importForm = new(importDwgData))
                         {
                             dialogResult = importForm.ShowDialog();
                         }
 
                         break;
                     case ImportFormat.Image:
-                        var importImageData = new ImportImageData(CommandData, format);
+                        ImportImageData importImageData = new(CommandData, format);
                         dialogResult = Import(importImageData);
                         break;
                     case ImportFormat.Gbxml:
-                        var importGbxmlData = new ImportGbxmlData(CommandData, format);
+                        ImportGbxmlData importGbxmlData = new(CommandData, format);
                         dialogResult = Import(importGbxmlData);
                         break;
                 }
@@ -300,18 +295,16 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
 
         public static DialogResult ShowOpenDialog(ImportData importData, ref string returnFileName)
         {
-            using (var importDialog = new OpenFileDialog())
-            {
-                importDialog.Title = importData.Title;
-                importDialog.InitialDirectory = importData.ImportFolder;
-                importDialog.Filter = importData.Filter;
-                importDialog.RestoreDirectory = true;
+            using OpenFileDialog importDialog = new();
+            importDialog.Title = importData.Title;
+            importDialog.InitialDirectory = importData.ImportFolder;
+            importDialog.Filter = importData.Filter;
+            importDialog.RestoreDirectory = true;
 
-                var result = importDialog.ShowDialog();
-                if (result != DialogResult.Cancel) returnFileName = importDialog.FileName;
+            var result = importDialog.ShowDialog();
+            if (result != DialogResult.Cancel) returnFileName = importDialog.FileName;
 
-                return result;
-            }
+            return result;
         }
     }
 }

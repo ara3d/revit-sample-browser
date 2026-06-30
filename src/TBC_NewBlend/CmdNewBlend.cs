@@ -33,7 +33,7 @@ namespace BuildingCoder
 
             if (doc.IsFamilyDocument)
             {
-                using var t = new Transaction(doc);
+                using Transaction t = new(doc);
                 t.Start("New Blend");
 
                 Util.CreateBlend(doc);

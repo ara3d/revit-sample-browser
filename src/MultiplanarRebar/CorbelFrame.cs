@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 {
     /// <summary>
@@ -66,7 +64,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var sketchplane =
                 SketchPlane.Create(revitDoc, Plane.CreateByNormalAndOrigin(normal, Vertical.GetEndPoint(0)));
 
-            var curves = new CurveArray();
+            CurveArray curves = new();
             curves.Append(Top.Clone());
             curves.Append(Vertical.Clone());
             curves.Append(Bottom.Clone());
@@ -89,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var slantedLengthNew = verticalLengthNew * Slanted.Length / Vertical.Length;
 
             var slantedDir = (Slanted.GetEndPoint(1) - Slanted.GetEndPoint(0)).Normalize();
-            var slantedFinal = Slanted.GetEndPoint(0) + slantedDir * slantedLengthNew;
+            var slantedFinal = Slanted.GetEndPoint(0) + (slantedDir * slantedLengthNew);
 
             Vertical = Line.CreateBound(verticalFinal, Vertical.GetEndPoint(1));
             Top = Line.CreateBound(slantedFinal, verticalFinal);
@@ -130,7 +128,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var slantedLengthNew = verticalLengthNew * Slanted.Length / Vertical.Length;
 
             var slantedDir = (Slanted.GetEndPoint(0) - Slanted.GetEndPoint(1)).Normalize();
-            var slantedFinal = Slanted.GetEndPoint(1) + slantedDir * slantedLengthNew;
+            var slantedFinal = Slanted.GetEndPoint(1) + (slantedDir * slantedLengthNew);
 
             Vertical = Line.CreateBound(Vertical.GetEndPoint(0), verticalFinal);
             Bottom = Line.CreateBound(verticalFinal, slantedFinal);
@@ -178,7 +176,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
         public RebarShape ConstructMultiplanarRebarShape(Document revitDoc, double bendDiameter)
         {
             // Construct a segment definition with 2 lines.
-            var shapedef = new RebarShapeDefinitionBySegments(revitDoc, 2);
+            RebarShapeDefinitionBySegments shapedef = new(revitDoc, 2);
 
             // Define parameters for the dimension.
             var b = MultiplanarRebarHelper.GetOrCreateDef("B", revitDoc);
@@ -230,7 +228,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             if (!shapedef.CheckDefaultParameterValues(0, 0)) throw new Exception("Can't resolve rebar shape.");
 
             // Define multi-planar definition
-            var multiPlanarDef = new RebarShapeMultiplanarDefinition(bendDiameter)
+            RebarShapeMultiplanarDefinition multiPlanarDef = new(bendDiameter)
             {
                 DepthParamId = mm
             };
@@ -246,9 +244,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 
             // Make sure we can see the created shape from the browser.
             var curvesForBrowser = newshape.GetCurvesForBrowser();
-            if (curvesForBrowser.Count == 0) throw new Exception("The Rebar shape is invisible in browser.");
-
-            return newshape;
+            return curvesForBrowser.Count == 0 ? throw new Exception("The Rebar shape is invisible in browser.") : newshape;
         }
 
         /// <summary>
@@ -350,7 +346,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             profileCopy.OffsetTop(-m_corbelCoverDistance);
             profileCopy.OffsetLeft(-m_corbelCoverDistance
                                    - options.MultiplanarBarType.BarModelDiameter
-                                   - options.TopBarType.BarModelDiameter * 0.5);
+                                   - (options.TopBarType.BarModelDiameter * 0.5));
             profileCopy.OffsetBottom(m_hostDepth - m_hostCoverDistance
                                                  - options.StirrupBarType.BarModelDiameter
                                                  - options.HostStraightBarType.BarModelDiameter);
@@ -363,22 +359,22 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var offset = m_corbelCoverDistance +
                          options.StirrupBarType.BarModelDiameter +
                          options.MultiplanarBarType.BarModelDiameter +
-                         0.5 * options.TopBarType.BarModelDiameter;
+                         (0.5 * options.TopBarType.BarModelDiameter);
 
             var vetical = profileCopy.Vertical;
             var delta = extruDir * offset;
             Curve barLine = Line.CreateBound(vetical.GetEndPoint(1) + delta, vetical.GetEndPoint(0) + delta);
-            IList<Curve> barCurves = new List<Curve>
-            {
+            IList<Curve> barCurves =
+            [
                 barLine
-            };
+            ];
 
             var bars = Rebar.CreateFromCurves(options.RevitDoc, RebarStyle.Standard,
                 options.TopBarType, null, null, m_corbel, extruDir, barCurves,
                 RebarHookOrientation.Left, RebarHookOrientation.Left, true, true);
 
             bars.GetShapeDrivenAccessor().SetLayoutAsFixedNumber(options.TopBarCount + 2,
-                m_extrusionLine.Length - 2 * offset, true, false, false);
+                m_extrusionLine.Length - (2 * offset), true, false, false);
         }
 
         /// <summary>
@@ -390,10 +386,10 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var profileCopy = m_profile.Clone();
             profileCopy.OffsetTop(-m_corbelCoverDistance
                                   - options.StirrupBarType.BarModelDiameter -
-                                  0.5 * options.MultiplanarBarType.BarModelDiameter);
-            profileCopy.OffsetLeft(-m_corbelCoverDistance - 0.5 * options.MultiplanarBarType.BarModelDiameter);
+                                  (0.5 * options.MultiplanarBarType.BarModelDiameter));
+            profileCopy.OffsetLeft(-m_corbelCoverDistance - (0.5 * options.MultiplanarBarType.BarModelDiameter));
             profileCopy.OffsetBottom(m_hostDepth - m_hostCoverDistance
-                                                 - options.HostStraightBarType.BarModelDiameter * 4
+                                                 - (options.HostStraightBarType.BarModelDiameter * 4)
                                                  - options.StirrupBarType.BarModelDiameter);
             profileCopy.OffsetRight(-m_corbelCoverDistance - options.StirrupBarType.BarModelDiameter);
 
@@ -415,10 +411,10 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var extruDir = (m_extrusionLine.GetEndPoint(1) - m_extrusionLine.GetEndPoint(0)).Normalize();
             var offset = m_corbelCoverDistance +
                          options.StirrupBarType.BarModelDiameter +
-                         0.5 * options.MultiplanarBarType.BarModelDiameter;
+                         (0.5 * options.MultiplanarBarType.BarModelDiameter);
 
-            newRebar.GetShapeDrivenAccessor().ScaleToBoxFor3D(origin + extruDir * (m_extrusionLine.Length - offset),
-                vx, vy, m_extrusionLine.Length - 2 * offset);
+            newRebar.GetShapeDrivenAccessor().ScaleToBoxFor3D(origin + (extruDir * (m_extrusionLine.Length - offset)),
+                vx, vy, m_extrusionLine.Length - (2 * offset));
         }
 
         /// <summary>
@@ -442,22 +438,22 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             }
 
             var profileCopy = m_profile.Clone();
-            profileCopy.OffsetTop(-m_corbelCoverDistance - 0.5 * options.StirrupBarType.BarModelDiameter);
-            profileCopy.OffsetLeft(-m_corbelCoverDistance - 0.5 * options.StirrupBarType.BarModelDiameter);
-            profileCopy.OffsetBottom(m_hostDepth - m_hostCoverDistance - 0.5 * options.StirrupBarType.BarModelDiameter);
-            profileCopy.OffsetRight(-m_corbelCoverDistance - 0.5 * options.StirrupBarType.BarModelDiameter);
+            profileCopy.OffsetTop(-m_corbelCoverDistance - (0.5 * options.StirrupBarType.BarModelDiameter));
+            profileCopy.OffsetLeft(-m_corbelCoverDistance - (0.5 * options.StirrupBarType.BarModelDiameter));
+            profileCopy.OffsetBottom(m_hostDepth - m_hostCoverDistance - (0.5 * options.StirrupBarType.BarModelDiameter));
+            profileCopy.OffsetRight(-m_corbelCoverDistance - (0.5 * options.StirrupBarType.BarModelDiameter));
 
             var extruDir = (m_extrusionLine.GetEndPoint(1) - m_extrusionLine.GetEndPoint(0)).Normalize();
-            var offset = m_corbelCoverDistance + 0.5 * options.StirrupBarType.BarModelDiameter;
+            var offset = m_corbelCoverDistance + (0.5 * options.StirrupBarType.BarModelDiameter);
 
-            var origin = profileCopy.Vertical.GetEndPoint(0) + extruDir * offset;
+            var origin = profileCopy.Vertical.GetEndPoint(0) + (extruDir * offset);
             var xAxis = extruDir;
             var yAxis = (profileCopy.Vertical.GetEndPoint(1) - profileCopy.Vertical.GetEndPoint(0)).Normalize();
 
             var stirrupBars = Rebar.CreateFromRebarShape(options.RevitDoc, stirrupShape,
                 options.StirrupBarType, m_corbel, origin, xAxis, yAxis);
 
-            var xLength = m_extrusionLine.Length - 2 * offset;
+            var xLength = m_extrusionLine.Length - (2 * offset);
             var yLength = profileCopy.Vertical.Length;
 
             stirrupBars.GetShapeDrivenAccessor().SetLayoutAsFixedNumber(options.StirrupBarCount + 1,
@@ -469,18 +465,18 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 
             var dirTop = (m_profile.Top.GetEndPoint(0) - m_profile.Top.GetEndPoint(1)).Normalize();
             var dirVertical = yAxis;
-            var deltaStep = dirTop * space + dirVertical * step;
+            var deltaStep = (dirTop * space) + (dirVertical * step);
 
-            origin = profileCopy.Top.GetEndPoint(0) + extruDir * offset;
+            origin = profileCopy.Top.GetEndPoint(0) + (extruDir * offset);
             var count = (int)((m_profile.Vertical.Length - m_corbelCoverDistance -
-                               0.5 * options.StirrupBarType.BarModelDiameter) / step);
+                               (0.5 * options.StirrupBarType.BarModelDiameter)) / step);
             for (var i = 1; i <= count; i++)
             {
                 origin += deltaStep;
                 var stirrupBars2 = Rebar.CreateFromRebarShape(options.RevitDoc, stirrupShape,
                     options.StirrupBarType, m_corbel, origin, xAxis, yAxis);
 
-                stirrupBars2.GetShapeDrivenAccessor().ScaleToBox(origin, xAxis * xLength, yAxis * (yLength - i * step));
+                stirrupBars2.GetShapeDrivenAccessor().ScaleToBox(origin, xAxis * xLength, yAxis * (yLength - (i * step)));
             }
         }
 
@@ -492,24 +488,24 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
         {
             var profileCopy = m_profile.Clone();
             profileCopy.OffsetBottom(m_hostDepth - m_hostCoverDistance
-                                                 - options.HostStraightBarType.BarModelDiameter * 0.5
+                                                 - (options.HostStraightBarType.BarModelDiameter * 0.5)
                                                  - options.StirrupBarType.BarModelDiameter);
 
             //profileCopy.Draw(options.RevitDoc);
 
             var extruDir = (m_extrusionLine.GetEndPoint(1) - m_extrusionLine.GetEndPoint(0)).Normalize();
             var offset = m_corbelCoverDistance + options.StirrupBarType.BarModelDiameter
-                                               + options.HostStraightBarType.BarModelDiameter * 0.5;
+                                               + (options.HostStraightBarType.BarModelDiameter * 0.5);
             var delta = extruDir * offset;
 
             var pt1 = profileCopy.Bottom.GetEndPoint(0) + delta;
             var pt2 = profileCopy.Bottom.GetEndPoint(1) + delta;
 
             Curve barLine = Line.CreateBound(pt1, pt2);
-            IList<Curve> barCurves = new List<Curve>
-            {
+            IList<Curve> barCurves =
+            [
                 barLine
-            };
+            ];
 
             var bars = Rebar.CreateFromCurves(
                 options.RevitDoc, RebarStyle.Standard,
@@ -517,7 +513,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
                 RebarHookOrientation.Left, RebarHookOrientation.Left, true, true);
 
             bars.GetShapeDrivenAccessor()
-                .SetLayoutAsFixedNumber(2, m_extrusionLine.Length - 2 * offset, true, true, true);
+                .SetLayoutAsFixedNumber(2, m_extrusionLine.Length - (2 * offset), true, true, true);
         }
     }
 }

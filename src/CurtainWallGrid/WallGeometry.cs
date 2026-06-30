@@ -1,10 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
 using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Autodesk.Revit.DB;
+using System;
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     /// <summary>
@@ -84,12 +82,12 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                     "The start point and the end point of the line are too close, please re-draw it.");
             }
 
-            var act = new Transaction(MyDocument.Document);
+            Transaction act = new(MyDocument.Document);
             act.Start(Guid.NewGuid().GetHashCode().ToString());
             var wall = Wall.Create(MyDocument.Document, baseline, SelectedWallType.Id,
                 SelectedView.GenLevel.Id, 20, 0, false, false);
             act.Commit();
-            var act2 = new Transaction(MyDocument.Document);
+            Transaction act2 = new(MyDocument.Document);
             act2.Start(Guid.NewGuid().GetHashCode().ToString());
             MyDocument.UiDocument.ShowElements(wall);
             act2.Commit();

@@ -20,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 
             var selected = commandData.Application.ActiveUIDocument.Selection.PickObject(ObjectType.Element);
 
-            var newInstanceView = new Transaction(doc, "Create instance view for an electrical panel.");
+            Transaction newInstanceView = new(doc, "Create instance view for an electrical panel.");
             newInstanceView.Start();
             var instanceView = PanelScheduleView.CreateInstanceView(doc, doc.GetElement(selected).Id);
             if (null == instanceView)

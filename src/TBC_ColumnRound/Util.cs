@@ -1,5 +1,5 @@
-using System;
 using Autodesk.Revit.DB;
+using System;
 
 namespace BuildingCoder
 {
@@ -42,11 +42,10 @@ namespace BuildingCoder
         {
             var bb = e.get_BoundingBox(null);
 
-            if (null == bb)
-                throw new ArgumentException(
-                    "Expected Element 'e' to have a valid bounding box.");
-
-            return bb.Max.Z - bb.Min.Z;
+            return null == bb
+                ? throw new ArgumentException(
+                    "Expected Element 'e' to have a valid bounding box.")
+                : bb.Max.Z - bb.Min.Z;
         }
 
         internal static bool IsColumn(Element e)

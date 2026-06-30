@@ -1,10 +1,11 @@
-using System.Linq;
 using Ara3D.RevitSampleBrowser.N3P_Shared.CS;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Nice3point.Revit.Extensions;
+using System.Linq;
+using Nice3point.Revit.Extensions.Structure;
 
 namespace Ara3D.RevitSampleBrowser.N3P_Structure.CS
 {
@@ -15,12 +16,11 @@ namespace Ara3D.RevitSampleBrowser.N3P_Structure.CS
         {
             var doc = data.Application.ActiveUIDocument.Document;
 
-            var framing = doc.CollectElements()
+
+            if (doc.CollectElements()
                 .OfClass<FamilyInstance>()
                 .OfStructuralType(StructuralType.Beam)
-                .FirstOrDefault() as FamilyInstance;
-
-            if (framing != null)
+                .FirstOrDefault() is FamilyInstance framing)
             {
                 N3POutput.Header("Nice3point Structural framing extensions");
                 N3POutput.Line($"Beam {framing.Id}");
@@ -30,8 +30,7 @@ namespace Ara3D.RevitSampleBrowser.N3P_Structure.CS
                 return Result.Succeeded;
             }
 
-            var rebarShape = doc.CollectElements().OfClass<RebarShape>().FirstOrDefault() as RebarShape;
-            if (rebarShape != null)
+            if (doc.CollectElements().OfClass<RebarShape>().FirstOrDefault() is RebarShape rebarShape)
             {
                 N3POutput.Header("Nice3point Rebar shape extensions");
                 var parameters = rebarShape.GetAllParameters();

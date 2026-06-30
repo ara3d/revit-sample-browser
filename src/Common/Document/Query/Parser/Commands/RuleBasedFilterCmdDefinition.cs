@@ -2,22 +2,20 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class RuleBasedFilterCmdDefinition : ICommandDefinition, INeedInitializationWithDocument, IOfferArgumentAutocompletion
     {
-        private static readonly AutocompleteItem AutocompleteItem = new AutocompleteItem("f: ", "f:[filter]", "select elements that pass rule-based filter defined in Revit", AutocompleteItemGroups.Commands);
-        private readonly DataBucket<RuleBasedFilterCmdArgument> dataBucket = new DataBucket<RuleBasedFilterCmdArgument>(0.61);
+        private static readonly AutocompleteItem AutocompleteItem = new("f: ", "f:[filter]", "select elements that pass rule-based filter defined in Revit", AutocompleteItemGroups.Commands);
+        private readonly DataBucket<RuleBasedFilterCmdArgument> dataBucket = new(0.61);
 
 
         public void Init(Document document)
@@ -26,13 +24,17 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
             foreach (var element in new FilteredElementCollector(document).OfClass(typeof(ParameterFilterElement)))
             {
                 dataBucket.Add(new AutocompleteItem(element.Name, element.Name, null), new RuleBasedFilterCmdArgument(element.Id, element.Name), element.Name);
-                
+
             }
             dataBucket.Rebuild();
         }
 
 
-        public IAutocompleteItem GetCommandAutocompleteItem() => AutocompleteItem;
+        public IAutocompleteItem GetCommandAutocompleteItem()
+        {
+            return AutocompleteItem;
+        }
+
         public IEnumerable<IAutocompleteItem> GetAutocompleteItems(string prefix)
         {
             return dataBucket.ProvideAutoCompletion(prefix);
@@ -41,18 +43,24 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
         public IEnumerable<string> GetClassifiers()
         {
             yield return "f";
-            yield return "filter";        
+            yield return "filter";
         }
         public IEnumerable<string> GetKeywords()
         {
             yield break;
         }
-        public bool CanRecognizeArgument(string argument) => false;
-        public bool CanParticipateInGenericSearch() => true;
-              
+        public bool CanRecognizeArgument(string argument)
+        {
+            return false;
+        }
+
+        public bool CanParticipateInGenericSearch()
+        {
+            return true;
+        }
 
         public ICommand Create(string cmdText, string argument)
-        {           
+        {
             var args = dataBucket.FuzzySearch(argument);
             return new RuleBasedFilterCmd(cmdText, args);
         }
@@ -62,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
     public class RuleBasedFilterCmdArgument : CommandArgument<ElementId>
     {
         public RuleBasedFilterCmdArgument(ElementId filterId, string name) : base(filterId)
-        {           
+        {
             Name = $"new ElementId({filterId})";
             Label = name;
         }

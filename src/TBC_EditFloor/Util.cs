@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
+using System;
+using System.Linq;
 
 namespace BuildingCoder
 {
@@ -20,20 +17,20 @@ namespace BuildingCoder
             var levelId = Level.GetNearestLevelId(
                 document, elevation, out offset);
 
-            var first = new XYZ(0, 0, 0);
-            var second = new XYZ(20, 0, 0);
-            var third = new XYZ(20, 15, 0);
-            var fourth = new XYZ(0, 15, 0);
-            var profile = new CurveLoop();
+            XYZ first = new(0, 0, 0);
+            XYZ second = new(20, 0, 0);
+            XYZ third = new(20, 15, 0);
+            XYZ fourth = new(0, 15, 0);
+            CurveLoop profile = new();
             profile.Append(Line.CreateBound(first, second));
             profile.Append(Line.CreateBound(second, third));
             profile.Append(Line.CreateBound(third, fourth));
             profile.Append(Line.CreateBound(fourth, first));
 
-            var floor = Floor.Create(document, new List<CurveLoop>
-            {
+            var floor = Floor.Create(document,
+            [
                 profile
-            }, floorTypeId, levelId);
+            ], floorTypeId, levelId);
 
             var param = floor.get_Parameter(
                 BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
@@ -88,7 +85,7 @@ namespace BuildingCoder
                 var p1 = floor.get_Parameter(
                     BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
 
-                using var tx = new Transaction(doc);
+                using Transaction tx = new(doc);
                 tx.Start("Set Floor Level");
                 p.Set(level.Id);
                 p1.Set(2);
@@ -106,7 +103,7 @@ namespace BuildingCoder
             Curve right = Line.CreateBound(new XYZ(100, 100, 0), new XYZ(100, 0, 0));
             Curve lower = Line.CreateBound(new XYZ(100, 0, 0), new XYZ(0, 0, 0));
 
-            var floorProfile = new CurveLoop();
+            CurveLoop floorProfile = new();
             floorProfile.Append(left);
             floorProfile.Append(upper);
             floorProfile.Append(right);
@@ -114,11 +111,11 @@ namespace BuildingCoder
 
             var levelId = Level.GetNearestLevelId(doc, 0.0);
 
-            using var transaction = new Transaction(doc);
+            using Transaction transaction = new(doc);
             transaction.Start("Create floor");
             var floorTypeId = Floor.GetDefaultFloorType(doc, false);
             Floor.Create(doc,
-                new List<CurveLoop> {floorProfile},
+                [floorProfile],
                 floorTypeId, levelId);
             transaction.Commit();
         }
@@ -157,12 +154,12 @@ namespace BuildingCoder
                 return;
             }
 
-            var sketchEditScope = new SketchEditScope(doc,
+            SketchEditScope sketchEditScope = new(doc,
                 "Replace line with an arc");
 
             sketchEditScope.Start(sketch.Id);
 
-            using (var transaction = new Transaction(doc,
+            using (Transaction transaction = new(doc,
                 "Modify sketch"))
             {
                 transaction.Start();
@@ -197,11 +194,11 @@ namespace BuildingCoder
             }
 
             var sketch = doc.GetElement(floor.SketchId) as Sketch;
-            var sketchEditScope = new SketchEditScope(doc,
+            SketchEditScope sketchEditScope = new(doc,
                 "Add profile to the sketch");
             sketchEditScope.Start(sketch.Id);
 
-            using (var transaction = new Transaction(doc,
+            using (Transaction transaction = new(doc,
                 "Make a hole"))
             {
                 transaction.Start();

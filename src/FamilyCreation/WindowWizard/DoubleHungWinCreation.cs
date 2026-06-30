@@ -1,13 +1,13 @@
 ﻿// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     public class DoubleHungWinCreation : WindowCreation
@@ -63,41 +63,37 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_document = commandData.Application.ActiveUIDocument.Document;
             m_familyManager = m_document.FamilyManager;
 
-            using (var tran = new Transaction(m_document, "InitializeWindowWizard"))
+            using Transaction tran = new(m_document, "InitializeWindowWizard");
+            tran.Start();
+
+            CollectTemplateInfo();
+            para.Validator = new ValidateWindowParameter(m_wallHeight, m_wallWidth);
+            switch (m_document.DisplayUnitSystem)
             {
-                tran.Start();
-
-                CollectTemplateInfo();
-                para.Validator = new ValidateWindowParameter(m_wallHeight, m_wallWidth);
-                switch (m_document.DisplayUnitSystem)
-                {
-                    case DisplayUnit.METRIC:
-                        para.Validator.IsMetric = true;
-                        break;
-                    case DisplayUnit.IMPERIAL:
-                        para.Validator.IsMetric = false;
-                        break;
-                }
-
-                para.PathName = $"{Path.GetDirectoryName(para.PathName)}Double Hung.rfa";
-
-                CreateCommon();
-
-                tran.Commit();
+                case DisplayUnit.METRIC:
+                    para.Validator.IsMetric = true;
+                    break;
+                case DisplayUnit.IMPERIAL:
+                    para.Validator.IsMetric = false;
+                    break;
             }
+
+            para.PathName = $"{Path.GetDirectoryName(para.PathName)}Double Hung.rfa";
+
+            CreateCommon();
+
+            tran.Commit();
         }
 
         public override void CreateFrame()
         {
-            var subTransaction = new SubTransaction(m_document);
+            SubTransaction subTransaction = new(m_document);
             subTransaction.Start();
 
-            var refPlaneCreator = new CreateRefPlane();
-            if (m_sashPlane == null)
-                m_sashPlane = refPlaneCreator.Create(m_document, m_centerPlane, m_rightView,
-                    new XYZ(0, m_wallThickness / 2 - m_windowInset, 0), new XYZ(0, 0, 1), "Sash");
-            if (m_exteriorPlane == null)
-                m_exteriorPlane = refPlaneCreator.Create(m_document, m_centerPlane, m_rightView,
+            CreateRefPlane refPlaneCreator = new();
+            m_sashPlane ??= refPlaneCreator.Create(m_document, m_centerPlane, m_rightView,
+                    new XYZ(0, (m_wallThickness / 2) - m_windowInset, 0), new XYZ(0, 0, 1), "Sash");
+            m_exteriorPlane ??= refPlaneCreator.Create(m_document, m_centerPlane, m_rightView,
                     new XYZ(0, m_wallThickness / 2, 0), new XYZ(0, 0, 1), "MyExterior");
             m_document.Regenerate();
 
@@ -117,11 +113,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var curveArr1 =
                 m_extrusionCreator.CreateRectangle(m_width / 2, -m_width / 2, m_sillHeight + m_height, m_sillHeight, 0);
             var curveArr2 = m_extrusionCreator.CreateCurveArrayByOffset(curveArr1, frameCurveOffset1);
-            var curveArrArray1 = new CurveArrArray();
+            CurveArrArray curveArrArray1 = new();
             curveArrArray1.Append(curveArr1);
             curveArrArray1.Append(curveArr2);
             var extFrame = m_extrusionCreator.NewExtrusion(curveArrArray1, m_sashPlane,
-                m_wallThickness / 2 + m_wallThickness / 12, -m_windowInset);
+                (m_wallThickness / 2) + (m_wallThickness / 12), -m_windowInset);
             extFrame.SetVisibility(CreateVisibility());
             m_document.Regenerate();
 
@@ -130,7 +126,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                     true); // Get the face again as the document is regenerated.
             var exteriorExtrusionFace1 = SampleBrowserUtils.GetExtrusionFace(extFrame, m_rightView, true);
             var interiorExtrusionFace1 = SampleBrowserUtils.GetExtrusionFace(extFrame, m_rightView, false);
-            var alignmentCreator = new CreateAlignment(m_document);
+            CreateAlignment alignmentCreator = new(m_document);
             alignmentCreator.AddAlignment(m_rightView, exteriorWallFace, exteriorExtrusionFace1);
 
             var extFrameWithSashPlane =
@@ -144,11 +140,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var curveArr4 = m_extrusionCreator.CreateCurveArrayByOffset(curveArr3, frameCurveOffset2);
             m_document.Regenerate();
 
-            var curveArrArray2 = new CurveArrArray();
+            CurveArrArray curveArrArray2 = new();
             curveArrArray2.Append(curveArr3);
             curveArrArray2.Append(curveArr4);
             var intFrame = m_extrusionCreator.NewExtrusion(curveArrArray2, m_sashPlane, m_wallThickness - m_windowInset,
-                m_wallThickness / 2 + m_wallThickness / 12);
+                (m_wallThickness / 2) + (m_wallThickness / 12));
             intFrame.SetVisibility(CreateVisibility());
             m_document.Regenerate();
 
@@ -163,7 +159,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
             var sillCurs = m_extrusionCreator.CreateRectangle(m_width / 2, -m_width / 2,
                 m_sillHeight + frameCurveOffset1, m_sillHeight, 0);
-            var sillCurveArray = new CurveArrArray();
+            CurveArrArray sillCurveArray = new();
             sillCurveArray.Append(sillCurs);
             var sillFrame =
                 m_extrusionCreator.NewExtrusion(sillCurveArray, m_sashPlane, -m_windowInset, -m_windowInset - 0.1);
@@ -189,15 +185,15 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         public override void CreateSash()
         {
             var frameCurveOffset1 = 0.075;
-            var frameDepth = 7 * m_wallThickness / 12 + m_windowInset;
+            var frameDepth = (7 * m_wallThickness / 12) + m_windowInset;
             var sashCurveOffset = 0.075;
             var sashDepth = (frameDepth - m_windowInset) / 2;
 
             var exteriorView = m_document.GetNamedView("Exterior");
-            var subTransaction = new SubTransaction(m_document);
+            SubTransaction subTransaction = new(m_document);
             subTransaction.Start();
 
-            var refPlaneCreator = new CreateRefPlane();
+            CreateRefPlane refPlaneCreator = new();
             var middlePlane = refPlaneCreator.Create(m_document, m_topPlane, exteriorView, new XYZ(0, 0, -m_height / 2),
                 new XYZ(0, -1, 0), "tempmiddle");
             m_document.Regenerate();
@@ -205,13 +201,13 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var dim = m_dimensionCreator.AddDimension(exteriorView, m_topPlane, m_sillPlane, middlePlane);
             dim.AreSegmentsEqual = true;
 
-            var curveArr5 = m_extrusionCreator.CreateRectangle(m_width / 2 - frameCurveOffset1,
-                -m_width / 2 + frameCurveOffset1, m_sillHeight + m_height / 2 + sashCurveOffset / 2,
+            var curveArr5 = m_extrusionCreator.CreateRectangle((m_width / 2) - frameCurveOffset1,
+                (-m_width / 2) + frameCurveOffset1, m_sillHeight + (m_height / 2) + (sashCurveOffset / 2),
                 m_sillHeight + frameCurveOffset1, 0);
             var curveArr6 = m_extrusionCreator.CreateCurveArrayByOffset(curveArr5, sashCurveOffset);
             m_document.Regenerate();
 
-            var curveArrArray3 = new CurveArrArray();
+            CurveArrArray curveArrArray3 = new();
             curveArrArray3.Append(curveArr5);
             curveArrArray3.Append(curveArr6);
             var sash1 = m_extrusionCreator.NewExtrusion(curveArrArray3, m_sashPlane, 2 * sashDepth, sashDepth);
@@ -225,13 +221,13 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             sashWithPlane1.IsLocked = true;
             sash1.SetVisibility(CreateVisibility());
 
-            var curveArr7 = m_extrusionCreator.CreateRectangle(m_width / 2 - frameCurveOffset1,
-                -m_width / 2 + frameCurveOffset1, m_sillHeight + m_height - frameCurveOffset1,
-                m_sillHeight + m_height / 2 - sashCurveOffset / 2, 0);
+            var curveArr7 = m_extrusionCreator.CreateRectangle((m_width / 2) - frameCurveOffset1,
+                (-m_width / 2) + frameCurveOffset1, m_sillHeight + m_height - frameCurveOffset1,
+                m_sillHeight + (m_height / 2) - (sashCurveOffset / 2), 0);
             var curveArr8 = m_extrusionCreator.CreateCurveArrayByOffset(curveArr7, sashCurveOffset);
             m_document.Regenerate();
 
-            var curveArrArray4 = new CurveArrArray();
+            CurveArrArray curveArrArray4 = new();
             curveArrArray4.Append(curveArr7);
             curveArrArray4.Append(curveArr8);
             var sash2 = m_extrusionCreator.NewExtrusion(curveArrArray4, m_sashPlane, sashDepth, 0);
@@ -267,14 +263,14 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var glassDepth = 0.05;
             var glassOffsetSash = 0.05; // Offset from the exterior face of the sash.
 
-            var subTransaction = new SubTransaction(m_document);
+            SubTransaction subTransaction = new(m_document);
             subTransaction.Start();
-            var curveArr9 = m_extrusionCreator.CreateRectangle(m_width / 2 - frameCurveOffset1 - sashCurveOffset,
-                -m_width / 2 + frameCurveOffset1 + sashCurveOffset, m_sillHeight + m_height / 2 - sashCurveOffset / 2,
+            var curveArr9 = m_extrusionCreator.CreateRectangle((m_width / 2) - frameCurveOffset1 - sashCurveOffset,
+                (-m_width / 2) + frameCurveOffset1 + sashCurveOffset, m_sillHeight + (m_height / 2) - (sashCurveOffset / 2),
                 m_sillHeight + frameCurveOffset1 + sashCurveOffset, 0);
             m_document.Regenerate();
 
-            var curveArrArray5 = new CurveArrArray();
+            CurveArrArray curveArrArray5 = new();
             curveArrArray5.Append(curveArr9);
             var glass1 = m_extrusionCreator.NewExtrusion(curveArrArray5, m_sashPlane,
                 sashDepth + glassOffsetSash + glassDepth, sashDepth + glassOffsetSash);
@@ -288,11 +284,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var glass1WithSashPlane = m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, eglassFace1);
             glass1WithSashPlane.IsLocked = true;
 
-            var curveArr10 = m_extrusionCreator.CreateRectangle(m_width / 2 - frameCurveOffset1 - sashCurveOffset,
-                -m_width / 2 + frameCurveOffset1 + sashCurveOffset,
+            var curveArr10 = m_extrusionCreator.CreateRectangle((m_width / 2) - frameCurveOffset1 - sashCurveOffset,
+                (-m_width / 2) + frameCurveOffset1 + sashCurveOffset,
                 m_sillHeight + m_height - frameCurveOffset1 - sashCurveOffset,
-                m_sillHeight + m_height / 2 + sashCurveOffset / 2, 0);
-            var curveArrArray6 = new CurveArrArray();
+                m_sillHeight + (m_height / 2) + (sashCurveOffset / 2), 0);
+            CurveArrArray curveArrArray6 = new();
             curveArrArray6.Append(curveArr10);
             var glass2 = m_extrusionCreator.NewExtrusion(curveArrArray6, m_sashPlane, glassOffsetSash + glassDepth,
                 glassOffsetSash);
@@ -321,10 +317,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
         public override void CreateMaterial()
         {
-            var subTransaction = new SubTransaction(m_document);
+            SubTransaction subTransaction = new(m_document);
             subTransaction.Start();
 
-            var elementCollector = new FilteredElementCollector(m_document);
+            FilteredElementCollector elementCollector = new(m_document);
             elementCollector.WherePasses(new ElementClassFilter(typeof(Material)));
             var materials = elementCollector.ToElements();
 
@@ -341,7 +337,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
         public override void CombineAndBuild()
         {
-            var subTransaction = new SubTransaction(m_document);
+            SubTransaction subTransaction = new(m_document);
             subTransaction.Start();
             foreach (string type in Para.WinParaTab.Keys)
             {
@@ -355,7 +351,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
         public override bool Creation()
         {
-            using (var trans = new Transaction(m_document, "FinishWindowWizard"))
+            using (Transaction trans = new(m_document, "FinishWindowWizard"))
             {
                 try
                 {
@@ -450,7 +446,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 m_width);
             m_familyManager.Set(m_familyManager.get_Parameter("Default Sill Height"), m_sillHeight);
 
-            var elementCollector = new FilteredElementCollector(m_document);
+            FilteredElementCollector elementCollector = new(m_document);
             elementCollector.WherePasses(new ElementClassFilter(typeof(Material)));
             var materials = elementCollector.ToElements();
 
@@ -493,7 +489,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             }
         }
 
-        private bool NewFamilyType(WindowParameter para) 
+        private bool NewFamilyType(WindowParameter para)
         {
             var dbhungPara = para as DoubleHungWinPara;
             var typeName = dbhungPara.Type;
@@ -530,7 +526,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
         private FamilyElementVisibility CreateVisibility()
         {
-            var familyElemVisibility = new FamilyElementVisibility(FamilyElementVisibilityType.Model)
+            FamilyElementVisibility familyElemVisibility = new(FamilyElementVisibilityType.Model)
             {
                 IsShownInCoarse = true,
                 IsShownInFine = true,

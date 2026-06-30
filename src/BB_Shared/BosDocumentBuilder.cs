@@ -1,19 +1,13 @@
 ﻿using Ara3D.BimOpenSchema;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.DB.Electrical;
-using Autodesk.Revit.DB.Mechanical;
-using Autodesk.Revit.DB.Plumbing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using Ara3D.Domo;
 using static Ara3D.BimOpenSchema.CommonRevitParameters;
 using Document = Autodesk.Revit.DB.Document;
-using Domain = Autodesk.Revit.DB.Domain;
 using Exception = System.Exception;
 using RevitParameter = Autodesk.Revit.DB.Parameter;
 
@@ -30,7 +24,7 @@ public class StructuralLayer
 
 public partial class BosDocumentBuilder
 {
-    public BosDocumentBuilder(BosRevitBuilder bosRevitBuilder, BosDocumentContext context, Func<Element, bool> elementFilter) 
+    public BosDocumentBuilder(BosRevitBuilder bosRevitBuilder, BosDocumentContext context, Func<Element, bool> elementFilter)
     {
         DocumentContext = context;
         BosRevitBuilder = bosRevitBuilder;
@@ -46,13 +40,13 @@ public partial class BosDocumentBuilder
 
             // Check the id value
             var idVal = e.Id.Value;
-            
+
             if (NonTypeElementIds.Add(idVal))
             {
                 // Add a placeholder entity 
                 var ei = bosRevitBuilder.BimDataBuilder.AddEntity();
                 Debug.Assert(!ElementToEntityIndex.ContainsKey(idVal));
-                
+
                 // Store the entity index and associate it with the id value
                 ElementToEntityIndex.Add(idVal, ei);
 
@@ -101,23 +95,29 @@ public partial class BosDocumentBuilder
     public BimDataBuilder DataBuilder => BosRevitBuilder.BimDataBuilder;
     public DocumentIndex DocumentIndex { get; }
     public Document Document => DocumentContext.Document;
-    public Dictionary<int, EntityIndex> ProcessedConnectors = new();
-    public Dictionary<long, EntityIndex> ProcessedCategories = new();
+    public Dictionary<int, EntityIndex> ProcessedConnectors = [];
+    public Dictionary<long, EntityIndex> ProcessedCategories = [];
     public Dictionary<string, DescriptorIndex> DescriptorLookup { get; }
-    public Dictionary<long, Models.Material> MaterialLookup { get; } = new();
-    public HashSet<long> NonTypeElementIds = new();
-    public HashSet<long> TypeElementIds = new();
-    public Dictionary<long, EntityIndex> ElementToEntityIndex = new();
-    public HashSet<long> ProcessedElements = new();
+    public Dictionary<long, Models.Material> MaterialLookup { get; } = [];
+    public HashSet<long> NonTypeElementIds = [];
+    public HashSet<long> TypeElementIds = [];
+    public Dictionary<long, EntityIndex> ElementToEntityIndex = [];
+    public HashSet<long> ProcessedElements = [];
 
     public IEnumerable<Element> GetElements()
-        => DocumentContext.Document.GetElements();
+    {
+        return DocumentContext.Document.GetElements();
+    }
 
     public IEnumerable<ElementId> GetElementIds()
-        => DocumentContext.Document.GetElementIds();
-    
+    {
+        return DocumentContext.Document.GetElementIds();
+    }
+
     public EntityIndex GetElementIndex(ElementId id)
-        => ElementToEntityIndex.GetValueOrDefault(id.Value, InvalidEntity);
+    {
+        return ElementToEntityIndex.GetValueOrDefault(id.Value, InvalidEntity);
+    }
 
     public static (XYZ min, XYZ max)? GetBoundingBoxMinMax(Element element, View view = null)
     {
@@ -127,10 +127,14 @@ public partial class BosDocumentBuilder
     }
 
     public PointIndex AddPoint(XYZ xyz)
-        => AddPoint(DataBuilder, xyz);
+    {
+        return AddPoint(DataBuilder, xyz);
+    }
 
     public static PointIndex AddPoint(BimDataBuilder bdb, XYZ xyz)
-        => bdb.AddPoint(new((float)xyz.X, (float)xyz.Y, (float)xyz.Z));
+    {
+        return bdb.AddPoint(new((float)xyz.X, (float)xyz.Y, (float)xyz.Z));
+    }
 
     public List<StructuralLayer> GetLayers(HostObjAttributes host)
     {
@@ -156,13 +160,17 @@ public partial class BosDocumentBuilder
     { try { AddParameter(ei, p, f()); } catch { } }
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, XYZ xyz)
-        => AddParameter(ei, DescriptorLookup[p], AddPoint(xyz));
+    {
+        AddParameter(ei, DescriptorLookup[p], AddPoint(xyz));
+    }
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, Func<string> f)
     { try { AddParameter(ei, p, f()); } catch { } }
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, string val)
-        => AddParameter(ei, DescriptorLookup[p], val ?? "");
+    {
+        AddParameter(ei, DescriptorLookup[p], val ?? "");
+    }
 
     public void AddParameter(EntityIndex ei, DescriptorIndex di, string val)
     {
@@ -175,7 +183,9 @@ public partial class BosDocumentBuilder
     { try { AddParameter(ei, p, f()); } catch { } }
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, DateTime val)
-        => AddParameter(ei, DescriptorLookup[p], val);
+    {
+        AddParameter(ei, DescriptorLookup[p], val);
+    }
 
     public void AddParameter(EntityIndex ei, DescriptorIndex di, DateTime val)
     {
@@ -213,12 +223,14 @@ public partial class BosDocumentBuilder
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, Element e)
     {
-        if (e != null && e.IsValidObject) 
+        if (e != null && e.IsValidObject)
             AddParameter(ei, DescriptorLookup[p], ProcessElement(e.Id));
     }
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, EntityIndex val)
-        => AddParameter(ei, DescriptorLookup[p], val);
+    {
+        AddParameter(ei, DescriptorLookup[p], val);
+    }
 
     public void AddParameter(EntityIndex ei, DescriptorIndex di, EntityIndex val)
     {
@@ -228,7 +240,9 @@ public partial class BosDocumentBuilder
     }
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, PointIndex val)
-        => AddParameter(ei, DescriptorLookup[p], val);
+    {
+        AddParameter(ei, DescriptorLookup[p], val);
+    }
 
     public void AddParameter(EntityIndex ei, DescriptorIndex di, PointIndex val)
     {
@@ -241,7 +255,9 @@ public partial class BosDocumentBuilder
     { try { AddParameter(ei, p, f()); } catch { } }
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, int val)
-        => AddParameter(ei, DescriptorLookup[p], val);
+    {
+        AddParameter(ei, DescriptorLookup[p], val);
+    }
 
     public void AddParameter(EntityIndex ei, DescriptorIndex di, int val)
     {
@@ -254,7 +270,9 @@ public partial class BosDocumentBuilder
     { try { AddParameter(ei, p, f()); } catch { } }
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, bool val)
-        => AddParameter(ei, DescriptorLookup[p], val);
+    {
+        AddParameter(ei, DescriptorLookup[p], val);
+    }
 
     public void AddParameter(EntityIndex ei, DescriptorIndex di, bool val)
     {
@@ -267,7 +285,9 @@ public partial class BosDocumentBuilder
     { try { AddParameter(ei, p, f()); } catch { } }
 
     public void AddParameter(EntityIndex ei, RevitParameterDesc p, double val)
-        => AddParameter(ei, DescriptorLookup[p], val);
+    {
+        AddParameter(ei, DescriptorLookup[p], val);
+    }
 
     public void AddParameter(EntityIndex ei, DescriptorIndex di, double val)
     {
@@ -277,16 +297,24 @@ public partial class BosDocumentBuilder
     }
 
     public void AddDotNetTypeAsParameter(EntityIndex ei, object o)
-        => AddDotNetTypeAsParameter(ei, o.GetType().Name);
+    {
+        AddDotNetTypeAsParameter(ei, o.GetType().Name);
+    }
 
     public void AddDotNetTypeAsParameter(EntityIndex ei, string typeName)
-        => AddParameter(ei, ObjectTypeName, typeName);
+    {
+        AddParameter(ei, ObjectTypeName, typeName);
+    }
 
     public void AddError(ElementId id, Exception ex)
-        => AddError(ElementToEntityIndex.GetValueOrDefault(id.Value, InvalidEntity), ex);
+    {
+        AddError(ElementToEntityIndex.GetValueOrDefault(id.Value, InvalidEntity), ex);
+    }
 
     public void AddError(EntityIndex ei, Exception ex)
-        => DataBuilder.AddDiagnostic(DiagnosticType.ExporterError, ex.Message, DocumentIndex, ei);
+    {
+        DataBuilder.AddDiagnostic(DiagnosticType.ExporterError, ex.Message, DocumentIndex, ei);
+    }
 
     public EntityIndex ProcessCategory(Category category)
     {
@@ -297,9 +325,9 @@ public partial class BosDocumentBuilder
             return result;
 
         var r = DataBuilder.AddEntity(
-            category.Id.Value, 
-            category.Id.ToString(), 
-            DocumentIndex, 
+            category.Id.Value,
+            category.Id.ToString(),
+            DocumentIndex,
             category.Name,
             InvalidEntity,
             InvalidEntity);
@@ -368,7 +396,7 @@ public partial class BosDocumentBuilder
 
     public void ProcessMaterial(EntityIndex ei, Material m)
     {
-        var color = m.Color;            
+        var color = m.Color;
         AddParameter(ei, MaterialColorRed, color.Red / 255.0);
         AddParameter(ei, MaterialColorGreen, color.Green / 255.0);
         AddParameter(ei, MaterialColorBlue, color.Blue / 255.0);
@@ -424,7 +452,7 @@ public partial class BosDocumentBuilder
             DataBuilder.AddRelation(ei, matId, RelationType.HasMaterial);
         }
     }
-    
+
     public static string GetUnitLabel(RevitParameter p)
     {
         var spec = p.Definition.GetDataType();
@@ -441,7 +469,7 @@ public partial class BosDocumentBuilder
 
         foreach (RevitParameter p in element.Parameters)
         {
-            try 
+            try
             {
                 if (p == null) continue;
                 var def = p.Definition;
@@ -469,7 +497,7 @@ public partial class BosDocumentBuilder
                         break;
                 }
             }
-            catch (Exception ex) 
+            catch (Exception)
             {
             }
         }
@@ -501,11 +529,15 @@ public partial class BosDocumentBuilder
     }
 
     public EntityIndex ProcessElement(ElementId id)
-        => ProcessElement(id, id.Value);
+    {
+        return ProcessElement(id, id.Value);
+    }
 
     public EntityIndex ProcessElement(long idVal)
-        => ProcessElement(new ElementId(idVal), idVal);
-    
+    {
+        return ProcessElement(new ElementId(idVal), idVal);
+    }
+
     public EntityIndex ProcessElement(ElementId id, long idVal)
     {
         if (id == ElementId.InvalidElementId)
@@ -584,7 +616,7 @@ public partial class BosDocumentBuilder
         TryProcessAs<Material>(e, ei, ProcessMaterial);
         TryProcessAs<TextNote>(e, ei, ProcessTextNote);
         TryProcessAs<SpatialElement>(e, ei, ProcessSpatialElement);
-        
+
         //TryProcessAs<MEPSystem>(e, ei, DEPRECATED_ProcessMepSystem);
         //TryProcessAs<Zone>(e, ei, DEPRECATED_ProcessZone);
 
@@ -592,7 +624,7 @@ public partial class BosDocumentBuilder
     }
 
     public void TryProcessAs<T>(Element e, EntityIndex entityIndex, Action<EntityIndex, T> processor)
-        where T: Element
+        where T : Element
     {
         if (e is T val)
         {
@@ -653,7 +685,7 @@ public partial class BosDocumentBuilder
         AddDotNetTypeAsParameter(ei, d);
 
         var siteLocation = Document.SiteLocation;
-            
+
         var fi = new FileInfo(d.PathName);
         if (fi.Exists)
         {
@@ -670,7 +702,7 @@ public partial class BosDocumentBuilder
         var warnings = Document.GetWarnings();
         foreach (var w in warnings)
         {
-            var type = w.GetSeverity() == FailureSeverity.Warning 
+            var type = w.GetSeverity() == FailureSeverity.Warning
                 ? DiagnosticType.RevitWarning
                 : DiagnosticType.RevitError;
             DataBuilder.AddDiagnostic(type, w.GetDescriptionText(), DocumentIndex, ei);
@@ -720,5 +752,5 @@ public partial class BosDocumentBuilder
     }
 
 
-  
+
 }

@@ -1,10 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -22,37 +23,35 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 var analyticalMember = CreateAnalyticalMember.CreateMember(document);
 
                 // Start transaction
-                using (var transaction = new Transaction(document, "Release Conditions"))
+                using Transaction transaction = new(document, "Release Conditions");
+                transaction.Start();
+
+                // Get release conditions of analytical member
+                var releaseConditions = analyticalMember.GetReleaseConditions();
+                foreach (var rc in releaseConditions)
                 {
-                    transaction.Start();
-
-                    // Get release conditions of analytical member
-                    var releaseConditions = analyticalMember.GetReleaseConditions();
-                    foreach (var rc in releaseConditions)
-                    {
-                        Console.WriteLine(
-                            $"Position: {rc.Start}Fx: {rc.Fx}Fy: {rc.Fy}Fz: {rc.Fz}Mx: {rc.Mx}My: {rc.My}Mz: {rc.Mz}");
-                    }
-
-                    // Get release type at start
-                    analyticalMember.GetReleaseType(true);
-
-                    // Change release type
-                    analyticalMember.SetReleaseType(true, ReleaseType.UserDefined);
-
-                    try
-                    {
-                        analyticalMember.SetReleaseConditions(new ReleaseConditions(true, false, true, false, true,
-                            false, true));
-                    }
-                    catch (InvalidOperationException ex)
-                    {
-                        message = ex.Message;
-                        return Result.Failed;
-                    }
-
-                    transaction.Commit();
+                    Console.WriteLine(
+                        $"Position: {rc.Start}Fx: {rc.Fx}Fy: {rc.Fy}Fz: {rc.Fz}Mx: {rc.Mx}My: {rc.My}Mz: {rc.Mz}");
                 }
+
+                // Get release type at start
+                analyticalMember.GetReleaseType(true);
+
+                // Change release type
+                analyticalMember.SetReleaseType(true, ReleaseType.UserDefined);
+
+                try
+                {
+                    analyticalMember.SetReleaseConditions(new ReleaseConditions(true, false, true, false, true,
+                        false, true));
+                }
+                catch (InvalidOperationException ex)
+                {
+                    message = ex.Message;
+                    return Result.Failed;
+                }
+
+                transaction.Commit();
 
                 return Result.Succeeded;
             }

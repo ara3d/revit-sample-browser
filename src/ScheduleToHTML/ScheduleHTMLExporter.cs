@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 {
@@ -18,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 
         private HtmlTextWriter m_writer;
 
-        private readonly List<Tuple<int, int>> m_writtenCells = new List<Tuple<int, int>>();
+        private readonly List<Tuple<int, int>> m_writtenCells = [];
 
         /// <summary>
         ///     Constructs a new instance of the schedule exporter operating on the input schedule.
@@ -29,9 +29,9 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             m_theSchedule = input;
         }
 
-        private static Color Black => new Color(0, 0, 0);
+        private static Color Black => new(0, 0, 0);
 
-        private static Color White => new Color(255, 255, 255);
+        private static Color White => new(255, 255, 255);
 
         /// <summary>
         ///     Exports the schedule to formatted HTML.
@@ -135,17 +135,13 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 
         private static string GetAlignString(HorizontalAlignmentStyle style)
         {
-            switch (style)
+            return style switch
             {
-                case HorizontalAlignmentStyle.Left:
-                    return "left";
-                case HorizontalAlignmentStyle.Center:
-                    return "center";
-                case HorizontalAlignmentStyle.Right:
-                    return "right";
-            }
-
-            return "";
+                HorizontalAlignmentStyle.Left => "left",
+                HorizontalAlignmentStyle.Center => "center",
+                HorizontalAlignmentStyle.Right => "right",
+                _ => "",
+            };
         }
 
         private void WriteHeaderSectionRow(int iRow, int numberOfColumns)
@@ -187,8 +183,8 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 
                 // Remember all written cells related to the merge 
                 for (var iMergedRow = mergedCell.Top; iMergedRow <= mergedCell.Bottom; iMergedRow++)
-                for (var iMergedCol = mergedCell.Left; iMergedCol <= mergedCell.Right; iMergedCol++)
-                    m_writtenCells.Add(new Tuple<int, int>(iMergedRow, iMergedCol));
+                    for (var iMergedCol = mergedCell.Left; iMergedCol <= mergedCell.Right; iMergedCol++)
+                        m_writtenCells.Add(new Tuple<int, int>(iMergedRow, iMergedCol));
 
                 // Write formatting attributes for the upcoming cell
                 // Background color
@@ -276,8 +272,8 @@ internal enum HtmlTextWriterTag
 internal sealed class HtmlTextWriter : IDisposable
 {
     private readonly TextWriter m_writer;
-    private readonly Stack<string> m_openTags = new Stack<string>();
-    private readonly List<Tuple<string, string>> m_pendingAttributes = new List<Tuple<string, string>>();
+    private readonly Stack<string> m_openTags = new();
+    private readonly List<Tuple<string, string>> m_pendingAttributes = [];
 
     public HtmlTextWriter(TextWriter writer)
     {

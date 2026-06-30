@@ -24,19 +24,19 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
         private void Command_DisplayingOptionDialog(object sender, DisplayingOptionsDialogEventArgs e)
         {
             // Actual options
-            var optionsControl = new Options();
-            var ch = new ContextualHelp(ContextualHelpType.Url, "http://www.autodesk.com/");
-            var extension = new TabbedDialogExtension(optionsControl, optionsControl.OnOK)
- {
-     OnRestoreDefaultsAction = optionsControl.OnRestoreDefaults
- };
+            Options optionsControl = new();
+            ContextualHelp ch = new(ContextualHelpType.Url, "http://www.autodesk.com/");
+            TabbedDialogExtension extension = new(optionsControl, optionsControl.OnOK)
+            {
+                OnRestoreDefaultsAction = optionsControl.OnRestoreDefaults
+            };
             extension.SetContextualHelp(ch);
             e.AddTab("Demo options", extension);
 
             // Demo options
-            var userControl3 = new UserControl3("Product Information");
+            UserControl3 userControl3 = new("Product Information");
             new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
-            var tdext3 = new TabbedDialogExtension(userControl3,
+            TabbedDialogExtension tdext3 = new(userControl3,
                 userControl3.OnOK)
             {
                 OnCancelAction = userControl3.OnCancel,
@@ -45,17 +45,17 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
             tdext3.SetContextualHelp(ch);
             e.AddTab("Product Information", tdext3);
 
-            var userControl2 = new UserControl2("Copy of SteeringWheels");
-            var tdext2 = new TabbedDialogExtension(userControl2,
+            UserControl2 userControl2 = new("Copy of SteeringWheels");
+            TabbedDialogExtension tdext2 = new(userControl2,
                 userControl2.OnOK)
             {
                 OnCancelAction = userControl2.OnCancel
             };
             e.AddTab("SteeringWheels(Copy)", tdext2);
 
-            var userControl1 = new UserControl1();
+            UserControl1 userControl1 = new();
             new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
-            var tdext1 = new TabbedDialogExtension(userControl1,
+            TabbedDialogExtension tdext1 = new(userControl1,
                 userControl1.OnOK)
             {
                 OnCancelAction = userControl1.OnCancel,

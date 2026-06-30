@@ -1,25 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
 
 
 namespace BuildingCoder
@@ -60,19 +45,17 @@ namespace BuildingCoder
                     IncludeNonVisibleObjects = true
                 });
 
-            if (geometry == null)
-                return Enumerable.Empty<Solid>();
-
-            return GetSolidsFromGeometry(geometry)
+            return geometry == null
+                ? Enumerable.Empty<Solid>()
+                : GetSolidsFromGeometry(geometry)
                 .Where(x => x.Volume > 0);
         }
 
         public static List<Solid> GetElemSolids(GeometryElement geomElem)
         {
-            if (geomElem == null)
-                return new List<Solid>();
-
-            return GetSolidsFromGeometry(geomElem)
+            return geomElem == null
+                ? []
+                : GetSolidsFromGeometry(geomElem)
                 .Where(s => s.Faces.Size > 0)
                 .ToList();
         }
@@ -94,7 +77,7 @@ namespace BuildingCoder
         public static List<UV> Flatten(List<XYZ> polygon)
         {
             var z = polygon[0].Z;
-            var a = new List<UV>(polygon.Count);
+            List<UV> a = new(polygon.Count);
             foreach (var p in polygon)
             {
                 Debug.Assert(IsEqual(p.Z, z),
@@ -108,7 +91,7 @@ namespace BuildingCoder
         public static List<List<UV>> Flatten(List<List<XYZ>> polygons)
         {
             var z = polygons[0][0].Z;
-            var a = new List<List<UV>>(polygons.Count);
+            List<List<UV>> a = new(polygons.Count);
             foreach (var polygon in polygons)
             {
                 Debug.Assert(IsEqual(polygon[0].Z, z),
@@ -132,54 +115,54 @@ namespace BuildingCoder
             switch (n)
             {
                 case 3:
-                {
-                    var a = polygon[0];
-                    var b = polygon[1];
-                    var c = polygon[2];
-                    var v = b - a;
-                    normal = v.CrossProduct(c - a);
-                    dist = normal.DotProduct(a);
-                    break;
-                }
-                case 4:
-                {
-                    var a = polygon[0];
-                    var b = polygon[1];
-                    var c = polygon[2];
-                    var d = polygon[3];
-
-                    normal = (a - c).CrossProduct(b - d);
-
-                    dist = 0.25 *
-                           (normal.X * (a.X + b.X + c.X + d.X)
-                            + normal.Y * (a.Y + b.Y + c.Y + d.Y)
-                            + normal.Z * (a.Z + b.Z + c.Z + d.Z));
-                    break;
-                }
-                case > 4:
-                {
-                    XYZ a;
-                    var b = polygon[n - 2];
-                    var c = polygon[n - 1];
-                    var s = XYZ.Zero;
-
-                    for (var i = 0; i < n; ++i)
                     {
-                        a = b;
-                        b = c;
-                        c = polygon[i];
-
-                        normal = new XYZ(
-                            normal.X + b.Y * (c.Z - a.Z),
-                            normal.Y + b.Z * (c.X - a.X),
-                            normal.Z + b.X * (c.Y - a.Y));
-
-                        s += c;
+                        var a = polygon[0];
+                        var b = polygon[1];
+                        var c = polygon[2];
+                        var v = b - a;
+                        normal = v.CrossProduct(c - a);
+                        dist = normal.DotProduct(a);
+                        break;
                     }
+                case 4:
+                    {
+                        var a = polygon[0];
+                        var b = polygon[1];
+                        var c = polygon[2];
+                        var d = polygon[3];
 
-                    dist = s.DotProduct(normal) / n;
-                    break;
-                }
+                        normal = (a - c).CrossProduct(b - d);
+
+                        dist = 0.25 *
+                               ((normal.X * (a.X + b.X + c.X + d.X))
+                                + (normal.Y * (a.Y + b.Y + c.Y + d.Y))
+                                + (normal.Z * (a.Z + b.Z + c.Z + d.Z)));
+                        break;
+                    }
+                case > 4:
+                    {
+                        XYZ a;
+                        var b = polygon[n - 2];
+                        var c = polygon[n - 1];
+                        var s = XYZ.Zero;
+
+                        for (var i = 0; i < n; ++i)
+                        {
+                            a = b;
+                            b = c;
+                            c = polygon[i];
+
+                            normal = new XYZ(
+                                normal.X + (b.Y * (c.Z - a.Z)),
+                                normal.Y + (b.Z * (c.X - a.X)),
+                                normal.Z + (b.X * (c.Y - a.Y)));
+
+                            s += c;
+                        }
+
+                        dist = s.DotProduct(normal) / n;
+                        break;
+                    }
             }
 
             if (rc)
@@ -239,8 +222,8 @@ namespace BuildingCoder
         {
             var n = polygon.Count;
 
-            var polygonTransformed
-                = new List<XYZ>(n);
+            List<XYZ> polygonTransformed
+                = new(n);
 
             foreach (var p in polygon) polygonTransformed.Add(t.OfPoint(p));
             return polygonTransformed;
@@ -271,7 +254,7 @@ namespace BuildingCoder
                 var loops = lowest.EdgeLoops;
                 foreach (EdgeArray loop in loops)
                 {
-                    var vertices = new List<XYZ>();
+                    List<XYZ> vertices = new();
                     first = true;
                     foreach (Edge e in loop)
                     {
@@ -306,7 +289,7 @@ namespace BuildingCoder
             List<Element> floors,
             Options opt)
         {
-            var polygons = new List<List<XYZ>>();
+            List<List<XYZ>> polygons = new();
 
             foreach (Floor floor in floors)
             {
@@ -359,7 +342,7 @@ namespace BuildingCoder
                 var loops = outermost.EdgeLoops;
                 foreach (EdgeArray loop in loops)
                 {
-                    var vertices = new List<XYZ>();
+                    List<XYZ> vertices = new();
                     first = true;
                     foreach (Edge e in loop)
                     {
@@ -395,7 +378,7 @@ namespace BuildingCoder
             Options opt)
         {
             XYZ p, q, v, w;
-            var polygons = new List<List<XYZ>>();
+            List<List<XYZ>> polygons = new();
 
             foreach (Wall wall in walls)
             {

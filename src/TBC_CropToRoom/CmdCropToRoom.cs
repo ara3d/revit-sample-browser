@@ -13,14 +13,11 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -45,7 +42,7 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Crop to Room");
 
             // get the 3d view crop box:
@@ -64,8 +61,8 @@ namespace BuildingCoder
 
             // get all rooms in the model:
 
-            var collector
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector collector
+                = new(doc);
 
             collector.OfClass(typeof(Room));
             var rooms = collector.ToElements();
@@ -85,7 +82,7 @@ namespace BuildingCoder
             // to determine its extents:
 
             var e = room.ClosedShell;
-            var vertices = new List<XYZ>();
+            List<XYZ> vertices = new();
 
             //foreach( GeometryObject o in e.Objects ) // 2012
 
@@ -94,13 +91,13 @@ namespace BuildingCoder
                     // Iterate over all the edges of all solids:
 
                     foreach (Edge edge in solid.Edges)
-                    foreach (var p in edge.Tessellate())
-                        // Collect all vertices,
-                        // including duplicates:
+                        foreach (var p in edge.Tessellate())
+                            // Collect all vertices,
+                            // including duplicates:
 
-                        vertices.Add(p);
+                            vertices.Add(p);
 
-            var verticesIn3dView = new List<XYZ>();
+            List<XYZ> verticesIn3dView = new();
 
             foreach (var p in vertices)
                 verticesIn3dView.Add(
@@ -137,12 +134,12 @@ namespace BuildingCoder
             // size to include the walls of the room:
 
             var d = 0.05 * (xMax - xMin);
-            xMin = xMin - d;
-            xMax = xMax + d;
+            xMin -= d;
+            xMax += d;
 
             d = 0.05 * (yMax - yMin);
-            yMin = yMin - d;
-            yMax = yMax + d;
+            yMin -= d;
+            yMax += d;
 
             bb.Max = new XYZ(xMax, yMax, bb.Max.Z);
             bb.Min = new XYZ(xMin, yMin, bb.Min.Z);

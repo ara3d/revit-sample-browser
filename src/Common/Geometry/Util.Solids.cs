@@ -1,25 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
+using System;
+using System.Collections.Generic;
 
 
 namespace BuildingCoder
@@ -35,26 +18,28 @@ namespace BuildingCoder
             // Use the standard global coordinate system 
             // as a frame, translated to the sphere centre.
 
-            var frame = new Frame(centre, XYZ.BasisX,
+            Frame frame = new(centre, XYZ.BasisX,
                 XYZ.BasisY, XYZ.BasisZ);
 
             // that must be in the frame location.
 
             var arc = Arc.Create(
-                centre - radius * XYZ.BasisZ,
-                centre + radius * XYZ.BasisZ,
-                centre + radius * XYZ.BasisX);
+                centre - (radius * XYZ.BasisZ),
+                centre + (radius * XYZ.BasisZ),
+                centre + (radius * XYZ.BasisX));
 
             var line = Line.CreateBound(
                 arc.GetEndPoint(1),
                 arc.GetEndPoint(0));
 
-            var halfCircle = new CurveLoop();
+            CurveLoop halfCircle = new();
             halfCircle.Append(arc);
             halfCircle.Append(line);
 
-            var loops = new List<CurveLoop>(1);
-            loops.Add(halfCircle);
+            List<CurveLoop> loops =
+            [
+                halfCircle
+            ];
 
             return GeometryCreationUtilities
                 .CreateRevolvedGeometry(frame, loops,
@@ -74,24 +59,25 @@ namespace BuildingCoder
 
             // Define a rectangle in XZ plane
 
-            var px = origin + radius * ax;
-            var pxz = origin + radius * ax + height * az;
-            var pz = origin + height * az;
+            var px = origin + (radius * ax);
+            var pxz = origin + (radius * ax) + (height * az);
+            var pz = origin + (height * az);
 
-            var profile = new List<Curve>();
-
-            profile.Add(Line.CreateBound(origin, px));
-            profile.Add(Line.CreateBound(px, pxz));
-            profile.Add(Line.CreateBound(pxz, pz));
-            profile.Add(Line.CreateBound(pz, origin));
+            List<Curve> profile =
+            [
+                Line.CreateBound(origin, px),
+                Line.CreateBound(px, pxz),
+                Line.CreateBound(pxz, pz),
+                Line.CreateBound(pz, origin)
+            ];
 
             var curveLoop = CurveLoop.Create(profile);
 
-            var frame = new Frame(origin, ax, ay, az);
+            Frame frame = new(origin, ax, ay, az);
 
             var cone = GeometryCreationUtilities
                 .CreateRevolvedGeometry(frame,
-                    new[] {curveLoop},
+                    new[] { curveLoop },
                     0, 2 * Math.PI);
 
             return cone;
@@ -110,18 +96,19 @@ namespace BuildingCoder
 
             // Define a triangle in XZ plane
 
-            var px = center + radius * ax;
-            var pz = center + height * az;
+            var px = center + (radius * ax);
+            var pz = center + (height * az);
 
-            var profile = new List<Curve>();
-
-            profile.Add(Line.CreateBound(center, px));
-            profile.Add(Line.CreateBound(px, pz));
-            profile.Add(Line.CreateBound(pz, center));
+            List<Curve> profile =
+            [
+                Line.CreateBound(center, px),
+                Line.CreateBound(px, pz),
+                Line.CreateBound(pz, center)
+            ];
 
             var curveLoop = CurveLoop.Create(profile);
 
-            var frame = new Frame(center, ax, ay, az);
+            Frame frame = new(center, ax, ay, az);
 
             //SolidOptions options = new SolidOptions( 
             //  ElementId.InvalidElementId, 
@@ -129,7 +116,7 @@ namespace BuildingCoder
 
             var cone = GeometryCreationUtilities
                 .CreateRevolvedGeometry(frame,
-                    new[] {curveLoop},
+                    new[] { curveLoop },
                     0, 2 * Math.PI);
 
             return cone;
@@ -147,21 +134,23 @@ namespace BuildingCoder
         {
             var p = arc.GetEndPoint(0);
             var q = arc.GetEndPoint(1);
-            var r = q - q.Z * XYZ.BasisZ;
+            var r = q - (q.Z * XYZ.BasisZ);
 
-            var frame = new Frame(r,
+            Frame frame = new(r,
                 -XYZ.BasisX, -XYZ.BasisY, XYZ.BasisZ);
 
             var line2 = Line.CreateBound(q, r);
             var line3 = Line.CreateBound(r, p);
 
-            var loop = new CurveLoop();
+            CurveLoop loop = new();
             loop.Append(arc);
             loop.Append(line2);
             loop.Append(line3);
 
-            var loops = new List<CurveLoop>(1);
-            loops.Add(loop);
+            List<CurveLoop> loops =
+            [
+                loop
+            ];
 
             return GeometryCreationUtilities
                 .CreateRevolvedGeometry(frame,
@@ -180,11 +169,11 @@ namespace BuildingCoder
             double d2,
             double d3)
         {
-            var profile = new List<Curve>();
-            var profile00 = new XYZ(-d1 / 2, -d2 / 2, -d3 / 2);
-            var profile01 = new XYZ(-d1 / 2, d2 / 2, -d3 / 2);
-            var profile11 = new XYZ(d1 / 2, d2 / 2, -d3 / 2);
-            var profile10 = new XYZ(d1 / 2, -d2 / 2, -d3 / 2);
+            List<Curve> profile = [];
+            XYZ profile00 = new(-d1 / 2, -d2 / 2, -d3 / 2);
+            XYZ profile01 = new(-d1 / 2, d2 / 2, -d3 / 2);
+            XYZ profile11 = new(d1 / 2, d2 / 2, -d3 / 2);
+            XYZ profile10 = new(d1 / 2, -d2 / 2, -d3 / 2);
 
             profile.Add(Line.CreateBound(profile00, profile01));
             profile.Add(Line.CreateBound(profile01, profile11));
@@ -193,13 +182,13 @@ namespace BuildingCoder
 
             var curveLoop = CurveLoop.Create(profile);
 
-            var options = new SolidOptions(
+            SolidOptions options = new(
                 ElementId.InvalidElementId,
                 ElementId.InvalidElementId);
 
             return GeometryCreationUtilities
                 .CreateExtrusionGeometry(
-                    new[] {curveLoop},
+                    new[] { curveLoop },
                     XYZ.BasisZ, d3, options);
         }
 
@@ -210,10 +199,10 @@ namespace BuildingCoder
 
             // Corners in BBox coords
 
-            var pt0 = new XYZ(bbox.Min.X, bbox.Min.Y, bbox.Min.Z);
-            var pt1 = new XYZ(bbox.Max.X, bbox.Min.Y, bbox.Min.Z);
-            var pt2 = new XYZ(bbox.Max.X, bbox.Max.Y, bbox.Min.Z);
-            var pt3 = new XYZ(bbox.Min.X, bbox.Max.Y, bbox.Min.Z);
+            XYZ pt0 = new(bbox.Min.X, bbox.Min.Y, bbox.Min.Z);
+            XYZ pt1 = new(bbox.Max.X, bbox.Min.Y, bbox.Min.Z);
+            XYZ pt2 = new(bbox.Max.X, bbox.Max.Y, bbox.Min.Z);
+            XYZ pt3 = new(bbox.Min.X, bbox.Max.Y, bbox.Min.Z);
 
             // Edges in BBox coords
 
@@ -224,18 +213,22 @@ namespace BuildingCoder
 
             // Create loop, still in BBox coords
 
-            var edges = new List<Curve>();
-            edges.Add(edge0);
-            edges.Add(edge1);
-            edges.Add(edge2);
-            edges.Add(edge3);
+            List<Curve> edges =
+            [
+                edge0,
+                edge1,
+                edge2,
+                edge3
+            ];
 
             var height = bbox.Max.Z - bbox.Min.Z;
 
             var baseLoop = CurveLoop.Create(edges);
 
-            var loopList = new List<CurveLoop>();
-            loopList.Add(baseLoop);
+            List<CurveLoop> loopList =
+            [
+                baseLoop
+            ];
 
             var preTransformBox = GeometryCreationUtilities
                 .CreateExtrusionGeometry(loopList, XYZ.BasisZ,

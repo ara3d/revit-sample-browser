@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 {
@@ -18,31 +18,9 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
         private List<ImportUnit> m_enumUnit;
 
         private List<bool> m_enumVisibleLayersOnly;
-
-        private ImportColorMode m_importColorMode;
-
-        private double m_importCustomScale;
-
-        private bool m_importOrientToView;
-
-        private ImportPlacement m_importPlacement;
-
-        private bool m_importThisViewOnly;
-
-        private ImportUnit m_importUnit;
-
-        private View m_importView;
-
-        private bool m_importVisibleLayersOnly;
-
-        private bool m_is3DView;
-
         private List<string> m_placement;
 
         private List<string> m_unit;
-
-        private ViewSet m_views;
-
         private List<string> m_visibleLayersOnly;
 
         public ImportDwgData(ExternalCommandData commandData, ImportFormat format)
@@ -51,107 +29,63 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             Initialize();
         }
 
-        public bool ImportThisViewOnly
-        {
-            get => m_importThisViewOnly;
-            set => m_importThisViewOnly = value;
-        }
+        public bool ImportThisViewOnly { get; set; }
 
-        public ViewSet Views
-        {
-            get => m_views;
-            set => m_views = value;
-        }
+        public ViewSet Views { get; set; }
 
-        public View ImportView
-        {
-            get => m_importView;
-            set => m_importView = value;
-        }
+        public View ImportView { get; set; }
 
-        public ReadOnlyCollection<string> ColorMode => new ReadOnlyCollection<string>(m_colorMode);
+        public ReadOnlyCollection<string> ColorMode => new(m_colorMode);
 
         public ReadOnlyCollection<ImportColorMode> EnumColorMode =>
-            new ReadOnlyCollection<ImportColorMode>(m_enumColorMode);
+            new(m_enumColorMode);
 
-        public ImportColorMode ImportColorMode
-        {
-            get => m_importColorMode;
-            set => m_importColorMode = value;
-        }
+        public ImportColorMode ImportColorMode { get; set; }
 
-        public double ImportCustomScale
-        {
-            get => m_importCustomScale;
-            set => m_importCustomScale = value;
-        }
+        public double ImportCustomScale { get; set; }
 
-        public bool ImportOrientToView
-        {
-            get => m_importOrientToView;
-            set => m_importOrientToView = value;
-        }
+        public bool ImportOrientToView { get; set; }
 
-        public ReadOnlyCollection<string> Placement => new ReadOnlyCollection<string>(m_placement);
+        public ReadOnlyCollection<string> Placement => new(m_placement);
 
         public ReadOnlyCollection<ImportPlacement> EnumPlacement =>
-            new ReadOnlyCollection<ImportPlacement>(m_enumPlacement);
+            new(m_enumPlacement);
 
-        public ImportPlacement ImportPlacement
-        {
-            get => m_importPlacement;
-            set => m_importPlacement = value;
-        }
+        public ImportPlacement ImportPlacement { get; set; }
 
-        public ReadOnlyCollection<string> Unit => new ReadOnlyCollection<string>(m_unit);
+        public ReadOnlyCollection<string> Unit => new(m_unit);
 
-        public ReadOnlyCollection<ImportUnit> EnumUnit => new ReadOnlyCollection<ImportUnit>(m_enumUnit);
+        public ReadOnlyCollection<ImportUnit> EnumUnit => new(m_enumUnit);
 
-        public ImportUnit ImportUnit
-        {
-            get => m_importUnit;
-            set => m_importUnit = value;
-        }
+        public ImportUnit ImportUnit { get; set; }
 
-        public ReadOnlyCollection<string> VisibleLayersOnly => new ReadOnlyCollection<string>(m_visibleLayersOnly);
+        public ReadOnlyCollection<string> VisibleLayersOnly => new(m_visibleLayersOnly);
 
-        public ReadOnlyCollection<bool> EnumVisibleLayersOnly => new ReadOnlyCollection<bool>(m_enumVisibleLayersOnly);
+        public ReadOnlyCollection<bool> EnumVisibleLayersOnly => new(m_enumVisibleLayersOnly);
 
-        public bool ImportVisibleLayersOnly
-        {
-            get => m_importVisibleLayersOnly;
-            set => m_importVisibleLayersOnly = value;
-        }
+        public bool ImportVisibleLayersOnly { get; set; }
 
-        public bool Is3DView
-        {
-            get => m_is3DView;
-            set => m_is3DView = value;
-        }
+        public bool Is3DView { get; set; }
 
         public override bool Import()
         {
             //parameter: DWGImportOptions
-            var dwgImportOption = new DWGImportOptions
+            DWGImportOptions dwgImportOption = new()
             {
-                ColorMode = m_importColorMode,
-                CustomScale = m_importCustomScale,
-                OrientToView = m_importOrientToView,
-                Placement = m_importPlacement,
-                ThisViewOnly = m_importThisViewOnly
+                ColorMode = ImportColorMode,
+                CustomScale = ImportCustomScale,
+                OrientToView = ImportOrientToView,
+                Placement = ImportPlacement,
+                ThisViewOnly = ImportThisViewOnly
             };
-            View view = null;
-            if (!m_importThisViewOnly)
-                view = m_importView;
-            else
-                view = ActiveDoc.ActiveView;
-            dwgImportOption.Unit = m_importUnit;
-            dwgImportOption.VisibleLayersOnly = m_importVisibleLayersOnly;
+            var view = !ImportThisViewOnly ? ImportView : ActiveDoc.ActiveView;
+            dwgImportOption.Unit = ImportUnit;
+            dwgImportOption.VisibleLayersOnly = ImportVisibleLayersOnly;
 
             //parameter: ElementId
 
             //Import
-            var t = new Transaction(ActiveDoc);
+            Transaction t = new(ActiveDoc);
             t.SetName("Import");
             t.Start();
             var imported = ActiveDoc.Import(ImportFileFullName, dwgImportOption, view, out _);
@@ -163,8 +97,8 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
         private void Initialize()
         {
             //ColorMode
-            m_colorMode = new List<string>();
-            m_enumColorMode = new List<ImportColorMode>();
+            m_colorMode = [];
+            m_enumColorMode = [];
             m_colorMode.Add("Black and white");
             m_enumColorMode.Add(ImportColorMode.BlackAndWhite);
             m_colorMode.Add("Preserve colors");
@@ -173,16 +107,16 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             m_enumColorMode.Add(ImportColorMode.Inverted);
 
             //Placement
-            m_placement = new List<string>();
-            m_enumPlacement = new List<ImportPlacement>();
+            m_placement = [];
+            m_enumPlacement = [];
             m_placement.Add("Center-to-center");
             m_enumPlacement.Add(ImportPlacement.Centered);
             m_placement.Add("Origin-to-origin");
             m_enumPlacement.Add(ImportPlacement.Origin);
 
             //Unit
-            m_unit = new List<string>();
-            m_enumUnit = new List<ImportUnit>();
+            m_unit = [];
+            m_enumUnit = [];
             m_unit.Add("Auto-Detect");
             m_enumUnit.Add(ImportUnit.Default);
             m_unit.Add(ImportUnit.Foot.ToString());
@@ -201,29 +135,29 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             m_enumUnit.Add(ImportUnit.Default);
 
             //VisibleLayersOnly
-            m_visibleLayersOnly = new List<string>();
-            m_enumVisibleLayersOnly = new List<bool>();
+            m_visibleLayersOnly = [];
+            m_enumVisibleLayersOnly = [];
             m_visibleLayersOnly.Add("All");
             m_enumVisibleLayersOnly.Add(false);
             m_visibleLayersOnly.Add("Visible");
             m_enumVisibleLayersOnly.Add(true);
 
             //Whether active view is 3D
-            m_is3DView = false;
-            if (ActiveDoc.ActiveView.ViewType == ViewType.ThreeD) m_is3DView = true;
+            Is3DView = false;
+            if (ActiveDoc.ActiveView.ViewType == ViewType.ThreeD) Is3DView = true;
 
             //Views
-            m_views = new ViewSet();
+            Views = new ViewSet();
             GetViews();
 
-            m_importCustomScale = 0.0;
-            m_importOrientToView = true;
-            m_importUnit = ImportUnit.Default;
-            m_importThisViewOnly = false;
-            m_importView = ActiveDoc.ActiveView;
-            m_importColorMode = ImportColorMode.Inverted;
-            m_importPlacement = ImportPlacement.Centered;
-            m_importVisibleLayersOnly = false;
+            ImportCustomScale = 0.0;
+            ImportOrientToView = true;
+            ImportUnit = ImportUnit.Default;
+            ImportThisViewOnly = false;
+            ImportView = ActiveDoc.ActiveView;
+            ImportColorMode = ImportColorMode.Inverted;
+            ImportPlacement = ImportPlacement.Centered;
+            ImportVisibleLayersOnly = false;
 
             Filter = "DWG Files (*.dwg)|*.dwg";
             Title = "Import DWG";
@@ -231,17 +165,17 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 
         private void GetViews()
         {
-            var collector = new FilteredElementCollector(ActiveDoc);
+            FilteredElementCollector collector = new(ActiveDoc);
             var itor = collector.OfClass(typeof(View)).GetElementIterator();
             itor.Reset();
-            var views = new ViewSet();
-            var floorPlans = new ViewSet();
-            var ceilingPlans = new ViewSet();
-            var engineeringPlans = new ViewSet();
+            ViewSet views = new();
+            ViewSet floorPlans = new();
+            ViewSet ceilingPlans = new();
+            ViewSet engineeringPlans = new();
             while (itor.MoveNext())
             {
                 // skip view templates because they're invalid for import/export
-                if (!(itor.Current is View view) || view.IsTemplate)
+                if (itor.Current is not View view || view.IsTemplate)
                     continue;
                 switch (view.ViewType)
                 {
@@ -278,55 +212,55 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             {
                 case ViewType.FloorPlan:
                 case ViewType.CeilingPlan:
-                {
-                    m_views.Insert(activeView);
-                    foreach (View view in views)
                     {
-                        if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
-                            m_views.Insert(view);
-                    }
+                        Views.Insert(activeView);
+                        foreach (View view in views)
+                        {
+                            if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
+                                Views.Insert(view);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case ViewType.EngineeringPlan:
-                {
-                    if (views.Contains(activeView)) m_views.Insert(activeView);
-                    foreach (View view in views)
                     {
-                        if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
-                            m_views.Insert(view);
-                    }
+                        if (views.Contains(activeView)) Views.Insert(activeView);
+                        foreach (View view in views)
+                        {
+                            if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
+                                Views.Insert(view);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 //Get view of the lowest elevation
                 default:
-                {
-                    var i = 0;
-                    double elevation = 0;
-                    View viewLowestElevation = null;
-                    foreach (View view in views)
                     {
-                        if (i == 0)
+                        var i = 0;
+                        double elevation = 0;
+                        View viewLowestElevation = null;
+                        foreach (View view in views)
                         {
-                            elevation = view.GenLevel.Elevation;
-                            viewLowestElevation = view;
-                        }
-                        else
-                        {
-                            if (view.GenLevel.Elevation <= elevation)
+                            if (i == 0)
                             {
                                 elevation = view.GenLevel.Elevation;
                                 viewLowestElevation = view;
                             }
+                            else
+                            {
+                                if (view.GenLevel.Elevation <= elevation)
+                                {
+                                    elevation = view.GenLevel.Elevation;
+                                    viewLowestElevation = view;
+                                }
+                            }
+
+                            i++;
                         }
 
-                        i++;
+                        Views.Insert(viewLowestElevation);
+                        break;
                     }
-
-                    m_views.Insert(viewLowestElevation);
-                    break;
-                }
             }
         }
     }

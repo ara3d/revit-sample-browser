@@ -55,9 +55,9 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
                 var lengthBoundBox = m_selectedOpeningInfo.BoundingBox.Length;
                 var scale = height * 0.8 / lengthBoundBox;
                 e.Graphics.Clear(Color.Black);
-                var yellowPen = new Pen(Color.Yellow, 1);
-                var rect = new Rectangle((int)(width / 2 - widthBoundBox * scale / 2),
-                    (int)(height / 2 - lengthBoundBox * scale / 2), (int)(widthBoundBox * scale),
+                Pen yellowPen = new(Color.Yellow, 1);
+                Rectangle rect = new((int)((width / 2) - (widthBoundBox * scale / 2)),
+                    (int)((height / 2) - (lengthBoundBox * scale / 2)), (int)(widthBoundBox * scale),
                     (int)(lengthBoundBox * scale));
                 // Draw circle to screen.
                 e.Graphics.DrawArc(yellowPen, rect, 0, 360);
@@ -66,8 +66,8 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         private void Createbutton_Click(object sender, EventArgs e)
         {
-            var optionForm =
-                new CreateModelLineOptionsForm(m_openingInfos, m_selectedOpeningInfo);
+            CreateModelLineOptionsForm optionForm =
+                new(m_openingInfos, m_selectedOpeningInfo);
             optionForm.ShowDialog();
         }
 

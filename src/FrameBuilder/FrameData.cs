@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
     public class FrameData
@@ -36,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             CommandData = commandData;
             ColumnSymbolsMgr = new FrameTypesMgr(commandData);
             BeamSymbolsMgr = new FrameTypesMgr(commandData);
-            Levels = new SortedList<double, Level>();
+            Levels = [];
             OriginalLevelSize = Levels.Count;
             m_yNumber = YNumberDefault;
             m_xNumber = XNumberDefault;
@@ -56,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             get => m_yNumber;
             set
             {
-                if (value < YNumberMinValue || value > YNumberMaxValue)
+                if (value is < YNumberMinValue or > YNumberMaxValue)
                 {
                     var message =
                         $"Number of Columns in the Y Direction should no less than {YNumberMinValue} and no more than {YNumberMaxValue}";
@@ -73,7 +72,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             get => m_xNumber;
             set
             {
-                if (value < XNumberMinValue || value > XNumberMaxValue)
+                if (value is < XNumberMinValue or > XNumberMaxValue)
                 {
                     var message =
                         $"Number of Columns in the X Direction should no less than {XNumberMinValue} and no more than {XNumberMaxValue}";
@@ -90,7 +89,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             get => m_distance;
             set
             {
-                if (value < DistanceMinValue || value > DistanceMaxValue)
+                if (value is < DistanceMinValue or > DistanceMaxValue)
                 {
                     var message =
                         $"The distance between columns shoule no less than {DistanceMinValue}and no more than {DistanceMaxValue}";
@@ -106,7 +105,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             get => m_floorNumber;
             set
             {
-                if (value < FloorNumberMinValue || value > FloorNumberMaxValue)
+                if (value is < FloorNumberMinValue or > FloorNumberMaxValue)
                 {
                     var message =
                         $"Number of floors should no less than {FloorNumberMinValue} and no more than {FloorNumberMaxValue}";
@@ -123,7 +122,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             get => Math.Round(m_levelHeight, DigitPrecision);
             set
             {
-                if (value < LevelHeightMinValue || value > LevelHeightMaxValue)
+                if (value is < LevelHeightMinValue or > LevelHeightMaxValue)
                 {
                     var message =
                         $"The distance between columns shoule no less than {LevelHeightMinValue}and no more than {LevelHeightMaxValue}";
@@ -150,7 +149,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 
         public static FrameData CreateInstance(ExternalCommandData commandData)
         {
-            var data = new FrameData(commandData);
+            FrameData data = new(commandData);
             data.Initialize();
             data.Validate();
 
@@ -166,21 +165,21 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 
         public bool SetColumnSymbol(object obj)
         {
-            if (!(obj is FamilySymbol symbol)) return false;
+            if (obj is not FamilySymbol symbol) return false;
             ColumnSymbol = symbol;
             return true;
         }
 
         public bool SetBeamSymbol(object obj)
         {
-            if (!(obj is FamilySymbol symbol)) return false;
+            if (obj is not FamilySymbol symbol) return false;
             BeamSymbol = symbol;
             return true;
         }
 
         public bool SetBraceSymbol(object obj)
         {
-            if (!(obj is FamilySymbol symbol)) return false;
+            if (obj is not FamilySymbol symbol) return false;
             BraceSymbol = symbol;
             return true;
         }
@@ -190,7 +189,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             var baseElevation = Levels.Values[Levels.Count - 1].Elevation;
             var doc = CommandData.Application.ActiveUIDocument.Document;
 
-            var collector = new FilteredElementCollector(doc);
+            FilteredElementCollector collector = new(doc);
             var viewFamilyTypes = collector.OfClass(typeof(ViewFamilyType)).ToElements();
             var floorPlanId = ElementId.InvalidElementId;
             foreach (var e in viewFamilyTypes)
@@ -207,7 +206,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 
             for (var ii = 0; ii < newLevelSize; ii++)
             {
-                var elevation = baseElevation + m_levelHeight * (ii + 1);
+                var elevation = baseElevation + (m_levelHeight * (ii + 1));
                 var newLevel = Level.Create(CommandData.Application.ActiveUIDocument.Document, elevation);
                 var viewPlan = ViewPlan.Create(doc, floorPlanId, newLevel.Id);
                 viewPlan.Name = newLevel.Name;
@@ -221,7 +220,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
         {
             var doc = CommandData.Application.ActiveUIDocument.Document;
 
-            var collector1 = new FilteredElementCollector(doc);
+            FilteredElementCollector collector1 = new(doc);
             var a1 = collector1.OfClass(typeof(Level)).ToElements();
 
             foreach (Level lev in a1)
@@ -237,14 +236,14 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             var idColumn = categories.get_Item(bipColumn).Id;
             var idFraming = categories.get_Item(bipFraming).Id;
 
-            var filterColumn = new ElementCategoryFilter(bipColumn);
-            var filterFraming = new ElementCategoryFilter(bipFraming);
-            var orFilter = new LogicalOrFilter(filterColumn, filterFraming);
+            ElementCategoryFilter filterColumn = new(bipColumn);
+            ElementCategoryFilter filterFraming = new(bipFraming);
+            LogicalOrFilter orFilter = new(filterColumn, filterFraming);
 
-            var filterSymbol = new ElementClassFilter(typeof(FamilySymbol));
-            var andFilter = new LogicalAndFilter(orFilter, filterSymbol);
+            ElementClassFilter filterSymbol = new(typeof(FamilySymbol));
+            LogicalAndFilter andFilter = new(orFilter, filterSymbol);
             // Category filters reduce family symbols from 500+ to ~40 in the sample project.
-            var collector2 = new FilteredElementCollector(doc);
+            FilteredElementCollector collector2 = new(doc);
             var a2 = collector2.WherePasses(andFilter).ToElements();
 
             foreach (FamilySymbol symbol in a2)

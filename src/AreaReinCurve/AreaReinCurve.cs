@@ -1,15 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
+using Ara3D.RevitSampleBrowser.Common.Structural;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Parameters;
-using Ara3D.RevitSampleBrowser.Common.Structural;
+using System;
+using System.Collections.Generic;
 using RebarGeomHelper = Ara3D.RevitSampleBrowser.Common.Structural.RebarGeometry;
 
 namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
@@ -26,9 +24,9 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
         public Result Execute(ExternalCommandData revit,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "Ara3D.RevitSampleBrowser.AreaReinCurve");
+            Transaction trans = new(revit.Application.ActiveUIDocument.Document, "Ara3D.RevitSampleBrowser.AreaReinCurve");
             trans.Start();
-            var selected = new ElementSet();
+            ElementSet selected = new();
             foreach (var elementId in revit.Application.ActiveUIDocument.Selection.GetElementIds())
             {
                 selected.Insert(revit.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -90,15 +88,14 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
                 if (null == m_areaRein) return false;
             }
 
-            var curves = new CurveArray();
-            m_areaReinCurves = new List<AreaReinforcementCurve>();
+            CurveArray curves = new();
+            m_areaReinCurves = [];
             var curveIds = m_areaRein.GetBoundaryCurveIds();
             foreach (var o in curveIds)
             {
-                if (!(m_doc.GetElement(o) is AreaReinforcementCurve areaCurve))
+                if (m_doc.GetElement(o) is not AreaReinforcementCurve areaCurve)
                 {
-                    var appEx = new ApplicationException
-                        ("There is unexpected error with selected AreaReinforcement.");
+                    ApplicationException appEx = new("There is unexpected error with selected AreaReinforcement.");
                     throw appEx;
                 }
 
@@ -135,12 +132,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
         {
             var line0 = m_areaReinCurves[0].Curve as Line;
             var line1 = m_areaReinCurves[1].Curve as Line;
-            AreaReinforcementCurve temp = null;
-            if (RebarGeomHelper.IsVertical(line0, line1))
-                temp = m_areaReinCurves[1];
-            else
-                temp = m_areaReinCurves[2];
-
+            var temp = RebarGeomHelper.IsVertical(line0, line1) ? m_areaReinCurves[1] : m_areaReinCurves[2];
             ParameterAccess.SetParaInt(m_areaReinCurves[0],
                 BuiltInParameter.REBAR_SYSTEM_OVERRIDE, -1);
             var para = m_areaReinCurves[0].get_Parameter(

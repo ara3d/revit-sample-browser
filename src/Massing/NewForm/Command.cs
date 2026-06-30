@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
 namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -18,14 +17,14 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "MakeExtrusionForm");
+            Transaction transaction = new(doc, "MakeExtrusionForm");
             transaction.Start();
 
             // Create one profile
-            var refAr = new ReferenceArray();
+            ReferenceArray refAr = new();
 
-            var ptA = new XYZ(10, 10, 0);
-            var ptB = new XYZ(90, 10, 0);
+            XYZ ptA = new(10, 10, 0);
+            XYZ ptB = new(90, 10, 0);
             var modelcurve = XyzMath.MakeLine(commandData.Application, ptA, ptB);
             refAr.Append(modelcurve.GeometryCurve.Reference);
 
@@ -40,7 +39,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
             refAr.Append(modelcurve.GeometryCurve.Reference);
 
             // The extrusion form direction
-            var direction = new XYZ(0, 0, 50);
+            XYZ direction = new(0, 0, 50);
 
             doc.FamilyCreate.NewExtrusionForm(true, refAr, direction);
 
@@ -58,14 +57,14 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "MakeCapForm");
+            Transaction transaction = new(doc, "MakeCapForm");
             transaction.Start();
 
             // Create one profile
-            var refAr = new ReferenceArray();
+            ReferenceArray refAr = new();
 
-            var ptA = new XYZ(10, 10, 0);
-            var ptB = new XYZ(100, 10, 0);
+            XYZ ptA = new(10, 10, 0);
+            XYZ ptB = new(100, 10, 0);
             Line.CreateBound(ptA, ptB);
             var modelcurve = XyzMath.MakeLine(commandData.Application, ptA, ptB);
             refAr.Append(modelcurve.GeometryCurve.Reference);
@@ -96,15 +95,15 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "MakeRevolveForm");
+            Transaction transaction = new(doc, "MakeRevolveForm");
             transaction.Start();
 
             // Create one profile
-            var refAr = new ReferenceArray();
+            ReferenceArray refAr = new();
             var norm = XYZ.BasisZ;
 
-            var ptA = new XYZ(0, 0, 10);
-            var ptB = new XYZ(100, 0, 10);
+            XYZ ptA = new(0, 0, 10);
+            XYZ ptB = new(100, 0, 10);
             var modelcurve = XyzMath.MakeLine(commandData.Application, ptA, ptB, norm);
             refAr.Append(modelcurve.GeometryCurve.Reference);
 
@@ -140,13 +139,13 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "MakeSweptBlendForm");
+            Transaction transaction = new(doc, "MakeSweptBlendForm");
             transaction.Start();
 
             // Create first profile
-            var refAr = new ReferenceArray();
-            var ptA = new XYZ(10, 10, 0);
-            var ptB = new XYZ(50, 10, 0);
+            ReferenceArray refAr = new();
+            XYZ ptA = new(10, 10, 0);
+            XYZ ptB = new(50, 10, 0);
             var modelcurve = XyzMath.MakeLine(commandData.Application, ptA, ptB);
             refAr.Append(modelcurve.GeometryCurve.Reference);
 
@@ -161,7 +160,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
             refAr.Append(modelcurve.GeometryCurve.Reference);
 
             // Create second profile
-            var refAr2 = new ReferenceArray();
+            ReferenceArray refAr2 = new();
             ptA = new XYZ(10, 10, 90);
             ptB = new XYZ(80, 10, 90);
             modelcurve = XyzMath.MakeLine(commandData.Application, ptA, ptB);
@@ -178,12 +177,12 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
             refAr2.Append(modelcurve.GeometryCurve.Reference);
 
             // Add profiles
-            var profiles = new ReferenceArrayArray();
+            ReferenceArrayArray profiles = new();
             profiles.Append(refAr);
             profiles.Append(refAr2);
 
             // Create path for swept blend form
-            var path = new ReferenceArray();
+            ReferenceArray path = new();
             ptA = new XYZ(10, 10, 0);
             ptB = new XYZ(10, 10, 90);
             modelcurve = XyzMath.MakeLine(commandData.Application, ptA, ptB);
@@ -205,20 +204,20 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "MakeLoftForm");
+            Transaction transaction = new(doc, "MakeLoftForm");
             transaction.Start();
 
             // Create profiles array
-            var refArAr = new ReferenceArrayArray();
+            ReferenceArrayArray refArAr = new();
 
             // Create first profile
-            var refAr = new ReferenceArray();
+            ReferenceArray refAr = new();
 
             var y = 100;
             var x = 50;
-            var ptA = new XYZ(-x, y, 0);
-            var ptB = new XYZ(x, y, 0);
-            var ptC = new XYZ(0, y + 10, 10);
+            XYZ ptA = new(-x, y, 0);
+            XYZ ptB = new(x, y, 0);
+            XYZ ptC = new(0, y + 10, 10);
             var modelcurve = SampleBrowserUtils.MakeArc(commandData.Application, ptA, ptB, ptC);
             refAr.Append(modelcurve.GeometryCurve.Reference);
             refArAr.Append(refAr);

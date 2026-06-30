@@ -1,10 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
 using Color = System.Drawing.Color;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
@@ -71,8 +72,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 var rectLocation = curtainWallPictureBox.ClientRectangle.Location;
                 var rectWidth = curtainWallPictureBox.ClientRectangle.Width;
                 var rectHeight = curtainWallPictureBox.ClientRectangle.Height;
-                var midX = rectLocation.X + rectWidth / 2;
-                var midY = rectLocation.X + rectHeight / 2;
+                var midX = rectLocation.X + (rectWidth / 2);
+                var midY = rectLocation.X + (rectHeight / 2);
                 var originPoint = new Point(midX, midY);
                 m_myDocument.WallGeometry.Drawing.Origin = originPoint;
             }
@@ -86,8 +87,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 var rectLocation = gridDrawing.Boundary.Location;
                 var rectWidth = gridDrawing.Boundary.Width;
                 var rectHeight = gridDrawing.Boundary.Height;
-                var midX = rectLocation.X + rectWidth / 2;
-                var midY = rectLocation.Y + rectHeight / 2;
+                var midX = rectLocation.X + (rectWidth / 2);
+                var midY = rectLocation.Y + (rectHeight / 2);
                 var curtainGridMidpoint = new Point(midX, midY);
                 gridDrawing.Center = curtainGridMidpoint;
             }
@@ -97,11 +98,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         {
             //if it's an error / warning message, set the color of the text to red
             var message = m_myDocument.Message;
-            if (message.Value)
-                operationStatusLabel.ForeColor = Color.Red;
-            // it's a common hint message, set the color to black
-            else
-                operationStatusLabel.ForeColor = Color.Black;
+            operationStatusLabel.ForeColor = message.Value
+                ? Color.Red
+                // it's a common hint message, set the color to black
+                : Color.Black;
             operationStatusLabel.Text = message.Key;
             statusStrip.Refresh();
         }
@@ -420,39 +420,39 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                     break;
                 // move the selected grid line to a new place
                 case LineOperationType.MoveLine:
-                {
-                    // during moving a grid line, the mouse will click twice
-                    // the 1st time is to select a grid line to move
-                    // the 2nd time is to determine the destination place for the selected grid line
-
-                    // the 1st time, select a grid line to move
-                    if (false == m_lineToMoveSelected)
                     {
-                        var lineObtained = m_myDocument.GridGeometry.GetLineToBeMoved();
-                        if (lineObtained)
-                        {
-                            m_lineToMoveSelected = true;
-                            operationStatusLabel.ForeColor = Color.Black;
-                            operationStatusLabel.Text =
-                                "Move the mouse to the expected location, left click to finish the operation";
-                        }
-                    }
-                    // the 2nd time, the to-be-moved grid line specified, specify the destination location
-                    else
-                    {
-                        // the destination point has been set, move to that place
-                        var succeeded = m_myDocument.GridGeometry.MoveGridLine(e.Location);
-                        if (succeeded)
-                        {
-                            m_lineToMoveSelected = false;
-                            ResetLineOpApprearances();
-                            //UpdatePropertyGrid();
-                        }
-                    }
+                        // during moving a grid line, the mouse will click twice
+                        // the 1st time is to select a grid line to move
+                        // the 2nd time is to determine the destination place for the selected grid line
 
-                    m_lastPoint = e.Location;
-                    break;
-                }
+                        // the 1st time, select a grid line to move
+                        if (false == m_lineToMoveSelected)
+                        {
+                            var lineObtained = m_myDocument.GridGeometry.GetLineToBeMoved();
+                            if (lineObtained)
+                            {
+                                m_lineToMoveSelected = true;
+                                operationStatusLabel.ForeColor = Color.Black;
+                                operationStatusLabel.Text =
+                                    "Move the mouse to the expected location, left click to finish the operation";
+                            }
+                        }
+                        // the 2nd time, the to-be-moved grid line specified, specify the destination location
+                        else
+                        {
+                            // the destination point has been set, move to that place
+                            var succeeded = m_myDocument.GridGeometry.MoveGridLine(e.Location);
+                            if (succeeded)
+                            {
+                                m_lineToMoveSelected = false;
+                                ResetLineOpApprearances();
+                                //UpdatePropertyGrid();
+                            }
+                        }
+
+                        m_lastPoint = e.Location;
+                        break;
+                    }
                 // add a segment to the selected place
                 case LineOperationType.AddSegment:
                     m_myDocument.GridGeometry.AddSegment();
@@ -613,40 +613,19 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         public override string ToString()
         {
             var resultString = string.Empty;
-            switch (OpType)
+            resultString = OpType switch
             {
-                case LineOperationType.AddULine:
-                    resultString = "Add horizontal grid line";
-                    break;
-                case LineOperationType.AddVLine:
-                    resultString = "Add vertical grid line";
-                    break;
-                case LineOperationType.LockOrUnlockLine:
-                    resultString = "Lock or unlock grid line";
-                    break;
-                case LineOperationType.MoveLine:
-                    resultString = "Move grid line";
-                    break;
-                case LineOperationType.AddSegment:
-                    resultString = "Add segment";
-                    break;
-                case LineOperationType.RemoveSegment:
-                    resultString = "Delete segment";
-                    break;
-                case LineOperationType.AddAllSegments:
-                    resultString = "Add segments of entire grid line";
-                    break;
-                case LineOperationType.AddAllMullions:
-                    resultString = "Add mullions to all segments";
-                    break;
-                case LineOperationType.DeleteAllMullions:
-                    resultString = "Delete all mullions";
-                    break;
-                default:
-                    resultString = base.ToString();
-                    break;
-            }
-
+                LineOperationType.AddULine => "Add horizontal grid line",
+                LineOperationType.AddVLine => "Add vertical grid line",
+                LineOperationType.LockOrUnlockLine => "Lock or unlock grid line",
+                LineOperationType.MoveLine => "Move grid line",
+                LineOperationType.AddSegment => "Add segment",
+                LineOperationType.RemoveSegment => "Delete segment",
+                LineOperationType.AddAllSegments => "Add segments of entire grid line",
+                LineOperationType.AddAllMullions => "Add mullions to all segments",
+                LineOperationType.DeleteAllMullions => "Delete all mullions",
+                _ => base.ToString(),
+            };
             return resultString;
         }
     }

@@ -12,13 +12,14 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.IO;
-using System.Reflection;
-using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Windows.Media.Imaging;
 
 namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
 {
@@ -100,16 +101,16 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
         private void AddPrismComboBox(RibbonPanel panel)
         {
             //Family instance #1
-            var comboBoxMemberData1 = new ComboBoxMemberData("cylinder", "cylinder prism");
+            ComboBoxMemberData comboBoxMemberData1 = new("cylinder", "cylinder prism");
             //Family instance #2
-            var comboBoxMemberData2 = new ComboBoxMemberData("rectangle", "rectangular prism");
+            ComboBoxMemberData comboBoxMemberData2 = new("rectangle", "rectangular prism");
             //Family instance #3 
-            var comboBoxMemberData3 = new ComboBoxMemberData("regularpolygon", "regular polygon prism");
+            ComboBoxMemberData comboBoxMemberData3 = new("regularpolygon", "regular polygon prism");
             //Family instance #4
-            var comboBoxMemberData4 = new ComboBoxMemberData("isotriangle", "isotriangle prism");
+            ComboBoxMemberData comboBoxMemberData4 = new("isotriangle", "isotriangle prism");
 
             //make a combo box group group 
-            var comboBxData = new ComboBoxData("ComboBox");
+            ComboBoxData comboBxData = new("ComboBox");
             _prismComboBox = panel.AddItem(comboBxData) as ComboBox;
             _prismComboBox.ToolTip = "select a prism to array on a curve";
             _prismComboBox.AddItem(comboBoxMemberData1);
@@ -121,9 +122,9 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
         private void AddCurvePropertiesTextFields(RibbonPanel panel)
         {
             //Inactive textfields that just display information about the active input fields
-            var periodLabelData = new TextBoxData("curve period field");
-            var cyclesLabelData = new TextBoxData("curve cycles field");
-            var amplitudeLabelData = new TextBoxData("curve amplitude field");
+            TextBoxData periodLabelData = new("curve period field");
+            TextBoxData cyclesLabelData = new("curve cycles field");
+            TextBoxData amplitudeLabelData = new("curve amplitude field");
             //Stack them horizontally
             var textFieldList = panel.AddStackedItems(periodLabelData, cyclesLabelData, amplitudeLabelData);
             //Call method to customize the text boxes and make them inactive
@@ -136,9 +137,9 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
             CustomizeTextBox(panel, (TextBox)textFieldList[2], amplitudeToolTip, "curve amplitude:", 0, false, 130);
 
             //Active text fields for user input
-            var periodBoxData = new TextBoxData("curve period");
-            var cyclesBoxData = new TextBoxData("curve cycles");
-            var amplitudeBoxData = new TextBoxData("curve amplitude");
+            TextBoxData periodBoxData = new("curve period");
+            TextBoxData cyclesBoxData = new("curve cycles");
+            TextBoxData amplitudeBoxData = new("curve amplitude");
             //Stack them horizontally
             var textBoxList = panel.AddStackedItems(periodBoxData, cyclesBoxData, amplitudeBoxData);
 
@@ -157,12 +158,12 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
 
         private void AddPartitionsTextField(RibbonPanel panel)
         {
-            var partitionsFieldData = new TextBoxData("curve partitions field");
+            TextBoxData partitionsFieldData = new("curve partitions field");
             var partitionsFieldBox = panel.AddItem(partitionsFieldData) as TextBox;
             //Call method to customize the text box and set it as inactive
             CustomizeTextBox(panel, partitionsFieldBox, null, "number of partitions:", 0, false, 130);
             //Call method to customize the text box and set it as active
-            var partitionsBoxData = new TextBoxData("curve partitions box");
+            TextBoxData partitionsBoxData = new("curve partitions box");
             m_partitionsBox = panel.AddItem(partitionsBoxData) as TextBox;
             CustomizeTextBox(panel, m_partitionsBox, "Define the number of partitions", $"{_partitionsVal}", _partitionsVal,
                 true, 50);
@@ -170,7 +171,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
 
         private void AddRunButton(RibbonPanel panel)
         {
-            var pushButtonData = new PushButtonData("arrayPrisms", "run",
+            PushButtonData pushButtonData = new("arrayPrisms", "run",
                 $"{m_assemblyPath}\\{m_assemblyName}", "Ara3D.RevitSampleBrowser.SinePlotter.CS.Command")
             {
                 LargeImage = new BitmapImage(new Uri($"{m_imageFolder}Start.png"))
@@ -198,7 +199,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
             {
                 if (textBox.Name.Equals(m_periodBox.Name))
                 {
-                    if (value < 0.1 || value > 3)
+                    if (value is < 0.1 or > 3)
                         TaskDialog.Show("TextBox Input",
                             $"The input value for {textBox.Name} has to be between 0.1 and 3.0");
                     else _periodVal = value;
@@ -212,7 +213,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
                 }
                 else if (textBox.Name.Equals(m_amplitudeBox.Name))
                 {
-                    if (value < -4 || value > 4)
+                    if (value is < -4 or > 4)
                         TaskDialog.Show("TextBox Input",
                             $"The input value for {textBox.Name} has to be between -4.0 and 4.0");
                     else _amplitudeVal = value;

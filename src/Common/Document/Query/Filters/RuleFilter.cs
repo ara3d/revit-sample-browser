@@ -2,14 +2,12 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
@@ -45,10 +43,10 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
             var ruleElement = document.GetElement(this.arg.Value) as ParameterFilterElement;
             var elementFilter = ruleElement.GetElementFilter();
             var categories = ruleElement.GetCategories();
-            var categoryFilter = new ElementMulticategoryFilter(categories);
+            ElementMulticategoryFilter categoryFilter = new(categories);
             var filters = new[] { categoryFilter, elementFilter };
-            var andFilter = new LogicalAndFilter(filters.Where(x => x != null).ToArray());
+            LogicalAndFilter andFilter = new(filters.Where(x => x != null).ToArray());
             return andFilter;
         }
-    }    
+    }
 }

@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.RevitAddIns;
 using System;
 using System.IO;
 using System.Windows.Forms;
-using Autodesk.RevitAddIns;
 
 namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
 {
@@ -18,32 +18,32 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
 
         private void CreateAddInManifestButton_Click(object sender, EventArgs e)
         {
-            var manifest = new RevitAddInManifest();
+            RevitAddInManifest manifest = new();
 
-            var fileInfo = new FileInfo("..\\ExternalCommandRegistration\\ExternalCommandRegistration.dll");
+            FileInfo fileInfo = new("..\\ExternalCommandRegistration\\ExternalCommandRegistration.dll");
 
-            var application1 = new RevitAddInApplication(
+            RevitAddInApplication application1 = new(
                 "ExternalApplication", fileInfo.FullName, Guid.NewGuid(),
                 "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.ExternalApplicationClass", "adsk");
 
             // Not visible without an active document; disabled when a wall is selected.
-            var command1 = new RevitAddInCommand(
+            RevitAddInCommand command1 = new(
                 fileInfo.FullName, Guid.NewGuid(),
                 "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.ExternalCommandCreateWall", "adsk")
- {
-     Description = "A simple external command which is used to create a wall.",
-     Text = "@createWallText",
-     AvailabilityClassName = "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.WallSelection",
-     LanguageType = LanguageType.English_USA,
-     LargeImage = "@CreateWall",
-     TooltipImage = "@CreateWallTooltip",
-     VisibilityMode = VisibilityMode.NotVisibleWhenNoActiveDocument,
-     LongDescription = "This command will not be visible in Revit Structure or there is no active document."
- };
+            {
+                Description = "A simple external command which is used to create a wall.",
+                Text = "@createWallText",
+                AvailabilityClassName = "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.WallSelection",
+                LanguageType = LanguageType.English_USA,
+                LargeImage = "@CreateWall",
+                TooltipImage = "@CreateWallTooltip",
+                VisibilityMode = VisibilityMode.NotVisibleWhenNoActiveDocument,
+                LongDescription = "This command will not be visible in Revit Structure or there is no active document."
+            };
             command1.LongDescription += " And this command will be disabled if user selected a wall. ";
 
             // Not visible in family documents or without an active document; disabled outside 3D views.
-            var command2 = new RevitAddInCommand(
+            RevitAddInCommand command2 = new(
                 fileInfo.FullName, Guid.NewGuid(),
                 "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.ExternalCommand3DView", "adsk")
             {
@@ -70,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
 
         private void AddInsInfoButton_Click(object sender, EventArgs e)
         {
-            var fileInfo = new FileInfo("ExteranlCommand.Sample.addin");
+            FileInfo fileInfo = new("ExteranlCommand.Sample.addin");
             var revitAddInManifest =
                 AddInManifestUtility.GetRevitAddInManifest(fileInfo.FullName);
 
@@ -128,7 +128,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
 
         private void OpenAddInFileButton_Click(object sender, EventArgs e)
         {
-            var fileInfo = new FileInfo("ExteranlCommand.Sample.addin");
+            FileInfo fileInfo = new("ExteranlCommand.Sample.addin");
             System.Diagnostics.Process.Start(fileInfo.FullName);
         }
     }

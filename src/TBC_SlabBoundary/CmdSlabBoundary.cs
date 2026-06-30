@@ -13,11 +13,12 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -35,7 +36,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var floors = new List<Element>();
+            List<Element> floors = new();
 
             if (!Util.GetSelectedElementsOrAll(
                 floors, uidoc, typeof(Floor)))
@@ -60,9 +61,9 @@ namespace BuildingCoder
                 "{0} boundary loop{1} found.",
                 n, Util.PluralSuffix(n));
 
-            var creator = new Creator(doc);
+            Creator creator = new(doc);
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Draw Slab Boundaries");
 
             creator.DrawPolygons(polygons);

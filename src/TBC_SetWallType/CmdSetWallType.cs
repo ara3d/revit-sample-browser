@@ -16,11 +16,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -41,11 +41,13 @@ namespace BuildingCoder
             var wall_picked = Util.SelectSingleElementOfType(
                 uidoc, typeof(Wall), "wall", true);
 
-            var wall_id = new ElementId((long)25122);
+            ElementId wall_id = new((long)25122);
             wall_id = wall_picked.Id;
 
-            var ids = new List<ElementId>(1);
-            ids.Add(wall_id);
+            List<ElementId> ids = new(1)
+            {
+                wall_id
+            };
 
             var wall
                 = new FilteredElementCollector(doc, ids)
@@ -58,7 +60,7 @@ namespace BuildingCoder
                     .Cast<WallType>()
                     .FirstOrDefault();
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Change Wall Type");
             wall.WallType = wallType;
             t.Commit();

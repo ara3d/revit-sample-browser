@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 using System;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {

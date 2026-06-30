@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Text;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
@@ -19,16 +19,16 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
         private void Initialize()
         {
             //Image type
-            m_imageType = new List<string>
-            {
+            m_imageType =
+            [
                 "(*.bmp)",
                 "(*.jpeg)",
                 "(*.png)",
                 "(*.tga)",
                 "(*.tif)"
-            };
+            ];
 
-            var tmp = new StringBuilder();
+            StringBuilder tmp = new();
             tmp.Append($"{m_imageType[0]}|*.bmp|");
             tmp.Append($"{m_imageType[1]}|*.jpeg|");
             tmp.Append($"{m_imageType[2]}|*.png|");

@@ -1,6 +1,6 @@
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -17,9 +17,9 @@ namespace BuildingCoder
                 {
                     var normal = planarFace.FaceNormal;
                     var origin = planarFace.Origin;
-                    var normals = new List<XYZ>(naos.Keys);
+                    List<XYZ> normals = [.. naos.Keys];
                     var i = normals.FindIndex(
-                        delegate(XYZ v) { return IsParallel(v, normal); });
+                        delegate (XYZ v) { return IsParallel(v, normal); });
 
                     if (-1 == i)
                     {
@@ -28,7 +28,7 @@ namespace BuildingCoder
                             PointString(origin),
                             PointString(normal));
 
-                        naos.Add(normal, new List<XYZ>());
+                        naos.Add(normal, []);
                         naos[normal].Add(origin);
                     }
                     else
@@ -54,12 +54,12 @@ namespace BuildingCoder
             double dmax = 0;
 
             for (i = 0; i < n - 1; ++i)
-            for (j = i + 1; j < n; ++j)
-            {
-                var v = pts[i].Subtract(pts[j]);
-                var d = v.DotProduct(normal);
-                if (d > dmax) dmax = d;
-            }
+                for (j = i + 1; j < n; ++j)
+                {
+                    var v = pts[i].Subtract(pts[j]);
+                    var d = v.DotProduct(normal);
+                    if (d > dmax) dmax = d;
+                }
 
             return dmax;
         }
@@ -111,8 +111,8 @@ namespace BuildingCoder
 
             IEnumerable<GeometryObject> objs = ge;
 
-            var naos
-                = new Dictionary<XYZ, List<XYZ>>();
+            Dictionary<XYZ, List<XYZ>> naos
+                = [];
 
             foreach (var obj in objs)
             {

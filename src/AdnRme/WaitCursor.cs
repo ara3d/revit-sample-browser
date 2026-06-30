@@ -2,19 +2,19 @@ using System.Windows.Forms;
 
 namespace AdnRme
 {
-  class WaitCursor
-  {
-    Cursor _oldCursor;
-
-    public WaitCursor()
+    class WaitCursor
     {
-      _oldCursor = Cursor.Current;
-      Cursor.Current = Cursors.WaitCursor;
-    }
+        readonly Cursor _oldCursor;
 
-    ~WaitCursor()
-    {
-      Cursor.Current = _oldCursor;
+        public WaitCursor()
+        {
+            _oldCursor = Cursor.Current;
+            Cursor.Current = Cursors.WaitCursor;
+        }
+
+        ~WaitCursor()
+        {
+            Cursor.Current = _oldCursor;
+        }
     }
-  }
 }

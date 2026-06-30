@@ -1,12 +1,12 @@
 #region Namespaces
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 #endregion // Namespaces
 
@@ -63,7 +63,7 @@ namespace BuildingCoder
             var sel = uiDoc.Selection.PickObject(ObjectType.Element);
             var ele = doc.GetElement(sel.ElementId);
             var cat = ele.Category;
-            var builtInCat = (BuiltInCategory) cat.Id.Value;
+            var builtInCat = (BuiltInCategory)cat.Id.Value;
 
             var views = new FilteredElementCollector(doc)
                 .OfClass(typeof(ViewPlan))
@@ -80,7 +80,7 @@ namespace BuildingCoder
                     .OfCategory(builtInCat)
                     .WhereElementIsNotElementType();
 
-                var taggedElements = new List<Element>();
+                List<Element> taggedElements = [];
 
                 foreach (var e in tags)
                 {
@@ -89,10 +89,10 @@ namespace BuildingCoder
                     taggedElements.AddRange(taggedElems);
                 }
 
-                var tagColor = new List<Color>();
+                List<Color> tagColor = [];
 
                 var builtInParam
-                    = (BuiltInParameter) Enum.Parse(
+                    = (BuiltInParameter)Enum.Parse(
                         typeof(BuiltInParameter),
                         taggedElements[0]
                             .GetParameters("System Type")[0]
@@ -113,14 +113,14 @@ namespace BuildingCoder
                     var systemColorGreen = c.Green;
                     var systemColorblue = c.Blue;
 
-                    var color = new Color(systemColorRed,
+                    Color color = new(systemColorRed,
                         systemColorGreen, systemColorblue);
                     tagColor.Add(color);
                 }
 
-                var overRide = new OverrideGraphicSettings();
+                OverrideGraphicSettings overRide = new();
 
-                var trans1 = new Transaction(doc);
+                Transaction trans1 = new(doc);
 
                 trans1.Start("change color tag");
 
@@ -144,33 +144,33 @@ namespace BuildingCoder
         public static Tuple<double, double> GetTagExtents(
             IndependentTag tag)
         {
-            Document doc = tag.Document;
+            var doc = tag.Document;
 
             double tagWidth;
             double tagHeight;
 
-            View sec = doc.GetElement(tag.OwnerViewId) as View;
-            XYZ rightDirection = sec.RightDirection;
-            XYZ upDirection = sec.UpDirection;
-            Reference pipeReference = tag.GetTaggedReferences().First();
+            var sec = doc.GetElement(tag.OwnerViewId) as View;
+            var rightDirection = sec.RightDirection;
+            var upDirection = sec.UpDirection;
+            var pipeReference = tag.GetTaggedReferences().First();
 
-            using (TransactionGroup transG = new TransactionGroup(doc))
+            using (TransactionGroup transG = new(doc))
             {
                 transG.Start("Determine Tag Dimension");
 
-                using (Transaction trans = new Transaction(doc))
+                using (Transaction trans = new(doc))
                 {
                     trans.Start("Determine Tag Dimension");
 
                     tag.LeaderEndCondition = LeaderEndCondition.Free;
-                    XYZ leaderEndPoint = tag.GetLeaderEnd(pipeReference);
+                    var leaderEndPoint = tag.GetLeaderEnd(pipeReference);
                     tag.TagHeadPosition = leaderEndPoint;
                     tag.SetLeaderElbow(pipeReference, leaderEndPoint);
 
                     trans.Commit();
                 }
 
-                BoundingBoxXYZ tagBox = tag.get_BoundingBox(sec);
+                var tagBox = tag.get_BoundingBox(sec);
                 tagWidth = (tagBox.Max - tagBox.Min).DotProduct(rightDirection);
                 tagHeight = (tagBox.Max - tagBox.Min).DotProduct(upDirection);
 

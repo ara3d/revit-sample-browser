@@ -1,9 +1,9 @@
 #region Namespaces
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using Autodesk.Revit.DB;
 
 #endregion // Namespaces
 
@@ -22,9 +22,9 @@ namespace BuildingCoder
             Form[] extrusions)
         {
             ICollection<ElementId> delIds = null;
-            var enmIDs = new List<ElementId>();
+            List<ElementId> enmIDs = [];
 
-            using (var delTrans = new SubTransaction(famdoc))
+            using (SubTransaction delTrans = new(famdoc))
             {
                 try
                 {
@@ -38,8 +38,8 @@ namespace BuildingCoder
                 }
             }
 
-            var mArcsR1 = new List<ModelArc>();
-            var mArcsR2 = new List<ModelArc>();
+            List<ModelArc> mArcsR1 = [];
+            List<ModelArc> mArcsR2 = [];
 
             foreach (var id in delIds) enmIDs.Add(id);
 
@@ -98,9 +98,9 @@ namespace BuildingCoder
             Form[] extrusions)
         {
             ICollection<ElementId> delIds = null;
-            var enmIDs = new List<ElementId>();
+            List<ElementId> enmIDs = [];
 
-            using (var delTrans = new SubTransaction(famdoc))
+            using (SubTransaction delTrans = new(famdoc))
             {
                 try
                 {
@@ -114,8 +114,8 @@ namespace BuildingCoder
                 }
             }
 
-            var mArcsR1 = new List<ModelArc>();
-            var mArcsR2 = new List<ModelArc>();
+            List<ModelArc> mArcsR1 = [];
+            List<ModelArc> mArcsR2 = [];
 
             foreach (var id in delIds) enmIDs.Add(id);
 

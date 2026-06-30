@@ -4,7 +4,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
 {
@@ -16,15 +15,15 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
         {
             InitializeComponent();
 
-            var memberData = new ObservableCollection<Member>
-            {
+            ObservableCollection<Member> memberData =
+            [
                 new Member
                     { Name = "Joe", Age = "23", Pass = true, Email = new Uri("mailto:Joe@school.com") },
                 new Member
                     { Name = "Mike", Age = "20", Pass = false, Email = new Uri("mailto:Mike@school.com") },
                 new Member
                     { Name = "Lucy", Age = "25", Pass = true, Email = new Uri("mailto:Lucy@school.com") }
-            };
+            ];
             dataGrid1.DataContext = memberData;
             m_name = "WPF components";
         }

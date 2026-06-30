@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation.CS
 {
@@ -18,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         }
 
         private static GeometryCreation _instance;
-        private Application m_app;
+        private readonly Application m_app;
 
         private GeometryCreation(Application app)
         {
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
 
         public static GeometryCreation GetInstance(Application app)
         {
-            return _instance ?? (_instance = new GeometryCreation(app));
+            return _instance ??= new GeometryCreation(app);
         }
 
         private Solid CreateExtrusion(List<CurveLoop> profileLoops, XYZ extrusionDir, double extrusionDist)
@@ -64,8 +64,8 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         {
             var halfedgelength = edgelength / 2.0;
 
-            var profileloops = new List<CurveLoop>();
-            var profileloop = new CurveLoop();
+            List<CurveLoop> profileloops = new();
+            CurveLoop profileloop = new();
             profileloop.Append(Line.CreateBound(
                 new XYZ(center.X - halfedgelength, center.Y - halfedgelength, center.Z - halfedgelength),
                 new XYZ(center.X - halfedgelength, center.Y + halfedgelength, center.Z - halfedgelength)));
@@ -80,7 +80,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
                 new XYZ(center.X - halfedgelength, center.Y - halfedgelength, center.Z - halfedgelength)));
             profileloops.Add(profileloop);
 
-            var extrusiondir = new XYZ(0, 0, 1);
+            XYZ extrusiondir = new(0, 0, 1);
 
             var extrusiondist = edgelength;
 
@@ -89,13 +89,13 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
 
         public Solid CreateCenterbasedSphere(XYZ center, double radius)
         {
-            var frame = new Frame(center,
+            Frame frame = new(center,
                 XYZ.BasisX,
                 XYZ.BasisY,
                 XYZ.BasisZ);
 
-            var profileloops = new List<CurveLoop>();
-            var profileloop = new CurveLoop();
+            List<CurveLoop> profileloops = new();
+            CurveLoop profileloop = new();
             var cemiEllipse = Ellipse.CreateCurve(center, radius, radius,
                 XYZ.BasisX,
                 XYZ.BasisZ,
@@ -113,21 +113,21 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
             CylinderDirection cylinderdirection)
         {
             var halfheight = height / 2.0;
-            var bottomcenter = new XYZ(
+            XYZ bottomcenter = new(
                 cylinderdirection == CylinderDirection.BasisX ? center.X - halfheight : center.X,
                 cylinderdirection == CylinderDirection.BasisY ? center.Y - halfheight : center.Y,
                 cylinderdirection == CylinderDirection.BasisZ ? center.Z - halfheight : center.Z);
-            var topcenter = new XYZ(
+            XYZ topcenter = new(
                 cylinderdirection == CylinderDirection.BasisX ? center.X + halfheight : center.X,
                 cylinderdirection == CylinderDirection.BasisY ? center.Y + halfheight : center.Y,
                 cylinderdirection == CylinderDirection.BasisZ ? center.Z + halfheight : center.Z);
 
-            var sweepPath = new CurveLoop();
+            CurveLoop sweepPath = new();
             sweepPath.Append(Line.CreateBound(bottomcenter,
                 topcenter));
 
-            var profileloops = new List<CurveLoop>();
-            var profileloop = new CurveLoop();
+            List<CurveLoop> profileloops = new();
+            CurveLoop profileloop = new();
             var cemiEllipse1 = Ellipse.CreateCurve(bottomcenter, bottomradius, bottomradius,
                 cylinderdirection == CylinderDirection.BasisX ? XYZ.BasisY : XYZ.BasisX,
                 cylinderdirection == CylinderDirection.BasisZ ? XYZ.BasisY : XYZ.BasisZ,

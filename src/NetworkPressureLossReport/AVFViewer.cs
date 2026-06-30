@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Analysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Analysis;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
     public class AvfViewer
@@ -41,16 +40,16 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             m_view.TemporaryViewModes.RemoveCustomization();
             m_view.TemporaryViewModes.CustomTitle = "Network Flow Analysis";
 
-            var resultSchema = new AnalysisResultSchema(SchemaName, "");
-            m_sfm.SetMeasurementNames(new List<string> { SchemaName });
+            AnalysisResultSchema resultSchema = new(SchemaName, "");
+            m_sfm.SetMeasurementNames([SchemaName]);
             m_schemaIdx = m_sfm.RegisterResult(resultSchema);
         }
 
         public int AddData(List<XYZ> points, List<VectorAtPoint> valList)
         {
             var idx = m_sfm.AddSpatialFieldPrimitive();
-            var pnts = new FieldDomainPointsByXYZ(points);
-            var vals = new FieldValues(valList);
+            FieldDomainPointsByXYZ pnts = new(points);
+            FieldValues vals = new(valList);
             m_sfm.UpdateSpatialFieldPrimitive(idx, pnts, vals, m_schemaIdx);
             return idx;
         }
@@ -65,11 +64,11 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 
         private AnalysisDisplayStyle GetStyleByName(string name)
         {
-            var collector = new FilteredElementCollector(Document);
+            FilteredElementCollector collector = new(Document);
             ICollection<Element> collection = collector.OfClass(typeof(AnalysisDisplayStyle)).ToElements();
             var displayStyle = from element in collection
-                where element.Name == name
-                select element;
+                               where element.Name == name
+                               select element;
             AnalysisDisplayStyle analysisDisplayStyle = null;
             if (displayStyle.Count() != 0)
                 analysisDisplayStyle = displayStyle.Cast<AnalysisDisplayStyle>().ElementAt(0);
@@ -84,13 +83,13 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             var analysisDisplayStyle = GetStyleByName(DisplayStyleName);
 
             // If display style does not already exist in the document, create it
-            var colorSettings = new AnalysisDisplayColorSettings();
+            AnalysisDisplayColorSettings colorSettings = new();
             if (analysisDisplayStyle == null)
             {
                 colorSettings.MaxColor = new Color(255, 0, 0);
                 colorSettings.MinColor = new Color(0, 255, 0);
 
-                var vectorSettings = new AnalysisDisplayVectorSettings
+                AnalysisDisplayVectorSettings vectorSettings = new()
                 {
                     VectorOrientation = AnalysisDisplayStyleVectorOrientation.Linear,
                     ArrowheadScale = AnalysisDisplayStyleVectorArrowheadScale.NoScaling,
@@ -98,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                     VectorTextType = AnalysisDisplayStyleVectorTextType.ShowNone
                 };
 
-                var legendSettings = new AnalysisDisplayLegendSettings
+                AnalysisDisplayLegendSettings legendSettings = new()
                 {
                     ShowLegend = false
                 };
@@ -112,7 +111,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             m_view.TemporaryViewModes.CustomColor = analysisDisplayStyle.GetColorSettings().MaxColor;
 
             // Transparent everything so we can see the flow vector.
-            var rasterId = new ElementId(BuiltInCategory.OST_RasterImages);
+            ElementId rasterId = new(BuiltInCategory.OST_RasterImages);
             foreach (Category c in m_view.Document.Settings.Categories)
             {
                 if (!m_view.GetCategoryHidden(c.Id))

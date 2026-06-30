@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -36,12 +36,12 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
         public static AnalyticalPanel CreateAmPanel(Document revitDoc)
         {
             AnalyticalPanel analyticalPanel = null;
-            using (var transaction = new Transaction(revitDoc, "Create Analytical Panel"))
+            using (Transaction transaction = new(revitDoc, "Create Analytical Panel"))
             {
                 transaction.Start();
 
                 //create curveloop which will be assigned to the analytical panel
-                var profileloop = new CurveLoop();
+                CurveLoop profileloop = new();
                 profileloop.Append(Line.CreateBound(
                     new XYZ(0, 0, 0), new XYZ(5, 0, 0)));
                 profileloop.Append(Line.CreateBound(
@@ -69,11 +69,11 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 
             AnalyticalOpening opening = null;
 
-            using (var transaction = new Transaction(revitDoc, "Create Analytical Opening"))
+            using (Transaction transaction = new(revitDoc, "Create Analytical Opening"))
             {
                 transaction.Start();
 
-                var profileloop = new CurveLoop();
+                CurveLoop profileloop = new();
                 profileloop.Append(Line.CreateBound(
                     new XYZ(1, 1, 0), new XYZ(2, 1, 0)));
                 profileloop.Append(Line.CreateBound(

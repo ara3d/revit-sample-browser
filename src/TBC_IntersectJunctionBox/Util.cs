@@ -1,11 +1,11 @@
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Electrical;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Electrical;
-using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
@@ -14,7 +14,7 @@ namespace BuildingCoder
     {
         internal static IEnumerable<Face> GetElementFaces(Element e)
         {
-            var opt = new Options();
+            Options opt = new();
             var faces = e
                 .get_Geometry(opt)
                 .OfType<Solid>()
@@ -65,19 +65,19 @@ namespace BuildingCoder
                 var wallFaces = GetElementFaces(wall);
                 n = 0;
                 foreach (var f1 in floorFaces)
-                foreach (var f2 in wallFaces)
-                    if (f1.Intersect(f2)
-                        == FaceIntersectionFaceResult.Intersecting)
-                    {
-                        ++n;
+                    foreach (var f2 in wallFaces)
+                        if (f1.Intersect(f2)
+                            == FaceIntersectionFaceResult.Intersecting)
+                        {
+                            ++n;
 
-                        if (MessageBox.Show(
-                                "Intersects", "Continue",
-                                MessageBoxButtons.OKCancel,
-                                MessageBoxIcon.Exclamation)
-                            == DialogResult.Cancel)
-                            return;
-                    }
+                            if (MessageBox.Show(
+                                    "Intersects", "Continue",
+                                    MessageBoxButtons.OKCancel,
+                                    MessageBoxIcon.Exclamation)
+                                == DialogResult.Cancel)
+                                return;
+                        }
 
                 Debug.Print("{0} face-face intersection{1}.",
                     n, PluralSuffix(n));
@@ -101,29 +101,29 @@ namespace BuildingCoder
 
             var vz = XYZ.BasisZ;
             var vy = vz.CrossProduct(vx);
-            var start1 = start + offset_lr * vy;
-            var start2 = start - offset_lr * vy;
-            var start3 = start + offset_up * vz;
+            var start1 = start + (offset_lr * vy);
+            var start2 = start - (offset_lr * vy);
+            var start3 = start + (offset_up * vz);
             var end1 = start1 + vx;
             var end2 = start2 + vx;
             var end3 = start3 + vx;
 
-            var L = Math.Sqrt((start.X - end.X) * (start.X - end.X)
-                              + (start.Y - end.Y) * (start.Y - end.Y));
-            var x1startO = start.X + distance * (end.Y - start.Y) / L;
-            var x1endO = end.X + distance * (end.Y - start.Y) / L;
-            var y1startO = start.Y + distance * (start.X - end.X) / L;
-            var y1end0 = end.Y + distance * (start.X - end.X) / L;
+            var L = Math.Sqrt(((start.X - end.X) * (start.X - end.X))
+                              + ((start.Y - end.Y) * (start.Y - end.Y)));
+            var x1startO = start.X + (distance * (end.Y - start.Y) / L);
+            var x1endO = end.X + (distance * (end.Y - start.Y) / L);
+            var y1startO = start.Y + (distance * (start.X - end.X) / L);
+            var y1end0 = end.Y + (distance * (start.X - end.X) / L);
             var conduit1 = Conduit.Create(doc, conduit.GetTypeId(),
                 new XYZ(x1startO, y1startO, start.Z),
                 new XYZ(x1endO, y1end0, end.Z), conduit.LevelId);
             conduit1.get_Parameter(BuiltInParameter.RBS_CONDUIT_DIAMETER_PARAM)
                 .Set(diameter);
 
-            var x2startO = start.X - distance * (end.Y - start.Y) / L;
-            var x2endO = end.X - distance * (end.Y - start.Y) / L;
-            var y2startO = start.Y - distance * (start.X - end.X) / L;
-            var y2end0 = end.Y - distance * (start.X - end.X) / L;
+            var x2startO = start.X - (distance * (end.Y - start.Y) / L);
+            var x2endO = end.X - (distance * (end.Y - start.Y) / L);
+            var y2startO = start.Y - (distance * (start.X - end.X) / L);
+            var y2end0 = end.Y - (distance * (start.X - end.X) / L);
 
             var conduit2 = Conduit.Create(doc, conduit.GetTypeId(),
                 new XYZ(x2startO, y2startO, start.Z),
@@ -131,13 +131,13 @@ namespace BuildingCoder
             conduit2.get_Parameter(BuiltInParameter.RBS_CONDUIT_DIAMETER_PARAM)
                 .Set(diameter);
 
-            var p0 = new XYZ(
-                start.X - (end.Y - start.Y) * (1 / obj.Curve.ApproximateLength),
-                start.Y + (end.X - start.X) * (1 / obj.Curve.ApproximateLength),
+            XYZ p0 = new(
+                start.X - ((end.Y - start.Y) * (1 / obj.Curve.ApproximateLength)),
+                start.Y + ((end.X - start.X) * (1 / obj.Curve.ApproximateLength)),
                 start.Z);
-            var p1 = new XYZ(
-                start.X + (end.Y - start.Y) * (1 / obj.Curve.ApproximateLength),
-                start.Y - (end.X - start.X) * (1 / obj.Curve.ApproximateLength),
+            XYZ p1 = new(
+                start.X + ((end.Y - start.Y) * (1 / obj.Curve.ApproximateLength)),
+                start.Y - ((end.X - start.X) * (1 / obj.Curve.ApproximateLength)),
                 start.Z);
 
             var copyCurve = obj.Curve.CreateOffset(
@@ -152,7 +152,7 @@ namespace BuildingCoder
     }
     internal class JunctionBoxConduitFinder
     {
-        public readonly List<Conduit> GetListOfConduits = new();
+        public readonly List<Conduit> GetListOfConduits = [];
 
         public JunctionBoxConduitFinder(
             FamilyInstance jbox,
@@ -171,7 +171,7 @@ namespace BuildingCoder
                         .GetEndPoint(1).DistanceTo(jboxPoint) < 30)
                     .ToList();
 
-            var opt = new Options
+            Options opt = new()
             {
                 View = uiDoc.ActiveView
             };
@@ -188,14 +188,14 @@ namespace BuildingCoder
                         var geoSolid = geomObje2 as Solid;
                         if (geoSolid != null)
                             foreach (Face face in geoSolid.Faces)
-                            foreach (var cond in listOfCloserConduit)
-                            {
-                                var con = cond as Conduit;
-                                var conCurve = (con.Location as LocationCurve).Curve;
-                                var set = face.Intersect(conCurve);
-                                if (set.ToString() == "Overlap")
-                                    GetListOfConduits.Add(con);
-                            }
+                                foreach (var cond in listOfCloserConduit)
+                                {
+                                    var con = cond as Conduit;
+                                    var conCurve = (con.Location as LocationCurve).Curve;
+                                    var set = face.Intersect(conCurve);
+                                    if (set.ToString() == "Overlap")
+                                        GetListOfConduits.Add(con);
+                                }
                     }
             }
         }

@@ -10,11 +10,11 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
 using System;
 using System.IO;
 using System.Windows.Media.Imaging;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
 {
@@ -35,17 +35,17 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
         public Result OnStartup(UIControlledApplication application)
         {
             var ribbonPanel = application.CreateRibbonPanel("DatumModification");
-            var styleSettingButton = new PushButtonData("DatumStyle", "Datum Style", AddInPath,
+            PushButtonData styleSettingButton = new("DatumStyle", "Datum Style", AddInPath,
                 "Ara3D.RevitSampleBrowser.DatumsModification.CS.DatumStyleModification")
             {
                 LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Style.png"), UriKind.Absolute))
             };
-            var alignSettingButton = new PushButtonData("AlignDatum", "Align Datums", AddInPath,
+            PushButtonData alignSettingButton = new("AlignDatum", "Align Datums", AddInPath,
                 "Ara3D.RevitSampleBrowser.DatumsModification.CS.DatumAlignment")
             {
                 LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Align.png"), UriKind.Absolute))
             };
-            var propagateButton = new PushButtonData("PropagateDatum", "Propagate Extents", AddInPath,
+            PushButtonData propagateButton = new("PropagateDatum", "Propagate Extents", AddInPath,
                 "Ara3D.RevitSampleBrowser.DatumsModification.CS.DatumPropagation")
             {
                 LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Propagate.png"), UriKind.Absolute))

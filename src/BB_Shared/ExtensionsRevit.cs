@@ -1,5 +1,4 @@
-﻿using Ara3D.Geometry;
-using Ara3D.Utils;
+﻿using Ara3D.Utils;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.ExternalService;
@@ -14,87 +13,127 @@ namespace Ara3D.Bowerbird.RevitSamples
     public static class ExtensionsRevit
     {
         public static ICollection<Element> GetElements(this Document doc)
-            => new FilteredElementCollector(doc)
-                .WhereElementIsNotElementType()
-                .ToElements();
+        {
+            return new FilteredElementCollector(doc)
+                        .WhereElementIsNotElementType()
+                        .ToElements();
+        }
 
         public static ICollection<ElementId> GetElementIds(this Document doc)
-            => new FilteredElementCollector(doc)
-                .WhereElementIsNotElementType()
-                .ToElementIds();
+        {
+            return new FilteredElementCollector(doc)
+                        .WhereElementIsNotElementType()
+                        .ToElementIds();
+        }
 
         public static ICollection<Element> GetTypeElements(this Document doc)
-            => new FilteredElementCollector(doc)
-                .WhereElementIsElementType()
-                .ToElements();
+        {
+            return new FilteredElementCollector(doc)
+                        .WhereElementIsElementType()
+                        .ToElements();
+        }
 
         public static ICollection<ElementId> GetTypeElementIds(this Document doc)
-            => new FilteredElementCollector(doc)
-                .WhereElementIsElementType()
-                .ToElementIds();
+        {
+            return new FilteredElementCollector(doc)
+                        .WhereElementIsElementType()
+                        .ToElementIds();
+        }
 
         public static IEnumerable<Phase> GetPhases(this Document doc)
-            => doc.CollectElements()
-                .OfClass(typeof(Phase))
-                .OfType<Phase>();
+        {
+            return doc.CollectElements()
+                        .OfClass(typeof(Phase))
+                        .OfType<Phase>();
+        }
 
         public static int GetPhaseSequenceNumber(this Phase p)
-            => p.get_Parameter(BuiltInParameter.PHASE_SEQUENCE_NUMBER).AsInteger();
+        {
+            return p.get_Parameter(BuiltInParameter.PHASE_SEQUENCE_NUMBER).AsInteger();
+        }
 
         public static Phase GetLastPhase(this Document doc)
-            => doc.GetPhases().OrderBy(GetPhaseSequenceNumber).LastOrDefault();
+        {
+            return doc.GetPhases().OrderBy(GetPhaseSequenceNumber).LastOrDefault();
+        }
 
         public static IEnumerable<Room> GetRooms(this Document doc)
-            => doc.CollectElements()
-                .OfClass(typeof(SpatialElement))
-                .OfType<Room>();
+        {
+            return doc.CollectElements()
+                        .OfClass(typeof(SpatialElement))
+                        .OfType<Room>();
+        }
 
         public static IDictionary<long, T> ToDictionary<T>(this IEnumerable<T> self) where T : Element
-            => self.ToDictionary(v => v.Id.Value, v => v);
+        {
+            return self.ToDictionary(v => v.Id.Value, v => v);
+        }
 
         public static IEnumerable<Level> GetLevels(this Document doc)
-            => doc.CollectElements()
-                .OfClass(typeof(Level))
-                .OfType<Level>();
+        {
+            return doc.CollectElements()
+                        .OfClass(typeof(Level))
+                        .OfType<Level>();
+        }
 
         public static Dictionary<long, List<FamilyInstance>> GroupByRoom(this IEnumerable<FamilyInstance> instances)
-            => instances.GroupBy(fi => fi.GetRoomId()).ToDictionary(g => g.Key, g => g.ToList());
+        {
+            return instances.GroupBy(fi => fi.GetRoomId()).ToDictionary(g => g.Key, g => g.ToList());
+        }
 
         public static FilteredElementCollector CollectElements(this Document doc)
-            => new FilteredElementCollector(doc);
+        {
+            return new FilteredElementCollector(doc);
+        }
 
         public static IEnumerable<FamilyInstance> GetFamilyInstances(this Document doc)
-            => doc.CollectElements()
-                .OfClass(typeof(FamilyInstance))
-                .Cast<FamilyInstance>();
+        {
+            return doc.CollectElements()
+                        .OfClass(typeof(FamilyInstance))
+                        .Cast<FamilyInstance>();
+        }
 
         public static IEnumerable<FamilyInstance> GetFamilyInstances(this Document doc, BuiltInCategory cat)
-            => doc.CollectElements()
-                .OfCategory(cat)
-                .OfClass(typeof(FamilyInstance))
-                .Cast<FamilyInstance>();
+        {
+            return doc.CollectElements()
+                        .OfCategory(cat)
+                        .OfClass(typeof(FamilyInstance))
+                        .Cast<FamilyInstance>();
+        }
 
         public static IEnumerable<FamilyInstance> GetLights(this Document doc)
-            => doc.GetFamilyInstances(BuiltInCategory.OST_LightingFixtures);
+        {
+            return doc.GetFamilyInstances(BuiltInCategory.OST_LightingFixtures);
+        }
 
         public static IEnumerable<FamilyInstance> GetSockets(this Document doc)
-            => doc.GetFamilyInstances(BuiltInCategory.OST_ElectricalFixtures);
+        {
+            return doc.GetFamilyInstances(BuiltInCategory.OST_ElectricalFixtures);
+        }
 
         public static IEnumerable<FamilyInstance> GetDoors(this Document doc)
-            => doc.GetFamilyInstances(BuiltInCategory.OST_Doors);
+        {
+            return doc.GetFamilyInstances(BuiltInCategory.OST_Doors);
+        }
 
         public static IEnumerable<FamilyInstance> GetWindows(this Document doc)
-            => doc.GetFamilyInstances(BuiltInCategory.OST_Windows);
+        {
+            return doc.GetFamilyInstances(BuiltInCategory.OST_Windows);
+        }
 
         public static IEnumerable<FamilyInstance> GetWalls(this Document doc)
-            => doc.GetFamilyInstances(BuiltInCategory.OST_Walls);
+        {
+            return doc.GetFamilyInstances(BuiltInCategory.OST_Walls);
+        }
 
         public static IEnumerable<ViewSchedule> GetSchedules(this Document doc)
-            => doc.GetElements<ViewSchedule>();
+        {
+            return doc.GetElements<ViewSchedule>();
+        }
 
         public static List<Dictionary<string, string>> GetScheduleData(this ViewSchedule schedule)
         {
-            var scheduleData = new List<Dictionary<string, string>>();
+            List<Dictionary<string, string>> scheduleData = [];
 
             // Access the table data
             var tableData = schedule.GetTableData();
@@ -111,7 +150,7 @@ namespace Ara3D.Bowerbird.RevitSamples
             var numRows = bodySection.NumberOfRows;
             for (var row = 0; row < numRows; row++)
             {
-                var rowData = new Dictionary<string, string>();
+                Dictionary<string, string> rowData = [];
                 for (var col = 0; col < numCols; col++)
                 {
                     var cellValue = schedule.GetCellText(SectionType.Body, row, col);
@@ -130,7 +169,9 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static int CountFamilyInstance(this Room room, BuiltInCategory cat)
-            => room.Document.GetFamilyInstances(cat).Count();
+        {
+            return room.Document.GetFamilyInstances(cat).Count();
+        }
 
         public static IEnumerable<Wall> GetBoundaryWalls(this Room room)
         {
@@ -145,16 +186,22 @@ namespace Ara3D.Bowerbird.RevitSamples
                 }
             }
         }
-        
+
         public static bool IsCategoryType(this Element element, BuiltInCategory cat)
-            => element.Category.Id.Value == (int)cat
-               || element is FamilyInstance fi && fi.Symbol.IsCategoryType(cat);
+        {
+            return element.Category.Id.Value == (int)cat
+                       || (element is FamilyInstance fi && fi.Symbol.IsCategoryType(cat));
+        }
 
         public static IEnumerable<Element> GetHostedElements(this HostObject self)
-            => self.Document.GetElements(self.FindInserts(true, false, true, true));
+        {
+            return self.Document.GetElements(self.FindInserts(true, false, true, true));
+        }
 
         public static IEnumerable<Element> GetElements(this Document doc, IEnumerable<ElementId> ids)
-            => ids.Select(doc.GetElement);
+        {
+            return ids.Select(doc.GetElement);
+        }
 
         /// <summary>
         /// Returns points on a curve.
@@ -198,17 +245,23 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static IEnumerable<XYZ> GetPoints(this BoundarySegment self, int curveSamples = 8)
-            => self.GetCurve().SamplePoints(curveSamples);
+        {
+            return self.GetCurve().SamplePoints(curveSamples);
+        }
 
         public static IEnumerable<IEnumerable<XYZ>> GetBoundaryLoops(this Room room, int curveSamples = 8)
-            => room.GetBoundarySegmentLists().Select(segList => segList.GetBoundaryLoop(curveSamples));
+        {
+            return room.GetBoundarySegmentLists().Select(segList => segList.GetBoundaryLoop(curveSamples));
+        }
 
         public static IEnumerable<XYZ> GetBoundaryLoop(this IEnumerable<BoundarySegment> self, int curveSamples = 8)
-            => self.SelectMany(segment => segment.GetPoints(curveSamples));
+        {
+            return self.SelectMany(segment => segment.GetPoints(curveSamples));
+        }
 
         public static IEnumerable<IEnumerable<BoundarySegment>> GetBoundarySegmentLists(this Room room)
         {
-            var options = new SpatialElementBoundaryOptions();
+            SpatialElementBoundaryOptions options = new();
             var boundaries = room.GetBoundarySegments(options);
             if (boundaries == null) yield break;
             foreach (var boundaryList in boundaries)
@@ -228,23 +281,33 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static IEnumerable<FamilyInstance> BelongingToRoom(this IEnumerable<FamilyInstance> self, Room room)
-            => self.Where(fi => fi.GetRoomId() == room.Id.Value);
+        {
+            return self.Where(fi => fi.GetRoomId() == room.Id.Value);
+        }
 
         public static IEnumerable<FamilyInstance> GetLights(this Room room)
-            => room.Document.GetLights().BelongingToRoom(room);
+        {
+            return room.Document.GetLights().BelongingToRoom(room);
+        }
 
         public static IEnumerable<FamilyInstance> GetDoors(this Room room)
-            => room.Document.GetDoors().BelongingToRoom(room);
+        {
+            return room.Document.GetDoors().BelongingToRoom(room);
+        }
 
         public static IEnumerable<FamilyInstance> GetWindows(this Room room)
-            => room.Document.GetWindows().BelongingToRoom(room);
+        {
+            return room.Document.GetWindows().BelongingToRoom(room);
+        }
 
         public static IEnumerable<FamilyInstance> GetSockets(this Room room)
-            => room.Document.GetSockets().BelongingToRoom(room);
+        {
+            return room.Document.GetSockets().BelongingToRoom(room);
+        }
 
         public static double SpaceArea(Document doc, Room room)
         {
-            var calculator = new SpatialElementGeometryCalculator(doc);
+            SpatialElementGeometryCalculator calculator = new(doc);
 
             // compute the room geometry
             var results = calculator.CalculateSpatialElementGeometry(room);
@@ -285,14 +348,14 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public static Solid GetGeometry(this SpatialElement space)
         {
-            var calculator = new SpatialElementGeometryCalculator(space.Document);
+            SpatialElementGeometryCalculator calculator = new(space.Document);
             var results = calculator.CalculateSpatialElementGeometry(space);
             return results.GetGeometry();
         }
 
         public static IEnumerable<SpatialElementBoundarySubface> GetSubfaces(this SpatialElement space)
         {
-            var calculator = new SpatialElementGeometryCalculator(space.Document);
+            SpatialElementGeometryCalculator calculator = new(space.Document);
             var results = calculator.CalculateSpatialElementGeometry(space);
             var roomSolid = results.GetGeometry();
 
@@ -313,29 +376,37 @@ namespace Ara3D.Bowerbird.RevitSamples
         /// Retrieves the Opening elements grouped by their Host.
         /// </summary>
         public static Dictionary<long, List<Opening>> GroupOpeningsByHost(this Document doc)
-            => new FilteredElementCollector(doc).OfClass(typeof(Opening)).Cast<Opening>()
-                .GroupBy(opening => opening.Host?.Id ?? ElementId.InvalidElementId)
-                .ToDictionary(g => g.Key.Value, g => g.ToList());
+        {
+            return new FilteredElementCollector(doc).OfClass(typeof(Opening)).Cast<Opening>()
+                        .GroupBy(opening => opening.Host?.Id ?? ElementId.InvalidElementId)
+                        .ToDictionary(g => g.Key.Value, g => g.ToList());
+        }
 
         /// <summary>
         /// Retrieves the Door elements grouped by their Host.
         /// </summary>
         public static Dictionary<long, List<FamilyInstance>> GroupDoorsByHost(this Document doc)
-            => doc.GetDoors()
-                .GroupBy(door => door.Host?.Id ?? ElementId.InvalidElementId)
-                .ToDictionary(g => g.Key.Value, g => g.ToList());
+        {
+            return doc.GetDoors()
+                        .GroupBy(door => door.Host?.Id ?? ElementId.InvalidElementId)
+                        .ToDictionary(g => g.Key.Value, g => g.ToList());
+        }
 
         public static IEnumerable<FamilyInstance> GetBoundaryDoors(this Room room,
             Dictionary<long, List<FamilyInstance>> doorsByHost)
-            => room.GetBoundaryWalls().SelectMany(bw => doorsByHost.TryGetValue(bw.Id.Value, out var value)
-                ? value
-                : Enumerable.Empty<FamilyInstance>());
+        {
+            return room.GetBoundaryWalls().SelectMany(bw => doorsByHost.TryGetValue(bw.Id.Value, out var value)
+                        ? value
+                        : Enumerable.Empty<FamilyInstance>());
+        }
 
         public static IEnumerable<Opening> GetBoundaryOpenings(this Room room,
             Dictionary<long, List<Opening>> openingsByHost)
-            => room.GetBoundaryWalls().SelectMany(bw => openingsByHost.TryGetValue(bw.Id.Value, out var value)
-                ? value
-                : Enumerable.Empty<Opening>());
+        {
+            return room.GetBoundaryWalls().SelectMany(bw => openingsByHost.TryGetValue(bw.Id.Value, out var value)
+                        ? value
+                        : Enumerable.Empty<Opening>());
+        }
 
         public static Autodesk.Revit.DB.XYZ[] GetBaseBox(this Element e)
         {
@@ -356,7 +427,7 @@ namespace Ara3D.Bowerbird.RevitSamples
             if (opening.IsRectBoundary)
                 return opening.BoundaryRect.ToArray();
 
-            var list = new List<Autodesk.Revit.DB.XYZ>();
+            List<XYZ> list = [];
             foreach (var curve in opening.BoundaryCurves)
             {
                 if (curve is Line line)
@@ -376,20 +447,16 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public static Autodesk.Revit.DB.XYZ Current3DCameraPosition(this UIDocument uidoc)
         {
-            var view = uidoc.ActiveView as View3D;
-            if (view == null)
-                return Autodesk.Revit.DB.XYZ.Zero;
-            return view.GetOrientation().EyePosition;
+            return uidoc.ActiveView is not View3D view ? XYZ.Zero : view.GetOrientation().EyePosition;
         }
 
         public static void Update3DCameraPosition(this UIDocument uidoc, Autodesk.Revit.DB.XYZ pos)
         {
-            var view = uidoc.ActiveView as View3D;
-            if (view == null)
+            if (uidoc.ActiveView is not View3D view)
                 return;
 
             // Start a transaction to modify the view
-            using (var t = new Transaction(uidoc.Document, "Move Camera"))
+            using (Transaction t = new(uidoc.Document, "Move Camera"))
             {
                 t.Start();
 
@@ -397,7 +464,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                 var orientation = view.GetOrientation();
 
                 // Create the new orientation with the updated eye position
-                var newOrientation = new ViewOrientation3D(
+                ViewOrientation3D newOrientation = new(
                     pos,
                     orientation.UpDirection,
                     orientation.ForwardDirection);
@@ -419,8 +486,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                 ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.DirectContext3DService);
             directContext3DService.AddServer(self);
 
-            var msDirectContext3DService = directContext3DService as MultiServerService;
-            if (msDirectContext3DService == null)
+            if (directContext3DService is not MultiServerService msDirectContext3DService)
                 throw new Exception("Expected a MultiServerService");
 
             // Get current list 
@@ -430,7 +496,7 @@ namespace Ara3D.Bowerbird.RevitSamples
             // Add the new server to the list of active servers.
             msDirectContext3DService.SetActiveServers(serverIds);
         }
-        
+
         // TODO: this throws an exception if the server was not registered. Should check.
         public static void UnregisterDirectDrawServer(this IExternalServer self)
         {
@@ -439,8 +505,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                 ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.DirectContext3DService);
             directContext3DService.RemoveServer(self.GetServerId());
 
-            var msDirectContext3DService = directContext3DService as MultiServerService;
-            if (msDirectContext3DService == null)
+            if (directContext3DService is not MultiServerService msDirectContext3DService)
                 throw new Exception("Expected a MultiServerService");
 
             // Get current list 
@@ -453,7 +518,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public static IReadOnlyList<int> GetIndexData(this TriangulatedShellComponent self)
         {
-            var r = new List<int>();
+            List<int> r = [];
             for (var i = 0; i < self.TriangleCount; i++)
             {
                 var tri = self.GetTriangle(i);
@@ -466,7 +531,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public static IReadOnlyList<double> GetVertexData(this TriangulatedShellComponent self)
         {
-            var r = new List<double>();
+            List<double> r = [];
             for (var i = 0; i < self.VertexCount; i++)
             {
                 var v = self.GetVertex(i);
@@ -478,47 +543,56 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static Ara3D.Utils.FilePath WriteToFileAsObj(this TriangulatedShellComponent self, Ara3D.Utils.FilePath filePath)
-            => filePath.WriteObjFile(GetVertexData(self), GetIndexData(self));
+        {
+            return filePath.WriteObjFile(GetVertexData(self), GetIndexData(self));
+        }
 
         public static IReadOnlyList<TriangulatedShellComponent> TriangulatedComponents(
             this TriangulatedSolidOrShell solid)
-            => Enumerable.Range(0, solid.ShellComponentCount).Select(solid.GetShellComponent).ToList();
+        {
+            return Enumerable.Range(0, solid.ShellComponentCount).Select(solid.GetShellComponent).ToList();
+        }
 
         public static TriangulatedSolidOrShell Tessellate(this Solid solid)
         {
-            var controls = new SolidOrShellTessellationControls();
+            SolidOrShellTessellationControls controls = new()
+            {
+                // https://www.revitapidocs.com/2020.1/720f75c5-8a11-bfc6-d698-a200ffc28be9.htm
+                /*
+                controls.MinAngleInTriangle = 0.01; // Max value is (Math.PI * 3)
+                controls.MinExternalAngleBetweenTriangles = 0.2; // 
+                controls.LevelOfDetail = 0.5; // 0 to 1 
+                controls.Accuracy = 0.1;
+                */
 
-            // https://www.revitapidocs.com/2020.1/720f75c5-8a11-bfc6-d698-a200ffc28be9.htm
-            /*
-            controls.MinAngleInTriangle = 0.01; // Max value is (Math.PI * 3)
-            controls.MinExternalAngleBetweenTriangles = 0.2; // 
-            controls.LevelOfDetail = 0.5; // 0 to 1 
-            controls.Accuracy = 0.1;
-            */
+                /*
+                // https://github.com/Autodesk/revit-ifc/blob/master/Source/Revit.IFC.Export/Utility/ExporterUtil.cs
+                controls.Accuracy = 0.6;
+                controls.LevelOfDetail = 0.1;
+                controls.MinAngleInTriangle = 0.13;
+                    controls.MinExternalAngleBetweenTriangles = 1.2;
+                */
 
-            /*
-            // https://github.com/Autodesk/revit-ifc/blob/master/Source/Revit.IFC.Export/Utility/ExporterUtil.cs
-            controls.Accuracy = 0.6;
-            controls.LevelOfDetail = 0.1;
-            controls.MinAngleInTriangle = 0.13;
-                controls.MinExternalAngleBetweenTriangles = 1.2;
-            */
-
-            // https://github.com/Autodesk/revit-ifc/blob/master/Source/Revit.IFC.Export/Utility/ExporterUtil.cs
-            controls.Accuracy = 0.5;
-            controls.LevelOfDetail = 0.4;
-            controls.MinAngleInTriangle = 0.13;
-            controls.MinExternalAngleBetweenTriangles = 0.55;
+                // https://github.com/Autodesk/revit-ifc/blob/master/Source/Revit.IFC.Export/Utility/ExporterUtil.cs
+                Accuracy = 0.5,
+                LevelOfDetail = 0.4,
+                MinAngleInTriangle = 0.13,
+                MinExternalAngleBetweenTriangles = 0.55
+            };
 
             return SolidUtils.TessellateSolidOrShell(solid, controls);
         }
 
         public static IEnumerable<T> GetElements<T>(this Document doc)
             where T : Element
-                => new FilteredElementCollector(doc).OfClass(typeof(T)).Cast<T>();
+        {
+            return new FilteredElementCollector(doc).OfClass(typeof(T)).Cast<T>();
+        }
 
         public static IEnumerable<View3D> GetNonTemplateView3Ds(this Document doc)
-            => doc.GetElements<View3D>().Where(v => !v.IsTemplate);
+        {
+            return doc.GetElements<View3D>().Where(v => !v.IsTemplate);
+        }
 
         public static View3D GetDefault3DView(this Document doc)
         {
@@ -528,6 +602,8 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static Utils.FilePath CurrentFileName(this Document doc)
-            => doc.PathName;
+        {
+            return doc.PathName;
+        }
     }
 }

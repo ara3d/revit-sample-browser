@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
@@ -14,8 +14,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
     /// </summary>
     public class BoundingBox : BoundingBoxXYZ
     {
-        private readonly List<XYZ> m_points = new List<XYZ>();
-
         private bool m_isCreated;
 
         /// <summary>
@@ -30,14 +28,14 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             GetCorners();
         }
 
-        public List<XYZ> Points => m_points;
+        public List<XYZ> Points { get; } = [];
 
         public double Width
         {
             get
             {
-                var yDistance = m_points[2].Y - m_points[1].Y;
-                var xDistance = m_points[5].X - m_points[2].X;
+                var yDistance = Points[2].Y - Points[1].Y;
+                var xDistance = Points[5].X - Points[2].X;
                 return xDistance < yDistance ? xDistance : yDistance;
             }
         }
@@ -46,8 +44,8 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         {
             get
             {
-                var yDistance = m_points[2].Y - m_points[1].Y;
-                var xDistance = m_points[5].X - m_points[2].X;
+                var yDistance = Points[2].Y - Points[1].Y;
+                var xDistance = Points[5].X - Points[2].X;
                 return xDistance > yDistance ? xDistance : yDistance;
             }
         }
@@ -74,45 +72,45 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         private void GetCorners()
         {
-            m_points.Add(Min);
+            Points.Add(Min);
 
-            var point = new XYZ(
+            XYZ point = new(
                 Min.X,
                 Min.Y,
                 Max.Z);
-            m_points.Add(point);
+            Points.Add(point);
 
-            var point2 = new XYZ(
+            XYZ point2 = new(
                 Min.X,
                 Max.Y,
                 Max.Z);
-            m_points.Add(point2);
+            Points.Add(point2);
 
-            var point3 = new XYZ(
+            XYZ point3 = new(
                 Min.X,
                 Max.Y,
                 Min.Z);
-            m_points.Add(point3);
+            Points.Add(point3);
 
-            var point4 = new XYZ(
+            XYZ point4 = new(
                 Max.X,
                 Max.Y,
                 Min.Z);
-            m_points.Add(point4);
+            Points.Add(point4);
 
-            m_points.Add(Max);
+            Points.Add(Max);
 
-            var point5 = new XYZ(
+            XYZ point5 = new(
                 Max.X,
                 Min.Y,
                 Max.Z);
-            m_points.Add(point5);
+            Points.Add(point5);
 
-            var point6 = new XYZ(
+            XYZ point6 = new(
                 Max.X,
                 Min.Y,
                 Min.Z);
-            m_points.Add(point6);
+            Points.Add(point6);
         }
 
         /// <summary>
@@ -123,14 +121,9 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         /// <param name="aline">a line which sketch plane pass</param>
         private SketchPlane NewSketchPlanePassLine(Line aline, UIApplication app)
         {
-            XYZ norm;
-            if (aline.GetEndPoint(0).X == aline.GetEndPoint(1).X)
-                norm = new XYZ(1, 0, 0);
-            else if (aline.GetEndPoint(0).Y == aline.GetEndPoint(1).Y)
-                norm = new XYZ(0, 1, 0);
-            else
-                norm = new XYZ(0, 0, 1);
-
+            var norm = aline.GetEndPoint(0).X == aline.GetEndPoint(1).X
+                ? new XYZ(1, 0, 0)
+                : aline.GetEndPoint(0).Y == aline.GetEndPoint(1).Y ? new XYZ(0, 1, 0) : new XYZ(0, 0, 1);
             var point = aline.GetEndPoint(0);
             var plane = Plane.CreateByNormalAndOrigin(norm, point);
             var sketchPlane = SketchPlane.Create(app.ActiveUIDocument.Document, plane);
@@ -145,8 +138,8 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         /// <param name="pointIndex2">index of another point in BoundingBox acme</param>
         private void NewModelLine(UIApplication app, int pointIndex1, int pointIndex2)
         {
-            var startP2 = m_points[pointIndex1];
-            var endP2 = m_points[pointIndex2];
+            var startP2 = Points[pointIndex1];
+            var endP2 = Points[pointIndex2];
 
             try
             {

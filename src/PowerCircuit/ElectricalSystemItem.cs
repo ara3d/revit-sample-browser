@@ -11,18 +11,14 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
     /// </summary>
     public class ElectricalSystemItem
     {
-        private readonly ElementId m_id;
-
-        private readonly string m_name;
-
         public ElectricalSystemItem(ElectricalSystem es)
         {
-            m_name = es.Name;
-            m_id = es.Id;
+            Name = es.Name;
+            Id = es.Id;
         }
 
-        public ElementId Id => m_id;
+        public ElementId Id { get; }
 
-        public string Name => m_name;
+        public string Name { get; }
     }
 }

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
 {
@@ -20,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
                 var document = commandData.Application.ActiveUIDocument.Document;
 
                 //instantiate a finder to locate the FamilySymbol of the class instance we want to array
-                var familySymbolFinder = new FilteredElementCollector(document);
+                FilteredElementCollector familySymbolFinder = new(document);
                 familySymbolFinder.OfClass(typeof(FamilySymbol));
 
                 //the name of the family symbol we are looking for
@@ -38,7 +38,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
                 }
 
                 //instantiate an instance plotter object
-                var plotter = new FamilyInstancePlotter(fs, document);
+                FamilyInstancePlotter plotter = new(fs, document);
 
                 //reference the necessary inputs for the placeInstancesOnCurve method
                 var partitions = (int)Application.GetNumberOfPartitions();

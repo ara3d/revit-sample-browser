@@ -12,9 +12,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System.Threading;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
+using System.Threading;
 
 namespace Ara3D.RevitSampleBrowser.APIAppStartup.CS
 {

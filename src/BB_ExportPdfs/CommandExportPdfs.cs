@@ -15,7 +15,7 @@ public class CommandExportPdfs : NamedCommand
 
     public override void Execute(object arg)
     {
-        app = (arg as UIApplication);
+        app = arg as UIApplication;
         if (app == null)
         {
             throw new Exception($"Passed argument {arg} is either null or not a UI application");
@@ -61,10 +61,7 @@ public class CommandExportPdfs : NamedCommand
 
         // Fallback: try parameter
         var param = view.get_Parameter(BuiltInParameter.PLAN_VIEW_LEVEL);
-        if (param != null && param.HasValue)
-            return param.AsValueString();
-
-        return "NoLevel";
+        return param != null && param.HasValue ? param.AsValueString() : "NoLevel";
     }
 
     public static string GetSheetNumber(Document doc, View view)
@@ -93,14 +90,16 @@ public class CommandExportPdfs : NamedCommand
     }
 
     public static IReadOnlyList<View> GetPrintable2DViews(Document doc)
-        => new FilteredElementCollector(doc)
-            .OfClass(typeof(View))
-            .Cast<View>()
-            .Where(v =>
-                !v.IsTemplate &&
-                v.CanBePrinted &&
-                Is2DView(v))
-            .ToList();
+    {
+        return new FilteredElementCollector(doc)
+                .OfClass(typeof(View))
+                .Cast<View>()
+                .Where(v =>
+                    !v.IsTemplate &&
+                    v.CanBePrinted &&
+                    Is2DView(v))
+                .ToList();
+    }
 
     public static int ExportAll2DViewsToPdf(
         Document doc,
@@ -109,28 +108,26 @@ public class CommandExportPdfs : NamedCommand
         Directory.CreateDirectory(outputFolder);
 
         var views = GetPrintable2DViews(doc);
-        int count = 0;
+        var count = 0;
 
         foreach (var view in views)
         {
             var fileName = GetPdfFileName(doc, view);
 
-            using (var options = new PDFExportOptions())
-            {
-                options.Combine = false; 
-                options.FileName = EnsurePdfExtension(fileName);
+            using var options = new PDFExportOptions();
+            options.Combine = false;
+            options.FileName = EnsurePdfExtension(fileName);
 
-                options.AlwaysUseRaster = false;
-                options.ExportQuality = PDFExportQualityType.DPI1200;
-                options.RasterQuality = RasterQualityType.Presentation;
+            options.AlwaysUseRaster = false;
+            options.ExportQuality = PDFExportQualityType.DPI1200;
+            options.RasterQuality = RasterQualityType.Presentation;
 
-                var ids = new List<ElementId> { view.Id };
+            var ids = new List<ElementId> { view.Id };
 
-                bool ok = doc.Export(outputFolder, ids, options);
+            var ok = doc.Export(outputFolder, ids, options);
 
-                if (ok)
-                    count++;
-            }
+            if (ok)
+                count++;
         }
 
         return count;
@@ -138,30 +135,18 @@ public class CommandExportPdfs : NamedCommand
 
     public static bool Is2DView(View v)
     {
-        switch (v.ViewType)
+        return v.ViewType switch
         {
-            case ViewType.FloorPlan:
-            case ViewType.CeilingPlan:
-            case ViewType.Elevation:
-            case ViewType.Section:
-            case ViewType.Detail:
-            case ViewType.DraftingView:
-            case ViewType.AreaPlan:
-            case ViewType.EngineeringPlan:
-            case ViewType.Legend:
-                return true;
-
-            default:
-                return false;
-        }
+            ViewType.FloorPlan or ViewType.CeilingPlan or ViewType.Elevation or ViewType.Section or ViewType.Detail or ViewType.DraftingView or ViewType.AreaPlan or ViewType.EngineeringPlan or ViewType.Legend => true,
+            _ => false,
+        };
     }
 
     public static string EnsurePdfExtension(string fileName)
     {
-        if (string.IsNullOrWhiteSpace(fileName))
-            return "Export.pdf";
-
-        return fileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase)
+        return string.IsNullOrWhiteSpace(fileName)
+            ? "Export.pdf"
+            : fileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase)
             ? fileName
             : fileName + ".pdf";
     }

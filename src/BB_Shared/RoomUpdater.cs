@@ -1,5 +1,4 @@
-﻿using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,21 +27,29 @@ public class RoomUpdater : IUpdater
         ChangedElementsAction(elements);
     }
 
-    public ChangePriority GetChangePriority() 
-        => ChangePriority.FloorsRoofsStructuralWalls;
+    public ChangePriority GetChangePriority()
+    {
+        return ChangePriority.FloorsRoofsStructuralWalls;
+    }
 
-    public UpdaterId GetUpdaterId() 
-        => _id;
+    public UpdaterId GetUpdaterId()
+    {
+        return _id;
+    }
 
-    public string GetUpdaterName() 
-        => "Room Updater";
+    public string GetUpdaterName()
+    {
+        return "Room Updater";
+    }
 
     public string GetAdditionalInformation()
-        => "Room updater";
+    {
+        return "Room updater";
+    }
 
     public void RegisterForRoomChanges()
     {
-        var filter = new ElementMulticategoryFilter(
+        ElementMulticategoryFilter filter = new(
         [
             BuiltInCategory.OST_RoomSeparationLines,
             BuiltInCategory.OST_Walls,
@@ -59,7 +66,7 @@ public class RoomUpdater : IUpdater
 
         // Geometry changes
         UpdaterRegistry.AddTrigger(_id, filter, Element.GetChangeTypeGeometry());
-        
+
         // Added / deleted
         UpdaterRegistry.AddTrigger(_id, filter, Element.GetChangeTypeElementAddition());
         UpdaterRegistry.AddTrigger(_id, filter, Element.GetChangeTypeElementDeletion());

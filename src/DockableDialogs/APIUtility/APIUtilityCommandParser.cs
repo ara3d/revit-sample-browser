@@ -12,18 +12,18 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility
             switch (command.CommandType)
             {
                 case ModelessCommandType.PrintMainPageStatistics:
-                {
-                    command.WindowSummaryData = GetPaneSummary(ThisApplication.ThisApp.MainPageDockablePaneId);
-                    ModelessCommand.Make(command);
-                    break;
-                }
+                    {
+                        command.WindowSummaryData = GetPaneSummary(ThisApplication.ThisApp.MainPageDockablePaneId);
+                        ModelessCommand.Make(command);
+                        break;
+                    }
 
                 case ModelessCommandType.PrintSelectedPageStatistics:
-                {
-                    command.WindowSummaryData = GetPaneSummary(command.SelectedPaneId);
-                    ModelessCommand.Make(command);
-                    break;
-                }
+                    {
+                        command.WindowSummaryData = GetPaneSummary(command.SelectedPaneId);
+                        ModelessCommand.Make(command);
+                        break;
+                    }
             }
         }
     }

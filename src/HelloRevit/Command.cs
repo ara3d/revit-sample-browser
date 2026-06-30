@@ -1,5 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -17,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.HelloRevit.CS
             var app = commandData.Application.Application;
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-            var mainDialog = new TaskDialog("Hello, Revit!")
+            TaskDialog mainDialog = new("Hello, Revit!")
             {
                 MainInstruction = "Hello, Revit!",
                 MainContent =
@@ -43,16 +44,16 @@ namespace Ara3D.RevitSampleBrowser.HelloRevit.CS
             switch (tResult)
             {
                 case TaskDialogResult.CommandLink1:
-                {
-                        var dialogCommandLink1 = new TaskDialog("Revit Build Information")
+                    {
+                        TaskDialog dialogCommandLink1 = new("Revit Build Information")
                         {
                             MainInstruction =
                                 $"Revit Version Name is: {app.VersionName}\nRevit Version Number is: {app.VersionNumber}\nRevit Version Build is: {app.VersionBuild}"
                         };
 
                         dialogCommandLink1.Show();
-                    break;
-                }
+                        break;
+                    }
                 case TaskDialogResult.CommandLink2:
                     TaskDialog.Show("Active Document Information",
                         $"Active document: {activeDoc.Title}\nActive view name: {activeDoc.ActiveView.Name}");

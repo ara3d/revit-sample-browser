@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
         public EventManager(UIControlledApplication app)
         {
             m_app = app;
-            m_historySelection = new List<string>();
+            m_historySelection = [];
         }
 
         public void Update(List<string> selection)

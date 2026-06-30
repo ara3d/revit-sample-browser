@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         {
             var errorCount = 0;
 
-            var curves = new CurveArray();
+            CurveArray curves = new();
 
             var i = 0;
             foreach (Curve curve in m_selectedCurves)

@@ -9,8 +9,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         public Autodesk.Revit.DB.ReferencePlane Create(Document doc, Autodesk.Revit.DB.ReferencePlane host, View view,
             XYZ offSet, XYZ cutVec, string name)
         {
-            var bubbleEnd = new XYZ();
-            var freeEnd = new XYZ();
+            XYZ bubbleEnd = new();
+            XYZ freeEnd = new();
             try
             {
                 var refPlane = host;
@@ -18,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 {
                     bubbleEnd = refPlane.BubbleEnd.Add(offSet);
                     freeEnd = refPlane.FreeEnd.Add(offSet);
-                    var subTransaction = new SubTransaction(doc);
+                    SubTransaction subTransaction = new(doc);
                     subTransaction.Start();
                     refPlane = doc.FamilyCreate.NewReferencePlane(bubbleEnd, freeEnd, cutVec, view);
                     refPlane.Name = name;

@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.TagBeam.CS
 {
@@ -21,16 +22,12 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
             try
             {
                 //prepare data
-                var dataBuffer = new TagBeamData(commandData);
+                TagBeamData dataBuffer = new(commandData);
 
                 // show UI
-                using (var displayForm = new TagBeamForm(dataBuffer))
-                {
-                    var result = displayForm.ShowDialog();
-                    if (DialogResult.OK != result) return Result.Cancelled;
-                }
-
-                return Result.Succeeded;
+                using TagBeamForm displayForm = new(dataBuffer);
+                var result = displayForm.ShowDialog();
+                return DialogResult.OK != result ? Result.Cancelled : Result.Succeeded;
             }
             catch (Exception e)
             {
@@ -65,14 +62,12 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
                         var subelements = rebar.GetSubelements();
 
                         // create a rebar tag at the first end point of the first curve
-                        using (var t = new Transaction(revitDoc.Document))
-                        {
-                            t.Start("Create new tag");
-                            IndependentTag.Create(revitDoc.Document, view.Id, subelements[0].GetReference(), true,
-                                TagMode.TM_ADDBY_CATEGORY,
-                                TagOrientation.Horizontal, curve.GetEndPoint(0));
-                            t.Commit();
-                        }
+                        using Transaction t = new(revitDoc.Document);
+                        t.Start("Create new tag");
+                        IndependentTag.Create(revitDoc.Document, view.Id, subelements[0].GetReference(), true,
+                            TagMode.TM_ADDBY_CATEGORY,
+                            TagOrientation.Horizontal, curve.GetEndPoint(0));
+                        t.Commit();
 
                         return Result.Succeeded;
                     }
@@ -116,19 +111,17 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
                             MultiplanarOption.IncludeAllMultiplanarCurves, 0)[0];
 
                         // calculate necessary arguments
-                        var origin = new XYZ(
+                        XYZ origin = new(
                             curve.GetEndPoint(0).X + curve.Length,
                             curve.GetEndPoint(0).Y,
                             curve.GetEndPoint(0).Z);
                         var strText = $"This is {rebar.Category.Name} : {rebar.Name}";
 
                         // create the text
-                        using (var t = new Transaction(dbDoc))
-                        {
-                            t.Start("New text note");
-                            TextNote.Create(dbDoc, view.Id, origin, strText, currentTextTypeId);
-                            t.Commit();
-                        }
+                        using Transaction t = new(dbDoc);
+                        t.Start("New text note");
+                        TextNote.Create(dbDoc, view.Id, origin, strText, currentTextTypeId);
+                        t.Commit();
 
                         return Result.Succeeded;
                     }

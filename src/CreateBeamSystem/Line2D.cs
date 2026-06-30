@@ -1,11 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using System;
 using System.Drawing;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Ara3D.RevitSampleBrowser.CreateBeamSystem.CS;
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
     public class Line2D
@@ -89,10 +87,10 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 
         public PointF GetIntervalPoint(float rate)
         {
-            var result = new PointF
+            PointF result = new()
             {
-                X = m_startPnt.X + (m_endPnt.X - m_startPnt.X) * rate,
-                Y = m_startPnt.Y + (m_endPnt.Y - m_startPnt.Y) * rate
+                X = m_startPnt.X + ((m_endPnt.X - m_startPnt.X) * rate),
+                Y = m_startPnt.Y + ((m_endPnt.Y - m_startPnt.Y) * rate)
             };
             return result;
         }
@@ -108,14 +106,14 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 
         public void Shift(float distance)
         {
-            var moveSize = new SizeF(-distance * m_normal.Y, distance * m_normal.X);
+            SizeF moveSize = new(-distance * m_normal.Y, distance * m_normal.X);
             m_startPnt += moveSize;
             m_endPnt += moveSize;
         }
 
         public Line2D Clone()
         {
-            var cloned = new Line2D(m_startPnt, m_endPnt);
+            Line2D cloned = new(m_startPnt, m_endPnt);
             return cloned;
         }
 
@@ -134,21 +132,21 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             var d1 = Point2DMath.Multiply(line1.Length, line1.Normal);
 
             var e = Point2DMath.Subtract(p1, p0);
-            var kross = d0.X * d1.Y - d0.Y * d1.X;
+            var kross = (d0.X * d1.Y) - (d0.Y * d1.X);
             var sqrKross = kross * kross;
-            var sqrLen0 = d0.X * d0.X + d0.Y * d0.Y;
-            var sqrLen1 = d1.X * d1.X + d1.Y * d1.Y;
+            var sqrLen0 = (d0.X * d0.X) + (d0.Y * d0.Y);
+            var sqrLen1 = (d1.X * d1.X) + (d1.Y * d1.Y);
 
             // lines of the segments are not parallel
             if (sqrKross > Point2DMath.FloatEpsilon * sqrLen0 * sqrLen1)
             {
-                var s = (e.X * d1.Y - e.Y * d1.X) / kross;
-                if (s < 0 || s > 1)
+                var s = ((e.X * d1.Y) - (e.Y * d1.X)) / kross;
+                if (s is < 0 or > 1)
                     // intersection of lines is not point on segment p0 + s * d0
                     return 0;
 
-                var t = (e.X * d0.Y - e.Y * d0.X) / kross;
-                if (t < 0 || t > 1)
+                var t = ((e.X * d0.Y) - (e.Y * d0.X)) / kross;
+                if (t is < 0 or > 1)
                     // intersection of lines is not a point on segment p1 + t * d1
                     return 0;
                 // intersection of lines is a point on each segment
@@ -157,8 +155,8 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             }
 
             // lines of the segments are paralled
-            var sqrLenE = e.X * e.X + e.Y * e.Y;
-            var kross2 = e.X * d0.Y - e.Y * d0.X;
+            var sqrLenE = (e.X * e.X) + (e.Y * e.Y);
+            var kross2 = (e.X * d0.Y) - (e.Y * d0.X);
             var sqrKross2 = kross2 * kross2;
             if (sqrKross2 > Point2DMath.FloatEpsilon * sqrLen0 * sqrLenE)
                 // lines of the segments are different
@@ -166,7 +164,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 
             // lines of the segments are the same. need to test for overlap of segments
             var s0 = Point2DMath.Dot(d0, e) / sqrLen0;
-            var s1 = s0 + Point2DMath.Dot(d0, d1) / sqrLen0;
+            var s1 = s0 + (Point2DMath.Dot(d0, d1) / sqrLen0);
             var smin = Point2DMath.GetMin(s0, s1);
             var smax = Point2DMath.GetMax(s0, s1);
             var w = new float[2];
@@ -208,14 +206,14 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 
         private void CalculateEndPoint()
         {
-            m_endPnt.X = m_startPnt.X + m_length * m_normal.X;
-            m_endPnt.Y = m_startPnt.Y + m_length * m_normal.Y;
+            m_endPnt.X = m_startPnt.X + (m_length * m_normal.X);
+            m_endPnt.Y = m_startPnt.Y + (m_length * m_normal.Y);
         }
 
         private void CalculateStartPoint()
         {
-            m_startPnt.X = m_endPnt.X - m_length * m_normal.X;
-            m_startPnt.Y = m_endPnt.Y - m_length * m_normal.Y;
+            m_startPnt.X = m_endPnt.X - (m_length * m_normal.X);
+            m_startPnt.Y = m_endPnt.Y - (m_length * m_normal.Y);
         }
     }
 }

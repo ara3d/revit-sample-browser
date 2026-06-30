@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.DB;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
 {
@@ -61,11 +61,7 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
             OctagonalProfile = new CurveArray();
             for (var i = 0; i < 8; i++)
             {
-                Line line;
-                if (7 == i)
-                    line = Line.CreateBound(points[i], points[0]);
-                else
-                    line = Line.CreateBound(points[i], points[i + 1]);
+                var line = 7 == i ? Line.CreateBound(points[i], points[0]) : Line.CreateBound(points[i], points[i + 1]);
                 OctagonalProfile.Append(line);
             }
 

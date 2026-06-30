@@ -22,150 +22,144 @@
 #endregion // Copyright
 
 #region Namespaces
+using BuildingCoder;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using BuildingCoder;
 #endregion // Namespaces
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 {
-  /// <summary>
-  /// Modeless form to dsiplay a list of all string search hits.
-  /// User can double click on any row to zoom to and highlight
-  /// that element.
-  /// </summary>
-  partial class SearchHitNavigator : Form
-  {
-    static SearchHitNavigator _singleton_instance = null;
-    static Point? _last_location = null;
-    static Size _last_size;
-
-    public static bool IsShowing
+    /// <summary>
+    /// Modeless form to dsiplay a list of all string search hits.
+    /// User can double click on any row to zoom to and highlight
+    /// that element.
+    /// </summary>
+    partial class SearchHitNavigator : Form
     {
-      get
-      {
-        return null != _singleton_instance;
-      }
-    }
+        static SearchHitNavigator _singleton_instance = null;
+        static Point? _last_location = null;
+        static Size _last_size;
 
-    public static void Show(
+        public static bool IsShowing => null != _singleton_instance;
+
+        public static void Show(
       SortableBindingList<SearchHit> data,
       StringSearchHost.SetElementId set_id,
-      JtWindowHandle h )
-    {
-      if( null == _singleton_instance )
-      {
-        _singleton_instance
-          = new SearchHitNavigator(
-            data, set_id );
+      JtWindowHandle h)
+        {
+            if (null == _singleton_instance)
+            {
+                _singleton_instance
+                  = new SearchHitNavigator(
+                    data, set_id);
 
-        _singleton_instance.Load 
-          += new EventHandler( OnLoad );
+                _singleton_instance.Load
+                  += new EventHandler(OnLoad);
 
-        _singleton_instance.FormClosing
-          += new FormClosingEventHandler(
-            OnFormClosing );
+                _singleton_instance.FormClosing
+                  += new FormClosingEventHandler(
+                    OnFormClosing);
 
-        _singleton_instance.FormClosing
-          += new FormClosingEventHandler(
-            OnFormClosing );
+                _singleton_instance.FormClosing
+                  += new FormClosingEventHandler(
+                    OnFormClosing);
 
-        _singleton_instance.Disposed 
-          += new EventHandler( OnDisposed );
+                _singleton_instance.Disposed
+                  += new EventHandler(OnDisposed);
 
-        _singleton_instance.Show( h );
-      }
-      else
-      {
-        _singleton_instance.dataGridView1.DataSource
-          = data;
-      }
+                _singleton_instance.Show(h);
+            }
+            else
+            {
+                _singleton_instance.dataGridView1.DataSource
+                  = data;
+            }
+        }
+
+        public static void Shutdown()
+        {
+            if (null != _singleton_instance)
+            {
+                _singleton_instance.Close();
+            }
+        }
+
+        static void OnLoad(
+          object sender,
+          EventArgs e)
+        {
+            if (null != _last_location)
+            {
+                _singleton_instance.Location
+                  = (Point)_last_location;
+
+                _singleton_instance.Size = _last_size;
+            }
+        }
+
+        static void OnFormClosing(
+          object sender,
+          FormClosingEventArgs e)
+        {
+            _last_location = _singleton_instance.Location;
+            _last_size = _singleton_instance.Size;
+        }
+
+        static void OnDisposed(
+          object sender,
+          EventArgs e)
+        {
+            _singleton_instance = null;
+        }
+
+        readonly StringSearchHost.SetElementId _set_id;
+
+        SearchHitNavigator(
+          SortableBindingList<SearchHit> a,
+          StringSearchHost.SetElementId set_id)
+        {
+            InitializeComponent();
+            dataGridView1.DataSource = a;
+            dataGridView1.CellDoubleClick
+              += new DataGridViewCellEventHandler(
+                dataGridView1_CellDoubleClick);
+            _set_id = set_id;
+        }
+
+        void SetElementIdFromRow(
+          int rowIndex,
+          bool doubleClick)
+        {
+            // Do something on double click, 
+            // except when on the header:
+
+            if (rowIndex > -1)
+            {
+                var row
+                  = dataGridView1.Rows[rowIndex];
+
+                var n = row.Cells.Count;
+
+                var cell = row.Cells[n - 1];
+
+                var id = Convert.ToInt64(cell.Value);
+
+                _set_id(id);
+
+                Debug.Print(
+                  "{0} click on row {1} --> element id {2}",
+                  doubleClick ? "Double" : "Single",
+                  rowIndex, id);
+            }
+        }
+
+        void dataGridView1_CellDoubleClick(
+          object sender,
+          DataGridViewCellEventArgs e)
+        {
+            SetElementIdFromRow(e.RowIndex, true);
+        }
     }
-
-    public static void Shutdown()
-    {
-      if( null != _singleton_instance )
-      {
-        _singleton_instance.Close();
-      }
-    }
-
-    static void OnLoad( 
-      object sender, 
-      EventArgs e )
-    {
-      if( null != _last_location )
-      {
-        _singleton_instance.Location 
-          = ( Point ) _last_location;
-
-        _singleton_instance.Size = _last_size;
-      }
-    }
-
-    static void OnFormClosing( 
-      object sender, 
-      FormClosingEventArgs e )
-    {
-      _last_location = _singleton_instance.Location;
-      _last_size = _singleton_instance.Size;
-    }
-
-    static void OnDisposed( 
-      object sender, 
-      EventArgs e )
-    {
-      _singleton_instance = null;
-    }
-
-    StringSearchHost.SetElementId _set_id;
-
-    SearchHitNavigator(
-      SortableBindingList<SearchHit> a,
-      StringSearchHost.SetElementId set_id )
-    {
-      InitializeComponent();
-      dataGridView1.DataSource = a;
-      dataGridView1.CellDoubleClick 
-        += new DataGridViewCellEventHandler( 
-          dataGridView1_CellDoubleClick );
-      _set_id = set_id;
-    }
-
-    void SetElementIdFromRow(
-      int rowIndex,
-      bool doubleClick )
-    {
-      // Do something on double click, 
-      // except when on the header:
-
-      if( rowIndex > -1 )
-      {
-        DataGridViewRow row
-          = dataGridView1.Rows[rowIndex];
-
-        int n = row.Cells.Count;
-
-        DataGridViewCell cell = row.Cells[n - 1];
-
-        long id = Convert.ToInt64(cell.Value);
-
-        _set_id(id);
-
-        Debug.Print(
-          "{0} click on row {1} --> element id {2}",
-          doubleClick ? "Double" : "Single",
-          rowIndex, id );
-      }
-    }
-
-    void dataGridView1_CellDoubleClick( 
-      object sender, 
-      DataGridViewCellEventArgs e )
-    {
-      SetElementIdFromRow( e.RowIndex, true );
-    }
-  }
 }

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Controls.ComboBox;
 //
 // (C) Copyright 2003-2019 by Autodesk, Inc. All rights reserved.
@@ -32,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 {
     public partial class DefaultFamilyTypes : Page, IDockablePaneProvider
     {
-        public static readonly DockablePaneId PaneId = new DockablePaneId(new Guid("{DF0F08C3-447C-4615-B9B9-4843D821012E}"));
+        public static readonly DockablePaneId PaneId = new(new Guid("{DF0F08C3-447C-4615-B9B9-4843D821012E}"));
         private Document m_document;
 
         private readonly ExternalEvent m_event;
@@ -71,23 +71,23 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 
             foreach (var cid in categories)
             {
-                var record = new FamilyTypeRecord
+                FamilyTypeRecord record = new()
                 {
                     CategoryName = Enum.GetName(typeof(BuiltInCategory), cid)
                 };
 
-                var collector = new FilteredElementCollector(m_document);
+                FilteredElementCollector collector = new(m_document);
                 collector = collector.OfClass(typeof(FamilySymbol));
                 var query = from FamilySymbol et in collector
-                    where et.IsValidDefaultFamilyType(new ElementId(cid))
-                    select et;
+                                                  where et.IsValidDefaultFamilyType(new ElementId(cid))
+                                                  select et;
 
                 var defaultFamilyTypeId = m_document.GetDefaultFamilyTypeId(new ElementId(cid));
 
-                var defaultFamilyTypeCandidates = new List<DefaultFamilyTypeCandidate>();
+                List<DefaultFamilyTypeCandidate> defaultFamilyTypeCandidates = new();
                 foreach (var t in query)
                 {
-                    var item = new DefaultFamilyTypeCandidate
+                    DefaultFamilyTypeCandidate item = new()
                     {
                         Name = $"{t.FamilyName} - {t.Name}",
                         Id = t.Id,
@@ -106,11 +106,11 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 
         private List<BuiltInCategory> GetAllFamilyCateogries(Document document)
         {
-            var collector = new FilteredElementCollector(document);
+            FilteredElementCollector collector = new(document);
             collector = collector.OfClass(typeof(Family));
             var query = collector.ToElements();
 
-            var categoryids = new List<BuiltInCategory>
+            List<BuiltInCategory> categoryids = new()
             {
                 // Architecture -> Build -> Component
                 BuiltInCategory.OST_MatchModel,
@@ -131,10 +131,10 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
         {
             if (e.AddedItems.Count == 1 && e.RemovedItems.Count == 1)
             {
-                if (!(sender is ComboBox cb))
+                if (sender is not ComboBox cb)
                     return;
 
-                if (!(e.AddedItems[0] is DefaultFamilyTypeCandidate item))
+                if (e.AddedItems[0] is not DefaultFamilyTypeCandidate item)
                     return;
 
                 m_handler.SetData(item.CateogryId, item.Id);
@@ -178,13 +178,11 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 
         public void Execute(UIApplication revitApp)
         {
-            using (var tran = new Transaction(revitApp.ActiveUIDocument.Document,
-                       $"Set Default family type to {m_defaultTypeId}"))
-            {
-                tran.Start();
-                revitApp.ActiveUIDocument.Document.SetDefaultFamilyTypeId(m_builtInCategory, m_defaultTypeId);
-                tran.Commit();
-            }
+            using Transaction tran = new(revitApp.ActiveUIDocument.Document,
+                       $"Set Default family type to {m_defaultTypeId}");
+            tran.Start();
+            revitApp.ActiveUIDocument.Document.SetDefaultFamilyTypeId(m_builtInCategory, m_defaultTypeId);
+            tran.Commit();
         }
 
         public void SetData(ElementId categoryId, ElementId typeId)

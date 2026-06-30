@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -24,12 +24,12 @@ namespace Ara3D.Bowerbird.RevitSamples
         public Transform CurrentTransform => transformationStack.Peek();
 
         private readonly bool isCancelled = false;
-        private readonly Stack<ElementId> elementStack = new Stack<ElementId>();
-        private readonly Stack<Transform> transformationStack = new Stack<Transform>();
+        private readonly Stack<ElementId> elementStack = new();
+        private readonly Stack<Transform> transformationStack = new();
         private ElementId currentMaterialId = ElementId.InvalidElementId;
-        private StreamWriter streamWriter = null;
+        private readonly StreamWriter streamWriter = null;
 
-        readonly Dictionary<uint, ElementId> polymeshToMaterialId = new Dictionary<uint, ElementId>();
+        readonly Dictionary<uint, ElementId> polymeshToMaterialId = [];
 
         public ColladaExportContext(Document document, StreamWriter writer)
         {
@@ -144,7 +144,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         {
             streamWriter.Write($"<source id=\"geom-{CurrentPolymeshIndex}-positions\">\n");
             streamWriter.Write(
-                $"<float_array id=\"geom-{CurrentPolymeshIndex}-positions-array\" count=\"{(polymesh.NumberOfPoints * 3)}\">\n");
+                $"<float_array id=\"geom-{CurrentPolymeshIndex}-positions-array\" count=\"{polymesh.NumberOfPoints * 3}\">\n");
 
             XYZ point;
             var currentTransform = transformationStack.Peek();
@@ -188,7 +188,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
             streamWriter.Write($"<source id=\"geom-{CurrentPolymeshIndex}-normals\">\n");
             streamWriter.Write(
-                $"<float_array id=\"geom-{CurrentPolymeshIndex}-normals-array\" count=\"{(nNormals * 3)}\">\n");
+                $"<float_array id=\"geom-{CurrentPolymeshIndex}-normals-array\" count=\"{nNormals * 3}\">\n");
 
             XYZ point;
             var currentTransform = transformationStack.Peek();
@@ -216,7 +216,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         {
             streamWriter.Write($"<source id=\"geom-{CurrentPolymeshIndex}-map\">\n");
             streamWriter.Write(
-                $"<float_array id=\"geom-{CurrentPolymeshIndex}-map-array\" count=\"{(polymesh.NumberOfUVs * 2)}\">\n");
+                $"<float_array id=\"geom-{CurrentPolymeshIndex}-map-array\" count=\"{polymesh.NumberOfUVs * 2}\">\n");
 
             UV uv;
 
@@ -358,8 +358,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         private string GetMaterialName(ElementId materialId)
         {
-            var material = exportedDocument.GetElement(materialId) as Material;
-            if (material != null)
+            if (exportedDocument.GetElement(materialId) is Material material)
                 return material.Name;
 
             return ""; //default material name
@@ -367,11 +366,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         private bool IsMaterialValid(ElementId materialId)
         {
-            var material = exportedDocument.GetElement(materialId) as Material;
-            if (material != null)
-                return true;
-
-            return false;
+            return exportedDocument.GetElement(materialId) is Material material;
         }
 
         private void WriteXmlLibraryEffects()

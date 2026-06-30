@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
@@ -17,8 +17,9 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
         public override object ConvertTo(ITypeDescriptorContext context,
             CultureInfo culture, object value, Type destinationType)
         {
-            if (value is CreationData cd) return $"Total {cd.EdgesForHostedSweep.Count} Edges";
-            return base.ConvertTo(context, culture, value, destinationType);
+            return value is CreationData cd
+                ? $"Total {cd.EdgesForHostedSweep.Count} Edges"
+                : base.ConvertTo(context, culture, value, destinationType);
         }
     }
 }

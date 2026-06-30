@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 {
@@ -18,9 +18,9 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var corbelsToReinforce = new List<CorbelFrame>();
+            List<CorbelFrame> corbelsToReinforce = [];
 
-            var elems = new ElementSet();
+            ElementSet elems = new();
             foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
             {
                 elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -50,15 +50,15 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             }
 
             var revitDoc = commandData.Application.ActiveUIDocument.Document;
-            var reinforcementOptions = new CorbelReinforcementOptions(revitDoc);
-            using (var reinforcementOptionsForm =
-                   new CorbelReinforcementOptionsForm(reinforcementOptions))
+            CorbelReinforcementOptions reinforcementOptions = new(revitDoc);
+            using (CorbelReinforcementOptionsForm reinforcementOptionsForm =
+                   new(reinforcementOptions))
             {
                 if (reinforcementOptionsForm.ShowDialog() == DialogResult.Cancel)
                     return Result.Cancelled;
             }
 
-            var reinforceTransaction = new Transaction(revitDoc);
+            Transaction reinforceTransaction = new(revitDoc);
             try
             {
                 reinforceTransaction.Start("Reinforce Corbels");

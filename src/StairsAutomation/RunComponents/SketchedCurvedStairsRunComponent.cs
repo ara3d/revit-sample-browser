@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Document = Autodesk.Revit.DB.Document;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
@@ -16,7 +16,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
     /// <remarks>Because this is sketched, the maximum covered angle for the stair is 360 degrees.</remarks>
     public class SketchedCurvedStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
     {
-        private Application m_appCreate;
+        private readonly Application m_appCreate;
         private readonly XYZ m_center;
         private readonly double m_includedAngle;
         private readonly double m_incrementAngle;
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             RunElevation = bottomElevation;
             m_innerRadius = innerRadius;
             m_outerRadius = innerRadius + width;
-            m_incrementAngle = desiredTreadDepth / (m_innerRadius + width / 2.0);
+            m_incrementAngle = desiredTreadDepth / (m_innerRadius + (width / 2.0));
             m_includedAngle = m_incrementAngle * (riserNumber - 1);
             if (m_includedAngle > 2 * Math.PI)
                 throw new Exception("Arguments provided require an included angle of more than 360 degrees");
@@ -72,7 +72,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             RunElevation = bottomElevation;
             m_innerRadius = innerRadius;
             m_outerRadius = innerRadius + width;
-            m_incrementAngle = desiredTreadDepth / (m_innerRadius + width / 2.0);
+            m_incrementAngle = desiredTreadDepth / (m_innerRadius + (width / 2.0));
             m_includedAngle = m_incrementAngle * (riserNumber - 1);
             if (m_includedAngle > 2 * Math.PI)
                 throw new Exception("Arguments provided require an included angle of more than 360 degrees");
@@ -83,18 +83,11 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 
         public double RunElevation { get; }
 
-        public double TopElevation
-        {
-            get
-            {
-                if (m_stairsRun == null) throw new NotSupportedException("Stairs run hasn't been constructed yet.");
-                return m_stairsRun.TopElevation;
-            }
-        }
+        public double TopElevation => m_stairsRun == null ? throw new NotSupportedException("Stairs run hasn't been constructed yet.") : m_stairsRun.TopElevation;
 
         public IList<Curve> GetStairsPath()
         {
-            var ret = new List<Curve>();
+            List<Curve> ret = [];
             var arc = Arc.Create(m_center, (m_innerRadius + m_outerRadius) / 2.0, 0, m_includedAngle, XYZ.BasisX,
                 XYZ.BasisY);
             ret.Add(arc);
@@ -146,7 +139,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
         {
             var incAngle = 0.0;
             var center = XYZ.Zero;
-            var ret = new List<Curve>();
+            List<Curve> ret = [];
 
             // Run riser curves are linear and radial with respect to the center of curvature.
             for (var i = 0; i < m_riserNumber - 1; i++)
@@ -168,7 +161,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 
         public IList<Curve> GetRunBoundaryCurves()
         {
-            var ret = new List<Curve>();
+            List<Curve> ret = [];
             var arc = Arc.Create(m_center, m_innerRadius, 0, m_includedAngle, XYZ.BasisX, XYZ.BasisY);
             ret.Add(arc);
 

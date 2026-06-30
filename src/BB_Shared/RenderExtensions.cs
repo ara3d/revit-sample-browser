@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Ara3D.Collections;
+﻿using Ara3D.Collections;
 using Ara3D.Geometry;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
@@ -23,13 +23,19 @@ public struct Color32
 public static class RenderExtensions
 {
     public static double Clamp(this double value, double min, double max)
-        => Math.Max(Math.Min(value, max), min);
+    {
+        return Math.Max(Math.Min(value, max), min);
+    }
 
     public static double Clamp(this double value)
-        => value.Clamp(0, 1);
+    {
+        return value.Clamp(0, 1);
+    }
 
     public static double Round(this double value)
-        => Math.Round(value);
+    {
+        return Math.Round(value);
+    }
 
     public static byte ScaleToByte(this double value)
     {
@@ -91,8 +97,12 @@ public static class RenderExtensions
     }
 
     public static RenderMesh ToRenderMesh(this TriangleMesh3D mesh, Color32 color)
-        => mesh.ToRenderMesh(color.Repeat(mesh.Points.Count));
+    {
+        return mesh.ToRenderMesh(color.Repeat(mesh.Points.Count));
+    }
 
     public static RenderMesh ToRenderMesh(this TriangleMesh3D mesh, IReadOnlyList<Color32> colors = null)
-        => RenderMesh.Create(mesh.Points, mesh.CornerIndices().Map(i => i.Value), null, null, colors);
+    {
+        return RenderMesh.Create(mesh.Points, mesh.CornerIndices().Map(i => i.Value), null, null, colors);
+    }
 }

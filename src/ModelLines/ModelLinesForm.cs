@@ -1,9 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 
@@ -58,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             typeColumn.Width = informationDataGridView.Width * 3 / 5; // set column width
 
             numberColumn.DataPropertyName = "Number"; // set data property name
-            numberColumn.Width = informationDataGridView.Width * 2 / 5 - 2; // set column width
+            numberColumn.Width = (informationDataGridView.Width * 2 / 5) - 2; // set column width
         }
 
         private bool AssertDataIntegrity(LineType createType)

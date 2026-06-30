@@ -2,11 +2,9 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using System.Collections.Generic;
-using Autodesk.Revit.DB;
 using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
@@ -28,17 +26,17 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser
         void Init(Document document);
     }
 
-    public interface IAmCommandFactory 
+    public interface IAmCommandFactory
     {
         ICommand Create(string cmdText, string argument);
     }
 
     public interface IOfferCommandAutocompletion
     {
-        IAutocompleteItem GetCommandAutocompleteItem();        
+        IAutocompleteItem GetCommandAutocompleteItem();
     }
     public interface IOfferArgumentAutocompletion
     {
         IEnumerable<IAutocompleteItem> GetAutocompleteItems(string prefix);
-    }   
+    }
 }

@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using Point = System.Drawing.Point;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     public class GridGeometry
@@ -19,7 +19,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         // the referred drawing class for the curtain grid
 
         //object which contains reference of Revit Application
-        private ExternalCommandData m_commandData;
+        private readonly ExternalCommandData m_commandData;
 
         private readonly MyDocument m_myDocument;
 
@@ -31,9 +31,9 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             GridProperties = new GridProperties();
             //m_activeGrid = grid;
             Drawing = new GridDrawing(myDoc, this);
-            UGridLines = new List<CurtainGridLine>();
-            VGridLines = new List<CurtainGridLine>();
-            GridVertexesXyz = new List<XYZ>();
+            UGridLines = [];
+            VGridLines = [];
+            GridVertexesXyz = [];
         }
 
 
@@ -69,7 +69,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             }
 
             // horizontal grid pattern 
-            var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+            Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
             act.Start();
             switch (ActiveGrid.Grid2Justification)
             {
@@ -127,7 +127,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                     return;
             }
 
-            var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+            Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
             act.Start();
             //ElementSet mullions = m_activeGrid.Mullions;
             var mullions = ActiveGrid.GetMullionIds();
@@ -156,7 +156,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var lines2D = Drawing.DrawObject.Lines2D;
             if (lines2D.Count < 1) return;
 
-            var toBeRemovedList = new List<SegmentLine2D>();
+            List<SegmentLine2D> toBeRemovedList = [];
             var canRemove = true;
             MimicRemoveSegments(ref canRemove, toBeRemovedList);
             // in the "MimicRemove" process, we didn't find that we need to "Remove the last segment of the grid line"
@@ -165,7 +165,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             {
                 try
                 {
-                    var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+                    Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
                     act.Start();
                     foreach (var seg2D in toBeRemovedList)
                     {
@@ -173,11 +173,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                         var segIndex = seg2D.SegmentIndex;
                         var isUSegment = seg2D.IsUSegment;
 
-                        CurtainGridLine line;
-                        if (isUSegment)
-                            line = UGridLines[gridLineIndex];
-                        else
-                            line = VGridLines[gridLineIndex];
+                        var line = isUSegment ? UGridLines[gridLineIndex] : VGridLines[gridLineIndex];
                         var curve = line.AllSegmentCurves.get_Item(segIndex);
                         line.RemoveSegment(curve);
                     }
@@ -199,13 +195,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                     var gridLineIndex = seg2D.GridLineIndex;
                     var segIndex = seg2D.SegmentIndex;
                     var isUSegment = seg2D.IsUSegment;
-                    GridLine2D gridLine2D;
-
-                    if (isUSegment)
-                        gridLine2D = Drawing.UGridLines2D[gridLineIndex];
-                    else
-                        gridLine2D = Drawing.VGridLines2D[gridLineIndex];
-
+                    var gridLine2D = isUSegment ? Drawing.UGridLines2D[gridLineIndex] : Drawing.VGridLines2D[gridLineIndex];
                     gridLine2D.RemovedNumber--;
                     var segLine2D = gridLine2D.Segments[segIndex];
                     segLine2D.Removed = false;
@@ -234,7 +224,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 if (null != line && null != curve)
                     try
                     {
-                        var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+                        Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
 
                         act.Start();
                         line.AddSegment(curve);
@@ -260,7 +250,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 if (null != line && null != curve)
                     try
                     {
-                        var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+                        Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
                         act.Start();
                         line.AddSegment(curve);
                         act.Commit();
@@ -294,7 +284,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 if (null != line)
                     try
                     {
-                        var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+                        Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
                         act.Start();
                         line.AddAllSegments();
                         act.Commit();
@@ -318,7 +308,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 if (null != line)
                     try
                     {
-                        var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+                        Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
                         act.Start();
                         line.AddAllSegments();
                         act.Commit();
@@ -361,11 +351,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var midX = (line2D.StartPoint.X + line2D.EndPoint.X) / 2;
             var midY = (line2D.StartPoint.Y + line2D.EndPoint.Y) / 2;
             // transform the 2D point to Autodesk.Revit.DB.XYZ format
-            var pos = new XYZ(midX, midY, 0);
-            var vec = new Vector4(pos);
+            XYZ pos = new(midX, midY, 0);
+            Vector4 vec = new(pos);
             vec = Drawing.Coordinates.RestoreMatrix.Transform(vec);
 
-            var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+            Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
             act.Start();
             try
             {
@@ -404,11 +394,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var midX = (line2D.StartPoint.X + line2D.EndPoint.X) / 2;
             var midY = (line2D.StartPoint.Y + line2D.EndPoint.Y) / 2;
             // transform the 2D point to Autodesk.Revit.DB.XYZ format
-            var pos = new XYZ(midX, midY, 0);
-            var vec = new Vector4(pos);
+            XYZ pos = new(midX, midY, 0);
+            Vector4 vec = new(pos);
             vec = Drawing.Coordinates.RestoreMatrix.Transform(vec);
 
-            var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+            Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
             act.Start();
             try
             {
@@ -430,7 +420,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         public void LockOrUnlockSelectedGridLine()
         {
             CurtainGridLine line = null;
-            var line2D = new GridLine2D();
+            GridLine2D line2D = new();
 
             if (-1 != Drawing.SelectedUIndex)
             {
@@ -450,7 +440,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             // lock/unlock the grid line
             if (null != line)
             {
-                var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+                Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
                 act.Start();
                 line.Lock = !line.Lock;
                 act.Commit();
@@ -492,12 +482,12 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             if (-1 != Drawing.SelectedUIndex)
             {
                 // convert the 2D data to 3D
-                var xyz = new XYZ(mousePosition.X, mousePosition.Y, 0);
-                var vec = new Vector4(xyz);
+                XYZ xyz = new(mousePosition.X, mousePosition.Y, 0);
+                Vector4 vec = new(xyz);
                 vec = Drawing.Coordinates.RestoreMatrix.Transform(vec);
                 var offset = vec.Z - LineToBeMoved.FullCurve.GetEndPoint(0).Z;
                 xyz = new XYZ(0, 0, offset);
-                var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+                Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
                 act.Start();
                 try
                 {
@@ -515,7 +505,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 line.StartPoint = new Point(line.StartPoint.X, line.StartPoint.Y + MoveOffset);
                 line.EndPoint = new Point(line.EndPoint.X, line.EndPoint.Y + MoveOffset);
 
-                var path = new GraphicsPath();
+                GraphicsPath path = new();
                 path.AddLine(line.StartPoint, line.EndPoint);
                 Drawing.ULinePathList[Drawing.SelectedUIndex] = path;
 
@@ -527,7 +517,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                     segLine2D.StartPoint = new Point(segLine2D.StartPoint.X, segLine2D.StartPoint.Y + MoveOffset);
                     segLine2D.EndPoint = new Point(segLine2D.EndPoint.X, segLine2D.EndPoint.Y + MoveOffset);
 
-                    var gpath = new GraphicsPath();
+                    GraphicsPath gpath = new();
                     path.AddLine(segLine2D.StartPoint, segLine2D.EndPoint);
                     pathList[i] = gpath;
                 }
@@ -536,13 +526,13 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             else if (-1 != Drawing.SelectedVIndex)
             {
                 // convert the 2D data to 3D
-                var xyz = new XYZ(mousePosition.X, mousePosition.Y, 0);
-                var vec = new Vector4(xyz);
+                XYZ xyz = new(mousePosition.X, mousePosition.Y, 0);
+                Vector4 vec = new(xyz);
                 vec = Drawing.Coordinates.RestoreMatrix.Transform(vec);
                 var offset = vec.X - LineToBeMoved.FullCurve.GetEndPoint(0).X;
                 xyz = new XYZ(offset, 0, 0);
 
-                var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+                Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
                 act.Start();
                 try
                 {
@@ -560,7 +550,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 line.StartPoint = new Point(line.StartPoint.X + MoveOffset, line.StartPoint.Y);
                 line.EndPoint = new Point(line.EndPoint.X + MoveOffset, line.EndPoint.Y);
 
-                var path = new GraphicsPath();
+                GraphicsPath path = new();
                 path.AddLine(line.StartPoint, line.EndPoint);
                 Drawing.VLinePathList[Drawing.SelectedVIndex] = path;
 
@@ -572,7 +562,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                     segLine2D.StartPoint = new Point(segLine2D.StartPoint.X + MoveOffset, segLine2D.StartPoint.Y);
                     segLine2D.EndPoint = new Point(segLine2D.EndPoint.X + MoveOffset, segLine2D.EndPoint.Y);
 
-                    var gpath = new GraphicsPath();
+                    GraphicsPath gpath = new();
                     path.AddLine(segLine2D.StartPoint, segLine2D.EndPoint);
                     pathList[i] = gpath;
                 }
@@ -587,7 +577,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         public void AddAllMullions()
         {
-            var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+            Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
             act.Start();
             try
             {
@@ -614,7 +604,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         public void DeleteAllMullions()
         {
-            var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+            Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
             act.Start();
             try
             {
@@ -642,7 +632,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         private void GetULines()
         {
             UGridLines.Clear();
-            var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+            Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
             act.Start();
             //ElementSet uLines = m_activeGrid.UGridLines;
             var uLines = ActiveGrid.GetUGridLineIds();
@@ -660,7 +650,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         private void GetVLines()
         {
             VGridLines.Clear();
-            var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+            Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
             act.Start();
             //ElementSet vLines = m_activeGrid.VGridLines;
             var vLines = ActiveGrid.GetVGridLineIds();
@@ -691,12 +681,12 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 // so we compute the boundary from the data of the curtain cell
                 // Obtain the geometry information of the curtain wall
                 // also works with some curtain grids with only U grid lines or only V grid lines
-                var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
+                Transaction act = new(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
                 act.Start();
                 var cells = ActiveGrid.GetCurtainCells();
                 act.Commit();
-                var minXyz = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
-                var maxXyz = new XYZ(double.MinValue, double.MinValue, double.MinValue);
+                XYZ minXyz = new(double.MaxValue, double.MaxValue, double.MaxValue);
+                XYZ maxXyz = new(double.MinValue, double.MinValue, double.MinValue);
                 GetVertexesByCells(cells, ref minXyz, ref maxXyz);
 
                 // move the U & V lines to the boundary of the curtain grid, and get their end points as the vertexes of the curtain grid
@@ -711,7 +701,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var uLine = UGridLines[0];
             var vLine = VGridLines[0];
 
-            var points = new List<XYZ>();
+            List<XYZ> points = [];
 
             var uStartPoint = uLine.FullCurve.GetEndPoint(0);
             var uEndPoint = uLine.FullCurve.GetEndPoint(1);
@@ -735,7 +725,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         private List<XYZ> GetPoints(ICollection<CurtainCell> cells)
         {
-            var points = new List<XYZ>();
+            List<XYZ> points = [];
 
             if (null == cells || cells.Count == 0) return points;
 
@@ -853,7 +843,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             // and they're in the same line, delete one seg will cause the other 
             // been deleted automatically
             // get conjoint U line segments
-            var removeSegments = new List<SegmentLine2D>();
+            List<SegmentLine2D> removeSegments = [];
             Drawing.GetConjointSegments(segLine2D, removeSegments);
 
             // there's no isolated segment need to be removed automatically
@@ -881,11 +871,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
             if (-1 != gridLineIndex && -1 != segIndex)
             {
-                GridLine2D grid;
-                if (seg.IsUSegment)
-                    grid = Drawing.UGridLines2D[gridLineIndex];
-                else
-                    grid = Drawing.VGridLines2D[gridLineIndex];
+                var grid = seg.IsUSegment ? Drawing.UGridLines2D[gridLineIndex] : Drawing.VGridLines2D[gridLineIndex];
 
                 // the last segment of the grid line
                 var existingNumber = grid.Segments.Count - grid.RemovedNumber;

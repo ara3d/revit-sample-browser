@@ -1,7 +1,7 @@
-using System.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BuildingCoder
 {
@@ -48,10 +48,11 @@ namespace BuildingCoder
             var Max = new XYZ(Max_X, Max_Y, Max_Z);
             var Min = new XYZ(Min_X, Min_Y, Min_Z);
 
-            var myBox = new BoundingBoxXYZ();
-
-            myBox.Min = Min;
-            myBox.Max = Max;
+            var myBox = new BoundingBoxXYZ
+            {
+                Min = Min,
+                Max = Max
+            };
 
             (view as View3D).SetSectionBox(myBox);
         }

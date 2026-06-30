@@ -1,10 +1,10 @@
 #region Namespaces
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Mechanical;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Mechanical;
 
 #endregion // Namespaces
 
@@ -73,8 +73,10 @@ namespace BuildingCoder
             }
             else
             {
-                var opt = new Options();
-                opt.DetailLevel = ViewDetailLevel.Fine;
+                var opt = new Options
+                {
+                    DetailLevel = ViewDetailLevel.Fine
+                };
                 var geoElement = duct.get_Geometry(opt);
 
                 foreach (var obj in geoElement)

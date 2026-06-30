@@ -20,6 +20,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -36,12 +37,12 @@ namespace BuildingCoder
             var app = commandData.Application;
             var doc = app.ActiveUIDocument.Document;
 
-            var fFamInstClass = new ElementClassFilter(typeof(FamilyInstance));
-            var fDoorCat = new ElementCategoryFilter(BuiltInCategory.OST_Doors);
-            var fWindowCat = new ElementCategoryFilter(BuiltInCategory.OST_Windows);
-            var fCat = new LogicalOrFilter(fDoorCat, fWindowCat);
-            var f = new LogicalAndFilter(fCat, fFamInstClass);
-            var openings = new FilteredElementCollector(doc);
+            ElementClassFilter fFamInstClass = new(typeof(FamilyInstance));
+            ElementCategoryFilter fDoorCat = new(BuiltInCategory.OST_Doors);
+            ElementCategoryFilter fWindowCat = new(BuiltInCategory.OST_Windows);
+            LogicalOrFilter fCat = new(fDoorCat, fWindowCat);
+            LogicalAndFilter f = new(fCat, fFamInstClass);
+            FilteredElementCollector openings = new(doc);
             openings.WherePasses(f);
 
             var ids = Util.GetHostedElementIds(doc, openings);

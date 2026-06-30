@@ -1,7 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Text;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ara3D.RevitSampleBrowser.Loads.CS
 {
@@ -18,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             var document = combination.Document;
 
             // Generate the formula field.
-            var formulaString = new StringBuilder();
+            StringBuilder formulaString = new();
             var components = combination.GetComponents();
             foreach (var component in components)
             {
@@ -32,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             Formula = formulaString.ToString();
 
             // Generate the usage field.
-            var usageString = new StringBuilder();
+            StringBuilder usageString = new();
             var usageIds = combination.GetUsageIds();
             foreach (var id in usageIds)
             {

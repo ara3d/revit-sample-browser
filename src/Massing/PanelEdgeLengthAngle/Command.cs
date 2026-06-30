@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
 {
@@ -44,15 +44,15 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
 
         private List<FamilyInstance> GetFamilyInstances(DividedSurface ds)
         {
-            var fiList = new List<FamilyInstance>();
+            List<FamilyInstance> fiList = new();
 
             for (var u = 0; u < ds.NumberOfUGridlines; ++u)
-            for (var v = 0; v < ds.NumberOfVGridlines; ++v)
-            {
-                var gn = new GridNode(u, v);
-                var familyInstance = ds.GetTileFamilyInstance(gn, 0);
-                if (familyInstance != null) fiList.Add(familyInstance);
-            }
+                for (var v = 0; v < ds.NumberOfVGridlines; ++v)
+                {
+                    GridNode gn = new(u, v);
+                    var familyInstance = ds.GetTileFamilyInstance(gn, 0);
+                    if (familyInstance != null) fiList.Add(familyInstance);
+                }
 
             return fiList;
         }
@@ -73,28 +73,28 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
                 {
                     // partial panels
                     case Solid object1:
-                    {
-                        solid = object1;
-                        if (null == solid)
-                            continue;
-                        break;
-                    }
+                        {
+                            solid = object1;
+                            if (null == solid)
+                                continue;
+                            break;
+                        }
                     // non-partial panels
                     case GeometryInstance geomInst:
-                    {
-                        //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
-                        var objects1 = geomInst.SymbolGeometry.GetEnumerator();
-                        while (objects1.MoveNext())
                         {
-                            object geomObj = objects1.Current;
+                            //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
+                            var objects1 = geomInst.SymbolGeometry.GetEnumerator();
+                            while (objects1.MoveNext())
+                            {
+                                object geomObj = objects1.Current;
 
-                            solid = geomObj as Solid;
-                            if (solid != null)
-                                break;
+                                solid = geomObj as Solid;
+                                if (solid != null)
+                                    break;
+                            }
+
+                            break;
                         }
-
-                        break;
-                    }
                 }
 
                 if (null == solid || // the solid can't be null
@@ -186,7 +186,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
 
         private InstParameters GetParams(FamilyInstance familyInstance)
         {
-            var iParams = new InstParameters();
+            InstParameters iParams = new();
             var l1 = familyInstance.LookupParameter("Length1");
             var l2 = familyInstance.LookupParameter("Length2");
             var l3 = familyInstance.LookupParameter("Length3");
@@ -219,8 +219,8 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
 
         protected List<T> GetElements<T>() where T : Element
         {
-            var returns = new List<T>();
-            var collector = new FilteredElementCollector(m_doc);
+            List<T> returns = new();
+            FilteredElementCollector collector = new(m_doc);
             ICollection<Element> founds = collector.OfClass(typeof(T)).ToElements();
             foreach (var elem in founds)
             {
@@ -233,7 +233,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
 
     public class InstParameters
     {
-        private readonly Dictionary<string, Parameter> m_parameters = new Dictionary<string, Parameter>(8);
+        private readonly Dictionary<string, Parameter> m_parameters = new(8);
 
         public Parameter this[string index]
         {

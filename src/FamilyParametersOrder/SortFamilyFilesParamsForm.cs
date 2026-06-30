@@ -1,15 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
 {
     // Sorted output is written to an "ordered" subfolder; *.rfa files in subfolders are not processed.
@@ -25,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
 
         private void browseBtn_Click(object sender, EventArgs e)
         {
-            var dialog = new FolderBrowserDialog();
+            FolderBrowserDialog dialog = new();
             if (dialog.ShowDialog() == DialogResult.OK) directoryTxt.Text = dialog.SelectedPath;
         }
 
@@ -33,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
         {
             var absPath = AssemblyPathHelper.ResolveDirectoryPath(directoryTxt.Text);
 
-            var dirInfo = new DirectoryInfo(absPath);
+            DirectoryInfo dirInfo = new(absPath);
             if (!dirInfo.Exists)
             {
                 MessageBox.Show("Please select a valid directory first.");
@@ -48,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
             foreach (var fInfo in fileInfo)
             {
                 var doc = m_uiApp.Application.OpenDocumentFile(fInfo.FullName);
-                using (var trans = new Transaction(doc, "Sort parameters."))
+                using (Transaction trans = new(doc, "Sort parameters."))
                 {
                     trans.Start();
                     doc.FamilyManager.SortParameters(order);

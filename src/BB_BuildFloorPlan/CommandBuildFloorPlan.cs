@@ -1,5 +1,4 @@
-﻿using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
@@ -20,33 +19,33 @@ namespace Ara3D.Bowerbird.RevitSamples
             var ui = uiapp.ActiveUIDocument;
 
             // Example: quick plan spec (meters) — replace with deserialized JSON/YAML/XML or UI-collected data
-            var simpleSpec = new PlanSpec
+            PlanSpec simpleSpec = new()
             {
                 Units = SourceUnits.Meters,
                 LevelName = "Level 1",
                 LevelElevation = 0,
                 Shell = new OutlineSpec { Origin = new XYZ(0, 0, 0), Width = 40, Depth = 25, WallHeight = 3.6, ExteriorWallType = null },
-                Partitions = new List<PartitionSpec>
-                {
+                Partitions =
+                [
                     new PartitionSpec { P0 = new XYZ(-10, 0, 0), P1 = new XYZ(10, 0, 0), Height = 3.0 },
                     new PartitionSpec { P0 = new XYZ(0, -6, 0), P1 = new XYZ(0, 6, 0), Height = 3.0 }
-                },
+                ],
                 Corridor = new CorridorSpec
                 {
-                    Path = new List<XYZ> { new XYZ(-18, 0, 0), new XYZ(18, 0, 0) },
+                    Path = [new XYZ(-18, 0, 0), new XYZ(18, 0, 0)],
                     Width = 2.4,
                     UseWalls = false
                 },
-                Rooms = new List<RoomSpec>
-                {
+                Rooms =
+                [
                     new RoomSpec { Number = "101", Name = "Exam", Department = "Outpatient", SeedPoint = new XYZ(-8, 4, 0) },
                     new RoomSpec { Number = "102", Name = "Exam", Department = "Outpatient", SeedPoint = new XYZ( 8, 4, 0) },
                     new RoomSpec { Number = "103", Name = "Consult", Department = "Outpatient", SeedPoint = new XYZ(-8, -4, 0) },
                     new RoomSpec { Number = "104", Name = "Consult", Department = "Outpatient", SeedPoint = new XYZ( 8, -4, 0) }
-                }
+                ]
             };
 
-            var spec = new PlanSpec
+            PlanSpec spec = new()
             {
                 Units = SourceUnits.Meters,
                 LevelName = "Level 1",
@@ -54,8 +53,8 @@ namespace Ara3D.Bowerbird.RevitSamples
                 Shell = new OutlineSpec { Origin = new XYZ(0, 0, 0), Width = 60, Depth = 36, WallHeight = 3.6 },
 
                 // Long partitions — let CreatePartitionWallExtended extend them to the shell
-                Partitions = new List<PartitionSpec>
-                {
+                Partitions =
+                [
                     // north suite dividers
                     new PartitionSpec { P0 = new XYZ(-18,  8, 0), P1 = new XYZ( 18,  8, 0), Height = 3.2 },
                     new PartitionSpec { P0 = new XYZ(-18, 14, 0), P1 = new XYZ( 18, 14, 0), Height = 3.2 },
@@ -65,24 +64,24 @@ namespace Ara3D.Bowerbird.RevitSamples
                     new PartitionSpec { P0 = new XYZ(-12, -18, 0), P1 = new XYZ(-12, 18, 0), Height = 3.2 },
                     new PartitionSpec { P0 = new XYZ(   0, -18, 0), P1 = new XYZ(   0, 18, 0), Height = 3.2 },
                     new PartitionSpec { P0 = new XYZ(  12, -18, 0), P1 = new XYZ(  12, 18, 0), Height = 3.2 },
-                },
+                ],
 
                 Corridor = new CorridorSpec
                 {
                     // L-shaped corridor
-                    Path = new List<XYZ>
-                    {
+                    Path =
+                    [
                         new XYZ(-24, -10, 0),
                         new XYZ(  0, -10, 0),
                         new XYZ(  0,  12, 0),
                         new XYZ( 20,  12, 0)
-                    },
+                    ],
                     Width = 2.6,
                     UseWalls = false
                 },
 
-                Rooms = new List<RoomSpec>
-                {
+                Rooms =
+                [
                     // north wing, west to east
                     new RoomSpec { Number="101", Name="Exam",     Department="Outpatient", SeedPoint=new XYZ(-17, 15, 0) },
                     new RoomSpec { Number="102", Name="Exam",     Department="Outpatient", SeedPoint=new XYZ(-11, 15, 0) },
@@ -103,7 +102,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                     new RoomSpec { Number="113", Name="Utility",  Department="Ops",        SeedPoint=new XYZ(  5, -12, 0) },
                     new RoomSpec { Number="114", Name="Office",   Department="Admin",      SeedPoint=new XYZ( 11, -12, 0) },
                     new RoomSpec { Number="115", Name="Office",   Department="Admin",      SeedPoint=new XYZ( 17, -12, 0) },
-                }
+                ]
             };
 
             try
@@ -125,7 +124,11 @@ namespace Ara3D.Bowerbird.RevitSamples
     public sealed class UnitContext
     {
         public SourceUnits Units { get; }
-        public UnitContext(SourceUnits u) => Units = u;
+        public UnitContext(SourceUnits u)
+        {
+            Units = u;
+        }
+
         public double ToFeet(double v)
         {
             return Units switch
@@ -137,7 +140,10 @@ namespace Ara3D.Bowerbird.RevitSamples
                 _ => v
             };
         }
-        public XYZ ToFeet(XYZ p) => new XYZ(ToFeet(p.X), ToFeet(p.Y), ToFeet(p.Z));
+        public XYZ ToFeet(XYZ p)
+        {
+            return new XYZ(ToFeet(p.X), ToFeet(p.Y), ToFeet(p.Z));
+        }
     }
 
     /// <summary>
@@ -150,10 +156,10 @@ namespace Ara3D.Bowerbird.RevitSamples
         public string LevelName { get; set; } = "Level 1";
         public double LevelElevation { get; set; } = 0.0; // in Units
         public OutlineSpec Shell { get; set; } = new OutlineSpec();
-        public List<PartitionSpec> Partitions { get; set; } = new();
-        public List<RoomSpec> Rooms { get; set; } = new();
-        public List<DoorSpec> Doors { get; set; } = new();
-        public List<WindowSpec> Windows { get; set; } = new();
+        public List<PartitionSpec> Partitions { get; set; } = [];
+        public List<RoomSpec> Rooms { get; set; } = [];
+        public List<DoorSpec> Doors { get; set; } = [];
+        public List<WindowSpec> Windows { get; set; } = [];
         public CorridorSpec Corridor { get; set; } = null; // optional
     }
 
@@ -208,7 +214,7 @@ namespace Ara3D.Bowerbird.RevitSamples
     public class CorridorSpec
     {
         /// <summary>Centerline polyline in plan (Units).</summary>
-        public List<XYZ> Path { get; set; } = new();
+        public List<XYZ> Path { get; set; } = [];
         /// <summary>Clear width (Units).</summary>
         public double Width { get; set; } = 2.0;
         /// <summary>If true, build the corridor boundaries with walls; otherwise use room separation lines.</summary>
@@ -232,9 +238,9 @@ namespace Ara3D.Bowerbird.RevitSamples
         public static void BuildFromSpec(UIDocument uidoc, PlanSpec spec)
         {
             var doc = uidoc.Document;
-            var units = new UnitContext(spec.Units);
+            UnitContext units = new(spec.Units);
 
-            using var tg = new TransactionGroup(doc, "Build Hospital Floor");
+            using TransactionGroup tg = new(doc, "Build Hospital Floor");
             tg.Start();
 
             var level = EnsureLevel(doc, spec.LevelName, units.ToFeet(spec.LevelElevation));
@@ -285,18 +291,16 @@ namespace Ara3D.Bowerbird.RevitSamples
                 var room = CreateRoomAtPoint(doc, level, new UV(units.ToFeet(r.SeedPoint.X), units.ToFeet(r.SeedPoint.Y)));
                 if (room == null)
                     continue;
-                using (var t = new Transaction(doc, "Set Room Params"))
+                using Transaction t = new(doc, "Set Room Params");
+                t.Start();
+                SetStringParam(room, BuiltInParameter.ROOM_NUMBER, r.Number);
+                SetStringParam(room, BuiltInParameter.ROOM_NAME, r.Name);
+                if (!string.IsNullOrWhiteSpace(r.Department))
                 {
-                    t.Start();
-                    SetStringParam(room, BuiltInParameter.ROOM_NUMBER, r.Number);
-                    SetStringParam(room, BuiltInParameter.ROOM_NAME, r.Name);
-                    if (!string.IsNullOrWhiteSpace(r.Department))
-                    {
-                        var p = room.get_Parameter(BuiltInParameter.ROOM_DEPARTMENT);
-                        if (p is { IsReadOnly: false }) p.Set(r.Department);
-                    }
-                    t.Commit();
+                    var p = room.get_Parameter(BuiltInParameter.ROOM_DEPARTMENT);
+                    if (p is { IsReadOnly: false }) p.Set(r.Department);
                 }
+                t.Commit();
             }
 
             // Doors
@@ -308,7 +312,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                     symbolName: d.SymbolName,
                     wallId: ResolveWallId(doc, d),
                     locationFeet: units.ToFeet(d.Location),
-                    offsetFromWallStartFeet: double.IsNaN(d.OffsetFromWallStart) ? (double?)null : units.ToFeet(d.OffsetFromWallStart),
+                    offsetFromWallStartFeet: double.IsNaN(d.OffsetFromWallStart) ? null : units.ToFeet(d.OffsetFromWallStart),
                     sillHeightFeet: units.ToFeet(d.SillHeight),
                     flipHand: d.FlipHand,
                     flipFacing: d.FlipFacing
@@ -324,7 +328,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                     symbolName: w.SymbolName,
                     wallId: w.WallId,
                     locationFeet: units.ToFeet(w.Location),
-                    offsetFromWallStartFeet: double.IsNaN(w.OffsetFromWallStart) ? (double?)null : units.ToFeet(w.OffsetFromWallStart),
+                    offsetFromWallStartFeet: double.IsNaN(w.OffsetFromWallStart) ? null : units.ToFeet(w.OffsetFromWallStart),
                     sillHeightFeet: units.ToFeet(w.SillHeight),
                     centerInWallThickness: w.CenterInWallThickness
                 );
@@ -342,7 +346,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
             if (level != null) return level;
 
-            using var t = new Transaction(doc, $"Create Level {name}");
+            using Transaction t = new(doc, $"Create Level {name}");
             t.Start();
             level = Level.Create(doc, elevationFeet);
             level.Name = name;
@@ -369,7 +373,7 @@ namespace Ara3D.Bowerbird.RevitSamples
             if (vft == null)
                 throw new InvalidOperationException("No ViewFamilyType for FloorPlan found.");
 
-            using var t = new Transaction(doc, $"Create Plan for {level.Name}");
+            using Transaction t = new(doc, $"Create Plan for {level.Name}");
             t.Start();
             plan = ViewPlan.Create(doc, vft.Id, level.Id);
             created = true;
@@ -379,9 +383,9 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public static SketchPlane EnsureSketchPlaneOnLevel(Document doc, Level level)
         {
-            var origin = new XYZ(0, 0, level.Elevation);
+            XYZ origin = new(0, 0, level.Elevation);
             var plane = Plane.CreateByNormalAndOrigin(XYZ.BasisZ, origin);
-            using var t = new Transaction(doc, "Create SketchPlane");
+            using Transaction t = new(doc, "Create SketchPlane");
             t.Start();
             var sp = SketchPlane.Create(doc, plane);
             t.Commit();
@@ -389,9 +393,11 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static WallType FindWallType(Document doc, string typeName)
-            => string.IsNullOrWhiteSpace(typeName)
-                ? new FilteredElementCollector(doc).OfClass(typeof(WallType)).Cast<WallType>().FirstOrDefault(wt => wt.Kind == WallKind.Basic)
-                : new FilteredElementCollector(doc).OfClass(typeof(WallType)).Cast<WallType>().FirstOrDefault(wt => wt.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase));
+        {
+            return string.IsNullOrWhiteSpace(typeName)
+                        ? new FilteredElementCollector(doc).OfClass(typeof(WallType)).Cast<WallType>().FirstOrDefault(wt => wt.Kind == WallKind.Basic)
+                        : new FilteredElementCollector(doc).OfClass(typeof(WallType)).Cast<WallType>().FirstOrDefault(wt => wt.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase));
+        }
 
         public static FamilySymbol FindFamilySymbol(Document doc, BuiltInCategory bic, string symbolName)
         {
@@ -403,7 +409,7 @@ namespace Ara3D.Bowerbird.RevitSamples
             if (string.IsNullOrWhiteSpace(symbolName))
                 return col.FirstOrDefault();
 
-            var s = col.FirstOrDefault(f => f.Name.Equals(symbolName, StringComparison.OrdinalIgnoreCase) || ($"{f.Family?.Name} : {f.Name}").Equals(symbolName, StringComparison.OrdinalIgnoreCase));
+            var s = col.FirstOrDefault(f => f.Name.Equals(symbolName, StringComparison.OrdinalIgnoreCase) || $"{f.Family?.Name} : {f.Name}".Equals(symbolName, StringComparison.OrdinalIgnoreCase));
             return s ?? col.FirstOrDefault();
         }
 
@@ -411,7 +417,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         {
             if (symbol == null) throw new InvalidOperationException("FamilySymbol not found.");
             if (symbol.IsActive) return;
-            using var t = new Transaction(doc, $"Activate {symbol.Name}");
+            using Transaction t = new(doc, $"Activate {symbol.Name}");
             t.Start();
             symbol.Activate();
             t.Commit();
@@ -422,21 +428,21 @@ namespace Ara3D.Bowerbird.RevitSamples
         {
             var wt = FindWallType(doc, wallTypeName) ?? throw new InvalidOperationException("No WallType found.");
 
-            var p0 = new XYZ(origin.X - widthFeet / 2, origin.Y - depthFeet / 2, level.Elevation);
-            var p1 = new XYZ(origin.X + widthFeet / 2, origin.Y - depthFeet / 2, level.Elevation);
-            var p2 = new XYZ(origin.X + widthFeet / 2, origin.Y + depthFeet / 2, level.Elevation);
-            var p3 = new XYZ(origin.X - widthFeet / 2, origin.Y + depthFeet / 2, level.Elevation);
+            XYZ p0 = new(origin.X - (widthFeet / 2), origin.Y - (depthFeet / 2), level.Elevation);
+            XYZ p1 = new(origin.X + (widthFeet / 2), origin.Y - (depthFeet / 2), level.Elevation);
+            XYZ p2 = new(origin.X + (widthFeet / 2), origin.Y + (depthFeet / 2), level.Elevation);
+            XYZ p3 = new(origin.X - (widthFeet / 2), origin.Y + (depthFeet / 2), level.Elevation);
 
-            var curves = new List<Curve>
-            {
+            List<Curve> curves =
+            [
                 Line.CreateBound(p0, p1),
                 Line.CreateBound(p1, p2),
                 Line.CreateBound(p2, p3),
                 Line.CreateBound(p3, p0)
-            };
+            ];
 
-            var result = new List<Wall>(4);
-            using var t = new Transaction(doc, "Create Shell Walls");
+            List<Wall> result = new(4);
+            using Transaction t = new(doc, "Create Shell Walls");
             t.Start();
             foreach (var c in curves)
             {
@@ -454,7 +460,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         public static Wall CreatePartitionWall(Document doc, Level level, XYZ p0, XYZ p1, double heightFeet, string wallTypeName)
         {
             var wt = FindWallType(doc, wallTypeName) ?? FindWallType(doc, null);
-            using var t = new Transaction(doc, "Create Partition Wall");
+            using Transaction t = new(doc, "Create Partition Wall");
             t.Start();
             var w = Wall.Create(doc, Line.CreateBound(p0, p1), wt.Id, level.Id, heightFeet, 0, false, false);
             t.Commit();
@@ -468,17 +474,17 @@ namespace Ara3D.Bowerbird.RevitSamples
             var half = widthFeet / 2.0;
 
             // For each segment, build two offset walls.
-            var allWalls = new List<Wall>();
-            using var t = new Transaction(doc, "Create Corridor Walls");
+            List<Wall> allWalls = [];
+            using Transaction t = new(doc, "Create Corridor Walls");
             t.Start();
-            for (int i = 0; i < centerline.Count - 1; i++)
+            for (var i = 0; i < centerline.Count - 1; i++)
             {
                 var a = centerline[i];
                 var b = centerline[i + 1];
                 var dir = (b - a).Normalize();
-                var n = new XYZ(-dir.Y, dir.X, 0); // left-normal in XY
-                var pL0 = a + n * half; var pL1 = b + n * half;
-                var pR0 = a - n * half; var pR1 = b - n * half;
+                XYZ n = new(-dir.Y, dir.X, 0); // left-normal in XY
+                var pL0 = a + (n * half); var pL1 = b + (n * half);
+                var pR0 = a - (n * half); var pR1 = b - (n * half);
 
                 var wL = Wall.Create(doc, Line.CreateBound(pL0, pL1), wt.Id, level.Id, heightFeet, 0, false, false);
                 var wR = Wall.Create(doc, Line.CreateBound(pR0, pR1), wt.Id, level.Id, heightFeet, 0, false, false);
@@ -491,11 +497,11 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public static void TryJoinConsecutiveWalls(Document doc, IList<Wall> walls)
         {
-            using var t = new Transaction(doc, "Join Walls");
+            using Transaction t = new(doc, "Join Walls");
             t.Start();
-            for (int i = 0; i < walls.Count; i++)
+            for (var i = 0; i < walls.Count; i++)
             {
-                for (int j = i + 1; j < walls.Count; j++)
+                for (var j = i + 1; j < walls.Count; j++)
                 {
                     try { JoinGeometryUtils.JoinGeometry(doc, walls[i], walls[j]); }
                     catch { /* ignore */ }
@@ -506,7 +512,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public static CurveArray ToCurveArray(IEnumerable<Curve> curves)
         {
-            var ca = new CurveArray();
+            CurveArray ca = new();
             foreach (var c in curves) ca.Append(c);
             return ca;
         }
@@ -522,21 +528,21 @@ namespace Ara3D.Bowerbird.RevitSamples
             var level = plan.GenLevel;
             var sp = EnsureSketchPlaneOnLevel(doc, level);
 
-            var left = new List<Curve>();
-            var right = new List<Curve>();
+            List<Curve> left = [];
+            List<Curve> right = [];
 
             // Build offsets segment-by-segment (simple approach; for right-angle layouts this is fine).
-            for (int i = 0; i < centerline.Count - 1; i++)
+            for (var i = 0; i < centerline.Count - 1; i++)
             {
                 var a = centerline[i];
                 var b = centerline[i + 1];
                 var dir = (b - a).Normalize();
-                var n = new XYZ(-dir.Y, dir.X, 0);
-                left.Add(Line.CreateBound(a + n * half, b + n * half));
-                right.Add(Line.CreateBound(a - n * half, b - n * half));
+                XYZ n = new(-dir.Y, dir.X, 0);
+                left.Add(Line.CreateBound(a + (n * half), b + (n * half)));
+                right.Add(Line.CreateBound(a - (n * half), b - (n * half)));
             }
 
-            using var t = new Transaction(doc, "Create Corridor Separation Lines");
+            using Transaction t = new(doc, "Create Corridor Separation Lines");
             t.Start();
             // NewRoomBoundaryLines creates CurveElements in OST_RoomSeparationLines
 
@@ -551,7 +557,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         /// </summary>
         public static Room CreateRoomAtPoint(Document doc, Level level, UV uv)
         {
-            using var t = new Transaction(doc, "Create Room");
+            using Transaction t = new(doc, "Create Room");
             t.Start();
             Room r = null;
             try { r = doc.Create.NewRoom(level, uv); } catch { /* fails if not enclosed */ }
@@ -562,15 +568,14 @@ namespace Ara3D.Bowerbird.RevitSamples
         public static FamilyInstance PlaceDoorOnWall(Document doc, Level level, string symbolName, ElementId wallId, XYZ locationFeet, double? offsetFromWallStartFeet, double sillHeightFeet, bool flipHand, bool flipFacing)
         {
             if (wallId == ElementId.InvalidElementId) throw new ArgumentException("WallId required for placing a door.");
-            var wall = doc.GetElement(wallId) as Wall;
-            if (wall == null) throw new InvalidOperationException("Wall not found.");
+            if (doc.GetElement(wallId) is not Wall wall) throw new InvalidOperationException("Wall not found.");
 
             var symbol = FindFamilySymbol(doc, BuiltInCategory.OST_Doors, symbolName);
             symbol.EnsureActivated(doc);
 
             var insertPoint = ResolvePointOnWall(wall, locationFeet, offsetFromWallStartFeet);
 
-            using var t = new Transaction(doc, "Place Door");
+            using Transaction t = new(doc, "Place Door");
             t.Start();
             var inst = doc.Create.NewFamilyInstance(insertPoint, symbol, wall, level, StructuralType.NonStructural);
 
@@ -587,15 +592,14 @@ namespace Ara3D.Bowerbird.RevitSamples
         public static FamilyInstance PlaceWindowOnWall(Document doc, Level level, string symbolName, ElementId wallId, XYZ locationFeet, double? offsetFromWallStartFeet, double sillHeightFeet, bool centerInWallThickness)
         {
             if (wallId == ElementId.InvalidElementId) throw new ArgumentException("WallId required for placing a window.");
-            var wall = doc.GetElement(wallId) as Wall;
-            if (wall == null) throw new InvalidOperationException("Wall not found.");
+            if (doc.GetElement(wallId) is not Wall wall) throw new InvalidOperationException("Wall not found.");
 
             var symbol = FindFamilySymbol(doc, BuiltInCategory.OST_Windows, symbolName);
             symbol.EnsureActivated(doc);
 
             var insertPoint = ResolvePointOnWall(wall, locationFeet, offsetFromWallStartFeet);
 
-            using var t = new Transaction(doc, "Place Window");
+            using Transaction t = new(doc, "Place Window");
             t.Start();
             var inst = doc.Create.NewFamilyInstance(insertPoint, symbol, wall, level, StructuralType.NonStructural);
 
@@ -637,7 +641,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                 var s = lc.GetEndPoint(0);
                 var e = lc.GetEndPoint(1);
                 var dir = (e - s).Normalize();
-                return s + dir * offsetFromWallStartFeet.Value;
+                return s + (dir * offsetFromWallStartFeet.Value);
             }
 
             // Project the given point onto the wall curve

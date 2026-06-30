@@ -1,7 +1,6 @@
+using Autodesk.Revit.DB;
 using System;
 using System.Diagnostics;
-using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -41,7 +40,7 @@ namespace BuildingCoder
 
             var trueNorthAngle = patn.AsDouble();
 
-            var actualAzimuth = 2 * Math.PI - azimuth + trueNorthAngle; // adjust for project true north
+            var actualAzimuth = (2 * Math.PI) - azimuth + trueNorthAngle; // adjust for project true north
 
             var azimuthRotation = Transform
                 .CreateRotation(XYZ.BasisZ, actualAzimuth);

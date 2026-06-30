@@ -13,12 +13,12 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Xml;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Xml;
 
 #endregion // Namespaces
 
@@ -49,24 +49,25 @@ namespace BuildingCoder
             var app = commandData.Application;
             var doc = app.ActiveUIDocument.Document;
 
-            var a
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector a
+                = new(doc);
 
             a.OfCategory(BuiltInCategory.OST_Sheets);
             a.OfClass(typeof(ViewSheet));
 
-            var data = new List<SheetData>();
+            List<SheetData> data = new();
 
             foreach (ViewSheet v in a)
             {
-                var item = new SheetData(v);
+                SheetData item = new(v);
                 data.Add(item);
             }
 
-            var w = new XmlTextWriter(
-                "C:/SheetData.xml", null);
-
-            w.Formatting = Formatting.Indented;
+            XmlTextWriter w = new(
+                "C:/SheetData.xml", null)
+            {
+                Formatting = Formatting.Indented
+            };
             w.WriteStartDocument();
             w.WriteComment($" SheetData from {doc.PathName} on {DateTime.Now} by Jeremy ");
 

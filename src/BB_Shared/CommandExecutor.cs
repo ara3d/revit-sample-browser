@@ -1,7 +1,7 @@
-﻿using System.Windows.Forms;
-using Ara3D.Logging;
+﻿using Ara3D.Logging;
 using Ara3D.Utils;
 using Autodesk.Revit.UI;
+using System.Windows.Forms;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -24,10 +24,14 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public void SetCommand(INamedCommand command)
-            => _command = command;
+        {
+            _command = command;
+        }
 
         public void ResetCommand()
-            => _command = null;
+        {
+            _command = null;
+        }
 
         public void Execute(UIApplication app)
         {
@@ -46,7 +50,9 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public string GetName()
-            => "Command Executor";
+        {
+            return "Command Executor";
+        }
 
         public void Execute(INamedCommand command, object parameter = null)
         {

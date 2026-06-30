@@ -1,8 +1,8 @@
-using System;
-using System.IO;
 using Ara3D.Utils;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.IO;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -12,24 +12,25 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public override void Execute(object argument)
         {
-            var uiapp = argument as UIApplication;
-            if (uiapp == null)
+            if (argument is not UIApplication uiapp)
                 throw new Exception("Argument is not a UIApplication");
 
             var uidoc = uiapp.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            if (!(doc.ActiveView is View3D view3D))
+            if (doc.ActiveView is not View3D view3D)
                 throw new Exception("You must be in 3D view to export.");
 
 
             var outputFilePath = doc.CurrentFileName().ChangeDirectoryAndExt(Config.OutputDir, ".dae");
-            using (var textWriter = new StreamWriter(outputFilePath.CreateWrite()))
+            using (StreamWriter textWriter = new(outputFilePath.CreateWrite()))
             {
-                var context = new ColladaExportContext(doc, textWriter);
-                var exporter = new CustomExporter(doc, context);
-                exporter.IncludeGeometricObjects = true;
-                exporter.ShouldStopOnError = false;
+                ColladaExportContext context = new(doc, textWriter);
+                CustomExporter exporter = new(doc, context)
+                {
+                    IncludeGeometricObjects = true,
+                    ShouldStopOnError = false
+                };
                 exporter.Export(view3D);
             }
 

@@ -1,4 +1,3 @@
-using System;
 using Autodesk.Revit.ApplicationServices;
 using Microsoft.Win32;
 

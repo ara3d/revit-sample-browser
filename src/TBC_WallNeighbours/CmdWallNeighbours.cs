@@ -14,10 +14,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -35,7 +36,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = app.ActiveUIDocument.Document;
 
-            var walls = new List<Element>();
+            List<Element> walls = new();
             if (!Util.GetSelectedElementsOrAll(
                 walls, uidoc, typeof(Wall)))
             {

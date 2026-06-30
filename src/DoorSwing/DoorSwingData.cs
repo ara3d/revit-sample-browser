@@ -1,21 +1,19 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Parameters;
+using System.Collections;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
     public class DoorSwingData
     {
         // the Left, Right or others information.
-        public static readonly List<string> OpeningTypes = new List<string>();
+        public static readonly List<string> OpeningTypes = [];
 
 
         private readonly UIApplication m_app;
-        private readonly List<DoorFamily> m_doorFamilies = new List<DoorFamily>();
 
         static DoorSwingData()
         {
@@ -42,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             ParameterAccess.AddSharedParameters(app);
         }
 
-        public List<DoorFamily> DoorFamilies => m_doorFamilies;
+        public List<DoorFamily> DoorFamilies { get; } = [];
 
         public static Result UpdateDoorsInfo(Document doc, bool onlyUpdateSelect,
             bool showUpdateResultMessage, ref string message)

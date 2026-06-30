@@ -1,25 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 
 namespace BuildingCoder
@@ -50,10 +35,10 @@ namespace BuildingCoder
 
             var tangent = derivatives.BasisX.Normalize();
 
-            var normal = new XYZ(tangent.Y,
+            XYZ normal = new(tangent.Y,
                 tangent.X * -1, tangent.Z);
 
-            var p = midPoint + wallThickness * normal;
+            var p = midPoint + (wallThickness * normal);
 
             var otherRoom = doc.GetRoomAtPoint(p);
 
@@ -63,7 +48,7 @@ namespace BuildingCoder
                     normal = new XYZ(tangent.Y * -1,
                         tangent.X, tangent.Z);
 
-                    p = midPoint + wallThickness * normal;
+                    p = midPoint + (wallThickness * normal);
 
                     otherRoom = doc.GetRoomAtPoint(p);
 
@@ -92,7 +77,7 @@ namespace BuildingCoder
                     continue;
                 }
 
-                if (view is {ViewType: ViewType.Elevation})
+                if (view is { ViewType: ViewType.Elevation })
                     break;
 
                 view = null;
@@ -134,7 +119,7 @@ namespace BuildingCoder
                 var b = f.GetBoundingBox();
                 var p = b.Min;
                 var q = b.Max;
-                var midparam = p + 0.5 * (q - p);
+                var midparam = p + (0.5 * (q - p));
                 var midpoint = f.Evaluate(midparam);
                 var normal = f.ComputeNormal(midparam);
 

@@ -13,10 +13,10 @@
 
 #region Namespaces
 
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -33,8 +33,8 @@ namespace BuildingCoder
             var app = commandData.Application;
             var doc = app.ActiveUIDocument.Document;
 
-            var walls
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector walls
+                = new(doc);
 
             walls.OfClass(typeof(Wall));
 
@@ -43,7 +43,7 @@ namespace BuildingCoder
                 var param = wall.get_Parameter(
                     BuiltInParameter.HOST_AREA_COMPUTED);
 
-                var a = param is {StorageType: StorageType.Double}
+                var a = param is { StorageType: StorageType.Double }
                     ? param.AsDouble()
                     : 0.0;
 

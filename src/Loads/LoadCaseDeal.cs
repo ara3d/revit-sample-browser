@@ -1,12 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.Loads.CS
 {
@@ -27,8 +28,8 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         {
             m_dataBuffer = dataBuffer;
             m_revit = dataBuffer.RevitApplication;
-            m_newLoadNaturesName = new List<string>
-            {
+            m_newLoadNaturesName =
+            [
                 "EQ1",
                 "EQ2",
                 "W1",
@@ -36,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                 "W3",
                 "W4",
                 "Other"
-            };
+            ];
         }
 
         public void PrepareData()
@@ -45,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             CreateLoadNatures();
 
             //get all the categories of load cases
-            var uiapplication = new UIApplication(m_revit);
+            UIApplication uiapplication = new(m_revit);
             var categories = uiapplication.ActiveUIDocument.Document.Settings.Categories;
             var category = categories.get_Item(BuiltInCategory.OST_LoadCases);
             var categoryNameMap = category.SubCategories;
@@ -53,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             iter.Reset();
             while (iter.MoveNext())
             {
-                if (!(iter.Current is Category temp))
+                if (iter.Current is not Category temp)
                     continue;
 
                 m_dataBuffer.LoadCaseCategories.Add(temp);
@@ -67,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                 if (e is LoadNature nature)
                 {
                     m_dataBuffer.LoadNatures.Add(nature);
-                    var newLoadNaturesMap = new LoadNaturesMap(nature);
+                    LoadNaturesMap newLoadNaturesMap = new(nature);
                     m_dataBuffer.LoadNaturesMap.Add(newLoadNaturesMap);
                 }
             }
@@ -80,7 +81,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                 if (e is LoadCase loadCase)
                 {
                     m_dataBuffer.LoadCases.Add(loadCase);
-                    var newLoadCaseMap = new LoadCasesMap(loadCase);
+                    LoadCasesMap newLoadCaseMap = new(loadCase);
                     m_dataBuffer.LoadCasesMap.Add(newLoadCaseMap);
                 }
             }
@@ -91,7 +92,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             //try to add some new load natures
             try
             {
-                var uiapplication = new UIApplication(m_revit);
+                UIApplication uiapplication = new(m_revit);
                 foreach (var name in m_newLoadNaturesName)
                 {
                     LoadNature.Create(uiapplication.ActiveUIDocument.Document, name);
@@ -140,7 +141,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             //try to create a load nature
             try
             {
-                var uiapplication = new UIApplication(m_revit);
+                UIApplication uiapplication = new(m_revit);
                 var newLoadNature = LoadNature.Create(uiapplication.ActiveUIDocument.Document, natureName);
                 if (null == newLoadNature)
                 {
@@ -150,7 +151,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
                 //add the load nature into the list and maps
                 m_dataBuffer.LoadNatures.Add(newLoadNature);
-                var newMap = new LoadNaturesMap(newLoadNature);
+                LoadNaturesMap newMap = new(newLoadNature);
                 m_dataBuffer.LoadNaturesMap.Add(newMap);
             }
             catch (Exception e)
@@ -197,7 +198,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             var categoryId = myLoadCase.LoadCasesSubCategoryId;
             var natureId = myLoadCase.LoadCasesNatureId;
 
-            var uiapplication = new UIApplication(m_revit);
+            UIApplication uiapplication = new(m_revit);
 
             //try to create a load case
             try
@@ -212,7 +213,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
                 //add the new case into list and map
                 m_dataBuffer.LoadCases.Add(newLoadCase);
-                var newLoadCaseMap = new LoadCasesMap(newLoadCase);
+                LoadCasesMap newLoadCaseMap = new(newLoadCase);
                 m_dataBuffer.LoadCasesMap.Add(newLoadCaseMap);
             }
             catch (Exception e)

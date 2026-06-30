@@ -2,23 +2,21 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Autodesk.Revit.DB;
-
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using System.Collections.Generic;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class ElementTypeCmdDefinition : ICommandDefinition
     {
-        private static readonly AutocompleteItem AutocompleteItem = new AutocompleteItem("type", "type", "select element types", AutocompleteItemGroups.Commands);
-              
+        private static readonly AutocompleteItem AutocompleteItem = new("type", "type", "select element types", AutocompleteItemGroups.Commands);
 
-        public IAutocompleteItem GetCommandAutocompleteItem() => AutocompleteItem;
-                            
+
+        public IAutocompleteItem GetCommandAutocompleteItem()
+        {
+            return AutocompleteItem;
+        }
 
         public IEnumerable<string> GetClassifiers()
         {
@@ -29,11 +27,17 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
             yield return "type";
             yield return "types";
             yield return "element type";
-            yield return "not element";           
+            yield return "not element";
         }
-        public bool CanRecognizeArgument(string argument) => false;
-        public bool CanParticipateInGenericSearch() => false;
+        public bool CanRecognizeArgument(string argument)
+        {
+            return false;
+        }
 
+        public bool CanParticipateInGenericSearch()
+        {
+            return false;
+        }
 
         public ICommand Create(string cmdText, string argument)
         {

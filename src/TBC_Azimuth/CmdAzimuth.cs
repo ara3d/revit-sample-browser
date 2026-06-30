@@ -14,11 +14,10 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -26,7 +25,7 @@ namespace BuildingCoder
 {
     [Transaction(TransactionMode.ReadOnly)]
     internal class CmdAzimuth : IExternalCommand
-    {     
+    {
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,

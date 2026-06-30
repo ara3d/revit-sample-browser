@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BuildingCoder
 {
@@ -12,13 +12,13 @@ namespace BuildingCoder
     {
         internal static void ChangeElementColor(Document doc, ElementId id)
         {
-            var color = new Color(
+            Color color = new(
                 200, 100, 100);
 
-            var ogs = new OverrideGraphicSettings();
+            OverrideGraphicSettings ogs = new();
             ogs.SetProjectionLineColor(color);
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Change Element Color");
             doc.ActiveView.SetElementOverrides(id, ogs);
             tx.Commit();
@@ -32,19 +32,18 @@ namespace BuildingCoder
             {
                 var im = e.Category.Material.Id.Value;
 
-                var materials = new List<Material>(
-                    new FilteredElementCollector(doc)
+                List<Material> materials = [.. new FilteredElementCollector(doc)
                         .WhereElementIsNotElementType()
                         .OfClass(typeof(Material))
                         .ToElements()
                         .Where(m
                             => m.Id.Value != im)
-                        .Cast<Material>());
+                        .Cast<Material>()];
 
-                var r = new Random();
+                Random r = new();
                 var i = r.Next(materials.Count);
 
-                using var tx = new Transaction(doc);
+                using Transaction tx = new(doc);
                 tx.Start("Change Element Material");
                 e.Category.Material = materials[i];
                 tx.Commit();
@@ -73,7 +72,7 @@ namespace BuildingCoder
                 var str = elem as Stairs;
                 var landings = str.GetStairsLandings();
                 var runs = str.GetStairsLandings();
-                using var transaction = new Transaction(doc);
+                using Transaction transaction = new(doc);
                 transaction.Start("Paint Material");
                 foreach (var id in landings)
                 {
@@ -108,11 +107,11 @@ namespace BuildingCoder
 
             var selected_face = geoObject as Face;
 
-            using var transaction = new Transaction(doc);
+            using Transaction transaction = new(doc);
             transaction.Start("Paint Selected Face");
 
             if (elem.Category.Id.Value.Equals(
-                (int) BuiltInCategory.OST_Stairs))
+                (int)BuiltInCategory.OST_Stairs))
             {
                 var str = elem as Stairs;
                 var isLand = false;

@@ -1,15 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using GXYZ = Autodesk.Revit.DB.XYZ;
 
 namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
@@ -29,7 +29,7 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
 
         private const double Min2FittingsLength = Min1FittingLength * 2;
 
-        private const double Min1Duct2FittingsLength = Min1FittingLength * 2 + MinDuctLength;
+        private const double Min1Duct2FittingsLength = (Min1FittingLength * 2) + MinDuctLength;
 
         private static Application _application;
 
@@ -37,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
 
         private DuctType m_dtRectangle;
 
-        private readonly ElementId m_ductTypeId = new ElementId(139191L);
+        private readonly ElementId m_ductTypeId = new(139191L);
 
         private Level m_lvl;
 
@@ -87,9 +87,9 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
 
                 var ids = new List<ElementId>
                 {
-                    new ElementId(378728L),
-                    new ElementId(378707L),
-                    new ElementId(378716L)
+                    new(378728L),
+                    new(378707L),
+                    new(378716L)
                 };
 
                 var instances = new FamilyInstance[3];
@@ -669,17 +669,11 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
 
         public class ConnectorInfo
         {
-            private Connector m_connector;
-
-            private GXYZ m_origin;
-
-            private ElementId m_ownerId;
-
             public ConnectorInfo(ElementId ownerId, GXYZ origin)
             {
-                m_ownerId = ownerId;
-                m_origin = origin;
-                m_connector = GetConnector(m_ownerId, origin);
+                OwnerId = ownerId;
+                Origin = origin;
+                Connector = GetConnector(OwnerId, origin);
             }
 
             public ConnectorInfo(ElementId ownerId, double x, double y, double z)
@@ -687,23 +681,11 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             {
             }
 
-            public Connector Connector
-            {
-                get => m_connector;
-                set => m_connector = value;
-            }
+            public Connector Connector { get; set; }
 
-            public ElementId OwnerId
-            {
-                get => m_ownerId;
-                set => m_ownerId = value;
-            }
+            public ElementId OwnerId { get; set; }
 
-            public GXYZ Origin
-            {
-                get => m_origin;
-                set => m_origin = value;
-            }
+            public GXYZ Origin { get; set; }
 
             public static Connector GetConnector(ElementId ownerId, GXYZ connectorOrigin)
             {
@@ -736,10 +718,10 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                     case MEPSystem system:
                         return system.ConnectorManager.Connectors;
                     default:
-                    {
-                        var duct = element as MEPCurve;
-                        return duct?.ConnectorManager.Connectors;
-                    }
+                        {
+                            var duct = element as MEPCurve;
+                            return duct?.ConnectorManager.Connectors;
+                        }
                 }
             }
 
@@ -1026,7 +1008,7 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                         connId += GetConnectorId(logLinkConn);
                     }
 
-                if (!connectors.ContainsKey(connId)) connectors.Add(connId, new List<Connector>());
+                if (!connectors.ContainsKey(connId)) connectors.Add(connId, []);
 
                 connectors[connId].Add(conn);
             }
@@ -1057,7 +1039,7 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                         connId += GetConnectorId(logLinkConn);
                     }
 
-                if (!connectors.ContainsKey(connId)) connectors.Add(connId, new List<Connector>());
+                if (!connectors.ContainsKey(connId)) connectors.Add(connId, []);
 
                 connectors[connId].Add(conn);
             }

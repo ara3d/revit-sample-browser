@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
 {
@@ -27,9 +27,9 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
 
         public CreateWallinBeamProfile()
         {
-            WallTypes = new List<WallType>();
-            m_beamCollection = new ArrayList();
-            m_lineCollection = new ArrayList();
+            WallTypes = [];
+            m_beamCollection = [];
+            m_lineCollection = [];
             IsSturctual = true;
         }
 
@@ -62,7 +62,7 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
             }
 
             // Show the dialog for the user select the wall style
-            using (var displayForm = new CreateWallinBeamProfileForm(this))
+            using (CreateWallinBeamProfileForm displayForm = new(this))
             {
                 if (DialogResult.OK != displayForm.ShowDialog()) return Result.Failed;
             }
@@ -78,7 +78,7 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
 
         private bool BeginCreate(Document project)
         {
-            var curveArray = new List<Curve>();
+            List<Curve> curveArray = new();
             var curve = m_lineCollection[0] as Curve;
             curveArray.Add(curve);
             var point = curve.GetEndPoint(1);
@@ -131,7 +131,7 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
             }
 
             // Begin to create the wall.
-            var t = new Transaction(project, Guid.NewGuid().GetHashCode().ToString());
+            Transaction t = new(project, Guid.NewGuid().GetHashCode().ToString());
             t.Start();
             var createdWall = Wall.Create(project, curveArray,
                 m_selectedWallType.Id, m_level.Id, IsSturctual);
@@ -158,12 +158,12 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
         private bool PrepareData(UIDocument project)
         {
             // Search all the wall types in the Revit
-            var filteredElementCollector = new FilteredElementCollector(project.Document);
+            FilteredElementCollector filteredElementCollector = new(project.Document);
             filteredElementCollector.OfClass(typeof(WallType));
             WallTypes = filteredElementCollector.Cast<WallType>().ToList();
 
             // Find the selection of beams in Revit
-            var selection = new ElementSet();
+            ElementSet selection = new();
             foreach (var elementId in project.Selection.GetElementIds())
             {
                 selection.Insert(project.Document.GetElement(elementId));
@@ -176,7 +176,7 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
                 {
                     m_beamCollection.Add(e);
 
-                    if (!(m.Location is LocationCurve curve))
+                    if (m.Location is not LocationCurve curve)
                     {
                         m_errorInformation = "The beam should have location curve.";
                         return false;
@@ -192,7 +192,7 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
                 return false;
             }
 
-            var collector = new FilteredElementCollector(project.Document);
+            FilteredElementCollector collector = new(project.Document);
             m_level = collector.OfClass(typeof(Level)).FirstElement() as Level;
             return true;
         }
@@ -216,22 +216,20 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
 
         private bool EqualPoint(XYZ first, XYZ second)
         {
-            if (-Precision <= first.X - second.X && Precision >= first.X - second.X
+            return -Precision <= first.X - second.X && Precision >= first.X - second.X
                                                  && -Precision <= first.Y - second.Y && Precision >= first.Y - second.Y
-                                                 && -Precision <= first.Z - second.Z && Precision >= first.Z - second.Z)
-                return true;
-            return false;
+                                                 && -Precision <= first.Z - second.Z && Precision >= first.Z - second.Z;
         }
 
         private bool EqualDouble(double first, double second)
         {
-            return -Precision <= first - second && Precision >= first - second;
+            return first - second is >= -Precision and <= Precision;
         }
 
         private bool IsInVerticalPlane()
         {
-            var startPoint = new XYZ();
-            var endPoint = new XYZ();
+            XYZ startPoint = new();
+            XYZ endPoint = new();
             var sign = 0; // used as a symbol,
             double slope = 0; // record slope of the lines' projection on X-Y plane
 
@@ -281,9 +279,9 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
             // As we all know, a close profile is composed by borders and points,
             // and the number of borders should be equal to points'.
             // So, the judgement use this way. 
-            var startPoint = new XYZ();
-            var endPoint = new XYZ();
-            var pointArray = new ArrayList();
+            XYZ startPoint = new();
+            XYZ endPoint = new();
+            ArrayList pointArray = new();
 
             foreach (var line in m_lineCollection)
             {

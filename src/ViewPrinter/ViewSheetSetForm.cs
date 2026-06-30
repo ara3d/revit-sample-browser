@@ -33,23 +33,13 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
         private void ListViewSheetSet()
         {
-            VisibleType vt;
-            switch (showSheetsCheckBox.Checked)
+            var vt = showSheetsCheckBox.Checked switch
             {
-                case true when showViewsCheckBox.Checked:
-                    vt = VisibleType.VtBothViewAndSheet;
-                    break;
-                case true when !showViewsCheckBox.Checked:
-                    vt = VisibleType.VtSheetOnly;
-                    break;
-                case false when showViewsCheckBox.Checked:
-                    vt = VisibleType.VtViewOnly;
-                    break;
-                default:
-                    vt = VisibleType.VtNone;
-                    break;
-            }
-
+                true when showViewsCheckBox.Checked => VisibleType.VtBothViewAndSheet,
+                true when !showViewsCheckBox.Checked => VisibleType.VtSheetOnly,
+                false when showViewsCheckBox.Checked => VisibleType.VtViewOnly,
+                _ => VisibleType.VtNone,
+            };
             var views = m_viewSheets.AvailableViewSheetSet(vt);
             viewSheetSetListView.Items.Clear();
             foreach (var view in views)
@@ -71,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             saveButton.Enabled = revertButton.Enabled = false;
 
             reNameButton.Enabled = deleteButton.Enabled =
-                m_viewSheets.SettingName.Equals("<In-Session>") ? false : true;
+                !m_viewSheets.SettingName.Equals("<In-Session>");
         }
 
         private void showSheetsCheckBox_CheckedChanged(object sender, EventArgs e)

@@ -4,7 +4,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents
 {
     public class ModelessCommand
     {
-        private ModelessCommandData m_data = new ModelessCommandData();
+        private ModelessCommandData m_data = new();
 
         public void Make(ModelessCommandData commandData)
         {

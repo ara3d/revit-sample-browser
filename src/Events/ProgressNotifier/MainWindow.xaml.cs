@@ -1,13 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Events;
+using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Events;
-using Microsoft.Win32;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
@@ -42,10 +43,7 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 
         private void RevitApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (e.Stage == ProgressStage.Unchanged || (e.Stage == ProgressStage.PositionChanged && e.Cancellable))
-                button_Cancel.IsEnabled = true;
-            else
-                button_Cancel.IsEnabled = false;
+            button_Cancel.IsEnabled = e.Stage == ProgressStage.Unchanged || (e.Stage == ProgressStage.PositionChanged && e.Cancellable);
 
             System.Windows.Forms.Application.DoEvents();
 
@@ -81,7 +79,7 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
                 stackPanel_ProgressData.Children.Add(tbProgressItem);
             }
 
-            if (itemReturn.Stage == ProgressStage.RangeChanged || itemReturn.Stage == ProgressStage.Unchanged)
+            if (itemReturn.Stage is ProgressStage.RangeChanged or ProgressStage.Unchanged)
                 if (m_previousEvent != null)
                 {
                 }
@@ -117,12 +115,7 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
             {
                 if (m_receivedCancelEvent)
                 {
-                    string isNull;
-                    if (document == null)
-                        isNull = " is null.";
-                    else
-                        isNull = " is not null.";
-
+                    var isNull = document == null ? " is null." : " is not null.";
                     textBox_log.Text += $"Open Document has thrown an exception.{Environment.NewLine}";
                     textBox_log.Text +=
                         $"We just got a cancel event, so this exception is likely from 'Open' being canceled. Returned document{isNull}{Environment.NewLine}";

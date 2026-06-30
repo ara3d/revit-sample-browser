@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.Forms;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.Geom;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS
 {
@@ -53,10 +53,10 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
             if (selectedIds.Count == 0)
                 throw new Exception("Please select a concrete beam or column to create rebar.");
 
-            var stFilter = new LogicalOrFilter(
+            LogicalOrFilter stFilter = new(
                 new ElementStructuralTypeFilter(StructuralType.Beam),
                 new ElementStructuralTypeFilter(StructuralType.Column));
-            var hostFilter = new LogicalAndFilter(stFilter,
+            LogicalAndFilter hostFilter = new(stFilter,
                 new StructuralMaterialTypeFilter(StructuralMaterialType.Concrete));
             var rebarHost = new FilteredElementCollector(m_rvtUiDoc.Document, selectedIds)
                 .OfClass(typeof(FamilyInstance))
@@ -88,23 +88,21 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
         /// </summary>
         public void Execute()
         {
-            using (var form = new NewRebarForm(m_rvtUiDoc.Document))
+            using NewRebarForm form = new(m_rvtUiDoc.Document);
+            if (DialogResult.OK == form.ShowDialog())
             {
-                if (DialogResult.OK == form.ShowDialog())
-                {
-                    var barType = form.RebarBarType;
-                    var barShape = form.RebarShape;
+                var barType = form.RebarBarType;
+                var barShape = form.RebarShape;
 
-                    var profilePoints = m_geometryData.ProfilePoints;
-                    var origin = profilePoints[0];
-                    var yVec = profilePoints[1] - origin;
-                    var xVec = profilePoints[3] - origin;
+                var profilePoints = m_geometryData.ProfilePoints;
+                var origin = profilePoints[0];
+                var yVec = profilePoints[1] - origin;
+                var xVec = profilePoints[3] - origin;
 
-                    m_createdRebar = Rebar.CreateFromRebarShape(m_rvtUiDoc.Document, barShape, barType, m_rebarHost,
-                        origin, xVec, yVec);
+                m_createdRebar = Rebar.CreateFromRebarShape(m_rvtUiDoc.Document, barShape, barType, m_rebarHost,
+                    origin, xVec, yVec);
 
-                    LayoutRebar();
-                }
+                LayoutRebar();
             }
         }
 
@@ -118,12 +116,10 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
             var yVec = profilePoints[1] - origin;
             var xVec = profilePoints[3] - origin;
 
-            var arcDef =
-                (m_createdRebar.Document.GetElement(m_createdRebar.GetShapeId()) as RebarShape)
-                .GetRebarShapeDefinition() as RebarShapeDefinitionByArc;
 
             var rebarShapeDrivenAccessor = m_createdRebar.GetShapeDrivenAccessor();
-            if (arcDef != null && arcDef.Type == RebarShapeDefinitionByArcType.Spiral)
+            if ((m_createdRebar.Document.GetElement(m_createdRebar.GetShapeId()) as RebarShape)
+                .GetRebarShapeDefinition() is RebarShapeDefinitionByArc arcDef && arcDef.Type == RebarShapeDefinitionByArcType.Spiral)
             {
                 rebarShapeDrivenAccessor.ScaleToBoxFor3D(origin, xVec, yVec, 10.0);
                 rebarShapeDrivenAccessor.Height = m_geometryData.DrivingLength - 0.1;

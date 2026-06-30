@@ -12,17 +12,17 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Coroutine;
 using Ara3D.RevitSampleBrowser.CloudAPISample.CS.View;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS
 {
     public class SampleEngine : IDisposable
     {
-        private readonly List<SampleContext> m_allContext = new List<SampleContext>();
+        private readonly List<SampleContext> m_allContext = [];
         private readonly UIApplication m_application;
         private ViewSamplePortal m_viewPortal;
 

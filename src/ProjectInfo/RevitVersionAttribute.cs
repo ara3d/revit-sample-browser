@@ -1,15 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
 {
     public sealed class RevitVersionAttribute : Attribute
     {
-        private readonly List<ProductType> m_products = new List<ProductType>();
+        private readonly List<ProductType> m_products = [];
 
         public RevitVersionAttribute(params ProductType[] names)
         {

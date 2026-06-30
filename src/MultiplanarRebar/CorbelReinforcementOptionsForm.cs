@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using Autodesk.Revit.DB.Structure;
 
 namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 {
@@ -22,19 +22,19 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 
         private void Initialize()
         {
-            var bartypes4 = new List<RebarBarType>(m_corbelReinforcementOptions.RebarBarTypes);
+            List<RebarBarType> bartypes4 = [.. m_corbelReinforcementOptions.RebarBarTypes];
             columnBarTypeComboBox.DataSource = bartypes4;
             columnBarTypeComboBox.ValueMember = "Name";
 
-            var bartypes1 = new List<RebarBarType>(m_corbelReinforcementOptions.RebarBarTypes);
+            List<RebarBarType> bartypes1 = [.. m_corbelReinforcementOptions.RebarBarTypes];
             topBarTypeComboBox.DataSource = bartypes1;
             topBarTypeComboBox.ValueMember = "Name";
 
-            var bartypes2 = new List<RebarBarType>(m_corbelReinforcementOptions.RebarBarTypes);
+            List<RebarBarType> bartypes2 = [.. m_corbelReinforcementOptions.RebarBarTypes];
             stirrupBarTypeComboBox.DataSource = bartypes2;
             stirrupBarTypeComboBox.ValueMember = "Name";
 
-            var bartypes3 = new List<RebarBarType>(m_corbelReinforcementOptions.RebarBarTypes);
+            List<RebarBarType> bartypes3 = [.. m_corbelReinforcementOptions.RebarBarTypes];
             multiplanarBarTypeComboBox.DataSource = bartypes3;
             multiplanarBarTypeComboBox.ValueMember = "Name";
 

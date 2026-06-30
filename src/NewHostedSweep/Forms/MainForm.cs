@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators;
 using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
         public MainForm(CreationMgr mgr) : this()
         {
             m_creationMgr = mgr;
-            m_binding = new BindingSource();
+            m_binding = [];
         }
 
         /// <summary>
@@ -35,15 +35,13 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             var creator =
                 comboBoxHostedSweepType.SelectedItem as HostedSweepCreator;
 
-            var creationData = new CreationData(creator);
+            CreationData creationData = new(creator);
 
-            using (var createForm = new EdgeFetchForm(creationData))
+            using EdgeFetchForm createForm = new(creationData);
+            if (createForm.ShowDialog() == DialogResult.OK)
             {
-                if (createForm.ShowDialog() == DialogResult.OK)
-                {
-                    creator.Create(creationData);
-                    RefreshListBox();
-                }
+                creator.Create(creationData);
+                RefreshListBox();
             }
         }
 
@@ -51,10 +49,8 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
         {
             var modificationData = listBoxCreatedHostedSweeps.SelectedItem as ModificationData;
 
-            using (var modifyForm = new HostedSweepModifyForm(modificationData))
-            {
-                modifyForm.ShowDialog();
-            }
+            using HostedSweepModifyForm modifyForm = new(modificationData);
+            modifyForm.ShowDialog();
         }
 
         private void RefreshListBox()
@@ -90,10 +86,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 
         private void listBoxHostedSweeps_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (listBoxCreatedHostedSweeps.SelectedItem != null)
-                buttonModify.Enabled = true;
-            else
-                buttonModify.Enabled = false;
+            buttonModify.Enabled = listBoxCreatedHostedSweeps.SelectedItem != null;
         }
 
         private void comboBoxHostedSweepType_SelectedIndexChanged(object sender, EventArgs e)

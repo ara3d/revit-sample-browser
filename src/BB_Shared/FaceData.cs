@@ -96,9 +96,9 @@ public record ElementData(long Id, int GeometryElementIndex, TransformData Trans
 
 public class GeometryData
 {
-    public Dictionary<string, int> SymbolIdsToGeometry = new();
-    public List<object> GeometryObjects = new();
-    public List<ElementData> Elements = new();
+    public Dictionary<string, int> SymbolIdsToGeometry = [];
+    public List<object> GeometryObjects = [];
+    public List<ElementData> Elements = [];
 
     public int Add(GeometryObjectData geometryObject)
     {
@@ -107,7 +107,9 @@ public class GeometryData
     }
 
     public List<int> AddRange(IEnumerable<GeometryObjectData> geometryObjects)
-        => geometryObjects.Select(Add).ToList();
+    {
+        return geometryObjects.Select(Add).ToList();
+    }
 }
 
 public class DocumentData
@@ -115,5 +117,5 @@ public class DocumentData
     public string DocumentName;
     public TransformData Transform;
     public GeometryData Geometry = new();
-    public List<DocumentData> Documents = new();
+    public List<DocumentData> Documents = [];
 };

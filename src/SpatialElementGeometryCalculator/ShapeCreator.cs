@@ -3,9 +3,9 @@
 // Adapted from SpatialElementGeometryCalculator by Jeremy Tammik et al.
 // https://github.com/jeremytammik/SpatialElementGeometryCalculator (MIT License)
 
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 {
@@ -16,7 +16,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
             Solid transientSolid,
             string dsName)
         {
-            var catId = new ElementId(BuiltInCategory.OST_GenericModel);
+            ElementId catId = new(BuiltInCategory.OST_GenericModel);
             var addInId = doc.Application.ActiveAddInId;
 
             var ds = DirectShape.CreateElement(doc, catId);
@@ -41,7 +41,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
             Document doc,
             Solid transientSolid)
         {
-            var builder = new TessellatedShapeBuilder();
+            TessellatedShapeBuilder builder = new();
 
             var idMaterial = new FilteredElementCollector(doc)
                 .OfClass(typeof(Material))
@@ -58,7 +58,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 
             foreach (Face face in faceArray)
             {
-                var triFace = new List<XYZ>(3);
+                List<XYZ> triFace = new(3);
                 var mesh = face.Triangulate();
                 var triCount = mesh.NumTriangles;
 

@@ -14,13 +14,13 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -53,7 +53,7 @@ namespace BuildingCoder
                 Util.PluralSuffix(n));
 
             string name;
-            var sep = new[] {':'};
+            var sep = new[] { ':' };
             string[] a;
 
             foreach (var link in links)

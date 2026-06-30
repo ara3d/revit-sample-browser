@@ -1,18 +1,17 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Ara3D.RevitSampleBrowser.Common.Structural;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+using System.Collections.Generic;
+using System.Linq;
 namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 {
     public class GeomHelper
     {
-        private Document m_currentDoc; //active document
+        private readonly Document m_currentDoc; //active document
 
         public GeomHelper()
         {
@@ -23,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
         {
             var faces = SampleBrowserUtils.GetFaces(wall);
             //unless API has bug, locCurve can't be null
-            if (!(wall.Location is LocationCurve locCurve)) return false;
+            if (wall.Location is not LocationCurve locCurve) return false;
             //check the location is line
             var locLine = locCurve.Curve as Line;
             if (null == locLine) return false;
@@ -50,7 +49,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                    if (associatedElement is not null and AnalyticalPanel panel)
                         model = panel;
                 }
             }
@@ -90,7 +89,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                    if (associatedElement is not null and AnalyticalPanel panel)
                         model = panel;
                 }
             }

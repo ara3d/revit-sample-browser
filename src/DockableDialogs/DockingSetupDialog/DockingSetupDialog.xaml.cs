@@ -10,12 +10,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.UI;
 using System;
 using System.Windows;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
 {
     public partial class DockingSetupDialog : Window
@@ -27,7 +25,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
         private int m_right;
         private string m_targetGuidString;
         private int m_top;
-        private DockPosition m_dockPosition;
 
         public DockingSetupDialog()
         {
@@ -84,11 +81,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
             }
         }
 
-        public DockPosition DockPosition
-        {
-            get => m_dockPosition;
-            private set => m_dockPosition = value;
-        }
+        public DockPosition DockPosition { get; private set; }
 
         private void btn_ok_Click(object sender, RoutedEventArgs e)
         {
@@ -115,14 +108,9 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
             else if (rb_ProjectBrowser.IsChecked == true)
                 m_targetGuidString = DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid.ToString();
 
-            else if (rb_PropertiesPalette.IsChecked == true)
-                m_targetGuidString = DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid.ToString();
-
-            else if (rb_RebarBrowser.IsChecked == true)
-                m_targetGuidString = DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid.ToString();
-
-            else
-                m_targetGuidString = "null";
+            else m_targetGuidString = rb_PropertiesPalette.IsChecked == true
+                ? DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid.ToString()
+                : rb_RebarBrowser.IsChecked == true ? DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid.ToString() : "null";
 
             if (rb_bottom.IsChecked == true)
                 DockPosition = DockPosition.Bottom;
@@ -130,12 +118,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
                 DockPosition = DockPosition.Left;
             else if (rb_right.IsChecked == true)
                 DockPosition = DockPosition.Right;
-            else if (rb_top.IsChecked == true)
-                DockPosition = DockPosition.Top;
-            else if (rb_tabbed.IsChecked == true)
-                DockPosition = DockPosition.Tabbed;
-            else
-                DockPosition = DockPosition.Floating;
+            else DockPosition = rb_top.IsChecked == true ? DockPosition.Top : rb_tabbed.IsChecked == true ? DockPosition.Tabbed : DockPosition.Floating;
 
             DialogResult = true;
             Close();

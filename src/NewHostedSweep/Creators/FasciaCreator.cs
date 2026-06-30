@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
@@ -33,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         {
             get
             {
-                var filteredElementCollector = new FilteredElementCollector(RvtDoc);
+                FilteredElementCollector filteredElementCollector = new(RvtDoc);
                 filteredElementCollector.OfClass(typeof(FasciaType));
                 return filteredElementCollector;
             }
@@ -48,8 +49,8 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
             {
                 if (m_roofFasciaEdges == null)
                 {
-                    m_roofFasciaEdges = new Dictionary<Element, List<Edge>>();
-                    var collector = new FilteredElementCollector(RvtDoc);
+                    m_roofFasciaEdges = [];
+                    FilteredElementCollector collector = new(RvtDoc);
                     collector.OfClass(typeof(FootPrintRoof));
                     var elements = collector.ToElements();
 
@@ -67,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
                             var solid = ExtractGeom(elem);
                             if (solid != null)
                             {
-                                m_roofFasciaEdges.Add(elem, new List<Edge>());
+                                m_roofFasciaEdges.Add(elem, []);
                                 ElemGeom.Add(elem, solid);
                                 FilterEdgesForFascia(elem);
                             }
@@ -85,7 +86,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// <param name="elem">Element used to filter edges which fascia can be created on</param>
         private void FilterEdgesForFascia(Element elem)
         {
-            var transaction = new Transaction(RvtDocument, "FilterEdgesForFascia");
+            Transaction transaction = new(RvtDocument, "FilterEdgesForFascia");
             transaction.Start();
 
             // Note: This method will create a Fascia with no references.

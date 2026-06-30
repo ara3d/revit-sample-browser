@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
 {
@@ -36,10 +36,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
             if (!Command.SortDialogIsOpened)
                 return;
 
-            using (var sortForm = new SortLoadedFamiliesParamsForm(args.Document))
-            {
-                sortForm.ShowDialog();
-            }
+            using SortLoadedFamiliesParamsForm sortForm = new(args.Document);
+            sortForm.ShowDialog();
         }
     }
 }

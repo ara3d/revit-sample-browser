@@ -70,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
 
         public override string ToString()
         {
-            var strBuilder = new StringBuilder();
+            StringBuilder strBuilder = new();
             strBuilder.Append("   Field: ");
             strBuilder.Append(Name);
             strBuilder.Append(", ");

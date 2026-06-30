@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Drawing;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Drawing;
 using Document = Autodesk.Revit.Creation.Document;
 using Point = System.Drawing.Point;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
     /// <summary>
@@ -50,8 +49,8 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
                     var point1 = points[i];
                     var point2 = points[i + 1];
 
-                    var v1 = new Vector4(point1);
-                    var v2 = new Vector4(point2);
+                    Vector4 v1 = new(point1);
+                    Vector4 v2 = new(point2);
 
                     v1 = matrix4.TransForm(v1);
                     v2 = matrix4.TransForm(v2);
@@ -63,7 +62,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
         public List<List<Edge>> GetFaces(Element elem)
         {
-            var faceEdges = new List<List<Edge>>();
+            List<List<Edge>> faceEdges = new();
             var options = AppCreator.NewGeometryOptions();
             options.DetailLevel = ViewDetailLevel.Medium;
             options.ComputeReferences = true;
@@ -85,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
                         var edgeArrarr = face.EdgeLoops;
                         foreach (EdgeArray edgeArr in edgeArrarr)
                         {
-                            var edgesList = new List<Edge>();
+                            List<Edge> edgesList = new();
                             foreach (Edge edge in edgeArr)
                             {
                                 edgesList.Add(edge);
@@ -109,8 +108,8 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             var start = points[0];
             var end = points[1];
 
-            var vStart = new Vector4((float)start.X, (float)start.Y, (float)start.Z);
-            var vEnd = new Vector4((float)end.X, (float)end.Y, (float)end.Z);
+            Vector4 vStart = new((float)start.X, (float)start.Y, (float)start.Z);
+            Vector4 vEnd = new((float)end.X, (float)end.Y, (float)end.Z);
             var vSub = vEnd - vStart;
 
             points = eg1.Tessellate() as List<XYZ>;
@@ -137,18 +136,18 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             var eg0 = Face[0].Tessellate() as List<XYZ>;
             var eg1 = Face[1].Tessellate() as List<XYZ>;
 
-            var v1 = new Vector4((float)eg0[0].X,
+            Vector4 v1 = new((float)eg0[0].X,
                 (float)eg0[0].Y, (float)eg0[0].Z);
 
-            var v2 = new Vector4((float)eg0[1].X,
+            Vector4 v2 = new((float)eg0[1].X,
                 (float)eg0[1].Y, (float)eg0[1].Z);
             var v21 = v1 - v2;
             v21.Normalize();
 
-            var v3 = new Vector4((float)eg1[0].X,
+            Vector4 v3 = new((float)eg1[0].X,
                 (float)eg1[0].Y, (float)eg1[0].Z);
 
-            var v4 = new Vector4((float)eg1[1].X,
+            Vector4 v4 = new((float)eg1[1].X,
                 (float)eg1[1].Y, (float)eg1[1].Z);
             var v43 = v4 - v3;
             v43.Normalize();
@@ -159,19 +158,18 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             vZAxis.Normalize();
             var vOrigin = (v4 + v1) / 2;
 
-            var result = new Matrix4(v43, vYAxis, vZAxis, vOrigin);
+            Matrix4 result = new(v43, vYAxis, vZAxis, vOrigin);
             return result;
         }
 
         public Matrix4 WallMatrix()
         {
             //get the location curve
-            var location = DataProfile.Location as LocationCurve;
-            var xAxis = new Vector4(1, 0, 0);
-            var yAxis = new Vector4(0, 1, 0);
-            var zAxis = new Vector4(0, 0, 1);
-            var origin = new Vector4(0, 0, 0);
-            if (location != null)
+            Vector4 xAxis = new(1, 0, 0);
+            Vector4 yAxis = new(0, 1, 0);
+            Vector4 zAxis = new(0, 0, 1);
+            Vector4 origin = new(0, 0, 0);
+            if (DataProfile.Location is LocationCurve location)
             {
                 var curve = location.Curve;
                 var start = curve.GetEndPoint(0);
@@ -198,7 +196,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             var location = DataProfile.Location as LocationCurve;
             var curve = location.Curve;
             var xyzs = curve.Tessellate() as List<XYZ>;
-            var zAxis = new Vector4(0, 0, 1);
+            Vector4 zAxis = new(0, 0, 1);
 
             if (xyzs.Count == 2) return faces[0];
 
@@ -226,7 +224,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             var bounds = GetFaceBounds();
             var min = bounds[0];
             var max = bounds[1];
-            var center = new PointF((min.X + max.X) / 2, (min.Y + max.Y) / 2);
+            PointF center = new((min.X + max.X) / 2, (min.Y + max.Y) / 2);
             return new Matrix4(new Vector4(center.X, center.Y, 0));
         }
 
@@ -242,7 +240,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
                 foreach (var point in points)
                 {
-                    var v = new Vector4(point);
+                    Vector4 v = new(point);
                     var v1 = inverseMatrix.TransForm(v);
 
                     if (bFirstPoint)
@@ -266,7 +264,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
             var resultPoints = new PointF[2]
             {
-                new PointF(minX, minY), new PointF(maxX, maxY)
+                new(minX, minY), new(maxX, maxY)
             };
             return resultPoints;
         }

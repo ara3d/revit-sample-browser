@@ -12,11 +12,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Ara3D.RevitSampleBrowser.Site.CS.Properties;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -39,35 +38,35 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
         private void CreateSitePanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("Site");
-            var addPond = new PushButtonData("Site_Add_Pond", "Add Pond",
+            PushButtonData addPond = new("Site_Add_Pond", "Add Pond",
                 AddAssemblyPath,
                 typeof(SiteAddRetainingPondCommand).FullName);
             ViewHelper.SetIconsForPushButtonData(addPond, Resources.AddPond);
             _ = rp.AddItem(addPond) as PushButton;
 
-            var moveRegion = new PushButtonData("Site_Move_Region", "Move Region",
+            PushButtonData moveRegion = new("Site_Move_Region", "Move Region",
                 AddAssemblyPath,
                 typeof(SiteMoveRegionAndPointsCommand).FullName);
             ViewHelper.SetIconsForPushButtonData(moveRegion, Resources.MoveRegion);
 
-            var deleteRegion = new PushButtonData("Site_Delete_Region", "Delete Region",
+            PushButtonData deleteRegion = new("Site_Delete_Region", "Delete Region",
                 AddAssemblyPath,
                 typeof(SiteDeleteRegionAndPointsCommand).FullName);
             ViewHelper.SetIconsForPushButtonData(deleteRegion, Resources.DeleteRegion);
 
             rp.AddStackedItems(moveRegion, deleteRegion);
 
-            var raiseTerrain = new PushButtonData("Site_Raise_Terrain", "Raise Terrain",
+            PushButtonData raiseTerrain = new("Site_Raise_Terrain", "Raise Terrain",
                 AddAssemblyPath,
                 typeof(SiteRaiseTerrainInRegionCommand).FullName);
             ViewHelper.SetIconsForPushButtonData(raiseTerrain, Resources.RaiseTerrain);
 
-            var lowerTerrain = new PushButtonData("Site_Lower_Terrain", "Lower Terrain",
+            PushButtonData lowerTerrain = new("Site_Lower_Terrain", "Lower Terrain",
                 AddAssemblyPath,
                 typeof(SiteLowerTerrainInRegionCommand).FullName);
             ViewHelper.SetIconsForPushButtonData(lowerTerrain, Resources.LowerTerrain);
 
-            var normalizeTerrain = new PushButtonData("Site_Normalize_Terrain", "Normalize Terrain",
+            PushButtonData normalizeTerrain = new("Site_Normalize_Terrain", "Normalize Terrain",
                 AddAssemblyPath,
                 typeof(SiteNormalizeTerrainInRegionCommand).FullName);
             ViewHelper.SetIconsForPushButtonData(normalizeTerrain, Resources.SiteNormalize);

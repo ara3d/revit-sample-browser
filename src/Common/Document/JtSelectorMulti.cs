@@ -2,13 +2,13 @@
 
 #region Namespaces
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 #endregion
@@ -97,11 +97,10 @@ namespace BuildingCoder
                     _result = Result.Cancelled;
                 }
 
-                if (refs is {Count: > 0})
-                    _selected = new List<T>(
-                        refs.Select(
+                if (refs is { Count: > 0 })
+                    _selected = [.. refs.Select(
                             r => doc.GetElement(r.ElementId)
-                                as T));
+                                as T)];
             }
 
             Debug.Assert(
@@ -129,7 +128,7 @@ namespace BuildingCoder
 
             if (null != cat)
                 if (cat.Id.Value.Equals(
-                    (int) BuiltInCategory.OST_Furniture))
+                    (int)BuiltInCategory.OST_Furniture))
                     if (e is FamilyInstance fi)
                     {
                         var fname = fi.Symbol.Family.Name;
@@ -161,7 +160,7 @@ namespace BuildingCoder
         {
             private readonly BuiltInCategory? _bic;
             private readonly IsSelectable _f;
-            private Type _t;
+            private readonly Type _t;
 
             public JtSelectionFilter(
                 Type t,
@@ -188,9 +187,9 @@ namespace BuildingCoder
             private bool HasBic(Element e)
             {
                 return null == _bic
-                       || null != e.Category
+                       || (null != e.Category
                        && e.Category.Id.Value.Equals(
-                           (int) _bic);
+                           (int)_bic));
             }
         }
 

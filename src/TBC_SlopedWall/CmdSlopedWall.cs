@@ -13,14 +13,10 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using View = Autodesk.Revit.DB.View;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -41,14 +37,14 @@ namespace BuildingCoder
             //  = app.Application.Create;
 
             //CurveArray profile = ac.NewCurveArray(); // 2012
-            var profile = new List<Curve>(4); // 2012
+            List<Curve> profile = new(4); // 2012
 
             double length = 10;
             double heightStart = 5;
             double heightEnd = 8;
 
             var p = XYZ.Zero;
-            var q = new XYZ(length, 0.0, 0.0);
+            XYZ q = new(length, 0.0, 0.0);
 
             //profile.Append( ac.NewLineBound( p, q ) ); // 2012
             profile.Add(Line.CreateBound(p, q)); // 2014
@@ -73,7 +69,7 @@ namespace BuildingCoder
             //profile.Add( ac.NewLineBound( p, q ) ); // 2013
             profile.Add(Line.CreateBound(p, q)); // 2014
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create Sloped Wall");
 
             //Wall wall = doc.Create.NewWall( profile, false ); // 2012

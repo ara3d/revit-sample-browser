@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
 {
@@ -19,7 +19,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
         // application's private data
         private static SectionUpdater _sectionUpdater;
 
-        private static readonly List<ElementId> IdsToWatch = new List<ElementId>();
+        private static readonly List<ElementId> IdsToWatch = [];
         private static ElementId _oldSectionId = ElementId.InvalidElementId;
         private Document m_document;
         private UIDocument m_documentUi;
@@ -35,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
 
                 // creating and registering the updater for the document.
                 if (_sectionUpdater == null)
-                    using (var tran = new Transaction(m_document, "Register Section Updater"))
+                    using (Transaction tran = new(m_document, "Register Section Updater"))
                     {
                         tran.Start();
 
@@ -82,11 +82,11 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
 
                 // Find the real ViewSection for the selected section element.
                 var name = sectionElement.Name;
-                var collector = new FilteredElementCollector(m_document);
+                FilteredElementCollector collector = new(m_document);
                 collector.WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_Views));
                 var viewElements = from element in collector
-                    where element.Name == name
-                    select element;
+                                                    where element.Name == name
+                                                    select element;
 
                 var sectionViews = viewElements.ToList();
                 if (sectionViews.Count == 0)

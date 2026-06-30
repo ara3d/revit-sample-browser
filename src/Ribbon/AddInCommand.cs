@@ -1,12 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 {
@@ -15,13 +16,13 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class CreateWall : IExternalCommand
     {
-        public static readonly ElementSet CreatedWalls = new ElementSet(); //restore all the walls created by API.
+        public static readonly ElementSet CreatedWalls = new(); //restore all the walls created by API.
 
         public Result Execute(ExternalCommandData revit,
             ref string message,
             ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "CreateWall");
+            Transaction trans = new(revit.Application.ActiveUIDocument.Document, "CreateWall");
             trans.Start();
             var app = revit.Application;
 
@@ -30,12 +31,10 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             var newWallShape = GetNewWallShape(app);
             var newWallMark = GetNewWallMark(app);
 
-            Wall newWall = null;
-            if ("CreateStructureWall" == GetType().Name) //decided by SplitButton
-                newWall = Wall.Create(app.ActiveUIDocument.Document, newWallShape, newWallType.Id, newWallLevel.Id,
-                    true);
-            else
-                newWall = Wall.Create(app.ActiveUIDocument.Document, newWallShape, newWallType.Id, newWallLevel.Id,
+            var newWall = "CreateStructureWall" == GetType().Name
+                ? Wall.Create(app.ActiveUIDocument.Document, newWallShape, newWallType.Id, newWallLevel.Id,
+                    true)
+                : Wall.Create(app.ActiveUIDocument.Document, newWallShape, newWallType.Id, newWallLevel.Id,
                     false);
             if (null != newWall)
             {
@@ -50,20 +49,20 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         protected WallType GetNewWallType(UIApplication app)
         {
             var myPanel = app.GetRibbonPanels()[0];
-            if (!(GetRibbonItemByName(myPanel, "WallTypeSelector") is RadioButtonGroup radioGroupTypeSelector)) throw new InvalidCastException("Cannot get Wall Type selector!");
+            if (GetRibbonItemByName(myPanel, "WallTypeSelector") is not RadioButtonGroup radioGroupTypeSelector) throw new InvalidCastException("Cannot get Wall Type selector!");
             var wallTypeName = radioGroupTypeSelector.Current.ItemText;
-            var collector = new FilteredElementCollector(app.ActiveUIDocument.Document);
+            FilteredElementCollector collector = new(app.ActiveUIDocument.Document);
             return collector.OfClass(typeof(WallType)).ToElements().OfType<WallType>().FirstOrDefault(wallType => wallType.Name.StartsWith(wallTypeName));
         }
 
         protected Level GetNewWallLevel(UIApplication app)
         {
             var myPanel = app.GetRibbonPanels()[0];
-            if (!(GetRibbonItemByName(myPanel, "LevelsSelector") is ComboBox comboboxLevel)) throw new InvalidCastException("Cannot get Level selector!");
+            if (GetRibbonItemByName(myPanel, "LevelsSelector") is not ComboBox comboboxLevel) throw new InvalidCastException("Cannot get Level selector!");
             var wallLevel = comboboxLevel.Current.ItemText;
             //find wall type in document
             Level newWallLevel = null;
-            var collector = new FilteredElementCollector(app.ActiveUIDocument.Document);
+            FilteredElementCollector collector = new(app.ActiveUIDocument.Document);
             ICollection<Element> founds = collector.OfClass(typeof(Level)).ToElements();
             foreach (var elem in founds)
             {
@@ -81,28 +80,24 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         protected List<Curve> GetNewWallShape(UIApplication app)
         {
             var myPanel = app.GetRibbonPanels()[0];
-            if (!(GetRibbonItemByName(myPanel, "WallShapeComboBox") is ComboBox comboboxWallShape)) throw new InvalidCastException("Cannot get Wall Shape Gallery!");
+            if (GetRibbonItemByName(myPanel, "WallShapeComboBox") is not ComboBox comboboxWallShape) throw new InvalidCastException("Cannot get Wall Shape Gallery!");
             var wallShape = comboboxWallShape.Current.ItemText;
-            switch (wallShape)
+            return wallShape switch
             {
-                case "SquareWall":
-                    return GetSquareWallShape(app.Application.Create);
-                case "CircleWall":
-                    return GetCircleWallShape(app.Application.Create);
-                case "TriangleWall":
-                    return GetTriangleWallShape(app.Application.Create);
-                default:
-                    return GetRectangleWallShape(app.Application.Create);
-            }
+                "SquareWall" => GetSquareWallShape(app.Application.Create),
+                "CircleWall" => GetCircleWallShape(app.Application.Create),
+                "TriangleWall" => GetTriangleWallShape(app.Application.Create),
+                _ => GetRectangleWallShape(app.Application.Create),
+            };
         }
 
         protected string GetNewWallMark(UIApplication app)
         {
             var myPanel = app.GetRibbonPanels()[0];
-            if (!(GetRibbonItemByName(myPanel, "WallMark") is TextBox textBox)) throw new InvalidCastException("Cannot get Wall Mark TextBox!");
+            if (GetRibbonItemByName(myPanel, "WallMark") is not TextBox textBox) throw new InvalidCastException("Cannot get Wall Mark TextBox!");
 
             var newWallIndex = 0;
-            var collector = new FilteredElementCollector(app.ActiveUIDocument.Document);
+            FilteredElementCollector collector = new(app.ActiveUIDocument.Document);
             ICollection<Element> founds = collector.OfClass(typeof(Wall)).ToElements();
             foreach (var elem in founds)
             {
@@ -124,7 +119,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
                 }
             }
 
-            var newWallMark = $"{textBox.Value}_{(newWallIndex + 1)}";
+            var newWallMark = $"{textBox.Value}_{newWallIndex + 1}";
             return newWallMark;
         }
 
@@ -132,7 +127,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         {
             //calculate size of Structural and NonStructural walls
             var wallsSize = CreatedWalls.Size + CreatedWalls.Size;
-            var curves = new List<Curve>();
+            List<Curve> curves = [];
             //15: distance from each wall, 60: wall length , 60: wall width 
             var line1 = Line.CreateBound(new XYZ(wallsSize * 15, 0, 0), new XYZ(wallsSize * 15, 60, 0));
             var line2 = Line.CreateBound(new XYZ(wallsSize * 15, 60, 0), new XYZ(wallsSize * 15, 60, 40));
@@ -149,7 +144,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         {
             //calculate size of Structural and NonStructural walls
             var wallsSize = CreatedWalls.Size + CreatedWalls.Size;
-            var curves = new List<Curve>();
+            List<Curve> curves = [];
             //15: distance from each wall, 40: wall length  
             var line1 = Line.CreateBound(new XYZ(wallsSize * 15, 0, 0), new XYZ(wallsSize * 15, 40, 0));
             var line2 = Line.CreateBound(new XYZ(wallsSize * 15, 40, 0), new XYZ(wallsSize * 15, 40, 40));
@@ -166,7 +161,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         {
             //calculate size of Structural and NonStructural walls
             var wallsSize = CreatedWalls.Size + CreatedWalls.Size;
-            var curves = new List<Curve>();
+            List<Curve> curves = [];
             //15: distance from each wall, 40: diameter of circle  
             var arc = Arc.Create(new XYZ(wallsSize * 15, 20, 0), new XYZ(wallsSize * 15, 20, 40),
                 new XYZ(wallsSize * 15, 40, 20));
@@ -181,7 +176,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         {
             //calculate size of Structural and NonStructural walls
             var wallsSize = CreatedWalls.Size + CreatedWalls.Size;
-            var curves = new List<Curve>();
+            List<Curve> curves = [];
             //15: distance from each wall, 40: height of triangle  
             var line1 = Line.CreateBound(new XYZ(wallsSize * 15, 0, 0), new XYZ(wallsSize * 15, 40, 0));
             var line2 = Line.CreateBound(new XYZ(wallsSize * 15, 40, 0), new XYZ(wallsSize * 15, 20, 40));
@@ -220,7 +215,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         {
             // delete all the walls which create by RibbonSample
             var wallSet = CreateWall.CreatedWalls;
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "DeleteWalls");
+            Transaction trans = new(revit.Application.ActiveUIDocument.Document, "DeleteWalls");
             trans.Start();
             foreach (Element e in wallSet)
             {
@@ -241,7 +236,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             ref string message,
             ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "XMoveWalls");
+            Transaction trans = new(revit.Application.ActiveUIDocument.Document, "XMoveWalls");
             trans.Start();
             var iter = CreateWall.CreatedWalls.GetEnumerator();
             iter.Reset();
@@ -264,7 +259,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             ref string message,
             ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "YMoveWalls");
+            Transaction trans = new(revit.Application.ActiveUIDocument.Document, "YMoveWalls");
             trans.Start();
             var iter = CreateWall.CreatedWalls.GetEnumerator();
             iter.Reset();
@@ -289,11 +284,11 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         {
             var myPanel = revit.Application.GetRibbonPanels()[0];
             //reset wall type
-            if (!(GetRibbonItemByName(myPanel, "WallTypeSelector") is RadioButtonGroup radioGroupTypeSelector)) throw new InvalidCastException("Cannot get Wall Type selector!");
+            if (GetRibbonItemByName(myPanel, "WallTypeSelector") is not RadioButtonGroup radioGroupTypeSelector) throw new InvalidCastException("Cannot get Wall Type selector!");
             radioGroupTypeSelector.Current = radioGroupTypeSelector.GetItems()[0];
 
             //reset level
-            if (!(GetRibbonItemByName(myPanel, "LevelsSelector") is ComboBox comboboxLevel)) throw new InvalidCastException("Cannot get Level selector!");
+            if (GetRibbonItemByName(myPanel, "LevelsSelector") is not ComboBox comboboxLevel) throw new InvalidCastException("Cannot get Level selector!");
             comboboxLevel.Current = comboboxLevel.GetItems()[0];
 
             //reset wall shape
@@ -302,7 +297,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             if (null == comboboxLevel) throw new InvalidCastException("Cannot get wall shape combo box!");
             comboboxWallShape.Current = comboboxWallShape.GetItems()[0];
 
-            if (!(GetRibbonItemByName(myPanel, "WallMark") is TextBox textBox)) throw new InvalidCastException("Cannot get Wall Mark TextBox!");
+            if (GetRibbonItemByName(myPanel, "WallMark") is not TextBox textBox) throw new InvalidCastException("Cannot get Wall Mark TextBox!");
             textBox.Value = "new wall";
 
             return Result.Succeeded;

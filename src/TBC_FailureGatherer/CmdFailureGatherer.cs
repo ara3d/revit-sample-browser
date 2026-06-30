@@ -12,10 +12,10 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -25,7 +25,7 @@ namespace BuildingCoder
     {
         public MessageDescriptionGatheringPreprocessor()
         {
-            FailureList = new List<string>();
+            FailureList = [];
         }
 
         private List<string> FailureList { get; }

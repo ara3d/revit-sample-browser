@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 {
@@ -29,104 +29,103 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                     return Result.Failed;
                 var barType = fec.FirstElement() as RebarBarType;
                 CurveElement curveElem = null;
-                using (var tran = new Transaction(doc, "Create Rebar"))
+                using Transaction tran = new(doc, "Create Rebar");
+                Element host = null;
+                var sel = commandData.Application.ActiveUIDocument.Selection;
+                try
                 {
-                    Element host = null;
-                    var sel = commandData.Application.ActiveUIDocument.Selection;
+                    //Select structural Host.
+                    var hostRef = sel.PickObject(ObjectType.Element, "Select Host");
+                    host = doc.GetElement(hostRef.ElementId);
+                    if (host == null)
+                        return Result.Failed;
+                }
+                catch (Exception e)
+                {
+                    message = e.Message;
+                    return Result.Failed;
+                }
+
+                try
+                {
+                    //Select curve element
+                    var lineRef = sel.PickObject(ObjectType.Element, "Select Model curve");
+                    curveElem = doc.GetElement(lineRef.ElementId) as CurveElement;
+                }
+                catch (Exception)
+                {
+                    curveElem = null;
+                }
+
+                tran.Start();
+
+                // Create Rebar Free Form by specifying the GUID defining the custom external server.
+                // The Rebar element returned needs to receive constraints, so that regeneration can
+                // call the custom geometry calculations and create the bars 
+                var rebar = Rebar.CreateFreeForm(doc, RebarUpdateServer.SampleGuid, barType, host);
+                // Get all bar handles to set constraints to them, so that the bar can generate its geometry
+                var rManager = rebar.GetRebarConstraintsManager();
+                var handles = rManager.GetAllHandles();
+
+                // if bar has no handles then the server can't generate rebar geometry 
+                if (handles.Count <= 0)
+                {
+                    tran.RollBack();
+                    return Result.Failed;
+                }
+
+                foreach (var handle in handles)
+                {
+                    if (handle.GetHandleType() is RebarHandleType.StartOfBar or
+                        RebarHandleType.EndOfBar)
+                        continue; // Start handle and end handle will receive constraints from the custom external server execution
                     try
                     {
-                        //Select structural Host.
-                        var hostRef = sel.PickObject(ObjectType.Element, "Select Host");
-                        host = doc.GetElement(hostRef.ElementId);
-                        if (host == null)
-                            return Result.Failed;
+                        var reference = sel.PickObject(ObjectType.Face,
+                            $"Select face for {handle.GetHandleName()}");
+                        if (reference == null)
+                            continue;
+                        // create constraint using the picked faces and set it to the associated handle
+                        List<Reference> refs = new()
+                        { reference };
+                        var constraint = RebarConstraint.Create(handle, refs, true, 0.0);
+                        rManager.SetPreferredConstraintForHandle(handle, constraint);
                     }
                     catch (Exception e)
                     {
                         message = e.Message;
-                        return Result.Failed;
-                    }
-
-                    try
-                    {
-                        //Select curve element
-                        var lineRef = sel.PickObject(ObjectType.Element, "Select Model curve");
-                        curveElem = doc.GetElement(lineRef.ElementId) as CurveElement;
-                    }
-                    catch (Exception)
-                    {
-                        curveElem = null;
-                    }
-
-                    tran.Start();
-
-                    // Create Rebar Free Form by specifying the GUID defining the custom external server.
-                    // The Rebar element returned needs to receive constraints, so that regeneration can
-                    // call the custom geometry calculations and create the bars 
-                    var rebar = Rebar.CreateFreeForm(doc, RebarUpdateServer.SampleGuid, barType, host);
-                    // Get all bar handles to set constraints to them, so that the bar can generate its geometry
-                    var rManager = rebar.GetRebarConstraintsManager();
-                    var handles = rManager.GetAllHandles();
-
-                    // if bar has no handles then the server can't generate rebar geometry 
-                    if (handles.Count <= 0)
-                    {
-                        tran.RollBack();
-                        return Result.Failed;
-                    }
-
-                    foreach (var handle in handles)
-                    {
-                        if (handle.GetHandleType() == RebarHandleType.StartOfBar ||
-                            handle.GetHandleType() == RebarHandleType.EndOfBar)
-                            continue; // Start handle and end handle will receive constraints from the custom external server execution
-                        try
-                        {
-                            var reference = sel.PickObject(ObjectType.Face,
-                                $"Select face for {handle.GetHandleName()}");
-                            if (reference == null)
-                                continue;
-                            // create constraint using the picked faces and set it to the associated handle
-                            var refs = new List<Reference> { reference };
-                            var constraint = RebarConstraint.Create(handle, refs, true, 0.0);
-                            rManager.SetPreferredConstraintForHandle(handle, constraint);
-                        }
-                        catch (Exception e)
-                        {
-                            message = e.Message;
-                            tran.RollBack();
-                            return Result.Cancelled;
-                        }
-                    }
-
-                    try
-                    {
-                        //here we add a value to the shared parameter and add it to the regeneration dependencies
-                        var newSharedParam = rebar.LookupParameter(AddSharedParams.ParamName);
-                        var newSharedParam2 = rebar.LookupParameter(AddSharedParams.CurveIdName);
-                        if (newSharedParam != null && newSharedParam2 != null)
-                        {
-                            newSharedParam.Set(0);
-                            newSharedParam2.Set(curveElem == null
-                                ? ElementId.InvalidElementId.ToString()
-                                : curveElem.Id.ToString());
-
-                            var accesRebar = rebar.GetFreeFormAccessor();
-                            accesRebar.AddUpdatingSharedParameter(newSharedParam.Id);
-                            accesRebar.AddUpdatingSharedParameter(newSharedParam2.Id);
-                        }
-                        // The AddSharedParams command should be executed to create and bind these parameters to rebar.
-                    }
-                    catch (Exception ex)
-                    {
-                        message = ex.Message;
                         tran.RollBack();
                         return Result.Cancelled;
                     }
-
-                    tran.Commit();
-                    return Result.Succeeded;
                 }
+
+                try
+                {
+                    //here we add a value to the shared parameter and add it to the regeneration dependencies
+                    var newSharedParam = rebar.LookupParameter(AddSharedParams.ParamName);
+                    var newSharedParam2 = rebar.LookupParameter(AddSharedParams.CurveIdName);
+                    if (newSharedParam != null && newSharedParam2 != null)
+                    {
+                        newSharedParam.Set(0);
+                        newSharedParam2.Set(curveElem == null
+                            ? ElementId.InvalidElementId.ToString()
+                            : curveElem.Id.ToString());
+
+                        var accesRebar = rebar.GetFreeFormAccessor();
+                        accesRebar.AddUpdatingSharedParameter(newSharedParam.Id);
+                        accesRebar.AddUpdatingSharedParameter(newSharedParam2.Id);
+                    }
+                    // The AddSharedParams command should be executed to create and bind these parameters to rebar.
+                }
+                catch (Exception ex)
+                {
+                    message = ex.Message;
+                    tran.RollBack();
+                    return Result.Cancelled;
+                }
+
+                tran.Commit();
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {

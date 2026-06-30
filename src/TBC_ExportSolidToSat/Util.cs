@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using System.IO;
 using Autodesk.Revit.DB;
+using System.IO;
 
 namespace BuildingCoder
 {
@@ -26,9 +25,9 @@ namespace BuildingCoder
         /// </summary>
         public static Solid CloneSolid(Solid solid)
         {
-            if (solid == null) return null;
-
-            return BooleanOperationsUtils
+            return solid == null
+                ? null
+                : BooleanOperationsUtils
                 .ExecuteBooleanOperation(solid, solid,
                     BooleanOperationsType.Union);
         }

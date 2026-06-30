@@ -1,25 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace BuildingCoder
@@ -296,13 +280,13 @@ const T f = ( ay * bx ) - ( ax * by );
             var w = p2 - p1;
             XYZ p5 = null;
 
-            var c = (v2.X * w.Y - v2.Y * w.X)
-                    / (v2.X * v1.Y - v2.Y * v1.X);
+            var c = ((v2.X * w.Y) - (v2.Y * w.X))
+                    / ((v2.X * v1.Y) - (v2.Y * v1.X));
 
             if (!double.IsInfinity(c))
             {
-                var x = p1.X + c * v1.X;
-                var y = p1.Y + c * v1.Y;
+                var x = p1.X + (c * v1.X);
+                var y = p1.Y + (c * v1.Y);
 
                 p5 = new XYZ(x, y, 0);
             }
@@ -359,7 +343,7 @@ const T f = ( ay * bx ) - ( ax * by );
                 return null;
             }
 
-            return linePoint + lineParameter * lineDirection;
+            return linePoint + (lineParameter * lineDirection);
         }
 
         public static double[,]
@@ -414,8 +398,8 @@ const T f = ( ay * bx ) - ( ax * by );
             // https://en.wikipedia.org/wiki/Sagitta_(geometry)
 
             var s = largeSagitta
-                ? radius + Math.Sqrt(radius * radius - d * d) // sagitta large
-                : radius - Math.Sqrt(radius * radius - d * d); // sagitta small
+                ? radius + Math.Sqrt((radius * radius) - (d * d)) // sagitta large
+                : radius - Math.Sqrt((radius * radius) - (d * d)); // sagitta small
 
             var midPointOffset = Transform
                 .CreateRotation(XYZ.BasisZ, 0.5 * Math.PI)

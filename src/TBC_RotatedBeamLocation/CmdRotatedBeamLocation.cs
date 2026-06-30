@@ -33,15 +33,14 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var beam = Util.SelectSingleElementOfType(
-                uidoc, typeof(FamilyInstance), "a beam", false) as FamilyInstance;
 
             var bic
                 = BuiltInCategory.OST_StructuralFraming;
 
-            if (null == beam
+            if (Util.SelectSingleElementOfType(
+                uidoc, typeof(FamilyInstance), "a beam", false) is not FamilyInstance beam
                 || null == beam.Category
-                || !beam.Category.Id.Value.Equals((int) bic))
+                || !beam.Category.Id.Value.Equals((int)bic))
             {
                 message = "Please select a single beam element.";
             }
@@ -56,13 +55,13 @@ namespace BuildingCoder
                 var p = curve.Curve.GetEndPoint(0);
                 var q = curve.Curve.GetEndPoint(1);
                 var v = 0.1 * (q - p);
-                p = p - v;
-                q = q + v;
+                p -= v;
+                q += v;
 
                 //Creator creator = new Creator( doc );
                 //creator.CreateModelLine( p, q );
 
-                using var t = new Transaction(doc);
+                using Transaction t = new(doc);
                 t.Start("Create Model Line");
 
                 Creator.CreateModelLine(doc, p, q);

@@ -1,15 +1,17 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using Autodesk.Revit.UI;
-
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.UI;
 namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_ExternalEvent.CS
 {
     public class RequestHandler : IExternalEventHandler
     {
         public Request Request { get; } = new Request();
 
-        public string GetName() => "R2014 External Event Sample";
+        public string GetName()
+        {
+            return "R2014 External Event Sample";
+        }
 
         public void Execute(UIApplication uiapp)
         {

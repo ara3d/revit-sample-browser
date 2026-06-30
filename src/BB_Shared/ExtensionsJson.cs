@@ -1,11 +1,11 @@
-﻿using Autodesk.Revit.DB;
+﻿using Ara3D.Utils;
+using Autodesk.Revit.DB;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Ara3D.Utils;
 using Parameter = Autodesk.Revit.DB.Parameter;
 
 namespace Ara3D.Bowerbird.RevitSamples
@@ -23,23 +23,21 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static Utils.FilePath WriteAsJson(this ViewSchedule schedule, Utils.FilePath outputFile)
-            => outputFile.WriteJson(schedule.GetScheduleData());
+        {
+            return outputFile.WriteJson(schedule.GetScheduleData());
+        }
 
         public static void SerializeAllElementsAsJson(this Document doc, string filePath)
         {
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                SerializeAllElementsAsJson(doc, stream);
-            }
+            using var stream = new FileStream(filePath, FileMode.Create);
+            SerializeAllElementsAsJson(doc, stream);
         }
 
         public static void SerializeAllElementsAsJson(this Document doc, Stream stream)
         {
             var js = new JsonSerializer();
-            using (var writer = new StreamWriter(stream))
-            {
-                js.Serialize(writer, GetAllElementsAsJson(doc));
-            }
+            using var writer = new StreamWriter(stream);
+            js.Serialize(writer, GetAllElementsAsJson(doc));
         }
 
         public static JObject ToJson(this Element elem)
@@ -92,13 +90,19 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static Utils.FilePath WriteJson<T>(this Utils.FilePath path, T data)
-            => path.WriteAllText(JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings()));
+        {
+            return path.WriteAllText(JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings()));
+        }
 
         public static JArray ToJson(this IEnumerable<Element> elements)
-            => new JArray(elements.Select(ToJson));
+        {
+            return new JArray(elements.Select(ToJson));
+        }
 
         public static JArray GetAllElementsAsJson(this Document doc)
-            => doc.GetElements().ToJson();
+        {
+            return doc.GetElements().ToJson();
+        }
 
         /// <summary>
         /// Helper method to convert a Revit parameter value into a string.

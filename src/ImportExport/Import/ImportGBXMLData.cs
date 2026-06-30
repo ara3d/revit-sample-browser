@@ -17,10 +17,10 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
         public override bool Import()
         {
             //parameter: GBXMLImportOptions
-            var options = new GBXMLImportOptions();
+            GBXMLImportOptions options = new();
 
             //Import
-            var t = new Transaction(ActiveDoc);
+            Transaction t = new(ActiveDoc);
             t.SetName("Import GBXML");
             t.Start();
             var imported = ActiveDoc.Import(ImportFileFullName, options);

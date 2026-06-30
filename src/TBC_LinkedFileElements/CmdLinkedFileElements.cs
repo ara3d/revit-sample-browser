@@ -13,13 +13,10 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -104,7 +101,7 @@ namespace BuildingCoder
             // Retrieve lighting fixture element
             // data from linked documents:
 
-            var data = new List<ElementData>();
+            List<ElementData> data = new();
             var app = commandData.Application;
             var docs = app.Application.Documents;
 
@@ -129,7 +126,7 @@ namespace BuildingCoder
 
             // Display data:
 
-            using var dlg = new CmdLinkedFileElementsForm(data);
+            using CmdLinkedFileElementsForm dlg = new(data);
             dlg.ShowDialog();
 
             return Result.Succeeded;

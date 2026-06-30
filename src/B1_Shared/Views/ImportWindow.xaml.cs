@@ -1,11 +1,11 @@
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
+using ExcelExporterImporter.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
-using System.Windows;
-using Autodesk.Revit.DB;
-using ExcelExporterImporter.ViewModels;
 
 namespace ExcelExporterImporter.Views
 {
@@ -19,16 +19,15 @@ namespace ExcelExporterImporter.Views
             var lang = application.Language;
             if (lang.ToString().Contains("French"))
             {
-                var cultureInfo = new CultureInfo("fr-FR");
+                CultureInfo cultureInfo = new("fr-FR");
                 Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = cultureInfo;
             }
 
             InitializeComponent();
 
-            var viewModel = new ImportViewModel(this, doc);
+            ImportViewModel viewModel = new(this, doc);
             DataContext = viewModel;
-            if (viewModel.CloseAction == null)
-                viewModel.CloseAction = Close;
+            viewModel.CloseAction ??= Close;
 
             consoleTraceListener = new ConsoleTraceListener();
             PresentationTraceSources.Refresh();

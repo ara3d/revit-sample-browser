@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
     public partial class ViewFiltersForm : Form
@@ -20,7 +19,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         private bool m_catChangedEventSuppress;
 
         private FilterData m_currentFilterData;
-        private readonly Dictionary<string, FilterData> m_dictFilters = new Dictionary<string, FilterData>();
+        private readonly Dictionary<string, FilterData> m_dictFilters = [];
         private readonly Document m_doc;
 
         public ViewFiltersForm(ExternalCommandData commandData)
@@ -58,16 +57,16 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 
         private void newButton_Click(object sender, EventArgs e)
         {
-            var inUseKeys = new List<string>();
+            List<string> inUseKeys = new();
             inUseKeys.AddRange(m_dictFilters.Keys);
-            var newForm = new NewFilterForm(inUseKeys);
+            NewFilterForm newForm = new(inUseKeys);
             var result = newForm.ShowDialog();
             if (result != DialogResult.OK)
                 return;
 
             // In-memory only until OK commits to Revit.
             var newFilterName = newForm.FilterName;
-            m_currentFilterData = new FilterData(m_doc, new List<BuiltInCategory>(), new List<FilterRuleBuilder>());
+            m_currentFilterData = new FilterData(m_doc, new List<BuiltInCategory>(), []);
             m_dictFilters.Add(newFilterName, m_currentFilterData);
             filtersListBox.Items.Add(newFilterName);
             filtersListBox.SetSelected(filtersListBox.Items.Count - 1, true);
@@ -94,7 +93,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                 return;
 
             // ItemCheck fires before the check state changes; include the pending item from e.
-            var selCats = new List<BuiltInCategory>();
+            List<BuiltInCategory> selCats = new();
             var itemCount = categoryCheckedListBox.Items.Count;
             for (var ii = 0; ii < itemCount; ii++)
             {
@@ -256,11 +255,8 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             if (null == currentRule)
             {
                 updateButton.Enabled = deleRuleButton.Enabled = false;
-                if (!HasFilterData() || null == paramerComboBox.SelectedItem ||
-                    paramerComboBox.SelectedItem as string == NoneParam)
-                    newRuleButton.Enabled = false;
-                else
-                    newRuleButton.Enabled = true;
+                newRuleButton.Enabled = HasFilterData() && null != paramerComboBox.SelectedItem &&
+                    (paramerComboBox.SelectedItem as string) != NoneParam;
             }
             else
             {
@@ -274,12 +270,12 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            ICollection<string> updatedFilters = new List<string>();
-            ICollection<ElementId> deleteElemIds = new List<ElementId>();
-            var collector = new FilteredElementCollector(m_doc);
+            ICollection<string> updatedFilters = [];
+            ICollection<ElementId> deleteElemIds = [];
+            FilteredElementCollector collector = new(m_doc);
             ICollection<Element> oldFilters = collector.OfClass(typeof(ParameterFilterElement)).ToElements();
 
-            var tran = new Transaction(m_doc, "Update View Filter");
+            Transaction tran = new(m_doc, "Update View Filter");
             tran.Start();
             try
             {
@@ -297,7 +293,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                     if (!ListCompareUtility<ElementId>.Equals(filter.GetCategories(), newCatIds))
                         filter.SetCategories(newCatIds);
 
-                    IList<FilterRule> newRules = new List<FilterRule>();
+                    IList<FilterRule> newRules = [];
                     foreach (var ruleData in filterData.RuleData)
                     {
                         newRules.Add(ruleData.AsFilterRule());
@@ -316,7 +312,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                     if (updatedFilters.Contains(myFilter.Key))
                         continue;
 
-                    IList<FilterRule> rules = new List<FilterRule>();
+                    IList<FilterRule> rules = [];
                     foreach (var ruleData in myFilter.Value.RuleData)
                     {
                         rules.Add(ruleData.AsFilterRule());
@@ -377,7 +373,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                 if (0 == numFilterRules)
                     return;
 
-                var ruleDataSet = new List<FilterRuleBuilder>();
+                List<FilterRuleBuilder> ruleDataSet = new();
                 foreach (var filterRule in filterRules)
                 {
                     var paramId = filterRule.GetRuleParameter();
@@ -386,7 +382,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                     ruleDataSet.Add(ruleData);
                 }
 
-                var filterData = new FilterData(m_doc, catIds, ruleDataSet);
+                FilterData filterData = new(m_doc, catIds, ruleDataSet);
                 m_dictFilters.Add(filter.Name, filterData);
                 filtersListBox.Items.Add(filter.Name);
             }
@@ -475,7 +471,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         private void ResetRule_CategoriesChanged()
         {
             ICollection<BuiltInCategory> filterCat = m_currentFilterData.FilterCategories;
-            ICollection<ElementId> filterCatIds = new List<ElementId>();
+            ICollection<ElementId> filterCatIds = [];
             foreach (var curCat in filterCat)
             {
                 filterCatIds.Add(new ElementId(curCat));
@@ -591,25 +587,25 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                 case StorageType.String:
                     return new FilterRuleBuilder(curParam, criteria, ruleValueComboBox.Text);
                 case StorageType.Double:
-                {
-                    double ruleValue = 0, epsilon = 0;
-                    if (!GetRuleValueDouble(false, ref ruleValue)) return null;
-                    if (!GetRuleValueDouble(true, ref epsilon)) return null;
-                    return new FilterRuleBuilder(curParam, criteria,
+                    {
+                        double ruleValue = 0, epsilon = 0;
+                        return !GetRuleValueDouble(false, ref ruleValue)
+                            ? null
+                            : !GetRuleValueDouble(true, ref epsilon)
+                        ? null
+                        : new FilterRuleBuilder(curParam, criteria,
                         ruleValue, epsilon);
-                }
+                    }
                 case StorageType.Integer:
-                {
-                    var ruleValue = 0;
-                    if (!GetRuleValueInt(ref ruleValue)) return null;
-                    return new FilterRuleBuilder(curParam, criteria, ruleValue);
-                }
+                    {
+                        var ruleValue = 0;
+                        return !GetRuleValueInt(ref ruleValue) ? null : new FilterRuleBuilder(curParam, criteria, ruleValue);
+                    }
                 case StorageType.ElementId:
-                {
-                    long ruleValue = 0;
-                    if (!GetRuleValueLong(ref ruleValue)) return null;
-                    return new FilterRuleBuilder(curParam, criteria, new ElementId(ruleValue));
-                }
+                    {
+                        long ruleValue = 0;
+                        return !GetRuleValueLong(ref ruleValue) ? null : new FilterRuleBuilder(curParam, criteria, new ElementId(ruleValue));
+                    }
                 default:
                     return null;
             }
@@ -651,10 +647,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         {
             try
             {
-                if (isEpsilon)
-                    ruleValue = double.Parse(epsilonTextBox.Text);
-                else
-                    ruleValue = double.Parse(ruleValueComboBox.Text);
+                ruleValue = isEpsilon ? double.Parse(epsilonTextBox.Text) : double.Parse(ruleValueComboBox.Text);
             }
             catch (Exception)
             {

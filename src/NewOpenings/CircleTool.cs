@@ -52,7 +52,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
             if (2 == Points.Count)
             {
-                var line = new List<Point>(Points);
+                List<Point> line = new(Points);
                 Lines.Add(line);
                 Points.Clear();
             }
@@ -60,9 +60,9 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
         private void DrawCircle(Graphics graphics, Pen pen, Point pCenter, Point pBound)
         {
-            var radius = (int)Math.Sqrt((pBound.X - pCenter.X) * (pBound.X - pCenter.X)
-                                        + (pBound.Y - pCenter.Y) * (pBound.Y - pCenter.Y));
-            var radiusSize = new Size(radius, radius);
+            var radius = (int)Math.Sqrt(((pBound.X - pCenter.X) * (pBound.X - pCenter.X))
+                                        + ((pBound.Y - pCenter.Y) * (pBound.Y - pCenter.Y)));
+            Size radiusSize = new(radius, radius);
             var uperLeft = pCenter - radiusSize;
             graphics.DrawEllipse(pen, uperLeft.X, uperLeft.Y, 2 * radius, 2 * radius);
         }

@@ -14,14 +14,13 @@
 
 #region Namespaces
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.Exceptions;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 #endregion // Namespaces
 
@@ -60,7 +59,7 @@ namespace BuildingCoder
                 string.Join(", ", pts.Select(
                     q => Util.PointString(q))));
 
-            var d = new List<double>(n);
+            List<double> d = new(n);
             var q0 = p;
             foreach (var q in pts)
             {
@@ -71,7 +70,7 @@ namespace BuildingCoder
             Debug.Print(
                 $"Horizontal distances in metres: {string.Join(", ", d.Select(x => Util.RealString(Util.FootToMetre(x))))}");
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Draw Point Markers");
 
             var sketchPlane = dim.View.SketchPlane;
@@ -92,7 +91,7 @@ namespace BuildingCoder
         {
             var dimLine = dim.Curve as Line;
             if (dimLine == null) return null;
-            var pts = new List<XYZ>();
+            List<XYZ> pts = new();
 
             dimLine.MakeBound(0, 1);
             var pt1 = dimLine.GetEndPoint(0);
@@ -101,7 +100,7 @@ namespace BuildingCoder
             pts.Add(pt1);
             if (dim.Segments.Size == 0)
             {
-                pt2 = pt1.Add(direction.Multiply((double) dim.Value));
+                pt2 = pt1.Add(direction.Multiply((double)dim.Value));
                 pts.Add(pt2);
             }
             else
@@ -109,8 +108,8 @@ namespace BuildingCoder
                 var segmentPt0 = pt1;
                 foreach (DimensionSegment seg in dim.Segments)
                 {
-                    var segmentPt1 = segmentPt0.Add(direction.Multiply((double) seg.Value));
-                    Debug.Print("pt  {0},  value  {1}", segmentPt1, (double) seg.Value);
+                    var segmentPt1 = segmentPt0.Add(direction.Multiply((double)seg.Value));
+                    Debug.Print("pt  {0},  value  {1}", segmentPt1, (double)seg.Value);
                     pts.Add(segmentPt1);
                     segmentPt0 = segmentPt1;
                 }

@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 {
     /// <summary>
@@ -41,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         public RebarGeometry GetTransverseRebar(TransverseRebarLocation location, double spacing)
         {
             // sort the points of the swept profile
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             // the offset from the column surface to the rebar
@@ -61,11 +60,11 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
                     break;
                 case TransverseRebarLocation.Center: // center transverse rebar
                     rebarLength = m_columnHeight / 2;
-                    curveOffset = m_columnHeight / 4 + rebarLength % spacing / 2;
+                    curveOffset = (m_columnHeight / 4) + (rebarLength % spacing / 2);
                     break;
                 case TransverseRebarLocation.End: // end transverse rebar
                     rebarLength = m_columnHeight / 4;
-                    curveOffset = m_columnHeight - rebarLength + rebarLength % spacing;
+                    curveOffset = m_columnHeight - rebarLength + (rebarLength % spacing);
                     break;
                 default:
                     throw new Exception("The program should never go here.");
@@ -76,13 +75,13 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             // get the profile of the transverse rebar
             var movedPoints = OffsetPoints(offset);
 
-            var translatedPoints = new List<XYZ>();
+            List<XYZ> translatedPoints = [];
             foreach (var point in movedPoints)
             {
                 translatedPoints.Add(XyzMath.OffsetPoint(point, DrivingVector, curveOffset));
             }
 
-            IList<Curve> curves = new List<Curve>(); //the profile of the transverse rebar
+            IList<Curve> curves = []; //the profile of the transverse rebar
             var first = translatedPoints[0];
             var second = translatedPoints[1];
             var third = translatedPoints[2];
@@ -105,7 +104,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         public RebarGeometry GetVerticalRebar(VerticalRebarLocation location, int rebarNumber)
         {
             // sort the points of the swept profile
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             // Get the offset and rebar length of rebar
@@ -118,29 +117,29 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             var movedPoints = OffsetPoints(offset);
             movedPoints.Sort(comparer);
 
-            var normal = new XYZ(); // the normal parameter
+            XYZ normal = new(); // the normal parameter
             double rebarOffset = 0; // rebar offset, equal to rebarNumber* spacing 
             // get the normal, start point and rebar offset of vertical rebar
             switch (location)
             {
                 case VerticalRebarLocation.East: //vertical rebar in east 
                     normal = new XYZ(0, 1, 0);
-                    rebarOffset = m_columnWidth - 2 * offset;
+                    rebarOffset = m_columnWidth - (2 * offset);
                     startPoint = movedPoints[1];
                     break;
                 case VerticalRebarLocation.North: //vertical rebar in north
                     normal = new XYZ(-1, 0, 0);
-                    rebarOffset = m_columnLength - 2 * offset;
+                    rebarOffset = m_columnLength - (2 * offset);
                     startPoint = movedPoints[3];
                     break;
                 case VerticalRebarLocation.West: //vertical rebar in west
                     normal = new XYZ(0, -1, 0);
-                    rebarOffset = m_columnWidth - 2 * offset;
+                    rebarOffset = m_columnWidth - (2 * offset);
                     startPoint = movedPoints[2];
                     break;
                 case VerticalRebarLocation.South: //vertical rebar in south
                     normal = new XYZ(1, 0, 0);
-                    rebarOffset = m_columnLength - 2 * offset;
+                    rebarOffset = m_columnLength - (2 * offset);
                     startPoint = movedPoints[0];
                     break;
             }
@@ -148,10 +147,10 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             var spacing = rebarOffset / rebarNumber; //spacing value of the rebar
             var endPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, rebarLength);
 
-            IList<Curve> curves = new List<Curve>
-            {
+            IList<Curve> curves =
+            [
                 Line.CreateBound(startPoint, endPoint)
-            }; //profile of the rebar
+            ]; //profile of the rebar
 
             // return the rebar geometry information
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
@@ -159,7 +158,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 
         private double GetColumnLength()
         {
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             var refPoint = Points[0];
@@ -171,7 +170,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 
         private double GetColumnWidth()
         {
-            var comparer = new XyzHeightComparer();
+            XyzHeightComparer comparer = new();
             Points.Sort(comparer);
 
             var refPoint = Points[0];

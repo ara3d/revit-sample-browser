@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-using Document = Autodesk.Revit.Creation.Document;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 {
@@ -24,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
         public Result Execute(ExternalCommandData revit,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
+            Transaction trans = new(revit.Application.ActiveUIDocument.Document,
                 "Ara3D.RevitSampleBrowser.CreateComplexAreaRein");
             trans.Start();
             //initialize members
@@ -36,18 +35,18 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             {
                 //check precondition and prepare necessary data to create AreaReinforcement.
                 Reference refer = null;
-                IList<Curve> curves = new List<Curve>();
+                IList<Curve> curves = [];
                 var floor = InitFloor(ref refer, ref curves);
 
                 //ask for user's input
-                var dataOnFloor = new AreaReinData(revit.Application.ActiveUIDocument.Document);
-                var createForm = new
-                    CreateComplexAreaReinForm(dataOnFloor);
+                AreaReinData dataOnFloor = new(revit.Application.ActiveUIDocument.Document);
+                CreateComplexAreaReinForm createForm = new
+(dataOnFloor);
                 if (createForm.ShowDialog() == DialogResult.OK)
                 {
                     //we get direction of first Line on the Floor as the Major Direction
                     var firstLine = (Line)curves[0];
-                    var majorDirection = new XYZ(
+                    XYZ majorDirection = new(
                         firstLine.GetEndPoint(1).X - firstLine.GetEndPoint(0).X,
                         firstLine.GetEndPoint(1).Y - firstLine.GetEndPoint(0).Y,
                         firstLine.GetEndPoint(1).Z - firstLine.GetEndPoint(0).Z);
@@ -88,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 
         private Floor InitFloor(ref Reference refer, ref IList<Curve> curves)
         {
-            var elems = new ElementSet();
+            ElementSet elems = new();
             foreach (var elementId in m_currentDoc.Selection.GetElementIds())
             {
                 elems.Insert(m_currentDoc.Document.GetElement(elementId));
@@ -98,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             if (elems.Size != 1)
             {
                 var msg = "Please select exactly one slab.";
-                var appEx = new ApplicationException(msg);
+                ApplicationException appEx = new(msg);
                 throw appEx;
             }
 
@@ -110,17 +109,17 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
                 if (null == floor)
                 {
                     var msg = "Please select exactly one slab.";
-                    var appEx = new ApplicationException(msg);
+                    ApplicationException appEx = new(msg);
                     throw appEx;
                 }
             }
 
             //check the shape is rectangular and get its edges
-            var helper = new GeomHelper();
+            GeomHelper helper = new();
             if (!helper.GetFloorGeom(floor, ref refer, ref curves))
             {
-                var appEx = new
-                    ApplicationException(
+                ApplicationException appEx = new
+(
                         "Your selection is not a structural rectangular horizontal slab.");
                 throw appEx;
             }

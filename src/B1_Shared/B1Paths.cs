@@ -10,8 +10,10 @@ namespace ExcelExporterImporter
 
         public static string SharedFolder => Path.Combine(AssemblyFolder, "B1_Shared");
 
-        public static string ResourcePath(string fileName) =>
-            Path.Combine(SharedFolder, "Resources", fileName);
+        public static string ResourcePath(string fileName)
+        {
+            return Path.Combine(SharedFolder, "Resources", fileName);
+        }
 
         public static string ParametersSettingsPath =>
             Path.Combine(SharedFolder, "ParametersSettings.xml");

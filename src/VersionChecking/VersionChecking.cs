@@ -1,5 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -44,10 +45,8 @@ namespace Ara3D.RevitSampleBrowser.VersionChecking.CS
             BuildNumner = revitApplication.VersionBuild;
 
             //Show forms dialog which is a UI
-            using (var displayForm = new VersionCheckingForm(this))
-            {
-                displayForm.ShowDialog();
-            }
+            using VersionCheckingForm displayForm = new(this);
+            displayForm.ShowDialog();
 
             return Result.Succeeded;
         }

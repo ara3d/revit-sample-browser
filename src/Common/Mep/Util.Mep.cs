@@ -1,25 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace BuildingCoder
@@ -34,11 +18,10 @@ namespace BuildingCoder
             var mc = e as MEPCurve;
             var fi = e as FamilyInstance;
 
-            if (null == mc && null == fi)
-                throw new ArgumentException(
-                    "Element is neither an MEP curve nor a fitting.");
-
-            return null == mc
+            return null == mc && null == fi
+                ? throw new ArgumentException(
+                    "Element is neither an MEP curve nor a fitting.")
+                : null == mc
                 ? fi.MEPModel.ConnectorManager
                 : mc.ConnectorManager;
         }

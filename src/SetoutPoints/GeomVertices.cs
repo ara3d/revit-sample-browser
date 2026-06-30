@@ -3,8 +3,8 @@
 // Adapted from SetoutPoints by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/SetoutPoints
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
 {
@@ -13,19 +13,29 @@ namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
     /// </summary>
     internal static class GeomVertices
     {
-        private static string RealString(double a) => a.ToString("0.##");
+        private static string RealString(double a)
+        {
+            return a.ToString("0.##");
+        }
 
-        public static string PointString(XYZ p) =>
-            $"({RealString(p.X)},{RealString(p.Y)},{RealString(p.Z)})";
+        public static string PointString(XYZ p)
+        {
+            return $"({RealString(p.X)},{RealString(p.Y)},{RealString(p.Z)})";
+        }
 
         private sealed class XyzEqualityComparer : IEqualityComparer<XYZ>
         {
             private const double SixteenthInchInFeet = 1.0 / (16.0 * 12.0);
 
-            public bool Equals(XYZ p, XYZ q) =>
-                p.IsAlmostEqualTo(q, SixteenthInchInFeet);
+            public bool Equals(XYZ p, XYZ q)
+            {
+                return p.IsAlmostEqualTo(q, SixteenthInchInFeet);
+            }
 
-            public int GetHashCode(XYZ p) => PointString(p).GetHashCode();
+            public int GetHashCode(XYZ p)
+            {
+                return PointString(p).GetHashCode();
+            }
         }
 
         private static void GetCorners(Dictionary<XYZ, int> corners, Solid solid)
@@ -47,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
 
         public static Dictionary<XYZ, int> GetCorners(List<Solid> solids)
         {
-            var corners = new Dictionary<XYZ, int>(new XyzEqualityComparer());
+            Dictionary<XYZ, int> corners = new(new XyzEqualityComparer());
             foreach (var solid in solids)
                 GetCorners(corners, solid);
             return corners;
@@ -56,7 +66,7 @@ namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
         public static List<Solid> GetSolids(Element e, Options opt, out Transform t)
         {
             var geo = e.get_Geometry(opt);
-            var solids = new List<Solid>();
+            List<Solid> solids = new();
             GeometryInstance inst = null;
             t = Transform.Identity;
 

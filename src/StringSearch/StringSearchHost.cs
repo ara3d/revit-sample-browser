@@ -21,13 +21,13 @@
 // applicable.
 #endregion // Copyright
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using BuildingCoder;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 {

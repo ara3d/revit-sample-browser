@@ -3,10 +3,10 @@
 // Adapted from ListImportInstances by Nikolay Shulga and Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/ListImportInstances
 
-using System.Collections.Specialized;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Specialized;
 
 namespace Ara3D.RevitSampleBrowser.ListImportInstances.CS
 {
@@ -39,11 +39,11 @@ namespace Ara3D.RevitSampleBrowser.ListImportInstances.CS
             var col = new FilteredElementCollector(doc)
                 .OfClass(typeof(ImportInstance));
 
-            var listOfViewSpecificImports = new NameValueCollection();
-            var listOfModelImports = new NameValueCollection();
-            var listOfUnidentifiedImports = new NameValueCollection();
+            NameValueCollection listOfViewSpecificImports = new();
+            NameValueCollection listOfModelImports = new();
+            NameValueCollection listOfUnidentifiedImports = new();
 
-            foreach (Element e in col)
+            foreach (var e in col)
             {
                 if (e.ViewSpecific)
                 {
@@ -75,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.ListImportInstances.CS
                 }
             }
 
-            var logOutput = new SimpleTextFileBasedReporter();
+            SimpleTextFileBasedReporter logOutput = new();
             if (!logOutput.Init(doc.PathName))
             {
                 TaskDialog.Show("FindImports", "Unable to create report file");

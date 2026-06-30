@@ -122,7 +122,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Coroutine
         {
             if (enumerator == null || _instance == null) return null;
 
-            var coroutine = new Coroutine(enumerator);
+            Coroutine coroutine = new(enumerator);
             _instance.AddCoroutine(coroutine);
             return coroutine;
         }

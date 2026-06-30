@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
@@ -20,74 +20,72 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             {
                 var activeDoc = commandData.Application.ActiveUIDocument;
 
-                using (var frm = new StructuralConnectionForm())
+                using StructuralConnectionForm frm = new();
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    var result = frm.ShowDialog();
-                    if (result == DialogResult.OK)
+                    var opt = frm.UserOption;
+                    switch (opt)
                     {
-                        var opt = frm.UserOption;
-                        switch (opt)
-                        {
-                            case CommandOption.CreateGeneric:
+                        case CommandOption.CreateGeneric:
                             {
                                 ret = GenericStructuralConnectionOps.CreateGenericStructuralConnection(activeDoc,
                                     ref message);
                                 break;
                             }
-                            case CommandOption.DeleteGeneric:
+                        case CommandOption.DeleteGeneric:
                             {
                                 ret = GenericStructuralConnectionOps.DeleteGenericStructuralConnection(activeDoc,
                                     ref message);
                                 break;
                             }
-                            case CommandOption.ReadGeneric:
+                        case CommandOption.ReadGeneric:
                             {
                                 ret = GenericStructuralConnectionOps.ReadGenericStructuralConnection(activeDoc,
                                     ref message);
                                 break;
                             }
-                            case CommandOption.UpdateGeneric:
+                        case CommandOption.UpdateGeneric:
                             {
                                 ret = GenericStructuralConnectionOps.UpdateGenericStructuralConnection(activeDoc,
                                     ref message);
                                 break;
                             }
-                            case CommandOption.CreateDetailed:
+                        case CommandOption.CreateDetailed:
                             {
                                 ret = DetailedStructuralConnectionOps.CreateDetailedStructuralConnection(activeDoc,
                                     ref message);
                                 break;
                             }
-                            case CommandOption.ChangeDetailed:
+                        case CommandOption.ChangeDetailed:
                             {
                                 ret = DetailedStructuralConnectionOps.ChangeDetailedStructuralConnection(activeDoc,
                                     ref message);
                                 break;
                             }
-                            case CommandOption.CopyDetailed:
+                        case CommandOption.CopyDetailed:
                             {
                                 ret = DetailedStructuralConnectionOps.CopyDetailedStructuralConnection(activeDoc,
                                     ref message);
                                 break;
                             }
-                            case CommandOption.MatchPropDetailed:
+                        case CommandOption.MatchPropDetailed:
                             {
                                 ret = DetailedStructuralConnectionOps.MatchPropertiesDetailedStructuralConnection(
                                     activeDoc, ref message);
                                 break;
                             }
-                            case CommandOption.ResetDetailed:
+                        case CommandOption.ResetDetailed:
                             {
                                 ret = DetailedStructuralConnectionOps.ResetDetailedStructuralConnection(activeDoc,
                                     ref message);
                                 break;
                             }
-                        }
                     }
-                    else
-                    {
-                        ret = Result.Cancelled;
-                    }
+                }
+                else
+                {
+                    ret = Result.Cancelled;
                 }
             }
             catch (Exception e)

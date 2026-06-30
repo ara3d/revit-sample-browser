@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.UI;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
 {
@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
     /// </summary>
     public partial class PathReinforcementForm : Form
     {
-        private Autodesk.Revit.DB.Structure.PathReinforcement m_pathRein;
+        private readonly Autodesk.Revit.DB.Structure.PathReinforcement m_pathRein;
 
         private readonly Profile m_profile;
 

@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Point = System.Drawing.Point;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
     /// <summary>
@@ -38,15 +37,15 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             var levelList = new FilteredElementCollector(CommandData.Application.ActiveUIDocument.Document)
                 .OfClass(typeof(Level)).ToElements();
             var levels = from elem in levelList
-                let level = elem as Level
-                where level != null && "Level 1" == level.Name
-                select level;
+                                        let level = elem as Level
+                                        where level != null && "Level 1" == level.Name
+                                        select level;
             if (levels.Count() > 0) m_level1 = levels.First();
 
             levels = from elem in levelList
-                let level = elem as Level
-                where level != null && "Level 2" == level.Name
-                select level;
+                     let level = elem as Level
+                     where level != null && "Level 2" == level.Name
+                     select level;
             if (levels.Count() > 0) m_level2 = levels.First();
         }
 
@@ -99,7 +98,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             graphics.DrawLine(pen, new Point(15, 80), new Point(25, 80));
             graphics.DrawLine(pen, new Point(15, 180), new Point(25, 180));
             //dimension
-            var font = new Font("Verdana", 10, FontStyle.Regular);
+            Font font = new("Verdana", 10, FontStyle.Regular);
             graphics.DrawString("100'", font, Brushes.Blue, new PointF(122, 266));
             graphics.DrawString("200'", font, Brushes.Blue, new PointF(222, 266));
             graphics.DrawString("300'", font, Brushes.Blue, new PointF(322, 266));
@@ -116,12 +115,12 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         /// <returns>Vector list contains points have been transformed</returns>
         public override List<Vector4> Transform2DTo3D(Point[] ps)
         {
-            var result = new List<Vector4>();
+            List<Vector4> result = new();
             foreach (var point in ps)
             {
                 //because our coordinate system is different with window UI
                 //so we should change what we got from UI coordinate
-                var v = new Vector4(point.X - 20, -(point.Y - 280), 0);
+                Vector4 v = new(point.X - 20, -(point.Y - 280), 0);
                 v = ScaleMatrix.Transform(v);
                 result.Add(v);
             }

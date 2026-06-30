@@ -42,7 +42,7 @@ namespace BuildingCoder
             var app = commandData.Application;
             var doc = app.ActiveUIDocument.Document;
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create Shared Parameter");
             Category cat;
             var i = 0;

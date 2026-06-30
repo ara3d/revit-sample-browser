@@ -12,14 +12,15 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -48,7 +49,7 @@ namespace BuildingCoder
             var app = uiapp.Application;
             var doc = uidoc.Document;
 
-            var curves = new List<CurveElement>(
+            List<CurveElement> curves = new(
                 new FilteredElementCollector(doc)
                     .OfClass(typeof(CurveElement))
                     .ToElements()
@@ -146,8 +147,8 @@ namespace BuildingCoder
                 Util.RealString(sp1),
                 Util.RealString(ep1));
 
-            using var tx = new Transaction(doc);
-            var creator = new Creator(doc);
+            using Transaction tx = new(doc);
+            Creator creator = new(doc);
 
             tx.Start("MidCurve");
 

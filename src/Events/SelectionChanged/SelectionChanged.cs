@@ -1,9 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Linq;
 using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
@@ -26,7 +28,7 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
             _ctrlApp = application;
 
             var ribbonPanel = _ctrlApp.CreateRibbonPanel("SelectionChanged Event");
-            var showInfoWindowButton = new PushButtonData("showInfoWindow", "Show Event Info", AddInPath,
+            PushButtonData showInfoWindowButton = new("showInfoWindow", "Show Event Info", AddInPath,
                 "Ara3D.RevitSampleBrowser.SelectionChanged.CS.Command")
             {
                 ToolTip = "Show Event Monitor window"
@@ -57,7 +59,7 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
         {
             var doc = args.GetDocument();
 
-            var uidoc = new UIDocument(doc);
+            UIDocument uidoc = new(doc);
             var currentSelection = uidoc.Selection.GetReferences();
             var reportedSelection = args.GetReferences();
             if (!currentSelection.All(i => null != reportedSelection.FirstOrDefault(r => r.EqualTo(i))))

@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
 {
@@ -30,13 +30,11 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
         /// </remarks>
         public VisibilityCtrl(UIDocument document)
         {
-            if (document == null)
-                throw new ArgumentNullException(nameof(document));
-            m_document = document;
+            m_document = document ?? throw new ArgumentNullException(nameof(document));
 
             // initialize the two table
-            AllCategories = new Hashtable();
-            m_categoriesWithName = new Hashtable();
+            AllCategories = [];
+            m_categoriesWithName = [];
 
             // fill out the two table
             foreach (Category category in m_document.Document.Settings.Categories)

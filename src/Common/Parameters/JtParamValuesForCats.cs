@@ -14,9 +14,9 @@
 
 #region Namespaces
 
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
 
 #endregion // Namespaces
 
@@ -50,7 +50,7 @@ namespace BuildingCoder
 
             var ps = e.GetOrderedParameters();
 
-            var param_values = new List<string>(
+            List<string> param_values = new(
                 ps.Count);
 
             foreach (var p in ps)
@@ -74,8 +74,7 @@ namespace BuildingCoder
             foreach (var cat in cats)
                 map_cat_to_uid_to_param_values.Add(
                     cat.Description(),
-                    new Dictionary<string,
-                        List<string>>());
+                    []);
 
             // Collect all required elements
 
@@ -86,13 +85,13 @@ namespace BuildingCoder
             var ids
                 = new List<BuiltInCategory>(cats)
                     .ConvertAll(c
-                        => new ElementId((long) c));
+                        => new ElementId((long)c));
 
-            var r
-                = new FilterCategoryRule(ids);
+            FilterCategoryRule r
+                = new(ids);
 
-            var f
-                = new ElementParameterFilter(r, true);
+            ElementParameterFilter f
+                = new(r, true);
 
             // Use a logical OR of category filters
 
@@ -101,8 +100,8 @@ namespace BuildingCoder
 
             foreach (var bic in cats) a.Add(new ElementCategoryFilter(bic));
 
-            var categoryFilter
-                = new LogicalOrFilter(a);
+            LogicalOrFilter categoryFilter
+                = new(a);
 
             // Run the collector
 
@@ -148,7 +147,7 @@ namespace BuildingCoder
 #if DEBUG
         public void DebugPrint()
         {
-            var keys = new List<string>(
+            List<string> keys = new(
                 Keys);
             keys.Sort();
 
@@ -165,7 +164,7 @@ namespace BuildingCoder
 
                 if (0 < n)
                 {
-                    var uids = new List<string>(els.Keys);
+                    List<string> uids = new(els.Keys);
                     var uid = uids[0];
 
                     var param_values = els[uid];

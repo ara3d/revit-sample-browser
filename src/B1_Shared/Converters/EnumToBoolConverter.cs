@@ -19,10 +19,9 @@ namespace ExcelExporterImporter.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || parameter == null) return null;
-            var useValue = (bool) value;
+            var useValue = (bool)value;
             var targetValue = parameter.ToString();
-            if (useValue) return Enum.Parse(targetType, targetValue);
-            return null;
+            return useValue ? Enum.Parse(targetType, targetValue) : null;
         }
     }
 }

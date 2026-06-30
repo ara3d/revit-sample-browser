@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Parameters;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -26,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
 
             try
             {
-                var elementSet = new ElementSet();
+                ElementSet elementSet = new();
                 foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
                 {
                     elementSet.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
@@ -40,7 +39,7 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
 
                 using (m_displayForm = new DeckPropertyForm())
                 {
-                    var floorList = new List<Floor>();
+                    List<Floor> floorList = new();
                     foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
                     {
                         var element = revit.ActiveUIDocument.Document.GetElement(elementId);

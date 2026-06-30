@@ -1,5 +1,5 @@
-using System;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -22,10 +22,14 @@ namespace Ara3D.Bowerbird.RevitSamples
             public Action<UIApplication> Action { get; set; }
 
             public void Execute(UIApplication app)
-                => Action?.Invoke(app);
+            {
+                Action?.Invoke(app);
+            }
 
             public string GetName()
-                => "BB Revit Event Scheduler";
+            {
+                return "BB Revit Event Scheduler";
+            }
         }
     }
 }

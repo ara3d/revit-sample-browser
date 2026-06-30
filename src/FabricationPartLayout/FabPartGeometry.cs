@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
@@ -26,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 ISet<ElementId> parts = null;
 
-                using (var tr = new Transaction(doc, "Optimise Preselection"))
+                using (Transaction tr = new(doc, "Optimise Preselection"))
                 {
                     tr.Start();
                     var selElems = uidoc.Selection.GetElementIds();
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 var callingFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-                var saveAsDlg = new FileSaveDialog("CSV Files (*.csv)|*.csv")
+                FileSaveDialog saveAsDlg = new("CSV Files (*.csv)|*.csv")
                 {
                     InitialFileName = $"{callingFolder}\\geomExport",
                     Title = "Save Part Geometry As"
@@ -63,7 +63,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 {
                     if (doc.GetElement(eid) is FabricationPart part)
                     {
-                        var options = new Options
+                        Options options = new()
                         {
                             DetailLevel = ViewDetailLevel.Coarse
                         };
@@ -74,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         var mlp = 0;
                         foreach (var mesh in main)
                         {
-                            var file = $"{filename}{partcount}-main-{(++mlp)}{ext}";
+                            var file = $"{filename}{partcount}-main-{++mlp}{ext}";
                             if (ExportMesh(file, mesh))
                                 exported++;
                         }
@@ -82,7 +82,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         var ilp = 0;
                         foreach (var mesh in ins)
                         {
-                            var file = $"{filename}{partcount}-ins-{(++ilp)}{ext}";
+                            var file = $"{filename}{partcount}-ins-{++ilp}{ext}";
                             if (ExportMesh(file, mesh))
                                 exported++;
                         }
@@ -94,7 +94,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var res = exported > 0 ? "Export was successful" : "Nothing was exported";
                 var manywritten = $"{exported} Parts were exported";
 
-                var td = new TaskDialog("Export Part Mesh Geometry")
+                TaskDialog td = new("Export Part Mesh Geometry")
                 {
                     MainIcon = TaskDialogIcon.TaskDialogIconInformation,
                     TitleAutoPrefix = false,
@@ -117,7 +117,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
         private IList<Mesh> GetMeshes(GeometryElement ge)
         {
-            IList<Mesh> rv = new List<Mesh>();
+            IList<Mesh> rv = [];
             if (ge != null)
                 foreach (var g in ge)
                 {
@@ -145,7 +145,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
             try
             {
-                var sout = new StreamWriter(filename, false);
+                StreamWriter sout = new(filename, false);
                 sout.WriteLine("P1X, P1Y, P1Z, P2X, P2Y, P2Z, P3X, P3Y, P3Z");
                 for (var tlp = 0; tlp < mesh.NumTriangles; tlp++)
                 {

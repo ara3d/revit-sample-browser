@@ -1,9 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
 {
@@ -92,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
             var fOrientation = XYZ.Zero;
             if (elem is FamilyInstance familyInstance)
             {
-                if (familyInstance.Location != null && familyInstance.Location is LocationPoint locationPoint)
+                if (familyInstance.Location is not null and LocationPoint locationPoint)
                 {
                     position = locationPoint.Point;
                 }
@@ -113,19 +112,13 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
             if (!cross.IsAlmostEqualTo(XYZ.BasisZ)) sign = -1.0;
 
             double rotateAngle = 0;
-            if (Math.Abs(angle) > 0 && Math.Abs(angle) <= Math.PI / 2.0)
+            if (Math.Abs(angle) is > 0 and <= (Math.PI / 2.0))
             {
-                if (angle < 0)
-                    rotateAngle = Math.PI / 2.0 + angle;
-                else
-                    rotateAngle = Math.PI / 2.0 - angle;
+                rotateAngle = angle < 0 ? (Math.PI / 2.0) + angle : (Math.PI / 2.0) - angle;
             }
             else if (Math.Abs(angle) > Math.PI / 2.0)
             {
-                if (angle < 0)
-                    rotateAngle = angle + Math.PI / 2.0;
-                else
-                    rotateAngle = angle - Math.PI / 2.0;
+                rotateAngle = angle < 0 ? angle + (Math.PI / 2.0) : angle - (Math.PI / 2.0);
             }
 
             rotateAngle *= sign;

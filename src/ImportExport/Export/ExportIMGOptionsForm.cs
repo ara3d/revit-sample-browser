@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 using View = Autodesk.Revit.DB.View;
 
@@ -94,11 +94,9 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 
         private void Select_Click(object sender, EventArgs e)
         {
-            using (var selectViewsForm = new SelectViewsForm(m_exportData.SelectViewsData))
-            {
-                m_exportData.SelectViewsData.SelectedViews.Clear();
-                selectViewsForm.ShowDialog();
-            }
+            using SelectViewsForm selectViewsForm = new(m_exportData.SelectViewsData);
+            m_exportData.SelectViewsData.SelectedViews.Clear();
+            selectViewsForm.ShowDialog();
         }
 
         private void CurrentWindow_CheckedChanged(object sender, EventArgs e)
@@ -129,24 +127,22 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 
         private DialogResult ShowSaveDialog(ExportData exportData, ref string returnFileName, ref int filterIndex)
         {
-            using (var saveDialog = new SaveFileDialog())
+            using SaveFileDialog saveDialog = new();
+            saveDialog.Title = exportData.Title;
+            saveDialog.InitialDirectory = exportData.ExportFolder;
+            saveDialog.FileName = exportData.ActiveViewName;
+            saveDialog.Filter = exportData.Filter;
+            saveDialog.FilterIndex = 1;
+            saveDialog.RestoreDirectory = true;
+
+            var result = saveDialog.ShowDialog();
+            if (result != DialogResult.Cancel)
             {
-                saveDialog.Title = exportData.Title;
-                saveDialog.InitialDirectory = exportData.ExportFolder;
-                saveDialog.FileName = exportData.ActiveViewName;
-                saveDialog.Filter = exportData.Filter;
-                saveDialog.FilterIndex = 1;
-                saveDialog.RestoreDirectory = true;
-
-                var result = saveDialog.ShowDialog();
-                if (result != DialogResult.Cancel)
-                {
-                    returnFileName = saveDialog.FileName;
-                    filterIndex = saveDialog.FilterIndex;
-                }
-
-                return result;
+                returnFileName = saveDialog.FileName;
+                filterIndex = saveDialog.FilterIndex;
             }
+
+            return result;
         }
 
         private void OK_Click(object sender, EventArgs e)
@@ -169,7 +165,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             if (m_exportOptions.ExportRange == ExportRange.SetOfViews)
             {
                 var views = m_exportData.SelectViewsData.SelectedViews;
-                var viewIds = new List<ElementId>();
+                List<ElementId> viewIds = [];
                 foreach (View view in views)
                 {
                     viewIds.Add(view.Id);

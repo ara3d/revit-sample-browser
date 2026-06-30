@@ -12,13 +12,10 @@
 
 #region Namespaces
 
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Text;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 using UIFrameworkServices;
 
 #endregion // Namespaces

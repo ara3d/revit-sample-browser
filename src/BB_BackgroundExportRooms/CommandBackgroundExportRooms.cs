@@ -13,12 +13,12 @@ namespace Ara3D.Bowerbird.RevitSamples
     public class CommandBackgroundExportRooms : NamedCommand
     {
         public BosBackgroundExporterForm BosForm;
-        public List<long> Ids = new();
-        public int QueueSize; 
+        public List<long> Ids = [];
+        public int QueueSize;
         public override string Name => "Background Export Rooms";
         public RoomUpdater RoomUpdater;
 
-        public static Guid AddInGuid = new ("8F4295CE-00A0-4E39-A64E-412DD8F2814B");
+        public static Guid AddInGuid = new("8F4295CE-00A0-4E39-A64E-412DD8F2814B");
 
         public override void Execute(object arg)
         {
@@ -26,15 +26,17 @@ namespace Ara3D.Bowerbird.RevitSamples
             BosForm.FormClosing += BosFormOnFormClosing;
             BosForm.Show();
 
-            var uiapp = arg as UIApplication; 
+            var uiapp = arg as UIApplication;
             Doc = uiapp?.ActiveUIDocument?.Document;
             Dir.Create();
             Ids.Clear();
             RoomUpdater = new RoomUpdater(new AddInId(AddInGuid), OnChangeElements);
             RoomUpdater.RegisterForRoomChanges();
-            Processor = new BackgroundProcessor<long>(ProcessElementById, uiapp);
-            Processor.ExecuteNextIdleImmediately = false;
-            Processor.DoWorkDuringIdle = true;
+            Processor = new BackgroundProcessor<long>(ProcessElementById, uiapp)
+            {
+                ExecuteNextIdleImmediately = false,
+                DoWorkDuringIdle = true
+            };
             Processor.OnHeartbeat += ProcessorOnHeartbeat;
             Processor.OnIdle += ProcessorOnIdle;
             BosForm.OnReset += BosFormOnOnReset;
@@ -96,8 +98,10 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static string GetFileName(Element e)
+        {
             //=> $"{e.Name.ToIdentifier()}({e.Id}){DateTime.Now.ToTimeStamp()}.json";
-            => $"{e.Name.ToIdentifier()}({e.Id}).json";
+            return $"{e.Name.ToIdentifier()}({e.Id}).json";
+        }
 
         public class ElementData
         {

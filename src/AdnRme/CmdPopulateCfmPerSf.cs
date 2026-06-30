@@ -23,71 +23,69 @@
 #endregion // Header
 
 #region Namespaces
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 #endregion // Namespaces
 
 namespace AdnRme
 {
-  [Transaction( TransactionMode.Manual )]
-  public class CmdPopulateCfmPerSf : IExternalCommand
-  {
-    #region Set CFM/SF
-    static void SetCfmPerSf( Space space )
+    [Transaction(TransactionMode.Manual)]
+    public class CmdPopulateCfmPerSf : IExternalCommand
     {
-      double flow = Util.GetSpaceParameterValue( space, Bip.Airflow, "Actual Supply Airflow" );
-      double area = Util.GetSpaceParameterValue( space, Bip.Area, "Area" );
-      double cfm = Const.SecondsPerMinute * flow;
-      double cfmPerSf = cfm / area;
-      Debug.WriteLine( string.Format( "Space {0} flow {1} CFM / area {2} f^2 --> {3} CFM/SF",
-        space.Number, Util.RealString( cfm ), Util.RealString( area ), Util.RealString( cfmPerSf ) ) );
-      Parameter pCfmPerSf = Util.GetSpaceParameter( space, ParameterName.CfmPerSf );
-      pCfmPerSf.Set( cfmPerSf );
-    }
-    #endregion // Set CFM/SF
-
-    #region Execute Command
-    public Result Execute(
-      ExternalCommandData commandData,
-      ref string message,
-      ElementSet elements )
-    {
-      try
-      {
-        WaitCursor waitCursor = new WaitCursor();
-
-        UIApplication app = commandData.Application;
-        Document doc = app.ActiveUIDocument.Document;
-
-        //ElementIterator it = doc.get_Elements( typeof( Room ) );
-        //ElementIterator it = doc.get_Elements( typeof( Space ) ); // changed Room to Space
-        //FilteredElementCollector spaces = new FilteredElementCollector( doc );
-        //spaces.OfClass( typeof( Space ) );
-
-        using( Transaction tx = new Transaction( doc ) )
+        #region Set CFM/SF
+        static void SetCfmPerSf(Space space)
         {
-          tx.Start( "Set Air Flow per SqFt on Spaces" );
-          List<Space> spaces = Util.GetSpaces( doc );
-
-          foreach( Space space in spaces )
-          {
-            SetCfmPerSf( space ); // set CFM/SF on the space AFTER assigning flow to the terminals
-          }
-          tx.Commit();
+            var flow = Util.GetSpaceParameterValue(space, Bip.Airflow, "Actual Supply Airflow");
+            var area = Util.GetSpaceParameterValue(space, Bip.Area, "Area");
+            var cfm = Const.SecondsPerMinute * flow;
+            var cfmPerSf = cfm / area;
+            Debug.WriteLine(string.Format("Space {0} flow {1} CFM / area {2} f^2 --> {3} CFM/SF",
+              space.Number, Util.RealString(cfm), Util.RealString(area), Util.RealString(cfmPerSf)));
+            var pCfmPerSf = Util.GetSpaceParameter(space, ParameterName.CfmPerSf);
+            pCfmPerSf.Set(cfmPerSf);
         }
-        return Result.Succeeded;
-      }
-      catch( Exception ex )
-      {
-        message = ex.Message;
-        return Result.Failed;
-      }
+        #endregion // Set CFM/SF
+
+        #region Execute Command
+        public Result Execute(
+          ExternalCommandData commandData,
+          ref string message,
+          ElementSet elements)
+        {
+            try
+            {
+                WaitCursor waitCursor = new();
+
+                var app = commandData.Application;
+                var doc = app.ActiveUIDocument.Document;
+
+                //ElementIterator it = doc.get_Elements( typeof( Room ) );
+                //ElementIterator it = doc.get_Elements( typeof( Space ) ); // changed Room to Space
+                //FilteredElementCollector spaces = new FilteredElementCollector( doc );
+                //spaces.OfClass( typeof( Space ) );
+
+                using Transaction tx = new(doc);
+                tx.Start("Set Air Flow per SqFt on Spaces");
+                var spaces = Util.GetSpaces(doc);
+
+                foreach (var space in spaces)
+                {
+                    SetCfmPerSf(space); // set CFM/SF on the space AFTER assigning flow to the terminals
+                }
+                tx.Commit();
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+        }
+        #endregion // Execute Command
     }
-    #endregion // Execute Command
-  }
 }

@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using System;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 
 namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 {
@@ -18,8 +17,10 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             return RebarShapeParameters.GetOrCreateElementIdForExternalDefinition(revitDoc, ed);
         }
 
-        public static ExternalDefinition GetOrCreateDef(string name, Application revitApp) =>
-            GetOrCreateDef(name, "MultiplanarRebarParameters", revitApp);
+        public static ExternalDefinition GetOrCreateDef(string name, Application revitApp)
+        {
+            return GetOrCreateDef(name, "MultiplanarRebarParameters", revitApp);
+        }
 
         public static ExternalDefinition GetOrCreateDef(string name, string groupName, Application revitApp)
         {
@@ -29,9 +30,9 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 
             var defGroups = defFile.Groups;
             var defGroup = defGroups.get_Item(groupName) ?? defGroups.Create(groupName);
-            if (!(defGroup.Definitions.get_Item(name) is ExternalDefinition externalDefinition))
+            if (defGroup.Definitions.get_Item(name) is not ExternalDefinition externalDefinition)
             {
-                var options = new ExternalDefinitionCreationOptions(name, SpecTypeId.ReinforcementLength);
+                ExternalDefinitionCreationOptions options = new(name, SpecTypeId.ReinforcementLength);
                 externalDefinition = defGroup.Definitions.Create(options) as ExternalDefinition;
             }
 
@@ -149,7 +150,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 
             var edgeV0 = GetCommonVertex(bottomEdge, leftEdge);
             var edgeV1 = GetCommonVertex(bottomEdge, rightEdge);
-            var profile = new Trapezoid(
+            Trapezoid profile = new(
                 Line.CreateBound(nextX, prevX),
                 Line.CreateBound(prevX, edgeV0),
                 Line.CreateBound(edgeV0, edgeV1),
@@ -172,9 +173,9 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var edge1V1 = edge1.Evaluate(1.0);
             var edge2V0 = edge2.Evaluate(0.0);
             var edge2V1 = edge2.Evaluate(1.0);
-            if (edge1V0.IsAlmostEqualTo(edge2V0) || edge1V0.IsAlmostEqualTo(edge2V1)) return edge1V0;
-            if (edge1V1.IsAlmostEqualTo(edge2V0) || edge1V1.IsAlmostEqualTo(edge2V1)) return edge1V1;
-            return null;
+            return edge1V0.IsAlmostEqualTo(edge2V0) || edge1V0.IsAlmostEqualTo(edge2V1)
+                ? edge1V0
+                : edge1V1.IsAlmostEqualTo(edge2V0) || edge1V1.IsAlmostEqualTo(edge2V1) ? edge1V1 : null;
         }
 
         private static XYZ GetNormalOutside(Face face)

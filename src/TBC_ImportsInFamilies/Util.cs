@@ -1,6 +1,6 @@
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -8,9 +8,9 @@ namespace BuildingCoder
     {
         internal static Dictionary<string, Family> GetFamilies(Document doc)
         {
-            var families = new Dictionary<string, Family>();
+            Dictionary<string, Family> families = [];
 
-            var instances = new FilteredElementCollector(doc);
+            FilteredElementCollector instances = new(doc);
             instances.OfClass(typeof(FamilyInstance));
 
             foreach (FamilyInstance i in instances)
@@ -20,7 +20,7 @@ namespace BuildingCoder
                     families[family.Name] = family;
             }
 
-            var annotations = new FilteredElementCollector(doc);
+            FilteredElementCollector annotations = new(doc);
             annotations.OfClass(typeof(AnnotationSymbol));
 
             foreach (AnnotationSymbol a in annotations)
@@ -41,7 +41,7 @@ namespace BuildingCoder
         {
             var indent = new string(' ', 2 * recursionLevel);
 
-            var keys = new List<string>(families.Keys);
+            List<string> keys = new(families.Keys);
             keys.Sort();
 
             foreach (var key in keys)
@@ -56,7 +56,7 @@ namespace BuildingCoder
                 {
                     var fdoc = doc.EditFamily(family);
 
-                    var c = new FilteredElementCollector(doc);
+                    FilteredElementCollector c = new(doc);
                     c.OfClass(typeof(ImportInstance));
 
                     var imports = c.ToElements();

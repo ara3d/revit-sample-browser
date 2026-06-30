@@ -2,9 +2,8 @@
 // Adapted from PipeSystemExporter by Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/PipeSystemExporter
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Plumbing;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
 {
@@ -17,13 +16,9 @@ namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
             if (e is FamilyInstance fi && fi.MEPModel != null)
                 return fi.MEPModel.ConnectorManager.Connectors;
 
-            if (e is MEPSystem mepSystem)
-                return mepSystem.ConnectorManager.Connectors;
-
-            if (e is MEPCurve mepCurve)
-                return mepCurve.ConnectorManager.Connectors;
-
-            return null;
+            return e is MEPSystem mepSystem
+                ? mepSystem.ConnectorManager.Connectors
+                : e is MEPCurve mepCurve ? mepCurve.ConnectorManager.Connectors : null;
         }
 
         public static List<XYZ> GetConnectorPoints(Element e)

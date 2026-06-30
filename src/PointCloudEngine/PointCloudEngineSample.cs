@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.PointClouds;
+using Autodesk.Revit.UI;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.PointClouds;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
@@ -113,7 +113,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
     {
         public void AddInstance(Document doc, string engineType, string identifier, Transform trf)
         {
-            var t = new Transaction(doc, "Create PC instance");
+            Transaction t = new(doc, "Create PC instance");
             t.Start();
             var type = PointCloudType.Create(doc, engineType, identifier);
             PointCloudInstance.Create(doc, type.Id, trf);
@@ -126,10 +126,10 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var cloud = new PredefinedPointCloud("dummy");
+            PredefinedPointCloud cloud = new("dummy");
 
-            var doc = new XDocument();
-            var root = new XElement("PointCloud");
+            XDocument doc = new();
+            XElement root = new("PointCloud");
             cloud.SerializeObjectData(root);
             doc.Add(root);
 

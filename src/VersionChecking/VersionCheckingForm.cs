@@ -1,10 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Windows.Forms;
 namespace Ara3D.RevitSampleBrowser.VersionChecking.CS
 {
     public partial class VersionCheckingForm : Form

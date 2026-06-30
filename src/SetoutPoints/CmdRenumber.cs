@@ -42,22 +42,20 @@ namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
                 return Result.Succeeded;
             }
 
-            var instanceFilter = new FamilyInstanceFilter(doc, symbols[0].Id);
+            FamilyInstanceFilter instanceFilter = new(doc, symbols[0].Id);
             var col = new FilteredElementCollector(doc)
                 .OfCategory(BuiltInCategory.OST_GenericModel)
                 .OfClass(typeof(FamilyInstance))
                 .WherePasses(instanceFilter);
 
-            using (var tx = new Transaction(doc))
-            {
-                tx.Start("Renumber Setout Points");
+            using Transaction tx = new(doc);
+            tx.Start("Renumber Setout Points");
 
-                var i = 0;
-                foreach (Element p in col)
-                    p.get_Parameter(CmdGeomVertices.ParameterPointNr).Set(SopPrefix + ++i);
+            var i = 0;
+            foreach (var p in col)
+                p.get_Parameter(CmdGeomVertices.ParameterPointNr).Set(SopPrefix + ++i);
 
-                tx.Commit();
-            }
+            tx.Commit();
 
             return Result.Succeeded;
         }

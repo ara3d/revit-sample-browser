@@ -1,9 +1,8 @@
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -15,8 +14,8 @@ namespace BuildingCoder
         public static ICollection<ElementId> GetUnusedTextNoteTypes(
             Document doc)
         {
-            var collector
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector collector
+                = new(doc);
 
             ICollection<ElementId> textNoteTypes
                 = collector.OfClass(typeof(TextNoteType))
@@ -40,7 +39,7 @@ namespace BuildingCoder
                 Document doc)
         {
             ICollection<ElementId> usedTextNotesTypeIds
-                = new Collection<ElementId>();
+                = [];
 
             var textNotes
                 = new FilteredElementCollector(doc)

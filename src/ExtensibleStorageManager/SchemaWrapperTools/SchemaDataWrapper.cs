@@ -12,10 +12,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS
 {
@@ -40,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
         public SchemaDataWrapper(Guid schemaId, AccessLevel readAccess, AccessLevel writeAccess, string vendorId,
             string applicationId, string name, string documentation)
         {
-            DataList = new List<FieldData>();
+            DataList = [];
             SchemaId = schemaId.ToString();
             ReadAccess = readAccess;
             WriteAccess = writeAccess;

@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 
         private const float DirectionTagLengthRatio = 0.1f;
 
-        private readonly Line2D m_line = new Line2D(); // geometry line to draw
+        private readonly Line2D m_line = new(); // geometry line to draw
 
         public LineSketch(Line2D line)
         {
@@ -25,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 
         public override void Draw(Graphics g, Matrix translate)
         {
-            var path = new GraphicsPath();
+            GraphicsPath path = new();
             path.AddLine(m_line.StartPnt, m_line.EndPnt);
 
             if (IsDirection) DrawDirectionTag(path);
@@ -42,9 +42,9 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             leftLine.Shift(DirectionTagDistanceRatio * m_line.Length);
             rightLine.Scale(DirectionTagLengthRatio);
             rightLine.Shift(-DirectionTagDistanceRatio * m_line.Length);
-            var leftPath = new GraphicsPath();
+            GraphicsPath leftPath = new();
             leftPath.AddLine(leftLine.StartPnt, leftLine.EndPnt);
-            var rightPath = new GraphicsPath();
+            GraphicsPath rightPath = new();
             rightPath.AddLine(rightLine.StartPnt, rightLine.EndPnt);
             path.AddPath(leftPath, false);
             path.AddPath(rightPath, false);

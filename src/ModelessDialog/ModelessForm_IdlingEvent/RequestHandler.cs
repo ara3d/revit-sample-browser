@@ -1,8 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using Autodesk.Revit.UI;
-
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.UI;
 namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
 {
     public static class RequestHandler

@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
@@ -16,17 +16,15 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             ref string message, ElementSet elements)
         {
             var data = FrameData.CreateInstance(commandData);
-            using (var framingForm = new CreateFrameForm(data))
+            using CreateFrameForm framingForm = new(data);
+            if (framingForm.ShowDialog() == DialogResult.OK)
             {
-                if (framingForm.ShowDialog() == DialogResult.OK)
-                {
-                    var builder = new FrameBuilder(data);
-                    builder.CreateFraming();
-                }
-                else
-                {
-                    return Result.Cancelled;
-                }
+                FrameBuilder builder = new(data);
+                builder.CreateFraming();
+            }
+            else
+            {
+                return Result.Cancelled;
             }
 
             return Result.Succeeded;

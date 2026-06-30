@@ -24,9 +24,9 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 
             if (activeView is ViewSchedule view)
             {
-                var exporter = new ScheduleHtmlExporter(view);
+                ScheduleHtmlExporter exporter = new(view);
                 var revitApplication = commandData.Application.Application;
-                var bInteractive = revitApplication.IsJournalPlaying() ? false : true;
+                var bInteractive = !revitApplication.IsJournalPlaying();
                 return exporter.ExportToHtml(bInteractive, ref message) ? Result.Succeeded : Result.Cancelled;
             }
 

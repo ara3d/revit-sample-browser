@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
 {
     public partial class MessageForm : Form
     {
-        private readonly Timer m_timer = new Timer(2000);
+        private readonly Timer m_timer = new(2000);
 
         public MessageForm()
         {

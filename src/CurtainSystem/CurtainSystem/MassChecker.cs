@@ -1,16 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
-using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties;
-using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Utility;
-using Autodesk.Revit.DB;
-using GeoVector4 = Ara3D.RevitSampleBrowser.Common.Geometry.Vector4;
-
 using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Ara3D.RevitSampleBrowser.Common.Mep;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using GeoVector4 = Ara3D.RevitSampleBrowser.Common.Geometry.Vector4;
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
 {
     public class MassChecker
@@ -87,10 +85,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
                 }
             }
 
-            if (normals == null || normals.Count != 6)
-                return false;
-
-            return FaceAndSolidGeometry.AreFaceNormalsPaired(normals);
+            return normals != null && normals.Count == 6 && FaceAndSolidGeometry.AreFaceNormalsPaired(normals);
         }
 
         private FaceArray GetMassFaceArray(FamilyInstance mass)

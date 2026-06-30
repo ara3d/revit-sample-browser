@@ -13,13 +13,13 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.Attributes;
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -179,7 +179,7 @@ namespace BuildingCoder
 
             // Retrieve selected floors, or all floors, if nothing is selected:
 
-            var floors = new List<Element>();
+            List<Element> floors = new();
             if (!Util.GetSelectedElementsOrAll(
                 floors, uidoc, typeof(Floor)))
             {
@@ -193,7 +193,7 @@ namespace BuildingCoder
             // Determine top face of each selected floor:
 
             var nNullFaces = 0;
-            var topFaces = new List<Face>();
+            List<Face> topFaces = new();
             var opt = app.Application.Create.NewGeometryOptions();
 
             foreach (Floor floor in floors)
@@ -220,7 +220,7 @@ namespace BuildingCoder
                 }
             }
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create Model Lines and Floor");
 
             // Create new floors from the top faces found.
@@ -283,10 +283,10 @@ namespace BuildingCoder
                     //  }
                     //}
 
-                    var loops = new List<CurveLoop>(); // 2022
+                    List<CurveLoop> loops = new(); // 2022
 
                     {
-                        var loop = new CurveLoop();
+                        CurveLoop loop = new();
 
                         // Only use first edge array,
                         // the outer boundary loop,
@@ -304,8 +304,7 @@ namespace BuildingCoder
                             loop.Append(line);
                         }
 
-                        loops = new List<CurveLoop>();
-                        loops.Add(loop);
+                        loops = [loop];
                     }
 
                     //Level level = floor.Level; // 2013
@@ -324,7 +323,7 @@ namespace BuildingCoder
                     floor = Floor.Create(doc, loops,
                         floor.FloorType.Id, floor.LevelId); // 2022
 
-                    var v = new XYZ(5, 5, 0);
+                    XYZ v = new(5, 5, 0);
 
                     //doc.Move( floor, v ); // 2011
 

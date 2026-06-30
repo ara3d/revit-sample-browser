@@ -2,25 +2,23 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class ParameterArgument : CommandArgument<ElementId>
     {
-        private static readonly Dictionary<ElementId, StorageType> storageTypeCache= new();
-        private static readonly Dictionary<ElementId, ForgeTypeId> dataTypeCache = new();
+        private static readonly Dictionary<ElementId, StorageType> storageTypeCache = [];
+        private static readonly Dictionary<ElementId, ForgeTypeId> dataTypeCache = [];
         public bool IsBuiltInParameter { get; }
         public BuiltInParameter BuiltInParameter { get; init; }
         public StorageType StorageType { get; private set; } = StorageType.None;
-        public ForgeTypeId DataType { get; private set; } = SpecTypeId.Custom; 
+        public ForgeTypeId DataType { get; private set; } = SpecTypeId.Custom;
 
         public ParameterArgument(BuiltInParameter value) : base(new ElementId(value))
-        {            
+        {
             IsBuiltInParameter = true;
             BuiltInParameter = value;
             Name = $"BuiltInParameter.{value}";
@@ -28,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
         }
         public ParameterArgument(ElementId value, string name) : base(value)
         {
-           
+
             IsBuiltInParameter = false;
             Name = $"new ElementId({value})";
             Label = name;
@@ -37,10 +35,10 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 
         public void ResolveStorageType(Document document)
         {
-            if (storageTypeCache.TryGetValue(Value, out StorageType storageType))
+            if (storageTypeCache.TryGetValue(Value, out var storageType))
             {
                 StorageType = storageType;
-                if (dataTypeCache.TryGetValue(Value, out ForgeTypeId dataType))
+                if (dataTypeCache.TryGetValue(Value, out var dataType))
                 {
                     DataType = dataType;
                     return;
@@ -62,24 +60,23 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
                 {
                     DataType = parameter.Definition.GetDataType();
                     dataTypeCache[Value] = DataType;
-}
+                }
             }
             else
             {
-                var parameterElement = document.GetElement(Value) as ParameterElement;
-                if (parameterElement != null)
+                if (document.GetElement(Value) is ParameterElement parameterElement)
                 {
                     var definition = parameterElement.GetDefinition();
                     DataType = definition.GetDataType();
                     dataTypeCache[Value] = DataType;
-var parameter = first?.get_Parameter(definition);
+                    var parameter = first?.get_Parameter(definition);
                     if (parameter != null)
                     {
                         StorageType = parameter.StorageType;
                         storageTypeCache[Value] = StorageType;
                     }
                 }
-            }            
+            }
         }
     }
 }

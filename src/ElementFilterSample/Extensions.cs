@@ -9,8 +9,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
     {
         public static TEnum Parse(string strValue)
         {
-            if (!typeof(TEnum).IsEnum) return default;
-            return (TEnum)Enum.Parse(typeof(TEnum), strValue);
+            return !typeof(TEnum).IsEnum ? default : (TEnum)Enum.Parse(typeof(TEnum), strValue);
         }
 
         public static string Parse(TEnum enumVal)

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
@@ -32,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             if (DialogResult.OK == ExternalApplication.SettingDialog.DialogResult)
             {
                 ExternalApplication.ApplicationEvents = ExternalApplication.SettingDialog.AppSelectionList;
-                IDictionary<string, string> journalData = commandData.JournalData;
+                var journalData = commandData.JournalData;
 
 #if !(Debug || DEBUG)
                     ExternalApplication.JnlProcessor.DumpEventListToJournalData(ExternalApplication.ApplicationEvents, ref journalData);

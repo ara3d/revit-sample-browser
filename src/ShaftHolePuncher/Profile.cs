@@ -1,15 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using Document = Autodesk.Revit.Creation.Document;
 using Point = System.Drawing.Point;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
     /// <summary>
@@ -214,7 +213,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             //return an array with max and min value of face
             var resultPoints = new PointF[2]
             {
-                new PointF(minX, minY), new PointF(maxX, maxY)
+                new(minX, minY), new(maxX, maxY)
             };
             return resultPoints;
         }

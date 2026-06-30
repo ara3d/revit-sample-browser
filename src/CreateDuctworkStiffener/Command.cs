@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
 {
@@ -33,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
                 return Result.Failed;
             }
 
-            var ductCollector = new FilteredElementCollector(_document);
+            FilteredElementCollector ductCollector = new(_document);
             ductCollector.OfCategory(BuiltInCategory.OST_FabricationDuctwork).OfClass(typeof(FabricationPart));
             if (ductCollector.GetElementCount() == 0)
             {
@@ -43,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
 
             m_ductwork = ductCollector.FirstElement() as FabricationPart;
 
-            var stiffenerTypeCollector = new FilteredElementCollector(_document);
+            FilteredElementCollector stiffenerTypeCollector = new(_document);
             stiffenerTypeCollector.OfCategory(BuiltInCategory.OST_FabricationDuctworkStiffeners)
                 .OfClass(typeof(FamilySymbol));
             if (stiffenerTypeCollector.GetElementCount() == 0)
@@ -75,19 +76,17 @@ namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
 
             try
             {
-                using (var transaction = new Transaction(_document, "Sample_CreateDuctworkStiffener"))
+                using Transaction transaction = new(_document, "Sample_CreateDuctworkStiffener");
+                transaction.Start();
+                if (!m_stiffenerType.IsActive)
                 {
-                    transaction.Start();
-                    if (!m_stiffenerType.IsActive)
-                    {
-                        m_stiffenerType.Activate();
-                        _document.Regenerate();
-                    }
-
-                    MEPSupportUtils.CreateDuctworkStiffener(_document, m_stiffenerType.Id, m_ductwork.Id,
-                        m_distanceToHostEnd);
-                    transaction.Commit();
+                    m_stiffenerType.Activate();
+                    _document.Regenerate();
                 }
+
+                MEPSupportUtils.CreateDuctworkStiffener(_document, m_stiffenerType.Id, m_ductwork.Id,
+                    m_distanceToHostEnd);
+                transaction.Commit();
 
                 return Result.Succeeded;
             }

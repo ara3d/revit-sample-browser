@@ -12,12 +12,13 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -49,7 +50,7 @@ namespace BuildingCoder
 
             var e = doc.GetElement(r); // 2012
 
-            var tx = new Transaction(doc);
+            Transaction tx = new(doc);
 
             tx.Start(_caption);
 
@@ -79,7 +80,7 @@ namespace BuildingCoder
             }
             */
 
-            var a = new List<Element>(
+            List<Element> a = new(
                 ids.Select(id => doc.GetElement(id)));
 
             var s = $"{_caption} for host element {Util.ElementDescription(e)}: ";

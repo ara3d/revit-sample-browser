@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Rooms.CS
 {
@@ -16,13 +16,13 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
     public class RoomsData
     {
         // a list to store the information of departments
-        private readonly List<DepartmentInfo> m_departmentInfos = new List<DepartmentInfo>();
+        private readonly List<DepartmentInfo> m_departmentInfos = [];
         private readonly UIApplication m_revit; // Store the reference of the application in revit
 
-        private readonly List<Room> m_rooms = new List<Room>(); // a list to store all rooms in the project
-        private readonly List<Room> m_roomsWithoutTag = new List<Room>(); // a list to store all rooms without tag
-        private readonly List<Room> m_roomsWithTag = new List<Room>(); // a list to store all rooms with tag
-        private readonly List<RoomTag> m_roomTags = new List<RoomTag>(); // a list to store all room tags
+        private readonly List<Room> m_rooms = []; // a list to store all rooms in the project
+        private readonly List<Room> m_roomsWithoutTag = []; // a list to store all rooms without tag
+        private readonly List<Room> m_roomsWithTag = []; // a list to store all rooms with tag
+        private readonly List<RoomTag> m_roomTags = []; // a list to store all room tags
 
         public RoomsData(ExternalCommandData commandData)
         {
@@ -35,18 +35,18 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
         }
 
         public ReadOnlyCollection<DepartmentInfo> DepartmentInfos =>
-            new ReadOnlyCollection<DepartmentInfo>(m_departmentInfos);
+            new(m_departmentInfos);
 
-        public ReadOnlyCollection<Room> Rooms => new ReadOnlyCollection<Room>(m_rooms);
+        public ReadOnlyCollection<Room> Rooms => new(m_rooms);
 
         /// <summary>
         ///     a list of all the room tags in the project
         /// </summary>
-        public ReadOnlyCollection<RoomTag> RoomTags => new ReadOnlyCollection<RoomTag>(m_roomTags);
+        public ReadOnlyCollection<RoomTag> RoomTags => new(m_roomTags);
 
-        public ReadOnlyCollection<Room> RoomsWithTag => new ReadOnlyCollection<Room>(m_roomsWithTag);
+        public ReadOnlyCollection<Room> RoomsWithTag => new(m_roomsWithTag);
 
-        public ReadOnlyCollection<Room> RoomsWithoutTag => new ReadOnlyCollection<Room>(m_roomsWithoutTag);
+        public ReadOnlyCollection<Room> RoomsWithoutTag => new(m_roomsWithoutTag);
 
         public void CreateTags()
         {
@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
             {
                 foreach (var tmpRoom in m_roomsWithoutTag)
                 {
-                    if (!(tmpRoom.Location is LocationPoint locPoint))
+                    if (tmpRoom.Location is not LocationPoint locPoint)
                     {
                         var roomId = $"Room Id:  {tmpRoom.Id}";
                         var errMsg = $"{roomId}\r\nFault to create room tag,can't get the location point!";
@@ -265,11 +265,10 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
                 var tmpRoom = m_rooms[i];
                 for (var j = i + 1; j < amount; j++)
                 {
-                    var tmpPoint = tmpRoom.Location as LocationPoint;
                     var listRoom = m_rooms[j];
 
                     // if can't get location point, return false;
-                    if (null == tmpPoint || !(listRoom.Location is LocationPoint roomPoint)) return false;
+                    if (tmpRoom.Location is not LocationPoint tmpPoint || listRoom.Location is not LocationPoint roomPoint) return false;
 
                     // rooms in different level
                     if (tmpPoint.Point.Z > roomPoint.Point.Z)

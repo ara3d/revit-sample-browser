@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 using Color = System.Drawing.Color;
 using Form = System.Windows.Forms.Form;
 
@@ -174,13 +174,13 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         {
             // a sub-transaction is not necessary in this case
             // it is used for illustration purposes only
-            using (var subTransaction = new SubTransaction(m_document))
+            using (SubTransaction subTransaction = new(m_document))
             {
                 // if not handled explicitly, the sub-transaction will be rolled back when leaving this block
                 try
                 {
                     if (subTransaction.Start() == TransactionStatus.Started)
-                        using (var createWallForm = new CreateWallForm(m_commandData))
+                        using (CreateWallForm createWallForm = new(m_commandData))
                         {
                             createWallForm.ShowDialog();
                             if (DialogResult.OK == createWallForm.DialogResult)
@@ -218,14 +218,14 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
 
             // a sub-transaction is not necessary in this case
             // it is used for illustration purposes only
-            using (var subTransaction = new SubTransaction(m_document))
+            using (SubTransaction subTransaction = new(m_document))
             {
                 // if not handled explicitly, the sub-transaction will be rolled back when leaving this block
                 try
                 {
                     if (subTransaction.Start() == TransactionStatus.Started)
                     {
-                        var translationVec = new XYZ(10, 10, 0);
+                        XYZ translationVec = new(10, 10, 0);
                         ElementTransformUtils.MoveElement(m_document, m_lastCreatedWall.Id, translationVec);
                         UpdateModel(true); // immediately update the view to see the changes
 
@@ -252,7 +252,7 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
 
             // a sub-transaction is not necessary in this case
             // it is used for illustration purposes only
-            using (var subTransaction = new SubTransaction(m_document))
+            using (SubTransaction subTransaction = new(m_document))
             {
                 // if not handled explicitly, the sub-transaction will be rolled back when leaving this block
                 try
@@ -353,19 +353,19 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
                     case TaskDialogResult.Cancel:
                         return;
                     case TaskDialogResult.Yes:
-                    {
-                        if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
-                            m_transaction.Commit();
-                        HandleNestedTransactionGroups(OperationType.CommitTransactionGroup);
-                        break;
-                    }
+                        {
+                            if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
+                                m_transaction.Commit();
+                            HandleNestedTransactionGroups(OperationType.CommitTransactionGroup);
+                            break;
+                        }
                     default:
-                    {
-                        if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
-                            m_transaction.RollBack();
-                        HandleNestedTransactionGroups(OperationType.RollbackTransactionGroup);
-                        break;
-                    }
+                        {
+                            if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
+                                m_transaction.RollBack();
+                            HandleNestedTransactionGroups(OperationType.RollbackTransactionGroup);
+                            break;
+                        }
                 }
             }
 
@@ -424,10 +424,7 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
                 if (m_transactionGroup.HasEnded())
                 {
                     m_transGroupNode = m_transGroupNode.Parent;
-                    if (m_transGroupNode.Equals(m_rootNode))
-                        m_transactionGroup = null;
-                    else
-                        m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
+                    m_transactionGroup = m_transGroupNode.Equals(m_rootNode) ? null : m_transGroupNode.Tag as TransactionGroup;
                 }
                 else
                 {
@@ -482,116 +479,109 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             {
                 //add tree node according to operation type 
                 case OperationType.StartTransactionGroup:
-                {
-                    if (m_transGroupNode == null)
                     {
-                        m_transGroupNode = new TreeNode(m_transactionGroup.GetName());
-                        var index = m_rootNode.Nodes.Add(m_transGroupNode);
-                        m_rootNode.Nodes[index].Tag = m_transactionGroup;
-                        m_rootNode.Expand();
-                        UpdateTreeNode(m_transGroupNode, type);
-                    }
-                    else
-                    {
-                        var newTransGroupNode = new TreeNode(m_transactionGroup.GetName());
-                        var index = m_transGroupNode.Nodes.Add(newTransGroupNode);
-                        m_transGroupNode.Nodes[index].Tag = m_transactionGroup;
-                        m_transGroupNode.Expand();
-                        m_transGroupNode = newTransGroupNode;
-                        m_transGroupNode.Expand();
-                        UpdateTreeNode(m_transGroupNode, type);
-                    }
+                        if (m_transGroupNode == null)
+                        {
+                            m_transGroupNode = new TreeNode(m_transactionGroup.GetName());
+                            var index = m_rootNode.Nodes.Add(m_transGroupNode);
+                            m_rootNode.Nodes[index].Tag = m_transactionGroup;
+                            m_rootNode.Expand();
+                            UpdateTreeNode(m_transGroupNode, type);
+                        }
+                        else
+                        {
+                            TreeNode newTransGroupNode = new(m_transactionGroup.GetName());
+                            var index = m_transGroupNode.Nodes.Add(newTransGroupNode);
+                            m_transGroupNode.Nodes[index].Tag = m_transactionGroup;
+                            m_transGroupNode.Expand();
+                            m_transGroupNode = newTransGroupNode;
+                            m_transGroupNode.Expand();
+                            UpdateTreeNode(m_transGroupNode, type);
+                        }
 
-                    m_transNode = null;
-                    m_transaction = null;
-                    break;
-                }
+                        m_transNode = null;
+                        m_transaction = null;
+                        break;
+                    }
                 case OperationType.RollbackTransactionGroup:
-                {
-                    UpdateTreeNode(m_transGroupNode, type);
-                    if (m_transGroupNode.Parent.Equals(m_rootNode))
                     {
-                        m_rootNode.Expand();
-                        m_transactionGroup = null;
-                        m_transGroupNode = null;
-                    }
-                    else
-                    {
-                        m_transGroupNode = m_transGroupNode.Parent;
-                        m_transGroupNode.Expand();
-                        m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
-                    }
+                        UpdateTreeNode(m_transGroupNode, type);
+                        if (m_transGroupNode.Parent.Equals(m_rootNode))
+                        {
+                            m_rootNode.Expand();
+                            m_transactionGroup = null;
+                            m_transGroupNode = null;
+                        }
+                        else
+                        {
+                            m_transGroupNode = m_transGroupNode.Parent;
+                            m_transGroupNode.Expand();
+                            m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
+                        }
 
-                    m_transNode = null;
-                    m_transaction = null;
-                    break;
-                }
+                        m_transNode = null;
+                        m_transaction = null;
+                        break;
+                    }
                 case OperationType.CommitTransactionGroup:
-                {
-                    UpdateTreeNode(m_transGroupNode, type);
-                    if (m_transGroupNode.Parent.Equals(m_rootNode))
                     {
-                        m_rootNode.Expand();
-                        m_transactionGroup = null;
-                        m_transGroupNode = null;
-                    }
-                    else
-                    {
-                        m_transGroupNode.Expand();
-                        m_transGroupNode = m_transGroupNode.Parent;
-                        m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
-                    }
+                        UpdateTreeNode(m_transGroupNode, type);
+                        if (m_transGroupNode.Parent.Equals(m_rootNode))
+                        {
+                            m_rootNode.Expand();
+                            m_transactionGroup = null;
+                            m_transGroupNode = null;
+                        }
+                        else
+                        {
+                            m_transGroupNode.Expand();
+                            m_transGroupNode = m_transGroupNode.Parent;
+                            m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
+                        }
 
-                    m_transNode = null;
-                    m_transaction = null;
-                    break;
-                }
+                        m_transNode = null;
+                        m_transaction = null;
+                        break;
+                    }
                 case OperationType.StartTransaction:
-                {
-                    m_transNode = new TreeNode(m_transaction.GetName())
                     {
-                        ForeColor = m_startedColor
-                    };
-                    var node = m_transGroupNode == null ? m_rootNode : m_transGroupNode;
-                    node.Nodes.Add(m_transNode);
-                    node.Expand();
-                    UpdateTreeNode(m_transNode, type);
-                    break;
-                }
+                        m_transNode = new TreeNode(m_transaction.GetName())
+                        {
+                            ForeColor = m_startedColor
+                        };
+                        var node = m_transGroupNode ?? m_rootNode;
+                        node.Nodes.Add(m_transNode);
+                        node.Expand();
+                        UpdateTreeNode(m_transNode, type);
+                        break;
+                    }
                 case OperationType.CommitTransaction:
-                {
-                    UpdateTreeNode(m_transNode, type);
-                    var node = m_transGroupNode == null ? m_rootNode : m_transGroupNode;
-                    node.Expand();
-                    m_transNode = null;
-                    break;
-                }
+                    {
+                        UpdateTreeNode(m_transNode, type);
+                        var node = m_transGroupNode ?? m_rootNode;
+                        node.Expand();
+                        m_transNode = null;
+                        break;
+                    }
                 case OperationType.RollbackTransaction:
-                {
-                    UpdateTreeNode(m_transNode, type);
-                    var node = m_transGroupNode == null ? m_rootNode : m_transGroupNode;
-                    node.Expand();
-                    m_transNode = null;
-                    break;
-                }
+                    {
+                        UpdateTreeNode(m_transNode, type);
+                        var node = m_transGroupNode ?? m_rootNode;
+                        node.Expand();
+                        m_transNode = null;
+                        break;
+                    }
                 default:
-                {
-                    string childNodeText = null;
-
-                    if (string.IsNullOrEmpty(info))
-                        childNodeText = "Operation";
-                    else
-                        childNodeText = info;
-
-                    var childNode = new TreeNode(childNodeText);
-                    if (type == OperationType.ObjectDeletion)
-                        childNode.ForeColor = m_deletedColor;
-                    else
-                        childNode.ForeColor = m_normalColor;
-                    m_transNode.Nodes.Add(childNode);
-                    m_transNode.Expand();
-                    break;
-                }
+                    {
+                        var childNodeText = string.IsNullOrEmpty(info) ? "Operation" : info;
+                        TreeNode childNode = new(childNodeText)
+                        {
+                            ForeColor = type == OperationType.ObjectDeletion ? m_deletedColor : m_normalColor
+                        };
+                        m_transNode.Nodes.Add(childNode);
+                        m_transNode.Expand();
+                        break;
+                    }
             }
         }
 

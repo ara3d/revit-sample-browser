@@ -2,7 +2,6 @@
 
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
 {
@@ -13,9 +12,7 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
 
         public VisibilityCtrlForm(VisibilityCtrl visibilityCtrl)
         {
-            if (null == visibilityCtrl)
-                throw new ArgumentNullException(nameof(visibilityCtrl));
-            m_visibilityCtrl = visibilityCtrl;
+            m_visibilityCtrl = visibilityCtrl ?? throw new ArgumentNullException(nameof(visibilityCtrl));
 
             InitializeComponent();
         }
@@ -26,8 +23,8 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
             allCategoriesListView.Columns.Add("name");
             foreach (string name in m_visibilityCtrl.AllCategories.Keys)
             {
-                var check = m_visibilityCtrl.AllCategories[name].ToString().Equals("True") ? true : false;
-                var item = new ListViewItem(name)
+                var check = m_visibilityCtrl.AllCategories[name].ToString().Equals("True");
+                ListViewItem item = new(name)
                 {
                     Checked = check
                 };
@@ -42,7 +39,7 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
 
         private void allCategoriesListView_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            var visible = e.NewValue == CheckState.Checked ? true : false;
+            var visible = e.NewValue == CheckState.Checked;
             var name = allCategoriesListView.Items[e.Index].Text;
 
             // change the visibility of the category
@@ -53,12 +50,9 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
         private void isolateButton_Click(object sender, EventArgs e)
         {
             // set the IsolateMode
-            if (pickOneRadioButton.Checked)
-                m_visibilityCtrl.IsolateMode = IsolateMode.PickOne;
-            else if (windowSelectRadioButton.Checked)
-                m_visibilityCtrl.IsolateMode = IsolateMode.WindowSelect;
-            else
-                m_visibilityCtrl.IsolateMode = IsolateMode.None;
+            m_visibilityCtrl.IsolateMode = pickOneRadioButton.Checked
+                ? IsolateMode.PickOne
+                : windowSelectRadioButton.Checked ? IsolateMode.WindowSelect : IsolateMode.None;
 
             // close the form
             Close();

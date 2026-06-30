@@ -1,30 +1,27 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 using Document = Autodesk.Revit.Creation.Document;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
     using ModelElement = Element;
 
     public class FrameBuilder
     {
-        private Application m_appCreator;
+        private readonly Application m_appCreator;
         private readonly FrameData m_data;
         private readonly Document m_docCreator;
 
         public FrameBuilder(FrameData data)
         {
-            if (null == data)
-                throw new ArgumentNullException(nameof(data),
+            m_data = data ?? throw new ArgumentNullException(nameof(data),
                     "constructor FrameBuilder(FrameData data)'s parameter shouldn't be null ");
-            m_data = data;
 
             m_appCreator = data.CommandData.Application.Application.Create;
             m_docCreator = data.CommandData.Application.ActiveUIDocument.Document.Create;
@@ -36,11 +33,11 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 
         public void CreateFraming()
         {
-            var t = new Transaction(m_data.CommandData.Application.ActiveUIDocument.Document,
+            Transaction t = new(m_data.CommandData.Application.ActiveUIDocument.Document,
                 Guid.NewGuid().GetHashCode().ToString());
             t.Start();
             m_data.UpdateLevels();
-            var frameElems = new List<FamilyInstance>();
+            List<FamilyInstance> frameElems = [];
             var matrixUv = XyzMath.CreateMatrix(m_data.XNumber, m_data.YNumber, m_data.Distance);
 
             for (var ii = 0; ii < m_data.FloorNumber; ii++)
@@ -57,23 +54,23 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
                 }
 
                 for (var j = 0; j < matrixYSize; j++)
-                for (var i = 0; i < matrixXSize; i++)
-                {
-                    if (i != matrixXSize - 1) frameElems.Add(NewBeam(matrixUv[i, j], matrixUv[i + 1, j], topLevel));
-                    if (j != matrixYSize - 1) frameElems.Add(NewBeam(matrixUv[i, j], matrixUv[i, j + 1], topLevel));
-                }
+                    for (var i = 0; i < matrixXSize; i++)
+                    {
+                        if (i != matrixXSize - 1) frameElems.Add(NewBeam(matrixUv[i, j], matrixUv[i + 1, j], topLevel));
+                        if (j != matrixYSize - 1) frameElems.Add(NewBeam(matrixUv[i, j], matrixUv[i, j + 1], topLevel));
+                    }
 
                 // Braces connect each column midpoint to the midpoint of adjoining beams.
                 for (var j = 0; j < matrixYSize; j++)
-                for (var i = 0; i < matrixXSize; i++)
-                {
-                    if (i != matrixXSize - 1)
-                        frameElems.AddRange(
-                            NewBraces(matrixUv[i, j], matrixUv[i + 1, j], baseLevel, topLevel));
-                    if (j != matrixYSize - 1)
-                        frameElems.AddRange(
-                            NewBraces(matrixUv[i, j], matrixUv[i, j + 1], baseLevel, topLevel));
-                }
+                    for (var i = 0; i < matrixXSize; i++)
+                    {
+                        if (i != matrixXSize - 1)
+                            frameElems.AddRange(
+                                NewBraces(matrixUv[i, j], matrixUv[i + 1, j], baseLevel, topLevel));
+                        if (j != matrixYSize - 1)
+                            frameElems.AddRange(
+                                NewBraces(matrixUv[i, j], matrixUv[i, j + 1], baseLevel, topLevel));
+                    }
             }
 
             MoveRotateFrame(frameElems);
@@ -82,7 +79,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 
         private FamilyInstance NewColumn(UV point2D, Level baseLevel, Level topLevel)
         {
-            var point = new XYZ(point2D.U, point2D.V, 0);
+            XYZ point = new(point2D.U, point2D.V, 0);
 
             if (!m_data.ColumnSymbol.IsActive)
                 m_data.ColumnSymbol.Activate();
@@ -99,8 +96,8 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
         private FamilyInstance NewBeam(UV point2D1, UV point2D2, Level topLevel)
         {
             var height = topLevel.Elevation;
-            var startPoint = new XYZ(point2D1.U, point2D1.V, height);
-            var endPoint = new XYZ(point2D2.U, point2D2.V, height);
+            XYZ startPoint = new(point2D1.U, point2D1.V, height);
+            XYZ endPoint = new(point2D2.U, point2D2.V, height);
             var baseLine = Line.CreateBound(startPoint, endPoint);
             if (!m_data.BeamSymbol.IsActive)
                 m_data.BeamSymbol.Activate();
@@ -114,9 +111,9 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             var topHeight = topLevel.Elevation;
             var baseHeight = baseLevel.Elevation;
             var middleElevation = (topHeight + baseHeight) / 2;
-            var startPoint = new XYZ(point2D1.U, point2D1.V, middleElevation);
-            var endPoint = new XYZ(point2D2.U, point2D2.V, middleElevation);
-            var middlePoint = new XYZ((point2D1.U + point2D2.U) / 2, (point2D1.V + point2D2.V) / 2, topHeight);
+            XYZ startPoint = new(point2D1.U, point2D1.V, middleElevation);
+            XYZ endPoint = new(point2D2.U, point2D2.V, middleElevation);
+            XYZ middlePoint = new((point2D1.U + point2D2.U) / 2, (point2D1.V + point2D2.V) / 2, topHeight);
 
             var firstBaseLine = Line.CreateBound(startPoint, middlePoint);
             if (!m_data.BraceSymbol.IsActive)
@@ -127,11 +124,11 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             var secondBaseLine = Line.CreateBound(endPoint, middlePoint);
             var secondBrace =
                 m_docCreator.NewFamilyInstance(secondBaseLine, m_data.BraceSymbol, topLevel, StructuralType.Brace);
-            var result = new List<FamilyInstance>
-            {
+            List<FamilyInstance> result =
+            [
                 firstBrace,
                 secondBrace
-            };
+            ];
             return result;
         }
 
@@ -173,15 +170,15 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 
         private void MoveElement(Autodesk.Revit.DB.Document doc, Element elem, UV translation2D)
         {
-            var translation3D = new XYZ(translation2D.U, translation2D.V, 0.0);
+            XYZ translation3D = new(translation2D.U, translation2D.V, 0.0);
             ElementTransformUtils.MoveElement(doc, elem.Id, translation3D);
         }
 
         // ElementTransformUtils.RotateElement expects angle in radians.
         private void RotateElement(UIApplication app, Element elem, UV center, double angle)
         {
-            var axisPnt1 = new XYZ(center.U, center.V, 0.0);
-            var axisPnt2 = new XYZ(center.U, center.V, 1.0);
+            XYZ axisPnt1 = new(center.U, center.V, 0.0);
+            XYZ axisPnt2 = new(center.U, center.V, 1.0);
             var axis = Line.CreateBound(axisPnt1, axisPnt2);
             ElementTransformUtils.RotateElement(elem.Document, elem.Id, axis, angle);
         }

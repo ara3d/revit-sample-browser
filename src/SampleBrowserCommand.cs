@@ -1,15 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser
 {
@@ -29,7 +29,9 @@ namespace Ara3D.RevitSampleBrowser
             public RichTextBox TextBox { get; }
 
             public LoggingListener(RichTextBox tetBox)
-                => TextBox = tetBox;
+            {
+                TextBox = tetBox;
+            }
 
             public override void Write(string message)
             {
@@ -59,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser
                     .Select(t => new SampleData(t))
                     .OrderBy(t => t.Name);
 
-                foreach (var (text, width) in new[] { ("Name", 400), ("Type", 200), ("Readme", 400) })
+                foreach ((var text, var width) in new[] { ("Name", 400), ("Type", 200), ("Readme", 400) })
                     Form.listView1.Columns.Add(new ColumnHeader { Text = text, Width = width });
 
                 Form.listView1.Items.Clear();
@@ -75,7 +77,7 @@ namespace Ara3D.RevitSampleBrowser
                 Form.listView1.SelectedIndexChanged += ListView1_SelectedIndexChanged;
                 Form.listView1.FullRowSelect = true;
                 Form.listView1.MouseDoubleClick += ListView1_MouseDoubleClick;
-                
+
                 Form.Show();
                 CurrentListener = new LoggingListener(Form.logTextBox);
                 Trace.Listeners.Add(CurrentListener);
@@ -108,7 +110,7 @@ namespace Ara3D.RevitSampleBrowser
                 if (item?.Tag is SampleData sample)
                 {
                     Debug.WriteLine($"Activating plug-in {sample.Name}");
-                    EventHandler.Raise(() => 
+                    EventHandler.Raise(() =>
                         sample.Activate(CommandData, SampleBrowserApplication.Application),
                         $"Activate sample {item.Name}");
                 }
@@ -131,7 +133,7 @@ namespace Ara3D.RevitSampleBrowser
                 if (Form.listView1.SelectedItems.Count > 0)
                 {
                     var item = Form.listView1.SelectedItems[0];
-                    if (!(item.Tag is SampleData data))
+                    if (item.Tag is not SampleData data)
                         return;
                     if (File.Exists(data.ReadmePath))
                     {

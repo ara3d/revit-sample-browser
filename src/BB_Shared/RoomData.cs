@@ -1,10 +1,11 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Text;
-using Autodesk.Revit.DB.Architecture;
-using System;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
@@ -79,8 +80,8 @@ public class RoomData
     public int Windows;
     public int Walls;
 
-    public Dictionary<string, string> Parameters = new();
-    public List<AccessPoint> AccessPoints = new();
+    public Dictionary<string, string> Parameters = [];
+    public List<AccessPoint> AccessPoints = [];
     public Vector2 Center;
     public long Id;
     public double LimitOffset;
@@ -102,7 +103,7 @@ public class RoomData
 
     public override string ToString()
     {
-        var sb = new StringBuilder();
+        StringBuilder sb = new();
         foreach (var fi in typeof(RoomData).GetFields())
         {
             var val = fi.GetValue(this);
@@ -148,7 +149,7 @@ public sealed class AccessPoint
     public double Height { get; set; }
 
     /// <summary>Parameters if this is </summary>
-    public Dictionary<string, string> Parameters = new();
+    public Dictionary<string, string> Parameters = [];
 }
 
 public static class RoomAccessPoints
@@ -161,7 +162,7 @@ public static class RoomAccessPoints
         if (doc is null) throw new ArgumentNullException(nameof(doc));
         if (room is null) throw new ArgumentNullException(nameof(room));
 
-        var result = new List<AccessPoint>(64);
+        List<AccessPoint> result = new(64);
 
         // ---- DOORS (FamilyInstance, category OST_Doors) ----
         var doors = new FilteredElementCollector(doc)
@@ -189,7 +190,7 @@ public static class RoomAccessPoints
             if (!touchesRoom)
                 continue;
 
-            var (hostWallId, accessPoint) = ComputeWallProjectionPoint(door);
+            (var hostWallId, var accessPoint) = ComputeWallProjectionPoint(door);
 
             XYZ facingDir = null;
             try
@@ -200,8 +201,8 @@ public static class RoomAccessPoints
             catch
             {
             }
-            
-            var (width, height) = GetOpeningSize(door);
+
+            (var width, var height) = GetOpeningSize(door);
 
             result.Add(new AccessPoint
             {
@@ -212,7 +213,7 @@ public static class RoomAccessPoints
                 Height = height,
                 Point = accessPoint ?? GuessElementPoint(doc, door),
                 FacingDirection = facingDir,
-                IsOnToSide = (toRoom != null && toRoom.Id == room.Id)
+                IsOnToSide = toRoom != null && toRoom.Id == room.Id
             });
         }
 
@@ -232,8 +233,7 @@ public static class RoomAccessPoints
 
         foreach (var op in openings)
         {
-            var hostWall = op.Host as Wall;
-            if (hostWall == null) continue;
+            if (op.Host is not Wall hostWall) continue;
 
             // A representative point: try projecting bbox center to the wall line.
             var center = GuessElementPoint(doc, op);
@@ -252,8 +252,8 @@ public static class RoomAccessPoints
             var normal = hostWall.Orientation ?? XYZ.BasisX;
             const double offset = 0.15; // ~15 cm, adjust as needed
 
-            var pPlus = projected + normal * offset;
-            var pMinus = projected - normal * offset;
+            var pPlus = projected + (normal * offset);
+            var pMinus = projected - (normal * offset);
 
             var roomPlus = FindRoomContainingPoint(roomsInPhase, pPlus);
             var roomMinus = FindRoomContainingPoint(roomsInPhase, pMinus);
@@ -270,9 +270,9 @@ public static class RoomAccessPoints
             if (!connectsSomething)
                 continue;
 
-            var isOnToSide = (roomPlus != null && roomPlus.Id == room.Id); // define "+" as "To"
+            var isOnToSide = roomPlus != null && roomPlus.Id == room.Id; // define "+" as "To"
 
-            var (width, height) = GetOpeningSize(op);
+            (var width, var height) = GetOpeningSize(op);
 
             result.Add(new AccessPoint
             {
@@ -296,8 +296,7 @@ public static class RoomAccessPoints
     public static (ElementId HostWallId, XYZ ProjectedPoint) ComputeWallProjectionPoint(FamilyInstance inst)
     {
         var locPt = (inst.Location as LocationPoint)?.Point;
-        var hostWall = inst.Host as Wall;
-        if (hostWall != null)
+        if (inst.Host is Wall hostWall)
         {
             var lc = hostWall.Location as LocationCurve;
             var curve = lc?.Curve;
@@ -326,8 +325,7 @@ public static class RoomAccessPoints
         if (bb != null) return (bb.Min + bb.Max) * 0.5;
 
         // Fallback: project geometry & compute centroid of first solid
-        var opts = new Options
-            { ComputeReferences = false, IncludeNonVisibleObjects = false, DetailLevel = ViewDetailLevel.Fine };
+        Options opts = new() { ComputeReferences = false, IncludeNonVisibleObjects = false, DetailLevel = ViewDetailLevel.Fine };
         var geo = e.get_Geometry(opts);
         if (geo != null)
         {
@@ -340,7 +338,7 @@ public static class RoomAccessPoints
                     if (c != null) return c;
                 }
 
-                var c1 = FirstCentroid(new List<GeometryObject> { obj });
+                var c1 = FirstCentroid([obj]);
                 if (c1 != null) return c1;
             }
         }
@@ -525,7 +523,7 @@ public static class RoomAccessPoints
     /// </summary>
     public static Dictionary<string, string> GetAllParametersAsDictionary(Element e)
     {
-        var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, string> result = new(StringComparer.OrdinalIgnoreCase);
         if (e == null) return result;
 
         // Instance parameters
@@ -536,8 +534,7 @@ public static class RoomAccessPoints
         }
 
         // Type parameters (FamilySymbol / ElementType)
-        var type = e.Document.GetElement(e.GetTypeId()) as ElementType;
-        if (type != null)
+        if (e.Document.GetElement(e.GetTypeId()) is ElementType type)
         {
             foreach (Parameter p in type.Parameters)
             {
@@ -603,7 +600,7 @@ public static class RoomAccessPoints
     {
         var walls = r.GetBoundaryWalls().ToList();
         var numWalls = walls.Count;
-        var rd = new RoomData()
+        RoomData rd = new()
         {
             Name = r.Name ?? "",
             Id = r.Id.Value,

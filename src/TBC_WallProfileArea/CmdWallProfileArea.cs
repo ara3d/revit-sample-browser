@@ -14,12 +14,13 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -37,7 +38,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var walls = new List<Element>();
+            List<Element> walls = new();
             if (!Util.GetSelectedElementsOrAll(
                 walls, uidoc, typeof(Wall)))
             {
@@ -98,9 +99,9 @@ namespace BuildingCoder
                         ? ", outer loop of largest wall"
                         : "");
 
-            var creator = new Creator(doc);
+            Creator creator = new(doc);
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Draw wall profile loops");
             creator.DrawPolygons(polygons);
             tx.Commit();

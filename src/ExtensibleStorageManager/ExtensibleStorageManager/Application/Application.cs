@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Reflection;
 using Autodesk.Revit.UI;
+using System.Reflection;
 
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.Application
 {

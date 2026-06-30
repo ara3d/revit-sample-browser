@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
 {
@@ -19,10 +19,10 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
         {
             try
             {
-                var documentTransaction =
-                    new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
+                Transaction documentTransaction =
+                    new(commandData.Application.ActiveUIDocument.Document, "Document");
                 documentTransaction.Start();
-                using (var infoForm = new SpotDimensionInfoDlg(commandData))
+                using (SpotDimensionInfoDlg infoForm = new(commandData))
                 {
                     //Highlight the selected spotdimension
                     if (infoForm.ShowDialog() == DialogResult.OK

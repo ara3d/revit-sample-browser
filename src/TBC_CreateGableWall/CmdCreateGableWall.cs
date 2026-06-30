@@ -12,11 +12,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -65,7 +65,7 @@ namespace BuildingCoder
             //  q = p;
             //}
 
-            var profile = new List<Curve>( // 2013
+            List<Curve> profile = new( // 2013
                 pts.Length);
 
             var q = pts[pts.Length - 1];
@@ -98,7 +98,7 @@ namespace BuildingCoder
                             => e.Name.Equals("Level 1"))
                     as Level;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Create Gable Wall");
 
             //Wall wall = doc.Create.NewWall( // 2012

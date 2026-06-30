@@ -13,13 +13,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -46,7 +44,7 @@ namespace BuildingCoder
             var elementIds
                 = uidoc.Selection.GetElementIds();
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Mirror Elements");
 
             ElementTransformUtils.MirrorElements(

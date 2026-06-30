@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Windows.Forms;
 using Autodesk.Revit.UI;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
@@ -24,23 +24,14 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 Template = "DoubleHung"
             };
             if (m_para.Template == "DoubleHung") m_winCreator = new DoubleHungWinCreation(m_para, m_commandData);
-            using (var form = new WizardForm(m_para))
+            using (WizardForm form = new(m_para))
             {
-                switch (form.ShowDialog())
+                result = form.ShowDialog() switch
                 {
-                    case DialogResult.Cancel:
-                        result = 0;
-                        break;
-                    case DialogResult.OK:
-                        if (Creation())
-                            result = 1;
-                        else
-                            result = -1;
-                        break;
-                    default:
-                        result = -1;
-                        break;
-                }
+                    DialogResult.Cancel => 0,
+                    DialogResult.OK => Creation() ? 1 : -1,
+                    _ => -1,
+                };
             }
 
             return result;

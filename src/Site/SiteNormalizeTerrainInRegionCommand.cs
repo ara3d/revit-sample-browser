@@ -12,12 +12,12 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     /// <summary>
@@ -53,21 +53,19 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var elevation = SiteTopographyHelper.GetAverageElevation(allPoints);
 
             // Edit scope for all changes
-            using (var editScope = new TopographyEditScope(doc, "Edit TS"))
+            using var editScope = new TopographyEditScope(doc, "Edit TS");
+            editScope.Start(toposurface.Id);
+
+            using (var t = new Transaction(doc, "Normalize terrain"))
             {
-                editScope.Start(toposurface.Id);
+                t.Start();
 
-                using (var t = new Transaction(doc, "Normalize terrain"))
-                {
-                    t.Start();
-
-                    // Change all points to same elevation
-                    toposurface.ChangePointsElevation(points, elevation);
-                    t.Commit();
-                }
-
-                editScope.Commit(new TopographyEditFailuresPreprocessor());
+                // Change all points to same elevation
+                toposurface.ChangePointsElevation(points, elevation);
+                t.Commit();
             }
+
+            editScope.Commit(new TopographyEditFailuresPreprocessor());
         }
     }
 }

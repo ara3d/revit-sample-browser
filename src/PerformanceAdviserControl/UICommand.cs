@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -17,7 +16,7 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         {
             var ruleInfoList = ElementQuery.CollectRuleInfo(PerformanceAdviser.GetPerformanceAdviser());
 
-            var tdd = new TestDisplayDialog(PerformanceAdviser.GetPerformanceAdviser(),
+            TestDisplayDialog tdd = new(PerformanceAdviser.GetPerformanceAdviser(),
                 commandData.Application.ActiveUIDocument.Document);
 
             foreach (var r in ruleInfoList)

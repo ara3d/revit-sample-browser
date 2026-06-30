@@ -1,11 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.MeasureHeight.CS
 {
@@ -28,9 +30,9 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.MeasureHeight.CS
             m_app = revit.Application.Application;
             m_doc = revit.Application.ActiveUIDocument.Document;
 
-            var trans = new Transaction(m_doc, "Ara3D.RevitSampleBrowser.MeasureHeight");
+            Transaction trans = new(m_doc, "Ara3D.RevitSampleBrowser.MeasureHeight");
             trans.Start();
-            var collector = new FilteredElementCollector(m_doc);
+            FilteredElementCollector collector = new(m_doc);
             Func<View3D, bool> isNotTemplate = v3 => !v3.IsTemplate;
             m_view3D = collector.OfClass(typeof(View3D)).Cast<View3D>().First(isNotTemplate);
 
@@ -59,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.MeasureHeight.CS
             }
 
             // Sample-specific floor element id; replace for other models.
-            var id = new ElementId(150314L);
+            ElementId id = new(150314L);
             m_floor = m_doc.GetElement(id) as Floor;
 
             var line = CalculateLineAboveFloor();
@@ -80,9 +82,9 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.MeasureHeight.CS
             var box = m_skylight.get_BoundingBox(m_view3D);
             var center = box.Min.Add(box.Max).Multiply(0.5);
 
-            var rayDirection = new XYZ(0, 0, -1);
+            XYZ rayDirection = new(0, 0, -1);
 
-            var referenceIntersector = new ReferenceIntersector(m_floor.Id, FindReferenceTarget.Face, m_view3D);
+            ReferenceIntersector referenceIntersector = new(m_floor.Id, FindReferenceTarget.Face, m_view3D);
             var references = referenceIntersector.Find(center, rayDirection);
 
             var distance = double.PositiveInfinity;

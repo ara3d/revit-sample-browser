@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System.Collections.Generic;
+using System.Linq;
 namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 {
     /// <summary>
@@ -33,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 
         public override List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
-            var needPoints = new List<List<XYZ>>();
+            List<List<XYZ>> needPoints = new();
             foreach (var edge in faces[0])
             {
                 var edgexyzs = edge.Tessellate() as List<XYZ>;
@@ -51,28 +49,28 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             var views = from elem in
                     new FilteredElementCollector(CommandData.Application.ActiveUIDocument.Document)
                         .OfClass(typeof(ViewPlan)).ToElements()
-                let view = elem as View
-                where view != null && !view.IsTemplate && view.Name == "Level 2"
-                select view;
+                                      let view = elem as View
+                                      where view != null && !view.IsTemplate && view.Name == "Level 2"
+                                      select view;
             var viewLevel2 = views.First();
 
-            var xAxis = new Vector4(viewLevel2.RightDirection);
+            Vector4 xAxis = new(viewLevel2.RightDirection);
             //Because Y axis in windows UI is downward, so we should Multiply(-1) here
-            var yAxis = new Vector4(viewLevel2.UpDirection.Multiply(-1));
-            var zAxis = new Vector4(viewLevel2.ViewDirection);
+            Vector4 yAxis = new(viewLevel2.UpDirection.Multiply(-1));
+            Vector4 zAxis = new(viewLevel2.ViewDirection);
 
-            var result = new Matrix4(xAxis, yAxis, zAxis);
+            Matrix4 result = new(xAxis, yAxis, zAxis);
             return result;
         }
 
         public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points,
             bool flip)
         {
-            IList<Curve> curves = new List<Curve>();
+            IList<Curve> curves = [];
             for (var i = 0; i < points.Count - 1; i++)
             {
-                var p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
-                var p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
+                XYZ p1 = new(points[i].X, points[i].Y, points[i].Z);
+                XYZ p2 = new(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
                 var curve = Line.CreateBound(p1, p2);
                 curves.Add(curve);
             }

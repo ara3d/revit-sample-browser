@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         private readonly LoadCase m_loadCase;
         private string m_loadCasesName; //Store the load case's name
         private ElementId m_loadCasesNatureId; //Store the Id of the load case's nature
-        private string m_loadCasesNumber; //Store the load cases number
+        private readonly string m_loadCasesNumber; //Store the load cases number
         private ElementId m_loadCasesSubcategoryId; //Store the Id of the load case's category
 
         public LoadCasesMap(LoadCase loadCase)

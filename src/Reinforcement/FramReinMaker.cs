@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 {
@@ -28,11 +28,11 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
     /// </summary>
     public class FramReinMaker : IFrameReinMaker
     {
-        private List<RebarHookType> m_hookTypes = new List<RebarHookType>();
+        private List<RebarHookType> m_hookTypes = [];
 
         private readonly FamilyInstance m_hostObject;
 
-        private List<RebarBarType> m_rebarTypes = new List<RebarBarType>();
+        private List<RebarBarType> m_rebarTypes = [];
 
         private readonly Document m_revitDoc;
 
@@ -117,8 +117,8 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         private bool GetHookTypes(ExternalCommandData commandData)
         {
             // Initialize the m_hookTypes which used to store all hook types.
-            var filteredElementCollector =
-                new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document);
+            FilteredElementCollector filteredElementCollector =
+                new(commandData.Application.ActiveUIDocument.Document);
             filteredElementCollector.OfClass(typeof(RebarHookType));
             m_hookTypes = filteredElementCollector.Cast<RebarHookType>().ToList();
 
@@ -130,8 +130,8 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         {
             // Initialize the m_rebarTypes which used to store all rebar types.
             // Get all rebar types in revit and add them in m_rebarTypes
-            var filteredElementCollector =
-                new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document);
+            FilteredElementCollector filteredElementCollector =
+                new(commandData.Application.ActiveUIDocument.Document);
             filteredElementCollector.OfClass(typeof(RebarBarType));
             m_rebarTypes = filteredElementCollector.Cast<RebarBarType>().ToList();
 

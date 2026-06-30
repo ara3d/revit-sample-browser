@@ -24,9 +24,9 @@
 
 namespace AdnRme
 {
-  class Const
-  {
-    public const double SecondsPerMinute = 60;
-    public const double RoundTerminalFlowTo = 5;
-  }
+    class Const
+    {
+        public const double SecondsPerMinute = 60;
+        public const double RoundTerminalFlowTo = 5;
+    }
 }

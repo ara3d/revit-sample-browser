@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
-using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Linq;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 namespace BuildingCoder
@@ -15,16 +14,16 @@ namespace BuildingCoder
             SelectFamilyInstanceWithApparentLoad(
                 UIDocument uidoc)
         {
-            var electricalApparentLoadFactory
-                = new ElectricalApparentLoadFactory();
+            ElectricalApparentLoadFactory electricalApparentLoadFactory
+                = new();
 
-            var selectionFilter
-                = new FamilyInstanceWithApparentLoadSelectionFilter(
+            FamilyInstanceWithApparentLoadSelectionFilter selectionFilter
+                = new(
                     electricalApparentLoadFactory);
 
             try
             {
-                return (FamilyInstance) uidoc.Document.GetElement(
+                return (FamilyInstance)uidoc.Document.GetElement(
                     uidoc.Selection.PickObject(ObjectType.Element,
                         selectionFilter));
             }
@@ -113,10 +112,7 @@ namespace BuildingCoder
 
             public bool AllowElement(Element elem)
             {
-                if (elem is not FamilyInstance familyInstance)
-                    return false;
-
-                return electricalApparentLoadFactory
+                return elem is FamilyInstance familyInstance && electricalApparentLoadFactory
                     .Create(familyInstance)
                     .Any();
             }

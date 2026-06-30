@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Ara3D.Logging;
 using Ara3D.Utils;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
+using System;
 using System.Text;
-using System.Windows.Forms;
-using Ara3D.Logging;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
@@ -14,15 +14,17 @@ public class CommandUpgradeFiles : NamedCommand
 
     public override void Execute(object arg)
     {
-        var app = (arg as UIApplication);
-        var dlg = new OpenFolderDialog();
-        dlg.Multiselect = false;
+        var app = arg as UIApplication;
+        OpenFolderDialog dlg = new()
+        {
+            Multiselect = false
+        };
         if (dlg.ShowDialog() != true)
             return;
-        
-        var folder = new DirectoryPath(dlg.FolderName);
+
+        DirectoryPath folder = new(dlg.FolderName);
         var outputFolder = folder.RelativeFolder("upgrade");
-        var sb = new StringBuilder();
+        StringBuilder sb = new();
         var logger = Logger.Create(sb);
 
         foreach (var f in folder.GetFiles("*.rvt"))

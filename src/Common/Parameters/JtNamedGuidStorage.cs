@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-﻿#region Header
+#region Header
 
 //
 // JtNamedGuidStorage.cs - implement named Guid storage, e.g. for a globally unique project identifier
@@ -14,11 +14,11 @@
 
 #region Namespaces
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExtensibleStorage;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExtensibleStorage;
 
 #endregion // Namespaces
 
@@ -41,8 +41,8 @@ namespace BuildingCoder
             // and the specified element name. Only zero
             // or one should exist.
 
-            var f
-                = new ExtensibleStorageFilter(
+            ExtensibleStorageFilter f
+                = new(
                     JtNamedGuidStorageSchema.SchemaGuid);
 
             if (new FilteredElementCollector(doc)
@@ -53,7 +53,7 @@ namespace BuildingCoder
             {
                 if (create)
                 {
-                    using var t = new Transaction(
+                    using Transaction t = new(
                         doc, "Create named Guid storage");
                     t.Start();
 
@@ -64,7 +64,7 @@ namespace BuildingCoder
 
                     // Create entity to store the Guid data
 
-                    var entity = new Entity(
+                    Entity entity = new(
                         JtNamedGuidStorageSchema.GetSchema());
 
                     entity.Set("Guid", guid = Guid.NewGuid());
@@ -111,8 +111,8 @@ namespace BuildingCoder
 
                 if (create && null == schema)
                 {
-                    var schemaBuilder =
-                        new SchemaBuilder(SchemaGuid);
+                    SchemaBuilder schemaBuilder =
+                        new(SchemaGuid);
 
                     schemaBuilder.SetSchemaName(
                         "JtNamedGuiStorage");

@@ -12,14 +12,14 @@
 
 // DirectContext3D server that duplicates element graphics.
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
 {
@@ -29,7 +29,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
     {
         private static Application _sApplicationInstance;
         private HashSet<Document> m_documents;
-        private readonly XYZ m_offset = new XYZ(0, 0, 45);
+        private readonly XYZ m_offset = new(0, 0, 45);
 
         private List<RevitElementDrawingServer> m_servers;
 
@@ -39,8 +39,8 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             {
                 // Register events. 
                 application.ControlledApplication.DocumentClosing += OnDocumentClosing;
-                m_servers = new List<RevitElementDrawingServer>();
-                m_documents = new HashSet<Document>();
+                m_servers = [];
+                m_documents = [];
 
                 _sApplicationInstance = this;
             }
@@ -82,7 +82,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
 
             var directContext3DService =
                 ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.DirectContext3DService);
-            var revitServer = new RevitElementDrawingServer(uidoc, elem, m_offset);
+            RevitElementDrawingServer revitServer = new(uidoc, elem, m_offset);
             directContext3DService.AddServer(revitServer);
             m_servers.Add(revitServer);
 
@@ -113,7 +113,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             {
                 var elem = uidoc.Document.GetElement(reference);
 
-                var revitServer = new RevitElementDrawingServer(uidoc, elem, m_offset);
+                RevitElementDrawingServer revitServer = new(uidoc, elem, m_offset);
                 directContext3DService.AddServer(revitServer);
                 m_servers.Add(revitServer);
 
@@ -129,12 +129,12 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
         public void UnregisterServers(Document document, bool updateViews)
         {
             var externalDrawerServiceId = ExternalServices.BuiltInExternalServices.DirectContext3DService;
-            if (!(ExternalServiceRegistry.GetService(externalDrawerServiceId) is MultiServerService externalDrawerService))
+            if (ExternalServiceRegistry.GetService(externalDrawerServiceId) is not MultiServerService externalDrawerService)
                 return;
 
             foreach (var registeredServerId in externalDrawerService.GetRegisteredServerIds())
             {
-                if (!(externalDrawerService.GetServer(registeredServerId) is RevitElementDrawingServer externalDrawServer))
+                if (externalDrawerService.GetServer(registeredServerId) is not RevitElementDrawingServer externalDrawServer)
                     continue;
                 if (document != null && !document.Equals(externalDrawServer.Document))
                     continue;
@@ -147,7 +147,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
 
                 if (updateViews)
                 {
-                    var uidoc = new UIDocument(document);
+                    UIDocument uidoc = new(document);
                     uidoc.UpdateAllOpenViews();
                 }
 
@@ -160,7 +160,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                 if (updateViews)
                     foreach (var doc in m_documents)
                     {
-                        var uidoc = new UIDocument(doc);
+                        UIDocument uidoc = new(doc);
                         uidoc.UpdateAllOpenViews();
                     }
 

@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinControl.CS
@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
         {
             treeViewResults.Nodes.Clear();
 
-            var node = new TreeNode(operation);
+            TreeNode node = new(operation);
             treeViewResults.Nodes.Add(node);
 
             var spaceNode = XElementToTreeNode(element);
@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 nodename += $" ({att.Name.LocalName}:{att.Value})";
             }
 
-            var node = new TreeNode(nodename);
+            TreeNode node = new(nodename);
 
             if (!element.HasElements)
                 return node;
@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
         private IEnumerable<Wall> GetAllWalls()
         {
-            var wallCollector = new FilteredElementCollector(m_doc);
+            FilteredElementCollector wallCollector = new(m_doc);
             wallCollector.OfClass(typeof(Wall));
 
             return wallCollector.OfType<Wall>();
@@ -76,10 +76,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
         private ICollection<Element> GetAllEgresses()
         {
-            var collector = new FilteredElementCollector(m_doc);
-            var filterFamilyInstance = new ElementClassFilter(typeof(FamilyInstance));
-            var filterDoorCategory = new ElementCategoryFilter(BuiltInCategory.OST_Doors);
-            var filterDoorInstance = new LogicalAndFilter(filterDoorCategory, filterFamilyInstance);
+            FilteredElementCollector collector = new(m_doc);
+            ElementClassFilter filterFamilyInstance = new(typeof(FamilyInstance));
+            ElementCategoryFilter filterDoorCategory = new(BuiltInCategory.OST_Doors);
+            LogicalAndFilter filterDoorInstance = new(filterDoorCategory, filterFamilyInstance);
             return collector.WherePasses(filterDoorInstance).ToElements();
         }
 
@@ -113,7 +113,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            var tran = new Transaction(m_doc, "GeometryCreation_BooleanOperation");
+            Transaction tran = new(m_doc, "GeometryCreation_BooleanOperation");
             tran.Start();
 
             if (radioButtonFindColumnsInWall.Checked)

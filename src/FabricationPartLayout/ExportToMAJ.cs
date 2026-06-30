@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Fabrication;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Fabrication;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             {
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var doc = uidoc.Document;
-                var elementIds = new HashSet<ElementId>();
+                HashSet<ElementId> elementIds = new();
                 uidoc.Selection.GetElementIds().ToList().ForEach(x => elementIds.Add(x));
 
                 var hasFabricationParts = false;
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 }
 
                 var callingFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var saveAsDlg = new FileSaveDialog("MAJ Files (*.maj)|*.maj")
+                FileSaveDialog saveAsDlg = new("MAJ Files (*.maj)|*.maj")
                 {
                     InitialFileName = $"{callingFolder}\\majExport",
                     Title = "Export To MAJ"
@@ -60,7 +60,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         new FabricationSaveJobOptions(true));
                 if (exported.Count > 0)
                 {
-                    var td = new TaskDialog("Export to MAJ")
+                    TaskDialog td = new("Export to MAJ")
                     {
                         MainIcon = TaskDialogIcon.TaskDialogIconInformation,
                         TitleAutoPrefix = false,

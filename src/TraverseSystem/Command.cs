@@ -1,16 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
+using Ara3D.RevitSampleBrowser.Common.Mep;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Mep;
+using System;
+using System.IO;
+using System.Reflection;
 namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -33,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
                 }
 
                 // Verify the number of selected elements
-                var selElements = new ElementSet();
+                ElementSet selElements = new();
                 foreach (var elementId in activeDoc.Selection.GetElementIds())
                 {
                     selElements.Insert(activeDoc.Document.GetElement(elementId));
@@ -67,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
                 }
 
                 // Traverse the system and dump the traversal into an XML file
-                var tree = new TraversalTree(activeDoc.Document, system);
+                TraversalTree tree = new(activeDoc.Document, system);
                 tree.Traverse();
                 var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                     "traversal.xml");
@@ -88,33 +86,33 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
 
             switch (selectedElement)
             {
-                case MEPSystem element when element is MechanicalSystem || element is PipingSystem:
+                case MEPSystem element when element is MechanicalSystem or PipingSystem:
                     system = element;
                     return system;
                 //
                 // If selected element is a family instance, iterate its connectors and get the expected system
                 case FamilyInstance fi:
-                {
-                    var mepModel = fi.MEPModel;
-                    ConnectorSet connectors = null;
-                    try
                     {
-                        connectors = mepModel.ConnectorManager.Connectors;
-                    }
-                    catch (Exception)
-                    {
-                        system = null;
-                    }
+                        var mepModel = fi.MEPModel;
+                        ConnectorSet connectors = null;
+                        try
+                        {
+                            connectors = mepModel.ConnectorManager.Connectors;
+                        }
+                        catch (Exception)
+                        {
+                            system = null;
+                        }
 
-                    system = ConnectorHelper.ExtractSystemFromConnectors(connectors);
-                    break;
-                }
+                        system = ConnectorHelper.ExtractSystemFromConnectors(connectors);
+                        break;
+                    }
                 case MEPCurve mepCurve:
-                {
-                    var connectors = mepCurve.ConnectorManager.Connectors;
-                    system = ConnectorHelper.ExtractSystemFromConnectors(connectors);
-                    break;
-                }
+                    {
+                        var connectors = mepCurve.ConnectorManager.Connectors;
+                        system = ConnectorHelper.ExtractSystemFromConnectors(connectors);
+                        break;
+                    }
             }
 
             return system;

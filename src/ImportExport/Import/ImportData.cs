@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 {
@@ -40,9 +40,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 
         public virtual bool Import()
         {
-            if (ImportFileFullName == null) throw new NullReferenceException();
-
-            return true;
+            return ImportFileFullName == null ? throw new NullReferenceException() : true;
         }
     }
 }

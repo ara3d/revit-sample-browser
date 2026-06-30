@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 using FilePath = Ara3D.Utils.FilePath;
 
 namespace Ara3D.Bowerbird.RevitSamples
@@ -16,11 +16,10 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public override void Execute(object arg)
         {
-            var uiapp = (arg as UIApplication);
-            if (uiapp == null)
+            if (arg is not UIApplication uiapp)
                 return;
-            var doc  = uiapp.ActiveUIDocument.Document;
-            
+            var doc = uiapp.ActiveUIDocument.Document;
+
             Rooms = doc.GetRooms().ToDictionary();
             Levels = doc.GetLevels().ToDictionary();
             Doors = doc.GetDoors().ToDictionary();
@@ -30,6 +29,6 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static FilePath LayoutFile
-            => new FilePath(@"C:\Users\cdigg\AppData\Local\Temp\imdf.geojson");
+            => new(@"C:\Users\cdigg\AppData\Local\Temp\imdf.geojson");
     }
 }

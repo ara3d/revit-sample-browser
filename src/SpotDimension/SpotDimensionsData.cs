@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
 {
@@ -15,9 +15,9 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
         private readonly UIApplication m_revit; // Store the reference of the application in Revit
 
         private readonly List<Autodesk.Revit.DB.SpotDimension> m_spotDimensions =
-            new List<Autodesk.Revit.DB.SpotDimension>(); //a list to store all SpotDimensions in the project
+            []; //a list to store all SpotDimensions in the project
 
-        private readonly List<string> m_views = new List<string>();
+        private readonly List<string> m_views = [];
 
         public SpotDimensionsData(ExternalCommandData commandData)
         {
@@ -29,12 +29,12 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
         ///     a list of all the SpotDimensions in the project
         /// </summary>
         public ReadOnlyCollection<Autodesk.Revit.DB.SpotDimension> SpotDimensions =>
-            new ReadOnlyCollection<Autodesk.Revit.DB.SpotDimension>(m_spotDimensions);
+            new(m_spotDimensions);
 
         /// <summary>
         ///     a list of all the views that have SpotDimentions in the project
         /// </summary>
-        public ReadOnlyCollection<string> Views => new ReadOnlyCollection<string>(m_views);
+        public ReadOnlyCollection<string> Views => new(m_views);
 
         private void GetSpotDimensions()
         {

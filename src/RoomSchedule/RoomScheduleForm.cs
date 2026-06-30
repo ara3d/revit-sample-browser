@@ -1,17 +1,16 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Parameters;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
-
-using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
@@ -20,10 +19,10 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
     public partial class RoomScheduleForm : Form
     {
         // All levels in Revit document.
-        private readonly List<Level> m_allLevels = new List<Level>();
+        private readonly List<Level> m_allLevels = [];
 
         // All available phases in Revit document.
-        private readonly List<Phase> m_allPhases = new List<Phase>();
+        private readonly List<Phase> m_allPhases = [];
 
         // Revit external command data
         private readonly ExternalCommandData m_commandData;
@@ -80,7 +79,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 m_allLevels.Add(planTopology.Level);
             }
 
-            var collector = new FilteredElementCollector(m_document);
+            FilteredElementCollector collector = new(m_document);
             ICollection<Element> allPhases = collector.OfClass(typeof(Phase)).ToElements();
             foreach (Phase phs in allPhases)
             {
@@ -120,8 +119,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
                 var apiGroup = parafile.Groups.Create("SDKSampleRoomScheduleGroup");
 
-                var externalDefinitionCreationOptions =
-                    new ExternalDefinitionCreationOptions(RoomsData.SharedParam, SpecTypeId.String.Text);
+                ExternalDefinitionCreationOptions externalDefinitionCreationOptions =
+                    new(RoomsData.SharedParam, SpecTypeId.String.Text);
                 var roomSharedParamDef = apiGroup.Definitions.Create(externalDefinitionCreationOptions);
 
                 var roomCat =
@@ -201,7 +200,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         private void UpdateRoomMapSheetInfo()
         {
             var hashCode = m_document.GetHashCode();
-            var xlsAndTable = new SheetInfo("", "");
+            SheetInfo xlsAndTable = new("", "");
             if (CrtlApplication.EventReactor.DocMappedSheetInfo(hashCode, ref xlsAndTable))
                 roomExcelTextBox.Text = $"Mapped Sheet: {xlsAndTable.FileName}: {xlsAndTable.SheetName}";
         }
@@ -210,7 +209,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         {
             var nNewRoomsSize = 0;
             // transaction is used to cancel room creation when exception occurs
-            var myTransaction = new SubTransaction(m_document);
+            SubTransaction myTransaction = new(m_document);
             try
             {
                 // Preparation before room creation starts
@@ -218,7 +217,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 if (!RoomCreationPreparation(ref curPhase)) return 0;
 
                 // we should skip the creation for those spreadsheet rooms which have been mapped by Revit rooms.
-                var existingRooms = new Dictionary<ElementId, string>();
+                Dictionary<ElementId, string> existingRooms = [];
                 foreach (var room in m_roomData.Rooms)
                 {
                     var sharedParameter = room.LookupParameter(RoomsData.SharedParam);
@@ -279,16 +278,15 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             // output unplaced rooms creation message
             var strMessage = string.Empty;
             var nSkippedRooms = m_spreadRoomsTable.Rows.Count - nNewRoomsSize;
-            if (nSkippedRooms > 0)
-                strMessage = string.Format("{0} unplaced {1} created successfully.\r\n{2} skipped, {3}",
+            strMessage = nSkippedRooms > 0
+                ? string.Format("{0} unplaced {1} created successfully.\r\n{2} skipped, {3}",
                     nNewRoomsSize,
                     nNewRoomsSize > 1 ? "rooms were" : "room was",
                     nSkippedRooms + (nSkippedRooms > 1 ? " were" : " was"),
                     nSkippedRooms > 1
                         ? "because they were already mapped by Revit rooms."
-                        : "because it was already mapped by Revit rooms.");
-            else
-                strMessage = string.Format("{0} unplaced {1} created successfully.",
+                        : "because it was already mapped by Revit rooms.")
+                : string.Format("{0} unplaced {1} created successfully.",
                     nNewRoomsSize,
                     nNewRoomsSize > 1 ? "rooms were" : "room was");
 
@@ -364,39 +362,37 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
         private void importRoomButton_Click(object sender, EventArgs e)
         {
-            using (var sfdlg = new OpenFileDialog())
-            {
-                // file dialog initialization 
-                sfdlg.Title = "Import Excel File";
-                sfdlg.Filter = "Excel File(*.xls)|*.xls";
-                sfdlg.RestoreDirectory = true;
-                //
-                // initialize the default file name
-                var hashCode = m_document.GetHashCode();
-                var xlsAndTable = new SheetInfo(string.Empty, string.Empty);
-                if (CrtlApplication.EventReactor.DocMappedSheetInfo(hashCode, ref xlsAndTable))
-                    sfdlg.FileName = xlsAndTable.FileName;
-                //
-                // import the select
-                if (DialogResult.OK == sfdlg.ShowDialog())
-                    try
-                    {
-                        // create xls data source connector and retrieve data from it
-                        m_dataBaseName = sfdlg.FileName;
-                        var xlsCon = new XlsDbConnector(m_dataBaseName);
+            using OpenFileDialog sfdlg = new();
+            // file dialog initialization 
+            sfdlg.Title = "Import Excel File";
+            sfdlg.Filter = "Excel File(*.xls)|*.xls";
+            sfdlg.RestoreDirectory = true;
+            //
+            // initialize the default file name
+            var hashCode = m_document.GetHashCode();
+            SheetInfo xlsAndTable = new(string.Empty, string.Empty);
+            if (CrtlApplication.EventReactor.DocMappedSheetInfo(hashCode, ref xlsAndTable))
+                sfdlg.FileName = xlsAndTable.FileName;
+            //
+            // import the select
+            if (DialogResult.OK == sfdlg.ShowDialog())
+                try
+                {
+                    // create xls data source connector and retrieve data from it
+                    m_dataBaseName = sfdlg.FileName;
+                    XlsDbConnector xlsCon = new(m_dataBaseName);
 
-                        // bind table data to grid view and ComboBox control
-                        tablesComboBox.DataSource = xlsCon.RetrieveAllTables();
+                    // bind table data to grid view and ComboBox control
+                    tablesComboBox.DataSource = xlsCon.RetrieveAllTables();
 
-                        // close the connection
-                        xlsCon.Dispose();
-                    }
-                    catch (Exception ex)
-                    {
-                        tablesComboBox.DataSource = null;
-                        MyMessageBox(ex.Message, MessageBoxIcon.Warning);
-                    }
-            }
+                    // close the connection
+                    xlsCon.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    tablesComboBox.DataSource = null;
+                    MyMessageBox(ex.Message, MessageBoxIcon.Warning);
+                }
         }
 
         private void tablesComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -413,7 +409,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
                 // generate room data table from room work sheet.
                 m_spreadRoomsTable = xlsCon.GenDataTable(m_roomTableName);
-                newRoomButton.Enabled = 0 == m_spreadRoomsTable.Rows.Count ? false : true;
+                newRoomButton.Enabled = 0 != m_spreadRoomsTable.Rows.Count;
 
                 // close connection
                 xlsCon.Dispose();

@@ -1,10 +1,11 @@
-using System.Linq;
 using Ara3D.RevitSampleBrowser.N3P_Shared.CS;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 using Nice3point.Revit.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.N3P_Mep.CS
 {
@@ -27,7 +28,6 @@ namespace Ara3D.RevitSampleBrowser.N3P_Mep.CS
             foreach (var pipe in pipes)
             {
                 N3POutput.Line($"Pipe {pipe.Id}");
-                N3POutput.Line("  HasOpenConnector", pipe.HasOpenConnector);
             }
 
             return Result.Succeeded;

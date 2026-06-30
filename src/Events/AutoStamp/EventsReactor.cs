@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Events;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Events;
 
 namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
 {
@@ -51,26 +51,24 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
                 // Release builds use fixed text so PrintEventsLog.txt compares cleanly across machines.
                 strText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 #endif
-                using (var eventTransaction = new Transaction(e.Document, "External Tool"))
+                using Transaction eventTransaction = new(e.Document, "External Tool");
+                eventTransaction.Start();
+                TextNoteOptions options = new()
                 {
-                    eventTransaction.Start();
-                    var options = new TextNoteOptions
-                    {
-                        HorizontalAlignment = HorizontalTextAlignment.Center,
-                        TypeId = e.Document.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType)
-                    };
-                    var newTextNote = TextNote.Create(e.Document, e.View.Id, XYZ.Zero, strText, options);
-                    eventTransaction.Commit();
+                    HorizontalAlignment = HorizontalTextAlignment.Center,
+                    TypeId = e.Document.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType)
+                };
+                var newTextNote = TextNote.Create(e.Document, e.View.Id, XYZ.Zero, strText, options);
+                eventTransaction.Commit();
 
-                    if (null != newTextNote)
-                    {
-                        Trace.WriteLine("Create TextNote element successfully...");
-                        m_newTextNoteId = newTextNote.Id;
-                    }
-                    else
-                    {
-                        failureOccured = true;
-                    }
+                if (null != newTextNote)
+                {
+                    Trace.WriteLine("Create TextNote element successfully...");
+                    m_newTextNoteId = newTextNote.Id;
+                }
+                else
+                {
+                    failureOccured = true;
                 }
             }
             catch (Exception ex)
@@ -93,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
             if (RevitAPIEventStatus.Cancelled != e.Status)
             {
                 // Event handlers must start their own Transaction (Revit does not provide one).
-                var eventTransaction = new Transaction(e.Document, "External Tool");
+                Transaction eventTransaction = new(e.Document, "External Tool");
                 eventTransaction.Start();
                 e.Document.Delete(m_newTextNoteId);
                 eventTransaction.Commit();

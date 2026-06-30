@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.ObjectModel;
-using Autodesk.Revit.DB;
 using Control = System.Windows.Forms.Control;
 using Form = System.Windows.Forms.Form;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     public partial class PrintMgrForm : Form
@@ -15,9 +14,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
         public PrintMgrForm(PrintMgr printMgr)
         {
-            if (null == printMgr)
-                throw new ArgumentNullException(nameof(printMgr));
-            m_printMgr = printMgr;
+            m_printMgr = printMgr ?? throw new ArgumentNullException(nameof(printMgr));
 
             InitializeComponent();
         }
@@ -38,12 +35,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             if (m_printMgr.VerifyPrintToFile(printToFileCheckBox))
                 printToFileCheckBox.Checked = m_printMgr.IsPrintToFile;
 
-            var controlsToEnableOrNot =
-                new Collection<Control>
-                {
+            Collection<Control> controlsToEnableOrNot =
+                [
                     copiesNumericUpDown,
                     numberofcoyiesLabel
-                };
+                ];
             m_printMgr.VerifyCopies(controlsToEnableOrNot);
 
             controlsToEnableOrNot.Clear();
@@ -106,12 +102,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             // Verify the relative controls is enable or not, according to the printer changed.
             m_printMgr.VerifyPrintToFile(printToFileCheckBox);
 
-            var controlsToEnableOrNot =
-                new Collection<Control>
-                {
+            Collection<Control> controlsToEnableOrNot =
+                [
                     copiesNumericUpDown,
                     numberofcoyiesLabel
-                };
+                ];
             m_printMgr.VerifyCopies(controlsToEnableOrNot);
 
             controlsToEnableOrNot.Clear();
@@ -135,12 +130,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
             // Verify the relative controls is enable or not, according to the print to file
             // check box is checked or not.
-            var controlsToEnableOrNot =
-                new Collection<Control>
-                {
+            Collection<Control> controlsToEnableOrNot =
+                [
                     copiesNumericUpDown,
                     numberofcoyiesLabel
-                };
+                ];
             m_printMgr.VerifyCopies(controlsToEnableOrNot);
 
             controlsToEnableOrNot.Clear();
@@ -170,12 +164,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             {
                 m_printMgr.PrintRange = PrintRange.Current;
 
-                var controlsToEnableOrNot =
-                    new Collection<Control>
-                    {
+                Collection<Control> controlsToEnableOrNot =
+                    [
                         selectedViewSheetSetLabel,
                         selectedViewSheetSetButton
-                    };
+                    ];
                 m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot);
 
                 if (m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton))
@@ -196,12 +189,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             {
                 m_printMgr.PrintRange = PrintRange.Visible;
 
-                var controlsToEnableOrNot =
-                    new Collection<Control>
-                    {
+                Collection<Control> controlsToEnableOrNot =
+                    [
                         selectedViewSheetSetLabel,
                         selectedViewSheetSetButton
-                    };
+                    ];
                 m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot);
 
                 if (m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton))
@@ -222,12 +214,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             {
                 m_printMgr.PrintRange = PrintRange.Select;
 
-                var controlsToEnableOrNot =
-                    new Collection<Control>
-                    {
+                Collection<Control> controlsToEnableOrNot =
+                    [
                         selectedViewSheetSetLabel,
                         selectedViewSheetSetButton
-                    };
+                    ];
                 m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot);
 
                 m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton);

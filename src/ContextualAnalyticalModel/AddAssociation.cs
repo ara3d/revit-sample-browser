@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -19,24 +18,22 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 
             if (null == doc) return Result.Failed;
 
-            using (var trans =
-                   new Transaction(doc, "Ara3D.RevitSampleBrowser.AddRelationBetweenPhysicalAndAnalyticalElements"))
-            {
-                trans.Start();
+            using Transaction trans =
+                   new(doc, "Ara3D.RevitSampleBrowser.AddRelationBetweenPhysicalAndAnalyticalElements");
+            trans.Start();
 
-                var analyticalElementId = ElementQuery.GetSelectedObject(activeDoc, "Please select analytical element");
-                var physicalElementId = ElementQuery.GetSelectedObject(activeDoc, "Please select physical element");
+            var analyticalElementId = ElementQuery.GetSelectedObject(activeDoc, "Please select analytical element");
+            var physicalElementId = ElementQuery.GetSelectedObject(activeDoc, "Please select physical element");
 
-                var analyticalToPhysicalmanager =
-                    AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(doc);
-                if (analyticalToPhysicalmanager == null)
-                    return Result.Failed;
+            var analyticalToPhysicalmanager =
+                AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(doc);
+            if (analyticalToPhysicalmanager == null)
+                return Result.Failed;
 
-                //creates a new relation between physical and analytical selected elements
-                analyticalToPhysicalmanager.AddAssociation(analyticalElementId, physicalElementId);
+            //creates a new relation between physical and analytical selected elements
+            analyticalToPhysicalmanager.AddAssociation(analyticalElementId, physicalElementId);
 
-                trans.Commit();
-            }
+            trans.Commit();
 
             return Result.Succeeded;
         }

@@ -19,10 +19,10 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             base.Export();
 
             //parameter : ViewSet views
-            var views = new ViewSet();
+            ViewSet views = new();
             views.Insert(ActiveDocument.ActiveView);
 
-            var options = new FBXExportOptions();
+            FBXExportOptions options = new();
             var exported = ActiveDocument.Export(ExportFolder, ExportFileName, views, options);
 
             return exported;

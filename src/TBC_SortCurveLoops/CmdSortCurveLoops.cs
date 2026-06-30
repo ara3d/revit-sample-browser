@@ -14,12 +14,13 @@
 
 #region Namespaces
 
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -49,17 +50,17 @@ namespace BuildingCoder
                 return Result.Cancelled;
             }
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Sort and Mark Face Curve Loops");
 
             var lists = Util.SortCurveLoops(face);
 
             for (var i = 0; i < lists.Count; i++)
-            for (var j = 0; j < lists[i].Count; j++)
-            {
-                var loop = lists[i][j];
-                Creator.CreateTextNote($"[{i}][{j}]", loop.First().Evaluate(0.33, true), doc);
-            }
+                for (var j = 0; j < lists[i].Count; j++)
+                {
+                    var loop = lists[i][j];
+                    Creator.CreateTextNote($"[{i}][{j}]", loop.First().Evaluate(0.33, true), doc);
+                }
 
             tx.Commit();
 

@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using System;
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -22,20 +21,18 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 
                 var selectedElementId = ElementQuery.GetSelectedObject(activeDoc, "Please select the analytical element");
 
-                using (var transaction = new Transaction(document, "Create custom LineLoad"))
-                {
-                    transaction.Start();
+                using Transaction transaction = new(document, "Create custom LineLoad");
+                transaction.Start();
 
-                    var start = activeDoc.Selection.PickPoint("start");
-                    var end = activeDoc.Selection.PickPoint("end");
+                var start = activeDoc.Selection.PickPoint("start");
+                var end = activeDoc.Selection.PickPoint("end");
 
-                    var line = Line.CreateBound(start, end);
+                var line = Line.CreateBound(start, end);
 
-                    if (LineLoad.IsCurveInsideHostBoundaries(document, selectedElementId, line))
-                        LineLoad.Create(document, selectedElementId, line, new XYZ(1, 0, 0), new XYZ(1, 0, 0), null);
+                if (LineLoad.IsCurveInsideHostBoundaries(document, selectedElementId, line))
+                    LineLoad.Create(document, selectedElementId, line, new XYZ(1, 0, 0), new XYZ(1, 0, 0), null);
 
-                    transaction.Commit();
-                }
+                transaction.Commit();
             }
             catch (Exception ex)
             {

@@ -6,7 +6,7 @@ namespace BuildingCoder
     {
         internal static BRepBuilder CreateBrepSolid()
         {
-            var b = new BRepBuilder(BRepType.Solid);
+            BRepBuilder b = new(BRepType.Solid);
 
             // 1. Planes.
             // naming convention for faces and planes:
@@ -134,10 +134,10 @@ namespace BuildingCoder
             // y is horizontal and pointing to the right, 
             // z is up.
 
-            var b = new BRepBuilder(BRepType.Solid);
+            BRepBuilder b = new(BRepType.Solid);
 
             // The surfaces of the four faces.
-            var basis = new Frame(new XYZ(50, 0, 0), new XYZ(0, 1, 0), new XYZ(-1, 0, 0), new XYZ(0, 0, 1));
+            Frame basis = new(new XYZ(50, 0, 0), new XYZ(0, 1, 0), new XYZ(-1, 0, 0), new XYZ(0, 0, 1));
             var cylSurf = CylindricalSurface.Create(basis, 40);
             var top1 = Plane.CreateByNormalAndOrigin(new XYZ(0, 0, 1), new XYZ(0, 0, 100)); // normal points outside the cylinder
             var bottom1 = Plane.CreateByNormalAndOrigin(new XYZ(0, 0, 1), new XYZ(0, 0, 0)); // normal points inside the cylinder

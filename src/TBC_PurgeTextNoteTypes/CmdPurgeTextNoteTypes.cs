@@ -12,11 +12,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -56,7 +56,7 @@ namespace BuildingCoder
 
             sw.Stop();
             var ms = sw.ElapsedMilliseconds
-                     / (double) nLoop;
+                     / (double)nLoop;
 
             sw.Reset();
             sw.Start();
@@ -73,7 +73,7 @@ namespace BuildingCoder
             sw.Stop();
             var msExcluding
                 = sw.ElapsedMilliseconds
-                  / (double) nLoop;
+                  / (double)nLoop;
 
             var t = new Transaction(doc,
                 "Purging unused text note types");
@@ -88,7 +88,7 @@ namespace BuildingCoder
             sw.Stop();
             var msDeleting
                 = sw.ElapsedMilliseconds
-                  / (double) nLoop;
+                  / (double)nLoop;
 
             t.Commit();
 

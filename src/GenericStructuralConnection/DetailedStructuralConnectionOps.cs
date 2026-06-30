@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
     public class DetailedStructuralConnectionOps
@@ -20,22 +19,20 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ids = SelectionHelper.SelectConnectionElements(activeDoc);
             if (ids.Count() > 0)
             {
-                using (var transaction = new Transaction(activeDoc.Document, "Create detailed structural connection"))
+                using Transaction transaction = new(activeDoc.Document, "Create detailed structural connection");
+                transaction.Start();
+
+                // Connection type name and GUID come from SteelConnectionsData.xml.
+                var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "usclipangle",
+                    new Guid("A42C5CE5-91C5-47E4-B445-D053E5BD66DB"), "usclipangle");
+                if (connectionType != null)
+                    StructuralConnectionHandler.Create(activeDoc.Document, ids, connectionType.Id);
+
+                var ts = transaction.Commit();
+                if (ts != TransactionStatus.Committed)
                 {
-                    transaction.Start();
-
-                    // Connection type name and GUID come from SteelConnectionsData.xml.
-                    var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "usclipangle",
-                        new Guid("A42C5CE5-91C5-47E4-B445-D053E5BD66DB"), "usclipangle");
-                    if (connectionType != null)
-                        StructuralConnectionHandler.Create(activeDoc.Document, ids, connectionType.Id);
-
-                    var ts = transaction.Commit();
-                    if (ts != TransactionStatus.Committed)
-                    {
-                        message = "Failed to commit the current transaction !";
-                        ret = Result.Failed;
-                    }
+                    message = "Failed to commit the current transaction !";
+                    ret = Result.Failed;
                 }
             }
             else
@@ -54,23 +51,21 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
-                using (var tran = new Transaction(activeDoc.Document, "Change detailed connection type"))
+                using Transaction tran = new(activeDoc.Document, "Change detailed connection type");
+                tran.Start();
+
+                // Connection type name and GUID come from SteelConnectionsData.xml.
+                var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "shearplatenew",
+                    new Guid("B490A703-5B6D-4B7A-8471-752133527925"), "shearplatenew");
+                if (connectionType != null)
+                    // Replacement type must be valid for the connected elements.
+                    conn.ChangeTypeId(connectionType.Id);
+
+                var ts = tran.Commit();
+                if (ts != TransactionStatus.Committed)
                 {
-                    tran.Start();
-
-                    // Connection type name and GUID come from SteelConnectionsData.xml.
-                    var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "shearplatenew",
-                        new Guid("B490A703-5B6D-4B7A-8471-752133527925"), "shearplatenew");
-                    if (connectionType != null)
-                        // Replacement type must be valid for the connected elements.
-                        conn.ChangeTypeId(connectionType.Id);
-
-                    var ts = tran.Commit();
-                    if (ts != TransactionStatus.Committed)
-                    {
-                        message = "Failed to commit the current transaction !";
-                        ret = Result.Failed;
-                    }
+                    message = "Failed to commit the current transaction !";
+                    ret = Result.Failed;
                 }
             }
             else
@@ -91,16 +86,14 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             {
                 var transform = Transform.CreateTranslation(new XYZ(0, 20, 0));
 
-                using (var tran = new Transaction(activeDoc.Document, "Copy elements"))
+                using Transaction tran = new(activeDoc.Document, "Copy elements");
+                tran.Start();
+                ElementTransformUtils.CopyElements(activeDoc.Document, ids, activeDoc.Document, transform, null);
+                var ts = tran.Commit();
+                if (ts != TransactionStatus.Committed)
                 {
-                    tran.Start();
-                    ElementTransformUtils.CopyElements(activeDoc.Document, ids, activeDoc.Document, transform, null);
-                    var ts = tran.Commit();
-                    if (ts != TransactionStatus.Committed)
-                    {
-                        message = "Failed to commit the current transaction !";
-                        ret = Result.Failed;
-                    }
+                    message = "Failed to commit the current transaction !";
+                    ret = Result.Failed;
                 }
             }
             else
@@ -121,34 +114,32 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 
             if (srcConn != null && destConn != null)
             {
-                using (var tran = new Transaction(activeDoc.Document, "Match properties"))
+                using Transaction tran = new(activeDoc.Document, "Match properties");
+                tran.Start();
+
+                var primarySchema = GetSchema(activeDoc.Document, srcConn);
+                var primaryEnt = srcConn.GetEntity(primarySchema);
+
+                // Connection parameters can also be read and modified via extensible storage fields.
+                var fields = primarySchema.ListFields();
+                foreach (var field in fields)
                 {
-                    tran.Start();
-
-                    var primarySchema = GetSchema(activeDoc.Document, srcConn);
-                    var primaryEnt = srcConn.GetEntity(primarySchema);
-
-                    // Connection parameters can also be read and modified via extensible storage fields.
-                    var fields = primarySchema.ListFields();
-                    foreach (var field in fields)
+                    if (field.ValueType == typeof(string))
                     {
-                        if (field.ValueType == typeof(string))
+                        var parameters = primaryEnt.Get<IList<string>>(field);
+                        foreach (var str in parameters)
                         {
-                            var parameters = primaryEnt.Get<IList<string>>(field);
-                            foreach (var str in parameters)
-                            {
-                            }
                         }
                     }
+                }
 
-                    destConn.SetEntity(primaryEnt);
+                destConn.SetEntity(primaryEnt);
 
-                    var ts = tran.Commit();
-                    if (ts != TransactionStatus.Committed)
-                    {
-                        message = "Failed to commit the current transaction !";
-                        ret = Result.Failed;
-                    }
+                var ts = tran.Commit();
+                if (ts != TransactionStatus.Committed)
+                {
+                    message = "Failed to commit the current transaction !";
+                    ret = Result.Failed;
                 }
             }
             else
@@ -167,25 +158,23 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
-                using (var tran = new Transaction(activeDoc.Document, "Change detailed connection type"))
+                using Transaction tran = new(activeDoc.Document, "Change detailed connection type");
+                tran.Start();
+
+                var genericTypeId =
+                    StructuralConnectionHandlerType.GetDefaultConnectionHandlerType(activeDoc.Document);
+                if (genericTypeId == ElementId.InvalidElementId)
+                    genericTypeId =
+                        StructuralConnectionHandlerType.CreateDefaultStructuralConnectionHandlerType(
+                            activeDoc.Document);
+
+                conn.ChangeTypeId(genericTypeId);
+
+                var ts = tran.Commit();
+                if (ts != TransactionStatus.Committed)
                 {
-                    tran.Start();
-
-                    var genericTypeId =
-                        StructuralConnectionHandlerType.GetDefaultConnectionHandlerType(activeDoc.Document);
-                    if (genericTypeId == ElementId.InvalidElementId)
-                        genericTypeId =
-                            StructuralConnectionHandlerType.CreateDefaultStructuralConnectionHandlerType(
-                                activeDoc.Document);
-
-                    conn.ChangeTypeId(genericTypeId);
-
-                    var ts = tran.Commit();
-                    if (ts != TransactionStatus.Committed)
-                    {
-                        message = "Failed to commit the current transaction !";
-                        ret = Result.Failed;
-                    }
+                    message = "Failed to commit the current transaction !";
+                    ret = Result.Failed;
                 }
             }
             else
@@ -219,10 +208,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
                 return Guid.Empty;
 
             var connType = (StructuralConnectionHandlerType)doc.GetElement(typeId);
-            if (connType == null || connType.ConnectionGuid == null)
-                return Guid.Empty;
-
-            return connType.ConnectionGuid;
+            return connType == null || connType.ConnectionGuid == null ? Guid.Empty : connType.ConnectionGuid;
         }
     }
 }

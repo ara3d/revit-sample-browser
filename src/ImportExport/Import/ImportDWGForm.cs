@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.UI;
 using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
@@ -133,14 +133,9 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 
         private void SetImportColorMode()
         {
-            string colorMode;
-            if (radioButtonBlackWhite.Checked)
-                colorMode = radioButtonBlackWhite.Text;
-            else if (radioButtonPreserve.Checked)
-                colorMode = radioButtonPreserve.Text;
-            else
-                colorMode = radioButtonInvertColor.Text;
-
+            var colorMode = radioButtonBlackWhite.Checked
+                ? radioButtonBlackWhite.Text
+                : radioButtonPreserve.Checked ? radioButtonPreserve.Text : radioButtonInvertColor.Text;
             var indexColor = 0;
             for (var i = 0; i < m_importData.ColorMode.Count; ++i)
                 if (colorMode == m_importData.ColorMode[i])
@@ -154,12 +149,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 
         private void SetImportPlacement()
         {
-            string placement;
-            if (radioButtonCenter2Center.Checked)
-                placement = radioButtonCenter2Center.Text;
-            else
-                placement = radioButtonOrigin2Origin.Text;
-
+            var placement = radioButtonCenter2Center.Checked ? radioButtonCenter2Center.Text : radioButtonOrigin2Origin.Text;
             var indexPlacement = 0;
             for (var i = 0; i < m_importData.Placement.Count; ++i)
                 if (placement == m_importData.Placement[i])
@@ -216,10 +206,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
         // KeyPress: digits and '.' only.
         private void textBoxScale_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if ((e.KeyChar < (char)46 || e.KeyChar > (char)57) && (e.KeyChar != (char)8 || e.KeyChar == (char)47))
-                e.Handled = true;
-            else
-                e.Handled = false;
+            e.Handled = e.KeyChar is (< ((char)46) or > ((char)57)) and (not ((char)8) or ((char)47));
         }
 
         // TextChanged: at most one '.'.
@@ -227,7 +214,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
         {
             var newPoint = false;
             var text = textBoxScale.Text.Trim();
-            var textAfter = new StringBuilder();
+            StringBuilder textAfter = new();
             for (var i = 0; i < text.Length; i++)
             {
                 var tmp = char.Parse(text.Substring(i, 1));

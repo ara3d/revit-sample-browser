@@ -1,4 +1,10 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using ExcelExporterImporter.Annotations;
+using ExcelExporterImporter.Common;
+using log4net;
+using OfficeOpenXml;
+using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,12 +20,6 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Autodesk.Revit.DB;
-using ExcelExporterImporter.Annotations;
-using ExcelExporterImporter.Common;
-using log4net;
-using OfficeOpenXml;
-using Ookii.Dialogs.Wpf;
 using MessageBox = System.Windows.MessageBox;
 
 namespace ExcelExporterImporter.ViewModels
@@ -30,39 +30,20 @@ namespace ExcelExporterImporter.ViewModels
         private const int UniqueIdRow = 1;
 
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly Dictionary<string, string> knownStandards = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> knownStandards = [];
         private readonly ParametersSettings parametersSettings;
-        private readonly List<string> readonlyStandards = new List<string>();
+        private readonly List<string> readonlyStandards = [];
         private readonly Document revitDocument;
-        private readonly Dictionary<string, ViewSchedule> schedulesInModel = new Dictionary<string, ViewSchedule>();
+        private readonly Dictionary<string, ViewSchedule> schedulesInModel = [];
         private readonly Window window;
 
         private BackgroundWorker backgroundWorker;
-        private bool bCheckAllImport;
-        private string buttonText;
         private CancellationTokenSource cancellationTokenSource;
-        private bool checkExportSchedule;
-        private bool checkExportStandard;
         private Dispatcher dispatcher;
-        private bool enableButtons;
-        private bool enableButtonsBasic;
-        private ExcelPackage excelPackageToImport;
-        private ExportOptions exportOption = ExportOptions.SeparateTables;
-        private ExportOptionsBasic exportOptionBasic = ExportOptionsBasic.SeparateTables;
-        private string exportPrefix;
-        private string exportPrefixBasic;
+        private readonly ExcelPackage excelPackageToImport;
         private FileInfo fiExportFile;
-        private string importFolder;
         private Progress progress;
-        private int selectedTab;
-
         private string sFileExport;
-        private string sIconButton;
-        private string sShowExportButton;
-        private string sShowImportButton;
-        private string title;
-        private bool useExportPrefix;
-        private bool useExportPrefixBasic;
 
         /// <summary>
         /// </summary>
@@ -86,10 +67,10 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public ExportViewModel()
         {
-            SchedulesList = new ObservableCollection<CheckedListItem<string>>();
-            SchedulesListBasic = new ObservableCollection<CheckedListItem<string>>();
+            SchedulesList = [];
+            SchedulesListBasic = [];
 
-            StandardsList = new ObservableCollection<CheckedListItem<string>>();
+            StandardsList = [];
 
             OrderedSchedulesForExport = CollectionViewSource.GetDefaultView(SchedulesList);
             OrderedSchedulesForExport.SortDescriptions.Add(new SortDescription("Item", ListSortDirection.Ascending));
@@ -115,43 +96,43 @@ namespace ExcelExporterImporter.ViewModels
 
         public string Title
         {
-            get => title;
+            get;
             set
             {
-                if (value == title) return;
-                title = value;
+                if (value == field) return;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public bool EnableButtons
         {
-            get => enableButtons;
+            get;
             set
             {
-                if (value.Equals(enableButtons)) return;
-                enableButtons = value;
+                if (value.Equals(field)) return;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public bool EnableButtonsBasic
         {
-            get => enableButtonsBasic;
+            get;
             set
             {
-                if (value.Equals(enableButtonsBasic)) return;
-                enableButtonsBasic = value;
+                if (value.Equals(field)) return;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public int SelectedTab
         {
-            get => selectedTab;
+            get;
             set
             {
-                selectedTab = value;
+                field = value;
                 ButtonText = value == 1 ? Resources.TitleBtnImport : Resources.TitleBtnExport;
                 IconButton = value == 1 ? Constants.IconImportButton : Constants.IconExportButton;
                 OnPropertyChanged();
@@ -160,20 +141,20 @@ namespace ExcelExporterImporter.ViewModels
 
         public string ButtonText
         {
-            get => buttonText;
+            get;
             set
             {
-                buttonText = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public string IconButton
         {
-            get => sIconButton;
+            get;
             set
             {
-                sIconButton = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -183,17 +164,11 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public string LastImportFolder
         {
-            get
-            {
-                if (string.IsNullOrEmpty(Settings.Default.LastImportPath))
-                {
-                    if (string.IsNullOrEmpty(Settings.Default.LastExportPath))
-                        return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    return Settings.Default.LastExportPath;
-                }
-
-                return Settings.Default.LastImportPath;
-            }
+            get => string.IsNullOrEmpty(Settings.Default.LastImportPath)
+                    ? string.IsNullOrEmpty(Settings.Default.LastExportPath)
+                        ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                        : Settings.Default.LastExportPath
+                    : Settings.Default.LastImportPath;
             set
             {
                 if (value != Settings.Default.LastImportPath)
@@ -209,17 +184,11 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public string ExportFolder
         {
-            get
-            {
-                if (string.IsNullOrEmpty(Settings.Default.LastExportPath))
-                {
-                    if (string.IsNullOrEmpty(Settings.Default.LastImportPath))
-                        return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    return Settings.Default.LastImportPath;
-                }
-
-                return Settings.Default.LastExportPath;
-            }
+            get => string.IsNullOrEmpty(Settings.Default.LastExportPath)
+                    ? string.IsNullOrEmpty(Settings.Default.LastImportPath)
+                        ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                        : Settings.Default.LastImportPath
+                    : Settings.Default.LastExportPath;
             set
             {
                 if (value != Settings.Default.LastExportPath)
@@ -245,10 +214,10 @@ namespace ExcelExporterImporter.ViewModels
 
         public string ImportFolder
         {
-            get => importFolder;
+            get;
             set
             {
-                importFolder = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -258,10 +227,10 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public string ShowExportButton
         {
-            get => sShowExportButton;
+            get;
             set
             {
-                sShowExportButton = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -271,20 +240,20 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public string ShowImportButton
         {
-            get => sShowImportButton;
+            get;
             set
             {
-                sShowImportButton = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public bool CheckAllImport
         {
-            get => bCheckAllImport;
+            get;
             set
             {
-                bCheckAllImport = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -294,10 +263,10 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public bool CheckExportSchedule
         {
-            get => checkExportSchedule;
+            get;
             set
             {
-                checkExportSchedule = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -307,10 +276,10 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public bool CheckExportStandard
         {
-            get => checkExportStandard;
+            get;
             set
             {
-                checkExportStandard = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -334,11 +303,7 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public bool ExportModeBid
         {
-            get
-            {
-                if (!Settings.Default.LastExportModeUni && !Settings.Default.LastExportModeBid) return true;
-                return Settings.Default.LastExportModeBid;
-            }
+            get => (!Settings.Default.LastExportModeUni && !Settings.Default.LastExportModeBid) || Settings.Default.LastExportModeBid;
             set
             {
                 if (value) ExportModeUni = false;
@@ -349,63 +314,63 @@ namespace ExcelExporterImporter.ViewModels
 
         public bool UseExportPrefix
         {
-            get => useExportPrefix;
+            get;
             set
             {
-                useExportPrefix = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public bool UseExportPrefixBasic
         {
-            get => useExportPrefixBasic;
+            get;
             set
             {
-                useExportPrefixBasic = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public string ExportPrefix
         {
-            get => exportPrefix;
+            get;
             set
             {
-                exportPrefix = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public string ExportPrefixBasic
         {
-            get => exportPrefixBasic;
+            get;
             set
             {
-                exportPrefixBasic = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
 
         public ExportOptions ExportOption
         {
-            get => exportOption;
+            get;
             set
             {
-                exportOption = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = ExportOptions.SeparateTables;
 
         public ExportOptionsBasic ExportOptionBasic
         {
-            get => exportOptionBasic;
+            get;
             set
             {
-                exportOptionBasic = value;
+                field = value;
                 OnPropertyChanged();
             }
-        }
+        } = ExportOptionsBasic.SeparateTables;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -428,8 +393,8 @@ namespace ExcelExporterImporter.ViewModels
                 schedulesInModel.Add(viewSchedule.UniqueId, viewSchedule);
             }
 
-            StandardsList = new ObservableCollection<CheckedListItem<string>>
-            {
+            StandardsList =
+            [
                 new CheckedListItem<string>(Constants.StandardsGroupLineStylesUniqueId, Constants.StandardsLineStyles,
                     new List<string> {Constants.StandardsGroupItemLineStylesUniqueId}),
                 new CheckedListItem<string>(Constants.StandardsGroupObjectStylesUniqueId,
@@ -452,7 +417,7 @@ namespace ExcelExporterImporter.ViewModels
                 new CheckedListItem<string>(Constants.StandardsGroupProjectInformationUniqueId,
                     Constants.StandardsProjectInformation,
                     new List<string> {Constants.StandardsGroupItemProjectInformationUniqueId})
-            };
+            ];
             //Variable used for import
             knownStandards.Add(Constants.StandardsGroupItemLineStylesUniqueId, Constants.StandardsLineStyles);
             knownStandards.Add(Constants.StandardsGroupItemAnnotationObjectsUniqueId,
@@ -507,8 +472,10 @@ namespace ExcelExporterImporter.ViewModels
                         CheckAllItems(StandardsList, false);
                     break;
                 case "BrowseExportFolder":
-                    var folderBrowserDialog = new VistaFolderBrowserDialog();
-                    folderBrowserDialog.SelectedPath = ExportFolder;
+                    VistaFolderBrowserDialog folderBrowserDialog = new()
+                    {
+                        SelectedPath = ExportFolder
+                    };
                     var dialogResult = folderBrowserDialog.ShowDialog();
                     if (dialogResult.HasValue && dialogResult.Value) ExportFolder = folderBrowserDialog.SelectedPath;
 
@@ -525,10 +492,7 @@ namespace ExcelExporterImporter.ViewModels
             var sRevitFilename = Path.GetFileNameWithoutExtension(revitDocument.PathName);
             if (string.IsNullOrEmpty(sRevitFilename))
             {
-                if (string.IsNullOrEmpty(revitDocument.Title))
-                    sRevitFilename = "Default";
-                else
-                    sRevitFilename = revitDocument.Title;
+                sRevitFilename = string.IsNullOrEmpty(revitDocument.Title) ? "Default" : revitDocument.Title;
             }
 
             if (!schedules.Any() && !standards.Any())
@@ -541,14 +505,17 @@ namespace ExcelExporterImporter.ViewModels
             if (schedules.Any())
             {
                 var sFileName = sRevitFilename + "_Schedules.xlsx";
-                var exportDlg = new SaveFileDialog
+                SaveFileDialog exportDlg = new()
                 {
-                    Filter = @"Excel Files|*.xlsx;*.xls", CheckFileExists = false, RestoreDirectory = true,
-                    InitialDirectory = ExportFolder, FileName = sFileName
+                    Filter = @"Excel Files|*.xlsx;*.xls",
+                    CheckFileExists = false,
+                    RestoreDirectory = true,
+                    InitialDirectory = ExportFolder,
+                    FileName = sFileName
                 };
                 if (exportDlg.ShowDialog() == DialogResult.OK)
                 {
-                    var filesToOverwrite = new List<FileInfo>();
+                    List<FileInfo> filesToOverwrite = new();
                     fiExportFile = new FileInfo(exportDlg.FileName);
                     ExportFolder = fiExportFile.DirectoryName;
                     if (fiExportFile.Exists) filesToOverwrite.Add(fiExportFile);
@@ -567,14 +534,17 @@ namespace ExcelExporterImporter.ViewModels
             if (standards.Any())
             {
                 var sFileName = sRevitFilename + "_Standards.xlsx";
-                var exportDlg = new SaveFileDialog
+                SaveFileDialog exportDlg = new()
                 {
-                    Filter = @"Excel Files|*.xlsx;*.xls", CheckFileExists = false, RestoreDirectory = true,
-                    InitialDirectory = ExportFolder, FileName = sFileName
+                    Filter = @"Excel Files|*.xlsx;*.xls",
+                    CheckFileExists = false,
+                    RestoreDirectory = true,
+                    InitialDirectory = ExportFolder,
+                    FileName = sFileName
                 };
                 if (exportDlg.ShowDialog() == DialogResult.OK)
                 {
-                    var filesToOverwrite = new List<FileInfo>();
+                    List<FileInfo> filesToOverwrite = new();
                     fiExportFile = new FileInfo(exportDlg.FileName);
                     if (fiExportFile.Exists) filesToOverwrite.Add(fiExportFile);
                     if (DeleteExistFile(filesToOverwrite))
@@ -721,18 +691,17 @@ namespace ExcelExporterImporter.ViewModels
             if (schedules.Any())
             {
                 ExcelPackage excelPackage = null;
-                var createdPackages = new List<ExcelPackage>();
+                List<ExcelPackage> createdPackages = new();
                 excelPackage = new ExcelPackage(fiExportFile);
                 createdPackages.Add(excelPackage);
 
-                var worksheetNames = new Hashtable();
-                var scheduleExporter = new ScheduleExporter(cancellationTokenSource.Token);
+                Hashtable worksheetNames = new();
+                ScheduleExporter scheduleExporter = new(cancellationTokenSource.Token);
                 foreach (var schedule in schedules)
                 {
                     if (cancellationTokenSource.IsCancellationRequested) break;
 
-                    var viewSchedule = schedule.Object as ViewSchedule;
-                    if (viewSchedule == null) continue;
+                    if (schedule.Object is not ViewSchedule viewSchedule) continue;
 
                     //There is a 31 characters limit for a worksheet in excel. We need to trim the end and try to prevent collisons.
                     var name = schedule.Item;
@@ -788,17 +757,16 @@ namespace ExcelExporterImporter.ViewModels
             if (schedules.Any())
             {
                 ExcelPackage excelPackage = null;
-                var createdPackages = new List<ExcelPackage>();
+                List<ExcelPackage> createdPackages = new();
                 excelPackage = new ExcelPackage(fiExportFile);
                 createdPackages.Add(excelPackage);
 
-                var worksheetNames = new Hashtable();
-                var scheduleExporter = new ScheduleExporter(cancellationTokenSource.Token);
+                Hashtable worksheetNames = new();
+                ScheduleExporter scheduleExporter = new(cancellationTokenSource.Token);
                 foreach (var schedule in schedules)
                 {
                     if (cancellationTokenSource.IsCancellationRequested) break;
-                    var viewSchedule = schedule.Object as ViewSchedule;
-                    if (viewSchedule == null) continue;
+                    if (schedule.Object is not ViewSchedule viewSchedule) continue;
                     //There is a 31 characters limit for a worksheet in excel. We need to trim the end and try to prevent collisons.
                     var name = schedule.Item;
 
@@ -836,10 +804,10 @@ namespace ExcelExporterImporter.ViewModels
         /// <param name="standardsGroups"></param>
         private void ExportStandards(List<CheckedListItem<string>> standardsGroups)
         {
-            var standardsExporter = new StandardsExporter(cancellationTokenSource.Token);
+            StandardsExporter standardsExporter = new(cancellationTokenSource.Token);
             if (standardsGroups.Any())
             {
-                var excelPackage = new ExcelPackage(fiExportFile);
+                ExcelPackage excelPackage = new(fiExportFile);
                 foreach (var standardGroup in standardsGroups)
                 {
                     if (cancellationTokenSource.IsCancellationRequested) return;

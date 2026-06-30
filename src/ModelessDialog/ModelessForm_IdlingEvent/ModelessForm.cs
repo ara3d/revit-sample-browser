@@ -16,23 +16,13 @@ namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
     /// </remarks>
     public partial class ModelessForm : Form
     {
-        /// <summary>
-        ///     In this sample, the dialog owns the value of the request but it is not necessary. It may as
-        ///     well be a static property of the application.
-        /// </summary>
-        private Request m_request;
-
         public ModelessForm()
         {
             InitializeComponent();
             Request = new Request();
         }
 
-        public Request Request
-        {
-            get => m_request;
-            private set => m_request = value;
-        }
+        public Request Request { get; private set; }
 
         private void EnableCommands(bool status)
         {

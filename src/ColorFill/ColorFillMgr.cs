@@ -1,21 +1,20 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ColorFill.CS
 {
     public class ColorFillMgr
     {
         private readonly Document m_document;
         private readonly ExternalCommandData m_externalCommandData;
-        private List<ElementId> m_fillPatternIds = new List<ElementId>();
-        private readonly List<ElementId> m_levelIds = new List<ElementId>();
-        private List<ElementId> m_parameterDefinitions = new List<ElementId>();
+        private List<ElementId> m_fillPatternIds = [];
+        private readonly List<ElementId> m_levelIds = [];
+        private List<ElementId> m_parameterDefinitions = [];
         private readonly ElementId m_schemeCategoryId;
 
         public ColorFillMgr(Document doc, ExternalCommandData commandData)
@@ -46,47 +45,43 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
 
         public void DuplicateScheme(ColorFillScheme scheme, string schemeName, string schemeTitle)
         {
-            var parameterId = new ElementId(BuiltInParameter.AREA_SCHEME_NAME);
-            using (var tr = new Transaction(m_document))
-            {
-                tr.Start("CopyScheme");
-                var newSchemeId = scheme.Duplicate(schemeName);
-                var newScheme = scheme.Document.GetElement(newSchemeId) as ColorFillScheme;
-                newScheme.Title = schemeTitle;
-                m_parameterDefinitions = newScheme.GetSupportedParameterIds().ToList();
-                if (m_parameterDefinitions.Contains(parameterId))
-                    newScheme.ParameterDefinition = parameterId;
-                tr.Commit();
-            }
+            ElementId parameterId = new(BuiltInParameter.AREA_SCHEME_NAME);
+            using Transaction tr = new(m_document);
+            tr.Start("CopyScheme");
+            var newSchemeId = scheme.Duplicate(schemeName);
+            var newScheme = scheme.Document.GetElement(newSchemeId) as ColorFillScheme;
+            newScheme.Title = schemeTitle;
+            m_parameterDefinitions = newScheme.GetSupportedParameterIds().ToList();
+            if (m_parameterDefinitions.Contains(parameterId))
+                newScheme.ParameterDefinition = parameterId;
+            tr.Commit();
         }
 
         public void CreateAndPlaceLegend(ColorFillScheme scheme, View view)
         {
-            using (var transaction = new Transaction(m_document))
-            {
-                transaction.Start("Create legend");
-                var origin = view.Origin.Add(view.UpDirection.Multiply(20));
+            using Transaction transaction = new(m_document);
+            transaction.Start("Create legend");
+            var origin = view.Origin.Add(view.UpDirection.Multiply(20));
 
-                if (view.CanApplyColorFillScheme(m_schemeCategoryId, scheme.Id))
-                {
-                    view.SetColorFillSchemeId(m_schemeCategoryId, scheme.Id);
-                    var legend = ColorFillLegend.Create(m_document, view.Id, m_schemeCategoryId, origin);
-                    legend.Height /= 2;
-                    transaction.Commit();
-                }
-                else
-                {
-                    throw new Exception("The scheme can not be applied on the view.");
-                }
+            if (view.CanApplyColorFillScheme(m_schemeCategoryId, scheme.Id))
+            {
+                view.SetColorFillSchemeId(m_schemeCategoryId, scheme.Id);
+                var legend = ColorFillLegend.Create(m_document, view.Id, m_schemeCategoryId, origin);
+                legend.Height /= 2;
+                transaction.Commit();
+            }
+            else
+            {
+                throw new Exception("The scheme can not be applied on the view.");
             }
         }
 
         public void ModifyByValueScheme(ColorFillScheme scheme)
         {
             var entries = scheme.GetEntries().ToList();
-            var newEntries = new List<ColorFillSchemeEntry>();
+            List<ColorFillSchemeEntry> newEntries = [];
             var storageType = entries[0].StorageType;
-            var random = new Random();
+            Random random = new();
             var seed = random.Next(0, 256);
             foreach (var entry in entries)
             {
@@ -111,7 +106,7 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
                 newEntries.Add(newEntry);
             }
 
-            using (var tr = new Transaction(m_document))
+            using (Transaction tr = new(m_document))
             {
                 tr.Start("update entries");
                 scheme.SetEntries(newEntries);
@@ -129,7 +124,7 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
             if (entries.Count > 0)
                 lastEntry = entries.Last();
 
-            var entry = new ColorFillSchemeEntry(type)
+            ColorFillSchemeEntry entry = new(type)
             {
                 FillPatternId = fillPatternId
             };

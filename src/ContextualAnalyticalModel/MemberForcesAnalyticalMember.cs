@@ -1,10 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -22,24 +23,22 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 var analyticalMember = CreateAnalyticalMember.CreateMember(document);
 
                 // Start transaction
-                using (var transaction = new Transaction(document, "Member Forces"))
+                using Transaction transaction = new(document, "Member Forces");
+                transaction.Start();
+
+                // Get member forces of analytical member
+                var memberForces = analyticalMember.GetMemberForces();
+                foreach (var mf in memberForces)
                 {
-                    transaction.Start();
-
-                    // Get member forces of analytical member
-                    var memberForces = analyticalMember.GetMemberForces();
-                    foreach (var mf in memberForces)
-                    {
-                        Console.WriteLine($"Position: {mf.Start}Force: {mf.Force}Moment: {mf.Moment}");
-                    }
-
-                    // Change some values
-                    analyticalMember.SetMemberForces(true, new XYZ(10000, 5000, 0), new XYZ(0, 0, 0));
-                    analyticalMember.SetMemberForces(new MemberForces(false, new XYZ(5000, 5000, 5000),
-                        new XYZ(10000, 10000, 10000)));
-
-                    transaction.Commit();
+                    Console.WriteLine($"Position: {mf.Start}Force: {mf.Force}Moment: {mf.Moment}");
                 }
+
+                // Change some values
+                analyticalMember.SetMemberForces(true, new XYZ(10000, 5000, 0), new XYZ(0, 0, 0));
+                analyticalMember.SetMemberForces(new MemberForces(false, new XYZ(5000, 5000, 5000),
+                    new XYZ(10000, 10000, 10000)));
+
+                transaction.Commit();
 
                 return Result.Succeeded;
             }

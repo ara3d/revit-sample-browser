@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     public class ValidateWindowParameter
@@ -30,14 +30,12 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             if (IsMetric)
             {
                 value = SampleBrowserUtils.MetricToImperial(value);
-                if (value >= 0.23 && value < m_wallWidth)
-                    return string.Empty;
-                return $"The width should be between 69 and {Convert.ToInt32(SampleBrowserUtils.ImperialToMetric(m_wallWidth))}";
+                return value >= 0.23 && value < m_wallWidth
+                    ? string.Empty
+                    : $"The width should be between 69 and {Convert.ToInt32(SampleBrowserUtils.ImperialToMetric(m_wallWidth))}";
             }
 
-            if (value >= 0.4 && value < m_wallWidth)
-                return string.Empty;
-            return $"The width should be between 0.4 and {m_wallWidth}";
+            return value >= 0.4 && value < m_wallWidth ? string.Empty : $"The width should be between 0.4 and {m_wallWidth}";
         }
 
         public string IsHeightInRange(double value)
@@ -63,14 +61,12 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             if (IsMetric)
             {
                 value = SampleBrowserUtils.MetricToImperial(value);
-                if (value < m_wallHeight)
-                    return string.Empty;
-                return $"The sillheight should be < {Convert.ToInt32(SampleBrowserUtils.ImperialToMetric(m_wallHeight))}";
+                return value < m_wallHeight
+                    ? string.Empty
+                    : $"The sillheight should be < {Convert.ToInt32(SampleBrowserUtils.ImperialToMetric(m_wallHeight))}";
             }
 
-            if (value < m_wallHeight)
-                return string.Empty;
-            return $"The sillheight should be < {m_wallHeight}";
+            return value < m_wallHeight ? string.Empty : $"The sillheight should be < {m_wallHeight}";
         }
     }
 }

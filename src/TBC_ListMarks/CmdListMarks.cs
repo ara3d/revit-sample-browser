@@ -13,12 +13,12 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -63,7 +63,7 @@ namespace BuildingCoder
                             BuiltInParameter.ALL_MODEL_MARK)
                         .AsString();
 
-                    if (!marks.ContainsKey(mark)) marks.Add(mark, new List<Element>());
+                    if (!marks.ContainsKey(mark)) marks.Add(mark, []);
                     marks[mark].Add(door);
                 }
 
@@ -107,7 +107,7 @@ namespace BuildingCoder
 
                     if (e is FamilyInstance
                         && null != e.Category
-                        && (int) BuiltInCategory.OST_Doors
+                        && (int)BuiltInCategory.OST_Doors
                         == e.Category.Id.Value)
                     {
                         e.get_Parameter(

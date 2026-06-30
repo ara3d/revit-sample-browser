@@ -2,14 +2,12 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
@@ -22,14 +20,9 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Filters
         public CategoryFilter(List<CategoryCmdArgument> categories)
         {
             this.categories = categories;
-            if (categories.Count == 1)
-            {               
-                FilterSyntax = $".OfCategory({categories.First().Name})";
-            }
-            else
-            {               
-                FilterSyntax = "new ElementMulticategoryFilter(new [] {" + String.Join(", ", categories.Select(x => x.Name)) + "})";
-            }            
+            FilterSyntax = categories.Count == 1
+                ? $".OfCategory({categories.First().Name})"
+                : "new ElementMulticategoryFilter(new [] {" + String.Join(", ", categories.Select(x => x.Name)) + "})";
         }
 
 

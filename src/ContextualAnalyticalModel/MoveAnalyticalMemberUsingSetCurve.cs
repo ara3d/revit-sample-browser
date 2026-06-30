@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -22,25 +23,23 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 CreateAnalyticalMember.CreateConvergentMember(document);
 
                 // Start transaction
-                using (var transaction = new Transaction(document, "Offset member"))
-                {
-                    transaction.Start();
+                using Transaction transaction = new(document, "Offset member");
+                transaction.Start();
 
-                    var originalCurve = analyticalMember.GetCurve();
-                    var originalCurveStart = originalCurve.GetEndPoint(0);
-                    var originalCurveEnd = originalCurve.GetEndPoint(1);
+                var originalCurve = analyticalMember.GetCurve();
+                var originalCurveStart = originalCurve.GetEndPoint(0);
+                var originalCurveEnd = originalCurve.GetEndPoint(1);
 
-                    // Create new start and end with offset value
-                    double offset = 15;
-                    var newLineStart = new XYZ(originalCurveStart.X + offset, 0, 0);
-                    var newLineEnd = new XYZ(originalCurveEnd.X + offset, 0, 0);
+                // Create new start and end with offset value
+                double offset = 15;
+                XYZ newLineStart = new(originalCurveStart.X + offset, 0, 0);
+                XYZ newLineEnd = new(originalCurveEnd.X + offset, 0, 0);
 
-                    var line = Line.CreateBound(newLineStart, newLineEnd);
+                var line = Line.CreateBound(newLineStart, newLineEnd);
 
-                    analyticalMember.SetCurve(line);
+                analyticalMember.SetCurve(line);
 
-                    transaction.Commit();
-                }
+                transaction.Commit();
 
                 return Result.Succeeded;
             }

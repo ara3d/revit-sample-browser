@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
@@ -16,7 +16,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
+            Transaction transaction = new(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
             {
                 transaction.Start();
@@ -30,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
                 var selectElem = commandData.Application.ActiveUIDocument.Document.GetElement(selectedId);
 
-                if (!(selectElem is Wall) && !(selectElem is Floor))
+                if (selectElem is not Wall and not Floor)
                 {
                     message = "please selected one Object (Floor or Wall) to create Opening.";
                     return Result.Cancelled;
@@ -41,19 +41,19 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
                     switch (selectElem)
                     {
                         case Wall wall:
-                        {
-                            var profileWall = new ProfileWall(wall, commandData);
-                            var newOpeningsForm = new NewOpeningsForm(profileWall);
-                            newOpeningsForm.ShowDialog();
-                            break;
-                        }
+                            {
+                                ProfileWall profileWall = new(wall, commandData);
+                                NewOpeningsForm newOpeningsForm = new(profileWall);
+                                newOpeningsForm.ShowDialog();
+                                break;
+                            }
                         case Floor floor:
-                        {
-                            var profileFloor = new ProfileFloor(floor, commandData);
-                            var newOpeningsForm = new NewOpeningsForm(profileFloor);
-                            newOpeningsForm.ShowDialog();
-                            break;
-                        }
+                            {
+                                ProfileFloor profileFloor = new(floor, commandData);
+                                NewOpeningsForm newOpeningsForm = new(profileFloor);
+                                newOpeningsForm.ShowDialog();
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)

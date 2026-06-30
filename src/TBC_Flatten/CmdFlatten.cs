@@ -23,12 +23,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -64,9 +63,9 @@ namespace BuildingCoder
                 = new FilteredElementCollector(doc, viewId)
                     .WhereElementIsNotElementType();
 
-            var geometryOptions = new Options();
+            Options geometryOptions = new();
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             if (tx.Start("Convert elements to DirectShapes")
                 == TransactionStatus.Started)
             {
@@ -101,7 +100,7 @@ namespace BuildingCoder
                         try
                         {
                             ds.SetShape(
-                                new List<GeometryObject>(gelt));
+                                [.. gelt]);
 
                             // Delete original element
 

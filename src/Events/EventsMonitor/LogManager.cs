@@ -1,17 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using System;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
     public class LogManager
     {
-        private readonly DataTable m_eventsLog;
-
         private readonly string m_filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         // Temp file is copied to EventsMonitor.log on close so the log stays readable while Revit runs.
@@ -22,10 +20,10 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
         public LogManager()
         {
             CreateLogFile();
-            m_eventsLog = CreateEventsLogTable();
+            EventsLog = CreateEventsLogTable();
         }
 
-        public DataTable EventsLog => m_eventsLog;
+        public DataTable EventsLog { get; }
 
         private void CreateLogFile()
         {
@@ -50,21 +48,21 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 
         private DataTable CreateEventsLogTable()
         {
-            var eventsInfoLogTable = new DataTable("EventsLogInfoTable");
+            DataTable eventsInfoLogTable = new("EventsLogInfoTable");
 
-            var timeColumn = new DataColumn("Time", typeof(string))
+            DataColumn timeColumn = new("Time", typeof(string))
             {
                 Caption = "Time"
             };
             eventsInfoLogTable.Columns.Add(timeColumn);
 
-            var eventColumn = new DataColumn("Event", typeof(string))
+            DataColumn eventColumn = new("Event", typeof(string))
             {
                 Caption = "Event"
             };
             eventsInfoLogTable.Columns.Add(eventColumn);
 
-            var typeColumn = new DataColumn("Type", typeof(string))
+            DataColumn typeColumn = new("Type", typeof(string))
             {
                 Caption = "Type"
             };
@@ -75,13 +73,13 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 
         public void TrackEvent(object sender, EventArgs args)
         {
-            var newRow = m_eventsLog.NewRow();
+            var newRow = EventsLog.NewRow();
 
             newRow["Time"] = DateTime.Now.ToString();
             newRow["Event"] = EventLoggingHelper.GetRevitDbEventName(args.GetType());
             newRow["Type"] = sender.GetType().ToString();
 
-            m_eventsLog.Rows.Add(newRow);
+            EventsLog.Rows.Add(newRow);
         }
 
         public void WriteLogFile(object sender, EventArgs args)

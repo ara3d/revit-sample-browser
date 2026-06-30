@@ -40,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         {
             if (Points.Count == 2)
             {
-                var line = new List<Point>(Points);
+                List<Point> line = [.. Points];
                 Lines.Add(line);
                 Points.Clear();
             }
@@ -56,7 +56,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
         private void DrawRect(Graphics graphic, Pen pen, Point p1, Point p2)
         {
-            var p = new Size(p2.X - p1.X, p2.Y - p1.Y);
+            Size p = new(p2.X - p1.X, p2.Y - p1.Y);
             if (p.Width >= 0 && p.Height >= 0)
             {
                 graphic.DrawRectangle(pen, p1.X, p1.Y, p.Width, p.Height);
@@ -66,8 +66,8 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             {
                 var points = new Point[5]
                 {
-                    p1, new Point(p1.X, p2.Y),
-                    p2, new Point(p2.X, p1.Y), p1
+                    p1, new(p1.X, p2.Y),
+                    p2, new(p2.X, p1.Y), p1
                 };
                 graphic.DrawLines(pen, points);
             }

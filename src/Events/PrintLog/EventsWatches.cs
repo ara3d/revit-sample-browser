@@ -6,20 +6,8 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
 {
     public sealed class EventsWatches
     {
-        private Stopwatch m_docPrintWatch;
+        public Stopwatch ViewPrintWatch { get; set; }
 
-        private Stopwatch m_viewPrintWatch;
-
-        public Stopwatch ViewPrintWatch
-        {
-            get => m_viewPrintWatch;
-            set => m_viewPrintWatch = value;
-        }
-
-        public Stopwatch DocPrintWatch
-        {
-            get => m_docPrintWatch;
-            set => m_docPrintWatch = value;
-        }
+        public Stopwatch DocPrintWatch { get; set; }
     }
 }

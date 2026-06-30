@@ -23,22 +23,18 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
     /// </summary>
     public class UiMigrationViewModel : IMigrationModel, INotifyPropertyChanged
     {
-        private string m_accountGuid;
+        public ObservableCollection<FolderLocation> AvailableFolders { get; set; } = [];
 
-        private string m_projectGuid;
-
-        public ObservableCollection<FolderLocation> AvailableFolders { get; set; } = new ObservableCollection<FolderLocation>();
-
-        public ObservableCollection<MigrationRule> Rules { get; set; } = new ObservableCollection<MigrationRule>();
+        public ObservableCollection<MigrationRule> Rules { get; set; } = [];
 
         public string AccountGuid
         {
-            get => m_accountGuid;
+            get;
             set
             {
-                if (m_accountGuid != value)
+                if (field != value)
                 {
-                    m_accountGuid = value;
+                    field = value;
                     NotifyPropertyChanged("AccountGuid");
                 }
             }
@@ -46,12 +42,12 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 
         public string ProjectGuid
         {
-            get => m_projectGuid;
+            get;
             set
             {
-                if (m_projectGuid != value)
+                if (field != value)
                 {
-                    m_projectGuid = value;
+                    field = value;
                     NotifyPropertyChanged("ProjectGuid");
                 }
             }

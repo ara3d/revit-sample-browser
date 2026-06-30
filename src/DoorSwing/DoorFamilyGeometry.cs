@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         private readonly BoundingBoxXYZ m_bbox;
 
         // curves can represent the wireFrame of the door's geometry.
-        private readonly List<List<XYZ>> m_curve3Ds = new List<List<XYZ>>();
+        private readonly List<List<XYZ>> m_curve3Ds = [];
 
         // User preferences for parsing of geometry.
         private readonly Options m_options;
@@ -32,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         }
 
         public RectangleF Bbox2D =>
-            new RectangleF((float)m_bbox.Min.X, (float)m_bbox.Min.Y,
+            new((float)m_bbox.Min.X, (float)m_bbox.Min.Y,
                 (float)(m_bbox.Max.X - m_bbox.Min.X), (float)(m_bbox.Max.Y - m_bbox.Min.Y));
 
         public void DrawGraphics(Graphics graphics, Pen drawPen)
@@ -53,9 +53,9 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         {
             var viewPlans = from elem in
                     new FilteredElementCollector(door.Document).OfClass(typeof(ViewPlan)).ToElements()
-                let viewPlan = elem as ViewPlan
-                where viewPlan != null && !viewPlan.IsTemplate && viewPlan.GenLevel.Id == door.LevelId
-                select viewPlan;
+                                              let viewPlan = elem as ViewPlan
+                                              where viewPlan != null && !viewPlan.IsTemplate && viewPlan.GenLevel.Id == door.LevelId
+                                              select viewPlan;
             return viewPlans.Count() > 0 ? viewPlans.First() : null;
         }
 

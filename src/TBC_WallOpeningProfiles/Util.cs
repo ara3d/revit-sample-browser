@@ -1,6 +1,6 @@
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -10,9 +10,9 @@ namespace BuildingCoder
             Wall wall,
             ElementId openingId)
         {
-            var faceList = new List<PlanarFace>();
+            List<PlanarFace> faceList = [];
 
-            var solidList = new List<Solid>();
+            List<Solid> solidList = [];
 
             var geomOptions = wall.Document.Application.Create.NewGeometryOptions();
 
@@ -27,11 +27,11 @@ namespace BuildingCoder
             }
 
             foreach (var solid in solidList)
-            foreach (Face face in solid.Faces)
-                if (face is PlanarFace planarFace)
-                    if (wall.GetGeneratingElementIds(face)
-                        .Any(x => x == openingId))
-                        faceList.Add(planarFace);
+                foreach (Face face in solid.Faces)
+                    if (face is PlanarFace planarFace)
+                        if (wall.GetGeneratingElementIds(face)
+                            .Any(x => x == openingId))
+                            faceList.Add(planarFace);
             return faceList;
         }
     }

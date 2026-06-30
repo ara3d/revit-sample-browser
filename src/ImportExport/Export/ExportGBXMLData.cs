@@ -16,11 +16,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 
         public override bool Export()
         {
-            var transaction = new Transaction(ActiveDocument, "Export_To_GBXML");
+            Transaction transaction = new(ActiveDocument, "Export_To_GBXML");
             transaction.Start();
             base.Export();
 
-            var options = new GBXMLExportOptions();
+            GBXMLExportOptions options = new();
             var exported = ActiveDocument.Export(ExportFolder, ExportFileName, options);
             transaction.Commit();
 

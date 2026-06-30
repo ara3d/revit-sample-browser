@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
     /// </summary>
     public class OpeningInfo
     {
-        private readonly List<Line3D> m_lines = new List<Line3D>(); //contains lines in curve
+        private readonly List<Line3D> m_lines = []; //contains lines in curve
         private UIApplication m_revit; //Application of Revit
 
         /// <summary>
@@ -29,12 +29,12 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             m_revit = app;
 
             //get OpeningProperty which can use in PropertyGrid control
-            var openingProperty = new OpeningProperty(Opening);
+            OpeningProperty openingProperty = new(Opening);
             Property = openingProperty;
 
             //get BoundingBox of Opening
             var boxXyz = Opening.get_BoundingBox(m_revit.ActiveUIDocument.Document.ActiveView);
-            var boundingBox = new BoundingBox(boxXyz);
+            BoundingBox boundingBox = new(boxXyz);
             BoundingBox = boundingBox;
 
             //get profile
@@ -86,7 +86,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
                     AddLine(points);
                 }
 
-                var wireFrameSketch = new WireFrame(new ReadOnlyCollection<Line3D>(m_lines));
+                WireFrame wireFrameSketch = new(new ReadOnlyCollection<Line3D>(m_lines));
                 Sketch = wireFrameSketch;
             }
             else if (Opening.IsRectBoundary)
@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
                 var boundRect = Opening.BoundaryRect as List<XYZ>;
                 var rectPoints = GetPoints(boundRect);
                 AddLine(rectPoints);
-                var wireFrameSketch = new WireFrame(new ReadOnlyCollection<Line3D>(m_lines));
+                WireFrame wireFrameSketch = new(new ReadOnlyCollection<Line3D>(m_lines));
                 Sketch = wireFrameSketch;
             }
             else
@@ -115,11 +115,11 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         /// </param>
         private List<XYZ> GetPoints(List<XYZ> boundRect)
         {
-            var points = new List<XYZ>();
+            List<XYZ> points = [];
             var p1 = boundRect[0];
             points.Add(p1);
 
-            var p2 = new XYZ(
+            XYZ p2 = new(
                 boundRect[0].X,
                 boundRect[0].Y,
                 boundRect[1].Z);
@@ -128,7 +128,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             var p3 = boundRect[1];
             points.Add(p3);
 
-            var p4 = new XYZ(
+            XYZ p4 = new(
                 boundRect[1].X,
                 boundRect[1].Y,
                 boundRect[0].Z);
@@ -151,9 +151,9 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             {
                 var point = points[i];
 
-                var line = new Line3D();
-                var pointStart = new Vector();
-                var pointEnd = new Vector();
+                Line3D line = new();
+                Vector pointStart = new();
+                Vector pointEnd = new();
                 for (var j = 0; j < 3; j++)
                 {
                     pointStart[j] = previousPoint[j];

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
@@ -44,10 +44,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             ActiveViewName = ActiveDocument.ActiveView.Name;
             var viewType = ActiveDocument.ActiveView.ViewType.ToString();
             ExportFileName = $"{ActiveDocName}-{viewType}-{ActiveViewName}.{GetExtension()}";
-            if (ActiveDocument.ActiveView.ViewType == ViewType.ThreeD)
-                Is3DView = true;
-            else
-                Is3DView = false;
+            Is3DView = ActiveDocument.ActiveView.ViewType == ViewType.ThreeD;
         }
 
         private string GetExtension()
@@ -92,9 +89,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 
         public virtual bool Export()
         {
-            if (ExportFolder == null || ExportFileName == null) throw new NullReferenceException();
-
-            return true;
+            return ExportFolder == null || ExportFileName == null ? throw new NullReferenceException() : true;
         }
     }
 }

@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
@@ -46,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
         public void CreateGrids()
         {
-            var failureReasons = new ArrayList();
+            ArrayList failureReasons = [];
             if (CreateXGrids(ref failureReasons) + CreateYGrids(ref failureReasons) != 0)
             {
                 var failureReason = ResManager.GetString("FailedToCreateGrids");
@@ -71,7 +71,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             var errorCount = 0;
 
             // Curve array which stores all curves for batch creation
-            var curves = new CurveArray();
+            CurveArray curves = new();
 
             for (var i = 0; i < XNumber; ++i)
             {
@@ -84,23 +84,20 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                     if (YNumber != 0)
                     {
                         // Grids will have an extension distance of m_ySpacing / 2
-                        startPoint = new XYZ(XOrigin - YSpacing / 2, YOrigin + i * XSpacing, 0);
-                        endPoint = new XYZ(XOrigin + (YNumber - 1) * YSpacing + YSpacing / 2, YOrigin + i * XSpacing,
+                        startPoint = new XYZ(XOrigin - (YSpacing / 2), YOrigin + (i * XSpacing), 0);
+                        endPoint = new XYZ(XOrigin + ((YNumber - 1) * YSpacing) + (YSpacing / 2), YOrigin + (i * XSpacing),
                             0);
                     }
                     else
                     {
-                        startPoint = new XYZ(XOrigin, YOrigin + i * XSpacing, 0);
-                        endPoint = new XYZ(XOrigin + XSpacing / 2, YOrigin + i * XSpacing, 0);
+                        startPoint = new XYZ(XOrigin, YOrigin + (i * XSpacing), 0);
+                        endPoint = new XYZ(XOrigin + (XSpacing / 2), YOrigin + (i * XSpacing), 0);
                     }
 
                     try
                     {
                         // Create a line according to the bubble location
-                        if (XBubbleLoc == BubbleLocation.StartPoint)
-                            line = NewLine(startPoint, endPoint);
-                        else
-                            line = NewLine(endPoint, startPoint);
+                        line = XBubbleLoc == BubbleLocation.StartPoint ? NewLine(startPoint, endPoint) : NewLine(endPoint, startPoint);
                     }
                     catch (ArgumentException)
                     {
@@ -150,7 +147,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             var errorCount = 0;
 
             // Curve array which stores all curves for batch creation
-            var curves = new CurveArray();
+            CurveArray curves = new();
 
             for (var j = 0; j < YNumber; ++j)
             {
@@ -162,23 +159,20 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                 {
                     if (XNumber != 0)
                     {
-                        startPoint = new XYZ(XOrigin + j * YSpacing, YOrigin - XSpacing / 2, 0);
-                        endPoint = new XYZ(XOrigin + j * YSpacing, YOrigin + (XNumber - 1) * XSpacing + XSpacing / 2,
+                        startPoint = new XYZ(XOrigin + (j * YSpacing), YOrigin - (XSpacing / 2), 0);
+                        endPoint = new XYZ(XOrigin + (j * YSpacing), YOrigin + ((XNumber - 1) * XSpacing) + (XSpacing / 2),
                             0);
                     }
                     else
                     {
-                        startPoint = new XYZ(XOrigin + j * YSpacing, YOrigin, 0);
-                        endPoint = new XYZ(XOrigin + j * YSpacing, YOrigin + YSpacing / 2, 0);
+                        startPoint = new XYZ(XOrigin + (j * YSpacing), YOrigin, 0);
+                        endPoint = new XYZ(XOrigin + (j * YSpacing), YOrigin + (YSpacing / 2), 0);
                     }
 
                     try
                     {
                         // Create a line according to the bubble location
-                        if (YBubbleLoc == BubbleLocation.StartPoint)
-                            line = NewLine(startPoint, endPoint);
-                        else
-                            line = NewLine(endPoint, startPoint);
+                        line = YBubbleLoc == BubbleLocation.StartPoint ? NewLine(startPoint, endPoint) : NewLine(endPoint, startPoint);
                     }
                     catch (ArgumentException)
                     {

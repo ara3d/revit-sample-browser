@@ -14,10 +14,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -35,7 +36,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var walls = new List<Element>();
+            List<Element> walls = new();
             if (!Util.GetSelectedElementsOrAll(
                 walls, uidoc, typeof(Wall)))
             {
@@ -46,8 +47,8 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            var totalVolumes
-                = new Util.MapLayerToVolume();
+            Util.MapLayerToVolume totalVolumes
+                = new();
 
             foreach (Wall wall in walls) Util.GetWallLayerVolumes(wall, ref totalVolumes);
 
@@ -56,7 +57,7 @@ namespace BuildingCoder
                   + "wall type : layer function :"
                   + " volume in cubic meters':\n";
 
-            var keys = new List<string>(
+            List<string> keys = new(
                 totalVolumes.Keys);
 
             keys.Sort();

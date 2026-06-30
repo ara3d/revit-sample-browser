@@ -29,44 +29,37 @@ using System.IO;
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 {
-  class JtLogFile : IDisposable
-  {
-    string _path;
-    StreamWriter _sw;
-
-    public JtLogFile( string basename )
+    class JtLogFile : IDisposable
     {
-      _path = System.IO.Path.Combine(
-        System.IO.Path.GetTempPath(),
-        basename + ".log" );
+        readonly StreamWriter _sw;
 
-      _sw = new StreamWriter( _path, true );
+        public JtLogFile(string basename)
+        {
+            Path = System.IO.Path.Combine(
+              System.IO.Path.GetTempPath(),
+              basename + ".log");
 
-      _sw.WriteLine( "\r\n\r\n{0} Start string search\r\n",
-        DateTime.Now.ToString( "u" ) );
+            _sw = new StreamWriter(Path, true);
+
+            _sw.WriteLine("\r\n\r\n{0} Start string search\r\n",
+              DateTime.Now.ToString("u"));
+        }
+
+        public void Dispose()
+        {
+            _sw.WriteLine("\r\n\r\n{0} Terminate string search\r\n",
+              DateTime.Now.ToString("u"));
+
+            _sw.Close();
+            _sw.Dispose();
+        }
+
+        public void Log(string s)
+        {
+            _sw.WriteLine(s);
+            Debug.WriteLine(s);
+        }
+
+        public string Path { get; }
     }
-
-    public void Dispose()
-    {
-      _sw.WriteLine( "\r\n\r\n{0} Terminate string search\r\n",
-        DateTime.Now.ToString( "u" ) );
-
-      _sw.Close();
-      _sw.Dispose();
-    }
-
-    public void Log( string s )
-    {
-      _sw.WriteLine( s );
-      Debug.WriteLine( s );
-    }
-
-    public string Path
-    {
-      get
-      {
-        return _path;
-      }
-    }
-  }
 }

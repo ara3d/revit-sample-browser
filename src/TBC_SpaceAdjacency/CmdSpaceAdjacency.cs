@@ -13,11 +13,12 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -35,7 +36,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var spaces = new List<Element>();
+            List<Element> spaces = new();
             if (!Util.GetSelectedElementsOrAll(
                 spaces, uidoc, typeof(Space)))
             {
@@ -46,17 +47,17 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            var segments = new List<SpaceAdjacencySegment>();
+            List<SpaceAdjacencySegment> segments = new();
 
             foreach (Space space in spaces) Util.GetBoundaries(segments, space);
 
-            var segmentPairs
-                = new Dictionary<SpaceAdjacencySegment, SpaceAdjacencySegment>();
+            Dictionary<SpaceAdjacencySegment, SpaceAdjacencySegment> segmentPairs
+                = new();
 
             Util.FindClosestSegments(segmentPairs, segments);
 
-            var spaceAdjacencies
-                = new Dictionary<Space, List<Space>>();
+            Dictionary<Space, List<Space>> spaceAdjacencies
+                = new();
 
             Util.DetermineAdjacencies(
                 spaceAdjacencies, segmentPairs);

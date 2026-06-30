@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Autodesk.Revit.DB;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
 
 namespace ExcelExporterImporter.Common
 {
@@ -215,7 +215,7 @@ namespace ExcelExporterImporter.Common
             //We are looking for categories of families
             var familiesCategories = new FilteredElementCollector(doc)
                 .WherePasses(new ElementClassFilter(typeof(Family))).OrderBy(f => f.Name)
-                .GroupBy(f => ((Family) f).FamilyCategory.Name).Select(f => new {CategoryName = f.Key, Families = f});
+                .GroupBy(f => ((Family)f).FamilyCategory.Name).Select(f => new { CategoryName = f.Key, Families = f });
             //Initialization of the starting line
             var row = 2;
             foreach (var cat in familiesCategories.OrderBy(fc => fc.CategoryName))
@@ -303,7 +303,7 @@ namespace ExcelExporterImporter.Common
                 worksheet.Cells[row, 1].Value = parameter.Id;
                 worksheet.Cells[row, 2].Value = parameter.Definition.Name;
 #if REVIT2021
-                    var format = RevitUtilities.GetUnitTypeSymbol(doc, parameter.Definition.GetDataType());
+                var format = RevitUtilities.GetUnitTypeSymbol(doc, parameter.Definition.GetDataType());
 #else
                 var format = RevitUtilities.GetUnitTypeSymbol(doc, parameter.Definition.UnitType);
 #endif
@@ -395,49 +395,48 @@ namespace ExcelExporterImporter.Common
             var it = map.ForwardIterator();
             it.Reset();
 #if REVIT2017 || REVIT2018 || REVIT2019 || REVIT2020 || REVIT2021
-                while (it.MoveNext())
+            while (it.MoveNext())
+            {
+                if (this.cancellationToken.IsCancellationRequested)
                 {
-                    if (this.cancellationToken.IsCancellationRequested)
+                    return;
+                }
+                var eleBinding = it.Current as ElementBinding;
+                var def = (InternalDefinition)it.Key;
+                if (def != null)
+                {
+                    var sharedParameterElement = doc.GetElement(def.Id) as SharedParameterElement;
+                    var shared = sharedParameterElement != null;
+                    var sOwnerGroupName = string.Empty;
+                    if (shared)
                     {
-                        return ;
-                    }
-                    var eleBinding = it.Current as ElementBinding;
-                    var insBinding = eleBinding as InstanceBinding;
-                    var def = (InternalDefinition)it.Key;
-                    if (def != null)
-                    {
-                        var sharedParameterElement = doc.GetElement(def.Id) as SharedParameterElement;
-                        var shared = sharedParameterElement != null;
-                        string sOwnerGroupName = string.Empty;
-                        if(shared)
+                        var OwnerParameterElement = doc.GetElement(sharedParameterElement.OwnerViewId);
+                        if (OwnerParameterElement != null)
                         {
-                            Element OwnerParameterElement = doc.GetElement(sharedParameterElement.OwnerViewId);
-                            if(OwnerParameterElement != null)
+                            var eGroup = doc.GetElement(OwnerParameterElement.GroupId);
+                            if (eGroup != null)
                             {
-                                Element eGroup = doc.GetElement(OwnerParameterElement.GroupId);
-                                if(eGroup != null)
+                                if (eGroup.Name != null)
                                 {
-                                    if(eGroup.Name != null)
-                                    {
-                                        sOwnerGroupName = eGroup.Name;
-                                    }
+                                    sOwnerGroupName = eGroup.Name;
                                 }
                             }
                         }
-                        worksheet.Cells[row, 1].Value =
- shared ? sharedParameterElement.GuidValue.ToString() : string.Empty;
-                        worksheet.Cells[row, 2].Value = def.Name;
-                        worksheet.Cells[row, 3].Value = B1ParameterCompat.GetGroupLabel(def);
-                        worksheet.Cells[row, 4].Value = B1ParameterCompat.GetTypeLabel(def);
-                        worksheet.Cells[row, 5].Value = insBinding != null;
-                        worksheet.Cells[row, 6].Value = def.Visible;
-                        worksheet.Cells[row, 7].Value = shared;
-                        worksheet.Cells[row, 8].Value = sOwnerGroupName;
-                        worksheet.Cells[row, 9].Value =
- string.Join(",", eleBinding.Categories.Cast<Category>().Select(c => c.Name).ToArray());
-                        row++;
                     }
+                    worksheet.Cells[row, 1].Value =
+shared ? sharedParameterElement.GuidValue.ToString() : string.Empty;
+                    worksheet.Cells[row, 2].Value = def.Name;
+                    worksheet.Cells[row, 3].Value = B1ParameterCompat.GetGroupLabel(def);
+                    worksheet.Cells[row, 4].Value = B1ParameterCompat.GetTypeLabel(def);
+                    worksheet.Cells[row, 5].Value = eleBinding is InstanceBinding insBinding;
+                    worksheet.Cells[row, 6].Value = def.Visible;
+                    worksheet.Cells[row, 7].Value = shared;
+                    worksheet.Cells[row, 8].Value = sOwnerGroupName;
+                    worksheet.Cells[row, 9].Value =
+string.Join(",", eleBinding.Categories.Cast<Category>().Select(c => c.Name).ToArray());
+                    row++;
                 }
+            }
 #endif
             RevitUtilities.AutoFitAllCol(worksheet);
             RevitUtilities.InsertMsgNotBeImported(worksheet);
@@ -464,16 +463,14 @@ namespace ExcelExporterImporter.Common
                 if (cancellationToken.IsCancellationRequested) return;
                 var eleBinding = it.Current as ElementBinding;
                 var insBinding = eleBinding as InstanceBinding;
-                var def = (InternalDefinition) it.Key;
+                var def = (InternalDefinition)it.Key;
                 if (def != null)
                 {
 #if REVIT2017 || REVIT2018 || REVIT2019 || REVIT2020 || REVIT2021
-                        SharedParameterElement sharedParameterElement =
- doc.GetElement(def.Id) as SharedParameterElement;
-                        if(sharedParameterElement != null)
-                        {
-                            ListSharedParam.Add(def);
-                        }
+                    if (doc.GetElement(def.Id) is SharedParameterElement sharedParameterElement)
+                    {
+                        ListSharedParam.Add(def);
+                    }
 #endif
                 }
             }
@@ -505,16 +502,16 @@ namespace ExcelExporterImporter.Common
                 //Initialization of the departure line
                 var row = 3;
 #if REVIT2017 || REVIT2018 || REVIT2019 || REVIT2020 || REVIT2021
-                    foreach (InternalDefinition iItem in ListSharedParam)
-                    {
-                        SharedParameterElement sItem = doc.GetElement(iItem.Id) as SharedParameterElement;
-                        worksheet.Cells[row, 1].Value = sItem.GuidValue;
-                        worksheet.Cells[row, 2].Value = sItem.Name;
-                        worksheet.Cells[row, 3].Value = B1ParameterCompat.GetGroupLabel(iItem);
-                        worksheet.Cells[row, 4].Value = B1ParameterCompat.GetTypeLabel(iItem);
-                        worksheet.Cells[row, 5].Value = iItem.Visible;
-                        row++;
-                    }
+                foreach (var iItem in ListSharedParam)
+                {
+                    var sItem = doc.GetElement(iItem.Id) as SharedParameterElement;
+                    worksheet.Cells[row, 1].Value = sItem.GuidValue;
+                    worksheet.Cells[row, 2].Value = sItem.Name;
+                    worksheet.Cells[row, 3].Value = B1ParameterCompat.GetGroupLabel(iItem);
+                    worksheet.Cells[row, 4].Value = B1ParameterCompat.GetTypeLabel(iItem);
+                    worksheet.Cells[row, 5].Value = iItem.Visible;
+                    row++;
+                }
 #endif
                 RevitUtilities.AutoFitAllCol(worksheet);
                 RevitUtilities.InsertMsgNotBeImported(worksheet);

@@ -23,39 +23,38 @@
 #endregion // Header
 
 #region Namespaces
-using System;
 using System.Windows.Forms;
 #endregion // Namespaces
 
 namespace AdnRme
 {
-  public partial class ProgressForm : Form
-  {
-    string _format;
-
-    public ProgressForm( string caption, string format, int max )
+    public partial class ProgressForm : Form
     {
-      _format = format;
-      InitializeComponent();
-      Text = caption;
-      label1.Text = (null == format) ? caption : string.Format( format, 0 );
-      progressBar1.Minimum = 0;
-      progressBar1.Maximum = max;
-      progressBar1.Value = 0;
-      Show();
-      Application.DoEvents();
-    }
+        readonly string _format;
 
-    public void Increment()
-    {
-      ++progressBar1.Value;
+        public ProgressForm(string caption, string format, int max)
+        {
+            _format = format;
+            InitializeComponent();
+            Text = caption;
+            label1.Text = (null == format) ? caption : string.Format(format, 0);
+            progressBar1.Minimum = 0;
+            progressBar1.Maximum = max;
+            progressBar1.Value = 0;
+            Show();
+            Application.DoEvents();
+        }
 
-      if( null != _format )
-      {
-        label1.Text = string.Format( _format, progressBar1.Value );
-      }
-      Application.DoEvents();
-    }
+        public void Increment()
+        {
+            ++progressBar1.Value;
+
+            if (null != _format)
+            {
+                label1.Text = string.Format(_format, progressBar1.Value);
+            }
+            Application.DoEvents();
+        }
 
 #if USE_MARTINS_PROGRESS_FORM
     public void SetText(string text)
@@ -90,5 +89,5 @@ namespace AdnRme
     }
 #endif // USE_MARTINS_PROGRESS_FORM
 
-  }
+    }
 }

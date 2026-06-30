@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
@@ -23,69 +23,67 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
                 var selectedCurves = GetSelectedCurves(commandData.Application.ActiveUIDocument.Document);
 
-                var gridCreationOption = new GridCreationOptionData(!selectedCurves.IsEmpty);
-                using (var gridCreationOptForm = new GridCreationOptionForm(gridCreationOption))
+                GridCreationOptionData gridCreationOption = new(!selectedCurves.IsEmpty);
+                using GridCreationOptionForm gridCreationOptForm = new(gridCreationOption);
+                var result = gridCreationOptForm.ShowDialog();
+                if (result == DialogResult.Cancel) return Result.Cancelled;
+
+                var labels = GetAllLabelsOfGrids(document);
+                var unit = GetLengthUnitType(document);
+                switch (gridCreationOption.CreateGridsMode)
                 {
-                    var result = gridCreationOptForm.ShowDialog();
-                    if (result == DialogResult.Cancel) return Result.Cancelled;
-
-                    var labels = GetAllLabelsOfGrids(document);
-                    var unit = GetLengthUnitType(document);
-                    switch (gridCreationOption.CreateGridsMode)
-                    {
-                        case CreateMode.Select:
-                            var data = new CreateWithSelectedCurvesData(commandData.Application, selectedCurves,
-                                labels);
-                            using (var createWithSelected = new CreateWithSelectedCurvesForm(data))
+                    case CreateMode.Select:
+                        CreateWithSelectedCurvesData data = new(commandData.Application, selectedCurves,
+                            labels);
+                        using (CreateWithSelectedCurvesForm createWithSelected = new(data))
+                        {
+                            result = createWithSelected.ShowDialog();
+                            if (result == DialogResult.OK)
                             {
-                                result = createWithSelected.ShowDialog();
-                                if (result == DialogResult.OK)
-                                {
-                                    var transaction = new Transaction(document, "CreateGridsWithSelectedCurves");
-                                    transaction.Start();
-                                    data.CreateGrids();
-                                    transaction.Commit();
-                                }
+                                Transaction transaction = new(document, "CreateGridsWithSelectedCurves");
+                                transaction.Start();
+                                data.CreateGrids();
+                                transaction.Commit();
                             }
+                        }
 
-                            break;
+                        break;
 
-                        case CreateMode.Orthogonal:
-                            var orthogonalData = new CreateOrthogonalGridsData(commandData.Application, unit, labels);
-                            using (var orthogonalGridForm = new CreateOrthogonalGridsForm(orthogonalData))
+                    case CreateMode.Orthogonal:
+                        CreateOrthogonalGridsData orthogonalData = new(commandData.Application, unit, labels);
+                        using (CreateOrthogonalGridsForm orthogonalGridForm = new(orthogonalData))
+                        {
+                            result = orthogonalGridForm.ShowDialog();
+                            if (result == DialogResult.OK)
                             {
-                                result = orthogonalGridForm.ShowDialog();
-                                if (result == DialogResult.OK)
-                                {
-                                    var transaction = new Transaction(document, "CreateOrthogonalGrids");
-                                    transaction.Start();
-                                    orthogonalData.CreateGrids();
-                                    transaction.Commit();
-                                }
+                                Transaction transaction = new(document, "CreateOrthogonalGrids");
+                                transaction.Start();
+                                orthogonalData.CreateGrids();
+                                transaction.Commit();
                             }
+                        }
 
-                            break;
+                        break;
 
-                        case CreateMode.RadialAndArc:
-                            var radArcData = new CreateRadialAndArcGridsData(commandData.Application, unit, labels);
-                            using (var radArcForm = new CreateRadialAndArcGridsForm(radArcData))
+                    case CreateMode.RadialAndArc:
+                        CreateRadialAndArcGridsData radArcData = new(commandData.Application, unit, labels);
+                        using (CreateRadialAndArcGridsForm radArcForm = new(radArcData))
+                        {
+                            result = radArcForm.ShowDialog();
+                            if (result == DialogResult.OK)
                             {
-                                result = radArcForm.ShowDialog();
-                                if (result == DialogResult.OK)
-                                {
-                                    var transaction = new Transaction(document, "CreateRadialAndArcGrids");
-                                    transaction.Start();
-                                    radArcData.CreateGrids();
-                                    transaction.Commit();
-                                }
+                                Transaction transaction = new(document, "CreateRadialAndArcGrids");
+                                transaction.Start();
+                                radArcData.CreateGrids();
+                                transaction.Commit();
                             }
+                        }
 
-                            break;
-                    }
-
-                    return result == DialogResult.OK 
-                        ? Result.Succeeded : Result.Cancelled;
+                        break;
                 }
+
+                return result == DialogResult.OK
+                    ? Result.Succeeded : Result.Cancelled;
             }
             catch (Exception ex)
             {
@@ -96,9 +94,9 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
         private static CurveArray GetSelectedCurves(Document document)
         {
-            var selectedCurves = new CurveArray();
-            var newUIdocument = new UIDocument(document);
-            var elements = new ElementSet();
+            CurveArray selectedCurves = new();
+            UIDocument newUIdocument = new(document);
+            ElementSet elements = new();
             foreach (var elementId in newUIdocument.Selection.GetElementIds())
             {
                 elements.Insert(newUIdocument.Document.GetElement(elementId));
@@ -110,20 +108,20 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                 {
                     case ModelLine _:
                     case ModelArc _:
-                    {
-                        var modelCurve = element as ModelCurve;
-                        var curve = modelCurve.GeometryCurve;
-                        if (curve != null) selectedCurves.Append(curve);
-                        break;
-                    }
+                        {
+                            var modelCurve = element as ModelCurve;
+                            var curve = modelCurve.GeometryCurve;
+                            if (curve != null) selectedCurves.Append(curve);
+                            break;
+                        }
                     case DetailLine _:
                     case DetailArc _:
-                    {
-                        var detailCurve = element as DetailCurve;
-                        var curve = detailCurve.GeometryCurve;
-                        if (curve != null) selectedCurves.Append(curve);
-                        break;
-                    }
+                        {
+                            var detailCurve = element as DetailCurve;
+                            var curve = detailCurve.GeometryCurve;
+                            if (curve != null) selectedCurves.Append(curve);
+                            break;
+                        }
                 }
             }
 
@@ -132,17 +130,17 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
         public static ElementSet GetSelectedModelLinesAndArcs(Document document)
         {
-            var newUIdocument = new UIDocument(document);
-            var elements = new ElementSet();
+            UIDocument newUIdocument = new(document);
+            ElementSet elements = new();
             foreach (var elementId in newUIdocument.Selection.GetElementIds())
             {
                 elements.Insert(newUIdocument.Document.GetElement(elementId));
             }
 
-            var tmpSet = new ElementSet();
+            ElementSet tmpSet = new();
             foreach (Element element in elements)
             {
-                if (element is ModelLine || element is ModelArc || element is DetailLine || element is DetailArc)
+                if (element is ModelLine or ModelArc or DetailLine or DetailArc)
                     tmpSet.Insert(element);
             }
 
@@ -166,7 +164,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
         private static ArrayList GetAllLabelsOfGrids(Document document)
         {
-            var labels = new ArrayList();
+            ArrayList labels = new();
             var itor = new FilteredElementCollector(document).OfClass(typeof(Grid)).GetElementIterator();
             itor.Reset();
             for (; itor.MoveNext();)

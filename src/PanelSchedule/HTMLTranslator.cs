@@ -1,14 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Electrical;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Xml;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Electrical;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
     /// <summary>
@@ -32,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 
             if (!File.Exists(tempFile))
             {
-                var messageDlg = new TaskDialog("Warnning Message")
+                TaskDialog messageDlg = new("Warnning Message")
                 {
                     MainIcon = TaskDialogIcon.TaskDialogIconWarning,
                     MainContent =
@@ -45,8 +43,8 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
             var panelScheduleFile =
                 asemblyName.Replace("PanelSchedule.dll", $"{ScheduleHelper.ReplaceIllegalCharacters(PsView.Name)}.html");
 
-            var doc = new XmlDocument();
-            var tw = new XmlTextWriter(panelScheduleFile, null);
+            XmlDocument doc = new();
+            XmlTextWriter tw = new(panelScheduleFile, null);
             doc.Load(tempFile);
 
             var psTable = doc.DocumentElement.SelectSingleNode("//div/table[1]");

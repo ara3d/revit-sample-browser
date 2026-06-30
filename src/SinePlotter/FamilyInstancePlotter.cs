@@ -12,9 +12,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
 {
@@ -34,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
 
         private void PlaceAtLocation(XYZ location)
         {
-            var t = new Transaction(m_document, "Place family instance");
+            Transaction t = new(m_document, "Place family instance");
             t.Start();
             m_document.Create.NewFamilyInstance(location, m_familySymbol,
                 StructuralType.NonStructural);
@@ -58,7 +58,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
             //Given the number of partitions compute the angle increment. 
             var theta = 2 * Math.PI / partitions;
 
-            var transGroup = new TransactionGroup(m_document, "Place All Instances");
+            TransactionGroup transGroup = new(m_document, "Place All Instances");
             transGroup.Start();
             //Calculates the sine of an angle. This function expects the values of the angle parameter to be
             //provided in radians (values from 0 to 6.28). Values are returned in the range -1 to 1. The theta 
@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
                 var x = i * theta;
                 //function used:  y = a*sin(b*x)
                 var y = Math.Sin(period * x) * amplitude;
-                var temp = new XYZ(x, y, 0);
+                XYZ temp = new(x, y, 0);
 
                 PlaceAtLocation(temp);
             }

@@ -36,8 +36,8 @@ namespace BuildingCoder
             var doc = uidoc.Document;
             Reference r;
 
-            var filter
-                = new ElementInLinkSelectionFilter<Room>(
+            ElementInLinkSelectionFilter<Room> filter
+                = new(
                     doc);
 
             try
@@ -52,14 +52,10 @@ namespace BuildingCoder
                 return Result.Cancelled;
             }
 
-            Element e;
-
-            if (filter.LastCheckedWasFromLink)
-                e = filter.LinkedDocument.GetElement(
-                    r.LinkedElementId);
-            else
-                e = doc.GetElement(r);
-
+            var e = filter.LastCheckedWasFromLink
+                ? filter.LinkedDocument.GetElement(
+                    r.LinkedElementId)
+                : doc.GetElement(r);
             TaskDialog.Show("Picked", e.Name);
 
             return Result.Succeeded;

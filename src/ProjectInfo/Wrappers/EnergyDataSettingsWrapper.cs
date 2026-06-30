@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.ComponentModel;
 using Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.DB.Mechanical;
+using System.ComponentModel;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {
@@ -135,7 +135,7 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
         [DisplayName("Site Location")]
         [TypeConverter(typeof(WrapperConverter))]
         [RevitVersion(ProductType.MEP, ProductType.Architecture)]
-        public SiteLocationWrapper SiteLocation => new SiteLocationWrapper(m_document.SiteLocation);
+        public SiteLocationWrapper SiteLocation => new(m_document.SiteLocation);
 
         [Browsable(false)]
         public object Handle => m_energyDataSettings;

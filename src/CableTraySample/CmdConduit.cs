@@ -3,12 +3,11 @@
 // Adapted from CableTraySample by Gavin_WS / Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/CableTraySample
 
-using System;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
 {
@@ -26,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
 
-                using var transaction = new Transaction(doc, "Conduit elbow fitting");
+                using Transaction transaction = new(doc, "Conduit elbow fitting");
                 transaction.Start();
 
                 var idType = new FilteredElementCollector(doc)
@@ -35,12 +34,12 @@ namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
 
                 var idLevel = Util.FindLevelId(doc, "Level 1");
 
-                var start1 = new XYZ(10, 10, 10);
-                var end1 = new XYZ(20, 10, 10);
+                XYZ start1 = new(10, 10, 10);
+                XYZ end1 = new(20, 10, 10);
                 var c1 = Conduit.Create(doc, idType, start1, end1, idLevel);
 
-                var start2 = new XYZ(30, 20, 10);
-                var end2 = new XYZ(30, 30, 10);
+                XYZ start2 = new(30, 20, 10);
+                XYZ end2 = new(30, 30, 10);
                 var c2 = Conduit.Create(doc, idType, start2, end2, idLevel);
 
                 Connector c1end = null;

@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
@@ -34,24 +34,24 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 
         public static EventsInfoWindows InfoWindows
         {
-            get => _infWindows ?? (_infWindows = new EventsInfoWindows(EventLogManager));
+            get => _infWindows ??= new EventsInfoWindows(EventLogManager);
             set => _infWindows = value;
         }
 
-        public static EventsSettingForm SettingDialog 
-            => _settingDialog ?? (_settingDialog = new EventsSettingForm());
+        public static EventsSettingForm SettingDialog
+            => _settingDialog ??= new EventsSettingForm();
 
-        public static LogManager EventLogManager 
-            => _logManager ?? (_logManager = new LogManager());
+        public static LogManager EventLogManager
+            => _logManager ??= new LogManager();
 
         public static List<string> ApplicationEvents
         {
-            get => _appEventsSelection ?? (_appEventsSelection = new List<string>());
+            get => _appEventsSelection ??= [];
             set => _appEventsSelection = value;
         }
 
-        public static EventManager AppEventMgr 
-            => _appEventMgr ?? (_appEventMgr = new EventManager(_ctrlApp));
+        public static EventManager AppEventMgr
+            => _appEventMgr ??= new EventManager(_ctrlApp);
 
 #if !(Debug || DEBUG)
         public static JournalProcessor JnlProcessor
@@ -73,7 +73,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             _logManager = new LogManager();
             _infWindows = new EventsInfoWindows(_logManager);
             _settingDialog = new EventsSettingForm();
-            _appEventsSelection = new List<string>();
+            _appEventsSelection = [];
             _appEventMgr = new EventManager(_ctrlApp);
 
 #if !(Debug || DEBUG)

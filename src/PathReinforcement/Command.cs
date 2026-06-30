@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
 {
@@ -17,16 +17,16 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         /// <summary>
         ///     static property corresponding to s_rebarBarTypes field.
         /// </summary>
-        public static Hashtable BarTypes { get; } = new Hashtable();
+        public static Hashtable BarTypes { get; } = [];
 
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
+            Transaction transaction = new(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
             {
                 transaction.Start();
-                var elems = new ElementSet();
+                ElementSet elems = new();
                 foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
                 {
                     elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -45,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                     selectElem = e;
                 }
 
-                if (!(selectElem is Autodesk.Revit.DB.Structure.PathReinforcement pathRein))
+                if (selectElem is not Autodesk.Revit.DB.Structure.PathReinforcement pathRein)
                 {
                     message = "please select one PathReinforcement.";
                     return Result.Cancelled;
@@ -55,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                 if (BarTypes.Count > 0) BarTypes.Clear();
 
                 //get all bar type.
-                var collector = new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document);
+                FilteredElementCollector collector = new(commandData.Application.ActiveUIDocument.Document);
                 var itor = collector.OfClass(typeof(RebarBarType)).GetElementIterator();
                 itor.Reset();
                 while (itor.MoveNext())
@@ -69,10 +69,8 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                 }
 
                 //Create a form to view the path reinforcement.
-                using (var form = new PathReinforcementForm(pathRein, commandData))
-                {
-                    form.ShowDialog();
-                }
+                using PathReinforcementForm form = new(pathRein, commandData);
+                form.ShowDialog();
             }
             catch (Exception e)
             {

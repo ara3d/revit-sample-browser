@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
 {
     /// <summary>
@@ -84,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
     {
         public bool AllowElement(Element element)
         {
-            if (!(element is CurveElement curveElement))
+            if (element is not CurveElement curveElement)
                 return false;
 
             var curve = curveElement.GeometryCurve;

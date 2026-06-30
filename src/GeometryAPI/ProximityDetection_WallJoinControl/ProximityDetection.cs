@@ -1,18 +1,18 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinControl.CS
 {
     public class ProximityDetection
     {
         private static ProximityDetection _instance;
-        private Application m_app;
+        private readonly Application m_app;
         private readonly Document m_doc;
 
         private ProximityDetection(
@@ -27,30 +27,30 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
             Application app,
             Document doc)
         {
-            return _instance ?? (_instance = new ProximityDetection(app, doc));
+            return _instance ??= new ProximityDetection(app, doc);
         }
 
         public XElement FindColumnsInWall(IEnumerable<Wall> walls)
         {
-            var wallsNode = new XElement("Walls", new XAttribute("Name", "Walls"));
+            XElement wallsNode = new("Walls", new XAttribute("Name", "Walls"));
 
             try
             {
                 foreach (var wall in walls)
                 {
-                    var wallNode = new XElement("Wall", new XAttribute("Name", wall.Name));
+                    XElement wallNode = new("Wall", new XAttribute("Name", wall.Name));
 
-                    var collector = new FilteredElementCollector(m_doc);
-                    var columnCategories = new List<BuiltInCategory>
-                    {
+                    FilteredElementCollector collector = new(m_doc);
+                    List<BuiltInCategory> columnCategories =
+                    [
                         BuiltInCategory.OST_Columns,
                         BuiltInCategory.OST_StructuralColumns
-                    };
+                    ];
                     collector.WherePasses(new ElementMulticategoryFilter(columnCategories));
 
                     collector.WherePasses(new ElementIntersectsElementFilter(wall));
 
-                    var columnsNode = new XElement("columns",
+                    XElement columnsNode = new("columns",
                         new XAttribute("Count", collector.Count().ToString()));
 
                     foreach (var column in collector)
@@ -72,13 +72,13 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
         public XElement FindBlockingElements(ICollection<Element> egresses)
         {
-            var egressesNode = new XElement("Egresses", new XAttribute("Name", "Egresses"));
+            XElement egressesNode = new("Egresses", new XAttribute("Name", "Egresses"));
 
             try
             {
                 foreach (var egressElement in egresses)
                 {
-                    var egressNode = new XElement("Egress",
+                    XElement egressNode = new("Egress",
                         new XAttribute("Name", egressElement.Name));
 
                     var count = 1;
@@ -94,18 +94,18 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
                         if (egressGObj is Solid egressVolume)
                         {
-                            var solidNode = new XElement($"ElementSolid{count}");
-                            var blockingcollector = new FilteredElementCollector(m_doc);
+                            XElement solidNode = new($"ElementSolid{count}");
+                            FilteredElementCollector blockingcollector = new(m_doc);
                             blockingcollector.WhereElementIsNotElementType();
 
                             blockingcollector.WherePasses(new ElementIntersectsSolidFilter(egressVolume));
 
                             IEnumerable<Element> blockingElement = blockingcollector;
 
-                            var exclusions = new List<ElementId> { egressElement.Id };
+                            List<ElementId> exclusions = [egressElement.Id];
                             blockingcollector.Excluding(exclusions);
 
-                            var blockingegressNode = new XElement("blocking_egress_elements",
+                            XElement blockingegressNode = new("blocking_egress_elements",
                                 new XAttribute("Count", blockingElement.Count().ToString()));
 
                             foreach (var blockingelement in blockingElement)
@@ -134,27 +134,27 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
         public XElement FindNearbyWalls(IEnumerable<Wall> walls)
         {
-            var wallsNode = new XElement("Walls", new XAttribute("Name", "Walls"));
+            XElement wallsNode = new("Walls", new XAttribute("Name", "Walls"));
 
             try
             {
                 foreach (var wall in walls)
                 {
-                    var wallNode = new XElement("Wall", new XAttribute("Name", wall.Name));
+                    XElement wallNode = new("Wall", new XAttribute("Name", wall.Name));
 
-                    var endNode = new XElement("Start", new XAttribute("Name", "Start"));
+                    XElement endNode = new("Start", new XAttribute("Name", "Start"));
 
                     var wallEndPoint = (wall.Location as LocationCurve).Curve.GetEndPoint(0);
                     var wallHeight = wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble();
 
                     var collector = NearbyWallsFilter(wallEndPoint, wallHeight, 10.0); // 10 ft
 
-                    var exclusions = new List<ElementId> { wall.Id };
+                    List<ElementId> exclusions = [wall.Id];
                     collector.Excluding(exclusions);
 
                     var nearbyWalls = collector.OfType<Wall>();
 
-                    var nearbyWallsNode = new XElement("near_by_walls",
+                    XElement nearbyWallsNode = new("near_by_walls",
                         new XAttribute("Count", nearbyWalls.Count().ToString()));
 
                     foreach (var nearbywall in nearbyWalls)
@@ -172,7 +172,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
                     collector = NearbyWallsFilter(wallEndPoint, wallHeight, 10.0);
 
-                    exclusions = new List<ElementId> { wall.Id };
+                    exclusions = [wall.Id];
                     collector.Excluding(exclusions);
 
                     nearbyWalls = collector.OfType<Wall>();
@@ -202,8 +202,8 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
         private FilteredElementCollector NearbyWallsFilter(XYZ point, double height, double radius)
         {
-            var curveloops = new List<CurveLoop>();
-            var circle = new CurveLoop();
+            List<CurveLoop> curveloops = [];
+            CurveLoop circle = new();
             circle.Append(Arc.Create(point, radius
                 , 0, Math.PI,
                 XYZ.BasisX, XYZ.BasisY));
@@ -215,7 +215,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
             var wallEndCylinder =
                 GeometryCreationUtilities.CreateExtrusionGeometry(curveloops, XYZ.BasisZ, height);
 
-            var collector = new FilteredElementCollector(m_doc);
+            FilteredElementCollector collector = new(m_doc);
             collector.OfCategory(BuiltInCategory.OST_Walls);
 
             collector.WherePasses(new ElementIntersectsSolidFilter(wallEndCylinder));

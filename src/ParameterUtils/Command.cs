@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.Common.Units;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Units;
+using System.Collections.Generic;
+using System.Windows.Forms;
 namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
 {
     [Transaction(TransactionMode.ReadOnly)]
@@ -21,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
 
             var app = commandData.Application;
 
-            var seletion = new ElementSet();
+            ElementSet seletion = new();
             foreach (var elementId in app.ActiveUIDocument.Selection.GetElementIds())
             {
                 seletion.Insert(app.ActiveUIDocument.Document.GetElement(elementId));
@@ -33,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
                 it.MoveNext();
                 var element = it.Current as Element;
 
-                var parameterItems = new List<string>();
+                List<string> parameterItems = new();
                 var parameters = element.Parameters;
                 foreach (Parameter param in parameters)
                 {
@@ -41,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
                     parameterItems.Add(ValueFormatting.FormatParameterLine(param, app.ActiveUIDocument.Document));
                 }
 
-                var propertiesForm = new PropertiesForm(parameterItems.ToArray())
+                PropertiesForm propertiesForm = new(parameterItems.ToArray())
                 {
                     StartPosition = FormStartPosition.CenterParent
                 };

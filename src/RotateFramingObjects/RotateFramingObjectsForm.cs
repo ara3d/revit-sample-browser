@@ -4,7 +4,6 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 using TextBox = System.Windows.Forms.TextBox;
 
 namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS

@@ -2,13 +2,13 @@
 // Adapted from CropViewToRoom by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CropViewToRoom
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
 {
@@ -25,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
             ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-            var boundaryOptions = new SpatialElementBoundaryOptions();
+            SpatialElementBoundaryOptions boundaryOptions = new();
             var dateIso = DateTime.Now.ToString("yyyy-MM-dd");
 
             var created = 0;
@@ -37,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
                 .Cast<Level>()
                 .ToList();
 
-            using (var tx = new Transaction(doc))
+            using (Transaction tx = new(doc))
             {
                 tx.Start("Create cropped views for each room");
 

@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 {
@@ -31,21 +31,21 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                     return Result.Failed;
                 }
 
-                var optionData = new CircuitOperationData(commandData);
-                using (var mainForm = new CircuitOperationForm(optionData))
+                CircuitOperationData optionData = new(commandData);
+                using (CircuitOperationForm mainForm = new(optionData))
                 {
                     if (mainForm.ShowDialog() == DialogResult.Cancel) return Result.Cancelled;
                 }
 
                 if (optionData.Operation != Operation.CreateCircuit &&
                     optionData.ElectricalSystemCount > 1)
-                    using (var selectForm = new SelectCircuitForm(optionData))
+                    using (SelectCircuitForm selectForm = new(optionData))
                     {
                         if (selectForm.ShowDialog() == DialogResult.Cancel) return Result.Cancelled;
                     }
 
                 if (optionData.Operation == Operation.EditCircuit)
-                    using (var editForm = new EditCircuitForm(optionData))
+                    using (EditCircuitForm editForm = new(optionData))
                     {
                         if (editForm.ShowDialog() == DialogResult.Cancel) return Result.Cancelled;
                     }

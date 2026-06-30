@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.SpanDirection.CS
 {
@@ -30,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.SpanDirection.CS
                     return Result.Cancelled;
                 }
 
-                var elementSet = new ElementSet();
+                ElementSet elementSet = new();
                 foreach (var elementId in application.ActiveUIDocument.Selection.GetElementIds())
                 {
                     elementSet.Insert(application.ActiveUIDocument.Document.GetElement(elementId));

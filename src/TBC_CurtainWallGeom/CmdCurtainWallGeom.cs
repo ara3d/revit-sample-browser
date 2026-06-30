@@ -13,7 +13,6 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -61,7 +60,7 @@ namespace BuildingCoder
             //curve = curve.get_Transformed( tv ); // 2013
             curve = curve.CreateTransformed(tv); // 2014
 
-            var creator = new Creator(doc);
+            Creator creator = new(doc);
             creator.CreateModelCurve(curve);
 
             var opt = app.Create.NewGeometryOptions();
@@ -69,7 +68,7 @@ namespace BuildingCoder
 
             var e = wall.get_Geometry(opt);
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create Model Curves");
 
             foreach (var obj in e)

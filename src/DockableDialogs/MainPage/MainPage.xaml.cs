@@ -1,5 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Microsoft.VisualBasic;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -8,15 +15,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Microsoft.VisualBasic;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
 {
     public partial class MainPage : Page, IDockablePaneProvider
@@ -24,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
         private UIApplication m_application;
         private int m_bottom = 1;
         private readonly ExternalEvent m_exEvent;
-        private readonly ApiExternalEventHandler m_handler = new ApiExternalEventHandler();
+        private readonly ApiExternalEventHandler m_handler = new();
         private int m_left = 1;
         private DockPosition m_position = DockPosition.Bottom;
         private int m_right = 1;
@@ -55,10 +53,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
             {
                 DockPosition = m_position
             };
-            DockablePaneId targetPane;
-            if (m_targetGuid == Guid.Empty)
-                targetPane = null;
-            else targetPane = new DockablePaneId(m_targetGuid);
+            var targetPane = m_targetGuid == Guid.Empty ? null : new DockablePaneId(m_targetGuid);
             switch (m_position)
             {
                 case DockPosition.Tabbed:
@@ -93,18 +88,18 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
             switch (data.CommandType)
             {
                 case ModelessCommandType.PrintMainPageStatistics:
-                {
-                    DialogHelper.Message("***Main Pane***");
-                    DialogHelper.Message(data.WindowSummaryData);
-                    break;
-                }
+                    {
+                        DialogHelper.Message("***Main Pane***");
+                        DialogHelper.Message(data.WindowSummaryData);
+                        break;
+                    }
 
                 case ModelessCommandType.PrintSelectedPageStatistics:
-                {
-                    DialogHelper.Message("***Selected Pane***");
-                    DialogHelper.Message(data.WindowSummaryData);
-                    break;
-                }
+                    {
+                        DialogHelper.Message("***Selected Pane***");
+                        DialogHelper.Message(data.WindowSummaryData);
+                        break;
+                    }
             }
         }
 
@@ -113,7 +108,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
                 var child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is TChildItem item)
+                if (child is not null and TChildItem item)
                 {
                     return item;
                 }

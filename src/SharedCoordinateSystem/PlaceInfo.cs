@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 {
@@ -85,9 +84,9 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 
         public bool Initialize(CitySet cities)
         {
-            m_citiesInfo = new List<CityInfo>();
-            CitiesName = new List<string>();
-            TimeZones = new List<string>();
+            m_citiesInfo = [];
+            CitiesName = [];
+            TimeZones = [];
 
             return InitCities(cities) && InitTimeZone();
         }
@@ -115,8 +114,8 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             timeZone = InvalidTimeZone;
 
             foreach (var temp in m_citiesInfo)
-                //compare Latitude and longitude,and if difference < Diff 
-                // the two CityInfo are equal
+            //compare Latitude and longitude,and if difference < Diff 
+            // the two CityInfo are equal
             {
                 if (Math.Abs(temp.Latitude - cityInfo.Latitude) < Diff &&
                     Math.Abs(temp.Longitude - cityInfo.Longitude) < Diff)
@@ -175,21 +174,10 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             else
             {
                 //if timeZoneNumber > 0
-                if (timeZoneNumber > 0)
-                {
-                    if (timeZoneNumber > 9)
-                        temp = "(GMT+";
-                    else
-                        temp = "(GMT+0";
-                }
-                //if timeZoneNumber < 0
-                else
-                {
-                    if (timeZoneNumber < -9)
-                        temp = "(GMT-";
-                    else
-                        temp = "(GMT-0";
-                }
+                temp = timeZoneNumber > 0
+                    ? timeZoneNumber > 9 ? "(GMT+" : "(GMT+0"
+                    //if timeZoneNumber < 0
+                    : timeZoneNumber < -9 ? "(GMT-" : "(GMT-0";
 
                 //if timeZoneNumber is not int, append ":30" to string
                 var intNumber = (int)timeZoneNumber;
@@ -236,10 +224,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                 double.TryParse(decimalString, out decimalNumber))
             {
                 //if decimal part is not zero, add 0.5 after int part
-                if (0 != decimalNumber)
-                    result = intNumber + 0.5;
-                else
-                    result = intNumber;
+                result = 0 != decimalNumber ? intNumber + 0.5 : intNumber;
             }
 
             //if timezone is negative, add minus
@@ -255,8 +240,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             iter.Reset();
             for (; iter.MoveNext();)
             {
-                var city = iter.Current as City;
-                if (null == city) continue;
+                if (iter.Current is not City city) continue;
                 CitiesName.Add(city.Name);
                 m_citiesInfo.Add(new CityInfo(city.Latitude, city.Longitude, city.TimeZone, city.Name));
             }

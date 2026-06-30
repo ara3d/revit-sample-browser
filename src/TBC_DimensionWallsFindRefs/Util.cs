@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
-using Autodesk.Revit.UI;
+using System;
 
 namespace BuildingCoder
 {
@@ -14,14 +10,15 @@ namespace BuildingCoder
             View3D view,
             XYZ p)
         {
-            var filter = new ElementClassFilter(
+            ElementClassFilter filter = new(
                 typeof(Ceiling));
 
-            var refIntersector
-                = new ReferenceIntersector(filter,
-                    FindReferenceTarget.Face, view);
-
-            refIntersector.FindReferencesInRevitLinks = true;
+            ReferenceIntersector refIntersector
+                = new(filter,
+                    FindReferenceTarget.Face, view)
+                {
+                    FindReferencesInRevitLinks = true
+                };
 
             var rwc = refIntersector.FindNearest(
                 p, XYZ.BasisZ);
@@ -37,8 +34,8 @@ namespace BuildingCoder
         internal static void TestGetCeilingReferenceAbove(Document doc)
         {
             var view = doc.GetElement(new ElementId((Int64)147335)) as View3D;
-            var space = doc.GetElement(new ElementId((Int64) 151759)) as Space;
-            var center = ((LocationPoint) space.Location).Point;
+            var space = doc.GetElement(new ElementId((Int64)151759)) as Space;
+            var center = ((LocationPoint)space.Location).Point;
 
             var r = GetCeilingReferenceAbove(view, center);
 

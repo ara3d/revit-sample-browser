@@ -1,8 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties;
+using System;
+using System.Resources;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 {

@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using System.Threading;
-using Ara3D.Logging;
+﻿using Ara3D.Logging;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -13,7 +13,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         public const int WORK_ITEM_MSEC = 100;
         public const int WORK_TOTAL_MSEC = 1000;
         public override string Name => "Idling Demo";
-        public Stopwatch Stopwatch = new Stopwatch();
+        public Stopwatch Stopwatch = new();
 
         public void Log(string msg)
         {
@@ -31,9 +31,8 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         private void Application_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
-        {   
-            var uiApp = sender as UIApplication;
-            if (uiApp == null) return;
+        {
+            if (sender is not UIApplication uiApp) return;
 
             // Simulate work 
             Thread.Sleep(WORK_ITEM_MSEC);

@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
 {
@@ -21,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
         public Command()
         {
             //Construct the data members for the property
-            Functions = new ArrayList();
+            Functions = [];
         }
 
         public ArrayList Functions { get; }
@@ -34,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
             // Get the selected floor
             var project = revit.ActiveUIDocument;
             var choices = project.Selection;
-            var collection = new ElementSet();
+            ElementSet collection = new();
             foreach (var elementId in choices.GetElementIds())
             {
                 collection.Insert(project.Document.GetElement(elementId));
@@ -65,10 +66,8 @@ namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
                     Functions.Add(e.Function.ToString());
 
             // Display them in a form
-            using (var displayForm = new StructuralLayerFunctionForm(this))
-            {
-                displayForm.ShowDialog();
-            }
+            using StructuralLayerFunctionForm displayForm = new(this);
+            displayForm.ShowDialog();
 
             return Result.Succeeded;
         }

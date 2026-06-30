@@ -12,7 +12,7 @@ namespace BuildingCoder
                     .OfCategory(BuiltInCategory.OST_StructuralFraming)
                     .WhereElementIsNotElementType();
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Renumber marks");
 
             var mark_number = 3;
@@ -22,7 +22,7 @@ namespace BuildingCoder
                 var p = beam.get_Parameter(
                     BuiltInParameter.ALL_MODEL_MARK);
 
-                p.Set((mark_number++).ToString());
+                p.Set(mark_number++.ToString());
             }
 
             t.Commit();

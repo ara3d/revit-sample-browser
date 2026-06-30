@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 {
@@ -18,14 +18,14 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         {
             try
             {
-                var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+                Transaction trans = new(commandData.Application.ActiveUIDocument.Document,
                     "Ara3D.RevitSampleBrowser.SharedCoordinateSystem");
                 trans.Start();
-                var data = new CoordinateSystemData(commandData);
+                CoordinateSystemData data = new(commandData);
                 data.GatData();
 
-                using (var displayForm =
-                       new CoordinateSystemDataForm(data, commandData.Application.Application.Cities,
+                using (CoordinateSystemDataForm displayForm =
+                       new(data, commandData.Application.Application.Cities,
                            commandData.Application.ActiveUIDocument.Document.SiteLocation))
                 {
                     if (DialogResult.OK != displayForm.ShowDialog())

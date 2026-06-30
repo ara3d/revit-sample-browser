@@ -7,12 +7,6 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 {
     internal static class DebugHandler
     {
-        static bool _enableSolidUtilityVolumes;
-
-        public static bool EnableSolidUtilityVolumes
-        {
-            get => _enableSolidUtilityVolumes;
-            set => _enableSolidUtilityVolumes = value;
-        }
+        public static bool EnableSolidUtilityVolumes { get; set; }
     }
 }

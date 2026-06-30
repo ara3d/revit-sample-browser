@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
 {
@@ -17,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private static AddInId _appId = new AddInId(new Guid("7E5CAC0D-F3D8-4040-89D6-0828D681561B"));
+        private static readonly AddInId _appId = new(new Guid("7E5CAC0D-F3D8-4040-89D6-0828D681561B"));
 
         private Document m_doc;
 
@@ -73,7 +73,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
         /// <typeparam name="T"></typeparam>
         private void ExecuteCalculationsWith<T>() where T : MaterialQuantityCalculator, new()
         {
-            var calculator = new T();
+            T calculator = new();
             calculator.SetDocument(m_doc);
             calculator.CalculateMaterialQuantities();
             calculator.ReportResults(m_writer);
@@ -88,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
         protected override void CollectElements()
         {
             // filter for non-symbols that match the desired category so that inplace elements will also be found
-            var collector = new FilteredElementCollector(Doc);
+            FilteredElementCollector collector = new(Doc);
             ElementsToProcess = collector.OfCategory(BuiltInCategory.OST_Walls).WhereElementIsNotElementType()
                 .ToElements();
         }
@@ -106,7 +106,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
     {
         protected override void CollectElements()
         {
-            var collector = new FilteredElementCollector(Doc);
+            FilteredElementCollector collector = new(Doc);
             ElementsToProcess = collector.OfCategory(BuiltInCategory.OST_Floors).WhereElementIsNotElementType()
                 .ToElements();
         }
@@ -124,7 +124,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
     {
         protected override void CollectElements()
         {
-            var collector = new FilteredElementCollector(Doc);
+            FilteredElementCollector collector = new(Doc);
             ElementsToProcess = collector.OfCategory(BuiltInCategory.OST_Roofs).WhereElementIsNotElementType()
                 .ToElements();
         }
@@ -156,18 +156,18 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
         ///     A storage of material quantities per individual element.
         /// </summary>
         private readonly Dictionary<ElementId, Dictionary<ElementId, MaterialQuantities>> m_quantitiesPerElement =
-            new Dictionary<ElementId, Dictionary<ElementId, MaterialQuantities>>();
+            [];
 
         /// <summary>
         ///     A storage of material quantities for the entire project.
         /// </summary>
         private readonly Dictionary<ElementId, MaterialQuantities> m_totalQuantities =
-            new Dictionary<ElementId, MaterialQuantities>();
+            [];
 
         /// <summary>
         ///     A collection of warnings generated due to failure to delete elements in advance of gross quantity calculations.
         /// </summary>
-        private readonly List<string> m_warningsForGrossQuantityCalculations = new List<string>();
+        private readonly List<string> m_warningsForGrossQuantityCalculations = [];
 
         /// <summary>
         ///     Override this to populate the list of elements for material quantity extraction.
@@ -212,7 +212,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
         private void CalculateGrossMaterialQuantities()
         {
             m_calculatingGrossQuantities = true;
-            var t = new Transaction(Doc);
+            Transaction t = new(Doc);
             t.SetName("Delete Cutting Elements");
             t.Start();
             DeleteAllCuttingElements();
@@ -231,23 +231,23 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
         private void DeleteAllCuttingElements()
         {
             new List<ElementFilter>();
-            var collector = new FilteredElementCollector(Doc);
+            FilteredElementCollector collector = new(Doc);
 
             // (Type == FamilyInstance && (Category == Door || Category == Window) || Type == Opening
-            var filterFamilyInstance = new ElementClassFilter(typeof(FamilyInstance));
-            var filterWindowCategory = new ElementCategoryFilter(BuiltInCategory.OST_Windows);
-            var filterDoorCategory = new ElementCategoryFilter(BuiltInCategory.OST_Doors);
-            var filterDoorOrWindowCategory = new LogicalOrFilter(filterWindowCategory, filterDoorCategory);
-            var filterDoorWindowInstance = new LogicalAndFilter(filterDoorOrWindowCategory, filterFamilyInstance);
+            ElementClassFilter filterFamilyInstance = new(typeof(FamilyInstance));
+            ElementCategoryFilter filterWindowCategory = new(BuiltInCategory.OST_Windows);
+            ElementCategoryFilter filterDoorCategory = new(BuiltInCategory.OST_Doors);
+            LogicalOrFilter filterDoorOrWindowCategory = new(filterWindowCategory, filterDoorCategory);
+            LogicalAndFilter filterDoorWindowInstance = new(filterDoorOrWindowCategory, filterFamilyInstance);
 
-            var filterOpening = new ElementClassFilter(typeof(Opening));
+            ElementClassFilter filterOpening = new(typeof(Opening));
 
-            var filterCuttingElements = new LogicalOrFilter(filterOpening, filterDoorWindowInstance);
+            LogicalOrFilter filterCuttingElements = new(filterOpening, filterDoorWindowInstance);
             ICollection<Element> cuttingElementsList = collector.WherePasses(filterCuttingElements).ToElements();
 
             foreach (var e in cuttingElementsList)
-                // Doors in curtain grid systems cannot be deleted.  This doesn't actually affect the calculations because
-                // material quantities are not extracted for curtain systems.
+            // Doors in curtain grid systems cannot be deleted.  This doesn't actually affect the calculations because
+            // material quantities are not extracted for curtain systems.
             {
                 if (e.Category != null)
                 {
@@ -341,7 +341,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
                     }
                     else
                     {
-                        quantityPerElement = new Dictionary<ElementId, MaterialQuantities>();
+                        quantityPerElement = [];
                         StoreMaterialQuantities(materialId, volume, area, quantityPerElement);
                         m_quantitiesPerElement.Add(elementId, quantityPerElement);
                     }

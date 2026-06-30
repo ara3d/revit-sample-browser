@@ -1,15 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedCalculation.CS
 {
@@ -55,19 +55,19 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
             // Setup container object for executing the calculation
             var container = CreateContainer(element);
 
-            var updater = new SpatialFieldUpdater(container, uiApp.ActiveAddInId);
+            SpatialFieldUpdater updater = new(container, uiApp.ActiveAddInId);
             if (!UpdaterRegistry.IsUpdaterRegistered(updater.GetUpdaterId()))
                 UpdaterRegistry.RegisterUpdater(updater, doc);
-            IList<ElementId> idCollection = new List<ElementId>
-            {
+            IList<ElementId> idCollection =
+            [
                 element.Id
-            };
+            ];
             UpdaterRegistry.RemoveAllTriggers(_sUpdaterId);
             UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), doc, idCollection, Element.GetChangeTypeGeometry());
 
             uiApp.Idling += container.UpdateWhileIdling;
 
-            var thread = new Thread(container.Run);
+            Thread thread = new(container.Run);
             thread.Start();
 
             return Result.Succeeded;
@@ -93,9 +93,9 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
 
         private static Face GetBiggestFaceFacingUser(Element element, XYZ viewDirection)
         {
-            var faceAreas = new SortedDictionary<double, List<Face>>();
+            SortedDictionary<double, List<Face>> faceAreas = new();
 
-            var options = new Options
+            Options options = new()
             {
                 ComputeReferences = true
             };
@@ -114,7 +114,8 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
                         }
                         else
                         {
-                            var faces = new List<Face> { face };
+                            List<Face> faces = new()
+                            { face };
                             faceAreas.Add(area, faces);
                         }
                     }
@@ -143,12 +144,7 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
 
             var angle = viewDirection.AngleTo(faceNormal);
 
-            Face biggestFace = null;
-            if (Math.Abs(angle) < Math.PI / 2)
-                biggestFace = face1;
-            else
-                biggestFace = face2;
-
+            var biggestFace = Math.Abs(angle) < Math.PI / 2 ? face1 : face2;
             return biggestFace;
         }
 
@@ -164,7 +160,7 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
 
             public void Execute(UpdaterData data)
             {
-                var uiApp = new UIApplication(data.GetDocument().Application);
+                UIApplication uiApp = new(data.GetDocument().Application);
                 uiApp.Idling -= m_containerOld.UpdateWhileIdling;
                 m_containerOld.Stop();
 
@@ -179,7 +175,7 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
 
                 uiApp.Idling += container.UpdateWhileIdling;
 
-                var threadNew = new Thread(container.Run);
+                Thread threadNew = new(container.Run);
                 threadNew.Start();
             }
 
@@ -214,11 +210,11 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
             private readonly UV m_max;
             private readonly UV m_min;
             private volatile bool m_stop;
-            private IList<UV> m_uvToCalculate = new List<UV>();
+            private IList<UV> m_uvToCalculate = [];
             private int m_uvToCalculateCount;
-            private readonly IList<ResultsData> m_results = new List<ResultsData>();
-            private readonly IList<UV> m_uvPts = new List<UV>();
-            private readonly IList<ValueAtPoint> m_valList = new List<ValueAtPoint>();
+            private readonly IList<ResultsData> m_results = [];
+            private readonly IList<UV> m_uvPts = [];
+            private readonly IList<ValueAtPoint> m_valList = [];
 
             public MultithreadedCalculationContainer(string docName, UV min, UV max)
             {
@@ -247,7 +243,7 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
 
                 // Get SpatialFieldManager
 
-                var resultSchema = new AnalysisResultSchema("Schema Name", "Description");
+                AnalysisResultSchema resultSchema = new("Schema Name", "Description");
                 var sfm = SpatialFieldManager.GetSpatialFieldManager(uiApp.ActiveUIDocument.Document.ActiveView) ??
                           SpatialFieldManager.CreateSpatialFieldManager(uiApp.ActiveUIDocument.Document.ActiveView, 1);
 
@@ -275,18 +271,18 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
                         foreach (var rData in m_results)
                         {
                             m_uvPts.Add(new UV(rData.Uv.U, rData.Uv.V));
-                            IList<double> doubleList = new List<double>
-                            {
+                            IList<double> doubleList =
+                            [
                                 rData.Value
-                            };
+                            ];
                             m_valList.Add(new ValueAtPoint(doubleList));
                         }
 
-                        var pntsByUv = new FieldDomainPointsByUV(m_uvPts);
-                        var fieldValues = new FieldValues(m_valList);
+                        FieldDomainPointsByUV pntsByUv = new(m_uvPts);
+                        FieldValues fieldValues = new(m_valList);
 
                         // Update with calculated values
-                        var t = new Transaction(uiApp.ActiveUIDocument.Document);
+                        Transaction t = new(uiApp.ActiveUIDocument.Document);
                         t.SetName("AVF");
                         t.Start();
                         if (!m_stop)
@@ -330,7 +326,7 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
             // Setup the list of UV points to calculate results for
             private IList<UV> DetermineFacePoints()
             {
-                IList<UV> uvList = new List<UV>();
+                IList<UV> uvList = [];
                 var upnt = m_min.U;
                 var incrementU = (m_max.U - m_min.U) / (NumberOfUPnts - 1);
                 var incrementV = (m_max.V - m_min.V) / (NumberOfVPnts - 1);

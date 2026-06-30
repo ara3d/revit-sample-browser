@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 using Form = System.Windows.Forms.Form;
 
@@ -49,9 +49,9 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             m_lineTool = new LineTool();
             m_pointTool = new LineTool();
             m_editorState = EditorState.AddVertex;
-            m_graphicsPaths = new ArrayList();
-            m_createdVertices = new ArrayList();
-            m_createCreases = new ArrayList();
+            m_graphicsPaths = [];
+            m_createdVertices = [];
+            m_createCreases = [];
             m_selectIndex = -1;
             m_clickedIndex = -1;
             m_toolPen = new Pen(Color.Blue, 2);
@@ -101,11 +101,8 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         private void SlabShapePictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            var pointF = new PointF(e.X, e.Y);
-            if (EditorState.AddCrease == m_editorState && 1 == m_lineTool.Points.Count % 2)
-                m_lineTool.MovePoint = pointF;
-            else
-                m_lineTool.MovePoint = PointF.Empty;
+            PointF pointF = new(e.X, e.Y);
+            m_lineTool.MovePoint = EditorState.AddCrease == m_editorState && 1 == m_lineTool.Points.Count % 2 ? pointF : PointF.Empty;
 
             if (MouseButtons.Right == e.Button)
             {
@@ -149,45 +146,45 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
                 case EditorState.AddCrease when !m_slabProfile.CanCreateVertex(new PointF(e.X, e.Y)):
                     return;
                 case EditorState.AddCrease:
-                {
-                    m_lineTool.Points.Add(new PointF(e.X, e.Y));
-                    var lineSize = m_lineTool.Points.Count;
-                    if (0 == m_lineTool.Points.Count % 2)
-                        m_createCreases.Add(
-                            m_slabProfile.AddCrease((PointF)m_lineTool.Points[lineSize - 2],
-                                (PointF)m_lineTool.Points[lineSize - 1]));
-                    CreateGraphicsPath();
-                    break;
-                }
+                    {
+                        m_lineTool.Points.Add(new PointF(e.X, e.Y));
+                        var lineSize = m_lineTool.Points.Count;
+                        if (0 == m_lineTool.Points.Count % 2)
+                            m_createCreases.Add(
+                                m_slabProfile.AddCrease((PointF)m_lineTool.Points[lineSize - 2],
+                                    (PointF)m_lineTool.Points[lineSize - 1]));
+                        CreateGraphicsPath();
+                        break;
+                    }
                 case EditorState.AddVertex:
-                {
-                    var vertex = m_slabProfile.AddVertex(new PointF(e.X, e.Y));
-                    if (null == vertex) return;
-                    m_pointTool.Points.Add(new PointF(e.X, e.Y));
-                    //draw point as a short line, so add two points here
-                    m_pointTool.Points.Add(new PointF(e.X + 2, e.Y + 2));
-                    m_createdVertices.Add(vertex);
-                    CreateGraphicsPath();
-                    break;
-                }
+                    {
+                        var vertex = m_slabProfile.AddVertex(new PointF(e.X, e.Y));
+                        if (null == vertex) return;
+                        m_pointTool.Points.Add(new PointF(e.X, e.Y));
+                        //draw point as a short line, so add two points here
+                        m_pointTool.Points.Add(new PointF(e.X + 2, e.Y + 2));
+                        m_createdVertices.Add(vertex);
+                        CreateGraphicsPath();
+                        break;
+                    }
                 case EditorState.Select when m_selectIndex >= 0:
-                {
-                    m_clickedIndex = m_selectIndex;
-                    if (m_selectIndex <= m_createCreases.Count - 1)
                     {
-                        m_selectedCrease = (SlabShapeCrease)m_createCreases[m_selectIndex];
-                        m_selectedVertex = null;
-                    }
-                    else
-                    {
-                        //put all path (crease and vertex) in one arrayList, so reduce creases.count
-                        var index = m_selectIndex - m_createCreases.Count;
-                        m_selectedVertex = (SlabShapeVertex)m_createdVertices[index];
-                        m_selectedCrease = null;
-                    }
+                        m_clickedIndex = m_selectIndex;
+                        if (m_selectIndex <= m_createCreases.Count - 1)
+                        {
+                            m_selectedCrease = (SlabShapeCrease)m_createCreases[m_selectIndex];
+                            m_selectedVertex = null;
+                        }
+                        else
+                        {
+                            //put all path (crease and vertex) in one arrayList, so reduce creases.count
+                            var index = m_selectIndex - m_createCreases.Count;
+                            m_selectedVertex = (SlabShapeVertex)m_createdVertices[index];
+                            m_selectedCrease = null;
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case EditorState.Select:
                     m_selectedVertex = null;
                     m_selectedCrease = null;
@@ -238,7 +235,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
                 return;
             }
 
-            var transaction = new Transaction(
+            Transaction transaction = new(
                 m_commandData.Application.ActiveUIDocument.Document, "Update");
             transaction.Start();
             if (null != m_selectedCrease)
@@ -262,14 +259,14 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             m_graphicsPaths.Clear();
             for (var i = 0; i < m_lineTool.Points.Count - 1; i += 2)
             {
-                var path = new GraphicsPath();
+                GraphicsPath path = new();
                 path.AddLine((PointF)m_lineTool.Points[i], (PointF)m_lineTool.Points[i + 1]);
                 m_graphicsPaths.Add(path);
             }
 
             for (var i = 0; i < m_pointTool.Points.Count - 1; i += 2)
             {
-                var path = new GraphicsPath();
+                GraphicsPath path = new();
                 path.AddLine((PointF)m_pointTool.Points[i], (PointF)m_pointTool.Points[i + 1]);
                 m_graphicsPaths.Add(path);
             }
@@ -292,21 +289,13 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         private void SlabShapePictureBox_MouseHover(object sender, EventArgs e)
         {
-            switch (m_editorState)
+            SlabShapePictureBox.Cursor = m_editorState switch
             {
-                case EditorState.AddVertex:
-                    SlabShapePictureBox.Cursor = Cursors.Cross;
-                    break;
-                case EditorState.AddCrease:
-                    SlabShapePictureBox.Cursor = Cursors.Cross;
-                    break;
-                case EditorState.Select:
-                    SlabShapePictureBox.Cursor = Cursors.Arrow;
-                    break;
-                default:
-                    SlabShapePictureBox.Cursor = Cursors.Default;
-                    break;
-            }
+                EditorState.AddVertex => Cursors.Cross,
+                EditorState.AddCrease => Cursors.Cross,
+                EditorState.Select => Cursors.Arrow,
+                _ => Cursors.Default,
+            };
         }
 
         private enum EditorState

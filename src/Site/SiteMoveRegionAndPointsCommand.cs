@@ -12,13 +12,13 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     /// <summary>
@@ -57,55 +57,53 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var delta = targetPoint - sourceLocation;
 
             // All changes are added to one transaction group - will create one undo item
-            using (var moveGroup = new TransactionGroup(doc, "Move subregion and points"))
+            using TransactionGroup moveGroup = new(doc, "Move subregion and points");
+            moveGroup.Start();
+
+            var existingPointsInCurrentLocation = subregion.GetPoints();
+
+            var existingElevation = SiteTopographyHelper.GetAverageElevation(existingPointsInCurrentLocation);
+
+            // Move subregion first - allows the command delete existing points and adjust elevation to surroundings
+            using (Transaction t2 = new(doc, "Move subregion"))
             {
-                moveGroup.Start();
-
-                var existingPointsInCurrentLocation = subregion.GetPoints();
-
-                var existingElevation = SiteTopographyHelper.GetAverageElevation(existingPointsInCurrentLocation);
-
-                // Move subregion first - allows the command delete existing points and adjust elevation to surroundings
-                using (var t2 = new Transaction(doc, "Move subregion"))
-                {
-                    t2.Start();
-                    ElementTransformUtils.MoveElement(doc, subregion.Id, delta);
-                    t2.Commit();
-                }
-
-                // The boundary points for the subregion cannot be deleted, since they are generated
-                // to represent the subregion boundary rather than representing real points in the host.
-                // Get non-boundary points only to be deleted.
-                var existingPointsInNewLocation = SiteTopographyHelper.GetNonBoundaryPoints(subregion);
-
-                // Average elevation of all points in the subregion.
-                var newElevation = SiteTopographyHelper.GetAverageElevation(subregion.GetPoints());
-
-                // Adjust delta for elevation based on calculated values
-                delta = XyzMath.MoveXyzToElevation(delta, newElevation - existingElevation);
-
-                // Edit scope for points changes
-                using (var editScope = new TopographyEditScope(doc, "Edit TS"))
-                {
-                    editScope.Start(toposurface.Id);
-
-                    using (var t = new Transaction(doc, "Move points"))
-                    {
-                        t.Start();
-                        // Delete existing points from target region
-                        if (existingPointsInNewLocation.Count > 0)
-                            toposurface.DeletePoints(existingPointsInNewLocation);
-
-                        // Move points from source region
-                        toposurface.MovePoints(points, delta);
-                        t.Commit();
-                    }
-
-                    editScope.Commit(new TopographyEditFailuresPreprocessor());
-                }
-
-                moveGroup.Assimilate();
+                t2.Start();
+                ElementTransformUtils.MoveElement(doc, subregion.Id, delta);
+                t2.Commit();
             }
+
+            // The boundary points for the subregion cannot be deleted, since they are generated
+            // to represent the subregion boundary rather than representing real points in the host.
+            // Get non-boundary points only to be deleted.
+            var existingPointsInNewLocation = SiteTopographyHelper.GetNonBoundaryPoints(subregion);
+
+            // Average elevation of all points in the subregion.
+            var newElevation = SiteTopographyHelper.GetAverageElevation(subregion.GetPoints());
+
+            // Adjust delta for elevation based on calculated values
+            delta = XyzMath.MoveXyzToElevation(delta, newElevation - existingElevation);
+
+            // Edit scope for points changes
+            using (TopographyEditScope editScope = new(doc, "Edit TS"))
+            {
+                editScope.Start(toposurface.Id);
+
+                using (Transaction t = new(doc, "Move points"))
+                {
+                    t.Start();
+                    // Delete existing points from target region
+                    if (existingPointsInNewLocation.Count > 0)
+                        toposurface.DeletePoints(existingPointsInNewLocation);
+
+                    // Move points from source region
+                    toposurface.MovePoints(points, delta);
+                    t.Commit();
+                }
+
+                editScope.Commit(new TopographyEditFailuresPreprocessor());
+            }
+
+            moveGroup.Assimilate();
         }
     }
 }

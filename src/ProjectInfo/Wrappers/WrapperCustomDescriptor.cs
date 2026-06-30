@@ -2,46 +2,45 @@
 
 using System;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {
     public class WrapperCustomDescriptor : ICustomTypeDescriptor, IWrapper
     {
-        private readonly object m_handle;
-
         public WrapperCustomDescriptor(object handle)
         {
-            m_handle = handle;
+            Handle = handle;
         }
 
         public AttributeCollection GetAttributes()
         {
-            return TypeDescriptor.GetAttributes(m_handle, false);
+            return TypeDescriptor.GetAttributes(Handle, false);
         }
 
         public string GetClassName()
         {
-            return TypeDescriptor.GetClassName(m_handle, false);
+            return TypeDescriptor.GetClassName(Handle, false);
         }
 
         public string GetComponentName()
         {
-            return TypeDescriptor.GetComponentName(m_handle, false);
+            return TypeDescriptor.GetComponentName(Handle, false);
         }
 
         public TypeConverter GetConverter()
         {
-            return TypeDescriptor.GetConverter(m_handle, false);
+            return TypeDescriptor.GetConverter(Handle, false);
         }
 
         public EventDescriptor GetDefaultEvent()
         {
-            return TypeDescriptor.GetDefaultEvent(m_handle, false);
+            return TypeDescriptor.GetDefaultEvent(Handle, false);
         }
 
         public PropertyDescriptor GetDefaultProperty()
         {
-            return TypeDescriptor.GetDefaultProperty(m_handle, false);
+            return TypeDescriptor.GetDefaultProperty(Handle, false);
         }
 
         /// <summary>
@@ -54,25 +53,25 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
         /// </returns>
         public object GetEditor(Type editorBaseType)
         {
-            return TypeDescriptor.GetEditor(m_handle, editorBaseType, false);
+            return TypeDescriptor.GetEditor(Handle, editorBaseType, false);
         }
 
         public EventDescriptorCollection GetEvents(Attribute[] attributes)
         {
-            return TypeDescriptor.GetEvents(m_handle, attributes, false);
+            return TypeDescriptor.GetEvents(Handle, attributes, false);
         }
 
         public EventDescriptorCollection GetEvents()
         {
-            return TypeDescriptor.GetEvents(m_handle, false);
+            return TypeDescriptor.GetEvents(Handle, false);
         }
 
         public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
             // get handle's properties
-            var collection = TypeDescriptor.GetProperties(m_handle, attributes, false);
+            var collection = TypeDescriptor.GetProperties(Handle, attributes, false);
             // create empty collection
-            var collection2 = new PropertyDescriptorCollection(Array.Empty<PropertyDescriptor>());
+            PropertyDescriptorCollection collection2 = new(Array.Empty<PropertyDescriptor>());
 
             // filter properties by RevitVersionAttribute.
             // if there is RevitVersionAttribute specified and the designated names does not 
@@ -99,15 +98,15 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 
         public PropertyDescriptorCollection GetProperties()
         {
-            return TypeDescriptor.GetProperties(m_handle, false);
+            return TypeDescriptor.GetProperties(Handle, false);
         }
 
         public object GetPropertyOwner(PropertyDescriptor pd)
         {
-            return m_handle;
+            return Handle;
         }
 
-        public object Handle => m_handle;
+        public object Handle { get; }
 
         public string Name
         {

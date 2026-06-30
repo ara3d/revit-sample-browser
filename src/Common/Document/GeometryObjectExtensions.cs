@@ -18,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents
                 Face face => face.Reference,
                 Edge edge => edge.Reference,
                 Curve curve => curve.Reference,
-                Point point => point.Reference,               
+                Point point => point.Reference,
                 _ => null,
             };
 
@@ -28,7 +28,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents
 
 
         public static IEnumerable<Curve> StreamCurves(this GeometryObject geometryObject)
-        {            
+        {
             if (geometryObject is GeometryElement geometryElement)
             {
                 foreach (var geometryObject_ in geometryElement)

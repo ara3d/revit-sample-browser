@@ -1,7 +1,7 @@
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -19,17 +19,17 @@ namespace BuildingCoder
                 switch (f)
                 {
                     case PlanarFace face:
-                    {
-                        if (IsVertical(face))
-                            verticalFaces.Add(face);
-                        break;
-                    }
+                        {
+                            if (IsVertical(face))
+                                verticalFaces.Add(face);
+                            break;
+                        }
                     case CylindricalFace cylindricalFace:
-                    {
-                        if (IsVertical(cylindricalFace))
-                            verticalFaces.Add(cylindricalFace);
-                        break;
-                    }
+                        {
+                            if (IsVertical(cylindricalFace))
+                                verticalFaces.Add(cylindricalFace);
+                            break;
+                        }
                 }
         }
     }

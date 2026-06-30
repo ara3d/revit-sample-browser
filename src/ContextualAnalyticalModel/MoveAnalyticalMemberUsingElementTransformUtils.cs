@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -22,14 +23,12 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 CreateAnalyticalMember.CreateConvergentMember(document);
 
                 // Move the first Analytical Member using ElementTransformUtils
-                using (var transaction = new Transaction(document, "Move member with ElementTransformUtils"))
-                {
-                    transaction.Start();
+                using Transaction transaction = new(document, "Move member with ElementTransformUtils");
+                transaction.Start();
 
-                    ElementTransformUtils.MoveElement(document, analyticalMember.Id, new XYZ(15, 0, 0));
+                ElementTransformUtils.MoveElement(document, analyticalMember.Id, new XYZ(15, 0, 0));
 
-                    transaction.Commit();
-                }
+                transaction.Commit();
 
                 return Result.Succeeded;
             }

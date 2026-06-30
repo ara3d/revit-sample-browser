@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.IO;
-using System.Reflection;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
 {
@@ -13,13 +14,13 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class PointsParabola : IExternalCommand
     {
-        private static AddInId _appId = new AddInId(new Guid("B6FBC0C1-F3AE-4ffa-AB46-B4CF94304827"));
+        private static readonly AddInId _appId = new(new Guid("B6FBC0C1-F3AE-4ffa-AB46-B4CF94304827"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "PointsParabola");
+            Transaction transaction = new(doc, "PointsParabola");
             transaction.Start();
             double yctr = 0;
             var power = 1.2;
@@ -30,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
                 while (zctr < 100)
                 {
                     zctr = Math.Pow(xctr, power);
-                    var xyz = new XYZ(xctr, yctr, zctr);
+                    XYZ xyz = new(xctr, yctr, zctr);
                     doc.FamilyCreate.NewReferencePoint(xyz);
                     if (xctr > 0)
                     {
@@ -56,17 +57,17 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class PointsOnCurve : IExternalCommand
     {
-        private static AddInId _appId = new AddInId(new Guid("22D07F77-A3F7-490c-B0D8-0EC10D8DE7C7"));
+        private static readonly AddInId _appId = new(new Guid("22D07F77-A3F7-490c-B0D8-0EC10D8DE7C7"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "PointsOnCurve");
+            Transaction transaction = new(doc, "PointsOnCurve");
             transaction.Start();
-            var start = new XYZ(0, 0, 0);
-            var end = new XYZ(50, 50, 0);
+            XYZ start = new(0, 0, 0);
+            XYZ end = new(50, 50, 0);
             var line = Line.CreateBound(start, end);
             var geometryPlane = Plane.CreateByNormalAndOrigin(XYZ.BasisZ, start);
             var skplane = SketchPlane.Create(doc, geometryPlane);
@@ -74,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
 
             for (var i = 0.1; i <= 1; i += 0.1)
             {
-                var locationOnCurve = new PointLocationOnCurve(PointOnCurveMeasurementType.NormalizedCurveParameter, i,
+                PointLocationOnCurve locationOnCurve = new(PointOnCurveMeasurementType.NormalizedCurveParameter, i,
                     PointOnCurveMeasureFrom.Beginning);
                 var poe = app.Create.NewPointOnEdge(modelcurve.GeometryCurve.Reference, locationOnCurve);
                 doc.FamilyCreate.NewReferencePoint(poe);
@@ -90,24 +91,24 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class PointsFromTextFile : IExternalCommand
     {
-        private static AddInId _appId = new AddInId(new Guid("C6D0F4DB-81C3-4927-9D68-8936D6EE67DD"));
+        private static readonly AddInId _appId = new(new Guid("C6D0F4DB-81C3-4927-9D68-8936D6EE67DD"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "PointsParabola");
+            Transaction transaction = new(doc, "PointsParabola");
             transaction.Start();
             var filename = "sphere.csv";
             var filepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (File.Exists($"{filepath}\\{filename}"))
             {
-                var readFile = new StreamReader($"{filepath}\\{filename}");
+                StreamReader readFile = new($"{filepath}\\{filename}");
                 string line;
                 while ((line = readFile.ReadLine()) != null)
                 {
                     var data = line.Split(',');
-                    var xyz = new XYZ(Convert.ToDouble(data[0]), Convert.ToDouble(data[1]), Convert.ToDouble(data[2]));
+                    XYZ xyz = new(Convert.ToDouble(data[0]), Convert.ToDouble(data[1]), Convert.ToDouble(data[2]));
                     doc.FamilyCreate.NewReferencePoint(xyz);
                 }
             }
@@ -122,18 +123,18 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class SineCurve : IExternalCommand
     {
-        private static AddInId _appId = new AddInId(new Guid("F18A831C-AE42-43cc-91FD-6B5D461A1AC7"));
+        private static readonly AddInId _appId = new(new Guid("F18A831C-AE42-43cc-91FD-6B5D461A1AC7"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "PointsParabola");
+            Transaction transaction = new(doc, "PointsParabola");
             transaction.Start();
             var pntCtr = 0;
             double xctr = 0;
-            var xyz = new XYZ();
-            var rparray = new ReferencePointArray();
+            XYZ xyz = new();
+            ReferencePointArray rparray = new();
             while (pntCtr < 500)
             {
                 xyz = new XYZ(xctr, 0, Math.Cos(xctr) * 10);
@@ -154,17 +155,17 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class CatenaryCurve : IExternalCommand
     {
-        private static AddInId _appId = new AddInId(new Guid("817C2A99-BF00-4029-86F3-2D10550F1410"));
+        private static readonly AddInId _appId = new(new Guid("817C2A99-BF00-4029-86F3-2D10550F1410"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "CatenaryCurve");
+            Transaction transaction = new(doc, "CatenaryCurve");
             transaction.Start();
             for (double scalingFactor = 1; scalingFactor <= 2; scalingFactor += 0.5)
             {
-                var rpArray = new ReferencePointArray();
+                ReferencePointArray rpArray = new();
                 for (double x = -5; x <= 5; x += 0.5)
                 {
                     var y = scalingFactor * Math.Cosh(x / scalingFactor);
@@ -188,20 +189,20 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class CyclicSurface : IExternalCommand
     {
-        private static AddInId _appId = new AddInId(new Guid("3F926F3E-D93A-41cd-9ABF-A31594A827B3"));
+        private static readonly AddInId _appId = new(new Guid("3F926F3E-D93A-41cd-9ABF-A31594A827B3"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var transaction = new Transaction(doc, "CyclicSurface");
+            Transaction transaction = new(doc, "CyclicSurface");
             transaction.Start();
-            var xyz = new XYZ();
-            var refArAr = new ReferenceArrayArray();
+            XYZ xyz = new();
+            ReferenceArrayArray refArAr = new();
             var x = 0;
             while (x < 800)
             {
-                var rpAr = new ReferencePointArray();
+                ReferencePointArray rpAr = new();
                 var y = 0;
                 while (y < 800)
                 {
@@ -213,7 +214,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
                 }
 
                 var curve = doc.FamilyCreate.NewCurveByPoints(rpAr);
-                var refAr = new ReferenceArray();
+                ReferenceArray refAr = new();
                 refAr.Append(curve.GeometryCurve.Reference);
                 refArAr.Append(refAr);
                 x += 40;

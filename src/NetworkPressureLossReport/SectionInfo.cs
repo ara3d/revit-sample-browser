@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Analysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Analysis;
 
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
@@ -18,22 +18,16 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
         public SectionInfo()
         {
             TotalPressureLoss = 0.0;
-            m_segments = new List<SegmentInfo>();
+            m_segments = [];
         }
 
         public double TotalPressureLoss { get; set; }
 
         public int NumberOfSegments => m_segments.Count;
 
-        public int NumberOfStraights
-        {
-            get { return m_segments.Count(x => x.SegmentType == MEPAnalyticalSegmentType.Segment); }
-        }
+        public int NumberOfStraights => m_segments.Count(x => x.SegmentType == MEPAnalyticalSegmentType.Segment);
 
-        public int NumberOfFittingsOrAccessories
-        {
-            get { return m_segments.Count(x => x.SegmentType == MEPAnalyticalSegmentType.Fitting); }
-        }
+        public int NumberOfFittingsOrAccessories => m_segments.Count(x => x.SegmentType == MEPAnalyticalSegmentType.Fitting);
 
         public double Flow => m_segments.FirstOrDefault().Flow;
 
@@ -49,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 
         public SegmentInfo AddSegment(Document doc, MEPAnalyticalSegment segment, MEPNetworkSegmentData segmentData)
         {
-            var newSegmentInfo = new SegmentInfo(doc, segment, segmentData);
+            SegmentInfo newSegmentInfo = new(doc, segment, segmentData);
             m_segments.Add(newSegmentInfo);
             return newSegmentInfo;
         }
@@ -133,7 +127,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 
                 points.Add(p1);
 
-                var xyzList = new List<XYZ>();
+                List<XYZ> xyzList = [];
                 var vec = (p1 - p0) / coeff; // This is the exact segment length at the current view scale.
 
                 // Convert the vector length to the flow value in scale.

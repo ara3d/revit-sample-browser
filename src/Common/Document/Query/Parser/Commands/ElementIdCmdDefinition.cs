@@ -2,26 +2,26 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class ElementIdCmdDefinition : ICommandDefinition
     {
-        private static readonly AutocompleteItem AutocompleteItem = new AutocompleteItem("i: ", "i:[number] ", "select elements with given id", AutocompleteItemGroups.Commands);
-        private readonly DataBucket<ElementIdCmdArgument> dataBucket = new DataBucket<ElementIdCmdArgument>(0.666);
+        private static readonly AutocompleteItem AutocompleteItem = new("i: ", "i:[number] ", "select elements with given id", AutocompleteItemGroups.Commands);
+        private readonly DataBucket<ElementIdCmdArgument> dataBucket = new(0.666);
 
 
-        public IAutocompleteItem GetCommandAutocompleteItem() => AutocompleteItem;
-      
+        public IAutocompleteItem GetCommandAutocompleteItem()
+        {
+            return AutocompleteItem;
+        }
 
         public IEnumerable<string> GetClassifiers()
         {
@@ -35,20 +35,18 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
         }
         public bool CanRecognizeArgument(string argument)
         {
-            if (long.TryParse(argument, out long longValue))
-            {
-                return true;
-            }
+            return long.TryParse(argument, out var longValue);
+        }
+        public bool CanParticipateInGenericSearch()
+        {
             return false;
         }
-        public bool CanParticipateInGenericSearch() => false;
-
 
         public ICommand Create(string cmdText, string argument)
         {
-            long.TryParse(argument, out long longValue);
+            long.TryParse(argument, out var longValue);
             var id = ElementIdFactory.Create(longValue);
-            
+
             return new ElementIdCmd(cmdText, dataBucket.CreateMatch(new ElementIdCmdArgument(id)));
         }
     }
@@ -57,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
     public class ElementIdCmdArgument : CommandArgument<ElementId>
     {
         public ElementIdCmdArgument(ElementId value) : base(value)
-        {           
+        {
             Name = $"new ElementId({value})";
             Label = value.Value().ToString();
         }

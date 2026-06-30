@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Linq;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System.Collections.Generic;
+using System.Linq;
 namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
     /// <summary>
@@ -28,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 
         public override List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
-            var needPoints = new List<List<XYZ>>();
+            List<List<XYZ>> needPoints = new();
             foreach (var edge in faces[0])
             {
                 var edgexyzs = edge.Tessellate() as List<XYZ>;
@@ -46,17 +45,17 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             var views = from elem in
                     new FilteredElementCollector(CommandData.Application.ActiveUIDocument.Document)
                         .OfClass(typeof(ViewPlan)).ToElements()
-                let view = elem as View
-                where view != null && !view.IsTemplate && "Level 2" == view.Name
-                select view;
+                                      let view = elem as View
+                                      where view != null && !view.IsTemplate && "Level 2" == view.Name
+                                      select view;
             if (views.Count() > 0) viewLevel2 = views.First();
 
-            var xAxis = new Vector4(viewLevel2.RightDirection);
+            Vector4 xAxis = new(viewLevel2.RightDirection);
             //Because Y axis in windows UI is downward, so we should Multiply(-1) here
-            var yAxis = new Vector4(viewLevel2.UpDirection.Multiply(-1));
-            var zAxis = new Vector4(viewLevel2.ViewDirection);
+            Vector4 yAxis = new(viewLevel2.UpDirection.Multiply(-1));
+            Vector4 zAxis = new(viewLevel2.ViewDirection);
 
-            var result = new Matrix4(xAxis, yAxis, zAxis);
+            Matrix4 result = new(xAxis, yAxis, zAxis);
             return result;
         }
 

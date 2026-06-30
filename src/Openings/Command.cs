@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
@@ -17,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
+            Transaction transaction = new(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
             {
                 transaction.Start();
@@ -34,10 +34,8 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
                 }
 
                 //show dialogue
-                using (var openingForm = new OpeningForm(openingInfos))
-                {
-                    openingForm.ShowDialog();
-                }
+                using OpeningForm openingForm = new(openingInfos);
+                openingForm.ShowDialog();
             }
             catch (Exception e)
             {

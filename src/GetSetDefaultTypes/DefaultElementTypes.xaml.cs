@@ -1,22 +1,22 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Controls.ComboBox;
 
 namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 {
     public partial class DefaultElementTypes : Page, IDockablePaneProvider
     {
-        public static readonly DockablePaneId PaneId = new DockablePaneId(new Guid("{B6579F42-2F4A-4552-92EF-24B3A897757D}"));
+        public static readonly DockablePaneId PaneId = new(new Guid("{B6579F42-2F4A-4552-92EF-24B3A897757D}"));
         private Document m_document;
 
         private readonly ExternalEvent m_event;
-        private readonly IList<ElementTypeGroup> m_finishedTypeGroup = new List<ElementTypeGroup>();
+        private readonly IList<ElementTypeGroup> m_finishedTypeGroup = [];
         private readonly DefaultElementTypeCommandHandler m_handler;
 
         public DefaultElementTypes()
@@ -122,23 +122,23 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
                 if (m_finishedTypeGroup.IndexOf(etg) == -1)
                     continue;
 
-                var record = new ElementTypeRecord
+                ElementTypeRecord record = new()
                 {
                     ElementTypeGroupName = Enum.GetName(typeof(ElementTypeGroup), etg)
                 };
 
-                var collector = new FilteredElementCollector(m_document);
+                FilteredElementCollector collector = new(m_document);
                 collector = collector.OfClass(typeof(ElementType));
                 var query = from ElementType et in collector
-                    where m_document.IsDefaultElementTypeIdValid(etg, et.Id)
-                    select et; // Linq query  
+                                                 where m_document.IsDefaultElementTypeIdValid(etg, et.Id)
+                                                 select et; // Linq query  
 
                 var defaultElementTypeId = m_document.GetDefaultElementTypeId(etg);
 
-                var defaultElementTypeCandidates = new List<DefaultElementTypeCandidate>();
+                List<DefaultElementTypeCandidate> defaultElementTypeCandidates = [];
                 foreach (var t in query)
                 {
-                    var item = new DefaultElementTypeCandidate
+                    DefaultElementTypeCandidate item = new()
                     {
                         Name = $"{t.FamilyName} - {t.Name}",
                         Id = t.Id,
@@ -163,10 +163,10 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
         {
             if (e.AddedItems.Count == 1 && e.RemovedItems.Count == 1)
             {
-                if (!(sender is ComboBox cb))
+                if (sender is not ComboBox cb)
                     return;
 
-                if (!(e.AddedItems[0] is DefaultElementTypeCandidate item))
+                if (e.AddedItems[0] is not DefaultElementTypeCandidate item)
                     return;
 
                 m_handler.SetData(item.ElementTypeGroup, item.Id);
@@ -216,13 +216,11 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 
         public void Execute(UIApplication revitApp)
         {
-            using (var tran = new Transaction(revitApp.ActiveUIDocument.Document,
-                       $"Set Default element type to {m_defaultTypeId}"))
-            {
-                tran.Start();
-                revitApp.ActiveUIDocument.Document.SetDefaultElementTypeId(m_elementTypeGroup, m_defaultTypeId);
-                tran.Commit();
-            }
+            using Transaction tran = new(revitApp.ActiveUIDocument.Document,
+                       $"Set Default element type to {m_defaultTypeId}");
+            tran.Start();
+            revitApp.ActiveUIDocument.Document.SetDefaultElementTypeId(m_elementTypeGroup, m_defaultTypeId);
+            tran.Commit();
         }
 
         public void SetData(ElementTypeGroup elementTypeGroup, ElementId typeId)

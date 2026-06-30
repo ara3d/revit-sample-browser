@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
     /// <summary>
@@ -65,7 +64,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
         /// <value>
         ///     Id of the element of which face the analysis was set up for.
         /// </value>
-        public ElementId AnalyzedElementId 
+        public ElementId AnalyzedElementId
             => GetReference()?.ElementId ?? ElementId.InvalidElementId;
 
         /// <summary>
@@ -74,9 +73,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
         /// </summary>
         private Reference GetReference()
         {
-            if (m_view != null && m_sreference.Length > 0)
-                return SampleBrowserUtils.ParseReference(m_view.Document, m_sreference);
-            return null;
+            return m_view != null && m_sreference.Length > 0 ? SampleBrowserUtils.ParseReference(m_view.Document, m_sreference) : null;
         }
 
         /// <summary>
@@ -89,9 +86,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
         private Face GetReferencedFace()
         {
             var faceref = GetReference();
-            if (faceref != null)
-                return m_view.Document.GetElement(faceref).GetGeometryObjectFromReference(faceref) as Face;
-            return null;
+            return faceref != null ? m_view.Document.GetElement(faceref).GetGeometryObjectFromReference(faceref) as Face : null;
         }
 
         /// <summary>
@@ -107,7 +102,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
         {
             // create of get field manager for the view
 
-            m_sfManager = SpatialFieldManager.GetSpatialFieldManager(m_view) 
+            m_sfManager = SpatialFieldManager.GetSpatialFieldManager(m_view)
                           ?? SpatialFieldManager.CreateSpatialFieldManager(m_view, 1);
 
             // For the sake of simplicity, we remove any previous results
@@ -115,7 +110,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 
             // register schema for the results
 
-            var schema = new AnalysisResultSchema("E4623E91-8044-4721-86EA-2893642F13A9", "SDK2014-AL, Sample Schema");
+            AnalysisResultSchema schema = new("E4623E91-8044-4721-86EA-2893642F13A9", "SDK2014-AL, Sample Schema");
             m_schemaId = m_sfManager.RegisterResult(schema);
 
             // Add a spatial field for our face reference
@@ -159,8 +154,8 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 
             if (m_results.GetResults(out points, out values))
             {
-                var fieldPoints = new FieldDomainPointsByUV(points);
-                var fieldValues = new FieldValues(values);
+                FieldDomainPointsByUV fieldPoints = new(points);
+                FieldValues fieldValues = new(values);
                 m_sfManager.UpdateSpatialFieldPrimitive(m_fieldId, fieldPoints, fieldValues, m_schemaId);
             }
 

@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 
 namespace BuildingCoder
 {
@@ -86,7 +83,7 @@ namespace BuildingCoder
                 = new FilteredElementCollector(doc)
                     .OfClass(typeof(Duct));
 
-            using var transaction = new Transaction(doc);
+            using Transaction transaction = new(doc);
             if (transaction.Start("Resize Ducts for Taps")
                 == TransactionStatus.Started)
             {
@@ -150,7 +147,7 @@ namespace BuildingCoder
                     }
                 }
 
-                var taskDialog = new TaskDialog(
+                TaskDialog taskDialog = new(
                     "Resize Ducts");
 
                 TaskDialogCommonButtons buttons;

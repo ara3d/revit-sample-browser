@@ -15,7 +15,7 @@ namespace ExcelExporterImporter.Common
         /// <returns>The result of the text</returns>
         public static string AddSlashes(this string sText)
         {
-            if (sText != "" && sText != null)
+            if (sText is not "" and not null)
             {
                 sText = sText.Trim().Replace("\"", "\\\"");
                 sText = sText.Trim().Replace("'", "\'");
@@ -24,7 +24,7 @@ namespace ExcelExporterImporter.Common
             return sText;
         }
     }
-    
+
     public static class HyperlinkExtensions
     {
         #region Static Fields
@@ -35,7 +35,7 @@ namespace ExcelExporterImporter.Common
         ///     adding additional code to handle it.
         /// </summary>
         public static readonly DependencyProperty IsExternalProperty =
-            DependencyProperty.RegisterAttached("IsExternal", typeof (bool), typeof (HyperlinkExtensions),
+            DependencyProperty.RegisterAttached("IsExternal", typeof(bool), typeof(HyperlinkExtensions),
                 new UIPropertyMetadata(false, OnIsExternalChanged));
 
         #endregion
@@ -44,7 +44,7 @@ namespace ExcelExporterImporter.Common
 
         public static bool GetIsExternal(DependencyObject obj)
         {
-            return (bool) obj.GetValue(IsExternalProperty);
+            return (bool)obj.GetValue(IsExternalProperty);
         }
 
         public static void SetIsExternal(DependencyObject obj, bool value)
@@ -56,7 +56,7 @@ namespace ExcelExporterImporter.Common
         {
             var hyperlink = sender as Hyperlink;
 
-            if ((bool) args.NewValue)
+            if ((bool)args.NewValue)
                 hyperlink.RequestNavigate += Hyperlink_RequestNavigate;
             else
                 hyperlink.RequestNavigate -= Hyperlink_RequestNavigate;

@@ -12,10 +12,11 @@
 
 #region Namespaces
 
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+
 
 #endregion // Namespaces
 
@@ -39,8 +40,8 @@ namespace BuildingCoder
             if (familyInstance == null)
                 return Result.Cancelled;
 
-            var electricalApparentLoadFactory
-                = new Util.ElectricalApparentLoadFactory();
+            Util.ElectricalApparentLoadFactory electricalApparentLoadFactory
+                = new();
 
             var apparentLoads = electricalApparentLoadFactory
                 .Create(familyInstance);

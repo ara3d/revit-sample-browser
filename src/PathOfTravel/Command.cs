@@ -1,17 +1,17 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
 {
@@ -35,9 +35,9 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             try
             {
                 var uiDoc = commandData.Application.ActiveUIDocument;
-                if (!(uiDoc.ActiveView is ViewPlan viewPlan))
+                if (uiDoc.ActiveView is not ViewPlan viewPlan)
                 {
-                    var td = new TaskDialog("Cannot create PathOfTravel.")
+                    TaskDialog td = new("Cannot create PathOfTravel.")
                     {
                         MainInstruction = "PathOfTravel can only be created for plan views."
                     };
@@ -47,22 +47,20 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
                     return Result.Succeeded;
                 }
 
-                using (var createForm = new CreateForm())
+                using CreateForm createForm = new();
+                if (DialogResult.OK == createForm.ShowDialog())
                 {
-                    if (DialogResult.OK == createForm.ShowDialog())
+                    switch (createForm.PathCreateOption)
                     {
-                        switch (createForm.PathCreateOption)
-                        {
-                            case PathCreateOptions.SingleRoomCornersToSingleDoor:
-                                CreatePathsOfTravelInOneRoomMultiplePointsToOneDoor(uiDoc);
-                                break;
-                            case PathCreateOptions.AllRoomCenterToSingleDoor:
-                                CreatePathsOfTravelRoomCenterpointsToSingleDoor(uiDoc);
-                                break;
-                            default:
-                                CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(uiDoc);
-                                break;
-                        }
+                        case PathCreateOptions.SingleRoomCornersToSingleDoor:
+                            CreatePathsOfTravelInOneRoomMultiplePointsToOneDoor(uiDoc);
+                            break;
+                        case PathCreateOptions.AllRoomCenterToSingleDoor:
+                            CreatePathsOfTravelRoomCenterpointsToSingleDoor(uiDoc);
+                            break;
+                        default:
+                            CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(uiDoc);
+                            break;
                     }
                 }
 
@@ -89,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             var trf = doorElement.GetTransform();
             var endPoint = trf.Origin;
 
-            var resultsSummary = new ResultsSummary
+            ResultsSummary resultsSummary = new()
             {
                 NumDoors = 1
             };
@@ -116,25 +114,23 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             var trf = doorElement.GetTransform();
             var endPoint = trf.Origin;
 
-            var fec = new FilteredElementCollector(doc);
+            FilteredElementCollector fec = new(doc);
             fec.WherePasses(new RoomFilter());
 
-            var startPoints = new List<XYZ>();
+            List<XYZ> startPoints = new();
 
             foreach (var room in fec.Cast<Room>().Where(rm => rm.Level.Id == levelId))
             {
-                if (!(room.Location is LocationPoint location))
+                if (room.Location is not LocationPoint location)
                     continue;
                 var roomPoint = location.Point;
                 startPoints.Add(roomPoint);
             }
 
-            using (var t = new Transaction(doc, "Generate paths of travel"))
-            {
-                t.Start();
-                Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, startPoints, new List<XYZ> { endPoint }, out _);
-                t.Commit();
-            }
+            using Transaction t = new(doc, "Generate paths of travel");
+            t.Start();
+            Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, startPoints, [endPoint], out _);
+            t.Commit();
         }
 
         private void CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(UIDocument uiDoc)
@@ -181,7 +177,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
 
         private static List<XYZ> GetRoomNearCornerPoints(Room room)
         {
-            var nearCornerPoints = new List<XYZ>();
+            List<XYZ> nearCornerPoints = new();
 
             AppendRoomNearCornerPoints(room, nearCornerPoints);
 
@@ -191,15 +187,15 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
         private static void CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(Document doc,
             ViewPlan viewPlan, bool mapAllStartsToAllEnds)
         {
-            var fec = new FilteredElementCollector(doc, viewPlan.Id);
+            FilteredElementCollector fec = new(doc, viewPlan.Id);
             fec.WherePasses(new RoomFilter());
 
-            var fec2 = new FilteredElementCollector(doc, viewPlan.Id);
+            FilteredElementCollector fec2 = new(doc, viewPlan.Id);
             fec2.OfCategory(BuiltInCategory.OST_Doors);
 
-            var resultsSummary = new ResultsSummary();
+            ResultsSummary resultsSummary = new();
 
-            var endPoints = new List<XYZ>();
+            List<XYZ> endPoints = new();
 
             var rooms = fec.Cast<Room>().ToList();
 
@@ -212,7 +208,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
 
             resultsSummary.NumDoors = endPoints.Count;
 
-            using (var group = new TransactionGroup(doc, "Generate all paths of travel"))
+            using (TransactionGroup group = new(doc, "Generate all paths of travel"))
             {
                 group.Start();
 
@@ -229,7 +225,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             List<Room> rooms, List<XYZ> endPoints, ResultsSummary resultsSummary,
             bool mapAllStartsToAllEnds)
         {
-            var allSourcePoints = new List<XYZ>();
+            List<XYZ> allSourcePoints = new();
             foreach (var room in rooms)
             {
                 AppendRoomNearCornerPoints(room, allSourcePoints);
@@ -251,8 +247,8 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             // mapAllStartsToAllEnds: manual cross-product for testing; CreateMapped is preferred in production.
             if (mapAllStartsToAllEnds)
             {
-                var allSourcePointsMappedToEnds = new List<XYZ>();
-                var allEndPointsMappedToEnds = new List<XYZ>();
+                List<XYZ> allSourcePointsMappedToEnds = new();
+                List<XYZ> allEndPointsMappedToEnds = new();
                 foreach (var source in allSourcePoints)
                 {
                     foreach (var end in endPoints)
@@ -280,17 +276,14 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
         {
             var stopwatch = Stopwatch.StartNew();
 
-            using (var t = new Transaction(doc, "Generate paths of travel"))
+            using (Transaction t = new(doc, "Generate paths of travel"))
             {
                 t.Start();
 
                 IList<PathOfTravelCalculationStatus> statuses;
-                IList<Autodesk.Revit.DB.Analysis.PathOfTravel> pathsOfTravel;
-                if (mapAllStartsToAllEnds)
-                    pathsOfTravel = Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, startPoints, endPoints, out statuses);
-                else
-                    pathsOfTravel = Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMultiple(viewPlan, startPoints, endPoints, out statuses);
-
+                var pathsOfTravel = mapAllStartsToAllEnds
+                    ? Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, startPoints, endPoints, out statuses)
+                    : Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMultiple(viewPlan, startPoints, endPoints, out statuses);
                 var i = 0;
 
                 foreach (var pathOfTravel in pathsOfTravel)
@@ -322,36 +315,34 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             resultsSummary.NumSourcePoints += sourcePoints.Count;
 
 
-            using (var t = new Transaction(doc, "Generate paths of travel"))
+            using Transaction t = new(doc, "Generate paths of travel");
+            t.Start();
+            var pathsOfTravel = Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, sourcePoints, endPoints, out _);
+
+            foreach (var pOt in pathsOfTravel)
             {
-                t.Start();
-                var pathsOfTravel = Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, sourcePoints, endPoints, out _);
-
-                foreach (var pOt in pathsOfTravel)
-                {
-                    if (pOt == null) resultsSummary.NumFailures++;
-                    else resultsSummary.NumSuccesses++;
-                }
-
-                t.Commit();
+                if (pOt == null) resultsSummary.NumFailures++;
+                else resultsSummary.NumSuccesses++;
             }
+
+            t.Commit();
         }
 
         private static void GeneratePathsOfTravelForOneRoomOneDoor(Document doc, ViewPlan viewPlan, Room room,
             XYZ endPoint, ResultsSummary resultsSummary)
         {
-            GeneratePathsOfTravelForOneRoomManyDoors(doc, viewPlan, room, new List<XYZ> { endPoint }, resultsSummary);
+            GeneratePathsOfTravelForOneRoomManyDoors(doc, viewPlan, room, [endPoint], resultsSummary);
         }
 
         private static void ShowResults(ResultsSummary resultsSummary)
         {
-            var ci = new CultureInfo("en-us");
+            CultureInfo ci = new("en-us");
 
             var numOfPathsToCreate = resultsSummary.NumSourcePoints * resultsSummary.NumDoors;
 
             var successRatePercent = resultsSummary.NumSuccesses / (double)numOfPathsToCreate;
 
-            var td = new TaskDialog("Results of PathOfTravel creation")
+            TaskDialog td = new("Results of PathOfTravel creation")
             {
                 MainInstruction =
                 $"Path of Travel succeeded on {successRatePercent.ToString("P01", ci)} of known points"
@@ -397,9 +388,6 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
 
         private class ResultsSummary
         {
-            private readonly List<PathOfTravelCalculationStatus> m_failuresFound =
-                new List<PathOfTravelCalculationStatus>();
-
             public int NumSourcePoints { get; set; }
 
             public int NumDoors { get; set; }
@@ -410,7 +398,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
 
             public long ElapsedMilliseconds { get; set; }
 
-            public List<PathOfTravelCalculationStatus> FailuresFound => m_failuresFound;
+            public List<PathOfTravelCalculationStatus> FailuresFound { get; } = [];
         }
     }
 }

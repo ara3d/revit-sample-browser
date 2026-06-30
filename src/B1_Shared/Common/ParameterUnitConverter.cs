@@ -16,17 +16,17 @@ namespace ExcelExporterImporter.Common
             var document = param.Element.Document;
             double dResult = 0;
 #if REVIT2021
-                var fo = document.GetUnits().GetFormatOptions(param.Definition.GetDataType());
-                //Condition for if the user did not use the default settings
-                if (scheduleField != null)
+            var fo = document.GetUnits().GetFormatOptions(param.Definition.GetDataType());
+            //Condition for if the user did not use the default settings
+            if (scheduleField != null)
+            {
+                var foValue = scheduleField.GetFormatOptions();
+                if (!foValue.UseDefault)
                 {
-                    var foValue = scheduleField.GetFormatOptions();
-                    if (!foValue.UseDefault)
-                    {
-                        fo = foValue;
-                    }
+                    fo = foValue;
                 }
-                dResult = UnitUtils.ConvertFromInternalUnits(imperialValue, fo.GetUnitTypeId());
+            }
+            dResult = UnitUtils.ConvertFromInternalUnits(imperialValue, fo.GetUnitTypeId());
 #else
             var fo = document.GetUnits().GetFormatOptions(param.Definition.UnitType);
             //Condition for if the user did not use the default settings
@@ -54,16 +54,16 @@ namespace ExcelExporterImporter.Common
             var document = param.Element.Document;
             double dResult = 0;
 #if REVIT2021
-                var fo = document.GetUnits().GetFormatOptions(param.Definition.GetDataType());
-                if (scheduleField != null)
+            var fo = document.GetUnits().GetFormatOptions(param.Definition.GetDataType());
+            if (scheduleField != null)
+            {
+                var foValue = scheduleField.GetFormatOptions();
+                if (!foValue.UseDefault)
                 {
-                    var foValue = scheduleField.GetFormatOptions();
-                    if (!foValue.UseDefault)
-                    {
-                        fo = foValue;
-                    }
-                }   
-                dResult = UnitUtils.ConvertToInternalUnits(valueToConvert, fo.GetUnitTypeId());
+                    fo = foValue;
+                }
+            }
+            dResult = UnitUtils.ConvertToInternalUnits(valueToConvert, fo.GetUnitTypeId());
 #else
             var fo = document.GetUnits().GetFormatOptions(param.Definition.UnitType);
             if (scheduleField != null)

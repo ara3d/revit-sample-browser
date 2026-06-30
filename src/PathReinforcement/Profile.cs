@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
 {
     public class Profile
@@ -15,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         ///     field used to store the bound of the curves of path reinforcement.
         ///     2d data.
         /// </summary>
-        private readonly BoundingBoxUV m_box = new BoundingBoxUV();
+        private readonly BoundingBoxUV m_box = new();
 
         /// <summary>
         ///     field used to store external command data.
@@ -26,17 +24,17 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         ///     field used to store the geometry curves of path reinforcement.
         ///     3d data.
         /// </summary>
-        private readonly List<List<XYZ>> m_curves = new List<List<XYZ>>();
+        private readonly List<List<XYZ>> m_curves = [];
 
         /// <summary>
         ///     store path 3D.
         /// </summary>
-        private readonly List<List<XYZ>> m_path = new List<List<XYZ>>();
+        private readonly List<List<XYZ>> m_path = [];
 
         /// <summary>
         ///     store path 2D.
         /// </summary>
-        private readonly List<List<UV>> m_path2d = new List<List<UV>>();
+        private readonly List<List<UV>> m_path2d = [];
 
         /// <summary>
         ///     field used to store path reinforcement.
@@ -47,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         ///     field used to store the geometry data of curves of path reinforcement.
         ///     2d data.
         /// </summary>
-        private readonly List<List<UV>> m_point2d = new List<List<UV>>();
+        private readonly List<List<UV>> m_point2d = [];
 
         public Profile(Autodesk.Revit.DB.Structure.PathReinforcement pathRein, ExternalCommandData commandData)
         {

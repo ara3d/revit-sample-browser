@@ -1,9 +1,9 @@
 #region Namespaces
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 #endregion // Namespaces
 
@@ -55,8 +55,8 @@ namespace BuildingCoder
 
             if (doc.IsFamilyDocument) throw new Exception("doc can not be a family document.");
 
-            var result
-                = new List<ProjectParameterData>();
+            List<ProjectParameterData> result
+                = new();
 
             var map = doc.ParameterBindings;
             var it
@@ -64,13 +64,14 @@ namespace BuildingCoder
             it.Reset();
             while (it.MoveNext())
             {
-                var newProjectParameterData
-                    = new ProjectParameterData();
-
-                newProjectParameterData.Definition = it.Key;
-                newProjectParameterData.Name = it.Key.Name;
-                newProjectParameterData.Binding = it.Current
-                    as ElementBinding;
+                ProjectParameterData newProjectParameterData
+                    = new()
+                    {
+                        Definition = it.Key,
+                        Name = it.Key.Name,
+                        Binding = it.Current
+                        as ElementBinding
+                    };
 
                 result.Add(newProjectParameterData);
             }

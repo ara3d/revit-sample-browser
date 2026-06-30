@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
@@ -40,9 +40,9 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
             if (NumSteps == 0)
             {
                 // Just Generate one riser line.
-                var middleOffset = StartPoint + OffsetDirection * runWidth * 0.5;
-                var xOuter = middleOffset - OffsetDirection * runWidth * 0.5;
-                var xInner = middleOffset + OffsetDirection * runWidth * 0.5;
+                var middleOffset = StartPoint + (OffsetDirection * runWidth * 0.5);
+                var xOuter = middleOffset - (OffsetDirection * runWidth * 0.5);
+                var xInner = middleOffset + (OffsetDirection * runWidth * 0.5);
                 riserLines.Add(Line.CreateBound(xOuter, xInner));
                 return;
             }
@@ -55,24 +55,24 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
             outerBoundary.Add(outBounary);
 
             // Generate the middle walk path line.
-            var middleStart = StartPoint + OffsetDirection * runWidth * 0.5;
-            var middleEnd = EndPoint + OffsetDirection * runwidth2;
+            var middleStart = StartPoint + (OffsetDirection * runWidth * 0.5);
+            var middleEnd = EndPoint + (OffsetDirection * runwidth2);
             walkPath.Add(Line.CreateBound(middleStart, middleEnd));
 
             // Generate the inner boundary line.
-            var innerStart = StartPoint + OffsetDirection * runWidth;
-            var innerEnd = EndPoint + OffsetDirection * runWidth;
+            var innerStart = StartPoint + (OffsetDirection * runWidth);
+            var innerEnd = EndPoint + (OffsetDirection * runWidth);
             innerBoundary.Add(Line.CreateBound(innerStart, innerEnd));
 
             // Generate the NumSteps+1 riser lines.
             var treadDepth = StartPoint.DistanceTo(EndPoint) / NumSteps;
             var dir = (EndPoint - StartPoint).Normalize();
-            var currentStep = StartPoint + OffsetDirection * runWidth * 0.5;
+            var currentStep = StartPoint + (OffsetDirection * runWidth * 0.5);
             var deltaStep = dir * treadDepth;
             for (var i = 0; i <= NumSteps; i++)
             {
-                var xOuter = currentStep - OffsetDirection * runwidth2;
-                var xInner = currentStep + OffsetDirection * runwidth2;
+                var xOuter = currentStep - (OffsetDirection * runwidth2);
+                var xInner = currentStep + (OffsetDirection * runwidth2);
                 riserLines.Add(Line.CreateBound(xOuter, xInner));
                 currentStep += deltaStep;
             }

@@ -13,14 +13,10 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -46,8 +42,8 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var picker
-                = new JtPairPicker<FamilyInstance>(uidoc);
+            JtPairPicker<FamilyInstance> picker
+                = new(uidoc);
 
             var rc = picker.Pick();
 
@@ -58,22 +54,22 @@ namespace BuildingCoder
                               + "FamilyInstance elements in the model.";
                     break;
                 case Result.Succeeded:
-                {
-                    var a = picker.Selected;
+                    {
+                        var a = picker.Selected;
 
-                    var pts = new XYZ[2];
-                    var refs = new Reference[2];
+                        var pts = new XYZ[2];
+                        var refs = new Reference[2];
 
-                    pts[0] = (a[0].Location as LocationPoint).Point;
-                    pts[1] = (a[1].Location as LocationPoint).Point;
+                        pts[0] = (a[0].Location as LocationPoint).Point;
+                        pts[1] = (a[1].Location as LocationPoint).Point;
 
-                    refs[0] = Util.GetFamilyInstancePointReference(a[0]);
-                    refs[1] = Util.GetFamilyInstancePointReference(a[1]);
+                        refs[0] = Util.GetFamilyInstancePointReference(a[0]);
+                        refs[1] = Util.GetFamilyInstancePointReference(a[1]);
 
-                    Util.CreateDimensionElement(doc.ActiveView,
-                            pts[0], refs[0], pts[1], refs[1]);
-                    break;
-                }
+                        Util.CreateDimensionElement(doc.ActiveView,
+                                pts[0], refs[0], pts[1], refs[1]);
+                        break;
+                    }
             }
 
             return rc;

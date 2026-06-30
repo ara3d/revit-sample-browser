@@ -12,11 +12,6 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
     public class JournalProcessor
     {
         private readonly string m_directory;
-
-        private List<string> m_eventsInFile;
-
-        private readonly bool m_isReplay;
-
         private readonly string m_xmlFile;
 
         private readonly XmlSerializer m_xs;
@@ -28,37 +23,37 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             m_xmlFile = Path.Combine(m_directory, "Current.xml");
 
             // Current.xml present means journal replay; the settings dialog is skipped.
-            m_isReplay = CheckFileExistence();
+            IsReplay = CheckFileExistence();
 
             GetEventsListFromFile();
         }
 
-        public bool IsReplay => m_isReplay;
+        public bool IsReplay { get; }
 
-        public List<string> EventsList => m_eventsInFile;
+        public List<string> EventsList { get; private set; }
 
         private bool CheckFileExistence()
         {
-            return File.Exists(m_xmlFile) ? true : false;
+            return File.Exists(m_xmlFile);
         }
 
         private void GetEventsListFromFile()
         {
-            if (m_isReplay)
+            if (IsReplay)
             {
                 Stream stream = new FileStream(m_xmlFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                m_eventsInFile = (List<string>)m_xs.Deserialize(stream);
+                EventsList = (List<string>)m_xs.Deserialize(stream);
                 stream.Close();
             }
             else
             {
-                m_eventsInFile = new List<string>();
+                EventsList = [];
             }
         }
 
         public void DumpEventsListToFile(List<string> eventList)
         {
-            if (!m_isReplay)
+            if (!IsReplay)
             {
                 var fileName = $"{DateTime.Now:yyyyMMdd}.xml";
                 var tempFile = Path.Combine(m_directory, fileName);
@@ -71,7 +66,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 
         public List<string> GetEventsListFromJournalData(IDictionary<string, string> data)
         {
-            var eventList = new List<string>();
+            List<string> eventList = new();
             foreach (var kvp in data)
             {
                 eventList.Add(kvp.Key);

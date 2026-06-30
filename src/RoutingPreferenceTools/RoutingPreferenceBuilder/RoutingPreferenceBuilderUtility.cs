@@ -1,5 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +10,6 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder
 {
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             m_application = application;
             m_basePath = GetFamilyBasePath();
             var extraFamilyPaths = GetAdditionalFamilyPaths();
-            m_familyfiles = new Dictionary<string, string>();
+            m_familyfiles = [];
             GetAllFiles(m_basePath, m_familyfiles);
             foreach (var extraPath in extraFamilyPaths)
             {

@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.Units.CS
 {
@@ -22,19 +22,17 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
                 var units = document.GetUnits();
 
                 // show UI
-                using (var displayForm = new UnitsForm(units))
-                {
-                    var result = displayForm.ShowDialog();
-                    if (DialogResult.OK == result)
-                        using (var tran = new Transaction(document, "SetUnits"))
-                        {
-                            tran.Start();
-                            document.SetUnits(units);
-                            tran.Commit();
-                        }
-                    else
-                        return Result.Cancelled;
-                }
+                using UnitsForm displayForm = new(units);
+                var result = displayForm.ShowDialog();
+                if (DialogResult.OK == result)
+                    using (Transaction tran = new(document, "SetUnits"))
+                    {
+                        tran.Start();
+                        document.SetUnits(units);
+                        tran.Commit();
+                    }
+                else
+                    return Result.Cancelled;
 
                 return Result.Succeeded;
             }

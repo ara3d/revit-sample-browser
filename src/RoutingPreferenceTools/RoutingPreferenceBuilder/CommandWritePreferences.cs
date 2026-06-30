@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.IO;
-using System.Xml;
+using Ara3D.RevitSampleBrowser.Common.Mep;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
-
-using Ara3D.RevitSampleBrowser.Common.Mep;
+using System.IO;
+using System.Xml;
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder
 {
     /// <summary>
@@ -32,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                 return Result.Succeeded;
             }
 
-            var sfd = new SaveFileDialog
+            SaveFileDialog sfd = new()
             {
                 DefaultExt = ".xml",
                 Filter = "RoutingPreference Builder Xml files (*.xml)|*.xml",
@@ -41,10 +40,10 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             };
             if (sfd.ShowDialog() == true)
             {
-                var builder = new RoutingPreferenceBuilder(commandData.Application.ActiveUIDocument.Document);
+                RoutingPreferenceBuilder builder = new(commandData.Application.ActiveUIDocument.Document);
                 var pathsNotFound = false;
                 var routingPreferenceBuilderDoc = builder.CreateXmlFromAllPipingPolicies(ref pathsNotFound);
-                var xmlWriterSettings = new XmlWriterSettings
+                XmlWriterSettings xmlWriterSettings = new()
                 {
                     Indent = true,
                     NewLineOnAttributes = false

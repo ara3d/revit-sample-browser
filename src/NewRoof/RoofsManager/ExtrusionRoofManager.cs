@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 using Document = Autodesk.Revit.Creation.Document;
 
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
@@ -17,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
         private readonly ExternalCommandData m_commandData;
 
         // To store a reference to the creation application
-        private Application m_creationApp;
+        private readonly Application m_creationApp;
 
         // To store a reference to the creation document
         private readonly Document m_creationDoc;
@@ -38,8 +38,8 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             double extrusionStart, double extrusionEnd)
         {
             ExtrusionRoof extrusionRoof = null;
-            var createRoofTransaction =
-                new Transaction(m_commandData.Application.ActiveUIDocument.Document, "ExtrusionRoof");
+            Transaction createRoofTransaction =
+                new(m_commandData.Application.ActiveUIDocument.Document, "ExtrusionRoof");
             createRoofTransaction.Start();
             try
             {

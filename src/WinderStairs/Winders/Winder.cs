@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
@@ -33,10 +33,10 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
         public void Build(Document rvtDoc, bool drawSketch, ref ElementId winderRunId)
         {
             // Preparing the sketch containers.
-            OuterBoundary = new List<Curve>();
-            InnerBoundary = new List<Curve>();
-            CenterWalkpath = new List<Curve>();
-            RiserLines = new List<Curve>();
+            OuterBoundary = [];
+            InnerBoundary = [];
+            CenterWalkpath = [];
+            RiserLines = [];
 
             // Fill the sketch containers
             GenerateSketch();
@@ -61,54 +61,50 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
         /// <param name="winderRunId">Created winder run</param>
         private void CreateWinderRun(Document rvtDoc, ref ElementId winderRunId)
         {
-            using (var stairsMode = new StairsEditScope(rvtDoc, GetType().Name))
+            using StairsEditScope stairsMode = new(rvtDoc, GetType().Name);
+            ElementId stairsId;
+            // Non-existed stairs, create a new one.
+            if (rvtDoc.GetElement(winderRunId) is not StairsRun winderOldRun)
             {
-                ElementId stairsId;
-                // Non-existed stairs, create a new one.
-                if (!(rvtDoc.GetElement(winderRunId) is StairsRun winderOldRun))
-                {
-                    // Find two levels to create a stairs between them
-                    var levelList = rvtDoc.GetElements<Level>().ToList();
-                    levelList.Sort((a, b) => a.Elevation.CompareTo(b.Elevation));
-                    // Start the stairs edit mode
-                    stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);
-                }
-                else // using the existed stairs
-                {
-                    // Start the stairs edit mode
-                    stairsId = stairsMode.Start(winderOldRun.GetStairs().Id);
-                }
-
-                using (var winderTransaction = new Transaction(rvtDoc))
-                {
-                    // Start the winder creation transaction 
-                    winderTransaction.Start(GetType().Name);
-
-                    // The boundaries is consist of public and external boundaries.
-                    var boundarys = new List<Curve>();
-                    boundarys.AddRange(InnerBoundary);
-                    boundarys.AddRange(OuterBoundary);
-
-                    // Calculate the run elevation.
-                    var stairs = rvtDoc.GetElement(stairsId) as Stairs;
-                    var elevation = ControlPoints[0].Z;
-                    var actualElevation = Math.Max(elevation, stairs.BaseElevation);
-
-                    // Create the run
-                    var run = StairsRun.CreateSketchedRun(rvtDoc, stairsId,
-                        actualElevation, boundarys, RiserLines, CenterWalkpath);
-                    if (ElementId.InvalidElementId != winderRunId)
-                        // Delete the old run
-                        rvtDoc.Delete(winderRunId);
-                    // output the new run
-                    winderRunId = run.Id;
-                    // Finish the winder run creation.
-                    winderTransaction.Commit();
-                }
-
-                // Finish the stairs Edit mode.
-                stairsMode.Commit(new StairsEditScopeFailuresPreprocessor());
+                // Find two levels to create a stairs between them
+                var levelList = rvtDoc.GetElements<Level>().ToList();
+                levelList.Sort((a, b) => a.Elevation.CompareTo(b.Elevation));
+                // Start the stairs edit mode
+                stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);
             }
+            else // using the existed stairs
+            {
+                // Start the stairs edit mode
+                stairsId = stairsMode.Start(winderOldRun.GetStairs().Id);
+            }
+
+            using (Transaction winderTransaction = new(rvtDoc))
+            {
+                // Start the winder creation transaction 
+                winderTransaction.Start(GetType().Name);
+
+                // The boundaries is consist of public and external boundaries.
+                List<Curve> boundarys = [.. InnerBoundary, .. OuterBoundary];
+
+                // Calculate the run elevation.
+                var stairs = rvtDoc.GetElement(stairsId) as Stairs;
+                var elevation = ControlPoints[0].Z;
+                var actualElevation = Math.Max(elevation, stairs.BaseElevation);
+
+                // Create the run
+                var run = StairsRun.CreateSketchedRun(rvtDoc, stairsId,
+                    actualElevation, boundarys, RiserLines, CenterWalkpath);
+                if (ElementId.InvalidElementId != winderRunId)
+                    // Delete the old run
+                    rvtDoc.Delete(winderRunId);
+                // output the new run
+                winderRunId = run.Id;
+                // Finish the winder run creation.
+                winderTransaction.Commit();
+            }
+
+            // Finish the stairs Edit mode.
+            stairsMode.Commit(new StairsEditScopeFailuresPreprocessor());
         }
 
         /// <summary>
@@ -119,37 +115,35 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
         {
             try
             {
-                using (var debugTransaction = new Transaction(rvtDoc))
+                using Transaction debugTransaction = new(rvtDoc);
+                debugTransaction.Start("DEBUG API WINDER SKETCH");
+
+                var skp = SketchPlane.Create(
+                    rvtDoc, Plane.CreateByNormalAndOrigin(XYZ.BasisZ, ControlPoints[0]));
+                CurveArray curves = new();
+
+                foreach (var curve in OuterBoundary)
                 {
-                    debugTransaction.Start("DEBUG API WINDER SKETCH");
-
-                    var skp = SketchPlane.Create(
-                        rvtDoc, Plane.CreateByNormalAndOrigin(XYZ.BasisZ, ControlPoints[0]));
-                    var curves = new CurveArray();
-                    
-                    foreach (var curve in OuterBoundary)
-                    {
-                        curves.Append(curve);
-                    }
-
-                    foreach (var curve in InnerBoundary)
-                    {
-                        curves.Append(curve);
-                    }
-
-                    foreach (var curve in CenterWalkpath)
-                    {
-                        curves.Append(curve);
-                    }
-
-                    foreach (var curve in RiserLines)
-                    {
-                        curves.Append(curve);
-                    }
-
-                    rvtDoc.Create.NewModelCurveArray(curves, skp);
-                    debugTransaction.Commit();
+                    curves.Append(curve);
                 }
+
+                foreach (var curve in InnerBoundary)
+                {
+                    curves.Append(curve);
+                }
+
+                foreach (var curve in CenterWalkpath)
+                {
+                    curves.Append(curve);
+                }
+
+                foreach (var curve in RiserLines)
+                {
+                    curves.Append(curve);
+                }
+
+                rvtDoc.Create.NewModelCurveArray(curves, skp);
+                debugTransaction.Commit();
             }
             catch (Exception)
             {

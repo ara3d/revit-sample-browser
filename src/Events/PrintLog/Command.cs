@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
 {
@@ -21,11 +21,11 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
             var document = commandData.Application.ActiveUIDocument.Document;
             try
             {
-                var viewElems = new List<Element>();
-                var collector = new FilteredElementCollector(document);
+                List<Element> viewElems = new();
+                FilteredElementCollector collector = new(document);
                 viewElems.AddRange(collector.OfClass(typeof(View)).ToElements());
 
-                var printableViews = new ViewSet();
+                ViewSet printableViews = new();
                 foreach (View view in viewElems)
                 {
                     // View templates cannot be printed.

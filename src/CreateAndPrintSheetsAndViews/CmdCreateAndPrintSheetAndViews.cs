@@ -2,16 +2,15 @@
 // Adapted from CreateAndPrintSheetsAndViews by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CreateAndPrintSheetsAndViews
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
 {
@@ -30,9 +29,9 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             XYZ p,
             double rotation = 0)
         {
-            Document doc = view.Document;
+            var doc = view.Document;
 
-            var options = new TextNoteOptions
+            TextNoteOptions options = new()
             {
                 Rotation = rotation,
                 HorizontalAlignment = HorizontalTextAlignment.Center,
@@ -50,39 +49,39 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             double angleHorizD,
             double angleVertD)
         {
-            double degToRadian = Math.PI * 2 / 360;
-            double angleHorizR = angleHorizD * degToRadian;
-            double angleVertR = angleVertD * degToRadian;
+            var degToRadian = Math.PI * 2 / 360;
+            var angleHorizR = angleHorizD * degToRadian;
+            var angleVertR = angleVertD * degToRadian;
 
-            double a = Math.Cos(angleVertR);
-            double b = Math.Cos(angleHorizR);
-            double c = Math.Sin(angleHorizR);
-            double d = Math.Sin(angleVertR);
+            var a = Math.Cos(angleVertR);
+            var b = Math.Cos(angleHorizR);
+            var c = Math.Sin(angleHorizR);
+            var d = Math.Sin(angleVertR);
 
             return new XYZ(a * b, a * c, d);
         }
 
         static View3D CreateView3d(Document doc)
         {
-            ViewFamilyType viewFamilyType
+            var viewFamilyType
                 = new FilteredElementCollector(doc)
                     .OfClass(typeof(ViewFamilyType))
                     .Cast<ViewFamilyType>()
                     .Where(v => ViewFamily.ThreeDimensional == v.ViewFamily)
                     .First();
 
-            View3D view = View3D.CreateIsometric(doc, viewFamilyType.Id);
+            var view = View3D.CreateIsometric(doc, viewFamilyType.Id);
 
-            XYZ eye = XYZ.Zero;
+            var eye = XYZ.Zero;
 
-            XYZ forward = VectorFromHorizVertAngles(
+            var forward = VectorFromHorizVertAngles(
                 angleHorizD, angleVertD);
 
-            XYZ up = VectorFromHorizVertAngles(
+            var up = VectorFromHorizVertAngles(
                 angleHorizD, angleVertD + 90);
 
             ViewOrientation3D viewOrientation3D
-                = new ViewOrientation3D(eye, up, forward);
+                = new(eye, up, forward);
 
             view.SetOrientation(viewOrientation3D);
             view.SaveOrientation();
@@ -100,16 +99,16 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             XYZ vUp,
             ref List<ElementId> idsToShow)
         {
-            ViewFamilyType viewFamilyType
+            var viewFamilyType
                 = new FilteredElementCollector(doc)
                     .OfClass(typeof(ViewFamilyType))
                     .Cast<ViewFamilyType>()
                     .Where(v => ViewFamily.Section == v.ViewFamily)
                     .First();
 
-            XYZ vSize = new XYZ(halfsize, halfsize, halfsize);
+            XYZ vSize = new(halfsize, halfsize, halfsize);
 
-            Transform transform = Transform.Identity;
+            var transform = Transform.Identity;
 
             transform.Origin = pOrigin;
             transform.BasisX = vUp.CrossProduct(vRight);
@@ -117,21 +116,23 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             transform.BasisZ = vRight;
             Debug.Assert(Util.IsEqual(1, transform.Determinant), "expected 1 determinant");
 
-            BoundingBoxXYZ sectionBox = new BoundingBoxXYZ();
-            sectionBox.Transform = transform;
-            sectionBox.Min = -vSize;
-            sectionBox.Max = vSize;
+            BoundingBoxXYZ sectionBox = new()
+            {
+                Transform = transform,
+                Min = -vSize,
+                Max = vSize
+            };
 
-            ViewSection viewSection = ViewSection.CreateSection(
+            var viewSection = ViewSection.CreateSection(
                 doc, viewFamilyType.Id, sectionBox);
 
             viewSection.DetailLevel = ViewDetailLevel.Fine;
             viewSection.Scale = _view_scale;
 
-            double f = 0.2 * halfsize;
+            var f = 0.2 * halfsize;
             idsToShow.Add(CreateTextNote(viewSection, "O", pOrigin).Id);
-            idsToShow.Add(CreateTextNote(viewSection, "R", pOrigin + f * vRight).Id);
-            idsToShow.Add(CreateTextNote(viewSection, "U", pOrigin + f * vUp).Id);
+            idsToShow.Add(CreateTextNote(viewSection, "R", pOrigin + (f * vRight)).Id);
+            idsToShow.Add(CreateTextNote(viewSection, "U", pOrigin + (f * vUp)).Id);
 
             return viewSection;
         }
@@ -141,7 +142,7 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             Connector primary_connector = null;
             foreach (Connector c in conset)
             {
-                MEPConnectorInfo info = c.GetMEPConnectorInfo();
+                var info = c.GetMEPConnectorInfo();
                 if (info.IsPrimary)
                 {
                     primary_connector = c;
@@ -153,20 +154,20 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
 
         static Transform GetDuctLcs(FabricationPart part)
         {
-            ConnectorManager conmgr = part.ConnectorManager;
-            ConnectorSet conset = conmgr.Connectors;
-            Connector start = GetPrimaryConnector(conset);
-            Transform twcs = start.CoordinateSystem;
+            var conmgr = part.ConnectorManager;
+            var conset = conmgr.Connectors;
+            var start = GetPrimaryConnector(conset);
+            var twcs = start.CoordinateSystem;
             Debug.Assert(Util.IsEqual(1, twcs.Determinant), "expected 1 twcs determinant");
-            twcs.BasisY = -(twcs.BasisY);
-            twcs.BasisZ = -(twcs.BasisZ);
+            twcs.BasisY = -twcs.BasisY;
+            twcs.BasisZ = -twcs.BasisZ;
             Debug.Assert(Util.IsEqual(1, twcs.Determinant), "expected 1 flipped twcs determinant");
             return twcs;
         }
 
         static XYZ MidPoint(XYZ a, XYZ b)
         {
-            return a + 0.5 * (b - a);
+            return a + (0.5 * (b - a));
         }
 
         static void IsolateElementInView(IList<ElementId> idsToShow, View v)
@@ -176,19 +177,18 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
 
         public static void CreateSheetAndViewsFor(Element e)
         {
-            Document doc = e.Document;
-            BoundingBoxXYZ bb = e.get_BoundingBox(null);
-            XYZ p = MidPoint(bb.Min, bb.Max);
-            double halfsize = 0.5 * (bb.Max - bb.Min).GetLength();
+            var doc = e.Document;
+            var bb = e.get_BoundingBox(null);
+            var p = MidPoint(bb.Min, bb.Max);
+            var halfsize = 0.5 * (bb.Max - bb.Min).GetLength();
 
-            FabricationPart part = e as FabricationPart;
-            Transform twcs = (null != part)
+            var twcs = (e is FabricationPart part)
                 ? GetDuctLcs(part)
                 : Transform.Identity;
 
-            List<ElementId> idsToShowFront = new List<ElementId>() { e.Id };
-            List<ElementId> idsToShowRight = new List<ElementId>() { e.Id };
-            List<ElementId> idsToShowTop = new List<ElementId>() { e.Id };
+            List<ElementId> idsToShowFront = [e.Id];
+            List<ElementId> idsToShowRight = [e.Id];
+            List<ElementId> idsToShowTop = [e.Id];
 
             View view3d = CreateView3d(doc);
             View viewFront = CreateViewSection(doc, p, halfsize, twcs.BasisY, twcs.BasisZ, ref idsToShowFront);
@@ -200,24 +200,22 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             viewRight.Name = "Right";
             viewTop.Name = "Top";
 
-            IsolateElementInView(new List<ElementId>(1) { e.Id }, view3d);
+            IsolateElementInView([e.Id], view3d);
             IsolateElementInView(idsToShowFront, viewFront);
             IsolateElementInView(idsToShowRight, viewRight);
             IsolateElementInView(idsToShowTop, viewTop);
 
-            FamilySymbol titleBlock
-                = new FilteredElementCollector(doc)
+
+            if (new FilteredElementCollector(doc)
                     .OfClass(typeof(FamilySymbol))
                     .OfCategory(BuiltInCategory.OST_TitleBlocks)
                     .Where<Element>(x => x.Name.Equals(_title_block_name))
-                    .First() as FamilySymbol;
-
-            if (null != titleBlock)
+                    .First() is FamilySymbol titleBlock)
             {
-                ViewSheet viewSheet = ViewSheet.Create(doc, titleBlock.Id);
+                var viewSheet = ViewSheet.Create(doc, titleBlock.Id);
                 if (null != viewSheet)
                 {
-                    string s = Util.GetProductCode(e);
+                    var s = Util.GetProductCode(e);
                     if (null == s)
                     {
                         s = string.Empty;
@@ -230,19 +228,19 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
                     viewSheet.SheetNumber = "00";
                     viewSheet.Name = $"Part CAM Dimension Sheet for {s}{e.Id.Value}";
 
-                    UV pmin = viewSheet.Outline.Min;
-                    UV pmax = viewSheet.Outline.Max;
-                    UV v = pmax - pmin;
-                    double w = v.U;
-                    double h = v.V;
-                    double left = pmin.U + 0.1 * w;
-                    double bottom = pmin.V + 0.15 * h;
+                    var pmin = viewSheet.Outline.Min;
+                    var pmax = viewSheet.Outline.Max;
+                    var v = pmax - pmin;
+                    var w = v.U;
+                    var h = v.V;
+                    var left = pmin.U + (0.1 * w);
+                    var bottom = pmin.V + (0.15 * h);
                     w *= 0.9;
                     h *= 0.8;
-                    XYZ pul = new XYZ(left + 0.25 * w, bottom + 0.75 * h, 0);
-                    XYZ pur = new XYZ(left + 0.75 * w, bottom + 0.75 * h, 0);
-                    XYZ pll = new XYZ(left + 0.25 * w, bottom + 0.3 * h, 0);
-                    XYZ plr = new XYZ(left + 0.7 * w, bottom + 0.3 * h, 0);
+                    XYZ pul = new(left + (0.25 * w), bottom + (0.75 * h), 0);
+                    XYZ pur = new(left + (0.75 * w), bottom + (0.75 * h), 0);
+                    XYZ pll = new(left + (0.25 * w), bottom + (0.3 * h), 0);
+                    XYZ plr = new(left + (0.7 * w), bottom + (0.3 * h), 0);
 
                     Viewport.Create(doc, viewSheet.Id, viewRight.Id, pul);
                     Viewport.Create(doc, viewSheet.Id, viewFront.Id, pur);
@@ -251,19 +249,23 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
 
                     if (viewSheet.CanBePrinted)
                     {
-                        IList<ElementId> viewIds = new List<ElementId>(1) {
-                            viewSheet.Id };
+                        IList<ElementId> viewIds = [
+                            viewSheet.Id ];
 
-                        string dir = "C:/tmp";
-                        string project_name = doc.Title;
-                        string path = dir + "/" + project_name;
+                        var dir = "C:/tmp";
+                        var project_name = doc.Title;
+                        var path = dir + "/" + project_name;
 
-                        PDFExportOptions opt = new PDFExportOptions();
-                        opt.FileName = viewSheet.Name;
+                        PDFExportOptions opt = new()
+                        {
+                            FileName = viewSheet.Name
+                        };
                         doc.Export(dir, viewIds, opt);
 
-                        ImageExportOptions imgopt = new ImageExportOptions();
-                        imgopt.ExportRange = ExportRange.SetOfViews;
+                        ImageExportOptions imgopt = new()
+                        {
+                            ExportRange = ExportRange.SetOfViews
+                        };
                         imgopt.SetViewsAndSheets(viewIds);
                         imgopt.FilePath = path;
 
@@ -278,15 +280,15 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             ref string message,
             ElementSet elements)
         {
-            UIApplication uiapp = commandData.Application;
-            UIDocument uidoc = uiapp.ActiveUIDocument;
-            Document doc = uidoc.Document;
-            Selection sel = uidoc.Selection;
+            var uiapp = commandData.Application;
+            var uidoc = uiapp.ActiveUIDocument;
+            var doc = uidoc.Document;
+            var sel = uidoc.Selection;
             ElementId id_sample_element;
 
             try
             {
-                Reference r = sel.PickObject(
+                var r = sel.PickObject(
                     ObjectType.Element,
                     "Please select an element");
 
@@ -301,20 +303,18 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
                 += new EventHandler<DialogBoxShowingEventArgs>(
                     Command.OnDialogBoxShowing);
 
-            using (Transaction t = new Transaction(doc))
+            using Transaction t = new(doc);
+            t.Start("Create sheet and four views");
+            var e = doc.GetElement(id_sample_element);
+            CreateSheetAndViewsFor(e);
+            var save = Util.AskYesNoQuestion("Save the sheet?");
+            if (save)
             {
-                t.Start("Create sheet and four views");
-                Element e = doc.GetElement(id_sample_element);
-                CreateSheetAndViewsFor(e);
-                bool save = Util.AskYesNoQuestion("Save the sheet?");
-                if (save)
-                {
-                    t.Commit();
-                }
-                else
-                {
-                    t.RollBack();
-                }
+                t.Commit();
+            }
+            else
+            {
+                t.RollBack();
             }
             return Result.Succeeded;
         }

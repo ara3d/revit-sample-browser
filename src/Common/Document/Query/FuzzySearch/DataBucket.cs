@@ -2,27 +2,24 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Autodesk.Revit.DB;
-
+using Gma.DataStructures.StringSearch;
+using SimMetrics.Net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gma.DataStructures.StringSearch;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
-using SimMetrics.Net;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch
 {
     public class DataBucket<T> where T : ICommandArgument
     {
-        private readonly List<DataBucketItem<T>> items = new List<DataBucketItem<T>>();
+        private readonly List<DataBucketItem<T>> items = [];
         private readonly double fuzzySearchMatchingThreshold;
 
-        private readonly List<IAutocompleteItem> autocompleteItems = new List<IAutocompleteItem>();
+        private readonly List<IAutocompleteItem> autocompleteItems = [];
         private ITrie<IAutocompleteItem> autocompleteTrie = new Trie<IAutocompleteItem>();
 
         public DataBucket(double fuzzySearchMatchingThreshold)
@@ -40,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch
             }
         }
         public void Rebuild()
-        {            
+        {
             autocompleteItems.Sort((x, y) => x.Label.CompareTo(y.Label));
 
             autocompleteTrie = new UkkonenTrie<IAutocompleteItem>();
@@ -57,14 +54,14 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch
                         autocompleteTrie.Add(item.Description.ToLowerInvariant(), item);
                     }
                 }
-                catch(Exception e)
+                catch (Exception)
                 {
 #if DEBUG
                     throw;
 #endif
                 }
             }
-                            
+
         }
         public void Clear()
         {
@@ -75,11 +72,11 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch
         public IEnumerable<IFuzzySearchResult> FuzzySearch(string text)
         {
             var sorted = FuzzySearchInternal(text).OrderByDescending(x => x.LevensteinScore);
-            
+
             if (!sorted.Any()) yield break;
 
-            double prevScore = sorted.First().LevensteinScore;
-            double cutOffTreshold = prevScore == 1.0 ? 0.05 : 0.13;
+            var prevScore = sorted.First().LevensteinScore;
+            var cutOffTreshold = prevScore == 1.0 ? 0.05 : 0.13;
 
             foreach (var item in sorted.Take(27))
             {
@@ -124,8 +121,8 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch
             if (string.IsNullOrWhiteSpace(prefix))
             {
                 foreach (var item in autocompleteItems)
-                {                                        
-                     yield return item;  
+                {
+                    yield return item;
                 }
             }
             else
@@ -134,7 +131,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch
 
                 foreach (var item in autocompleteTrie.Retrieve(prefix))
                 {
-                    item.IsChosenOne = true;                    
+                    item.IsChosenOne = true;
                 }
 
                 foreach (var item in autocompleteItems)
@@ -154,7 +151,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch
             return text?.RemoveWhitespace()?.ToLower();
         }
 
-        
+
 
         private class DataBucketItem<T1>
         {
@@ -175,8 +172,8 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch
         {
             private readonly T2 argument;
             public ICommandArgument Argument => argument;
-            public double LevensteinScore { get; init; }         
-         
+            public double LevensteinScore { get; init; }
+
 
 
             public FuzzySearchResult(T2 argument, double levensteinScore)
@@ -190,7 +187,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch
     public interface IFuzzySearchResult
     {
         ICommandArgument Argument { get; }
-        public double LevensteinScore { get;  }
+        public double LevensteinScore { get; }
 
     }
 }

@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -20,11 +21,11 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 //create analytical panel
                 var analyticalPanel = CreateAnalyticalPanel.CreateAmPanel(document);
                 if (analyticalPanel != null)
-                    using (var transaction = new Transaction(document, "Edit Analytical Panel outer contour"))
+                    using (Transaction transaction = new(document, "Edit Analytical Panel outer contour"))
                     {
                         transaction.Start();
 
-                        var profileloop = new CurveLoop();
+                        CurveLoop profileloop = new();
                         profileloop.Append(Line.CreateBound(
                             new XYZ(0, 0, 0), new XYZ(5, 0, 0)));
                         profileloop.Append(Line.CreateBound(

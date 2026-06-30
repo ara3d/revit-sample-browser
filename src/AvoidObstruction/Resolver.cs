@@ -1,17 +1,16 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Mep;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Mep;
-using Ara3D.RevitSampleBrowser.Common.Parameters;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
     public class Resolver
@@ -20,7 +19,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 
         private readonly PipingSystemType m_pipingSystemType;
 
-        private Application m_rvtApp;
+        private readonly Application m_rvtApp;
 
         private readonly Document m_rvtDoc;
 
@@ -32,8 +31,8 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 
             foreach (var pipingSystemType in m_rvtDoc.GetElements<PipingSystemType>())
             {
-                if (pipingSystemType.SystemClassification == MEPSystemClassification.SupplyHydronic ||
-                    pipingSystemType.SystemClassification == MEPSystemClassification.ReturnHydronic)
+                if (pipingSystemType.SystemClassification is MEPSystemClassification.SupplyHydronic or
+                    MEPSystemClassification.ReturnHydronic)
                 {
                     m_pipingSystemType = pipingSystemType;
                     break;
@@ -44,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         public void Resolve()
         {
             foreach (var pipe in m_rvtDoc.GetElements<Pipe>())
-                 Resolve(pipe);
+                Resolve(pipe);
         }
 
         private void Resolve(Pipe pipe)
@@ -107,13 +106,10 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             var startConn = ElementQuery.FindConnectedTo(pipe, pipeLine.GetEndPoint(0));
             var endConn = ElementQuery.FindConnectedTo(pipe, pipeLine.GetEndPoint(1));
 
-            Pipe startPipe = null;
-            if (null != startConn)
-                startPipe = Pipe.Create(m_rvtDoc, pipe.PipeType.Id, levelId, startConn, sections[0].Start);
-            else
-                startPipe = Pipe.Create(m_rvtDoc, systemTypeId, pipe.PipeType.Id, levelId, sections[0].Start,
+            var startPipe = null != startConn
+                ? Pipe.Create(m_rvtDoc, pipe.PipeType.Id, levelId, startConn, sections[0].Start)
+                : Pipe.Create(m_rvtDoc, systemTypeId, pipe.PipeType.Id, levelId, sections[0].Start,
                     pipeLine.GetEndPoint(0));
-
             ParameterAccess.CopyParameters(pipe, startPipe);
 
             var connStart1 = ConnectorHelper.FindConnector(startPipe, sections[0].Start);
@@ -122,10 +118,9 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 
             Pipe endPipe = null;
             var count = sections.Count;
-            if (null != endConn)
-                endPipe = Pipe.Create(m_rvtDoc, pipe.PipeType.Id, levelId, endConn, sections[count - 1].End);
-            else
-                endPipe = Pipe.Create(m_rvtDoc, systemTypeId, pipe.PipeType.Id, levelId, sections[count - 1].End,
+            endPipe = null != endConn
+                ? Pipe.Create(m_rvtDoc, pipe.PipeType.Id, levelId, endConn, sections[count - 1].End)
+                : Pipe.Create(m_rvtDoc, systemTypeId, pipe.PipeType.Id, levelId, sections[count - 1].End,
                     pipeLine.GetEndPoint(1));
 
             ParameterAccess.CopyParameters(pipe, endPipe);
@@ -144,7 +139,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
                 var cur = refs[i].GetReference();
                 var curElem = m_rvtDoc.GetElement(cur);
                 if (curElem.Id == pipe.Id ||
-                    (!(curElem is Pipe) && !(curElem is Duct) &&
+                    (curElem is not Pipe && curElem is not Duct &&
                      curElem.Category.BuiltInCategory != BuiltInCategory.OST_StructuralFraming))
                     refs.RemoveAt(i);
             }
@@ -158,7 +153,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             // Parallel direction jump step. 
             var jumpStep = pipe.Diameter;
 
-            var dirs = new List<XYZ>();
+            List<XYZ> dirs = new();
             foreach (var gref in section.Refs)
             {
                 var elem = m_rvtDoc.GetElement(gref.GetReference());

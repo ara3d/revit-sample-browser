@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Parameters;
+using System;
 namespace Ara3D.RevitSampleBrowser.StructSample.CS
 {
     /// <summary>
@@ -31,13 +30,13 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
             {
                 var rvtApp = commandData.Application;
                 var rvtDoc = rvtApp.ActiveUIDocument;
-                var ss = new ElementSet();
+                ElementSet ss = new();
                 foreach (var elementId in rvtDoc.Selection.GetElementIds())
                 {
                     ss.Insert(rvtDoc.Document.GetElement(elementId));
                 }
 
-                var tran = new Transaction(rvtDoc.Document, "StructSample");
+                Transaction tran = new(rvtDoc.Document, "StructSample");
                 tran.Start();
 
                 var walls = rvtApp.Application.Create.NewElementSet();
@@ -107,12 +106,12 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
             var endPt = loc.Curve.GetEndPoint(1);
 
             // get wall's vector
-            var wallVec = new UV(
+            UV wallVec = new(
                 endPt.X - startPt.X,
                 endPt.Y - startPt.Y);
 
             // get the axis vector
-            var axis = new UV(1.0, 0.0);
+            UV axis = new(1.0, 0.0);
 
             var baseLevelId = wall.get_Parameter(BuiltInParameter.WALL_BASE_CONSTRAINT).AsElementId();
             var topLevelId = wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE).AsElementId();
@@ -174,7 +173,7 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
             }
 
             // rotate column to place it to right location
-            var zVec = new XYZ(0, 0, 1);
+            XYZ zVec = new(0, 0, 1);
             var axis = Line.CreateUnbound(point, zVec);
             column.Location.Rotate(axis, angle);
 

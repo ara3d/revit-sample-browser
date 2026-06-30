@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace BuildingCoder
 {
@@ -7,9 +7,9 @@ namespace BuildingCoder
     {
         internal static List<XYZ> GetBoundaryCorners(FilledRegion region)
         {
-            var result = new List<XYZ>();
+            List<XYZ> result = [];
 
-            var id = new ElementId(region.Id.Value - 1);
+            ElementId id = new(region.Id.Value - 1);
 
             if (region.Document.GetElement(id) is Sketch sketch)
             {
@@ -33,7 +33,7 @@ namespace BuildingCoder
                     .OfClass(typeof(FilledRegion))
                     .ToElementIds();
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Move all Filled Regions");
 
             var v = XYZ.BasisX;

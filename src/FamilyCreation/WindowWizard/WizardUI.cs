@@ -13,23 +13,23 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     public partial class WizardForm : Form
     {
-        private readonly BindingSource m_bindSource = new BindingSource();
+        private readonly BindingSource m_bindSource = [];
 
-        private readonly ToolTip m_copyTip = new ToolTip();
+        private readonly ToolTip m_copyTip = new();
 
-        private readonly ToolTip m_errorTip = new ToolTip();
+        private readonly ToolTip m_errorTip = new();
 
         private readonly Font m_highFont;
 
         private readonly Font m_commonFont;
 
-        private readonly ToolTip m_newTip = new ToolTip();
+        private readonly ToolTip m_newTip = new();
 
         private readonly WizardParameter m_para;
 
-        private readonly List<string> m_types = new List<string>();
+        private readonly List<string> m_types = [];
 
-        private readonly BindingList<DoubleHungWinPara> m_paraList = new BindingList<DoubleHungWinPara>();
+        private readonly BindingList<DoubleHungWinPara> m_paraList = [];
 
         public WizardForm(WizardParameter para)
         {
@@ -137,7 +137,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         {
             if (m_para.Template == "DoubleHung")
             {
-                var dbhungPara = new DoubleHungWinPara(m_para.Validator.IsMetric)
+                DoubleHungWinPara dbhungPara = new(m_para.Validator.IsMetric)
                 {
                     Height = Convert.ToDouble(m_height.Text),
                     Width = Convert.ToDouble(m_width.Text),
@@ -162,7 +162,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
         private void InitializePara()
         {
-            var dbhungPara = new DoubleHungWinPara(m_para.Validator.IsMetric);
+            DoubleHungWinPara dbhungPara = new(m_para.Validator.IsMetric);
             if (!m_para.WinParaTab.Contains(dbhungPara.Type))
             {
                 m_para.WinParaTab.Add(dbhungPara.Type, dbhungPara);
@@ -185,7 +185,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         private void button_newType_Click(object sender, EventArgs e)
         {
             TransforData();
-            var newPara = new DoubleHungWinPara(m_para.Validator.IsMetric);
+            DoubleHungWinPara newPara = new(m_para.Validator.IsMetric);
             SetParaText(newPara);
             m_comboType.Focus();
         }
@@ -193,7 +193,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         private void button_duplicateType_Click(object sender, EventArgs e)
         {
             TransforData();
-            var copyPara = new DoubleHungWinPara((DoubleHungWinPara)m_para.CurrentPara);
+            DoubleHungWinPara copyPara = new((DoubleHungWinPara)m_para.CurrentPara);
             SetParaText(copyPara);
             m_comboType.Focus();
         }
@@ -213,7 +213,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_paraList.Clear();
             foreach (string key in m_para.WinParaTab.Keys)
             {
-                if (!(m_para.WinParaTab[key] is DoubleHungWinPara para)) continue;
+                if (m_para.WinParaTab[key] is not DoubleHungWinPara para) continue;
                 m_paraList.Add(para);
             }
 
@@ -265,7 +265,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 return false;
             }
 
-            if (!(control is TextBox textbox)) return true;
+            if (control is not TextBox textbox) return true;
             var value = 0.0;
             var result = m_para.Validator.IsDouble(textbox.Text, ref value);
             if (!string.IsNullOrEmpty(result))
@@ -307,7 +307,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
         private void m_buttonBrowser_Click(object sender, EventArgs e)
         {
-            var saveDialog = new SaveFileDialog
+            SaveFileDialog saveDialog = new()
             {
                 CheckPathExists = true,
                 SupportMultiDottedExtensions = true,

@@ -7,7 +7,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
     public class Podium
     {
         /// <summary>ExternalGeometryId used when creating and updating the podium BRep.</summary>
-        public static readonly ExternalGeometryId ExternalId = new ExternalGeometryId("externalID");
+        public static readonly ExternalGeometryId ExternalId = new("externalID");
 
         private double m_halfPodiumDepth;
         private double m_halfPodiumHeight;
@@ -53,8 +53,8 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 
         public ExternallyTaggedBRep CreateStairs()
         {
-            var brepBuilder = new BRepBuilder(BRepType.Solid);
-            var persistentIds = new BRepBuilderPersistentIds(brepBuilder);
+            BRepBuilder brepBuilder = new(BRepType.Solid);
+            BRepBuilderPersistentIds persistentIds = new(brepBuilder);
 
             var riser1 = Plane.CreateByOriginAndBasis(new XYZ(0, m_riser1DepthPos, m_halfStepHeight), new XYZ(1, 0, 0),
                 new XYZ(0, 0, 1));

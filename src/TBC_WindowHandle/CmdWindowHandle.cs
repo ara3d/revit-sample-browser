@@ -14,11 +14,12 @@
 
 #region Namespaces
 
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -46,8 +47,8 @@ namespace BuildingCoder
 
             var sel = uidoc.Selection;
 
-            using var f
-                = new CmdWindowHandleForm();
+            using CmdWindowHandleForm f
+                = new();
             f.Show(_hWndRevit);
             var go = true;
             while (go)
@@ -92,8 +93,8 @@ namespace BuildingCoder
 
             var sel = uidoc.Selection;
 
-            using var f
-                = new CmdWindowHandleForm();
+            using CmdWindowHandleForm f
+                = new();
             f.Show(_hWndRevit);
             var go = true;
             while (go)

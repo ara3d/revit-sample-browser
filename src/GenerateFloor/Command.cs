@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Windows.Forms;
 namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -17,17 +16,17 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Generate Floor");
+            Transaction tran = new(commandData.Application.ActiveUIDocument.Document, "Generate Floor");
             tran.Start();
 
             try
             {
                 if (null == commandData) throw new ArgumentNullException(nameof(commandData));
 
-                var data = new Data();
+                Data data = new();
                 data.ObtainData(commandData);
 
-                var dlg = new GenerateFloorForm(data);
+                GenerateFloorForm dlg = new(data);
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

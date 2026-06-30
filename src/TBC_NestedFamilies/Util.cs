@@ -1,8 +1,8 @@
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -17,8 +17,8 @@ namespace BuildingCoder
         {
             ValidateFamilyDocument(familyDocument);
 
-            var collector
-                = new FilteredElementCollector(familyDocument);
+            FilteredElementCollector collector
+                = new(familyDocument);
 
             collector.OfClass(typeof(Family));
 
@@ -38,17 +38,17 @@ namespace BuildingCoder
         {
             ValidateFamilyDocument(familyDocument);
 
-            var oResult
-                = new List<FamilyInstance>();
+            List<FamilyInstance> oResult
+                = [];
 
             FamilyInstance oFamilyInstanceCandidate;
             FamilySymbol oFamilySymbolCandidate;
 
-            var oMatchingNestedFamilies
-                = new List<Family>();
+            List<Family> oMatchingNestedFamilies
+                = [];
 
-            var oAllFamilyInstances
-                = new List<FamilyInstance>();
+            List<FamilyInstance> oAllFamilyInstances
+                = [];
 
             var bFamilyFileNameFilterExists = true;
             var bTypeNameFilterExists = true;
@@ -57,10 +57,10 @@ namespace BuildingCoder
 
             if (string.IsNullOrEmpty(typeNameFilter)) bTypeNameFilterExists = false;
 
-            var fFamilyClass = new ElementClassFilter(typeof(Family));
-            var fFamInstClass = new ElementClassFilter(typeof(FamilyInstance));
-            var f = new LogicalOrFilter(fFamilyClass, fFamInstClass);
-            var collector = new FilteredElementCollector(familyDocument);
+            ElementClassFilter fFamilyClass = new(typeof(Family));
+            ElementClassFilter fFamInstClass = new(typeof(FamilyInstance));
+            LogicalOrFilter f = new(fFamilyClass, fFamInstClass);
+            FilteredElementCollector collector = new(familyDocument);
             collector.WherePasses(f);
 
             foreach (var e in collector)

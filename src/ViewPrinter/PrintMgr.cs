@@ -1,16 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing.Printing;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Control = System.Windows.Forms.Control;
 using PrintRange = Autodesk.Revit.DB.PrintRange;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     public class PrintMgr
@@ -152,9 +151,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             get
             {
                 var title = m_commandData.Application.ActiveUIDocument.Document.Title;
-                if (title.Contains(".rvt"))
-                    return title.Remove(title.LastIndexOf(".")) + PostFix;
-                return title + PostFix;
+                return title.Contains(".rvt") ? title.Remove(title.LastIndexOf(".")) + PostFix : title + PostFix;
             }
         }
 
@@ -185,59 +182,50 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
         public string ChangePrintToFileName()
         {
-            using (var saveDlg = new SaveFileDialog())
+            using var saveDlg = new SaveFileDialog();
+            string postfix = null;
+
+            switch (m_printMgr.IsVirtual)
             {
-                string postfix = null;
-
-                switch (m_printMgr.IsVirtual)
-                {
-                    case VirtualPrinterType.AdobePDF:
-                        saveDlg.Filter = "pdf files (*.pdf)|*.pdf";
-                        postfix = ".pdf";
-                        break;
-                    case VirtualPrinterType.DWFWriter:
-                        saveDlg.Filter = "dwf files (*.dwf)|*.dwf";
-                        postfix = ".dwf";
-                        break;
-                    case VirtualPrinterType.None:
-                        saveDlg.Filter = "prn files (*.prn)|*.prn";
-                        postfix = ".prn";
-                        break;
-                    case VirtualPrinterType.XPSWriter:
-                        saveDlg.Filter = "XPS files (*.xps)|*.xps";
-                        postfix = ".xps";
-                        break;
-                }
-
-                var title = m_commandData.Application.ActiveUIDocument.Document.Title;
-                if (title.Contains(".rvt"))
-                    saveDlg.FileName = title.Remove(title.LastIndexOf(".")) + postfix;
-                else
-                    saveDlg.FileName = title + postfix;
-
-                if (saveDlg.ShowDialog() == DialogResult.OK)
-                    return m_printMgr.PrintToFileName
-                        = saveDlg.FileName;
-                return null;
+                case VirtualPrinterType.AdobePDF:
+                    saveDlg.Filter = "pdf files (*.pdf)|*.pdf";
+                    postfix = ".pdf";
+                    break;
+                case VirtualPrinterType.DWFWriter:
+                    saveDlg.Filter = "dwf files (*.dwf)|*.dwf";
+                    postfix = ".dwf";
+                    break;
+                case VirtualPrinterType.None:
+                    saveDlg.Filter = "prn files (*.prn)|*.prn";
+                    postfix = ".prn";
+                    break;
+                case VirtualPrinterType.XPSWriter:
+                    saveDlg.Filter = "XPS files (*.xps)|*.xps";
+                    postfix = ".xps";
+                    break;
             }
+
+            var title = m_commandData.Application.ActiveUIDocument.Document.Title;
+            saveDlg.FileName = title.Contains(".rvt") ? title.Remove(title.LastIndexOf(".")) + postfix : title + postfix;
+
+            return saveDlg.ShowDialog() == DialogResult.OK
+                ? (m_printMgr.PrintToFileName
+                    = saveDlg.FileName)
+                : null;
         }
 
         public void ChangePrintSetup()
         {
-            using (var dlg = new PrintSetupForm(
-                       new PrintStp(m_printMgr, m_commandData)))
-            {
-                dlg.ShowDialog();
-            }
+            using var dlg = new PrintSetupForm(
+                       new PrintStp(m_printMgr, m_commandData));
+            dlg.ShowDialog();
         }
 
         public void SelectViewSheetSet()
         {
-            using (var dlg = new ViewSheetSetForm(
-                       new ViewSheets(m_commandData.Application.ActiveUIDocument.Document)))
-            {
-                dlg.ShowDialog();
-            }
+            using var dlg = new ViewSheetSetForm(
+                       new ViewSheets(m_commandData.Application.ActiveUIDocument.Document));
+            dlg.ShowDialog();
         }
 
         public bool SubmitPrint()
@@ -250,7 +238,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             // Enable terms (or):
             // 1. Print to non-virtual printer.
             return controlToEnableOrNot.Enabled =
-                m_printMgr.IsVirtual == VirtualPrinterType.None ? true : false;
+                m_printMgr.IsVirtual == VirtualPrinterType.None;
         }
 
         public bool VerifyCopies(Collection<Control> controlsToEnableOrNot)

@@ -1,14 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
 using Ara3D.RevitSampleBrowser.Common.Documents;
 using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
 namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
 {
     /// <summary>
@@ -18,10 +18,10 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
     [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-        private readonly List<ElementId> m_allColumnsOnWalls = new List<ElementId>();
+        private readonly List<ElementId> m_allColumnsOnWalls = [];
         private UIApplication m_app;
         private readonly Dictionary<ElementId, List<ElementId>> m_columnsOnWall =
-            new Dictionary<ElementId, List<ElementId>>();
+            [];
         private Document m_doc;
         private View3D m_view3D;
 
@@ -34,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
             m_view3D = ElementQuery.Get3DView(m_doc);
 
             var selection = revit.Application.ActiveUIDocument.Selection;
-            var wallsToCheck = new List<Wall>();
+            List<Wall> wallsToCheck = new();
 
             if (selection.GetElementIds().Count > 0)
             {
@@ -52,14 +52,14 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
             }
             else
             {
-                var collector = new FilteredElementCollector(m_doc);
+                FilteredElementCollector collector = new(m_doc);
                 var iter = collector.OfClass(typeof(Wall)).GetElementIterator();
                 while (iter.MoveNext()) wallsToCheck.Add((Wall)iter.Current);
             }
 
             CheckWallsForEmbeddedColumns(wallsToCheck);
 
-            ICollection<ElementId> toSelected = new List<ElementId>();
+            ICollection<ElementId> toSelected = [];
             if (m_allColumnsOnWalls.Count > 0)
             {
                 foreach (var id in m_allColumnsOnWalls)
@@ -113,7 +113,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
 
             var wallDelta = PlaneAndTransform.GetWallDeltaAt(wall, locationCurve, parameter);
 
-            var rayStart = new XYZ(wallLocation.X + wallDelta.X, wallLocation.Y + wallDelta.Y, elevation);
+            XYZ rayStart = new(wallLocation.X + wallDelta.X, wallLocation.Y + wallDelta.Y, elevation);
             FindColumnsByDirection(rayStart, rayDirection, within, wall);
 
             rayStart = new XYZ(wallLocation.X - wallDelta.X, wallLocation.Y - wallDelta.Y, elevation);
@@ -122,7 +122,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
 
         private void FindColumnsByDirection(XYZ rayStart, XYZ rayDirection, double within, Wall wall)
         {
-            var referenceIntersector = new ReferenceIntersector(m_view3D);
+            ReferenceIntersector referenceIntersector = new(m_view3D);
             var intersectedReferences = referenceIntersector.Find(rayStart, rayDirection);
             ElementQuery.FindColumnsWithin(intersectedReferences, within, wall, m_allColumnsOnWalls, m_columnsOnWall);
         }

@@ -1,10 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
@@ -30,10 +31,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             m_profile = profile;
             m_sizePictureBox = pictureBox.Size;
 
-            if (profile is ProfileWall)
-                m_tool = new RectangleTool();
-            else
-                m_tool = new LineTool();
+            m_tool = profile is ProfileWall ? new RectangleTool() : new LineTool();
 
             switch (profile)
             {

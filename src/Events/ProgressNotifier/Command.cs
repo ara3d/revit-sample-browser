@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var mainWindow = new MainWindow(commandData.Application.Application);
+            MainWindow mainWindow = new(commandData.Application.Application);
             mainWindow.ShowDialog();
             return Result.Succeeded;
         }

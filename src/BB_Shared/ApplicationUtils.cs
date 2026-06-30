@@ -1,11 +1,11 @@
-﻿using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Ara3D.Utils;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
@@ -39,8 +39,8 @@ public static class ApplicationUtils
         var app = uiapp.Application;
 
         // --- handlers we will attach temporarily ---
-        var suppressedDialogs = new List<string>();
-        var handledFailures = new List<string>();
+        List<string> suppressedDialogs = new();
+        List<string> handledFailures = new();
 
         EventHandler<DialogBoxShowingEventArgs>? dialogHandler = null;
         EventHandler<FailuresProcessingEventArgs>? failuresHandler = null;
@@ -159,7 +159,7 @@ public static class ApplicationUtils
             }
 
             // Build open options
-            var openOpts = new OpenOptions
+            OpenOptions openOpts = new()
             {
                 Audit = audit
             };
@@ -172,7 +172,7 @@ public static class ApplicationUtils
 
             if (closeAllWorksets)
             {
-                var wkc = new WorksetConfiguration(WorksetConfigurationOption.CloseAllWorksets);
+                WorksetConfiguration wkc = new(WorksetConfigurationOption.CloseAllWorksets);
                 openOpts.SetOpenWorksetsConfiguration(wkc);
             }
 

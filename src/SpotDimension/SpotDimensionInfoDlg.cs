@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.UI;
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
 {
@@ -51,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
             {
                 if (tmpSpotDimension.View.Name == viewName)
                 {
-                    var tmpItem = new ListViewItem(tmpSpotDimension.Id.ToString())
+                    ListViewItem tmpItem = new(tmpSpotDimension.Id.ToString())
                     {
                         Tag = tmpSpotDimension
                     };

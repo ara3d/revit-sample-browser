@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 namespace Ara3D.RevitSampleBrowser.Events.AutoUpdate.CS
 {
@@ -56,7 +56,7 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoUpdate.CS
             try
             {
                 // Event handlers must start their own Transaction (Revit does not provide one).
-                var eventTransaction = new Transaction(doc, "Event handler modify project information");
+                Transaction eventTransaction = new(doc, "Event handler modify project information");
                 eventTransaction.Start();
                 // ProjectInformation is empty on family documents; do not run this sample on them.
                 doc.ProjectInformation.Address =

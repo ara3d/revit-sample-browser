@@ -101,14 +101,14 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
         private PointF ComputeCenter(PointF p1, PointF p2, PointF p3)
         {
-            var deta = 4 * (p2.X - p1.X) * (p3.Y - p1.Y) - 4 * (p2.Y - p1.Y) * (p3.X - p1.X);
+            var deta = (4 * (p2.X - p1.X) * (p3.Y - p1.Y)) - (4 * (p2.Y - p1.Y) * (p3.X - p1.X));
 
             if (deta == 0) throw new Exception("Divided by Zero!");
-            var constD1 = p2.X * p2.X + p2.Y * p2.Y - (p1.X * p1.X + p1.Y * p1.Y);
-            var constD2 = p3.X * p3.X + p3.Y * p3.Y - (p1.X * p1.X + p1.Y * p1.Y);
+            var constD1 = (p2.X * p2.X) + (p2.Y * p2.Y) - ((p1.X * p1.X) + (p1.Y * p1.Y));
+            var constD2 = (p3.X * p3.X) + (p3.Y * p3.Y) - ((p1.X * p1.X) + (p1.Y * p1.Y));
 
-            var centerX = (constD1 * 2 * (p3.Y - p1.Y) - constD2 * 2 * (p2.Y - p1.Y)) / deta;
-            var centerY = (constD2 * 2 * (p2.X - p1.X) - constD1 * 2 * (p3.X - p1.X)) / deta;
+            var centerX = ((constD1 * 2 * (p3.Y - p1.Y)) - (constD2 * 2 * (p2.Y - p1.Y))) / deta;
+            var centerY = ((constD2 * 2 * (p2.X - p1.X)) - (constD1 * 2 * (p3.X - p1.X))) / deta;
 
             return new PointF(centerX, centerY);
         }
@@ -120,8 +120,8 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
                 var pCenter = ComputeCenter(p1, p2, p3);
 
                 //computer the arc rectangle
-                var radius = (float)Math.Sqrt((p1.X - pCenter.X) * (p1.X - pCenter.X)
-                                              + (p1.Y - pCenter.Y) * (p1.Y - pCenter.Y));
+                var radius = (float)Math.Sqrt(((p1.X - pCenter.X) * (p1.X - pCenter.X))
+                                              + ((p1.Y - pCenter.Y) * (p1.Y - pCenter.Y)));
                 var size = new SizeF(radius, radius);
                 var upLeft = pCenter - size;
                 var sizeRect = new SizeF(2 * radius, 2 * radius);
@@ -165,8 +165,8 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             if (sin > 0)
                 result = 180 / Math.PI * Math.Acos(cos);
             else if (cos < 0)
-                result = 180 + 180 / Math.PI * Math.Acos(Math.Abs(cos));
-            else if (cos > 0) result = 360 - 180 / Math.PI * Math.Acos(Math.Abs(cos));
+                result = 180 + (180 / Math.PI * Math.Acos(Math.Abs(cos)));
+            else if (cos > 0) result = 360 - (180 / Math.PI * Math.Acos(Math.Abs(cos)));
             return result;
         }
     }

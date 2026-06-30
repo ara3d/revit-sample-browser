@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
@@ -14,7 +12,7 @@ public static class CategoryExtensions
     {
         if (rootDoc == null) throw new ArgumentNullException(nameof(rootDoc));
 
-        var result = new List<Category>();
+        List<Category> result = [];
 
         void AddCategoryTree(Category cat)
         {

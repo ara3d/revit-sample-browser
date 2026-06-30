@@ -1,3 +1,7 @@
+using Ara3D.Utils;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Linq;
@@ -5,10 +9,6 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Ara3D.Bowerbird;
-using Ara3D.Utils;
-using Autodesk.Revit.UI;
-using Newtonsoft.Json.Linq;
 
 namespace Ara3D.Bowerbird.RevitSamples;
 
@@ -149,59 +149,59 @@ Reload MCP in Cursor (Settings → Tools & MCP), then try the echo or revit_docu
                 "initialize" => HandleInitialize(),
                 "tools/list" => HandleToolsList(),
                 "tools/call" => HandleToolsCall(request["params"] as JObject),
-                "ping" => new JObject(),
+                "ping" => [],
                 _ => throw new McpProtocolException(-32601, $"Method not found: {method}"),
             };
 
-            if (id == null || id.Type == JTokenType.Null)
-                return null;
-
-            return new JObject
-            {
-                ["jsonrpc"] = "2.0",
-                ["id"] = id,
-                ["result"] = result,
-            };
+            return id == null || id.Type == JTokenType.Null
+                ? null
+                : new JObject
+                {
+                    ["jsonrpc"] = "2.0",
+                    ["id"] = id,
+                    ["result"] = result,
+                };
         }
         catch (McpProtocolException ex)
         {
-            if (id == null || id.Type == JTokenType.Null)
-                return null;
-
-            return new JObject
-            {
-                ["jsonrpc"] = "2.0",
-                ["id"] = id,
-                ["error"] = new JObject
+            return id == null || id.Type == JTokenType.Null
+                ? null
+                : new JObject
                 {
-                    ["code"] = ex.Code,
-                    ["message"] = ex.Message,
-                },
-            };
+                    ["jsonrpc"] = "2.0",
+                    ["id"] = id,
+                    ["error"] = new JObject
+                    {
+                        ["code"] = ex.Code,
+                        ["message"] = ex.Message,
+                    },
+                };
         }
         catch (Exception ex)
         {
-            if (id == null || id.Type == JTokenType.Null)
-                return null;
-
-            return new JObject
-            {
-                ["jsonrpc"] = "2.0",
-                ["id"] = id,
-                ["error"] = new JObject
+            return id == null || id.Type == JTokenType.Null
+                ? null
+                : new JObject
                 {
-                    ["code"] = -32603,
-                    ["message"] = ex.Message,
-                },
-            };
+                    ["jsonrpc"] = "2.0",
+                    ["id"] = id,
+                    ["error"] = new JObject
+                    {
+                        ["code"] = -32603,
+                        ["message"] = ex.Message,
+                    },
+                };
         }
     }
 
     static bool IsRequest(JObject message)
-        => message["method"] != null && message["id"] != null;
+    {
+        return message["method"] != null && message["id"] != null;
+    }
 
     static JObject HandleInitialize()
-        => new()
+    {
+        return new()
         {
             ["protocolVersion"] = "2025-03-26",
             ["capabilities"] = new JObject
@@ -214,9 +214,11 @@ Reload MCP in Cursor (Settings → Tools & MCP), then try the echo or revit_docu
                 ["version"] = "1.0.0",
             },
         };
+    }
 
     static JObject HandleToolsList()
-        => new()
+    {
+        return new()
         {
             ["tools"] = new JArray
             {
@@ -250,11 +252,12 @@ Reload MCP in Cursor (Settings → Tools & MCP), then try the echo or revit_docu
                 },
             },
         };
+    }
 
     static JObject HandleToolsCall(JObject parameters)
     {
         var name = parameters?["name"]?.Value<string>();
-        var arguments = parameters?["arguments"] as JObject ?? new JObject();
+        var arguments = parameters?["arguments"] as JObject ?? [];
 
         var text = name switch
         {
@@ -269,10 +272,9 @@ Reload MCP in Cursor (Settings → Tools & MCP), then try the echo or revit_docu
     static string HandleEcho(JObject arguments)
     {
         var message = arguments["message"]?.Value<string>();
-        if (string.IsNullOrEmpty(message))
-            throw new McpProtocolException(-32602, "Missing required argument: message");
-
-        return $"hello {message}";
+        return string.IsNullOrEmpty(message)
+            ? throw new McpProtocolException(-32602, "Missing required argument: message")
+            : $"hello {message}";
     }
 
     static string HandleRevitDocumentInfo()
@@ -295,7 +297,8 @@ Reload MCP in Cursor (Settings → Tools & MCP), then try the echo or revit_docu
     }
 
     static JObject ToolResult(string text, bool isError = false)
-        => new()
+    {
+        return new()
         {
             ["content"] = new JArray
             {
@@ -307,17 +310,12 @@ Reload MCP in Cursor (Settings → Tools & MCP), then try the echo or revit_docu
             },
             ["isError"] = isError,
         };
+    }
 
     static bool IsAllowedOrigin(HttpListenerRequest request)
     {
         var origin = request.Headers["Origin"];
-        if (string.IsNullOrEmpty(origin))
-            return true;
-
-        if (!Uri.TryCreate(origin, UriKind.Absolute, out var uri))
-            return false;
-
-        return uri.Host is "localhost" or "127.0.0.1";
+        return string.IsNullOrEmpty(origin) || Uri.TryCreate(origin, UriKind.Absolute, out var uri) && uri.Host is "localhost" or "127.0.0.1";
     }
 
     static void WriteJson(HttpListenerResponse response, JToken payload)
@@ -354,9 +352,7 @@ Reload MCP in Cursor (Settings → Tools & MCP), then try the echo or revit_docu
 
             lock (_lock)
             {
-                if (_error != null)
-                    throw _error;
-                return _result;
+                return _error != null ? throw _error : _result;
             }
         }
 
@@ -381,7 +377,9 @@ Reload MCP in Cursor (Settings → Tools & MCP), then try the echo or revit_docu
         }
 
         public string GetName()
-            => "MCP Revit Bridge";
+        {
+            return "MCP Revit Bridge";
+        }
     }
 
     sealed class McpProtocolException(int code, string message) : Exception(message)

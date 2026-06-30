@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.IO;
-using System.Reflection;
-using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Windows.Media.Imaging;
 
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {

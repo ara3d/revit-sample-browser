@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.ComponentModel;
 using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
 {
@@ -49,12 +48,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         public delegate void UpdateSelectObjEventHandler();
 
         private string m_barSpacing;
-
-        private Face m_face;
-
         private LayoutRule m_layoutRule;
-
-        private int m_numberOfBars;
 
         /// <summary>
         ///     cache path reinforcement object.
@@ -63,20 +57,18 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
 
         private string m_primaryBarLength;
 
-        private ElementId m_primaryBarType;
-
         public PathReinProperties(Autodesk.Revit.DB.Structure.PathReinforcement pathRein)
         {
             PathRein = pathRein;
             m_layoutRule = (LayoutRule)GetParameter("Layout Rule").AsInteger();
-            m_face = (Face)GetParameter("Face").AsInteger();
-            m_numberOfBars = PathRein.get_Parameter(
+            Face = (Face)GetParameter("Face").AsInteger();
+            NumberOfBars = PathRein.get_Parameter(
                 BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).AsInteger();
             m_barSpacing = PathRein.get_Parameter(
                 BuiltInParameter.PATH_REIN_SPACING).AsValueString();
             m_primaryBarLength = PathRein.get_Parameter(
                 BuiltInParameter.PATH_REIN_LENGTH_1).AsValueString();
-            m_primaryBarType = GetParameter("Primary Bar - Type").AsElementId();
+            PrimaryBarType = GetParameter("Primary Bar - Type").AsElementId();
         }
 
         /// <summary>
@@ -86,11 +78,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         [Category("Layers")]
         [DisplayName("Number of Bars")]
         [ReadOnly(true)]
-        public int NumberOfBars
-        {
-            get => m_numberOfBars;
-            set => m_numberOfBars = value;
-        }
+        public int NumberOfBars { get; set; }
 
         /// <summary>
         ///     Layout rule of path reinforcement,get/set property.
@@ -146,11 +134,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         [Category("Layers")]
         [TypeConverter(typeof(BartypeConverter))]
         [DisplayName("Primary Bar - Type")]
-        public ElementId PrimaryBarType
-        {
-            get => m_primaryBarType;
-            set => m_primaryBarType = value;
-        }
+        public ElementId PrimaryBarType { get; set; }
 
         /// <summary>
         ///     Primary bar length of path reinforcement,get/set property.
@@ -172,11 +156,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         /// </summary>
         [Category("Layers")]
         [DisplayName("Face")]
-        public Face Face
-        {
-            get => m_face;
-            set => m_face = value;
-        }
+        public Face Face { get; set; }
 
         public event UpdateSelectObjEventHandler UpdateSelectObjEvent;
 
@@ -188,8 +168,8 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             try
             {
                 GetParameter("Layout Rule").Set((int)m_layoutRule);
-                GetParameter("Face").Set((int)m_face);
-                GetParameter("Primary Bar - Type").Set(m_primaryBarType);
+                GetParameter("Face").Set((int)Face);
+                GetParameter("Primary Bar - Type").Set(PrimaryBarType);
                 PathRein.get_Parameter(
                     BuiltInParameter.PATH_REIN_LENGTH_1).SetValueString(m_primaryBarLength);
 
@@ -203,7 +183,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                             BuiltInParameter.PATH_REIN_SPACING).SetValueString(m_barSpacing);
                         GetParameter("Layout Rule").Set((int)LayoutRule.FixedNumber);
                         PathRein.get_Parameter(
-                            BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(m_numberOfBars);
+                            BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(NumberOfBars);
                         GetParameter("Layout Rule").Set((int)m_layoutRule);
                         break;
                     // if layout rule is fixed number, bar spacing will be read only.
@@ -211,7 +191,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                     // to maximum spacing, and then set the layout rule back.
                     case LayoutRule.FixedNumber:
                         PathRein.get_Parameter(
-                            BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(m_numberOfBars);
+                            BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(NumberOfBars);
                         GetParameter("Layout Rule").Set((int)LayoutRule.MaximumSpacing);
                         PathRein.get_Parameter(
                             BuiltInParameter.PATH_REIN_SPACING).SetValueString(m_barSpacing);
@@ -304,44 +284,42 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             {
                 if (dQuotation > 0) return false;
 
-                if ('0' <= ch && ch <= '9')
+                if (ch is >= '0' and <= '9')
                 {
                     number++;
                 }
                 else switch (ch)
-                {
-                    case '\'' when sQuotation > 0 || number == 0:
-                        return false;
-                    case '\'':
-                        sQuotation++;
-                        number = 0;
-                        break;
-                    case '\"' when dQuotation > 0 || number == 0:
-                        return false;
-                    case '\"':
-                        dQuotation++;
-                        number = 0;
-                        break;
-                    case '-' when hLine != 0 || sQuotation == 0 || (sQuotation != 0 && number != 0):
-                        return false;
-                    case '-':
-                        hLine++;
-                        number = 0;
-                        break;
-                    case ' ':
-                        // skip the white space
-                        break;
-                    default:
-                        return false;
-                }
+                    {
+                        case '\'' when sQuotation > 0 || number == 0:
+                            return false;
+                        case '\'':
+                            sQuotation++;
+                            number = 0;
+                            break;
+                        case '\"' when dQuotation > 0 || number == 0:
+                            return false;
+                        case '\"':
+                            dQuotation++;
+                            number = 0;
+                            break;
+                        case '-' when hLine != 0 || sQuotation == 0 || (sQuotation != 0 && number != 0):
+                            return false;
+                        case '-':
+                            hLine++;
+                            number = 0;
+                            break;
+                        case ' ':
+                            // skip the white space
+                            break;
+                        default:
+                            return false;
+                    }
             }
 
             //check whether the parsed string is valid.
             var length = inputTrim.Length;
             var last = inputTrim[length - 1];
-            if (dQuotation > 0 && !last.Equals('\"')) return false;
-
-            return sQuotation <= 0 || dQuotation != 0 || last.Equals('\'');
+            return (dQuotation <= 0 || last.Equals('\"')) && (sQuotation <= 0 || dQuotation != 0 || last.Equals('\''));
         }
     }
 }

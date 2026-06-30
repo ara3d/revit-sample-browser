@@ -1,10 +1,10 @@
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -18,8 +18,8 @@ namespace BuildingCoder
             var doc = uidoc.Document;
             var active_view = doc.ActiveView;
 
-            var visible_dwg_geo
-                = new List<GeometryObject>();
+            List<GeometryObject> visible_dwg_geo
+                = new();
 
             var r = uidoc.Selection.PickObject(
                 ObjectType.Element,
@@ -55,7 +55,7 @@ namespace BuildingCoder
                     .OfType<FilledRegionType>()
                     .First();
 
-                using var t = new Transaction(doc);
+                using Transaction t = new(doc);
                 t.Start("ProcessDWG");
 
                 foreach (var obj in visible_dwg_geo)
@@ -64,7 +64,7 @@ namespace BuildingCoder
 
                     if (null != poly)
                     {
-                        var curveLoop = new CurveLoop();
+                        CurveLoop curveLoop = new();
 
                         var points = poly.GetCoordinates();
 
@@ -74,7 +74,7 @@ namespace BuildingCoder
 
                         FilledRegion.Create(doc,
                             filledType.Id, active_view.Id,
-                            new List<CurveLoop> {curveLoop});
+                            [curveLoop]);
                     }
                 }
 

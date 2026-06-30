@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.CreateTrianglesTopography.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -22,20 +21,18 @@ namespace Ara3D.RevitSampleBrowser.CreateTrianglesTopography.CS
 
                 var trianglesData = SampleBrowserUtils.LoadTrianglesData();
 
-                using (var tran = new Transaction(document, "CreateTrianglesTopography"))
+                using Transaction tran = new(document, "CreateTrianglesTopography");
+                tran.Start();
+                List<PolymeshFacet> triangleFacets = new();
+                foreach (var facet in trianglesData.Facets)
                 {
-                    tran.Start();
-                    var triangleFacets = new List<PolymeshFacet>();
-                    foreach (var facet in trianglesData.Facets)
-                    {
-                        triangleFacets.Add(new PolymeshFacet(facet[0], facet[1], facet[2]));
-                    }
-
-                    var topoSurface = TopographySurface.Create(document, trianglesData.Points, triangleFacets);
-                    var name = topoSurface.get_Parameter(BuiltInParameter.ROOM_NAME);
-                    name?.Set("CreateTrianglesTopography");
-                    tran.Commit();
+                    triangleFacets.Add(new PolymeshFacet(facet[0], facet[1], facet[2]));
                 }
+
+                var topoSurface = TopographySurface.Create(document, trianglesData.Points, triangleFacets);
+                var name = topoSurface.get_Parameter(BuiltInParameter.ROOM_NAME);
+                name?.Set("CreateTrianglesTopography");
+                tran.Commit();
 
                 return Result.Succeeded;
             }

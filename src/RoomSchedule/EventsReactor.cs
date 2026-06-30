@@ -1,15 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.DB.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.DB.Events;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
@@ -18,9 +17,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
     /// </summary>
     public class SheetInfo
     {
-        private string m_fileName;
-
-        private string m_sheetName;
 
         /// <summary>
         ///     Ctor method
@@ -29,21 +25,13 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         /// <param name="sheetName">The sheet name of spreadsheet which was opened.</param>
         public SheetInfo(string fileName, string sheetName)
         {
-            m_fileName = fileName;
-            m_sheetName = sheetName;
+            FileName = fileName;
+            SheetName = sheetName;
         }
 
-        public string FileName
-        {
-            get => m_fileName;
-            set => m_fileName = value;
-        }
+        public string FileName { get; set; }
 
-        public string SheetName
-        {
-            get => m_sheetName;
-            set => m_sheetName = value;
-        }
+        public string SheetName { get; set; }
     }
 
     /// <summary>
@@ -55,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
     /// </summary>
     public sealed class EventsReactor : IDisposable
     {
-        private readonly Dictionary<int, SheetInfo> m_docMapDict = new Dictionary<int, SheetInfo>();
+        private readonly Dictionary<int, SheetInfo> m_docMapDict = [];
 
         private readonly string m_logFile;
 
@@ -182,7 +170,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
 
             // retrieve all rooms in project(maybe there are new rooms created manually by user)
-            var roomData = new RoomsData(activeDocument);
+            RoomsData roomData = new(activeDocument);
             if (roomData.Rooms.Count <= 0)
             {
                 DumpLog("This document doesn't have any room yet.");
@@ -191,7 +179,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
             var updatedRows = 0; // number of rows which were updated
             var newRows = 0; // number of rows which were added into spread sheet
-            var dbConnector = new XlsDbConnector(mappedXlsAndTable.FileName);
+            XlsDbConnector dbConnector = new(mappedXlsAndTable.FileName);
 
             var stepNo = -1;
             DumpLog($"{Environment.NewLine}Start to update spreadsheet room......");

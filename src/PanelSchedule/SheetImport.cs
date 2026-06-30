@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
@@ -18,21 +18,21 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            if (!(doc.ActiveView is ViewSheet sheet))
+            if (doc.ActiveView is not ViewSheet sheet)
             {
                 message = "please go to a sheet view.";
                 return Result.Failed;
             }
 
-            var fec = new FilteredElementCollector(doc);
-            var panelScheduleViewsAreWanted = new ElementClassFilter(typeof(PanelScheduleView));
+            FilteredElementCollector fec = new(doc);
+            ElementClassFilter panelScheduleViewsAreWanted = new(typeof(PanelScheduleView));
             fec.WherePasses(panelScheduleViewsAreWanted);
             var psViews = fec.ToElements() as List<Element>;
 
-            var placePanelScheduleOnSheet = new Transaction(doc, "placePanelScheduleOnSheet");
+            Transaction placePanelScheduleOnSheet = new(doc, "placePanelScheduleOnSheet");
             placePanelScheduleOnSheet.Start();
 
-            var nextOrigin = new XYZ(0.0, 0.0, 0.0);
+            XYZ nextOrigin = new(0.0, 0.0, 0.0);
             foreach (var element in psViews)
             {
                 var psView = element as PanelScheduleView;

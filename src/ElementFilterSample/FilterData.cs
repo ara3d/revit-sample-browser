@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
 using PFRF = Autodesk.Revit.DB.ParameterFilterRuleFactory;
 
 namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
@@ -60,11 +60,11 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         /// <summary>Comparison tolerance; used only when <see cref="ParamType"/> is <see cref="StorageType.Double"/>.</summary>
         public double Epsilon { get; private set; }
 
-        public ElementId ParamId => new ElementId(Parameter);
+        public ElementId ParamId => new(Parameter);
 
         public FilterRule AsFilterRule()
         {
-            var paramId = new ElementId(Parameter);
+            ElementId paramId = new(Parameter);
             switch (ParamType)
             {
                 case StorageType.String:
@@ -172,41 +172,36 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
     public sealed class FilterData
     {
         private readonly Document m_doc;
-        private List<BuiltInCategory> m_filterCategories;
-        private readonly List<FilterRuleBuilder> m_filterRules;
 
         public FilterData(Document doc,
             ICollection<BuiltInCategory> categories, ICollection<FilterRuleBuilder> filterRules)
         {
             m_doc = doc;
-            m_filterCategories = new List<BuiltInCategory>();
-            m_filterCategories.AddRange(categories);
-            m_filterRules = new List<FilterRuleBuilder>();
-            m_filterRules.AddRange(filterRules);
+            FilterCategories = [.. categories];
+            RuleData = [.. filterRules];
         }
 
         public FilterData(Document doc,
             ICollection<ElementId> categories, ICollection<FilterRuleBuilder> filterRules)
         {
             m_doc = doc;
-            m_filterCategories = new List<BuiltInCategory>();
+            FilterCategories = [];
             foreach (var catId in categories)
             {
-                m_filterCategories.Add((BuiltInCategory)catId.Value);
+                FilterCategories.Add((BuiltInCategory)catId.Value);
             }
 
-            m_filterRules = new List<FilterRuleBuilder>();
-            m_filterRules.AddRange(filterRules);
+            RuleData = [.. filterRules];
         }
 
-        public List<BuiltInCategory> FilterCategories => m_filterCategories;
+        public List<BuiltInCategory> FilterCategories { get; private set; }
 
-        public List<FilterRuleBuilder> RuleData => m_filterRules;
+        public List<FilterRuleBuilder> RuleData { get; }
 
         public IList<ElementId> GetCategoryIds()
         {
-            var catIds = new List<ElementId>();
-            foreach (var cat in m_filterCategories)
+            List<ElementId> catIds = [];
+            foreach (var cat in FilterCategories)
             {
                 catIds.Add(new ElementId(cat));
             }
@@ -217,11 +212,11 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         /// <returns>true when categories changed or rules were cleared because new categories no longer support them.</returns>
         public bool SetNewCategories(List<BuiltInCategory> newCats)
         {
-            if (ListCompareUtility<BuiltInCategory>.Equals(newCats, m_filterCategories))
+            if (ListCompareUtility<BuiltInCategory>.Equals(newCats, FilterCategories))
                 return false;
-            m_filterCategories = newCats;
+            FilterCategories = newCats;
 
-            var newCatIds = new List<ElementId>();
+            List<ElementId> newCatIds = [];
             foreach (var cat in newCats)
             {
                 newCatIds.Add(new ElementId(cat));
@@ -229,11 +224,11 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 
             var supportParams =
                 ParameterFilterUtilities.GetFilterableParametersInCommon(m_doc, newCatIds);
-            foreach (var rule in m_filterRules)
+            foreach (var rule in RuleData)
             {
                 if (!supportParams.Contains(new ElementId(rule.Parameter)))
                 {
-                    m_filterRules.Clear();
+                    RuleData.Clear();
                     break;
                 }
             }
@@ -264,15 +259,15 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 
         public static ICollection<string> Criterions(StorageType paramType)
         {
-            ICollection<string> returns = new List<string>
-            {
+            ICollection<string> returns =
+            [
                 Equals,
                 Greater,
                 GreaterOrEqual,
                 LessOrEqual,
                 Less,
                 NotEquals
-            };
+            ];
             // String parameters also support substring criteria.
             if (paramType == StorageType.String)
             {

@@ -46,10 +46,7 @@ public static class VisibilityExtensions
             return null;
 
         var phaseId = phaseParam.AsElementId();
-        if (phaseId == ElementId.InvalidElementId)
-            return null;
-
-        return view.Document.GetElement(phaseId) as Phase;
+        return phaseId == ElementId.InvalidElementId ? null : view.Document.GetElement(phaseId) as Phase;
     }
 
     /// <summary>

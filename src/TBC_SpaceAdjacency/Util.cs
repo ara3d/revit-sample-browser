@@ -1,9 +1,9 @@
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -23,18 +23,18 @@ namespace BuildingCoder
                     new SpatialElementBoundaryOptions());
 
             foreach (var b in boundaries)
-            foreach (var s in b)
-            {
-                var curve = s.GetCurve();
-                var a = curve.Tessellate();
-                for (var i = 1; i < a.Count; ++i)
+                foreach (var s in b)
                 {
-                    var segment = new SpaceAdjacencySegment(
-                        a[i - 1], a[i], space);
+                    var curve = s.GetCurve();
+                    var a = curve.Tessellate();
+                    for (var i = 1; i < a.Count; ++i)
+                    {
+                        var segment = new SpaceAdjacencySegment(
+                            a[i - 1], a[i], space);
 
-                    segments.Add(segment);
+                        segments.Add(segment);
+                    }
                 }
-            }
         }
 
         public static void FindClosestSegments(
@@ -82,10 +82,10 @@ namespace BuildingCoder
                 {
                     var direction = s.DirectionTo(t);
                     var startPt = t.MidPoint;
-                    var testPoint = startPt + direction * SpaceAdjacency_D2mm;
+                    var testPoint = startPt + (direction * SpaceAdjacency_D2mm);
                     if (t.Space.IsPointInSpace(testPoint))
                     {
-                        if (!a.ContainsKey(s.Space)) a.Add(s.Space, new List<Space>());
+                        if (!a.ContainsKey(s.Space)) a.Add(s.Space, []);
                         if (!a[s.Space].Contains(t.Space)) a[s.Space].Add(t.Space);
                     }
                 }
@@ -133,8 +133,7 @@ namespace BuildingCoder
             {
                 var deltaX = StartPoint.X - EndPoint.X;
                 var deltaY = StartPoint.Y - EndPoint.Y;
-                if (deltaX != 0) return deltaY / deltaX;
-                return 0;
+                return deltaX != 0 ? deltaY / deltaX : 0;
             }
         }
 
@@ -162,8 +161,8 @@ namespace BuildingCoder
 
         public bool Parallel(SpaceAdjacencySegment a)
         {
-            return IsVertical && a.IsVertical
-                   || IsHorizontal && a.IsHorizontal
+            return (IsVertical && a.IsVertical)
+                   || (IsHorizontal && a.IsHorizontal)
                    || Util.IsEqual(Slope, a.Slope);
         }
     }

@@ -7,7 +7,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
     public class LineSketch : ObjectSketch
     {
-        private readonly Line2D m_line = new Line2D(); // geometry line to draw
+        private readonly Line2D m_line = new(); // geometry line to draw
 
         public LineSketch(Line2D line)
         {
@@ -20,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         public override void Draw(Graphics g, Matrix translate)
         {
             Transform = translate;
-            var path = new GraphicsPath();
+            GraphicsPath path = new();
             path.AddLine(m_line.StartPnt, m_line.EndPnt);
             path.Transform(translate);
             g.DrawPath(Pen, path);

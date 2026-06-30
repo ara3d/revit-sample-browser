@@ -10,11 +10,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
 namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
 {
     public class Application : IExternalApplication

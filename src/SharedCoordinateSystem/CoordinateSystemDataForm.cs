@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Form = System.Windows.Forms.Form;
-
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.Common.Units;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
+using Form = System.Windows.Forms.Form;
 using FormatValueType = Ara3D.RevitSampleBrowser.Common.Infrastructure.ValueType;
 namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 {
@@ -78,7 +77,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             ShowOffsetValue();
 
             //convert values get from API and set them to controls
-            var cityInfo = new CityInfo(m_siteLocation.Latitude, m_siteLocation.Longitude);
+            CityInfo cityInfo = new(m_siteLocation.Latitude, m_siteLocation.Longitude);
             var cityInfoString = ValueFormatting.ConvertFrom(cityInfo);
 
             latitudeTextBox.Text = cityInfoString.Latitude;
@@ -106,7 +105,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 
         private void duplicateButton_Click(object sender, EventArgs e)
         {
-            using (var duplicateForm = new DuplicateForm(m_data,
+            using (DuplicateForm duplicateForm = new(m_data,
                        this,
                        locationListBox.SelectedItem.ToString()))
             {
@@ -126,10 +125,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 
         private void CheckSelecteCurrent()
         {
-            if (locationListBox.SelectedItem.ToString() == m_currentName)
-                makeCurrentButton.Enabled = false;
-            else
-                makeCurrentButton.Enabled = true;
+            makeCurrentButton.Enabled = locationListBox.SelectedItem.ToString() != m_currentName;
             //get the offset values of the selected item 
             var selecteName = locationListBox.SelectedItem.ToString();
             m_data.GetOffset(selecteName);
@@ -289,7 +285,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         {
             //disable timezone ComboBox
             timeZoneComboBox.Enabled = false;
-            var cityInfoString = new CityInfoString();
+            CityInfoString cityInfoString = new();
 
             if (GetCityInfo(cityNameComboBox.SelectedItem as string, out cityInfoString))
             {
@@ -320,7 +316,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         {
             //enable timezone ComboBox
             timeZoneComboBox.Enabled = true;
-            var cityInfoString = new CityInfoString(latitudeTextBox.Text, longitudeTextBox.Text);
+            CityInfoString cityInfoString = new(latitudeTextBox.Text, longitudeTextBox.Text);
             string cityName;
             string timeZone;
 
@@ -398,7 +394,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 
         private bool GetCityInfo(string cityName, out CityInfoString cityInfoString)
         {
-            var cityInfo = new CityInfo();
+            CityInfo cityInfo = new();
 
             //try to get CityInfo according to cityName
             if (m_placeInfo.TryGetCityInfo(cityName, out cityInfo))

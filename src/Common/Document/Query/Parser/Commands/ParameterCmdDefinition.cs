@@ -2,29 +2,28 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class ParameterCmdDefinition : ICommandDefinition, INeedInitialization, INeedInitializationWithDocument, IOfferArgumentAutocompletion
     {
-        private static readonly AutocompleteItem AutocompleteItem = new AutocompleteItem("p: ", "p:[parametr] = [value]", "search for a parameter (value)", AutocompleteItemGroups.Commands);
-        private readonly DataBucket<ParameterArgument> dataBucket = new DataBucket<ParameterArgument>(0.69);
-        private readonly DataBucket<ParameterArgument> dataBucketForUser = new DataBucket<ParameterArgument>(0.67);
+        private static readonly AutocompleteItem AutocompleteItem = new("p: ", "p:[parametr] = [value]", "search for a parameter (value)", AutocompleteItemGroups.Commands);
+        private readonly DataBucket<ParameterArgument> dataBucket = new(0.69);
+        private readonly DataBucket<ParameterArgument> dataBucketForUser = new(0.67);
 
         public void Init()
         {
             var ids = Autodesk.Revit.DB.ParameterUtils.GetAllBuiltInParameters()
                 .Select(x => Autodesk.Revit.DB.ParameterUtils.GetBuiltInParameter(x)).ToList();
-foreach (var param in ids)
+            foreach (var param in ids)
             {
                 var label = LabelUtils.GetLabelFor(param);
                 var strParam = param.ToString();
@@ -39,13 +38,13 @@ foreach (var param in ids)
                 }
 
 
-                dataBucket.Add(new AutocompleteItem(strParam, $"{strParam} ({(long)param})", label, AutocompleteItemGroups.BuiltInParameter), new ParameterArgument(param), label, strParam);              
+                dataBucket.Add(new AutocompleteItem(strParam, $"{strParam} ({(long)param})", label, AutocompleteItemGroups.BuiltInParameter), new ParameterArgument(param), label, strParam);
             }
             dataBucket.Rebuild();
         }
         public void Init(Document document)
         {
-            dataBucketForUser.Clear();         
+            dataBucketForUser.Clear();
             foreach (var userParam in new FilteredElementCollector(document).OfClass(typeof(ParameterElement)))
             {
                 var group = AutocompleteItemGroups.ProjectParameter;
@@ -59,7 +58,11 @@ foreach (var param in ids)
         }
 
 
-        public IAutocompleteItem GetCommandAutocompleteItem() => AutocompleteItem;
+        public IAutocompleteItem GetCommandAutocompleteItem()
+        {
+            return AutocompleteItem;
+        }
+
         public IEnumerable<IAutocompleteItem> GetAutocompleteItems(string prefix)
         {
             return dataBucketForUser.ProvideAutoCompletion(prefix).Union(dataBucket.ProvideAutoCompletion(prefix));
@@ -76,18 +79,12 @@ foreach (var param in ids)
         }
         public bool CanRecognizeArgument(string argument)
         {
-            if (argument.StartsWith(nameof(BuiltInParameter), StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-            if (Operators.DoesContainAnyValidOperator(argument))
-            {
-                return true;
-            }
+            return argument.StartsWith(nameof(BuiltInParameter), StringComparison.OrdinalIgnoreCase) || Operators.DoesContainAnyValidOperator(argument);
+        }
+        public bool CanParticipateInGenericSearch()
+        {
             return false;
         }
-        public bool CanParticipateInGenericSearch() => false;
-
 
         public ICommand Create(string cmdText, string argument)
         {
@@ -99,7 +96,7 @@ foreach (var param in ids)
             var args = argsBIP.Union(argsUser);
 
             return new ParameterCmd(cmdText, args, @operator);
-        }       
+        }
     }
 
 
@@ -114,13 +111,13 @@ foreach (var param in ids)
 
                 if (firstArg != null)
                 {
-                    string count = "";
+                    var count = "";
                     if (arguments.Count() > 1)
                     {
                         count = $" [+{arguments.Count() - 1} more]";
                     }
 
-                    string name = firstArg?.Name;
+                    var name = firstArg?.Name;
                     if (!firstArg.IsBuiltInParameter)
                     {
                         name = firstArg.Label;

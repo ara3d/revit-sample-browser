@@ -13,13 +13,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var myDoc = new MyDocument(commandData);
+            MyDocument myDoc = new(commandData);
 
-            using (var gridForm = new GridForm(myDoc))
-            {
-                // The form is created successfully
-                if (null != gridForm && false == gridForm.IsDisposed) gridForm.ShowDialog();
-            }
+            using GridForm gridForm = new(myDoc);
+            // The form is created successfully
+            if (null != gridForm && false == gridForm.IsDisposed) gridForm.ShowDialog();
 
             return Result.Succeeded;
         }

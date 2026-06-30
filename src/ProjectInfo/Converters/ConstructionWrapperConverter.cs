@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Analysis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers;
-using Autodesk.Revit.DB.Analysis;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
@@ -23,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            var list = new List<ConstructionWrapper>();
+            List<ConstructionWrapper> list = [];
             // convert property name to ConstructionType
             var constructionType =
                 (ConstructionType)Enum.Parse(typeof(ConstructionType), context.PropertyDescriptor.Name);

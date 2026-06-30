@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Document = Autodesk.Revit.DB.Document;
 
@@ -40,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.CreateTruss.CS
                 m_appCreator = _application.Create;
                 m_familyCreator = _document.FamilyCreate;
 
-                var newTran = new Transaction(_document);
+                Transaction newTran = new(_document);
                 newTran.Start("NewTrussCurve");
 
                 MakeNewTruss();
@@ -63,15 +63,15 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.CreateTruss.CS
         {
             var webAngle = 35.0;
             var webAngleRadians = (180 - webAngle) * Math.PI / 180.0;
-            var angleDirection = new XYZ(Math.Cos(webAngleRadians), Math.Sin(webAngleRadians), 0);
+            XYZ angleDirection = new(Math.Cos(webAngleRadians), Math.Sin(webAngleRadians), 0);
 
             Autodesk.Revit.DB.ReferencePlane top = null, bottom = null, left = null, right = null, center = null;
             View level1 = null;
-            var elements = new List<Element>();
-            var refPlaneFilter = new ElementClassFilter(typeof(Autodesk.Revit.DB.ReferencePlane));
-            var viewFilter = new ElementClassFilter(typeof(View));
-            var filter = new LogicalOrFilter(refPlaneFilter, viewFilter);
-            var collector = new FilteredElementCollector(_document);
+            List<Element> elements = [];
+            ElementClassFilter refPlaneFilter = new(typeof(Autodesk.Revit.DB.ReferencePlane));
+            ElementClassFilter viewFilter = new(typeof(View));
+            LogicalOrFilter filter = new(refPlaneFilter, viewFilter);
+            FilteredElementCollector collector = new(_document);
             elements.AddRange(collector.WherePasses(filter).ToElements());
             foreach (var e in elements)
             {
@@ -181,7 +181,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.CreateTruss.CS
         private Line GetReferencePlaneLine(Autodesk.Revit.DB.ReferencePlane plane)
         {
             // Flatten reference-plane geometry to Z=0 so intersection math matches sketch placement.
-            var origin = new XYZ(
+            XYZ origin = new(
                 plane.BubbleEnd.X,
                 plane.BubbleEnd.Y,
                 0.0);

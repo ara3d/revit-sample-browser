@@ -1,8 +1,7 @@
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
@@ -17,14 +16,14 @@ namespace BuildingCoder
         {
             var doc = view.Document;
 
-            var ra = new ReferenceArray();
+            ReferenceArray ra = new();
 
             ra.Append(r1);
             ra.Append(r2);
 
             var line = Line.CreateBound(p1, p2);
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create New Dimension");
 
             doc.Create.NewDimension(
@@ -94,8 +93,8 @@ namespace BuildingCoder
         internal static Dimension CreateLinearDimension(
             Document doc)
         {
-            var pt1 = new XYZ(5, 5, 0);
-            var pt2 = new XYZ(5, 10, 0);
+            XYZ pt1 = new(5, 5, 0);
+            XYZ pt2 = new(5, 10, 0);
             var line = Line.CreateBound(pt1, pt2);
 
             var plane = Plane.CreateByNormalAndOrigin(pt1.CrossProduct(pt2), pt2);
@@ -115,7 +114,7 @@ namespace BuildingCoder
             var modelcurve2 = doc.FamilyCreate
                 .NewModelCurve(line, skplane);
 
-            var ra = new ReferenceArray();
+            ReferenceArray ra = new();
             ra.Append(modelcurve1.GeometryCurve.Reference);
             ra.Append(modelcurve2.GeometryCurve.Reference);
 
@@ -142,7 +141,7 @@ namespace BuildingCoder
         {
             var document = filledRegion.Document;
 
-            var view = (View) document.GetElement(
+            var view = (View)document.GetElement(
                 filledRegion.OwnerViewId);
 
             var edgesDirection = dimensionDirection.CrossProduct(
@@ -163,7 +162,7 @@ namespace BuildingCoder
                 filledRegion.get_BoundingBox(view).Min
                 + shift, dimensionDirection);
 
-            var references = new ReferenceArray();
+            ReferenceArray references = new();
 
             foreach (var edge in edges)
                 references.Append(edge.Reference);
@@ -179,7 +178,7 @@ namespace BuildingCoder
         {
             var document = filledRegion.Document;
 
-            var view = (View) document.GetElement(
+            var view = (View)document.GetElement(
                 filledRegion.OwnerViewId);
 
             var edgesDirection = dimensionDirection.CrossProduct(
@@ -200,7 +199,7 @@ namespace BuildingCoder
                 filledRegion.get_BoundingBox(view).Min + shift,
                 dimensionDirection);
 
-            var references = new ReferenceArray();
+            ReferenceArray references = new();
 
             foreach (var edge in edges)
                 references.Append(edge.Reference);
@@ -220,10 +219,7 @@ namespace BuildingCoder
         {
             var edgeCurve = edge.AsCurve() as Line;
 
-            if (edgeCurve == null)
-                return false;
-
-            return edgeCurve.Direction.CrossProduct(
+            return edgeCurve != null && edgeCurve.Direction.CrossProduct(
                 edgeDirection).IsAlmostEqualTo(XYZ.Zero);
         }
 
@@ -232,7 +228,7 @@ namespace BuildingCoder
                 Document document,
                 ElementId viewId)
         {
-            var collector = new FilteredElementCollector(
+            FilteredElementCollector collector = new(
                 document, viewId);
 
             return collector
@@ -244,10 +240,10 @@ namespace BuildingCoder
             FindFilledRegionEdges(
                 FilledRegion filledRegion)
         {
-            var view = (View) filledRegion.Document.GetElement(
+            var view = (View)filledRegion.Document.GetElement(
                 filledRegion.OwnerViewId);
 
-            var options = new Options
+            Options options = new()
             {
                 View = view,
                 ComputeReferences = true

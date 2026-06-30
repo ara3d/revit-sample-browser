@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         private object m_objConn;
 
         // All available tables(work sheets) in xls data source
-        private readonly List<string> m_tables = new List<string>();
+        private readonly List<string> m_tables = [];
 
         public XlsDbConnector(string strXlsFile)
         {
@@ -85,7 +85,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         {
             var strCom = $"Select * From [{tableName}$]";
             var myCommand = CreateOleDbDataAdapter(strCom, m_objConn);
-            var myDataSet = new DataSet();
+            DataSet myDataSet = new();
             Invoke(myCommand, "Fill", myDataSet, $"[{tableName}$]");
 
             try
@@ -209,9 +209,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         private static Type GetOleDbType(string typeName)
         {
             var type = Type.GetType($"{typeName}, System.Data.OleDb");
-            if (type == null)
-                throw new InvalidOperationException("System.Data.OleDb is required for the RoomSchedule Excel sample.");
-            return type;
+            return type ?? throw new InvalidOperationException("System.Data.OleDb is required for the RoomSchedule Excel sample.");
         }
 
         private static object Invoke(object target, string methodName, params object[] args)

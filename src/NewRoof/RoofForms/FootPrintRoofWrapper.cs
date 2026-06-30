@@ -1,13 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
-using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
     /// <summary>
@@ -100,7 +99,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         /// <param name="curve"></param>
         private void DrawCurve(Graphics graphics, Pen pen, Curve curve)
         {
-            var poinsts = new List<PointF>();
+            List<PointF> poinsts = new();
             foreach (var point in curve.Tessellate())
             {
                 poinsts.Add(ViewHelper.Translate(point, m_boundingbox));
@@ -132,7 +131,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         public FootPrintRoofWrapper(FootPrintRoof roof)
         {
             m_roof = roof;
-            m_roofLines = new List<FootPrintRoofLine>();
+            m_roofLines = [];
             var curveloops = m_roof.GetProfiles();
 
             foreach (ModelCurveArray curveloop in curveloops)
@@ -199,7 +198,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 
         [Browsable(false)]
         public ReadOnlyCollection<FootPrintRoofLine> FootPrintRoofLines =>
-            new ReadOnlyCollection<FootPrintRoofLine>(m_roofLines);
+            new(m_roofLines);
 
         // To store the boundingbox of the roof
 

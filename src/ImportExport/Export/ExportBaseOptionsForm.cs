@@ -36,10 +36,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             comboBoxSolids.SelectedIndex = 0;
             checkBoxMergeViews.Checked = m_exportOptionsData.ExportMergeFiles;
             checkBoxMergeViews.Text = "Merge all views in one file (via XRefs).";
-            if (m_contain3DView)
-                comboBoxSolids.Enabled = true;
-            else
-                comboBoxSolids.Enabled = false;
+            comboBoxSolids.Enabled = m_contain3DView;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

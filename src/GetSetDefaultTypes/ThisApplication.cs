@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Events;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Events;
 
 namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 {
@@ -56,7 +56,7 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
                 !DockablePane.PaneExists(DefaultElementTypes.PaneId))
                 return;
 
-            if (!(sender is UIApplication uiApp))
+            if (sender is not UIApplication uiApp)
                 return;
 
             DefaultFamilyTypesPane?.SetDocument(e.Document);

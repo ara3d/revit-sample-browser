@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
 {
     /// <summary>
@@ -40,10 +38,10 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
         /// </summary>
         private void InitViewNameComboBox()
         {
-            var viewCollector = new FilteredElementCollector(m_activeDocument);
+            FilteredElementCollector viewCollector = new(m_activeDocument);
             viewCollector.OfCategory(BuiltInCategory.OST_Views);
 
-            m_views = new List<View>();
+            m_views = [];
             foreach (View curView in viewCollector)
             {
                 if (!curView.IsTemplate && curView.IsViewValidForTemplateCreation())
@@ -82,24 +80,22 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
         {
             try
             {
-                using (var transaction = new Transaction(m_activeDocument, "View Template Creation sample"))
-                {
-                    transaction.Start();
+                using Transaction transaction = new(m_activeDocument, "View Template Creation sample");
+                transaction.Start();
 
-                    var selectedView = GetSelectedView();
-                    var viewTemplate = selectedView.CreateViewTemplate();
-                    ViewTemplateHelper.ShowInformationMessageBox($"View template '{viewTemplate.Name}' has been created.");
+                var selectedView = GetSelectedView();
+                var viewTemplate = selectedView.CreateViewTemplate();
+                ViewTemplateHelper.ShowInformationMessageBox($"View template '{viewTemplate.Name}' has been created.");
 
-                    SetPartsVisibilityIncludeState(viewTemplate);
-                    SetDetailLevelValue(viewTemplate);
-                    ChangeVgOverridesModelSettings(viewTemplate);
+                SetPartsVisibilityIncludeState(viewTemplate);
+                SetDetailLevelValue(viewTemplate);
+                ChangeVgOverridesModelSettings(viewTemplate);
 
-                    selectedView.ViewTemplateId = viewTemplate.Id;
-                    ViewTemplateHelper.ShowInformationMessageBox(
-                        $"View template '{viewTemplate.Name}' has been assigned to '{selectedView.Name}' view.");
+                selectedView.ViewTemplateId = viewTemplate.Id;
+                ViewTemplateHelper.ShowInformationMessageBox(
+                    $"View template '{viewTemplate.Name}' has been assigned to '{selectedView.Name}' view.");
 
-                    transaction.Commit();
-                }
+                transaction.Commit();
             }
             catch (Exception ex)
             {
@@ -167,7 +163,7 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
                 return;
             }
 
-            var blackColor = new Color(0, 0, 0);
+            Color blackColor = new(0, 0, 0);
             var foregroundFillPattern =
                 FillPatternElement.GetFillPatternElementByName(view.Document, FillPatternTarget.Drafting,
                     "<Solid fill>");
@@ -181,7 +177,7 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
         private void SetCutPatternSettings(View view, BuiltInCategory buildInCategory, Color backgroundColor,
             FillPatternElement foregroundFillPattern)
         {
-            var categoryId = new ElementId(buildInCategory);
+            ElementId categoryId = new(buildInCategory);
 
             var ogSettings = view.GetCategoryOverrides(categoryId);
             if (ogSettings == null || !ogSettings.IsValidObject)

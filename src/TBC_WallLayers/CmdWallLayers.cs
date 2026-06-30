@@ -14,11 +14,12 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -36,7 +37,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = app.ActiveUIDocument.Document;
 
-            var walls = new List<Element>();
+            List<Element> walls = new();
 
             if (!Util.GetSelectedElementsOrAll(
                 walls, uidoc, typeof(Wall)))
@@ -54,7 +55,7 @@ namespace BuildingCoder
             //Creator creator = new Creator( doc );
             XYZ lcstart, lcend, v, w, p, q;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Draw wall layer sepearation lines");
 
             foreach (Wall wall in walls)
@@ -75,15 +76,15 @@ namespace BuildingCoder
                 w = XYZ.BasisZ.CrossProduct(v).Normalize();
                 if (wall.Flipped) w = -w;
 
-                p = lcstart - 2 * v;
-                q = lcend + 2 * v;
+                p = lcstart - (2 * v);
+                q = lcend + (2 * v);
                 Creator.CreateModelLine(doc, p, q);
 
-                q = p + halfThickness * w;
+                q = p + (halfThickness * w);
                 Creator.CreateModelLine(doc, p, q);
 
-                p = lcstart - v + halfThickness * w;
-                q = lcend + v + halfThickness * w;
+                p = lcstart - v + (halfThickness * w);
+                q = lcend + v + (halfThickness * w);
                 Creator.CreateModelLine(doc, p, q);
 
                 //CompoundStructure structure = wall.WallType.CompoundStructure; // 2011
@@ -113,8 +114,8 @@ namespace BuildingCoder
 
                 if (0 == n)
                 {
-                    p = lcstart - v - halfThickness * w;
-                    q = lcend + v - halfThickness * w;
+                    p = lcstart - v - (halfThickness * w);
+                    q = lcend + v - (halfThickness * w);
                     Creator.CreateModelLine(doc, p, q);
                 }
                 else
@@ -134,8 +135,8 @@ namespace BuildingCoder
                         //layerOffset -= layer.Thickness; // 2011
                         layerOffset -= layer.Width; // 2012
 
-                        p = lcstart - v + layerOffset * w;
-                        q = lcend + v + layerOffset * w;
+                        p = lcstart - v + (layerOffset * w);
+                        q = lcend + v + (layerOffset * w);
                         Creator.CreateModelLine(doc, p, q);
                     }
                 }

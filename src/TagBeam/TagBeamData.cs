@@ -1,15 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
-using Document = Autodesk.Revit.Creation.Document;
-
 using Ara3D.RevitSampleBrowser.Common.Documents;
 using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using Document = Autodesk.Revit.Creation.Document;
 namespace Ara3D.RevitSampleBrowser.TagBeam.CS
 {
     public class TagBeamData
@@ -17,15 +14,15 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
         private readonly List<FamilyInstance> m_beamList;
 
         private readonly List<FamilySymbolWrapper> m_categoryTagTypes =
-            new List<FamilySymbolWrapper>();
+            [];
 
-        private Document m_docCreator; // document creation
+        private readonly Document m_docCreator; // document creation
 
         private readonly List<FamilySymbolWrapper> m_materialTagTypes =
-            new List<FamilySymbolWrapper>();
+            [];
 
         private readonly List<FamilySymbolWrapper> m_multiCategoryTagTypes =
-            new List<FamilySymbolWrapper>();
+            [];
 
         private readonly UIDocument m_revitDoc;
 
@@ -43,14 +40,14 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
             if (m_beamList.Count < 1) throw new ApplicationException("there is no beam selected");
 
             //Get the family symbols of tag in this document.
-            var collector = new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document);
+            FilteredElementCollector collector = new(commandData.Application.ActiveUIDocument.Document);
             var elements = collector.OfClass(typeof(Family)).ToElements();
 
             foreach (Family family in elements)
             {
                 if (family != null && family.GetFamilySymbolIds() != null)
                 {
-                    var ffs = new List<FamilySymbol>();
+                    List<FamilySymbol> ffs = [];
                     foreach (var elementId in family.GetFamilySymbolIds())
                     {
                         ffs.Add((FamilySymbol)commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -63,23 +60,13 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
             }
         }
 
-        public List<FamilySymbolWrapper> this[TagMode mode]
+        public List<FamilySymbolWrapper> this[TagMode mode] => mode switch
         {
-            get
-            {
-                switch (mode)
-                {
-                    case TagMode.TM_ADDBY_CATEGORY:
-                        return m_categoryTagTypes;
-                    case TagMode.TM_ADDBY_MATERIAL:
-                        return m_materialTagTypes;
-                    case TagMode.TM_ADDBY_MULTICATEGORY:
-                        return m_multiCategoryTagTypes;
-                    default:
-                        return null;
-                }
-            }
-        }
+            TagMode.TM_ADDBY_CATEGORY => m_categoryTagTypes,
+            TagMode.TM_ADDBY_MATERIAL => m_materialTagTypes,
+            TagMode.TM_ADDBY_MULTICATEGORY => m_multiCategoryTagTypes,
+            _ => null,
+        };
 
         public void CreateTag(TagMode tagMode,
             FamilySymbolWrapper tagSymbol, bool leader,
@@ -91,10 +78,10 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
                 var location = beam.Location as LocationCurve;
                 var curve = location.Curve;
 
-                var t = new Transaction(m_revitDoc.Document);
+                Transaction t = new(m_revitDoc.Document);
                 t.Start("Create new tag");
                 //Create tag on the beam's start and end.
-                var beamRef = new Reference(beam);
+                Reference beamRef = new(beam);
                 var tag1 = IndependentTag.Create(m_revitDoc.Document,
                     m_view.Id, beamRef, leader, tagMode, tagOrientation, curve.GetEndPoint(0));
                 var tag2 = IndependentTag.Create(m_revitDoc.Document,

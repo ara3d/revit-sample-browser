@@ -1,13 +1,14 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Linq;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 {
@@ -29,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             ref string message,
             ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
+            Transaction trans = new(revit.Application.ActiveUIDocument.Document,
                 "Ara3D.RevitSampleBrowser.AreaReinParameters");
             trans.Start();
             CommandData = revit;
@@ -53,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
                 }
             }
 
-            var form = new AreaReinParametersForm(data);
+            AreaReinParametersForm form = new(data);
             if (form.ShowDialog() == DialogResult.Cancel)
             {
                 trans.RollBack();

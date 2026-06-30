@@ -1,10 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.CapitalizeAllTextNotes.CS
 {
@@ -26,16 +27,16 @@ namespace Ara3D.RevitSampleBrowser.CapitalizeAllTextNotes.CS
                     return Result.Failed;
                 }
 
-                var textNotesToUpdate = new ElementSet();
+                ElementSet textNotesToUpdate = new();
                 foreach (var element in textNotes)
                 {
-                    var textNote = (TextNote)element;
+                    var textNote = element;
 
                     var formattedText = textNote.GetFormattedText();
 
                     // FormatStatus.All/None/Mixed from GetAllCapsStatus(); mutate via SetFormattedText after SetAllCapsStatus.
 
-                    if (formattedText.GetAllCapsStatus() != FormatStatus.All) 
+                    if (formattedText.GetAllCapsStatus() != FormatStatus.All)
                         textNotesToUpdate.Insert(textNote);
                 }
 
@@ -45,19 +46,17 @@ namespace Ara3D.RevitSampleBrowser.CapitalizeAllTextNotes.CS
                     return Result.Failed;
                 }
 
-                using (var transaction = new Transaction(document, "Capitalize All TextNotes"))
+                using Transaction transaction = new(document, "Capitalize All TextNotes");
+                transaction.Start();
+
+                foreach (TextNote textNote in textNotesToUpdate)
                 {
-                    transaction.Start();
-
-                    foreach (TextNote textNote in textNotesToUpdate)
-                    {
-                        var formattedText = textNote.GetFormattedText();
-                        formattedText.SetAllCapsStatus(true);
-                        textNote.SetFormattedText(formattedText);
-                    }
-
-                    transaction.Commit();
+                    var formattedText = textNote.GetFormattedText();
+                    formattedText.SetAllCapsStatus(true);
+                    textNote.SetFormattedText(formattedText);
                 }
+
+                transaction.Commit();
 
                 return Result.Succeeded;
             }

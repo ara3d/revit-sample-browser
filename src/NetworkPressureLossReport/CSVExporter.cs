@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.IO;
 using System.Text;
-using Autodesk.Revit.DB;
 using ArgumentException = Autodesk.Revit.Exceptions.ArgumentException;
 
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
@@ -61,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             {
                 unitLabel = LabelUtils.GetLabelForSymbol(opt.GetSymbolTypeId());
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 // The unit symbol is None.
             }
@@ -71,7 +71,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                 {
                     unitLabel = LabelUtils.GetLabelForUnit(opt.GetUnitTypeId());
                 }
-                catch (ArgumentException ex)
+                catch (ArgumentException)
                 {
                     // The unit symbol is None.
                 }

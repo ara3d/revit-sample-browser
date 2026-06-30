@@ -11,114 +11,111 @@ public static class FaceDataExtensions
 {
     public static FaceType GetFaceType(this Face face)
     {
-        switch (face)
+        return face switch
         {
-            case ConicalFace conicalFace:
-                return FaceType.Conical;
-            case CylindricalFace cylindricalFace:
-                return FaceType.Cylindrical;
-            case HermiteFace hermiteFace:
-                return FaceType.Hermite;
-            case PlanarFace planarFace:
-                return FaceType.Planar;
-            case RevolvedFace revolvedFace:
-                return FaceType.Revolved;
-            case RuledFace ruledFace:
-                return FaceType.Ruled;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(face));
-        }
+            ConicalFace conicalFace => FaceType.Conical,
+            CylindricalFace cylindricalFace => FaceType.Cylindrical,
+            HermiteFace hermiteFace => FaceType.Hermite,
+            PlanarFace planarFace => FaceType.Planar,
+            RevolvedFace revolvedFace => FaceType.Revolved,
+            RuledFace ruledFace => FaceType.Ruled,
+            _ => throw new ArgumentOutOfRangeException(nameof(face)),
+        };
     }
 
     public static object ToSpecificFaceData(this Face face)
     {
-        switch (face)
+        return face switch
         {
-            case ConicalFace conicalFace:
-                return new ConicalFaceData(
-                    conicalFace.Axis.ToData(),
-                    conicalFace.HalfAngle,
-                    conicalFace.Origin.ToData(),
-                    conicalFace.get_Radius(0).ToData(),
-                    conicalFace.get_Radius(1).ToData());
-            case CylindricalFace cylindricalFace:
-                return new CylindricalFaceData(
-                    cylindricalFace.Axis.ToData(),
-                    cylindricalFace.Origin.ToData(),
-                    cylindricalFace.get_Radius(0).ToData(),
-                    cylindricalFace.get_Radius(1).ToData());
-                break;
-            case HermiteFace hermiteFace:
-                return new HermiteFaceData(
-                    hermiteFace.MixedDerivs.ToData(),
-                    hermiteFace.Points.ToData(),
-                    hermiteFace.get_Params(0).ToData(),
-                    hermiteFace.get_Params(1).ToData(),
-                    hermiteFace.get_Tangents(0).ToData(),
-                    hermiteFace.get_Tangents(1).ToData());
-            case PlanarFace planarFace:
-                return new PlanarFaceData(
-                    planarFace.Origin.ToData(),
-                    planarFace.FaceNormal.ToData(),
-                    planarFace.XVector.ToData(),
-                    planarFace.YVector.ToData());
-            case RevolvedFace revolvedFace:
-                return new RevolvedFaceData(
-                    revolvedFace.Axis.ToData(),
-                    revolvedFace.Curve.ToData(),
-                    revolvedFace.Origin.ToData(),
-                    revolvedFace.get_Radius(0).ToData(),
-                    revolvedFace.get_Radius(1).ToData());
-            case RuledFace ruledFace:
-                return new RuledFaceData(
-                    ruledFace.IsExtruded,
-                    ruledFace.RulingsAreParallel,
-                    ruledFace.get_Curve(0).ToData(),
-                    ruledFace.get_Curve(1).ToData(),
-                    ruledFace.get_Point(0).ToData(),
-                    ruledFace.get_Point(1).ToData());
-            default:
-                throw new ArgumentOutOfRangeException(nameof(face));
-        }
+            ConicalFace conicalFace => new ConicalFaceData(
+                                conicalFace.Axis.ToData(),
+                                conicalFace.HalfAngle,
+                                conicalFace.Origin.ToData(),
+                                conicalFace.get_Radius(0).ToData(),
+                                conicalFace.get_Radius(1).ToData()),
+            CylindricalFace cylindricalFace => new CylindricalFaceData(
+                                cylindricalFace.Axis.ToData(),
+                                cylindricalFace.Origin.ToData(),
+                                cylindricalFace.get_Radius(0).ToData(),
+                                cylindricalFace.get_Radius(1).ToData()),
+            HermiteFace hermiteFace => new HermiteFaceData(
+                                hermiteFace.MixedDerivs.ToData(),
+                                hermiteFace.Points.ToData(),
+                                hermiteFace.get_Params(0).ToData(),
+                                hermiteFace.get_Params(1).ToData(),
+                                hermiteFace.get_Tangents(0).ToData(),
+                                hermiteFace.get_Tangents(1).ToData()),
+            PlanarFace planarFace => new PlanarFaceData(
+                                planarFace.Origin.ToData(),
+                                planarFace.FaceNormal.ToData(),
+                                planarFace.XVector.ToData(),
+                                planarFace.YVector.ToData()),
+            RevolvedFace revolvedFace => new RevolvedFaceData(
+                                revolvedFace.Axis.ToData(),
+                                revolvedFace.Curve.ToData(),
+                                revolvedFace.Origin.ToData(),
+                                revolvedFace.get_Radius(0).ToData(),
+                                revolvedFace.get_Radius(1).ToData()),
+            RuledFace ruledFace => new RuledFaceData(
+                                ruledFace.IsExtruded,
+                                ruledFace.RulingsAreParallel,
+                                ruledFace.get_Curve(0).ToData(),
+                                ruledFace.get_Curve(1).ToData(),
+                                ruledFace.get_Point(0).ToData(),
+                                ruledFace.get_Point(1).ToData()),
+            _ => throw new ArgumentOutOfRangeException(nameof(face)),
+        };
     }
 
     public static List<double> ToData(this DoubleArray self)
     {
-        var r = new List<double>(self.Size);
+        List<double> r = new(self.Size);
         for (var i = 0; i < self.Size; i++)
             r.Add(self.get_Item(i));
         return r;
     }
 
     public static UVData ToData(this UV self)
-        => new(self.U, self.V);
+    {
+        return new(self.U, self.V);
+    }
 
     public static List<UVData> ToData(this IEnumerable<UV> self)
-        => self.Select(ToData).ToList();
+    {
+        return self.Select(ToData).ToList();
+    }
 
     public static XYZData ToData(this XYZ self)
-        => new(self.X, self.Y, self.Z);
+    {
+        return new(self.X, self.Y, self.Z);
+    }
 
     public static List<XYZData> ToData(this IEnumerable<XYZ> self)
-        => self.Select(ToData).ToList();
+    {
+        return self.Select(ToData).ToList();
+    }
 
     public static List<UVData> GetEdgePoints(this Face face, Edge edge)
-        => edge.TessellateOnFace(face).Select(ToData).ToList();
+    {
+        return edge.TessellateOnFace(face).Select(ToData).ToList();
+    }
 
     public static List<UVData> GetEdgePoints(this Face face, EdgeArray edgeArray)
     {
-        var r = new List<UVData>();
+        List<UVData> r = [];
         foreach (Edge edge in edgeArray)
             r.AddRange(face.GetEdgePoints(edge));
         return r;
     }
 
     public static UVLoop GetUVLoop(this Face face, EdgeArray edgeArray)
-        => new(face.GetEdgePoints(edgeArray));
+    {
+        return new(face.GetEdgePoints(edgeArray));
+    }
 
     public static List<UVLoop> GetUVLoops(this Face face)
     {
-        var r = new List<UVLoop>();
+        List<UVLoop> r = [];
         var edgeLoops = face.EdgeLoops;
         foreach (EdgeArray edgeArray in edgeLoops)
             r.Add(GetUVLoop(face, edgeArray));
@@ -153,8 +150,9 @@ public static class FaceDataExtensions
 
     public static TransformData ToData(this Transform self)
     {
-        if (self.IsIdentity) return null;
-        return new TransformData(
+        return self.IsIdentity
+            ? null
+            : new TransformData(
             self.Origin.ToData(),
             self.BasisX.ToData(),
             self.BasisY.ToData(),
@@ -165,16 +163,20 @@ public static class FaceDataExtensions
     }
 
     public static string GetUniqueIdString(this GeometryInstance self)
-        => self.GetSymbolGeometryId().AsUniqueIdentifier();
+    {
+        return self.GetSymbolGeometryId().AsUniqueIdentifier();
+    }
 
     public static TransformData GetTransform(this GeometryInstance self)
-        => (self.Transform).ToData();
+    {
+        return self.Transform.ToData();
+    }
 
     public static int ProcessGeometryElement(this GeometryElement self, GeometryData data)
     {
         var childIds = self.Select(g => ProcessGeometryObject(g, data)).Where(index => index >= 0).ToList();
         if (childIds.Count == 0) return -1;
-        var tmp = new GeometryElementData(self.Id, childIds);
+        GeometryElementData tmp = new(self.Id, childIds);
         return data.Add(tmp);
     }
 
@@ -185,11 +187,13 @@ public static class FaceDataExtensions
     }
 
     public static int ProcessFace(this Face self, GeometryData data)
-        => data.Add(self.ToData());
+    {
+        return data.Add(self.ToData());
+    }
 
     public static int ProcessGeometryInstance(this GeometryInstance self, GeometryData data)
     {
-        var r = new GeometryInstanceData(self.Id, self.GetTransform(), self.GetUniqueIdString());
+        GeometryInstanceData r = new(self.Id, self.GetTransform(), self.GetUniqueIdString());
         if (!data.SymbolIdsToGeometry.ContainsKey(r.SymbolUniqueId))
             ProcessSymbolGeometry(self.SymbolGeometry, r.SymbolUniqueId, data);
         return data.Add(r);
@@ -197,11 +201,11 @@ public static class FaceDataExtensions
 
     public static int ProcessSolid(this Solid self, GeometryData data)
     {
-        var faces = new List<FaceData>();
+        List<FaceData> faces = [];
         foreach (Face face in self.Faces)
             faces.Add(face.ToData());
         var faceIds = data.AddRange(faces);
-        var tmp = new SolidGeometryData(self.Id, faceIds);
+        SolidGeometryData tmp = new(self.Id, faceIds);
         return data.Add(tmp);
     }
 
@@ -209,7 +213,7 @@ public static class FaceDataExtensions
     {
         var numTris = mesh.NumTriangles;
         var points = mesh.Vertices.ToData();
-        var indices = new List<int>();
+        List<int> indices = [];
         for (var i = 0; i < numTris; i++)
         {
             var tri = mesh.get_Triangle(i);
@@ -222,7 +226,9 @@ public static class FaceDataExtensions
     }
 
     public static int ProcessMesh(this RevitMesh mesh, GeometryData data)
-        => data.Add(mesh.ToData());
+    {
+        return data.Add(mesh.ToData());
+    }
 
     public static void ProcessSymbolGeometry(this GeometryElement element, string id, GeometryData data)
     {
@@ -235,44 +241,26 @@ public static class FaceDataExtensions
 
     public static int ProcessGeometryObject(this GeometryObject self, GeometryData data)
     {
-        switch (self)
+        return self switch
         {
-            case Arc arc:
-                return NotProcessedMessage(arc);
-            case CylindricalHelix cylindricalHelix:
-                return NotProcessedMessage(cylindricalHelix);
-            case Ellipse ellipse:
-                return NotProcessedMessage(ellipse);
-            case HermiteSpline hermiteSpline:
-                return NotProcessedMessage(hermiteSpline);
-            case Line line:
-                return NotProcessedMessage(line);
-            case NurbSpline nurbSpline:
-                return NotProcessedMessage(nurbSpline);
-            case Curve curve:
-                return NotProcessedMessage(curve);
-            case Edge edge:
-                return NotProcessedMessage(edge);
-            case Face face:
-                return ProcessFace(face, data);
-            case GeometryElement geometryElement:
-                return ProcessGeometryElement(geometryElement, data);
-            case GeometryInstance geometryInstance:
-                return ProcessGeometryInstance(geometryInstance, data);
-            case Autodesk.Revit.DB.Mesh mesh:
-                return ProcessMesh(mesh, data);
-            case Point point:
-                return NotProcessedMessage(point);
-            case PolyLine polyLine:
-                return NotProcessedMessage(polyLine);
-            case Profile profile:
-                return NotProcessedMessage(profile);
-            case Solid solid:
-                return ProcessSolid(solid, data);
-            default:
-                throw new ArgumentOutOfRangeException(nameof(self));
-        }
-
+            Arc arc => NotProcessedMessage(arc),
+            CylindricalHelix cylindricalHelix => NotProcessedMessage(cylindricalHelix),
+            Ellipse ellipse => NotProcessedMessage(ellipse),
+            HermiteSpline hermiteSpline => NotProcessedMessage(hermiteSpline),
+            Line line => NotProcessedMessage(line),
+            NurbSpline nurbSpline => NotProcessedMessage(nurbSpline),
+            Curve curve => NotProcessedMessage(curve),
+            Edge edge => NotProcessedMessage(edge),
+            Face face => ProcessFace(face, data),
+            GeometryElement geometryElement => ProcessGeometryElement(geometryElement, data),
+            GeometryInstance geometryInstance => ProcessGeometryInstance(geometryInstance, data),
+            Autodesk.Revit.DB.Mesh mesh => ProcessMesh(mesh, data),
+            Point point => NotProcessedMessage(point),
+            PolyLine polyLine => NotProcessedMessage(polyLine),
+            Profile profile => NotProcessedMessage(profile),
+            Solid solid => ProcessSolid(solid, data),
+            _ => throw new ArgumentOutOfRangeException(nameof(self)),
+        };
         return -1;
     }
 
@@ -288,7 +276,7 @@ public static class FaceDataExtensions
             var transform = e is Instance inst
                 ? inst.GetTransform().ToData()
                 : null;
-            var ed = new ElementData(e.Id.Value, tmp, transform);
+            ElementData ed = new(e.Id.Value, tmp, transform);
             data.Elements.Add(ed);
         }
         catch (Exception)
@@ -318,7 +306,7 @@ public static class FaceDataExtensions
         {
             var linkDoc = link.GetLinkDocument();
             if (linkDoc == null) continue;
-            var childDoc = new DocumentData();
+            DocumentData childDoc = new();
             data.Documents.Add(childDoc);
             childDoc.Transform = link.GetTransform().ToData();
             ProcessDocument(linkDoc, childDoc, options);
@@ -327,14 +315,14 @@ public static class FaceDataExtensions
 
     public static DocumentData ProcessDocumentBrep(this Document doc)
     {
-        var options = new Options
+        Options options = new()
         {
             DetailLevel = ViewDetailLevel.Fine,
             IncludeNonVisibleObjects = false,
             ComputeReferences = false // huge: speed-up unless you need reference objects
         };
 
-        var dd = new DocumentData();
+        DocumentData dd = new();
         ProcessDocument(doc, dd, options);
         return dd;
     }

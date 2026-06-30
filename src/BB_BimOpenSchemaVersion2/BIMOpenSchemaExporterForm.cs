@@ -1,11 +1,10 @@
 ﻿using Ara3D.Bowerbird.RevitSamples;
+using Ara3D.Logging;
 using Ara3D.Utils;
+using Autodesk.Revit.UI;
 using System;
 using System.IO;
 using System.Windows.Forms;
-using Ara3D.Logging;
-using Autodesk.Revit.UI;
-using Ara3D.Utils;
 
 namespace Ara3D.BIMOpenSchema.Revit2025
 {
@@ -122,12 +121,12 @@ namespace Ara3D.BIMOpenSchema.Revit2025
                 }
 
                 var logWriter = LogWriter.Create(Log);
-                var logger = new Logger(logWriter, "BOS Exporter");
+                Logger logger = new(logWriter, "BOS Exporter");
 
                 RevitWorkQueue.QueueWork(uiApp =>
                 {
                     CurrentFilePath = default;
-                    var exporter = new BimOpenSchemaExporter(uiApp, CurrentDocument, settings, logger, false, shutDownOnCompletion);
+                    BimOpenSchemaExporter exporter = new(uiApp, CurrentDocument, settings, logger, false, shutDownOnCompletion);
                     CurrentFilePath = exporter.OutputFilePath;
                 });
             }

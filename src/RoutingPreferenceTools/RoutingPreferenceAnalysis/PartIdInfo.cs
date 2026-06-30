@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAnalysis
 {
@@ -14,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
     {
         public PartIdInfo(RoutingPreferenceRuleGroupType groupType, IList<ElementId> ids)
         {
-            Id = new List<ElementId>();
+            Id = [];
             GroupType = groupType;
             Id.AddRange(ids);
         }
@@ -38,7 +38,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
         /// <returns></returns>
         public XElement GetXml(Document document)
         {
-            var xPartInfo = new XElement(XName.Get("PartInfo"));
+            XElement xPartInfo = new(XName.Get("PartInfo"));
             xPartInfo.Add(new XAttribute(XName.Get("groupType"), GroupType.ToString()));
             xPartInfo.Add(new XAttribute(XName.Get("partNames"), GetFittingNames(document)));
             return xPartInfo;

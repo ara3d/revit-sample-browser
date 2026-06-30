@@ -13,12 +13,13 @@
 
 #region Namespaces
 
-using System;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Document = Autodesk.Revit.DB.Document;
 
 #endregion // Namespaces
@@ -33,7 +34,7 @@ namespace BuildingCoder
             XYZ camera_position,
             XYZ target)
         {
-            using var trans = new Transaction(doc);
+            using Transaction trans = new(doc);
             trans.Start("Map Forge Viewer Camera");
 
             var typ
@@ -47,14 +48,14 @@ namespace BuildingCoder
             var view3D = View3D.CreatePerspective(
                 doc, typ.Id);
 
-            var rnd = new Random();
+            Random rnd = new();
             view3D.Name = $"Camera{rnd.Next()}";
 
             var up = XYZ.BasisZ;
 
             var sightDir = target.Subtract(camera_position).Normalize();
 
-            var orientation = new ViewOrientation3D(
+            ViewOrientation3D orientation = new(
                 camera_position, up, sightDir);
 
             view3D.SetOrientation(orientation);
@@ -80,9 +81,9 @@ namespace BuildingCoder
             var viewFamilyTypes
                 = from e in new FilteredElementCollector(doc)
                     .OfClass(typeof(ViewFamilyType))
-                let type = e as ViewFamilyType
-                where type.ViewFamily == ViewFamily.CeilingPlan
-                select type;
+                  let type = e as ViewFamilyType
+                  where type.ViewFamily == ViewFamily.CeilingPlan
+                  select type;
 
             var ceilingPlan = ViewPlan.Create(doc,
                 viewFamilyTypes.First().Id, level.Id);
@@ -94,9 +95,9 @@ namespace BuildingCoder
             var view = View3D.CreateIsometric(
                 doc, viewFamily3d);
 
-            var eyePosition = new XYZ(10, 10, 10);
-            var upDirection = new XYZ(-1, 0, 1);
-            var forwardDirection = new XYZ(1, 0, 1);
+            XYZ eyePosition = new(10, 10, 10);
+            XYZ upDirection = new(-1, 0, 1);
+            XYZ forwardDirection = new(1, 0, 1);
 
             view.SetOrientation(new ViewOrientation3D(
                 eyePosition, upDirection, forwardDirection));
@@ -105,16 +106,14 @@ namespace BuildingCoder
         private Application _create;
         private bool NewSpotElevation(Document doc)
         {
-            var westView = Util.GetFirstElementOfTypeNamed(
-                doc, typeof(View), "West") as View;
-
-            if (null == westView)
+            if (Util.GetFirstElementOfTypeNamed(
+                doc, typeof(View), "West") is not View westView)
             {
                 Util.ErrorMsg("No view found named 'West'.");
                 return false;
             }
 
-            var instanceId = new ElementId((Int64)230298);
+            ElementId instanceId = new((Int64)230298);
 
             if (doc.GetElement(
                 instanceId) is not FamilyInstance beam)
@@ -123,7 +122,7 @@ namespace BuildingCoder
                 return false;
             }
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create Spot Elevation");
 
             var topReference

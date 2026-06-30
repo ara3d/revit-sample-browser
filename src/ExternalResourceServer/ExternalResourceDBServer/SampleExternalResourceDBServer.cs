@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExternalService;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExternalService;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServer.CS
 {
     /// <summary>
@@ -28,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             {
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var rootFolderName = $"{assemblyFolder}\\SampleResourceServerRoot";
-                var rootFolder = new DirectoryInfo(rootFolderName);
+                DirectoryInfo rootFolder = new(rootFolderName);
                 if (!rootFolder.Exists)
                     rootFolder.Create();
 
@@ -47,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             {
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var cacheRootFolderName = $"{assemblyFolder}\\SampleResourceServerLinkCache";
-                var cacheRootFolder = new DirectoryInfo(cacheRootFolderName);
+                DirectoryInfo cacheRootFolder = new(cacheRootFolderName);
                 if (!cacheRootFolder.Exists)
                     cacheRootFolder.Create();
 
@@ -130,12 +129,11 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
 
             // Database key (de-DE/fr-FR keynotes), link path, or keynote file path.
             var refMap = extRef.GetReferenceInformation();
-            if (refMap.ContainsKey(RefMapDbKeyEntry))
-                return ExternalResourceHelper.IsValidDbKey(refMap[RefMapDbKeyEntry]);
-            if (refMap.ContainsKey(RefMapLinkPathEntry))
-                return File.Exists(GetFullServerLinkFilePath(extRef));
-
-            return File.Exists(GetFullServerKeynoteFilePath(extRef));
+            return refMap.ContainsKey(RefMapDbKeyEntry)
+                ? ExternalResourceHelper.IsValidDbKey(refMap[RefMapDbKeyEntry])
+                : refMap.ContainsKey(RefMapLinkPathEntry)
+                ? File.Exists(GetFullServerLinkFilePath(extRef))
+                : File.Exists(GetFullServerKeynoteFilePath(extRef));
         }
 
         public virtual bool AreSameResources(IDictionary<string, string> referenceInformation1,
@@ -201,10 +199,9 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             // Determine whether currently loaded version is out of date, and return appropriate status.
             var currentlyLoadedVersion = extRef.Version;
 
-            if (currentlyLoadedVersion == string.Empty)
-                return ResourceVersionStatus.Unknown;
-
-            return currentlyLoadedVersion == GetCurrentlyAvailableResourceVersion(extRef)
+            return currentlyLoadedVersion == string.Empty
+                ? ResourceVersionStatus.Unknown
+                : currentlyLoadedVersion == GetCurrentlyAvailableResourceVersion(extRef)
                 ? ResourceVersionStatus.Current
                 : ResourceVersionStatus.OutOfDate;
         }
@@ -248,63 +245,63 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                     browserData.AddSubFolder("Unterordner2");
                     break;
                 case "de-DE" when folderPath.EndsWith("/Unterordner1"):
-                {
-                    var refMap = new Dictionary<string, string>
                     {
-                        [RefMapDbKeyEntry] = "1"
-                    };
-                    browserData.AddResource("Keynotes1_de-DE.txt", ExternalResourceHelper.CurrentVersion, refMap);
-                    break;
-                }
-                case "de-DE":
-                {
-                    if (folderPath.EndsWith("/Unterordner2"))
-                    {
-                        var refMap = new Dictionary<string, string>
+                        Dictionary<string, string> refMap = new()
                         {
-                            [RefMapDbKeyEntry] = "2"
+                            [RefMapDbKeyEntry] = "1"
                         };
-                        browserData.AddResource("Keynotes2_de-DE.txt", ExternalResourceHelper.CurrentVersion, refMap);
+                        browserData.AddResource("Keynotes1_de-DE.txt", ExternalResourceHelper.CurrentVersion, refMap);
+                        break;
                     }
+                case "de-DE":
+                    {
+                        if (folderPath.EndsWith("/Unterordner2"))
+                        {
+                            Dictionary<string, string> refMap = new()
+                            {
+                                [RefMapDbKeyEntry] = "2"
+                            };
+                            browserData.AddResource("Keynotes2_de-DE.txt", ExternalResourceHelper.CurrentVersion, refMap);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 // Top-level
                 case "fr-FR" when folderPath == "/":
                     browserData.AddSubFolder("Sous-dossier1");
                     browserData.AddSubFolder("Sous-dossier2");
                     break;
                 case "fr-FR" when folderPath.EndsWith("/Sous-dossier1"):
-                {
-                    var refMap = new Dictionary<string, string>
                     {
-                        [RefMapDbKeyEntry] = "3"
-                    };
-                    browserData.AddResource("Keynotes1_fr-FR.txt", ExternalResourceHelper.CurrentVersion, refMap);
-                    break;
-                }
-                case "fr-FR":
-                {
-                    if (folderPath.EndsWith("/Sous-dossier2"))
-                    {
-                        var refMap = new Dictionary<string, string>
+                        Dictionary<string, string> refMap = new()
                         {
-                            [RefMapDbKeyEntry] = "4"
+                            [RefMapDbKeyEntry] = "3"
                         };
-                        browserData.AddResource("Keynotes2_fr-FR.txt", ExternalResourceHelper.CurrentVersion, refMap);
+                        browserData.AddResource("Keynotes1_fr-FR.txt", ExternalResourceHelper.CurrentVersion, refMap);
+                        break;
                     }
+                case "fr-FR":
+                    {
+                        if (folderPath.EndsWith("/Sous-dossier2"))
+                        {
+                            Dictionary<string, string> refMap = new()
+                            {
+                                [RefMapDbKeyEntry] = "4"
+                            };
+                            browserData.AddResource("Keynotes2_fr-FR.txt", ExternalResourceHelper.CurrentVersion, refMap);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
         // File-based resources use last-modified UTC as the version string.
         private string GetFileVersion(string filePath)
         {
-            var fileInfo = new FileInfo(filePath);
+            FileInfo fileInfo = new(filePath);
             var lastModifiedTime = fileInfo.LastWriteTimeUtc;
-            var enUs = new CultureInfo("en-us");
+            CultureInfo enUs = new("en-us");
             return lastModifiedTime.ToString(enUs);
         }
 
@@ -329,7 +326,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             var path = RootFolder + folderPath.Replace('/', '\\');
             if (Directory.Exists(path))
             {
-                var dir = new DirectoryInfo(path);
+                DirectoryInfo dir = new(path);
                 var subDirs = dir.GetDirectories();
                 foreach (var subDir in subDirs)
                 {
@@ -345,7 +342,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                     }
                     else
                     {
-                        var refMap = new Dictionary<string, string>
+                        Dictionary<string, string> refMap = new()
                         {
                             [RefMapLinkPathEntry] = $"{folderPath.TrimEnd('/')}/{file.Name}"
                         };
@@ -431,10 +428,9 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                 return "";
 
             var refMap = resource.GetReferenceInformation();
-            if (!refMap.ContainsKey(RefMapLinkPathEntry))
-                return "";
-
-            return RootFolder + resource.GetReferenceInformation()[RefMapLinkPathEntry].Replace("/", "\\");
+            return !refMap.ContainsKey(RefMapLinkPathEntry)
+                ? ""
+                : RootFolder + resource.GetReferenceInformation()[RefMapLinkPathEntry].Replace("/", "\\");
         }
 
         /// <summary>
@@ -446,10 +442,9 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                 return "";
 
             var refMap = resource.GetReferenceInformation();
-            if (!refMap.ContainsKey(RefMapLinkPathEntry))
-                return "";
-
-            return LocalLinkCacheFolder + resource.GetReferenceInformation()[RefMapLinkPathEntry].Replace("/", "\\");
+            return !refMap.ContainsKey(RefMapLinkPathEntry)
+                ? ""
+                : LocalLinkCacheFolder + resource.GetReferenceInformation()[RefMapLinkPathEntry].Replace("/", "\\");
         }
     }
 }

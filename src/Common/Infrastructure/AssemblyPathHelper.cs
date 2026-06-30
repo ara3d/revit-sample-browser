@@ -1,9 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 
-using Autodesk.Revit.UI;
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -16,32 +13,30 @@ namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
         private static string _appResourcePath;
 
         public static string GetAssemblyPath()
-                {
-                    if (string.IsNullOrEmpty(_assemblyPath))
-                        _assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                    return _assemblyPath;
-                }
+        {
+            if (string.IsNullOrEmpty(_assemblyPath))
+                _assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            return _assemblyPath;
+        }
 
         public static string GetAssemblyFullName()
-                {
-                    if (string.IsNullOrEmpty(_assemblyFullName))
-                        _assemblyFullName = Assembly.GetExecutingAssembly().Location;
-                    return _assemblyFullName;
-                }
+        {
+            if (string.IsNullOrEmpty(_assemblyFullName))
+                _assemblyFullName = Assembly.GetExecutingAssembly().Location;
+            return _assemblyFullName;
+        }
 
         public static string GetApplicationResourcesPath()
-                {
-                    if (string.IsNullOrEmpty(_appResourcePath))
-                        _appResourcePath = $"{GetAssemblyPath()}\\Resources\\";
-                    return _appResourcePath;
-                }
+        {
+            if (string.IsNullOrEmpty(_appResourcePath))
+                _appResourcePath = $"{GetAssemblyPath()}\\Resources\\";
+            return _appResourcePath;
+        }
 
         public static string ResolveDirectoryPath(string path)
-                {
-                    if (Path.IsPathRooted(path))
-                        return path;
-                    return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), path);
-                }
+        {
+            return Path.IsPathRooted(path) ? path : Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), path);
+        }
 
     }
 }

@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.ObjectModel;
-using Autodesk.Revit.DB;
 using Control = System.Windows.Forms.Control;
 using Form = System.Windows.Forms.Form;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     public partial class PrintSetupForm : Form
@@ -28,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             printSetupsComboBox.SelectedItem = m_printSetup.SettingName;
             printSetupsComboBox.SelectedValueChanged += printSetupsComboBox_SelectedValueChanged;
             renameButton.Enabled = deleteButton.Enabled =
-                m_printSetup.SettingName.Equals("<In-Session>") ? false : true;
+                !m_printSetup.SettingName.Equals("<In-Session>");
 
             paperSizeComboBox.DataSource = m_printSetup.PaperSizes;
             paperSizeComboBox.SelectedItem = m_printSetup.PaperSize;
@@ -160,7 +159,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             hideUnreferencedViewTagsCheckBox.Checked = m_printSetup.HideUnreferencedViewTags;
 
             renameButton.Enabled = deleteButton.Enabled =
-                m_printSetup.SettingName.Equals("<In-Session>") ? false : true;
+                !m_printSetup.SettingName.Equals("<In-Session>");
 
             revertButton.Enabled = false;
         }
@@ -202,12 +201,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
             m_printSetup.VerifyMarginType(marginTypeComboBox);
 
-            var controlsToEnableOrNot =
-                new Collection<Control>
-                {
+            Collection<Control> controlsToEnableOrNot =
+                [
                     userDefinedMarginXTextBox,
                     userDefinedMarginYTextBox
-                };
+                ];
             if (m_printSetup.VerifyUserDefinedMargin(controlsToEnableOrNot))
             {
                 userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * m_inchesInFeet).ToString();
@@ -226,12 +224,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
             m_printSetup.VerifyMarginType(marginTypeComboBox);
 
-            var controlsToEnableOrNot =
-                new Collection<Control>
-                {
+            Collection<Control> controlsToEnableOrNot =
+                [
                     userDefinedMarginXTextBox,
                     userDefinedMarginYTextBox
-                };
+                ];
             if (m_printSetup.VerifyUserDefinedMargin(controlsToEnableOrNot))
             {
                 userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * m_inchesInFeet).ToString();
@@ -245,12 +242,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
         {
             m_printSetup.SelectedMarginType = (MarginType)marginTypeComboBox.SelectedItem;
 
-            var controlsToEnableOrNot =
-                new Collection<Control>
-                {
+            Collection<Control> controlsToEnableOrNot =
+                [
                     userDefinedMarginXTextBox,
                     userDefinedMarginYTextBox
-                };
+                ];
             if (m_printSetup.VerifyUserDefinedMargin(controlsToEnableOrNot))
             {
                 userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * m_inchesInFeet).ToString();
@@ -392,7 +388,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
         private void saveAsButton_Click(object sender, EventArgs e)
         {
-            using (var dlg = new SaveAsForm(m_printSetup))
+            using (SaveAsForm dlg = new(m_printSetup))
             {
                 dlg.ShowDialog();
             }
@@ -407,7 +403,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
         private void renameButton_Click(object sender, EventArgs e)
         {
-            using (var dlg = new ReNameForm(m_printSetup))
+            using (ReNameForm dlg = new(m_printSetup))
             {
                 dlg.ShowDialog();
             }

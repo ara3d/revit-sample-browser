@@ -1,8 +1,9 @@
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
@@ -43,13 +44,13 @@ namespace BuildingCoder
                 }
                 catch (Exception ex)
                 {
-                    ErrorMsg($"Error obtaining document {target.ToString()} category: {ex.Message}");
+                    ErrorMsg($"Error obtaining document {target} category: {ex.Message}");
                     return cat;
                 }
             }
 
             if (null == cat)
-                ErrorMsg($"Unable to obtain the document {target.ToString()} category.");
+                ErrorMsg($"Unable to obtain the document {target} category.");
             return cat;
         }
 
@@ -112,9 +113,10 @@ namespace BuildingCoder
             {
                 var opt
                     = new ExternalDefinitionCreationOptions(
-                        defname, SharedParamsDeftype);
-
-                opt.Visible = visible;
+                        defname, SharedParamsDeftype)
+                    {
+                        Visible = visible
+                    };
 
                 definition = group.Definitions.Create(opt);
             }
@@ -132,9 +134,9 @@ namespace BuildingCoder
 
             try
             {
-                var binding = typeParameter
+                Binding binding = typeParameter
                     ? ca.NewTypeBinding(catSet)
-                    : ca.NewInstanceBinding(catSet) as Binding;
+                    : ca.NewInstanceBinding(catSet);
 
                 doc.ParameterBindings.Insert(definition, binding);
 

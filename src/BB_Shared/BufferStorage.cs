@@ -1,9 +1,6 @@
-﻿using Ara3D.Geometry;
-using Autodesk.Revit.DB.DirectContext3D;
+﻿using Autodesk.Revit.DB.DirectContext3D;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using PrimitiveType = Autodesk.Revit.DB.DirectContext3D.PrimitiveType;
 
 namespace Ara3D.Bowerbird.RevitSamples
@@ -13,7 +10,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         public PrimitiveType PrimitiveType = PrimitiveType.TriangleList;
 
         public static readonly VertexFormatBits FormatBits = VertexFormatBits.PositionNormalColored;
-        
+
         public VertexBuffer? VertexBuffer { get; private set; }
         public IndexBuffer? IndexBuffer { get; private set; }
 
@@ -21,7 +18,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         public int IndexCount { get; private set; }
 
         public const int PrimitiveSize = 3;
-    
+
         public int PrimitiveCount => IndexCount / PrimitiveSize;
 
         public BufferStorage(RenderMesh mesh)
@@ -40,8 +37,8 @@ namespace Ara3D.Bowerbird.RevitSamples
             Debug.Assert(IndexCount > 0);
             Debug.Assert(IndexCount % PrimitiveSize == 0);
 
-            using VertexFormat vertexFormat = new VertexFormat(FormatBits);
-            using EffectInstance effectInstance = new EffectInstance(FormatBits);
+            using VertexFormat vertexFormat = new(FormatBits);
+            using EffectInstance effectInstance = new(FormatBits);
 
             DrawContext.FlushBuffer(
                 VertexBuffer,
@@ -56,7 +53,9 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public void Update(RenderMesh mesh)
-            => Update(mesh.Vertices, mesh.Indices);
+        {
+            Update(mesh.Vertices, mesh.Indices);
+        }
 
         public void Update(ReadOnlySpan<RenderVertex> vertices, ReadOnlySpan<int> indices)
         {
@@ -73,9 +72,11 @@ namespace Ara3D.Bowerbird.RevitSamples
             VertexCount = 0;
             IndexCount = 0;
         }
-    
+
         private int VertexBufferSizeInFloats()
-            => VertexPositionNormalColored.GetSizeInFloats() * VertexCount;
+        {
+            return VertexPositionNormalColored.GetSizeInFloats() * VertexCount;
+        }
 
         private int IndexBufferSizeInShorts()
         {
@@ -96,7 +97,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
             if (vertexCount == 0)
                 return;
-        
+
             VertexBuffer = new VertexBuffer(VertexBufferSizeInFloats());
         }
 
@@ -176,7 +177,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                 {
                     var s = IndexBuffer.GetIndexStreamPoint();
                     for (var i = 0; i < indices.Length; i++)
-                        s.AddPoint(new IndexPoint(indices[i])); 
+                        s.AddPoint(new IndexPoint(indices[i]));
                 }
                 else
                 {
@@ -195,7 +196,7 @@ namespace Ara3D.Bowerbird.RevitSamples
                 throw new ArgumentException("Triangle indices must be a multiple of 3.", nameof(tri));
 
             // Each triangle -> 3 edges -> 6 indices
-            var edges = new int[(tri.Length / 3) * 6];
+            var edges = new int[tri.Length / 3 * 6];
             var w = 0;
 
             for (var i = 0; i < tri.Length; i += 3)

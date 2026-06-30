@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.Selections.CS
 {
     /// <summary>
@@ -41,13 +40,11 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
 
         private readonly ExternalCommandData m_commandData;
 
-        private ItemFactoryBase m_creationBase;
+        private readonly ItemFactoryBase m_creationBase;
 
         private readonly UIDocument m_document;
 
         private XYZ m_elemPickedPoint;
-
-        private XYZ m_selectedPoint;
 
         public SelectionManager(ExternalCommandData commandData)
         {
@@ -55,10 +52,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
             m_application = m_commandData.Application;
             m_document = m_application.ActiveUIDocument;
 
-            if (m_document.Document.IsFamilyDocument)
-                m_creationBase = m_document.Document.FamilyCreate;
-            else
-                m_creationBase = m_document.Document.Create;
+            m_creationBase = m_document.Document.IsFamilyDocument ? m_document.Document.FamilyCreate : m_document.Document.Create;
         }
 
         /// <summary>
@@ -77,12 +71,12 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         /// </summary>
         public XYZ SelectedPoint
         {
-            get => m_selectedPoint;
+            get;
             set
             {
-                m_selectedPoint = value;
-                if (SelectedElement != null && m_selectedPoint != null)
-                    SelectionHelper.MoveElement(m_document.Document, SelectedElement, ref m_elemPickedPoint, m_selectedPoint);
+                field = value;
+                if (SelectedElement != null && field != null)
+                    SelectionHelper.MoveElement(m_document.Document, SelectedElement, ref m_elemPickedPoint, field);
             }
         }
 

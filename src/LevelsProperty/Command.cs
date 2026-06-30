@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Units;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Units;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -24,18 +23,18 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
             m_revit = revit;
             UnitTypeId = m_revit.Application.ActiveUIDocument.Document.GetUnits().GetFormatOptions(SpecTypeId.Length)
                 .GetUnitTypeId();
-            var documentTransaction = new Transaction(revit.Application.ActiveUIDocument.Document, "Document");
+            Transaction documentTransaction = new(revit.Application.ActiveUIDocument.Document, "Document");
             documentTransaction.Start();
             try
             {
                 //Get every level by iterating through all elements
-                SystemLevelsDatum = new List<LevelsDataSource>();
-                var collector = new FilteredElementCollector(m_revit.Application.ActiveUIDocument.Document);
+                SystemLevelsDatum = [];
+                FilteredElementCollector collector = new(m_revit.Application.ActiveUIDocument.Document);
                 ICollection<Element> collection = collector.OfClass(typeof(Level)).ToElements();
                 foreach (var element in collection)
                 {
                     var systemLevel = element as Level;
-                    var levelsDataSourceRow = new LevelsDataSource
+                    LevelsDataSource levelsDataSourceRow = new()
                     {
                         LevelIdValue = systemLevel.Id,
                         Name = systemLevel.Name
@@ -51,10 +50,8 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
                     SystemLevelsDatum.Add(levelsDataSourceRow);
                 }
 
-                using (var displayForm = new LevelsForm(this))
-                {
-                    displayForm.ShowDialog();
-                }
+                using LevelsForm displayForm = new(this);
+                displayForm.ShowDialog();
             }
             catch (Exception ex)
             {

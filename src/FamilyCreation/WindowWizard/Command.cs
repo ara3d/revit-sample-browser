@@ -26,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                     return Result.Failed;
                 }
 
-                var wizard = new WindowWizard(commandData);
+                WindowWizard wizard = new(commandData);
                 var result = wizard.RunWizard();
                 switch (result)
                 {

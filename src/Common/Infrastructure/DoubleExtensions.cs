@@ -11,11 +11,10 @@ namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
     {
         public static string ToLengthDisplayString(this double value, Autodesk.Revit.DB.Units units)
         {
-            if (units != null)
-                return UnitFormatUtils.Format(units, SpecTypeId.Length, value, false,
-                                       new FormatValueOptions { AppendUnitSymbol = true });
-            else
-                return string.Empty;
+            return units != null
+                ? UnitFormatUtils.Format(units, SpecTypeId.Length, value, false,
+                                       new FormatValueOptions { AppendUnitSymbol = true })
+                : string.Empty;
         }
     }
 }

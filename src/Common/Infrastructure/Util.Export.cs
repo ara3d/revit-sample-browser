@@ -1,25 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Color = System.Drawing.Color;
-using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
-using Rectangle = System.Drawing.Rectangle;
-using WinForms = System.Windows.Forms;
 
 
 namespace BuildingCoder
@@ -34,7 +21,7 @@ namespace BuildingCoder
             rs.BackgroundStyle = BackgroundStyle.Color;
 
             var cbs
-                = (ColorBackgroundSettings) rs
+                = (ColorBackgroundSettings)rs
                     .GetBackgroundSettings();
 
             cbs.Color = new Autodesk.Revit.DB.Color(255, 0, 0);
@@ -59,11 +46,11 @@ namespace BuildingCoder
                 return null;
             }
 
-            IList<ElementId> views = new List<ElementId>();
+            IList<ElementId> views = [];
 
             try
             {
-                var collector = new FilteredElementCollector(
+                FilteredElementCollector collector = new(
                     doc);
 
                 var viewFamilyType = collector
@@ -78,7 +65,7 @@ namespace BuildingCoder
 
                 if (view3D != null)
                 {
-                    var white = new Autodesk.Revit.DB.Color(255, 255, 255);
+                    Color white = new(255, 255, 255);
 
                     view3D.SetBackground(
                         ViewDisplayBackground.CreateGradient(
@@ -97,7 +84,7 @@ namespace BuildingCoder
             {
             }
 
-            var ieo = new ImageExportOptions
+            ImageExportOptions ieo = new()
             {
                 FilePath = tempImageFile,
                 FitDirection = FitDirectionType.Horizontal,
@@ -146,7 +133,7 @@ namespace BuildingCoder
         {
             var r = Result.Failed;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Export Image");
             var filepath = ExportToImage(doc);
             tx.RollBack();
@@ -164,7 +151,7 @@ namespace BuildingCoder
         {
             var r = Result.Failed;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Export Image");
 
             var desktop_path = Environment.GetFolderPath(
@@ -175,16 +162,17 @@ namespace BuildingCoder
             var filepath = Path.Combine(desktop_path,
                 view.Name);
 
-            var img = new ImageExportOptions();
-
-            img.ZoomType = ZoomFitType.FitToPage;
-            img.PixelSize = 32;
-            img.ImageResolution = ImageResolution.DPI_600;
-            img.FitDirection = FitDirectionType.Horizontal;
-            img.ExportRange = ExportRange.CurrentView;
-            img.HLRandWFViewsFileType = ImageFileType.PNG;
-            img.FilePath = filepath;
-            img.ShadowViewsFileType = ImageFileType.PNG;
+            ImageExportOptions img = new()
+            {
+                ZoomType = ZoomFitType.FitToPage,
+                PixelSize = 32,
+                ImageResolution = ImageResolution.DPI_600,
+                FitDirection = FitDirectionType.Horizontal,
+                ExportRange = ExportRange.CurrentView,
+                HLRandWFViewsFileType = ImageFileType.PNG,
+                FilePath = filepath,
+                ShadowViewsFileType = ImageFileType.PNG
+            };
 
             doc.ExportImage(img);
 
@@ -204,7 +192,7 @@ namespace BuildingCoder
         {
             var r = Result.Failed;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Export IFC");
 
             var desktop_path = Environment.GetFolderPath(

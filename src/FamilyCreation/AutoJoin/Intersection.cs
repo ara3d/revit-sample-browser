@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 {
@@ -9,8 +9,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
     {
         public static bool IsOverlapped(GeometryObject geometryA, GeometryObject geometryB)
         {
-            var facesOfA = new List<Face>();
-            var curvesOfB = new List<Curve>();
+            List<Face> facesOfA = [];
+            List<Curve> curvesOfB = [];
 
             GetAllFaces(geometryA, facesOfA);
             GetAllCurves(geometryB, curvesOfB);

@@ -23,7 +23,6 @@
 #endregion // Header
 
 #region Namespaces
-using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -31,22 +30,22 @@ using System.Windows.Forms;
 
 namespace AdnRme
 {
-  public partial class FamilySelector : Form
-  {
-    public FamilySelector( IEnumerable a )
+    public partial class FamilySelector : Form
     {
-      InitializeComponent();
-      foreach( string s in a )
-      {
-        checkedListBox1.Items.Add( s, true );
-      }
-    }
+        public FamilySelector(IEnumerable a)
+        {
+            InitializeComponent();
+            foreach (string s in a)
+            {
+                checkedListBox1.Items.Add(s, true);
+            }
+        }
 
-    public bool IsChecked( string s )
-    {
-      int i = checkedListBox1.Items.IndexOf( s );
-      Debug.Assert( -1 < i, "expected item to be contained in listbox" );
-      return ( -1 < i ) ? checkedListBox1.GetItemChecked( i ) : false;
+        public bool IsChecked(string s)
+        {
+            var i = checkedListBox1.Items.IndexOf(s);
+            Debug.Assert(-1 < i, "expected item to be contained in listbox");
+            return (-1 < i) && checkedListBox1.GetItemChecked(i);
+        }
     }
-  }
 }

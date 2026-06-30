@@ -13,12 +13,12 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
         public EventsSettingForm()
         {
             InitializeComponent();
-            m_appSelection = new List<string>();
+            m_appSelection = [];
         }
 
         public List<string> AppSelectionList
         {
-            get { return m_appSelection ?? (m_appSelection = new List<string>()); }
+            get => m_appSelection ??= [];
             set => m_appSelection = value;
         }
 

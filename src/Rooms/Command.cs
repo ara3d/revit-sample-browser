@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.Rooms.CS
 {
@@ -23,11 +23,11 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
         {
             try
             {
-                var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Rooms");
+                Transaction tran = new(commandData.Application.ActiveUIDocument.Document, "Rooms");
                 tran.Start();
-                var data = new RoomsData(commandData);
+                RoomsData data = new(commandData);
 
-                using (var infoForm = new RoomsInformationForm(data))
+                using (RoomsInformationForm infoForm = new(data))
                 {
                     infoForm.ShowDialog();
                 }

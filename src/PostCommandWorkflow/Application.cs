@@ -10,13 +10,13 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS.Properties;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS.Properties;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
 using Size = System.Drawing.Size;
 
 namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
@@ -47,7 +47,7 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
         private void CreateUiPanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("UI");
-            var setupMonitor = new PushButtonData("Setup_Revision_Monitor", "Setup Revision Monitor",
+            PushButtonData setupMonitor = new("Setup_Revision_Monitor", "Setup Revision Monitor",
                 AddAssemblyPath,
                 typeof(PostCommandRevisionMonitorCommand).FullName);
             var setupMonitorPb = rp.AddItem(setupMonitor) as PushButton;
@@ -79,7 +79,7 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
 
         private static BitmapSource GetSmallIcon(Icon icon)
         {
-            var smallIcon = new Icon(icon, new Size(16, 16));
+            Icon smallIcon = new(icon, new Size(16, 16));
             return Imaging.CreateBitmapSourceFromHIcon(
                 smallIcon.Handle,
                 Int32Rect.Empty,

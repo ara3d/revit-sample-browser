@@ -3,8 +3,8 @@
 // Adapted from GetCentroid by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/GetCentroid
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
 {
@@ -53,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
                 return false;
             }
 
-            var controls = new SolidOrShellTessellationControls
+            SolidOrShellTessellationControls controls = new()
             {
                 LevelOfDetail = 0
             };
@@ -69,7 +69,7 @@ namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
                 return false;
             }
 
-            var cv = new CentroidVolume();
+            CentroidVolume cv = new();
 
             for (var i = 0; i < triangulation.ShellComponentCount; ++i)
             {
@@ -114,7 +114,7 @@ namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
                 geo = geo.GetTransformed(Transform.Identity);
             }
 
-            var partials = new List<CentroidVolume>();
+            List<CentroidVolume> partials = [];
             GeometryInstance geometryInstance = null;
 
             foreach (var obj in geo)
@@ -145,7 +145,7 @@ namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
                 return false;
             }
 
-            var combined = new CentroidVolume();
+            CentroidVolume combined = new();
             foreach (var partial in partials)
             {
                 combined.AddWeightedContribution(

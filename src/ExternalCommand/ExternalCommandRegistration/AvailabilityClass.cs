@@ -2,6 +2,7 @@
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistration
 {

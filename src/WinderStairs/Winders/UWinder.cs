@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
@@ -67,18 +67,18 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
             m_corner2Nd = new WinderSinglePoint(ControlPoints[1], dir2, dir3, NumStepsInCorner2);
             m_corner2Nd.Construct(RunWidth, CenterOffsetF2, CenterOffsetE2);
             var moveDelta = (m_corner1St.Distance2 + m_corner2Nd.Distance1
-                                                   + TreadDepth * NumStepsInMiddle) * dir2;
+                                                   + (TreadDepth * NumStepsInMiddle)) * dir2;
             m_corner2Nd.Move(moveDelta);
 
             //
             // Construct the three straight runs
             //
-            var startPnt = m_corner1St.StartPoint - TreadDepth * NumStepsAtStart * dir1;
-            var endPnt = m_corner2Nd.EndPoint + TreadDepth * NumStepsAtEnd * dir3;
+            var startPnt = m_corner1St.StartPoint - (TreadDepth * NumStepsAtStart * dir1);
+            var endPnt = m_corner2Nd.EndPoint + (TreadDepth * NumStepsAtEnd * dir3);
             var bisectDir = (dir2 - dir1).Normalize();
-            var perpendicularDir1 = new XYZ(-dir1.Y, dir1.X, 0);
-            var perpendicularDir2 = new XYZ(-dir2.Y, dir2.X, 0);
-            var perpendicularDir3 = new XYZ(-dir3.Y, dir3.X, 0);
+            XYZ perpendicularDir1 = new(-dir1.Y, dir1.X, 0);
+            XYZ perpendicularDir2 = new(-dir2.Y, dir2.X, 0);
+            XYZ perpendicularDir3 = new(-dir3.Y, dir3.X, 0);
             if (bisectDir.DotProduct(perpendicularDir1) < 0)
             {
                 perpendicularDir1 = perpendicularDir1.Negate();

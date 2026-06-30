@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
@@ -35,26 +35,24 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             if (!myBRepBuilder.IsResultAvailable())
                 return;
 
-            using (var tr = new Transaction(m_dbdocument, "Create a DirectShape"))
-            {
-                tr.Start();
+            using Transaction tr = new(m_dbdocument, "Create a DirectShape");
+            tr.Start();
 
-                var myDirectShape =
-                    DirectShape.CreateElement(m_dbdocument, new ElementId(BuiltInCategory.OST_GenericModel));
-                myDirectShape.ApplicationId = "TestBRepBuilder";
-                myDirectShape.ApplicationDataId = name;
-                if (null != myDirectShape)
-                    myDirectShape.SetShape(myBRepBuilder);
-                tr.Commit();
-            }
+            var myDirectShape =
+                DirectShape.CreateElement(m_dbdocument, new ElementId(BuiltInCategory.OST_GenericModel));
+            myDirectShape.ApplicationId = "TestBRepBuilder";
+            myDirectShape.ApplicationDataId = name;
+            if (null != myDirectShape)
+                myDirectShape.SetShape(myBRepBuilder);
+            tr.Commit();
         }
 
         private void CreateCylinder()
         {
             // x down-left, y right, z up.
-            var brepBuilder = new BRepBuilder(BRepType.Solid);
+            BRepBuilder brepBuilder = new(BRepType.Solid);
 
-            var basis = new Frame(new XYZ(50, -100, 0), new XYZ(0, 1, 0), new XYZ(-1, 0, 0), new XYZ(0, 0, 1));
+            Frame basis = new(new XYZ(50, -100, 0), new XYZ(0, 1, 0), new XYZ(-1, 0, 0), new XYZ(0, 0, 1));
             // Periodic surfaces need at least two faces even when the underlying surface is identical
             // (BRepBuilderSurfaceGeometry.Create copies the input surface).
             var frontCylSurf = CylindricalSurface.Create(basis, 50);
@@ -127,11 +125,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 
         private void CreateTruncatedCone()
         {
-            var brepBuilder = new BRepBuilder(BRepType.Solid);
+            BRepBuilder brepBuilder = new(BRepType.Solid);
             var bottom = Plane.CreateByNormalAndOrigin(new XYZ(0, 0, -1), new XYZ(0, 0, 0));
             var top = Plane.CreateByNormalAndOrigin(new XYZ(0, 0, 1), new XYZ(0, 0, 50));
 
-            var basis = new Frame(new XYZ(0, 0, 100), new XYZ(0, 1, 0), new XYZ(1, 0, 0), new XYZ(0, 0, -1));
+            Frame basis = new(new XYZ(0, 0, 100), new XYZ(0, 1, 0), new XYZ(1, 0, 0), new XYZ(0, 0, -1));
 
             // Periodic surfaces need at least two faces even when the underlying surface is identical.
             var rightConicalSurface = ConicalSurface.Create(basis, Math.Atan(0.5));

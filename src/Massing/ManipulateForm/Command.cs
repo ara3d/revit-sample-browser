@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
 {
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
         {
             m_revitApp = commandData.Application.Application;
             m_revitDoc = commandData.Application.ActiveUIDocument.Document;
-            var transaction = new Transaction(m_revitDoc, "ManipulateForm");
+            Transaction transaction = new(m_revitDoc, "ManipulateForm");
 
             try
             {
@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
                 var edgeReference = AddEdge(form);
                 m_revitDoc.Regenerate();
                 // Move the added edge
-                var offset = new XYZ(0, -40, 0);
+                XYZ offset = new(0, -40, 0);
                 MoveSubElement(form, edgeReference, offset);
                 m_revitDoc.Regenerate();
                 // Move the vertex on added profile
@@ -90,11 +90,11 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
         private Form CreateLoft()
         {
             // Prepare profiles for loft creation
-            var profiles = new ReferenceArrayArray();
-            var bottomProfile = new ReferenceArray();
+            ReferenceArrayArray profiles = new();
+            ReferenceArray bottomProfile = new();
             bottomProfile = CreateProfile(m_bottomLength, m_bottomWidth, m_bottomHeight);
             profiles.Append(bottomProfile);
-            var topProfile = new ReferenceArray();
+            ReferenceArray topProfile = new();
             topProfile = CreateProfile(m_topLength, m_topWidth, m_topHeight);
             profiles.Append(topProfile);
 
@@ -104,19 +104,19 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
 
         private ReferenceArray CreateProfile(double length, double width, double height)
         {
-            var profile = new ReferenceArray();
+            ReferenceArray profile = new();
             // Prepare points to create lines
-            var points = new List<XYZ>
-            {
+            List<XYZ> points =
+            [
                 new XYZ(-1 * length / 2, -1 * width / 2, height),
                 new XYZ(length / 2, -1 * width / 2, height),
                 new XYZ(length / 2, width / 2, height),
                 new XYZ(-1 * length / 2, width / 2, height)
-            };
+            ];
 
             // Prepare sketch plane to create model line
-            var normal = new XYZ(0, 0, 1);
-            var origin = new XYZ(0, 0, height);
+            XYZ normal = new(0, 0, 1);
+            XYZ origin = new(0, 0, height);
             var geometryPlane = Plane.CreateByNormalAndOrigin(normal, origin);
             var sketchPlane = SketchPlane.Create(m_revitDoc, geometryPlane);
 
@@ -136,8 +136,8 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
         private int AddProfile(Form form)
         {
             // Get a connecting edge from the form
-            var startOfTop = new XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
-            var startOfBottom = new XYZ(-1 * m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
+            XYZ startOfTop = new(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
+            XYZ startOfBottom = new(-1 * m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
             var connectingEdge = GetEdgeByEndPoints(form, startOfTop, startOfBottom);
 
             // Add an profile with specific parameters
@@ -147,15 +147,15 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
 
         private void MoveProfile(Form form, int profileIndex)
         {
-            var offset = new XYZ(0, 0, 5);
+            XYZ offset = new(0, 0, 5);
             if (form.CanManipulateProfile(profileIndex)) form.MoveProfile(profileIndex, offset);
         }
 
         private void MoveEdgesOnProfile(Form form, int profileIndex)
         {
-            var startOfTop = new XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
-            var offset1 = new XYZ(m_profileOffset, 0, 0);
-            var offset2 = new XYZ(-m_profileOffset, 0, 0);
+            XYZ startOfTop = new(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
+            XYZ offset1 = new(m_profileOffset, 0, 0);
+            XYZ offset2 = new(-m_profileOffset, 0, 0);
             Reference r1 = null;
             Reference r2 = null;
             var ra = form.get_CurveLoopReferencesOnProfile(profileIndex, 0);
@@ -181,11 +181,11 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
 
         private void MoveVertexesOnBottomProfile(Form form)
         {
-            var offset1 = new XYZ(-m_vertexOffsetOnBottomProfile, -m_vertexOffsetOnBottomProfile, 0);
-            var offset2 = new XYZ(m_vertexOffsetOnBottomProfile, -m_vertexOffsetOnBottomProfile, 0);
+            XYZ offset1 = new(-m_vertexOffsetOnBottomProfile, -m_vertexOffsetOnBottomProfile, 0);
+            XYZ offset2 = new(m_vertexOffsetOnBottomProfile, -m_vertexOffsetOnBottomProfile, 0);
 
-            var startOfBottom = new XYZ(-1 * m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
-            var endOfBottom = new XYZ(m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
+            XYZ startOfBottom = new(-1 * m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
+            XYZ endOfBottom = new(m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
             var bottomEdge = GetEdgeByEndPoints(form, startOfBottom, endOfBottom);
             var pntsRef = form.GetControlPoints(bottomEdge.Reference);
             Reference r1 = null;
@@ -205,7 +205,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
 
         private void MoveVertexesOnAddedProfile(Form form, int profileIndex)
         {
-            var offset = new XYZ(0, m_vertexOffsetOnMiddleProfile, 0);
+            XYZ offset = new(0, m_vertexOffsetOnMiddleProfile, 0);
 
             var ra = form.get_CurveLoopReferencesOnProfile(profileIndex, 0);
             foreach (Reference r in ra)
@@ -226,13 +226,13 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
         private Reference AddEdge(Form form)
         {
             // Get two specific edges from the form
-            var startOfTop = new XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
-            var endOfTop = new XYZ(m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
+            XYZ startOfTop = new(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
+            XYZ endOfTop = new(m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
             var topEdge = GetEdgeByEndPoints(form, startOfTop, endOfTop);
-            var startOfBottom = new XYZ(-1 * (m_bottomLength / 2 + m_vertexOffsetOnBottomProfile),
-                -1 * (m_bottomWidth / 2 + m_vertexOffsetOnBottomProfile), m_bottomHeight);
-            var endOfBottom = new XYZ(m_bottomLength / 2 + m_vertexOffsetOnBottomProfile,
-                -1 * (m_bottomWidth / 2 + m_vertexOffsetOnBottomProfile), m_bottomHeight);
+            XYZ startOfBottom = new(-1 * ((m_bottomLength / 2) + m_vertexOffsetOnBottomProfile),
+                -1 * ((m_bottomWidth / 2) + m_vertexOffsetOnBottomProfile), m_bottomHeight);
+            XYZ endOfBottom = new((m_bottomLength / 2) + m_vertexOffsetOnBottomProfile,
+                -1 * ((m_bottomWidth / 2) + m_vertexOffsetOnBottomProfile), m_bottomHeight);
             var bottomEdge = GetEdgeByEndPoints(form, startOfBottom, endOfBottom);
 
             // Add an edge between the two edges with specific parameters

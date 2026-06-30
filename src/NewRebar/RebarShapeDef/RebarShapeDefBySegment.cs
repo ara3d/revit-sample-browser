@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints;
 using Autodesk.Revit.DB.Structure;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
 {

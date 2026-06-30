@@ -9,14 +9,17 @@ namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
 {
     public static class RevitToolkitSelection
     {
-        public static ISelectionFilter ForCategory(BuiltInCategory category) =>
-            new SelectionConfiguration()
+        public static ISelectionFilter ForCategory(BuiltInCategory category)
+        {
+            return new SelectionConfiguration()
                 .Allow.Element(element =>
                     element.Category?.Id != null && element.Category.Id.AreEquals(category))
                 .Filter;
+        }
 
-        public static ISelectionFilter ForCategories(params BuiltInCategory[] categories) =>
-            new SelectionConfiguration()
+        public static ISelectionFilter ForCategories(params BuiltInCategory[] categories)
+        {
+            return new SelectionConfiguration()
                 .Allow.Element(element =>
                 {
                     if (element.Category?.Id == null)
@@ -31,12 +34,18 @@ namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
                     return false;
                 })
                 .Filter;
+        }
 
-        public static ISelectionFilter ForClass<T>() where T : Element =>
-            new SelectionConfiguration()
+        public static ISelectionFilter ForClass<T>() where T : Element
+        {
+            return new SelectionConfiguration()
                 .Allow.Element(element => element is T)
                 .Filter;
+        }
 
-        public static SelectionConfiguration Create() => new SelectionConfiguration();
+        public static SelectionConfiguration Create()
+        {
+            return new SelectionConfiguration();
+        }
     }
 }

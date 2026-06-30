@@ -39,7 +39,7 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             if (m.Msg == WmKeydown)
             {
                 var k = (Keys)(int)m.WParam;
-                var e = new KeyEventArgs(k);
+                KeyEventArgs e = new(k);
                 switch (e.KeyCode)
                 {
                     case Keys.Left:

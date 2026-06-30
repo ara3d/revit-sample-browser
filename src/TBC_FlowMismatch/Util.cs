@@ -1,9 +1,9 @@
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
-using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BuildingCoder
 {
@@ -11,9 +11,9 @@ namespace BuildingCoder
     {
         internal static bool IsDesirableSystemPredicate(MEPSystem s)
         {
-            return s is MechanicalSystem || s is PipingSystem
+            return s is MechanicalSystem || (s is PipingSystem
                 && !s.Name.Equals("unassigned")
-                && 0 < s.Elements.Size;
+                && 0 < s.Elements.Size);
         }
 
         internal static void ReportSystemMistmatch(

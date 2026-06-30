@@ -12,11 +12,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
+using System;
 namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 {
     /// <summary>

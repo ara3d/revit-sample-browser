@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
 using Point = System.Drawing.Point;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 {
     public class TrackBall
@@ -18,21 +17,9 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 
         private XYZ m_previousPosition3D;
 
-        private Transform m_rotation = Transform.Identity;
+        public Transform Rotation { get; set; } = Transform.Identity;
 
-        private double m_scale;
-
-        public Transform Rotation
-        {
-            get => m_rotation;
-            set => m_rotation = value;
-        }
-
-        public double Scale
-        {
-            get => m_scale;
-            set => m_scale = value;
-        }
+        public double Scale { get; set; }
 
         private void Track(Point currentPosition)
         {
@@ -41,17 +28,19 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
             if (axis.GetLength() == 0)
                 return;
 
-            m_rotation = Transform.CreateRotation(axis, -m_previousPosition3D.AngleTo(currentPosition3D));
+            Rotation = Transform.CreateRotation(axis, -m_previousPosition3D.AngleTo(currentPosition3D));
             m_previousPosition3D = currentPosition3D;
         }
 
-        private void Zoom(Point currentPosition) =>
-            m_scale = Math.Exp((currentPosition.Y - m_previousPosition2D.Y) / 100);
+        private void Zoom(Point currentPosition)
+        {
+            Scale = Math.Exp((currentPosition.Y - m_previousPosition2D.Y) / 100);
+        }
 
         public void OnMouseDown(float width, float height, MouseEventArgs e)
         {
-            m_rotation = Transform.Identity;
-            m_scale = 1.0;
+            Rotation = Transform.Identity;
+            Scale = 1.0;
             m_canvasWidth = width;
             m_canvasHeight = height;
             m_previousPosition2D = e.Location;
@@ -79,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 
         public void OnKeyDown(KeyEventArgs e)
         {
-            var axis = new XYZ(1.0, 0, 0);
+            XYZ axis = new(1.0, 0, 0);
             var angle = 0.1;
             switch (e.KeyCode)
             {
@@ -96,7 +85,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
                     break;
             }
 
-            m_rotation = Transform.CreateRotation(axis, angle);
+            Rotation = Transform.CreateRotation(axis, angle);
         }
     }
 }

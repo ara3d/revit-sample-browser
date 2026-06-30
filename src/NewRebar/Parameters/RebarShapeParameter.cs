@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.ComponentModel;
 using Autodesk.Revit.DB;
+using System.ComponentModel;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters
 {
@@ -32,10 +32,10 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters
 
         protected ExternalDefinition GetOrCreateDef(DefinitionGroup group)
         {
-            if (!(group.Definitions.get_Item(Name) is ExternalDefinition bdef))
+            if (group.Definitions.get_Item(Name) is not ExternalDefinition bdef)
             {
-                var externalDefinitionCreationOptions =
-                    new ExternalDefinitionCreationOptions(Name, SpecTypeId.ReinforcementLength);
+                ExternalDefinitionCreationOptions externalDefinitionCreationOptions =
+                    new(Name, SpecTypeId.ReinforcementLength);
                 bdef = group.Definitions.Create(externalDefinitionCreationOptions) as ExternalDefinition;
             }
 

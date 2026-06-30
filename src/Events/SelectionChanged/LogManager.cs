@@ -25,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
         }
 
         /// <summary>True when ExpectedSelectionChanged.log is present (regression test mode).</summary>
-        public static bool RegressionTestNow 
+        public static bool RegressionTestNow
             => File.Exists(Path.Combine(AssemblyLocation, "ExpectedSelectionChanged.log"));
 
         public static void LogFinalize()
@@ -36,6 +36,9 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
             Trace.Listeners.Remove(TxtListener);
         }
 
-        public static void WriteLog(string message) => Trace.WriteLine(message);
+        public static void WriteLog(string message)
+        {
+            Trace.WriteLine(message);
+        }
     }
 }

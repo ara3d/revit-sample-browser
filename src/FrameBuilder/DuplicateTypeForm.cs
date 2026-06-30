@@ -1,9 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
@@ -32,13 +31,11 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             try
             {
                 var initialTypeName = m_typesMgr.GenerateSymbolName(m_copiedSymbol.Name);
-                using (var typeNameFrm = new EditTypeNameForm(initialTypeName))
-                {
-                    if (typeNameFrm.ShowDialog() != DialogResult.OK) return DialogResult.Cancel;
+                using EditTypeNameForm typeNameFrm = new(initialTypeName);
+                if (typeNameFrm.ShowDialog() != DialogResult.OK) return DialogResult.Cancel;
 
-                    var finalTypeName = m_typesMgr.GenerateSymbolName(typeNameFrm.TypeName);
-                    m_newSymbol = m_typesMgr.DuplicateSymbol(m_copiedSymbol, finalTypeName);
-                }
+                var finalTypeName = m_typesMgr.GenerateSymbolName(typeNameFrm.TypeName);
+                m_newSymbol = m_typesMgr.DuplicateSymbol(m_copiedSymbol, finalTypeName);
             }
             catch
             {

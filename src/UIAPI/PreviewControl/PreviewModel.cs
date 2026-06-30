@@ -1,17 +1,17 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
-using RView = Autodesk.Revit.DB.View;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using RView = Autodesk.Revit.DB.View;
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
 {
     public partial class PreviewModel : Form
@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
         private void UpdateViewsList(ElementId viewId)
         {
             // fill the combobox with printable views <name + id>
-            var collecotr = new FilteredElementCollector(m_dbDocument);
+            FilteredElementCollector collecotr = new(m_dbDocument);
             collecotr.OfClass(typeof(RView));
             var secs = from Element f in collecotr where (f as RView).CanBePrinted select f as RView;
             _cbViews.Items.Clear();
@@ -72,10 +72,9 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
             docIter.Reset();
             while (docIter.MoveNext())
             {
-                var dbDoc = docIter.Current as Document;
                 string documentName = null;
                 DbDocumentItem item = null;
-                if (dbDoc != null)
+                if (docIter.Current is Document dbDoc)
                 {
                     if (dbDoc.IsFamilyDocument)
                     {
@@ -105,7 +104,7 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
         {
             var cb = sender as ComboBox;
 
-            if (!(cb?.SelectedItem is DbViewItem dbItem))
+            if (cb?.SelectedItem is not DbViewItem dbItem)
                 return;
 
             //if (_currentDBViewId == null)
@@ -132,7 +131,7 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
 
             if (documentItem.IsNull)
             {
-                var ofd = new OpenFileDialog
+                OpenFileDialog ofd = new()
                 {
                     DefaultExt = "rvt",
                     Filter =
@@ -159,17 +158,9 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
                     // the combobox should show the current document item.
                     string documentName;
                     var projName = m_dbDocument.ProjectInformation.Name;
-                    if (string.IsNullOrEmpty(projName) || projName.ToLower().CompareTo("project name") == 0)
-                    {
-                        if (string.IsNullOrEmpty(m_dbDocument.PathName))
-                            documentName = projName;
-                        else
-                            documentName = new FileInfo(m_dbDocument.PathName).Name;
-                    }
-                    else
-                    {
-                        documentName = projName;
-                    }
+                    documentName = string.IsNullOrEmpty(projName) || projName.ToLower().CompareTo("project name") == 0
+                        ? string.IsNullOrEmpty(m_dbDocument.PathName) ? projName : new FileInfo(m_dbDocument.PathName).Name
+                        : projName;
 
                     foreach (DbDocumentItem dbItem in _cbDocuments.Items)
                     {
@@ -191,10 +182,6 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
 
     public class DbViewItem
     {
-        private string m_name;
-        private ElementId m_id;
-        private string m_uniqueId;
-
         public DbViewItem(RView dbView, Document dbDoc)
         {
             var viewType = dbDoc.GetElement(dbView.GetTypeId()) as ElementType;
@@ -203,23 +190,11 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
             UniqueId = dbView.UniqueId;
         }
 
-        public string Name
-        {
-            get => m_name;
-            set => m_name = value;
-        }
+        public string Name { get; set; }
 
-        public ElementId Id
-        {
-            get => m_id;
-            set => m_id = value;
-        }
+        public ElementId Id { get; set; }
 
-        public string UniqueId
-        {
-            get => m_uniqueId;
-            set => m_uniqueId = value;
-        }
+        public string UniqueId { get; set; }
 
         public override string ToString()
         {
@@ -229,10 +204,6 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
 
     public class DbDocumentItem
     {
-        private bool m_isNull;
-        private string m_name;
-        private Document m_document;
-
         public DbDocumentItem(string name, Document doc)
         {
             Name = name;
@@ -245,23 +216,11 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
             IsNull = true;
         }
 
-        public bool IsNull
-        {
-            get => m_isNull;
-            set => m_isNull = value;
-        }
+        public bool IsNull { get; set; }
 
-        public string Name
-        {
-            get => m_name;
-            set => m_name = value;
-        }
+        public string Name { get; set; }
 
-        public Document Document
-        {
-            get => m_document;
-            set => m_document = value;
-        }
+        public Document Document { get; set; }
 
         public override string ToString()
         {

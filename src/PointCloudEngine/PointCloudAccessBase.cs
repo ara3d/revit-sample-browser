@@ -1,13 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.PointClouds;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.PointClouds;
-using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
     /// <summary>
@@ -21,7 +19,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 
         protected PointCloudAccessBase()
         {
-            m_storedCells = new List<PointCloudCellStorage>();
+            m_storedCells = [];
         }
 
         /// <summary>
@@ -33,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         /// <param name="randomize">True to randomize point number and location, false for a regular arrangement of points.</param>
         protected void AddCell(XYZ lowerLeft, XYZ upperRight, int color, bool randomize)
         {
-            var storage = new PointCloudCellStorage(lowerLeft, upperRight, color, randomize);
+            PointCloudCellStorage storage = new(lowerLeft, upperRight, color, randomize);
             storage.GeneratePoints();
             m_storedCells.Add(storage);
 
@@ -102,7 +100,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
             var count = m_storedCells.Count;
             for (var i = 0; i < count; i++)
             {
-                var cellElement = new XElement("Cell");
+                XElement cellElement = new("Cell");
                 m_storedCells[i].SerializeObjectData(cellElement);
                 rootElement.Add(cellElement);
             }
@@ -214,10 +212,10 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
             }
 
             // Read cells.
-            m_storedCells = new List<PointCloudCellStorage>();
+            m_storedCells = [];
             foreach (var cellElement in rootElement.Elements("Cell"))
             {
-                var cell = new PointCloudCellStorage(cellElement);
+                PointCloudCellStorage cell = new(cellElement);
                 m_storedCells.Add(cell);
                 AddCellToOutline(cell);
                 cell.GeneratePoints();

@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
@@ -26,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
             };
 
             m_familySymbolList = symbolList;
-            var nameList = new List<string>();
+            List<string> nameList = [];
             foreach (var symbol in m_familySymbolList)
             {
                 nameList.Add(symbol.Name);

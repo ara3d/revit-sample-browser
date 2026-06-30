@@ -78,7 +78,7 @@ public sealed class ExportProgressForm : Form
         };
 
         // Details row
-        var detailsPanel = new Panel { Dock = DockStyle.Top, Height = 44, Padding = new Padding(0, 10, 0, 0) };
+        Panel detailsPanel = new() { Dock = DockStyle.Top, Height = 44, Padding = new Padding(0, 10, 0, 0) };
 
         _counts = new Label
         {
@@ -102,7 +102,7 @@ public sealed class ExportProgressForm : Form
         detailsPanel.Controls.Add(_counts);
 
         // Buttons
-        var bottomPanel = new Panel { Dock = DockStyle.Bottom, Height = 52 };
+        Panel bottomPanel = new() { Dock = DockStyle.Bottom, Height = 52 };
         _cancelButton = new Button
         {
             Text = "Cancel",

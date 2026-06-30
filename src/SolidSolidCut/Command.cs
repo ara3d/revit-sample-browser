@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.SolidSolidCut.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -26,12 +25,10 @@ namespace Ara3D.RevitSampleBrowser.SolidSolidCut.CS
             if (!SolidSolidCutUtils.CanElementCutElement(cuttingSolid, solidToBeCut, out _))
                 return Result.Succeeded;
 
-            using (var transaction = new Transaction(activeDoc, "AddCutBetweenSolids"))
-            {
-                transaction.Start();
-                SolidSolidCutUtils.AddCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid);
-                transaction.Commit();
-            }
+            using Transaction transaction = new(activeDoc, "AddCutBetweenSolids");
+            transaction.Start();
+            SolidSolidCutUtils.AddCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid);
+            transaction.Commit();
 
             return Result.Succeeded;
         }
@@ -53,12 +50,10 @@ namespace Ara3D.RevitSampleBrowser.SolidSolidCut.CS
                 return Result.Succeeded;
             }
 
-            using (var transaction = new Transaction(activeDoc, "RemoveCutBetweenSolids"))
-            {
-                transaction.Start();
-                SolidSolidCutUtils.RemoveCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid);
-                transaction.Commit();
-            }
+            using Transaction transaction = new(activeDoc, "RemoveCutBetweenSolids");
+            transaction.Start();
+            SolidSolidCutUtils.RemoveCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid);
+            transaction.Commit();
 
             return Result.Succeeded;
         }

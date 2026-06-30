@@ -7,7 +7,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     public class CreateDimension
     {
-        private Application m_application;
+        private readonly Application m_application;
         private readonly Document m_document;
 
         public CreateDimension(Application app, Document doc)
@@ -19,9 +19,9 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         public Dimension AddDimension(View view, Autodesk.Revit.DB.ReferencePlane refPlane1,
             Autodesk.Revit.DB.ReferencePlane refPlane2, Autodesk.Revit.DB.ReferencePlane refPlane)
         {
-            var startPoint = new XYZ();
-            var endPoint = new XYZ();
-            var refArray = new ReferenceArray();
+            XYZ startPoint = new();
+            XYZ endPoint = new();
+            ReferenceArray refArray = new();
             var ref1 = refPlane1.GetReference();
             var ref2 = refPlane2.GetReference();
             var ref3 = refPlane.GetReference();
@@ -35,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 refArray.Append(ref2);
             }
 
-            var subTransaction = new SubTransaction(m_document);
+            SubTransaction subTransaction = new(m_document);
             subTransaction.Start();
             var dim = m_document.FamilyCreate.NewDimension(view, line, refArray);
             subTransaction.Commit();
@@ -44,9 +44,9 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
         public Dimension AddDimension(View view, Autodesk.Revit.DB.ReferencePlane refPlane, Face face)
         {
-            var startPoint = new XYZ();
-            var endPoint = new XYZ();
-            var refArray = new ReferenceArray();
+            XYZ startPoint = new();
+            XYZ endPoint = new();
+            ReferenceArray refArray = new();
             var ref1 = refPlane.GetReference();
             var pFace = face as PlanarFace;
             var ref2 = pFace.Reference;
@@ -58,7 +58,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
             startPoint = refPlane.FreeEnd;
             endPoint = new XYZ(startPoint.X, pFace.Origin.Y, startPoint.Z);
-            var subTransaction = new SubTransaction(m_document);
+            SubTransaction subTransaction = new(m_document);
             subTransaction.Start();
             var line = Line.CreateBound(startPoint, endPoint);
             var dim = m_document.FamilyCreate.NewDimension(view, line, refArray);
@@ -68,9 +68,9 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
         public Dimension AddDimension(View view, Face face1, Face face2)
         {
-            var startPoint = new XYZ();
-            var endPoint = new XYZ();
-            var refArray = new ReferenceArray();
+            XYZ startPoint = new();
+            XYZ endPoint = new();
+            ReferenceArray refArray = new();
             var pFace1 = face1 as PlanarFace;
             var ref1 = pFace1.Reference;
             var pFace2 = face2 as PlanarFace;
@@ -83,7 +83,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
             startPoint = pFace1.Origin;
             endPoint = new XYZ(startPoint.X, pFace2.Origin.Y, startPoint.Z);
-            var subTransaction = new SubTransaction(m_document);
+            SubTransaction subTransaction = new(m_document);
             subTransaction.Start();
             var line = Line.CreateBound(startPoint, endPoint);
             var dim = m_document.FamilyCreate.NewDimension(view, line, refArray);

@@ -21,7 +21,7 @@ namespace Ara3D.Bowerbird.RevitSamples
 
         public override void Execute(object arg)
         {
-            var handler = new ExternalEventExample(); 
+            ExternalEventExample handler = new();
             var ev = ExternalEvent.Create(handler);
             ev.Raise();
         }

@@ -18,7 +18,7 @@ public class Component
     /// The ID of the component that was created 
     /// </summary>
     public Guid ComponentId { get; set; }
-    
+
     /// <summary>
     /// Identifies this particular component instance.
     /// Components are never modified, new ones are created with new version Ids.

@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
     /// <summary>Updates the ExternallyTaggedBRep in the DirectShape created by <see cref="CreateBRep"/>.</summary>
@@ -25,23 +24,21 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
                     if (Result.Succeeded != SampleBrowserUtils.ExecuteCreateBRepCommand(dbDocument))
                         return Result.Failed;
 
-                using (var transaction = new Transaction(dbDocument, "UpdateExternallyTaggedBRep"))
-                {
-                    transaction.Start();
+                using Transaction transaction = new(dbDocument, "UpdateExternallyTaggedBRep");
+                transaction.Start();
 
-                    var resizedTaggedBRep = SampleBrowserUtils.CreateExternallyTaggedPodium(120.0, 20.0, 60.0);
-                    if (null == resizedTaggedBRep)
-                        return Result.Failed;
+                var resizedTaggedBRep = SampleBrowserUtils.CreateExternallyTaggedPodium(120.0, 20.0, 60.0);
+                if (null == resizedTaggedBRep)
+                    return Result.Failed;
 
-                    CreateBRep.CreatedDirectShape.RemoveExternallyTaggedGeometry(Podium.ExternalId);
+                CreateBRep.CreatedDirectShape.RemoveExternallyTaggedGeometry(Podium.ExternalId);
 
-                    if (CreateBRep.CreatedDirectShape.HasExternalGeometry(Podium.ExternalId))
-                        return Result.Failed;
+                if (CreateBRep.CreatedDirectShape.HasExternalGeometry(Podium.ExternalId))
+                    return Result.Failed;
 
-                    CreateBRep.CreatedDirectShape.AddExternallyTaggedGeometry(resizedTaggedBRep);
+                CreateBRep.CreatedDirectShape.AddExternallyTaggedGeometry(resizedTaggedBRep);
 
-                    transaction.Commit();
-                }
+                transaction.Commit();
             }
             catch (Exception ex)
             {

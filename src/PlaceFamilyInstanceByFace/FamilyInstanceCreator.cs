@@ -1,23 +1,20 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using GeoInstance = Autodesk.Revit.DB.GeometryInstance;
-using GeoElement = Autodesk.Revit.DB.GeometryElement;
+using System;
+using System.Collections.Generic;
 using RevitElement = Autodesk.Revit.DB.Element;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
     public class FamilyInstanceCreator
     {
         // Revit document
         // Creation application
-        private Application m_appCreator;
+        private readonly Application m_appCreator;
 
         /// <summary>
         ///     Constructor, Store the Revit application
@@ -38,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
         /// <summary>
         ///     Store the all face names, they will be displayed in a combo box
         /// </summary>
-        public List<string> FaceNameList { get; } = new List<string>();
+        public List<string> FaceNameList { get; } = [];
 
         /// <summary>
         ///     Revit document
@@ -48,14 +45,14 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
         /// <summary>
         ///     Store all face instances for convenience to create a face-based family instance
         /// </summary>
-        public List<Face> FaceList { get; } = new List<Face>();
+        public List<Face> FaceList { get; } = [];
 
         /// <summary>
         ///     Store all family symbol in current Revit document
         /// </summary>
-        public List<FamilySymbol> FamilySymbolList { get; } = new List<FamilySymbol>();
+        public List<FamilySymbol> FamilySymbolList { get; } = [];
 
-        public List<string> FamilySymbolNameList { get; } = new List<string>();
+        public List<string> FamilySymbolNameList { get; } = [];
 
         /// <summary>
         ///     The index of default family symbol, will set it as default value when initializing UI

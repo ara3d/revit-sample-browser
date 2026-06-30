@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
@@ -18,11 +18,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
         {
             var document = m_data.CommandData.Application.ActiveUIDocument.Document;
             // create curve array and insert Lines in order
-            IList<Curve> curves = new List<Curve>();
-            foreach (var line in m_data.Lines)
-            {
-                curves.Add(line);
-            }
+            IList<Curve> curves = [.. m_data.Lines];
 
             // create beam system takes closed profile consist of lines
             var aBeamSystem = BeamSystem.Create(document, curves, document.ActiveView.SketchPlane, 0);

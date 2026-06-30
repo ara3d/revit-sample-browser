@@ -1,10 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
@@ -19,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+            Transaction trans = new(commandData.Application.ActiveUIDocument.Document,
                 "Ara3D.RevitSampleBrowser.ShaftHolePuncher");
             trans.Start();
             try
@@ -27,7 +28,7 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                 Wall wall = null;
                 Floor floor = null;
                 FamilyInstance familyInstance = null;
-                var elems = new ElementSet();
+                ElementSet elems = new();
                 foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
                 {
                     elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -59,18 +60,18 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                             floor = elem1;
                             break;
                         case FamilyInstance instance:
-                        {
-                            familyInstance = instance;
-                            if (familyInstance.StructuralType !=
-                                StructuralType.Beam)
                             {
-                                message = errorMessage;
-                                trans.RollBack();
-                                return Result.Cancelled;
-                            }
+                                familyInstance = instance;
+                                if (familyInstance.StructuralType !=
+                                    StructuralType.Beam)
+                                {
+                                    message = errorMessage;
+                                    trans.RollBack();
+                                    return Result.Cancelled;
+                                }
 
-                            break;
-                        }
+                                break;
+                            }
                         default:
                             message = errorMessage;
                             trans.RollBack();
@@ -82,30 +83,30 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                 {
                     if (null != wall)
                     {
-                        var profileWall = new ProfileWall(wall, commandData);
-                        var shaftHolePuncherForm =
-                            new ShaftHolePuncherForm(profileWall);
+                        ProfileWall profileWall = new(wall, commandData);
+                        ShaftHolePuncherForm shaftHolePuncherForm =
+                            new(profileWall);
                         shaftHolePuncherForm.ShowDialog();
                     }
                     else if (null != floor)
                     {
-                        var profileFloor = new ProfileFloor(floor, commandData);
-                        var shaftHolePuncherForm =
-                            new ShaftHolePuncherForm(profileFloor);
+                        ProfileFloor profileFloor = new(floor, commandData);
+                        ShaftHolePuncherForm shaftHolePuncherForm =
+                            new(profileFloor);
                         shaftHolePuncherForm.ShowDialog();
                     }
                     else if (null != familyInstance)
                     {
-                        var profileBeam = new ProfileBeam(familyInstance, commandData);
-                        var shaftHolePuncherForm =
-                            new ShaftHolePuncherForm(profileBeam);
+                        ProfileBeam profileBeam = new(familyInstance, commandData);
+                        ShaftHolePuncherForm shaftHolePuncherForm =
+                            new(profileBeam);
                         shaftHolePuncherForm.ShowDialog();
                     }
                     else
                     {
-                        var profileNull = new ProfileNull(commandData);
-                        var shaftHolePuncherForm =
-                            new ShaftHolePuncherForm(profileNull);
+                        ProfileNull profileNull = new(commandData);
+                        ShaftHolePuncherForm shaftHolePuncherForm =
+                            new(profileNull);
                         shaftHolePuncherForm.ShowDialog();
                     }
                 }

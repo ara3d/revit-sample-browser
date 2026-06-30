@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Fabrication;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
@@ -25,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var collection = uidoc.Selection.GetElementIds();
                 if (collection.Count > 0)
                 {
-                    var selIds = new List<ElementId>();
+                    List<ElementId> selIds = new();
                     foreach (var id in collection)
                     {
                         selIds.Add(id);
@@ -48,21 +48,19 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         return Result.Cancelled;
                     }
 
-                    using (var tr = new Transaction(doc, "Stretch and Fit"))
+                    using Transaction tr = new(doc, "Stretch and Fit");
+                    tr.Start();
+
+                    var result = FabricationPart.StretchAndFit(doc, connFrom, toEnd, out _);
+                    if (result != FabricationPartFitResult.Success)
                     {
-                        tr.Start();
-
-                        var result = FabricationPart.StretchAndFit(doc, connFrom, toEnd, out _);
-                        if (result != FabricationPartFitResult.Success)
-                        {
-                            message = result.ToString();
-                            return Result.Failed;
-                        }
-
-                        doc.Regenerate();
-
-                        tr.Commit();
+                        message = result.ToString();
+                        return Result.Failed;
                     }
+
+                    doc.Regenerate();
+
+                    tr.Commit();
 
                     return Result.Succeeded;
                 }
@@ -80,7 +78,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
         private Connector GetValidConnectorToStretchAndFitFrom(Document doc, ElementId elementId)
         {
-            if (!(doc.GetElement(elementId) is FabricationPart part))
+            if (doc.GetElement(elementId) is not FabricationPart part)
                 return null;
 
             // Straights, taps, and hangers cannot be stretched from.
@@ -104,7 +102,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
         private Connector GetValidConnectorToStretchAndFitTo(Document doc, ElementId elementId)
         {
-            if (!(doc.GetElement(elementId) is FabricationPart part))
+            if (doc.GetElement(elementId) is not FabricationPart part)
                 return null;
 
             if (part.IsAHanger())

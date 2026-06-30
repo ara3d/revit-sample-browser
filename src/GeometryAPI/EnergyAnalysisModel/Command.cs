@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 {
@@ -15,12 +15,12 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+            Transaction trans = new(commandData.Application.ActiveUIDocument.Document,
                 "Ara3D.RevitSampleBrowser.EnergyAnalysisModel");
             trans.Start();
-            var analysisModel = new EnergyAnalysisModel(commandData.Application.ActiveUIDocument.Document);
+            EnergyAnalysisModel analysisModel = new(commandData.Application.ActiveUIDocument.Document);
 
-            using (var form = new OptionsAndAnalysisForm(analysisModel))
+            using (OptionsAndAnalysisForm form = new(analysisModel))
             {
                 analysisModel.Initialize();
                 if (DialogResult.OK != form.ShowDialog())

@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
 {
@@ -57,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
 
         private void ValidateParameters(Document doc)
         {
-            var errorInfo = new List<string>();
+            List<string> errorInfo = [];
             if (doc.IsFamilyDocument)
             {
                 var familyManager = doc.FamilyManager;
@@ -69,11 +69,9 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
                     "The current document isn't a family document, so the validation doesn't work correctly!");
             }
 
-            using (var msgForm = new MessageForm(errorInfo.ToArray()))
-            {
-                msgForm.StartPosition = FormStartPosition.CenterParent;
-                msgForm.ShowDialog();
-            }
+            using MessageForm msgForm = new(errorInfo.ToArray());
+            msgForm.StartPosition = FormStartPosition.CenterParent;
+            msgForm.ShowDialog();
         }
     }
 }

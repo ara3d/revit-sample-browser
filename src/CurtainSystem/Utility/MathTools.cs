@@ -1,8 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Utility
 {
     public class Vector4
@@ -31,14 +29,14 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Utility
 
         public Vector4 CrossProduct(Vector4 v)
         {
-            return new Vector4(Y * v.Z - Z * v.Y, Z * v.X
-                                                  - X * v.Z, X * v.Y - Y * v.X);
+            return new Vector4((Y * v.Z) - (Z * v.Y), (Z * v.X)
+                                                  - (X * v.Z), (X * v.Y) - (Y * v.X));
         }
 
         public static Vector4 CrossProduct(Vector4 va, Vector4 vb)
         {
-            return new Vector4(va.Y * vb.Z - va.Z * vb.Y, va.Z * vb.X
-                                                          - va.X * vb.Z, va.X * vb.Y - va.Y * vb.X);
+            return new Vector4((va.Y * vb.Z) - (va.Z * vb.Y), (va.Z * vb.X)
+                                                          - (va.X * vb.Z), (va.X * vb.Y) - (va.Y * vb.X));
         }
     }
 }

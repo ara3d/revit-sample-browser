@@ -12,13 +12,13 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.IO;
-using System.Windows.Media.Imaging;
 using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS
 {

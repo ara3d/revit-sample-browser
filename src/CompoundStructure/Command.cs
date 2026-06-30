@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
 {
@@ -22,11 +22,11 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
             m_application = commandData.Application;
             m_document = m_application.ActiveUIDocument;
 
-            var transaction = new Transaction(m_document.Document, "Create CompoundStructure for Wall");
+            Transaction transaction = new(m_document.Document, "Create CompoundStructure for Wall");
 
             try
             {
-                var selectedElements = new ElementSet();
+                ElementSet selectedElements = new();
                 foreach (var elementId in m_document.Selection.GetElementIds())
                 {
                     selectedElements.Insert(m_document.Document.GetElement(elementId));
@@ -72,14 +72,14 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
             var masonryBrick = CreateSampleBrickMaterial();
             var concrete = CreateSampleConcreteMaterial();
 
-            var csLayers = new List<CompoundStructureLayer>();
-            var finish1Layer = new CompoundStructureLayer(0.2, MaterialFunctionAssignment.Finish1, masonryBrick.Id);
-            var substrateLayer =
-                new CompoundStructureLayer(0.1, MaterialFunctionAssignment.Substrate, ElementId.InvalidElementId);
-            var structureLayer = new CompoundStructureLayer(0.5, MaterialFunctionAssignment.Structure, concrete.Id);
-            var membraneLayer =
-                new CompoundStructureLayer(0, MaterialFunctionAssignment.Membrane, ElementId.InvalidElementId);
-            var finish2Layer = new CompoundStructureLayer(0.2, MaterialFunctionAssignment.Finish2, concrete.Id);
+            List<CompoundStructureLayer> csLayers = [];
+            CompoundStructureLayer finish1Layer = new(0.2, MaterialFunctionAssignment.Finish1, masonryBrick.Id);
+            CompoundStructureLayer substrateLayer =
+                new(0.1, MaterialFunctionAssignment.Substrate, ElementId.InvalidElementId);
+            CompoundStructureLayer structureLayer = new(0.5, MaterialFunctionAssignment.Structure, concrete.Id);
+            CompoundStructureLayer membraneLayer =
+                new(0, MaterialFunctionAssignment.Membrane, ElementId.InvalidElementId);
+            CompoundStructureLayer finish2Layer = new(0.2, MaterialFunctionAssignment.Finish2, concrete.Id);
             csLayers.Add(finish1Layer);
             csLayers.Add(substrateLayer);
             csLayers.Add(structureLayer);
@@ -126,13 +126,13 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
                 revealPoint = (ep3 + ep4) / 2.0;
             }
 
-            var sweepInfo = new WallSweepInfo(true, WallSweepType.Sweep);
+            WallSweepInfo sweepInfo = new(true, WallSweepType.Sweep);
             PrepareWallSweepInfo(sweepInfo, sweepPoint.V);
             sweepInfo.ProfileId = GetProfile("8\" Wide").Id;
             sweepInfo.Id = 101;
             wallCs.AddWallSweep(sweepInfo);
 
-            var revealInfo = new WallSweepInfo(true, WallSweepType.Reveal);
+            WallSweepInfo revealInfo = new(true, WallSweepType.Reveal);
             PrepareWallSweepInfo(revealInfo, revealPoint.U);
             revealInfo.Id = 102;
             wallCs.AddWallSweep(revealInfo);
@@ -156,7 +156,7 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
 
         private Material CreateSampleBrickMaterial()
         {
-            var createMaterial = new SubTransaction(m_document.Document);
+            SubTransaction createMaterial = new(m_document.Document);
             createMaterial.Start();
             Material materialNew;
 
@@ -176,14 +176,14 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
 
             createMaterial.Commit();
 
-            var createPropertySets = new SubTransaction(m_document.Document);
+            SubTransaction createPropertySets = new(m_document.Document);
             createPropertySets.Start();
 
-            var structuralAsssetBrick = new StructuralAsset("BrickStructuralAsset", StructuralAssetClass.Generic);
+            StructuralAsset structuralAsssetBrick = new("BrickStructuralAsset", StructuralAssetClass.Generic);
 
             var pseStructural = PropertySetElement.Create(m_document.Document, structuralAsssetBrick);
 
-            var thermalAssetBrick = new ThermalAsset("BrickThermalAsset", ThermalMaterialType.Solid)
+            ThermalAsset thermalAssetBrick = new("BrickThermalAsset", ThermalMaterialType.Solid)
             {
                 Porosity = 0.1,
                 Permeability = 0.2,
@@ -193,7 +193,7 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
 
             var pseThermal = PropertySetElement.Create(m_document.Document, thermalAssetBrick);
             createPropertySets.Commit();
-            var setPropertySets = new SubTransaction(m_document.Document);
+            SubTransaction setPropertySets = new(m_document.Document);
             setPropertySets.Start();
             materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Structural, pseStructural.Id);
             materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Thermal, pseThermal.Id);
@@ -221,13 +221,13 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
                 materialNew.Color = new Color(130, 150, 120);
             }
 
-            var structuralAsssetConcrete =
-                new StructuralAsset("ConcreteStructuralAsset", StructuralAssetClass.Concrete)
+            StructuralAsset structuralAsssetConcrete =
+                new("ConcreteStructuralAsset", StructuralAssetClass.Concrete)
                 {
                     ConcreteBendingReinforcement = .5
                 };
 
-            var thermalAssetConcrete = new ThermalAsset("ConcreteThermalAsset", ThermalMaterialType.Solid)
+            ThermalAsset thermalAssetConcrete = new("ConcreteThermalAsset", ThermalMaterialType.Solid)
             {
                 Porosity = 0.2,
                 Permeability = 0.3,
@@ -246,11 +246,11 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
 
         private FamilySymbol GetProfile(string name)
         {
-            var profiles = new FilteredElementCollector(m_document.Document);
+            FilteredElementCollector profiles = new(m_document.Document);
             profiles.OfCategory(BuiltInCategory.OST_ProfileFamilies);
             var materialElement = from element in profiles
-                where element.Name == name
-                select element;
+                                                   where element.Name == name
+                                                   select element;
             return materialElement.First() as FamilySymbol;
         }
     }

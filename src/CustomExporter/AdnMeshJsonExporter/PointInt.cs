@@ -2,8 +2,8 @@
 // Adapted from CustomExporterAdnMeshJson by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CustomExporterAdnMeshJson
 
-using System;
 using Autodesk.Revit.DB;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 {
@@ -17,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 
         static int ConvertFeetToMillimetres(double d)
         {
-            return (int)(FeetToMm * d + 0.5);
+            return (int)((FeetToMm * d) + 0.5);
         }
 
         public PointInt(XYZ p)

@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
@@ -33,19 +33,19 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 
         public static IList<NetworkInfo> FindValidNetworks(Document doc)
         {
-            IList<NetworkInfo> validNetworks = new List<NetworkInfo>();
+            IList<NetworkInfo> validNetworks = [];
 
-            var visitedSegments = new HashSet<MEPNetworkSegmentId>(new CompareNetworkSegmentId());
+            HashSet<MEPNetworkSegmentId> visitedSegments = new(new CompareNetworkSegmentId());
 
             // Find all elements that may drive the pipe or duct flow calculations.
-            var categories = new List<BuiltInCategory>
-            {
+            List<BuiltInCategory> categories =
+            [
                 BuiltInCategory.OST_MechanicalEquipment,
                 BuiltInCategory.OST_PlumbingEquipment,
                 BuiltInCategory.OST_DuctTerminal
-            };
+            ];
 
-            var multiCatFilter = new ElementMulticategoryFilter(categories);
+            ElementMulticategoryFilter multiCatFilter = new(categories);
             var elemCollector = new FilteredElementCollector(doc).WherePasses(multiCatFilter)
                 .WhereElementIsNotElementType();
             foreach (var elem in elemCollector.ToElements())
@@ -58,19 +58,19 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                 for (var ii = 0; ii < nSeg; ii++)
                 {
                     var seg = data.GetSegmentByIndex(ii);
-                    var idSegment = new MEPNetworkSegmentId(elem.Id, seg.Id);
+                    MEPNetworkSegmentId idSegment = new(elem.Id, seg.Id);
                     if (visitedSegments.Contains(idSegment))
                         continue;
 
                     // Start from this analytical segment to traverse the entire network.
-                    var newNetwork = new NetworkInfo(doc)
+                    NetworkInfo newNetwork = new(doc)
                     {
                         DomainType = seg.DomainType
                     };
 
                     // First start from the side of the start node.
                     var startNode = data.GetNodeById(seg.StartNode);
-                    var iter = new MEPNetworkIterator(doc, startNode, seg);
+                    MEPNetworkIterator iter = new(doc, startNode, seg);
                     for (iter.Start(); !iter.End(); iter.Next())
                     {
                         var currentSegment = iter.GetAnalyticalSegment();
@@ -82,8 +82,8 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                             continue;
 
                         // Mark this segment so not to create the duplicate network.
-                        var currentSegmentId =
-                            new MEPNetworkSegmentId(currentSegment.RevitElementId, currentSegment.Id);
+                        MEPNetworkSegmentId currentSegmentId =
+                            new(currentSegment.RevitElementId, currentSegment.Id);
                         visitedSegments.Add(currentSegmentId);
 
                         var segFlowData = currentModelData.GetSegmentData(currentSegment.Id);
@@ -103,8 +103,8 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                         var currentSegment = iter.GetAnalyticalSegment();
                         if (currentSegment == null)
                             continue;
-                        var currentSegmentId =
-                            new MEPNetworkSegmentId(currentSegment.RevitElementId, currentSegment.Id);
+                        MEPNetworkSegmentId currentSegmentId =
+                            new(currentSegment.RevitElementId, currentSegment.Id);
                         // Check if the segment was already visited.
                         if (visitedSegments.Contains(currentSegmentId))
                             continue;
@@ -152,22 +152,22 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             switch (elem)
             {
                 case MEPCurve aCurve:
-                {
-                    var sys = aCurve.MEPSystem;
-                    if (sys != null) AppendName(sys.Name);
-                    break;
-                }
+                    {
+                        var sys = aCurve.MEPSystem;
+                        if (sys != null) AppendName(sys.Name);
+                        break;
+                    }
                 case FabricationPart aPart:
-                {
-                    var serviceName = aPart.ServiceName;
-                    // Get the full name of fabrication service by its id.
-                    var fabConfig = FabricationConfiguration.GetFabricationConfiguration(Document);
-                    var fabService = fabConfig?.GetService(aPart.ServiceId);
-                    if (fabService != null) serviceName = fabService.Name;
+                    {
+                        var serviceName = aPart.ServiceName;
+                        // Get the full name of fabrication service by its id.
+                        var fabConfig = FabricationConfiguration.GetFabricationConfiguration(Document);
+                        var fabService = fabConfig?.GetService(aPart.ServiceId);
+                        if (fabService != null) serviceName = fabService.Name;
 
-                    AppendName(serviceName);
-                    break;
-                }
+                        AppendName(serviceName);
+                        break;
+                    }
             }
         }
 
@@ -226,8 +226,8 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 
         public void UpdateView(AvfViewer viewer)
         {
-            var points = new List<XYZ>();
-            var valList = new List<VectorAtPoint>();
+            List<XYZ> points = [];
+            List<VectorAtPoint> valList = [];
 
             // Safety check.
             if (m_maxFlow < 0.0000001)

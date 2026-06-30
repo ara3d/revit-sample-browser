@@ -40,7 +40,7 @@ namespace BuildingCoder
 
             while (it.MoveNext())
             {
-                var definition = (InternalDefinition) it.Key;
+                var definition = (InternalDefinition)it.Key;
 
                 if (doc.GetElement(
                     definition.Id) is not SharedParameterElement sharedParameterElement)

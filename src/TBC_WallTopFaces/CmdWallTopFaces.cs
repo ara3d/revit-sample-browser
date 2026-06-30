@@ -14,13 +14,14 @@
 
 #region Namespaces
 
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 #endregion // Namespaces
 
@@ -56,20 +57,20 @@ namespace BuildingCoder
 
             var opt = app.Create.NewGeometryOptions();
 
-            var comparer
-                = new Util.XyzEqualityComparer(1e-6);
+            Util.XyzEqualityComparer comparer
+                = new(1e-6);
 
 #if CREATE_MODEL_CURVES_FOR_TOP_FACE_EDGES
 
-            var creator = new Creator(doc);
+            Creator creator = new(doc);
 
-            var t = new Transaction(doc);
+            Transaction t = new(doc);
 
             t.Start("Create model curve copies of top face edges");
 
 #endif // CREATE_MODEL_CURVES_FOR_TOP_FACE_EDGES
 
-            IList<Face> topFaces = new List<Face>();
+            IList<Face> topFaces = [];
 
             int n;
             var nWalls = 0;
@@ -80,9 +81,8 @@ namespace BuildingCoder
             {
                 var e = doc.GetElement(id);
 
-                var wall = e as Wall;
 
-                if (null == wall)
+                if (e is not Wall wall)
                 {
                     Debug.Print($"Skipped {Util.ElementDescription(e)}");
                     continue;

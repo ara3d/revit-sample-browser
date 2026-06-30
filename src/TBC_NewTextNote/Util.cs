@@ -1,9 +1,9 @@
 #region Namespaces
 
+using Autodesk.Revit.DB;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using Autodesk.Revit.DB;
 
 #endregion // Namespaces
 
@@ -16,7 +16,7 @@ namespace BuildingCoder
         {
             var doc = textNote.Document;
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("AlignTextNote");
 
             var p = textNote.get_Parameter(

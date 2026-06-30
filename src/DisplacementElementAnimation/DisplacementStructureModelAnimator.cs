@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Events;
 
 namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
 {
@@ -47,7 +47,7 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
         public void StartAnimation()
         {
             // Instantiate or reset animation variables
-            m_displacementElements = new List<DisplacementElement>();
+            m_displacementElements = [];
             m_currentDisplacementIndex = 0;
 
             var uiDoc = m_uiApplication.ActiveUIDocument;
@@ -56,7 +56,7 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
 
             // Get levels in order of elevation
             var collector = new FilteredElementCollector(doc).OfClass(typeof(Level));
-            var idGroupsInOrder = new List<ICollection<ElementId>>();
+            List<ICollection<ElementId>> idGroupsInOrder = new();
             IEnumerable<Level> levels = collector.Cast<Level>().OrderBy(lvl => lvl.Elevation);
 
             // Create lists of "elements on level" in ascending order:
@@ -76,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             }
 
             // Initial setup of displacement elements for animation
-            using (var t = new Transaction(doc, "Start animation"))
+            using (Transaction t = new(doc, "Start animation"))
             {
                 t.Start();
                 foreach (var idGroups in idGroupsInOrder)
@@ -133,30 +133,28 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             }
 
             // Execute transaction for next animation
-            using (var t = new Transaction(m_uiApplication.ActiveUIDocument.Document,
-                       groupFinished ? "Next animation group" : "Animation step"))
+            using Transaction t = new(m_uiApplication.ActiveUIDocument.Document,
+                       groupFinished ? "Next animation group" : "Animation step");
+            t.Start();
+            if (groupFinished)
             {
-                t.Start();
-                if (groupFinished)
-                {
-                    // Delete displacement element (and children)
-                    m_uiApplication.ActiveUIDocument.Document.Delete(m_displacementElement.Id);
+                // Delete displacement element (and children)
+                m_uiApplication.ActiveUIDocument.Document.Delete(m_displacementElement.Id);
 
-                    // Increment to next group
-                    m_displacementElement = allFinished ? null : m_displacementElements[m_currentDisplacementIndex];
-                    UnhideDisplacedElements();
-                }
-                else
-                {
-                    ChangeDisplacementLocationForParent();
-                    ChangeDisplacementLocationsForChildren();
-
-                    // Decrement displacement parameter
-                    m_displacementParameter -= m_displacementIncrement;
-                }
-
-                t.Commit();
+                // Increment to next group
+                m_displacementElement = allFinished ? null : m_displacementElements[m_currentDisplacementIndex];
+                UnhideDisplacedElements();
             }
+            else
+            {
+                ChangeDisplacementLocationForParent();
+                ChangeDisplacementLocationsForChildren();
+
+                // Decrement displacement parameter
+                m_displacementParameter -= m_displacementIncrement;
+            }
+
+            t.Commit();
         }
 
         private void UnhideDisplacedElements()
@@ -171,7 +169,7 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
         private static void AddInstancesOnLevelToIdGroupList(List<ICollection<ElementId>> idGroupsInOrder,
             Level level, BuiltInCategory category)
         {
-            var collector = new FilteredElementCollector(level.Document);
+            FilteredElementCollector collector = new(level.Document);
             collector.WherePasses(new ElementLevelFilter(level.Id));
             collector.OfCategory(category);
             collector.WhereElementIsNotElementType();
@@ -185,7 +183,7 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
         private static void AddInstancesOnReferenceLevelToIdGroupList(List<ICollection<ElementId>> idGroupsInOrder,
             Level level, BuiltInCategory category)
         {
-            var collector = new FilteredElementCollector(level.Document);
+            FilteredElementCollector collector = new(level.Document);
             collector.OfCategory(category);
             collector.WhereElementIsNotElementType();
 
@@ -216,7 +214,7 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             m_displacementElements.Add(parent);
 
             var count = ids.Count;
-            var childIds = new List<ElementId>();
+            List<ElementId> childIds = new();
             var idsList = ids.ToList();
 
             // Add all elements except the last one to child displacement elements
@@ -283,16 +281,16 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             var displacementDueToParentXy = MoveToElevationZero(displacementDueToParent);
             var location = GetNominalCenterLocation(e);
             var delta = location - m_modelCenter;
-            var displacedLocation = delta * GetXyDisplacementRatio() - displacementDueToParentXy;
+            var displacedLocation = (delta * GetXyDisplacementRatio()) - displacementDueToParentXy;
 
             return displacedLocation;
         }
 
         private double GetXyDisplacementRatio()
         {
-            if (m_displacementParameter == 1.0)
-                return m_initialXyRatio;
-            return m_initialXyRatio * 1 / Math.Pow(m_initialHeight - GetHeightDisplacementValue(), 0.75);
+            return m_displacementParameter == 1.0
+                ? m_initialXyRatio
+                : m_initialXyRatio * 1 / Math.Pow(m_initialHeight - GetHeightDisplacementValue(), 0.75);
         }
 
         private double GetHeightDisplacementValue()
@@ -335,15 +333,12 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
 
         private static XYZ GetNominalCenterLocation(Element e)
         {
-            switch (e.Location)
+            return e.Location switch
             {
-                case LocationPoint lp:
-                    return MoveToElevationZero(lp.Point);
-                case LocationCurve lc:
-                    return MoveToElevationZero(lc.Curve.Evaluate(0.5, true));
-                default:
-                    return XYZ.Zero;
-            }
+                LocationPoint lp => MoveToElevationZero(lp.Point),
+                LocationCurve lc => MoveToElevationZero(lc.Curve.Evaluate(0.5, true)),
+                _ => XYZ.Zero,
+            };
         }
     }
 }

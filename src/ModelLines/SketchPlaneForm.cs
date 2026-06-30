@@ -2,7 +2,6 @@
 
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ModelLines.CS
 {

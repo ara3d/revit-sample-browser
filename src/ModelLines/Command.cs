@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ModelLines.CS
 {
@@ -18,14 +18,14 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
         {
             try
             {
-                var documentTransaction =
-                    new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
+                Transaction documentTransaction =
+                    new(commandData.Application.ActiveUIDocument.Document, "Document");
                 documentTransaction.Start();
                 // Get the application of revit
                 var revit = commandData.Application;
 
                 // New a real operation class.
-                var deal = new ModelLines(revit);
+                ModelLines deal = new(revit);
 
                 // The main deal operation
                 deal.Run();

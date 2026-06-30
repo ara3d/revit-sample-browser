@@ -14,15 +14,17 @@
 
 #region Namespaces
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Visual;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Visual;
-using Autodesk.Revit.UI;
+using System.Reflection;
 
 #endregion // Namespaces
 
@@ -46,8 +48,8 @@ namespace BuildingCoder
         private void FindTextureBitmapPaths(Document doc)
         {
             // Find materials
-            var fec
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector fec
+                = new(doc);
 
             fec.OfClass(typeof(Material));
 
@@ -132,10 +134,7 @@ namespace BuildingCoder
     {
         public bool Equals(Element x, Element y)
         {
-            if (x == null || y == null)
-                return false;
-
-            return x.Id.Value == y.Id.Value && x.GetType() == y.GetType() && x.Document.Equals(y.Document);
+            return x != null && y != null && x.Id.Value == y.Id.Value && x.GetType() == y.GetType() && x.Document.Equals(y.Document);
         }
 
         public int GetHashCode(Element obj)
@@ -168,11 +167,11 @@ namespace BuildingCoder
             public AssetPropertyPropertyDescriptor(AssetProperty assetProperty)
                 : base(assetProperty.Name, Array.Empty<Attribute>())
             {
-                _assetProperty = assetProperty;
+                AssetProperty = assetProperty;
             }
 
             #region Properties
-            public AssetProperty AssetProperty => _assetProperty;
+            public AssetProperty AssetProperty { get; }
 
             #endregion
             private static double[] GetSystemArray(DoubleArray doubleArray)
@@ -202,7 +201,6 @@ namespace BuildingCoder
             }
 
             #region Fields
-            private readonly AssetProperty _assetProperty;
             /// m
             private Type _valueType;
             private object _value;
@@ -211,7 +209,7 @@ namespace BuildingCoder
 
             #region override Properties
             public override bool IsReadOnly => true;
-            public override Type ComponentType => _assetProperty.GetType();
+            public override Type ComponentType => AssetProperty.GetType();
             public override Type PropertyType => _valueType;
 
             #endregion
@@ -219,11 +217,11 @@ namespace BuildingCoder
             #region override methods
             public override bool Equals(object obj)
             {
-                return obj is AssetPropertyPropertyDescriptor other && other.AssetProperty.Equals(_assetProperty);
+                return obj is AssetPropertyPropertyDescriptor other && other.AssetProperty.Equals(AssetProperty);
             }
             public override int GetHashCode()
             {
-                return _assetProperty.GetHashCode();
+                return AssetProperty.GetHashCode();
             }
             public override void ResetValue(object component)
             {
@@ -238,7 +236,7 @@ namespace BuildingCoder
             }
             public override object GetValue(object component)
             {
-                var typeAndValue = GetTypeAndValue(_assetProperty, 0);
+                var typeAndValue = GetTypeAndValue(AssetProperty, 0);
                 _value = typeAndValue.Item2;
                 _valueType = typeAndValue.Item1;
 
@@ -456,7 +454,7 @@ namespace BuildingCoder
 
                     if (null != assetProperty)
                     {
-                        var assetPropertyPropertyDescriptor = new AssetPropertyPropertyDescriptor(assetProperty);
+                        AssetPropertyPropertyDescriptor assetPropertyPropertyDescriptor = new(assetProperty);
                         _propertyDescriptors.Add(assetPropertyPropertyDescriptor);
                     }
                 }
@@ -468,7 +466,7 @@ namespace BuildingCoder
         public void ShowMaterialInfo(Document doc)
         {
             // Find material
-            var fec = new FilteredElementCollector(doc);
+            FilteredElementCollector fec = new(doc);
             fec.OfClass(typeof(Material));
 
             var materialName = "Checker"; // "Copper";//"Prism - Glass - Textured"; // "Parking Stripe"; // "Copper";
@@ -481,8 +479,8 @@ namespace BuildingCoder
 
             var renderingAsset = appearanceAsset.GetRenderingAsset();
 
-            var rad
-                = new RenderAppearanceDescriptor(renderingAsset);
+            RenderAppearanceDescriptor rad
+                = new(renderingAsset);
 
             var collection = rad.GetProperties();
 
@@ -490,15 +488,14 @@ namespace BuildingCoder
 
             var s = ": Material Asset Properties";
 
-            var dlg = new TaskDialog(s);
-
-            dlg.MainInstruction = mat.Name + s;
+            TaskDialog dlg = new(s)
+            {
+                MainInstruction = mat.Name + s
+            };
 
             s = string.Empty;
 
-            var orderableCollection = new List<PropertyDescriptor>(collection.Count);
-
-            foreach (PropertyDescriptor descr in collection) orderableCollection.Add(descr);
+            List<PropertyDescriptor> orderableCollection = [.. collection.Cast<PropertyDescriptor>()];
 
             foreach (var descr in
                 orderableCollection.OrderBy(pd => pd.Name).Cast<AssetPropertyPropertyDescriptor>())
@@ -540,12 +537,8 @@ namespace BuildingCoder
         {
             public ElementMaterial(Element element, Material material)
             {
-                if (element == null)
-                    throw new ArgumentNullException("element");
-                if (material == null)
-                    throw new ArgumentNullException("material");
-                Element = element;
-                Material = material;
+                Element = element ?? throw new ArgumentNullException("element");
+                Material = material ?? throw new ArgumentNullException("material");
             }
 
             public Material Material { get; }
@@ -694,8 +687,8 @@ namespace BuildingCoder
                         var appearanceAsset = appearanceElement
                             .GetRenderingAsset();
 
-                        var assetProperties
-                            = new List<AssetProperty>();
+                        List<AssetProperty> assetProperties
+                            = [];
 
                         var physicalPropSet
                             = doc.GetElement(material.StructuralAssetId)
@@ -796,10 +789,10 @@ namespace BuildingCoder
             //  = doc.GetElement( material.AppearanceAssetId ) 
             //    as AppearanceAssetElement;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Transaction Set Keyword");
-            using (var editScope
-                = new AppearanceAssetEditScope(assetElem.Document))
+            using (AppearanceAssetEditScope editScope
+                = new(assetElem.Document))
             {
                 var editableAsset = editScope.Start(assetElem.Id);
 

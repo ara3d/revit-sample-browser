@@ -1,7 +1,7 @@
 #region Namespaces
 
-using System.Diagnostics;
 using Autodesk.Revit.DB;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -70,29 +70,14 @@ namespace BuildingCoder
 
             if (null != p)
             {
-                switch (p.StorageType)
+                s = p.StorageType switch
                 {
-                    case StorageType.Integer:
-                        s = p.AsInteger().ToString();
-                        break;
-
-                    case StorageType.ElementId:
-                        s = p.AsElementId().Value.ToString();
-                        break;
-
-                    case StorageType.Double:
-                        s = RealString(p.AsDouble());
-                        break;
-
-                    case StorageType.String:
-                        s = $"{p.AsValueString()} ({RealString(p.AsDouble())})";
-                        break;
-
-                    default:
-                        s = "";
-                        break;
-                }
-
+                    StorageType.Integer => p.AsInteger().ToString(),
+                    StorageType.ElementId => p.AsElementId().Value.ToString(),
+                    StorageType.Double => RealString(p.AsDouble()),
+                    StorageType.String => $"{p.AsValueString()} ({RealString(p.AsDouble())})",
+                    _ => "",
+                };
                 s = $", {bip}={s}";
             }
 

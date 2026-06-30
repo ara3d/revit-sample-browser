@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.User
 {
     public enum SampleSchemaComplexity
@@ -50,7 +49,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             if (Schema.Lookup(schemaId) != null)
                 throw new Exception(
                     "A Schema with this Guid already exists in this document -- another one cannot be created.");
-            var storageWrite = new Transaction(storageElement.Document, "storageWrite");
+            Transaction storageWrite = new(storageElement.Document, "storageWrite");
             storageWrite.Start();
 
             var mySchemaWrapper = SchemaWrapper.NewSchema(schemaId, readAccess, writeAccess, vendorId, applicationId,
@@ -133,7 +132,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 applicationId, Entity0Name, "A sub entity");
             mySubSchemaWrapper0.AddField<int>("subInt0", new ForgeTypeId(), null);
             mySubSchemaWrapper0.FinishSchema();
-            var subEnt0 = new Entity(mySubSchemaWrapper0.GetSchema());
+            Entity subEnt0 = new(mySubSchemaWrapper0.GetSchema());
             subEnt0.Set(mySubSchemaWrapper0.GetSchema().GetField("subInt0"), 11);
             mySchemaWrapper.AddField<Entity>(Entity0Name, new ForgeTypeId(), mySubSchemaWrapper0);
 
@@ -141,7 +140,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 applicationId, Map1Name, "A map of int to Entity");
             mySubSchemaWrapper1Map.AddField<int>("subInt1", new ForgeTypeId(), null);
             mySubSchemaWrapper1Map.FinishSchema();
-            var subEnt1 = new Entity(mySubSchemaWrapper1Map.GetSchema());
+            Entity subEnt1 = new(mySubSchemaWrapper1Map.GetSchema());
             subEnt1.Set(mySubSchemaWrapper1Map.GetSchema().GetField("subInt1"), 22);
             mySchemaWrapper.AddField<IDictionary<int, Entity>>(Map1Name, new ForgeTypeId(), mySubSchemaWrapper1Map);
 
@@ -149,7 +148,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 vendorId, applicationId, Array1Name, "An array of Entities");
             mySubSchemaWrapper2Array.AddField<int>("subInt2", new ForgeTypeId(), null);
             mySubSchemaWrapper2Array.FinishSchema();
-            var subEnt2 = new Entity(mySubSchemaWrapper2Array.GetSchema());
+            Entity subEnt2 = new(mySubSchemaWrapper2Array.GetSchema());
             subEnt2.Set(mySubSchemaWrapper2Array.GetSchema().GetField("subInt2"), 33);
             mySchemaWrapper.AddField<IList<Entity>>(Array1Name, new ForgeTypeId(), mySubSchemaWrapper2Array);
 
@@ -201,11 +200,11 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             storageElementEntityWrite.Set(fieldMap0, myMap0);
 
             // Entity.Set requires IList<>, not List<>.
-            IList<bool> myBoolArrayList0 = new List<bool>
-            {
+            IList<bool> myBoolArrayList0 =
+            [
                 true,
                 false
-            };
+            ];
             storageElementEntityWrite.Set(fieldArray0, myBoolArrayList0);
             storageElementEntityWrite.Set(fieldEntity0, subEnt0);
 
@@ -215,11 +214,11 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             };
             storageElementEntityWrite.Set(fieldMap1, myMap1);
 
-            IList<Entity> myEntArrayList1 = new List<Entity>
-            {
+            IList<Entity> myEntArrayList1 =
+            [
                 subEnt2,
                 subEnt2
-            };
+            ];
             storageElementEntityWrite.Set(fieldArray1, myEntArrayList1);
         }
 
@@ -251,7 +250,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             var fieldBool0 = schemaWrapper.GetSchema().GetField(Bool0Name);
             var fieldString0 = schemaWrapper.GetSchema().GetField(String0Name);
 
-            var tStore = new Transaction(storageElement.Document, "tStore");
+            Transaction tStore = new(storageElement.Document, "tStore");
             tStore.Start();
             storageElementEntityWrite = null;
             storageElementEntityWrite = new Entity(schemaWrapper.GetSchema());

@@ -6,10 +6,10 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
     public class Ucs
     {
-        private Vector m_origin = new Vector(0.0, 0.0, 0.0);
-        private Vector m_xAxis = new Vector(1.0, 0.0, 0.0);
-        private Vector m_yAxis = new Vector(0.0, 1.0, 0.0);
-        private Vector m_zAxis = new Vector(0.0, 0.0, 1.0);
+        private Vector m_origin = new(0.0, 0.0, 0.0);
+        private Vector m_xAxis = new(1.0, 0.0, 0.0);
+        private Vector m_yAxis = new(0.0, 1.0, 0.0);
+        private Vector m_zAxis = new(0.0, 0.0, 1.0);
 
         public Ucs(Vector origin, Vector xAxis, Vector yAxis)
             : this(origin, xAxis, yAxis, true)
@@ -41,11 +41,11 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         public Vector Lc2Gc(Vector arg)
         {
-            var result = new Vector
+            Vector result = new()
             {
-                X = arg.X * m_xAxis.X + arg.Y * m_yAxis.X + arg.Z * m_zAxis.X + m_origin.X,
-                Y = arg.X * m_xAxis.Y + arg.Y * m_yAxis.Y + arg.Z * m_zAxis.Y + m_origin.Y,
-                Z = arg.X * m_xAxis.Z + arg.Y * m_yAxis.Z + arg.Z * m_zAxis.Z + m_origin.Z
+                X = (arg.X * m_xAxis.X) + (arg.Y * m_yAxis.X) + (arg.Z * m_zAxis.X) + m_origin.X,
+                Y = (arg.X * m_xAxis.Y) + (arg.Y * m_yAxis.Y) + (arg.Z * m_zAxis.Y) + m_origin.Y,
+                Z = (arg.X * m_xAxis.Z) + (arg.Y * m_yAxis.Z) + (arg.Z * m_zAxis.Z) + m_origin.Z
             };
             return result;
         }
@@ -59,7 +59,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         public Vector Gc2Lc(Vector arg)
         {
-            var result = new Vector();
+            Vector result = new();
             arg -= m_origin;
             result.X = m_xAxis * arg;
             result.Y = m_yAxis * arg;

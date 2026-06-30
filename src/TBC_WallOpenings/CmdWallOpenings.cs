@@ -12,13 +12,13 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -94,9 +94,10 @@ namespace BuildingCoder
 
             var refIntersector
                 = new ReferenceIntersector(
-                    filter, FindReferenceTarget.Element, view3D);
-
-            refIntersector.FindReferencesInRevitLinks = true;
+                    filter, FindReferenceTarget.Element, view3D)
+                {
+                    FindReferencesInRevitLinks = true
+                };
             var referenceWithContext
                 = refIntersector.Find(
                     curve.GetEndPoint(0),
@@ -110,7 +111,7 @@ namespace BuildingCoder
                         curve.GetEndPoint(0)) < curve.Length)
                     .ToList();
 
-            IList<Element> walls = new List<Element>();
+            IList<Element> walls = [];
             foreach (var reference in references)
             {
                 var instance = doc.GetElement(reference)
@@ -127,13 +128,7 @@ namespace BuildingCoder
         {
             public bool Equals(Reference x, Reference y)
             {
-                if (x.ElementId == y.ElementId)
-                {
-                    if (x.LinkedElementId == y.LinkedElementId) return true;
-                    return false;
-                }
-
-                return false;
+                return x.ElementId == y.ElementId && x.LinkedElementId == y.LinkedElementId;
             }
 
             public int GetHashCode(Reference obj)
@@ -180,21 +175,23 @@ namespace BuildingCoder
                     {
                         var elem = doc.GetElement(elemId);
 
-                        if ((BuiltInCategory) elem.Category.Id.Value
+                        if ((BuiltInCategory)elem.Category.Id.Value
                             == BuiltInCategory.OST_StructuralColumns)
                         {
                             allColumns++;
 
                             var column = elem as FamilyInstance;
 
-                            var builtInCats = new List<BuiltInCategory>();
-                            builtInCats.Add(BuiltInCategory.OST_Floors);
-                            builtInCats.Add(BuiltInCategory.OST_StructuralFraming);
+                            var builtInCats = new List<BuiltInCategory>
+                            {
+                                BuiltInCategory.OST_Floors,
+                                BuiltInCategory.OST_StructuralFraming
+                            };
                             var beamSlabFilter
                                 = new ElementMulticategoryFilter(builtInCats);
 
                             var bb = elem.get_BoundingBox(view);
-                            var myOutLn = new Outline(bb.Min, bb.Max + 100 * XYZ.BasisZ);
+                            var myOutLn = new Outline(bb.Min, bb.Max + (100 * XYZ.BasisZ));
                             var bbFilter
                                 = new BoundingBoxIntersectsFilter(myOutLn);
 
@@ -302,16 +299,18 @@ namespace BuildingCoder
             {
                 var elem = doc.GetElement(elemId);
 
-                if ((BuiltInCategory) elem.Category.Id.Value
+                if ((BuiltInCategory)elem.Category.Id.Value
                     == BuiltInCategory.OST_StructuralColumns)
                 {
                     allColumns++;
 
                     var column = elem as FamilyInstance;
 
-                    var builtInCats = new List<BuiltInCategory>();
-                    builtInCats.Add(BuiltInCategory.OST_Floors);
-                    builtInCats.Add(BuiltInCategory.OST_StructuralFraming);
+                    var builtInCats = new List<BuiltInCategory>
+                    {
+                        BuiltInCategory.OST_Floors,
+                        BuiltInCategory.OST_StructuralFraming
+                    };
                     var filter
                         = new ElementMulticategoryFilter(builtInCats);
 
@@ -326,12 +325,14 @@ namespace BuildingCoder
                     var b3 = new XYZ(elemBB.Min.X, elemBB.Max.Y, elemBB.Min.Z + 0.1);
                     var b4 = new XYZ(elemBB.Max.X, elemBB.Min.Y, elemBB.Min.Z + 0.1);
 
-                    var points = new List<XYZ>(5);
-                    points.Add(b1);
-                    points.Add(b2);
-                    points.Add(b3);
-                    points.Add(b4);
-                    points.Add(elemCenter);
+                    var points = new List<XYZ>(5)
+                    {
+                        b1,
+                        b2,
+                        b3,
+                        b4,
+                        elemCenter
+                    };
 
                     var refI = new ReferenceIntersector(
                         filter, FindReferenceTarget.All, view);

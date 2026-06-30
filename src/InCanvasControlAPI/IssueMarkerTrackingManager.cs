@@ -12,10 +12,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 {
@@ -26,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
     {
         private static IssueMarkerTrackingManager _manager;
 
-        private readonly HashSet<IssueMarkerTracking> m_trackings = new HashSet<IssueMarkerTracking>();
+        private readonly HashSet<IssueMarkerTracking> m_trackings = [];
 
         private IssueMarkerTrackingManager()
         {
@@ -34,14 +34,12 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 
         public static IssueMarkerTrackingManager GetInstance()
         {
-            return _manager ?? (_manager = new IssueMarkerTrackingManager());
+            return _manager ??= new IssueMarkerTrackingManager();
         }
 
         public IssueMarkerTracking GetTracking(Document doc)
         {
-            if (m_trackings.Where(track => track.Document.Equals(doc)).FirstOrDefault() is IssueMarkerTracking tracking)
-                return tracking;
-            return null;
+            return m_trackings.Where(track => track.Document.Equals(doc)).FirstOrDefault() is IssueMarkerTracking tracking ? tracking : null;
         }
 
         public void AddTracking(Document doc)

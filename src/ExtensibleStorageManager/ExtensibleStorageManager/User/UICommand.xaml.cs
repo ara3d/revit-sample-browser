@@ -1,17 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExtensibleStorage;
+using Microsoft.Win32;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Windows;
-using Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExtensibleStorage;
-using Autodesk.Revit.UI;
-using Microsoft.Win32;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.User
 {
     public partial class UiCommand : Window
@@ -52,39 +50,39 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             switch (m_schemaWrapper.Data.ReadAccess)
             {
                 case AccessLevel.Application:
-                {
-                    m_rb_ReadAccess_Application.IsChecked = true;
-                    break;
-                }
+                    {
+                        m_rb_ReadAccess_Application.IsChecked = true;
+                        break;
+                    }
                 case AccessLevel.Public:
-                {
-                    m_rb_ReadAccess_Public.IsChecked = true;
-                    break;
-                }
+                    {
+                        m_rb_ReadAccess_Public.IsChecked = true;
+                        break;
+                    }
                 case AccessLevel.Vendor:
-                {
-                    m_rb_ReadAccess_Vendor.IsChecked = true;
-                    break;
-                }
+                    {
+                        m_rb_ReadAccess_Vendor.IsChecked = true;
+                        break;
+                    }
             }
 
             switch (m_schemaWrapper.Data.WriteAccess)
             {
                 case AccessLevel.Application:
-                {
-                    m_rb_WriteAccess_Application.IsChecked = true;
-                    break;
-                }
+                    {
+                        m_rb_WriteAccess_Application.IsChecked = true;
+                        break;
+                    }
                 case AccessLevel.Public:
-                {
-                    m_rb_WriteAccess_Public.IsChecked = true;
-                    break;
-                }
+                    {
+                        m_rb_WriteAccess_Public.IsChecked = true;
+                        break;
+                    }
                 case AccessLevel.Vendor:
-                {
-                    m_rb_WriteAccess_Vendor.IsChecked = true;
-                    break;
-                }
+                    {
+                        m_rb_WriteAccess_Vendor.IsChecked = true;
+                        break;
+                    }
             }
         }
 
@@ -93,19 +91,13 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             read = AccessLevel.Public;
             write = AccessLevel.Public;
 
-            if (m_rb_ReadAccess_Application.IsChecked == true)
-                read = AccessLevel.Application;
-            else if (m_rb_ReadAccess_Public.IsChecked == true)
-                read = AccessLevel.Public;
-            else
-                read = AccessLevel.Vendor;
+            read = m_rb_ReadAccess_Application.IsChecked == true
+                ? AccessLevel.Application
+                : m_rb_ReadAccess_Public.IsChecked == true ? AccessLevel.Public : AccessLevel.Vendor;
 
-            if (m_rb_WriteAccess_Application.IsChecked == true)
-                write = AccessLevel.Application;
-            else if (m_rb_WriteAccess_Public.IsChecked == true)
-                write = AccessLevel.Public;
-            else
-                write = AccessLevel.Vendor;
+            write = m_rb_WriteAccess_Application.IsChecked == true
+                ? AccessLevel.Application
+                : m_rb_WriteAccess_Public.IsChecked == true ? AccessLevel.Public : AccessLevel.Vendor;
         }
 
         private bool ValidateGuids()
@@ -156,7 +148,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 return;
             }
 
-            var sfd = new SaveFileDialog
+            SaveFileDialog sfd = new()
             {
                 DefaultExt = ".xml",
                 Filter = "SchemaWrapper Xml files (*.xml)|*.xml",
@@ -184,7 +176,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
 
                 UpdateUi();
 
-                var dataDialog = new UiData();
+                UiData dataDialog = new();
                 var schemaData = m_schemaWrapper.ToString();
                 var entityData =
                     m_schemaWrapper.GetSchemaEntityData(
@@ -210,7 +202,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 return;
             }
 
-            var dataDialog = new UiData();
+            UiData dataDialog = new();
             dataDialog.SetData(m_schemaWrapper.ToString());
             dataDialog.ShowDialog();
         }
@@ -229,7 +221,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             }
 
             UpdateUi();
-            var dataDialog = new UiData();
+            UiData dataDialog = new();
 
             var schemaData = m_schemaWrapper.ToString();
             var entityData =
@@ -243,7 +235,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
 
         private void m_button_CreateSchemaFromXml_Click(object sender, RoutedEventArgs e)
         {
-            var ofd = new OpenFileDialog
+            OpenFileDialog ofd = new()
             {
                 InitialDirectory = GetStartingXmlPath(),
                 DefaultExt = ".xml",
@@ -266,7 +258,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
 
                 UpdateUi();
 
-                var dataDialog = new UiData();
+                UiData dataDialog = new();
                 dataDialog.SetData(m_schemaWrapper.ToString());
                 dataDialog.ShowDialog();
             }
@@ -288,7 +280,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
 
             UpdateUi();
 
-            var dataDialog = new UiData();
+            UiData dataDialog = new();
             var schemaData = m_schemaWrapper.ToString();
             var entityData =
                 m_schemaWrapper.GetSchemaEntityData(Document.ProjectInformation.GetEntity(m_schemaWrapper.GetSchema()));

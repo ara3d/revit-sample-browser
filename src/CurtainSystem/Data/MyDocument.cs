@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data
 {
@@ -14,9 +14,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data
         public delegate void MessageChangedHandler();
 
         // the message shown when there's a fatal error in the sample
-        private string m_fatalErrorMsg;
-
-        private KeyValuePair<string /*msgText*/, bool /*is warningOrError*/> m_message;
 
         public MyDocument(ExternalCommandData commandData)
         {
@@ -50,23 +47,23 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data
 
         public string FatalErrorMsg
         {
-            get => m_fatalErrorMsg;
+            get;
             set
             {
-                m_fatalErrorMsg = value;
+                field = value;
 
-                if (false == string.IsNullOrEmpty(m_fatalErrorMsg) &&
+                if (false == string.IsNullOrEmpty(field) &&
                     null != FatalErrorEvent)
-                    FatalErrorEvent(m_fatalErrorMsg);
+                    FatalErrorEvent(field);
             }
         }
 
         public KeyValuePair<string /*msgText*/, bool /*is warningOrError*/> Message
         {
-            get => m_message;
+            get;
             set
             {
-                m_message = value;
+                field = value;
                 MessageChanged?.Invoke();
             }
         }
@@ -77,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data
 
         private void GetCurtainSystemType()
         {
-            var filteredElementCollector = new FilteredElementCollector(Document);
+            FilteredElementCollector filteredElementCollector = new(Document);
             filteredElementCollector.OfClass(typeof(CurtainSystemType));
             CurtainSystemType = filteredElementCollector.FirstElement() as CurtainSystemType;
         }

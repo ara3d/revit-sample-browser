@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Windows.Forms;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.Units.CS
@@ -100,26 +100,24 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
             {
                 // show UI
                 var specTypeId = (ForgeTypeId)dataGridView["UnitType", e.RowIndex].Value;
-                using (var displayForm = new FormatForm(specTypeId, m_units.GetFormatOptions(specTypeId)))
-                {
-                    DialogResult result;
-                    while (DialogResult.Cancel != (result = displayForm.ShowDialog()))
-                        if (DialogResult.OK == result)
-                            try
-                            {
-                                m_units.SetFormatOptions((ForgeTypeId)dataGridView["UnitType", e.RowIndex].Value,
-                                    displayForm.FormatOptions);
-                                dataGridView["FormatOptions", e.RowIndex].Value =
-                                    UnitFormatUtils.Format(m_units,
-                                        (ForgeTypeId)dataGridView["UnitType", e.RowIndex].Value, 1234.56789, false);
-                                break;
-                            }
-                            catch (Exception ex)
-                            {
-                                TaskDialog.Show(ex.GetType().ToString(), $"Set FormatOptions error : \n{ex.Message}",
-                                    TaskDialogCommonButtons.Ok);
-                            }
-                }
+                using var displayForm = new FormatForm(specTypeId, m_units.GetFormatOptions(specTypeId));
+                DialogResult result;
+                while (DialogResult.Cancel != (result = displayForm.ShowDialog()))
+                    if (DialogResult.OK == result)
+                        try
+                        {
+                            m_units.SetFormatOptions((ForgeTypeId)dataGridView["UnitType", e.RowIndex].Value,
+                                displayForm.FormatOptions);
+                            dataGridView["FormatOptions", e.RowIndex].Value =
+                                UnitFormatUtils.Format(m_units,
+                                    (ForgeTypeId)dataGridView["UnitType", e.RowIndex].Value, 1234.56789, false);
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            TaskDialog.Show(ex.GetType().ToString(), $"Set FormatOptions error : \n{ex.Message}",
+                                TaskDialogCommonButtons.Ok);
+                        }
             }
         }
 

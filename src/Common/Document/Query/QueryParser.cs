@@ -2,14 +2,10 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Autodesk.Revit.DB;
-
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
@@ -17,9 +13,9 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
     public class QueryParser
     {
         public static List<ICommand> Parse(string query)
-        {            
+        {
             var commandStrings = SplitIntoCmdStrings(query).Select(x => x.Trim());
-            var commands = commandStrings.SelectMany(x => CommandParser.Parse(x)).ToList();          
+            var commands = commandStrings.SelectMany(x => CommandParser.Parse(x)).ToList();
 
             if (!DoesContainQuickFilter(commands))
             {
@@ -32,11 +28,11 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
 
         public static readonly char[] Separators = new[] { ';', ',' };
         public static IList<string> SplitIntoCmdStrings(string query)
-        {            
+        {
             IList<string> splitted = query.Split(Separators, StringSplitOptions.RemoveEmptyEntries).ToArray();
             var commandsText = ReconcilePotentialDoubleNumbers(splitted)
                                       .Where(x => !string.IsNullOrWhiteSpace(x))
-                                      
+
                                       .ToArray();
             return commandsText;
         }
@@ -64,7 +60,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
             }
         }
 
-       
+
         private static bool DoesContainQuickFilter(IList<ICommand> commands)
         {
             foreach (var command in commands)
@@ -72,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query
                 if (command.IsBasedOnQuickFilter)
                 {
                     return true;
-                }                
+                }
             }
             return false;
         }

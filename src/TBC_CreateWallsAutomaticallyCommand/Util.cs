@@ -1,8 +1,8 @@
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
 
 namespace BuildingCoder
 {
@@ -25,20 +25,20 @@ namespace BuildingCoder
 
         internal static void CreateDoorForWall(Wall wall)
         {
-            var locationCurve = (LocationCurve) wall.Location;
+            var locationCurve = (LocationCurve)wall.Location;
 
             var position = locationCurve.Curve.Evaluate(
                 0.5, true);
 
             var document = wall.Document;
 
-            var level = (Level) document.GetElement(
+            var level = (Level)document.GetElement(
                 wall.LevelId);
 
             var symbolId = document.GetDefaultFamilyTypeId(
                 new ElementId(BuiltInCategory.OST_Doors));
 
-            var symbol = (FamilySymbol) document.GetElement(
+            var symbol = (FamilySymbol)document.GetElement(
                 symbolId);
 
             if (!symbol.IsActive)
@@ -51,7 +51,7 @@ namespace BuildingCoder
         internal static IEnumerable<FamilyInstance> FindCubes(
             Document doc)
         {
-            var collector = new FilteredElementCollector(doc);
+            FilteredElementCollector collector = new(doc);
 
             return collector
                 .OfCategory(BuiltInCategory.OST_GenericModel)

@@ -2,27 +2,25 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Autodesk.Revit.DB;
-
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class UniqueIdCmdDefinition : ICommandDefinition
     {
-        private static readonly AutocompleteItem AutocompleteItem = new AutocompleteItem("u: ", "u:[guid] ", "select elements with given UniqueId", AutocompleteItemGroups.Commands);
-        private readonly DataBucket<UniqueIdCmdArgument> dataBucket = new DataBucket<UniqueIdCmdArgument>(0.666);
+        private static readonly AutocompleteItem AutocompleteItem = new("u: ", "u:[guid] ", "select elements with given UniqueId", AutocompleteItemGroups.Commands);
+        private readonly DataBucket<UniqueIdCmdArgument> dataBucket = new(0.666);
 
 
-        public IAutocompleteItem GetCommandAutocompleteItem() => AutocompleteItem;
-
+        public IAutocompleteItem GetCommandAutocompleteItem()
+        {
+            return AutocompleteItem;
+        }
 
         public IEnumerable<string> GetClassifiers()
         {
@@ -38,18 +36,20 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
         public bool CanRecognizeArgument(string argument)
         {
             if (argument.Length >= 36)
-            { 
+            {
                 var guidPart = argument.Substring(0, 36);
 
-                if (Guid.TryParse(guidPart, out Guid guidValue))
+                if (Guid.TryParse(guidPart, out var guidValue))
                 {
                     return true;
                 }
             }
             return false;
         }
-        public bool CanParticipateInGenericSearch() => false;
-
+        public bool CanParticipateInGenericSearch()
+        {
+            return false;
+        }
 
         public ICommand Create(string cmdText, string argument)
         {

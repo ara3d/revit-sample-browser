@@ -14,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var trussForm = new TrussForm(commandData);
+            TrussForm trussForm = new(commandData);
             // The form is created successfully
             if (null != trussForm && false == trussForm.IsDisposed) trussForm.ShowDialog();
 

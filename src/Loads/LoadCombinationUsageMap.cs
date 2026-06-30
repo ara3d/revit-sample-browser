@@ -1,7 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using Autodesk.Revit.UI;
-
 namespace Ara3D.RevitSampleBrowser.Loads.CS
 {
     /// <summary>

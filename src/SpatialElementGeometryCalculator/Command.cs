@@ -3,14 +3,14 @@
 // Adapted from SpatialElementGeometryCalculator by Jeremy Tammik et al.
 // https://github.com/jeremytammik/SpatialElementGeometryCalculator (MIT License)
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using BuildingCoder;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 {
@@ -33,20 +33,20 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 
             try
             {
-                var sebOptions = new SpatialElementBoundaryOptions
+                SpatialElementBoundaryOptions sebOptions = new()
                 {
                     SpatialElementBoundaryLocation =
                         SpatialElementBoundaryLocation.Finish
                 };
 
-                IEnumerable<Room> rooms = new FilteredElementCollector(doc)
+                var rooms = new FilteredElementCollector(doc)
                     .OfClass(typeof(SpatialElement))
                     .Cast<SpatialElement>()
                     .OfType<Room>();
 
-                var compareWallAndRoom = new List<string>();
-                var openingHandler = new OpeningHandler();
-                var lstSpatialBoundaryCache = new List<SpatialBoundaryCache>();
+                List<string> compareWallAndRoom = new();
+                OpeningHandler openingHandler = new();
+                List<SpatialBoundaryCache> lstSpatialBoundaryCache = new();
 
                 foreach (var room in rooms)
                 {
@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
                     if (room.Location == null) continue;
                     if (room.Area.Equals(0)) continue;
 
-                    var calc = new Autodesk.Revit.DB.SpatialElementGeometryCalculator(
+                    Autodesk.Revit.DB.SpatialElementGeometryCalculator calc = new(
                         doc, sebOptions);
 
                     var results = calc.CalculateSpatialElementGeometry(room);
@@ -71,12 +71,11 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
                                 continue;
                             }
 
-                            var spatialData = new SpatialBoundaryCache();
+                            SpatialBoundaryCache spatialData = new();
 
-                            var wall = doc.GetElement(spatialSubFace
-                                .SpatialBoundaryElement.HostElementId) as Wall;
 
-                            if (wall == null)
+                            if (doc.GetElement(spatialSubFace
+                                .SpatialBoundaryElement.HostElementId) is not Wall wall)
                             {
                                 continue;
                             }
@@ -90,7 +89,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
                                 continue;
                             }
 
-                            var hostObject = wall as HostObject;
+                            HostObject hostObject = wall;
 
                             var insertsThisHost = hostObject.FindInserts(
                                 true, false, true, true);
@@ -105,7 +104,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
                                 if (!compareWallAndRoom.Contains(countOnce))
                                 {
                                     var elemOpening = doc.GetElement(
-                                        idInsert) as Element;
+                                        idInsert);
 
                                     openingArea += openingHandler.GetOpeningArea(
                                         wall, elemOpening, room, roomSolid);
@@ -128,7 +127,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
                     }
                 }
 
-                var t = new List<string>();
+                List<string> t = new();
 
                 var groupedData = SortByRoom(lstSpatialBoundaryCache);
 
@@ -148,7 +147,7 @@ namespace Ara3D.RevitSampleBrowser.SpatialElementGeometryCalculator.CS
 
                 foreach (var sbc in groupedData)
                 {
-                    var elemWall = doc.GetElement(sbc.idElement) as Element;
+                    var elemWall = doc.GetElement(sbc.idElement);
 
                     t.Add(sbc.roomName + "; " + elemWall.Name
                         + "(" + sbc.idElement.ToString() + "): "

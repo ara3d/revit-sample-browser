@@ -14,16 +14,9 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
-using IOException = System.IO.IOException;
 
 #endregion // Namespaces
 

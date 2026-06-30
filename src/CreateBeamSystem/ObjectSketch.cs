@@ -8,11 +8,11 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
     public abstract class ObjectSketch
     {
-        protected RectangleF m_boundingBox = new RectangleF();
+        protected RectangleF m_boundingBox = new();
 
-        protected readonly List<ObjectSketch> Objects = new List<ObjectSketch>();
+        protected readonly List<ObjectSketch> Objects = [];
 
-        protected readonly Pen Pen = new Pen(Color.DarkGreen);
+        protected readonly Pen Pen = new(Color.DarkGreen);
 
         protected Matrix Transform;
 

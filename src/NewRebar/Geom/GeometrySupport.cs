@@ -1,11 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Structural;
 using RebarGeomHelper = Ara3D.RevitSampleBrowser.Common.Structural.RebarGeometry;
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
 {
@@ -15,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
     {
         private readonly Line m_drivingLine;
         private readonly XYZ m_drivingVector;
-        private List<Line> m_edges = new List<Line>();
+        private List<Line> m_edges = [];
         private readonly Transform m_transform;
 
         public GeometrySupport(FamilyInstance element)
@@ -27,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
                     throw new Exception("Can't get the geometry of selected element.");
 
                 var swProfile = element.GetSweptProfile();
-                if (swProfile == null || !(swProfile.GetDrivingCurve() is Line line))
+                if (swProfile == null || swProfile.GetDrivingCurve() is not Line line)
                     throw new Exception("The selected element driving curve is not a line.");
 
                 m_drivingLine = line;
@@ -37,12 +35,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
                 objects.Reset();
                 while (objects.MoveNext())
                 {
-                    if (!(objects.Current is GeoInstance instance))
+                    if (objects.Current is not GeoInstance instance)
                         continue;
 
-                    foreach (GeometryObject o in instance.SymbolGeometry)
+                    foreach (var o in instance.SymbolGeometry)
                     {
-                        if (!(o is Solid solid) || solid.Faces.Size == 0 || solid.Edges.Size == 0)
+                        if (o is not Solid solid || solid.Faces.Size == 0 || solid.Edges.Size == 0)
                             continue;
 
                         m_transform = instance.Transform;
@@ -59,15 +57,18 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
                 throw new Exception("The sample only works for rectangle beam or column.");
         }
 
-        public List<XYZ> ProfilePoints { get; set; } = new List<XYZ>();
+        public List<XYZ> ProfilePoints { get; set; } = [];
 
         public double DrivingLength { get; }
 
-        private XYZ Transform(XYZ point) => XyzMath.TransformPoint(point, m_transform);
+        private XYZ Transform(XYZ point)
+        {
+            return XyzMath.TransformPoint(point, m_transform);
+        }
 
         private List<XYZ> GetRelatedVectors(XYZ point)
         {
-            var vectors = new List<XYZ>();
+            List<XYZ> vectors = new();
             foreach (var edgeLine in m_edges)
             {
                 if (XyzMath.IsEqual(point, edgeLine.GetEndPoint(0)))
@@ -76,18 +77,18 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
                     vectors.Add(XyzMath.SubXyz(edgeLine.GetEndPoint(0), edgeLine.GetEndPoint(1)));
             }
 
-            if (2 != vectors.Count)
-                throw new Exception("A point on swept profile should have only two directions.");
-            return vectors;
+            return 2 != vectors.Count ? throw new Exception("A point on swept profile should have only two directions.") : vectors;
         }
 
-        public List<XYZ> OffsetPoints(double offset) =>
-            ProfilePoints.ConvertAll(point =>
+        public List<XYZ> OffsetPoints(double offset)
+        {
+            return ProfilePoints.ConvertAll(point =>
             {
                 var directions = GetRelatedVectors(point);
                 var movedPoint = XyzMath.OffsetPoint(point, directions[0], offset);
                 return XyzMath.OffsetPoint(movedPoint, directions[1], offset);
             });
+        }
 
         private bool GetSweptProfile(Solid solid)
         {
@@ -104,7 +105,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
 
         private Face GetSweptProfileFace(Solid solid)
         {
-            var refPoint = new XYZ();
+            XYZ refPoint = new();
             foreach (Edge edge in solid.Edges)
             {
                 var points = edge.Tessellate() as List<XYZ>;
@@ -149,7 +150,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
 
         private List<Line> ChangeEdgeToLine(EdgeArray edges)
         {
-            var edgeLines = new List<Line>();
+            List<Line> edgeLines = new();
             foreach (Edge edge in edges)
             {
                 var points = edge.Tessellate() as List<XYZ>;

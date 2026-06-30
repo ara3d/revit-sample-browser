@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
@@ -19,19 +19,17 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 
             try
             {
-                using (var tr = new Transaction(m_dbdocument, "CreateNURBS"))
-                {
-                    tr.Start();
+                using Transaction tr = new(m_dbdocument, "CreateNURBS");
+                tr.Start();
 
-                    var myDirectShape =
-                        DirectShape.CreateElement(m_dbdocument, new ElementId(BuiltInCategory.OST_GenericModel));
-                    myDirectShape.ApplicationId = "TestCreateNURBS";
-                    myDirectShape.ApplicationDataId = "NURBS";
+                var myDirectShape =
+                    DirectShape.CreateElement(m_dbdocument, new ElementId(BuiltInCategory.OST_GenericModel));
+                myDirectShape.ApplicationId = "TestCreateNURBS";
+                myDirectShape.ApplicationDataId = "NURBS";
 
-                    if (null != myDirectShape)
-                        myDirectShape.SetShape(CreateNurbsSurface());
-                    tr.Commit();
-                }
+                if (null != myDirectShape)
+                    myDirectShape.SetShape(CreateNurbsSurface());
+                tr.Commit();
             }
             catch (Exception ex)
             {
@@ -45,15 +43,15 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
         private BRepBuilder CreateNurbsSurface()
         {
             // Open shell, not a closed solid.
-            var brepBuilder = new BRepBuilder(BRepType.OpenShell);
+            BRepBuilder brepBuilder = new(BRepType.OpenShell);
 
-            IList<double> knotsU = new List<double> { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 };
-            IList<double> knotsV = new List<double> { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 };
+            IList<double> knotsU = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1];
+            IList<double> knotsV = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1];
             var degreeU = 4;
             var degreeV = 4;
 
-            IList<XYZ> controlPoints = new List<XYZ>
-            {
+            IList<XYZ> controlPoints =
+            [
                 new XYZ(0, 0, 0), new XYZ(0, 20, 0), new XYZ(0, 40, 0), new XYZ(0, 60, 0), new XYZ(0, 80, 0),
                 new XYZ(20, 0, 100), new XYZ(20, 20, 200), new XYZ(20, 40, 300), new XYZ(20, 60, 200),
                 new XYZ(20, 80, 100),
@@ -62,32 +60,29 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
                 new XYZ(60, 0, 100), new XYZ(60, 20, 200), new XYZ(60, 40, 300), new XYZ(60, 60, 200),
                 new XYZ(60, 80, 100),
                 new XYZ(80, 0, 0), new XYZ(80, 20, 0), new XYZ(80, 40, 0), new XYZ(80, 60, 0), new XYZ(80, 80, 0)
-            };
+            ];
 
             var nurbsSurface = BRepBuilderSurfaceGeometry.CreateNURBSSurface(degreeU, degreeV, knotsU, knotsV,
                 controlPoints, false /*bReverseOrientation*/, null /*pSurfaceEnvelope*/);
 
-            IList<double> weights = new List<double> { 1, 1, 1, 1, 1 };
+            IList<double> weights = [1, 1, 1, 1, 1];
 
-            IList<XYZ> backEdgeControlPoints = new List<XYZ>
-                { new XYZ(0, 0, 0), new XYZ(0, 20, 0), new XYZ(0, 40, 0), new XYZ(0, 60, 0), new XYZ(0, 80, 0) };
+            IList<XYZ> backEdgeControlPoints = [new XYZ(0, 0, 0), new XYZ(0, 20, 0), new XYZ(0, 40, 0), new XYZ(0, 60, 0), new XYZ(0, 80, 0)];
             var backNurbs = NurbSpline.CreateCurve(4, knotsU, backEdgeControlPoints, weights);
             var backEdge = BRepBuilderEdgeGeometry.Create(backNurbs);
 
-            IList<XYZ> frontEdgeControlPoints = new List<XYZ>
-                { new XYZ(80, 0, 0), new XYZ(80, 20, 0), new XYZ(80, 40, 0), new XYZ(80, 60, 0), new XYZ(80, 80, 0) };
+            IList<XYZ> frontEdgeControlPoints = [new XYZ(80, 0, 0), new XYZ(80, 20, 0), new XYZ(80, 40, 0), new XYZ(80, 60, 0), new XYZ(80, 80, 0)];
             var frontNurbs = NurbSpline.CreateCurve(4, knotsU, frontEdgeControlPoints, weights);
             var frontEdge = BRepBuilderEdgeGeometry.Create(frontNurbs);
 
-            IList<XYZ> leftEdgeControlPoints = new List<XYZ>
-                { new XYZ(0, 0, 0), new XYZ(20, 0, 100), new XYZ(40, 0, -100), new XYZ(60, 0, 100), new XYZ(80, 0, 0) };
+            IList<XYZ> leftEdgeControlPoints = [new XYZ(0, 0, 0), new XYZ(20, 0, 100), new XYZ(40, 0, -100), new XYZ(60, 0, 100), new XYZ(80, 0, 0)];
             var leftNurbs = NurbSpline.CreateCurve(4, knotsU, leftEdgeControlPoints, weights);
             var leftEdge = BRepBuilderEdgeGeometry.Create(leftNurbs);
 
-            IList<XYZ> rightEdgeControlPoints = new List<XYZ>
-            {
+            IList<XYZ> rightEdgeControlPoints =
+            [
                 new XYZ(0, 80, 0), new XYZ(20, 80, 100), new XYZ(40, 80, -100), new XYZ(60, 80, 100), new XYZ(80, 80, 0)
-            };
+            ];
             var rightNurbs = NurbSpline.CreateCurve(4, knotsU, rightEdgeControlPoints, weights);
             var rightEdge = BRepBuilderEdgeGeometry.Create(rightNurbs);
 

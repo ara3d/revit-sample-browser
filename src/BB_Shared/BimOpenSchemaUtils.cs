@@ -1,12 +1,13 @@
-﻿using Ara3D.Utils;
-using System.IO;
-using System.IO.Compression;
-using Ara3D.BimOpenSchema;
+﻿using Ara3D.BimOpenSchema;
 using Ara3D.BimOpenSchema.IO;
 using Ara3D.Collections;
 using Ara3D.Logging;
+using Ara3D.Utils;
 using Autodesk.Revit.DB;
 using Parquet;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using Document = Autodesk.Revit.DB.Document;
 using FilePath = Ara3D.Utils.FilePath;
 using Material = Ara3D.Models.Material;
@@ -21,16 +22,12 @@ namespace Ara3D.Bowerbird.RevitSamples
             if (demoPhase != ElementId.InvalidElementId)
                 return false;
             var cat = g.Element.Category;
-            if (cat == null) 
+            if (cat == null)
                 return false;
-            if (cat.CategoryType != CategoryType.Model)
-                return false;
-            if (g.Element is SpatialElement)
-                return false;
-            return true;
+            return cat.CategoryType == CategoryType.Model && g.Element is not SpatialElement;
         }
 
-        public static Material DefaultMaterial = new Material(new(0.8f, 0.8f, 0.8f, 1), 0.05f, 0.3f);
+        public static Material DefaultMaterial = new(new(0.8f, 0.8f, 0.8f, 1), 0.05f, 0.3f);
 
         public static void BuildGeometry(this BosMeshGatherer meshGatherer, BimGeometryBuilder builder)
         {
@@ -47,8 +44,8 @@ namespace Ara3D.Bowerbird.RevitSamples
                 var defaultMatIndex = builder.AddMaterial(g.DefaultMaterial ?? DefaultMaterial);
                 foreach (var part in g.Parts)
                 {
-                    var matIndex = part.Material == null    
-                        ? defaultMatIndex 
+                    var matIndex = part.Material == null
+                        ? defaultMatIndex
                         : builder.AddMaterial(part.Material.Value);
 
                     var transformIndex = builder.AddTransform(part.Transform.ToAra3D());
@@ -106,6 +103,8 @@ namespace Ara3D.Bowerbird.RevitSamples
         }
 
         public static void BuildGeometry(this BosRevitBuilder self)
-            => self.MeshGatherer.BuildGeometry(self.GeometryBuilder);
+        {
+            self.MeshGatherer.BuildGeometry(self.GeometryBuilder);
+        }
     }
 }

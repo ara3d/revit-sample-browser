@@ -3,13 +3,10 @@
 // Adapted from GetCentroid by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/GetCentroid
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using BuildingCoder;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
 {

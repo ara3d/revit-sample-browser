@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Windows.Forms;
 using STRUCTURALTYPE = Autodesk.Revit.DB.Structure.StructuralType;
 
 namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
@@ -15,21 +15,21 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private readonly SortedList m_levels = new SortedList(); //list of list sorted by their elevations
+        private readonly SortedList m_levels = []; //list of list sorted by their elevations
 
         private UV[,] m_matrixUv; //2D coordinates of matrix
         private UIApplication m_revit;
 
-        public ArrayList ColumnMaps { get; } = new ArrayList();
+        public ArrayList ColumnMaps { get; } = [];
 
-        public ArrayList BeamMaps { get; } = new ArrayList();
+        public ArrayList BeamMaps { get; } = [];
 
-        public ArrayList BraceMaps { get; } = new ArrayList();
+        public ArrayList BraceMaps { get; } = [];
 
         public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
         {
             m_revit = revit.Application;
-            var tran = new Transaction(m_revit.ActiveUIDocument.Document, "CreateBeamsColumnsBraces");
+            Transaction tran = new(m_revit.ActiveUIDocument.Document, "CreateBeamsColumnsBraces");
             tran.Start();
 
             try
@@ -42,7 +42,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
                     return Result.Failed;
                 }
 
-                using (var displayForm = new CreateBeamsColumnsBracesForm(this))
+                using (CreateBeamsColumnsBracesForm displayForm = new(this))
                 {
                     if (displayForm.ShowDialog() != DialogResult.OK)
                     {
@@ -72,7 +72,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
             }
 
             //any symbol is null then the command failed
-            if (!(columnObject is FamilySymbol columnSymbol) || !(beamObject is FamilySymbol beamSymbol) || !(braceObject is FamilySymbol braceSymbol)) return false;
+            if (columnObject is not FamilySymbol columnSymbol || beamObject is not FamilySymbol beamSymbol || braceObject is not FamilySymbol braceSymbol) return false;
 
             try
             {
@@ -86,26 +86,26 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
 
                     //iterate coordinate both in x direction and y direction and create beams and braces
                     for (var j = 0; j < matrixYSize; j++)
-                    for (var i = 0; i < matrixXSize; i++)
-                    {
-                        //create beams and braces in x direction
-                        if (i != matrixXSize - 1)
-                            PlaceBrace(m_matrixUv[i, j], m_matrixUv[i + 1, j], baseLevel, topLevel, braceSymbol, true);
-                        //create beams and braces in y direction
-                        if (j != matrixYSize - 1)
-                            PlaceBrace(m_matrixUv[i, j], m_matrixUv[i, j + 1], baseLevel, topLevel, braceSymbol, false);
-                    }
+                        for (var i = 0; i < matrixXSize; i++)
+                        {
+                            //create beams and braces in x direction
+                            if (i != matrixXSize - 1)
+                                PlaceBrace(m_matrixUv[i, j], m_matrixUv[i + 1, j], baseLevel, topLevel, braceSymbol, true);
+                            //create beams and braces in y direction
+                            if (j != matrixYSize - 1)
+                                PlaceBrace(m_matrixUv[i, j], m_matrixUv[i, j + 1], baseLevel, topLevel, braceSymbol, false);
+                        }
 
                     for (var j = 0; j < matrixYSize; j++)
-                    for (var i = 0; i < matrixXSize; i++)
-                    {
-                        //create beams and braces in x direction
-                        if (i != matrixXSize - 1)
-                            PlaceBeam(m_matrixUv[i, j], m_matrixUv[i + 1, j], baseLevel, topLevel, beamSymbol);
-                        //create beams and braces in y direction
-                        if (j != matrixYSize - 1)
-                            PlaceBeam(m_matrixUv[i, j], m_matrixUv[i, j + 1], baseLevel, topLevel, beamSymbol);
-                    }
+                        for (var i = 0; i < matrixXSize; i++)
+                        {
+                            //create beams and braces in x direction
+                            if (i != matrixXSize - 1)
+                                PlaceBeam(m_matrixUv[i, j], m_matrixUv[i + 1, j], baseLevel, topLevel, beamSymbol);
+                            //create beams and braces in y direction
+                            if (j != matrixYSize - 1)
+                                PlaceBeam(m_matrixUv[i, j], m_matrixUv[i, j + 1], baseLevel, topLevel, beamSymbol);
+                        }
 
                     //place column of this level
                     foreach (var point2D in m_matrixUv)
@@ -127,8 +127,8 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
             m_matrixUv = new UV[xNumber, yNumber];
 
             for (var i = 0; i < xNumber; i++)
-            for (var j = 0; j < yNumber; j++)
-                m_matrixUv[i, j] = new UV(i * distance, j * distance);
+                for (var j = 0; j < yNumber; j++)
+                    m_matrixUv[i, j] = new UV(i * distance, j * distance);
         }
 
         private bool Initialize()
@@ -181,7 +181,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
         private void PlaceColumn(UV point2D, FamilySymbol columnType, Level baseLevel, Level topLevel)
         {
             //create column of certain type in certain level and start point 
-            var point = new XYZ(point2D.U, point2D.V, 0);
+            XYZ point = new(point2D.U, point2D.V, 0);
             var structuralType = STRUCTURALTYPE.Column;
             if (!columnType.IsActive)
                 columnType.Activate();
@@ -217,8 +217,8 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
         private void PlaceBeam(UV point2D1, UV point2D2, Level baseLevel, Level topLevel, FamilySymbol beamType)
         {
             var height = topLevel.Elevation;
-            var startPoint = new XYZ(point2D1.U, point2D1.V, height);
-            var endPoint = new XYZ(point2D2.U, point2D2.V, height);
+            XYZ startPoint = new(point2D1.U, point2D1.V, height);
+            XYZ endPoint = new(point2D2.U, point2D2.V, height);
 
             var line = Line.CreateBound(startPoint, endPoint);
             var structuralType = STRUCTURALTYPE.Beam;
@@ -233,14 +233,11 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
             var topHeight = topLevel.Elevation;
             var baseHeight = baseLevel.Elevation;
             var middleElevation = (topHeight + baseHeight) / 2;
-            var startPoint = new XYZ(point2D1.U, point2D1.V, middleElevation);
-            var endPoint = new XYZ(point2D2.U, point2D2.V, middleElevation);
-            XYZ middlePoint;
-
-            if (isXDirection)
-                middlePoint = new XYZ((point2D1.U + point2D2.U) / 2, point2D2.V, topHeight);
-            else
-                middlePoint = new XYZ(point2D2.U, (point2D1.V + point2D2.V) / 2, topHeight);
+            XYZ startPoint = new(point2D1.U, point2D1.V, middleElevation);
+            XYZ endPoint = new(point2D2.U, point2D2.V, middleElevation);
+            var middlePoint = isXDirection
+                ? new XYZ((point2D1.U + point2D2.U) / 2, point2D2.V, topHeight)
+                : new XYZ(point2D2.U, (point2D1.V + point2D2.V) / 2, topHeight);
 
             //create two brace and set their location line
             var structuralType = STRUCTURALTYPE.Brace;

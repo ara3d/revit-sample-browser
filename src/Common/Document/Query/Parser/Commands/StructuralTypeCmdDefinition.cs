@@ -2,30 +2,27 @@
 // Portions Copyright Revit Database Explorer (Apache-2.0)
 // https://github.com/NeVeSpl/RevitDBExplorer @ 6929da81491a7f9ef69ed4c346afa1c582b830b5
 
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
+using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Autodesk.Revit.DB;
-
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB.Structure;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.Autocompletion.Internals;
-using Ara3D.RevitSampleBrowser.Common.Documents.Query.FuzzySearch;
 
 
 namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
 {
     public class StructuralTypeCmdDefinition : ICommandDefinition, INeedInitialization, IOfferArgumentAutocompletion
     {
-        private static readonly AutocompleteItem CmdDefAutocompleteItem = new AutocompleteItem("s: ", "s:[structural type]", "select elements matching a structural type", AutocompleteItemGroups.Commands);
-        private readonly DataBucket<StructuralTypeCmdArgument> dataBucket = new DataBucket<StructuralTypeCmdArgument>(0.61);
+        private static readonly AutocompleteItem CmdDefAutocompleteItem = new("s: ", "s:[structural type]", "select elements matching a structural type", AutocompleteItemGroups.Commands);
+        private readonly DataBucket<StructuralTypeCmdArgument> dataBucket = new(0.61);
 
 
         public void Init()
         {
             var values = System.Enum.GetValues(typeof(StructuralType));
-         
+
             foreach (StructuralType i in values)
             {
                 var name = Enum.GetName(typeof(StructuralType), i);
@@ -37,10 +34,14 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
         }
 
 
-        public IAutocompleteItem GetCommandAutocompleteItem() => CmdDefAutocompleteItem;
+        public IAutocompleteItem GetCommandAutocompleteItem()
+        {
+            return CmdDefAutocompleteItem;
+        }
+
         public IEnumerable<IAutocompleteItem> GetAutocompleteItems(string prefix)
-        {            
-            return dataBucket.ProvideAutoCompletion(prefix);            
+        {
+            return dataBucket.ProvideAutoCompletion(prefix);
         }
 
 
@@ -56,28 +57,26 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
         }
         public bool CanRecognizeArgument(string argument)
         {
-            if (argument.StartsWith(nameof(StructuralType), StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
+            return argument.StartsWith(nameof(StructuralType), StringComparison.OrdinalIgnoreCase);
+        }
+        public bool CanParticipateInGenericSearch()
+        {
             return false;
         }
-        public bool CanParticipateInGenericSearch() => false;
-              
 
         public ICommand Create(string cmdText, string argument)
         {
             var arg = argument.RemovePrefix("StructuralType.");
             var args = dataBucket.FuzzySearch(arg);
             return new StructuralTypeCmd(cmdText, args);
-        }        
+        }
     }
 
 
     public class StructuralTypeCmdArgument : CommandArgument<StructuralType>
     {
         public StructuralTypeCmdArgument(StructuralType value) : base(value)
-        {           
+        {
             Name = $"StructuralType.{value}";
         }
     }
@@ -99,5 +98,5 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents.Query.Parser.Commands
             Arguments = matchedArguments.Select(x => x.Argument as StructuralTypeCmdArgument)?.ToArray();
             IsBasedOnQuickFilter = true;
         }
-    }   
+    }
 }

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Linq;
-using Ara3D.Logging;
+﻿using Ara3D.Logging;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System;
+using System.Linq;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -22,8 +23,10 @@ namespace Ara3D.Bowerbird.RevitSamples
         {
             if (Form == null)
             {
-                Form = new TextDisplayForm("");
-                Form.TopMost = true;
+                Form = new TextDisplayForm("")
+                {
+                    TopMost = true
+                };
                 Form.FormClosing += (sender, args) =>
                 {
                     args.Cancel = true;
@@ -34,10 +37,10 @@ namespace Ara3D.Bowerbird.RevitSamples
             Logger = Form.CreateLogger();
             try
             {
-                var uidoc = (arg as UIApplication)?.ActiveUIDocument; 
+                var uidoc = (arg as UIApplication)?.ActiveUIDocument;
                 var doc = uidoc.Document;
                 var sel = uidoc.Selection;
-                if (sel == null) 
+                if (sel == null)
                 {
                     Log($"No selection");
                     return;
@@ -56,15 +59,16 @@ namespace Ara3D.Bowerbird.RevitSamples
                     Log($"No element found");
                     return;
                 }
-                
+
                 Log($"Element found {element.Name}");
                 var ge = element.get_Geometry(new Options()
                 {
-                    ComputeReferences = false, 
+                    ComputeReferences = false,
                     DetailLevel = ViewDetailLevel.Coarse,
                     IncludeNonVisibleObjects = false
                 });
-                
+
+                /*
                 Log($"Retrieved geometry element {ge.Id}");
                 foreach (var go in ge)
                 {
@@ -76,12 +80,13 @@ namespace Ara3D.Bowerbird.RevitSamples
                     expr = GeometryAbstractSyntaxTree.PrettyPrintAst(expr);
                     Log($"{expr}");
                 }
+                */
 
                 Log($"Completed");
             }
             catch (Exception e)
             {
-                Log($"Exception occurred {e}"); 
+                Log($"Exception occurred {e}");
             }
             Form.Show();
         }

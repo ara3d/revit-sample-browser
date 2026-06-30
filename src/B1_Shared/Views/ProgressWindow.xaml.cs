@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ExcelExporterImporter.ViewModels;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using ExcelExporterImporter.ViewModels;
 
 namespace ExcelExporterImporter.Views
 {

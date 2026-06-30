@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
 
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
 {
@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
         private void createCSButton_Click(object sender, EventArgs e)
         {
             // step 1: get the faces for curtain system creation
-            var checkedIndices = new List<int>();
+            List<int> checkedIndices = new();
             for (var i = 0; i < facesCheckedListBox.Items.Count; i++)
             {
                 var itemChecked = facesCheckedListBox.GetItemChecked(i);

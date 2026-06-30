@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
@@ -72,7 +72,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                 ShowMessage(failureReason, ResManager.GetString("FailureCaptionCreateGrids"));
             }
 
-            var failureReasons = new ArrayList();
+            ArrayList failureReasons = new();
             if (CreateArcGrids(ref failureReasons) != 0)
             {
                 var failureReason =
@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             var errorCount = 0;
 
             // Curve array which stores all curves for batch creation
-            var curves = new CurveArray();
+            CurveArray curves = new();
 
             for (var i = 0; i < LineNumber; ++i)
                 try
@@ -110,11 +110,10 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                     else
                     {
                         // The number of space between radial grids will be m_lineNumber if arc is a circle
-                        if (EndDegree - StartDegree == 2 * Values.Pi)
-                            angel = StartDegree + i * (EndDegree - StartDegree) / LineNumber;
-                        // The number of space between radial grids will be m_lineNumber-1 if arc is not a circle
-                        else
-                            angel = StartDegree + i * (EndDegree - StartDegree) / (LineNumber - 1);
+                        angel = EndDegree - StartDegree == 2 * Values.Pi
+                            ? StartDegree + (i * (EndDegree - StartDegree) / LineNumber)
+                            // The number of space between radial grids will be m_lineNumber-1 if arc is not a circle
+                            : StartDegree + (i * (EndDegree - StartDegree) / (LineNumber - 1));
                     }
 
                     XYZ startPoint;
@@ -125,24 +124,20 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                     if (ArcNumber != 0)
                     {
                         // Grids will have an extension distance of m_ySpacing / 2
-                        startPoint = new XYZ(XOrigin + LineFirstDistance * cos, YOrigin + LineFirstDistance * sin, 0);
+                        startPoint = new XYZ(XOrigin + (LineFirstDistance * cos), YOrigin + (LineFirstDistance * sin), 0);
                         endPoint = new XYZ(
-                            XOrigin + (ArcFirstRadius + (ArcNumber - 1) * ArcSpacing + ArcSpacing / 2) * cos,
-                            YOrigin + (ArcFirstRadius + (ArcNumber - 1) * ArcSpacing + ArcSpacing / 2) * sin, 0);
+                            XOrigin + ((ArcFirstRadius + ((ArcNumber - 1) * ArcSpacing) + (ArcSpacing / 2)) * cos),
+                            YOrigin + ((ArcFirstRadius + ((ArcNumber - 1) * ArcSpacing) + (ArcSpacing / 2)) * sin), 0);
                     }
                     else
                     {
-                        startPoint = new XYZ(XOrigin + LineFirstDistance * cos, YOrigin + LineFirstDistance * sin, 0);
-                        endPoint = new XYZ(XOrigin + (ArcFirstRadius + 5) * cos, YOrigin + (ArcFirstRadius + 5) * sin,
+                        startPoint = new XYZ(XOrigin + (LineFirstDistance * cos), YOrigin + (LineFirstDistance * sin), 0);
+                        endPoint = new XYZ(XOrigin + ((ArcFirstRadius + 5) * cos), YOrigin + ((ArcFirstRadius + 5) * sin),
                             0);
                     }
 
-                    Line line;
+                    var line = LineFirstBubbleLoc == BubbleLocation.StartPoint ? NewLine(startPoint, endPoint) : NewLine(endPoint, startPoint);
                     // Create a line according to the bubble location
-                    if (LineFirstBubbleLoc == BubbleLocation.StartPoint)
-                        line = NewLine(startPoint, endPoint);
-                    else
-                        line = NewLine(endPoint, startPoint);
 
                     if (i == 0)
                     {
@@ -182,13 +177,13 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             var errorCount = 0;
 
             // Curve array which stores all curves for batch creation
-            var curves = new CurveArray();
+            CurveArray curves = new();
 
             for (var i = 0; i < ArcNumber; ++i)
                 try
                 {
-                    var origin = new XYZ(XOrigin, YOrigin, 0);
-                    var radius = ArcFirstRadius + i * ArcSpacing;
+                    XYZ origin = new(XOrigin, YOrigin, 0);
+                    var radius = ArcFirstRadius + (i * ArcSpacing);
 
                     // In Revit UI user can select a circle to create a grid, but actually two grids 
                     // (One from 0 to 180 degree and the other from 180 degree to 360) will be created. 
@@ -235,7 +230,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                             // extension degrees.
                             // Also the room for bubble should be considered, so a room size of 3 * extensionDegree
                             // is reserved here
-                            if (EndDegree - StartDegree < 2 * Values.Pi - 3 * extensionDegree)
+                            if (EndDegree - StartDegree < (2 * Values.Pi) - (3 * extensionDegree))
                             {
                                 var startDegreeWithExtension = StartDegree - extensionDegree;
                                 var endDegreeWithExtension = EndDegree + extensionDegree;

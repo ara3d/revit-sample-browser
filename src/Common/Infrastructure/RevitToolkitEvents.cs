@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.UI;
 using Nice3point.Revit.Toolkit.External;
+using System;
 using ToolkitExternalEvent = Nice3point.Revit.Toolkit.External.ExternalEvent;
 
 namespace Ara3D.RevitSampleBrowser.Common.Infrastructure

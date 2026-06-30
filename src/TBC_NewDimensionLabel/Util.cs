@@ -1,8 +1,8 @@
 #region Namespaces
 
+using Autodesk.Revit.DB;
 using System;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 #endregion // Namespaces
 
@@ -15,8 +15,8 @@ namespace BuildingCoder
             Document doc,
             XYZ normal)
         {
-            var collector
-                = new FilteredElementCollector(doc);
+            FilteredElementCollector collector
+                = new(doc);
 
             collector.OfClass(typeof(SketchPlane));
 

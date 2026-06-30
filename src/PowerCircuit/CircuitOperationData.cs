@@ -1,33 +1,21 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Mep;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Ara3D.RevitSampleBrowser.Common.Mep;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 {
     public class CircuitOperationData
     {
-        private bool m_canCreateCircuit;
-
-        private EditOption m_editOption;
-
         private readonly List<ElectricalSystemItem> m_electricalSystemItems;
 
         private ISet<ElectricalSystem> m_electricalSystemSet;
-
-        private bool m_hasCircuit;
-
-        private bool m_hasPanel;
-
-        private Operation m_operation;
 
         /// <summary>
         ///     Active document of Revit
@@ -48,30 +36,21 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             m_selection = m_revitDoc.Selection;
 
             m_electricalSystemSet = new HashSet<ElectricalSystem>();
-            m_electricalSystemItems = new List<ElectricalSystemItem>();
+            m_electricalSystemItems = [];
 
             CollectConnectorInfo();
             CollectCircuitInfo();
         }
 
-        public Operation Operation
-        {
-            get => m_operation;
+        public Operation Operation { get; set; }
 
-            set => m_operation = value;
-        }
+        public bool CanCreateCircuit { get; private set; }
 
-        public bool CanCreateCircuit => m_canCreateCircuit;
+        public bool HasCircuit { get; private set; }
 
-        public bool HasCircuit => m_hasCircuit;
+        public bool HasPanel { get; private set; }
 
-        public bool HasPanel => m_hasPanel;
-
-        public EditOption EditOption
-        {
-            get => m_editOption;
-            set => m_editOption = value;
-        }
+        public EditOption EditOption { get; set; }
 
         public ReadOnlyCollection<ElectricalSystemItem> ElectricalSystemItems
         {
@@ -79,7 +58,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             {
                 foreach (var es in m_electricalSystemSet)
                 {
-                    var esi = new ElectricalSystemItem(es);
+                    ElectricalSystemItem esi = new(es);
                     m_electricalSystemItems.Add(esi);
                 }
 
@@ -91,16 +70,16 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
         private void CollectConnectorInfo()
         {
-            m_canCreateCircuit = true;
+            CanCreateCircuit = true;
             // Flag to check if all selected elements are lighting devices
             var allLightingDevices = true;
 
             foreach (var elementId in m_selection.GetElementIds())
             {
                 var element = m_revitDoc.Document.GetElement(elementId);
-                if (!(element is FamilyInstance fi))
+                if (element is not FamilyInstance fi)
                 {
-                    m_canCreateCircuit = false;
+                    CanCreateCircuit = false;
                     return;
                 }
 
@@ -109,12 +88,12 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                 // Verify if the family instance has usable connectors
                 if (!ConnectorHelper.VerifyUnusedConnectors(fi))
                 {
-                    m_canCreateCircuit = false;
+                    CanCreateCircuit = false;
                     return;
                 }
             }
 
-            if (allLightingDevices) m_canCreateCircuit = false;
+            if (allLightingDevices) CanCreateCircuit = false;
         }
 
         private void CollectCircuitInfo()
@@ -124,7 +103,6 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             var bInitilzedElectricalSystemSet = false;
 
             // Get common circuits of selected elements
-            ElectricalSystem tempElectricalSystem = null;
             foreach (var elementId in m_selection.GetElementIds())
             {
                 var element = m_revitDoc.Document.GetElement(elementId);
@@ -140,8 +118,8 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                     var ess = mepModel.GetElectricalSystems();
                     if (null == ess)
                     {
-                        m_hasCircuit = false;
-                        m_hasPanel = false;
+                        HasCircuit = false;
+                        HasPanel = false;
                         return;
                     }
 
@@ -154,8 +132,8 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
                     if (ess.Count == 0)
                     {
-                        m_hasCircuit = false;
-                        m_hasPanel = false;
+                        HasCircuit = false;
+                        HasPanel = false;
                         return;
                     }
 
@@ -177,12 +155,12 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
                     if (m_electricalSystemSet.Count == 0)
                     {
-                        m_hasCircuit = false;
-                        m_hasPanel = false;
+                        HasCircuit = false;
+                        HasPanel = false;
                         return;
                     }
                 }
-                else if ((tempElectricalSystem = element as ElectricalSystem) != null)
+                else if (element is ElectricalSystem tempElectricalSystem)
                 {
                     // If the element is an electrical system, verify if it is a power circuit
                     // If not, compare with circuits of other selected elements
@@ -190,8 +168,8 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                     //verify if it is a power circuit
                     if (tempElectricalSystem.SystemType != ElectricalSystemType.PowerCircuit)
                     {
-                        m_hasCircuit = false;
-                        m_hasPanel = false;
+                        HasCircuit = false;
+                        HasPanel = false;
                         return;
                     }
 
@@ -207,8 +185,8 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
                     if (!m_electricalSystemSet.Contains(tempElectricalSystem))
                     {
-                        m_hasCircuit = false;
-                        m_hasPanel = false;
+                        HasCircuit = false;
+                        HasPanel = false;
                         return;
                     }
 
@@ -217,8 +195,8 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                 }
                 else
                 {
-                    m_hasCircuit = false;
-                    m_hasPanel = false;
+                    HasCircuit = false;
+                    HasPanel = false;
                     return;
                 }
             }
@@ -226,7 +204,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             // Verify if there is any common power circuit
             if (m_electricalSystemSet.Count != 0)
             {
-                m_hasCircuit = true;
+                HasCircuit = true;
                 if (m_electricalSystemSet.Count == 1)
                     foreach (var es in m_electricalSystemSet)
                     {
@@ -238,7 +216,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                 {
                     if (!string.IsNullOrEmpty(es.PanelName))
                     {
-                        m_hasPanel = true;
+                        HasPanel = true;
                         break;
                     }
                 }
@@ -247,9 +225,9 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
         public void Operate()
         {
-            var transaction = new Transaction(m_revitDoc.Document, m_operation.ToString());
+            Transaction transaction = new(m_revitDoc.Document, Operation.ToString());
             transaction.Start();
-            switch (m_operation)
+            switch (Operation)
             {
                 case Operation.CreateCircuit:
                     CreatePowerCircuit();
@@ -268,13 +246,13 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             transaction.Commit();
 
             // Select the modified circuit
-            if (m_operation != Operation.CreateCircuit) SelectCurrentCircuit();
+            if (Operation != Operation.CreateCircuit) SelectCurrentCircuit();
         }
 
         public void CreatePowerCircuit()
         {
-            var selectionElementId = new List<ElementId>();
-            var elements = new ElementSet();
+            List<ElementId> selectionElementId = new();
+            ElementSet elements = new();
             foreach (var elementId in m_selection.GetElementIds())
             {
                 elements.Insert(m_revitDoc.Document.GetElement(elementId));
@@ -303,7 +281,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
         public void EditCircuit()
         {
-            switch (m_editOption)
+            switch (EditOption)
             {
                 case EditOption.Add:
                     AddElementToCircuit();
@@ -336,7 +314,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
             // Get the MEP model of selected element
             MEPModel mepModel = null;
-            if (!(selectedElement is FamilyInstance fi) || null == (mepModel = fi.MEPModel))
+            if (selectedElement is not FamilyInstance fi || null == (mepModel = fi.MEPModel))
             {
                 DialogHelper.ShowErrorMessage("SelectElectricalComponent");
                 return;
@@ -357,7 +335,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
             try
             {
-                var es = new ElementSet();
+                ElementSet es = new();
                 foreach (var elementId in m_selection.GetElementIds())
                 {
                     es.Insert(m_revitDoc.Document.GetElement(elementId));
@@ -388,7 +366,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
             // Get the MEP model of selected element
             MEPModel mepModel = null;
-            if (!(selectedElement is FamilyInstance fi) || null == (mepModel = fi.MEPModel))
+            if (selectedElement is not FamilyInstance fi || null == (mepModel = fi.MEPModel))
             {
                 DialogHelper.ShowErrorMessage("SelectElectricalComponent");
                 return;
@@ -404,7 +382,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             try
             {
                 // Remove the selected element from circuit
-                var es = new ElementSet();
+                ElementSet es = new();
                 foreach (var elementId in m_revitDoc.Selection.GetElementIds())
                 {
                     es.Insert(m_revitDoc.Document.GetElement(elementId));

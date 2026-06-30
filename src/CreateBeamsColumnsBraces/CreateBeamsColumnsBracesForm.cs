@@ -4,7 +4,6 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using TextBox = System.Windows.Forms.TextBox;
 
@@ -315,7 +314,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
                 m_xTextBox.Text = "";
             }
 
-            if (xNumber < 1 || xNumber > 20)
+            if (xNumber is < 1 or > 20)
             {
                 TaskDialog.Show("Revit", "Please input an integer for X direction between 1 to 20.");
                 m_xTextBox.Text = "";
@@ -335,7 +334,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
                 m_yTextBox.Text = "";
             }
 
-            if (yNumber < 1 || yNumber > 20)
+            if (yNumber is < 1 or > 20)
             {
                 TaskDialog.Show("Revit", "Please input an integer for Y direction between 1 to 20.");
                 m_yTextBox.Text = "";
@@ -355,7 +354,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
                 m_floornumberTextBox.Text = "";
             }
 
-            if (floorNumber < 1 || floorNumber > 10)
+            if (floorNumber is < 1 or > 10)
             {
                 TaskDialog.Show("Revit", "Please input an integer for the number of floors between 1 to 10.");
                 m_floornumberTextBox.Text = "";

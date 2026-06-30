@@ -2,12 +2,12 @@
 
 #region Using Directives
 
+using ExcelExporterImporter.Annotations;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using ExcelExporterImporter.Annotations;
 
 #endregion
 
@@ -39,10 +39,10 @@ namespace ExcelExporterImporter.ViewModels
 
         public string ButtonText
         {
-            get => buttonText;
+            get;
             set
             {
-                if (value != buttonText) buttonText = value;
+                if (value != field) field = value;
 
                 OnPropertyChanged();
             }
@@ -52,11 +52,7 @@ namespace ExcelExporterImporter.ViewModels
 
         #region Private Fields
 
-        private int _maxValue;
-        private string _status;
-        private int _value;
         private bool cancelling;
-        private string buttonText;
 
         #endregion
 
@@ -72,11 +68,11 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public int MaxValue
         {
-            get => _maxValue;
+            get;
             set
             {
-                if (value == _maxValue) return;
-                _maxValue = value;
+                if (value == field) return;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -87,11 +83,11 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public int Value
         {
-            get => _value;
+            get;
             set
             {
-                if (value == _value) return;
-                _value = value;
+                if (value == field) return;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -101,11 +97,11 @@ namespace ExcelExporterImporter.ViewModels
         /// </summary>
         public string Status
         {
-            get => _status;
+            get;
             set
             {
-                if (value == _status) return;
-                _status = value;
+                if (value == field) return;
+                field = value;
                 OnPropertyChanged();
             }
         }

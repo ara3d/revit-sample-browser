@@ -10,8 +10,14 @@ namespace Ara3D.RevitSampleBrowser.FindExteriorWalls.CS
 {
     internal class WallsSelectionFilter : ISelectionFilter
     {
-        public bool AllowElement(Element elem) => elem is Wall;
+        public bool AllowElement(Element elem)
+        {
+            return elem is Wall;
+        }
 
-        public bool AllowReference(Reference reference, XYZ position) => false;
+        public bool AllowReference(Reference reference, XYZ position)
+        {
+            return false;
+        }
     }
 }

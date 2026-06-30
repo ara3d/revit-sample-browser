@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
@@ -44,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
         {
             if (destinationType == typeof(string))
             {
-                if (!(v is FamilySymbol symbol)) return "";
+                if (v is not FamilySymbol symbol) return "";
 
                 foreach (var kvp in Hash)
                 {

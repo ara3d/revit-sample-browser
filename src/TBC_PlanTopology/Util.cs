@@ -1,8 +1,8 @@
 #region Namespaces
 
-using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using System;
 
 #endregion // Namespaces
 
@@ -18,7 +18,7 @@ namespace BuildingCoder
         }
         public static XYZ GetRoomCenter(Room room)
         {
-            var locPt = (LocationPoint) room.Location;
+            var locPt = (LocationPoint)room.Location;
             var pr = locPt.Point;
 
             var pbb = GetElementBbCenter(room);
@@ -30,17 +30,17 @@ namespace BuildingCoder
         {
             var docCreation = doc.Create;
 
-            var pt1 = new XYZ(0, -5, 0);
-            var pt2 = new XYZ(0, 5, 0);
-            var pt3 = new XYZ(8, 5, 0);
-            var pt4 = new XYZ(8, -5, 0);
+            XYZ pt1 = new(0, -5, 0);
+            XYZ pt2 = new(0, 5, 0);
+            XYZ pt3 = new(8, 5, 0);
+            XYZ pt4 = new(8, -5, 0);
 
             var line1 = Line.CreateBound(pt1, pt2);
             var line2 = Line.CreateBound(pt2, pt3);
             var line3 = Line.CreateBound(pt3, pt4);
             var line4 = Line.CreateBound(pt4, pt1);
 
-            var curveArr = new CurveArray();
+            CurveArray curveArr = new();
 
             curveArr.Append(line1);
             curveArr.Append(line2);
@@ -51,7 +51,7 @@ namespace BuildingCoder
                 doc.ActiveView.SketchPlane,
                 curveArr, doc.ActiveView);
 
-            var tagPoint = new UV(4, 0);
+            UV tagPoint = new(4, 0);
 
             var room = docCreation.NewRoom(
                 level, tagPoint);

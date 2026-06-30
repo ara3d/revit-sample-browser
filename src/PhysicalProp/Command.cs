@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
 {
@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
 
                 Material materialElement = null;
 
-                var selection = new ElementSet();
+                ElementSet selection = new();
                 foreach (var elementId in activeDoc.Selection.GetElementIds())
                 {
                     selection.Insert(activeDoc.Document.GetElement(elementId));
@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
                     return res;
                 }
 
-                var es = new ElementSet();
+                ElementSet es = new();
                 foreach (var elementId in activeDoc.Selection.GetElementIds())
                 {
                     es.Insert(activeDoc.Document.GetElement(elementId));
@@ -45,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
                 IEnumerator iter = es.ForwardIterator();
                 iter.MoveNext();
 
-                if (!(iter.Current is FamilyInstance famIns))
+                if (iter.Current is not FamilyInstance famIns)
                 {
                     TaskDialog.Show("Revit", "Not a type of FamilyInsance!");
                     res = Result.Failed;

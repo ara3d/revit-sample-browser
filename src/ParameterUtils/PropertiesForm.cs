@@ -31,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
             foreach (var row in information)
             {
                 if (row == null) continue;
-                var lvi = new ListViewItem(row.Split('\t'));
+                ListViewItem lvi = new(row.Split('\t'));
                 propertyListView.Items.Add(lvi);
             }
 

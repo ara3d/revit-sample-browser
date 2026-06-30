@@ -3,6 +3,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Nice3point.Revit.Extensions;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.N3P_Document.CS
 {
@@ -22,16 +23,6 @@ namespace Ara3D.RevitSampleBrowser.N3P_Document.CS
             N3POutput.Line("CheckAllFamilies", familiesOk);
             if (!familiesOk)
                 N3POutput.Line("  Corrupt family count", corruptIds.Count);
-
-            if (doc.AreGlobalParametersAllowed())
-            {
-                var globals = doc.GetAllGlobalParameters();
-                N3POutput.Line("Global parameters", globals.Count);
-            }
-            else
-            {
-                N3POutput.Line("Global parameters", "not allowed in this document");
-            }
 
             return Result.Succeeded;
         }

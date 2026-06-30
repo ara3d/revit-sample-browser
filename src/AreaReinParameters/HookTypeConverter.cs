@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 {
@@ -14,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 
         protected ParameterConverter()
         {
-            Hash = new Hashtable();
+            Hash = [];
             GetConvertHash();
         }
 
@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
                 ids[i++] = (ElementId)de.Value;
             }
 
-            var standardValues = new StandardValuesCollection(ids);
+            StandardValuesCollection standardValues = new(ids);
 
             return standardValues;
         }

@@ -3,18 +3,17 @@
 // Adapted from SetoutPoints by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/SetoutPoints
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
 {
@@ -54,10 +53,9 @@ namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
         {
             var sampleFolder = Path.GetDirectoryName(callerFilePath);
             var fromSource = Path.Combine(sampleFolder, "test", $"{FamilyName}.rfa");
-            if (File.Exists(fromSource))
-                return fromSource;
-
-            return Path.Combine(
+            return File.Exists(fromSource)
+                ? fromSource
+                : Path.Combine(
                 AssemblyPathHelper.GetAssemblyPath(),
                 "SetoutPoints",
                 "test",
@@ -116,31 +114,31 @@ namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
                 BuiltInCategory.OST_Ramps
             };
 
-            var categoryFilters = new List<ElementFilter>(bics.Length);
+            List<ElementFilter> categoryFilters = new(bics.Length);
             foreach (var bic in bics)
                 categoryFilters.Add(new ElementCategoryFilter(bic));
 
-            var categoryFilter = new LogicalOrFilter(categoryFilters);
+            LogicalOrFilter categoryFilter = new(categoryFilters);
 
-            var structuralMaterialFilter = new LogicalOrFilter(new List<ElementFilter>
-            {
+            LogicalOrFilter structuralMaterialFilter = new(
+            [
                 new StructuralMaterialTypeFilter(StructuralMaterialType.Concrete),
                 new StructuralMaterialTypeFilter(StructuralMaterialType.PrecastConcrete)
-            });
+            ]);
 
-            var familyInstanceFilter = new LogicalAndFilter(new List<ElementFilter>
-            {
+            LogicalAndFilter familyInstanceFilter = new(
+            [
                 new ElementClassFilter(typeof(FamilyInstance)),
                 structuralMaterialFilter,
                 categoryFilter
-            });
+            ]);
 
-            var classFilter = new LogicalOrFilter(new List<ElementFilter>
-            {
+            LogicalOrFilter classFilter = new(
+            [
                 new ElementClassFilter(typeof(Wall)),
                 new ElementClassFilter(typeof(Floor)),
                 familyInstanceFilter
-            });
+            ]);
 
             return new FilteredElementCollector(doc)
                 .WhereElementIsNotElementType()
@@ -169,7 +167,7 @@ namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
 
             if (family == null && loadIt)
             {
-                using var tx = new Transaction(doc);
+                using Transaction tx = new(doc);
                 tx.Start("Load Setout Point Family");
 
                 if (doc.LoadFamily(familyPath, out family))
@@ -230,64 +228,62 @@ namespace Ara3D.RevitSampleBrowser.SetoutPoints.CS
             var opt = app.Create.NewGeometryOptions();
             var first = true;
 
-            using (var tx = new Transaction(doc))
+            using Transaction tx = new(doc);
+            tx.Start("Place Setout Points");
+
+            foreach (var e in col)
             {
-                tx.Start("Place Setout Points");
+                var solids = GeomVertices.GetSolids(e, opt, out var t);
+                var desc = ElementDescription(e);
 
-                foreach (Element e in col)
+                if (solids == null || solids.Count == 0)
                 {
-                    var solids = GeomVertices.GetSolids(e, opt, out var t);
-                    var desc = ElementDescription(e);
-
-                    if (solids == null || solids.Count == 0)
-                    {
-                        Debug.Print("Unable to access element solid for element {0}.", desc);
-                        continue;
-                    }
-
-                    var corners = GeomVertices.GetCorners(solids);
-                    Debug.Print("{0}: {1} corners found:", desc, corners.Count);
-
-                    foreach (var p in corners.Keys)
-                    {
-                        ++_pointNumber;
-                        Debug.Print("  {0}: {1}", _pointNumber, GeomVertices.PointString(p));
-
-                        var insertionPoint = t.OfPoint(p);
-                        var fi = doc.Create.NewFamilyInstance(
-                            insertionPoint,
-                            symbols[1],
-                            StructuralType.NonStructural);
-
-                        if (first)
-                        {
-                            if (fi.get_Parameter(ParameterX) == null)
-                            {
-                                message =
-                                    "The required shared parameters "
-                                    + "X, Y, Z, Host_Id, Host_Type and "
-                                    + "Point_Number are missing.";
-
-                                tx.RollBack();
-                                return Result.Failed;
-                            }
-
-                            first = false;
-                        }
-
-                        var surveyPoint = projectLocationTransform.OfPoint(p);
-
-                        fi.get_Parameter(ParameterHostType).Set(GetHostType(e).ToString());
-                        fi.get_Parameter(ParameterHostId).Set((int)e.Id.Value);
-                        fi.get_Parameter(ParameterPointNr).Set(_pointNumber.ToString());
-                        fi.get_Parameter(ParameterX).Set(surveyPoint.X);
-                        fi.get_Parameter(ParameterY).Set(surveyPoint.Y);
-                        fi.get_Parameter(ParameterZ).Set(surveyPoint.Z);
-                    }
+                    Debug.Print("Unable to access element solid for element {0}.", desc);
+                    continue;
                 }
 
-                tx.Commit();
+                var corners = GeomVertices.GetCorners(solids);
+                Debug.Print("{0}: {1} corners found:", desc, corners.Count);
+
+                foreach (var p in corners.Keys)
+                {
+                    ++_pointNumber;
+                    Debug.Print("  {0}: {1}", _pointNumber, GeomVertices.PointString(p));
+
+                    var insertionPoint = t.OfPoint(p);
+                    var fi = doc.Create.NewFamilyInstance(
+                        insertionPoint,
+                        symbols[1],
+                        StructuralType.NonStructural);
+
+                    if (first)
+                    {
+                        if (fi.get_Parameter(ParameterX) == null)
+                        {
+                            message =
+                                "The required shared parameters "
+                                + "X, Y, Z, Host_Id, Host_Type and "
+                                + "Point_Number are missing.";
+
+                            tx.RollBack();
+                            return Result.Failed;
+                        }
+
+                        first = false;
+                    }
+
+                    var surveyPoint = projectLocationTransform.OfPoint(p);
+
+                    fi.get_Parameter(ParameterHostType).Set(GetHostType(e).ToString());
+                    fi.get_Parameter(ParameterHostId).Set((int)e.Id.Value);
+                    fi.get_Parameter(ParameterPointNr).Set(_pointNumber.ToString());
+                    fi.get_Parameter(ParameterX).Set(surveyPoint.X);
+                    fi.get_Parameter(ParameterY).Set(surveyPoint.Y);
+                    fi.get_Parameter(ParameterZ).Set(surveyPoint.Z);
+                }
             }
+
+            tx.Commit();
 
             return Result.Succeeded;
         }

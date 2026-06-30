@@ -23,133 +23,129 @@
 #endregion // Header
 
 #region Namespaces
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Electrical;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using WinForm = System.Windows.Forms.Form;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Electrical;
-using Autodesk.Revit.UI;
 #endregion // Namespaces
 
 namespace AdnRme
 {
-  /// <summary>
-  /// Form displaying electrical system elements in a tree view
-  /// according to their connection hierarchy, and a list view
-  /// of electrical equipment providing immediate access to jump 
-  /// directly into the appropriate location in the tree view.
-  /// </summary>
-  public partial class CmdInspectElectricalForm2 : WinForm
-  {
-    ElementId _electricalEquipmentCategoryId;
-    Dictionary<ElementId, int> _done = new Dictionary<ElementId, int>();
-    ElectricalElementComparer _comparer;
-
-    static public string ElectricalElementText( Element e, ElementId electricalEquipmentCategoryId )
+    /// <summary>
+    /// Form displaying electrical system elements in a tree view
+    /// according to their connection hierarchy, and a list view
+    /// of electrical equipment providing immediate access to jump 
+    /// directly into the appropriate location in the tree view.
+    /// </summary>
+    public partial class CmdInspectElectricalForm2 : WinForm
     {
-      bool isCircuit = e is ElectricalSystem;
-      bool isEquipment = e.Category.Id.Equals( electricalEquipmentCategoryId );
-      return ( isEquipment || isCircuit ) ? e.Name : Util.BrowserDescription( e );
-    }
+        readonly ElementId _electricalEquipmentCategoryId;
+        readonly Dictionary<ElementId, int> _done = [];
+        readonly ElectricalElementComparer _comparer;
 
-    #region PopulateFromMapParentToChildren
-    void PopulateFromMapParentToChildren(
-      TreeNodeCollection tnc, 
-      ElementId parentId, 
-      MapParentToChildren map )
-    {
-      if( map.ContainsKey( parentId ) )
-      {
-        List<Element> children = map[parentId];
-        children.Sort( _comparer );
-        string key, text;
-        bool isEquipment; // isCircuit
-        foreach( Element e in children )
+        public static string ElectricalElementText(Element e, ElementId electricalEquipmentCategoryId)
         {
-          if( !_done.ContainsKey( e.Id ) )
-          {
-            _done[e.Id] = 1;
-            //isCircuit = e is ElectricalSystem;
-            isEquipment = e.Category.Id.Equals( _electricalEquipmentCategoryId );
-            key = Util.ElementDescriptionAndId( e );
-            //text = ( isEquipment || isCircuit ) ? e.Name : Util.BrowserDescription( e );
-            text = ElectricalElementText( e, _electricalEquipmentCategoryId );
-            TreeNode tn = tnc.Add( key, text );
-            CmdInspectElectricalForm.AddLoadNodes( tn, e );
-            if( map.ContainsKey( e.Id ) )
-            {
-              //
-              // highlight circuit e.g. electrical system node that has 
-              // electrical equipment connected to it; also avoid setting
-              // it to bold multiple times over:
-              //
-              if( isEquipment )
-              {
-                TreeNode p = tn.Parent;
-                listBox1.Items.Add( new PanelTreeNodeHelper( e, tn ) );
-                if( null != p && ( null == p.NodeFont || !p.NodeFont.Bold ) )
-                {
-                  p.NodeFont = new System.Drawing.Font( this.Font, FontStyle.Bold );
-                }
-              }
-              PopulateFromMapParentToChildren( tn.Nodes, e.Id, map );
-            }
-          }
+            var isCircuit = e is ElectricalSystem;
+            var isEquipment = e.Category.Id.Equals(electricalEquipmentCategoryId);
+            return (isEquipment || isCircuit) ? e.Name : Util.BrowserDescription(e);
         }
-      }
-    }
-    #endregion // PopulateFromMapParentToChildren
 
-    #region Constructor
-    public CmdInspectElectricalForm2(
-      MapParentToChildren map,
-      ElementId electricalEquipmentCategoryId,
-      IList<Element> electricalEquipment )
+        #region PopulateFromMapParentToChildren
+        void PopulateFromMapParentToChildren(
+          TreeNodeCollection tnc,
+          ElementId parentId,
+          MapParentToChildren map)
+        {
+            if (map.ContainsKey(parentId))
+            {
+                var children = map[parentId];
+                children.Sort(_comparer);
+                string key, text;
+                bool isEquipment; // isCircuit
+                foreach (var e in children)
+                {
+                    if (!_done.ContainsKey(e.Id))
+                    {
+                        _done[e.Id] = 1;
+                        //isCircuit = e is ElectricalSystem;
+                        isEquipment = e.Category.Id.Equals(_electricalEquipmentCategoryId);
+                        key = Util.ElementDescriptionAndId(e);
+                        //text = ( isEquipment || isCircuit ) ? e.Name : Util.BrowserDescription( e );
+                        text = ElectricalElementText(e, _electricalEquipmentCategoryId);
+                        var tn = tnc.Add(key, text);
+                        CmdInspectElectricalForm.AddLoadNodes(tn, e);
+                        if (map.ContainsKey(e.Id))
+                        {
+                            //
+                            // highlight circuit e.g. electrical system node that has 
+                            // electrical equipment connected to it; also avoid setting
+                            // it to bold multiple times over:
+                            //
+                            if (isEquipment)
+                            {
+                                var p = tn.Parent;
+                                listBox1.Items.Add(new PanelTreeNodeHelper(e, tn));
+                                if (null != p && (null == p.NodeFont || !p.NodeFont.Bold))
+                                {
+                                    p.NodeFont = new System.Drawing.Font(this.Font, FontStyle.Bold);
+                                }
+                            }
+                            PopulateFromMapParentToChildren(tn.Nodes, e.Id, map);
+                        }
+                    }
+                }
+            }
+        }
+        #endregion // PopulateFromMapParentToChildren
+
+        #region Constructor
+        public CmdInspectElectricalForm2(
+          MapParentToChildren map,
+          ElementId electricalEquipmentCategoryId,
+          IList<Element> electricalEquipment)
+        {
+            _electricalEquipmentCategoryId = electricalEquipmentCategoryId;
+            _comparer = new ElectricalElementComparer(electricalEquipmentCategoryId);
+            InitializeComponent();
+            tv.BeginUpdate();
+            PopulateFromMapParentToChildren(tv.Nodes, ElementId.InvalidElementId, map);
+            tv.EndUpdate();
+            //listBox1.SelectedIndex = 0;
+        }
+        #endregion // Constructor
+
+        #region Selected equipment changed
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem is PanelTreeNodeHelper ptnh)
+            {
+                var tn = ptnh.TreeNode;
+                tv.CollapseAll();
+                tv.SelectedNode = tn;
+                tv.Select();
+                tn.Expand();
+            }
+        }
+        #endregion // Selected equipment changed
+    }
+
+    class ElectricalElementComparer : IComparer<Element>
     {
-      _electricalEquipmentCategoryId = electricalEquipmentCategoryId;
-      _comparer = new ElectricalElementComparer( electricalEquipmentCategoryId );
-      InitializeComponent();
-      tv.BeginUpdate();
-      PopulateFromMapParentToChildren( tv.Nodes, ElementId.InvalidElementId, map );
-      tv.EndUpdate();
-      //listBox1.SelectedIndex = 0;
-    }
-    #endregion // Constructor
+        readonly ElementId _electricalEquipmentCategoryId;
 
-    #region Selected equipment changed
-    private void listBox1_SelectedIndexChanged( object sender, EventArgs e )
-    {
-      PanelTreeNodeHelper ptnh = listBox1.SelectedItem as PanelTreeNodeHelper;
-      if( null != ptnh )
-      {
-        TreeNode tn = ptnh.TreeNode;
-        tv.CollapseAll();
-        tv.SelectedNode = tn;
-        tv.Select();
-        tn.Expand();
-      }
-    }
-    #endregion // Selected equipment changed
-  }
+        public ElectricalElementComparer(ElementId electricalEquipmentCategoryId)
+        {
+            _electricalEquipmentCategoryId = electricalEquipmentCategoryId;
+        }
 
-  class ElectricalElementComparer : IComparer<Element>
-  {
-    ElementId _electricalEquipmentCategoryId;
-
-    public ElectricalElementComparer( ElementId electricalEquipmentCategoryId )
-    {
-      _electricalEquipmentCategoryId = electricalEquipmentCategoryId;
+        public int Compare(Element x, Element y)
+        {
+            var sx = CmdInspectElectricalForm2.ElectricalElementText(x, _electricalEquipmentCategoryId);
+            var sy = CmdInspectElectricalForm2.ElectricalElementText(y, _electricalEquipmentCategoryId);
+            return sx.CompareTo(sy);
+        }
     }
-
-    public int Compare( Element x, Element y )
-    {
-      string sx = CmdInspectElectricalForm2.ElectricalElementText( x, _electricalEquipmentCategoryId );
-      string sy = CmdInspectElectricalForm2.ElectricalElementText( y, _electricalEquipmentCategoryId );
-      return sx.CompareTo( sy );
-    }
-  }
 }

@@ -12,12 +12,14 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -54,7 +56,7 @@ namespace BuildingCoder
 
             // Retrieve the floor solids
 
-            var opt = new Options();
+            Options opt = new();
 
             var geometry1 = floors[0].get_Geometry(opt);
             var geometry2 = floors[1].get_Geometry(opt);
@@ -82,7 +84,7 @@ namespace BuildingCoder
             // Create a free form element 
             // from the intersection solid
 
-            using (var t = new Transaction(family_doc))
+            using (Transaction t = new(family_doc))
             {
                 t.Start("Add Free Form Element");
 
@@ -97,7 +99,7 @@ namespace BuildingCoder
             var filepath = Path.Combine(dir,
                 "floor_intersection_family.rfa");
 
-            var sao = new SaveAsOptions
+            SaveAsOptions sao = new()
             {
                 OverwriteExistingFile = true
             };
@@ -115,7 +117,7 @@ namespace BuildingCoder
 
             View3D threeDView;
 
-            using (var t = new Transaction(family_doc))
+            using (Transaction t = new(family_doc))
             {
                 t.Start("Create 3D View");
 
@@ -127,13 +129,13 @@ namespace BuildingCoder
 
             // Export to SAT
 
-            var viewSet = new List<ElementId>
+            List<ElementId> viewSet = new()
             {
                 threeDView.Id
             };
 
-            var exportOptions
-                = new SATExportOptions();
+            SATExportOptions exportOptions
+                = new();
 
             var res = family_doc.Export(dir,
                 "SolidFile.sat", viewSet, exportOptions);

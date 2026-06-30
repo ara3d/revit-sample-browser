@@ -14,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         public LineTool()
         {
-            Points = new ArrayList();
+            Points = [];
             m_movePoint = Point.Empty;
         }
 

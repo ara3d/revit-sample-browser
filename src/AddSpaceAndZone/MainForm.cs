@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
@@ -44,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         private void editZoneButton_Click(object sender, EventArgs e)
         {
             if (zonesTreeView.SelectedNode is ZoneNode zoneNode)
-                using (var zoneEditorForm = new ZoneEditorForm(m_dataManager, zoneNode))
+                using (ZoneEditorForm zoneEditorForm = new(m_dataManager, zoneNode))
                 {
                     zoneEditorForm.ShowDialog();
                 }
@@ -89,10 +90,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 
         private void zonesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node is ZoneNode)
-                editZoneButton.Enabled = true;
-            else
-                editZoneButton.Enabled = false;
+            editZoneButton.Enabled = e.Node is ZoneNode;
         }
     }
 }

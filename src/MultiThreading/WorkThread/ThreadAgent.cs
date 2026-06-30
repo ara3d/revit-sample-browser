@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Threading;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
@@ -48,15 +48,15 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 
             for (var u = 0; u <= m_density; u++)
             {
-                var uPos = m_bbox.Min.U + u * uStep;
-                var uVal = (double)(u * (m_density - u));
+                var uPos = m_bbox.Min.U + (u * uStep);
+                double uVal = u * (m_density - u);
 
                 for (var v = 0; v <= m_density; v++)
                 {
-                    var vPos = m_bbox.Min.V + v * vStep;
-                    var vVal = (double)(v * (m_density - v));
+                    var vPos = m_bbox.Min.V + (v * vStep);
+                    double vVal = v * (m_density - v);
 
-                    var point = new UV(uPos, vPos);
+                    UV point = new(uPos, vPos);
                     var value = Math.Min(uVal, vVal);
 
                     Thread.Sleep(100);

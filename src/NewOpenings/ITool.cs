@@ -25,9 +25,9 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
         protected readonly Pen ForeGroundPen;
 
-        protected readonly List<List<Point>> Lines = new List<List<Point>>();
+        protected readonly List<List<Point>> Lines = [];
 
-        protected readonly List<Point> Points = new List<Point>();
+        protected readonly List<Point> Points = [];
 
         protected Point PreMovePoint;
 

@@ -3,10 +3,9 @@
 // Adapted from ListImportInstances by Nikolay Shulga and Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/ListImportInstances
 
-using System;
+using Autodesk.Revit.UI;
 using System.Diagnostics;
 using System.IO;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ListImportInstances.CS
 {
@@ -87,9 +86,15 @@ namespace Ara3D.RevitSampleBrowser.ListImportInstances.CS
             _currentSection = sectionName;
         }
 
-        public void LogItem(string item) => _outputFile.WriteLine(item);
+        public void LogItem(string item)
+        {
+            _outputFile.WriteLine(item);
+        }
 
-        public void SetWarning() => _warnUser = true;
+        public void SetWarning()
+        {
+            _warnUser = true;
+        }
 
         public void Done()
         {
@@ -111,7 +116,10 @@ namespace Ara3D.RevitSampleBrowser.ListImportInstances.CS
                 Process.Start("notepad.exe", _logFileName);
         }
 
-        public string GetLogFileName() => _logFileName;
+        public string GetLogFileName()
+        {
+            return _logFileName;
+        }
 
         void EndReportSection()
         {

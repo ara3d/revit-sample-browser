@@ -9,24 +9,24 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             switch (request)
             {
                 case RequestId.None:
-                {
-                    return; // no request at this time -> we can leave immediately
-                }
+                    {
+                        return; // no request at this time -> we can leave immediately
+                    }
                 case RequestId.Select:
-                {
-                    app.GetPaintedMaterial();
-                    break;
-                }
+                    {
+                        app.GetPaintedMaterial();
+                        break;
+                    }
                 case RequestId.Lighter:
-                {
-                    app.ModifySelectedMaterial("Lighter", true);
-                    break;
-                }
+                    {
+                        app.ModifySelectedMaterial("Lighter", true);
+                        break;
+                    }
                 case RequestId.Darker:
-                {
-                    app.ModifySelectedMaterial("Darker", false);
-                    break;
-                }
+                    {
+                        app.ModifySelectedMaterial("Darker", false);
+                        break;
+                    }
             }
         }
     } // class

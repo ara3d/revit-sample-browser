@@ -12,12 +12,12 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     /// <summary>
@@ -54,37 +54,35 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var points = SiteTopographyHelper.GetNonBoundaryPoints(subregion);
 
             // All changes are added to one transaction group - will create one undo item
-            using (var deleteGroup = new TransactionGroup(doc, "Delete region"))
-            {
-                deleteGroup.Start();
+            using TransactionGroup deleteGroup = new(doc, "Delete region");
+            deleteGroup.Start();
 
-                // Edit scope to delete points- if there are points in the region
-                if (points.Count > 0)
-                    using (var editScope = new TopographyEditScope(doc, "Edit TS"))
+            // Edit scope to delete points- if there are points in the region
+            if (points.Count > 0)
+                using (TopographyEditScope editScope = new(doc, "Edit TS"))
+                {
+                    editScope.Start(toposurface.Id);
+
+                    // Transaction for point deletion
+                    using (Transaction t = new(doc, "Delete points"))
                     {
-                        editScope.Start(toposurface.Id);
-
-                        // Transaction for point deletion
-                        using (var t = new Transaction(doc, "Delete points"))
-                        {
-                            t.Start();
-                            toposurface.DeletePoints(points);
-                            t.Commit();
-                        }
-
-                        editScope.Commit(new TopographyEditFailuresPreprocessor());
+                        t.Start();
+                        toposurface.DeletePoints(points);
+                        t.Commit();
                     }
 
-                // Transaction to delete subregion
-                using (var t2 = new Transaction(doc, "Delete subregion"))
-                {
-                    t2.Start();
-                    doc.Delete(subregion.Id);
-                    t2.Commit();
+                    editScope.Commit(new TopographyEditFailuresPreprocessor());
                 }
 
-                deleteGroup.Assimilate();
+            // Transaction to delete subregion
+            using (Transaction t2 = new(doc, "Delete subregion"))
+            {
+                t2.Start();
+                doc.Delete(subregion.Id);
+                t2.Commit();
             }
+
+            deleteGroup.Assimilate();
         }
     }
 }

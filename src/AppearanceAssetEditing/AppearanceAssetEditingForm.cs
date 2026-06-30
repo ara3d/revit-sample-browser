@@ -7,20 +7,14 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 {
     public partial class AppearanceAssetEditingForm : Form
     {
-        private Request m_request;
-
         public AppearanceAssetEditingForm()
         {
             InitializeComponent();
 
-            m_request = new Request();
+            Request = new Request();
         }
 
-        public Request Request
-        {
-            get => m_request;
-            private set => m_request = value;
-        }
+        public Request Request { get; private set; }
 
         private void buttonSelect_Click(object sender, EventArgs e)
         {

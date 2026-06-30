@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.ComponentModel;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.TypeConverter;
 using Autodesk.Revit.DB.Structure;
+using System.ComponentModel;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
 {
@@ -40,8 +40,10 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     Update list value for property grid.
         /// </summary>
-        protected void UpdateSegmentIdTypeConverter() =>
+        protected void UpdateSegmentIdTypeConverter()
+        {
             TypeConverterSegmentId.SegmentCount = GetRebarShapeDefinitionBySegments.NumberOfSegments;
+        }
     }
 
     /// <summary>
@@ -49,26 +51,17 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// </summary>
     public class ConstraintBendDefaultRadius : ConstraintOnSegmentShape
     {
-        /// <summary>
-        ///     Bend angle field.
-        /// </summary>
-        private RebarShapeBendAngle m_bendAngle;
 
         /// <summary>
         ///     Segment to be added constraint on.
         /// </summary>
         private int m_segment;
 
-        /// <summary>
-        ///     Bend orientation field.
-        /// </summary>
-        private RebarShapeVertexTurn m_turn;
-
         public ConstraintBendDefaultRadius(RebarShapeDefBySegment def)
             : base(def)
         {
-            m_turn = RebarShapeVertexTurn.Left;
-            m_bendAngle = RebarShapeBendAngle.Obtuse;
+            Turn = RebarShapeVertexTurn.Left;
+            BendAngle = RebarShapeBendAngle.Obtuse;
         }
 
         /// <summary>
@@ -89,20 +82,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     Bend orientation property.
         /// </summary>
-        public RebarShapeVertexTurn Turn
-        {
-            get => m_turn;
-            set => m_turn = value;
-        }
+        public RebarShapeVertexTurn Turn { get; set; }
 
         /// <summary>
         ///     Bend angle property.
         /// </summary>
-        public RebarShapeBendAngle BendAngle
-        {
-            get => m_bendAngle;
-            set => m_bendAngle = value;
-        }
+        public RebarShapeBendAngle BendAngle { get; set; }
 
         /// <summary>
         ///     Add bend default radius constraint to RebarShapeDefinitionBySegments.
@@ -110,7 +95,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.AddBendDefaultRadius(
-                m_segment, m_turn, m_bendAngle);
+                m_segment, Turn, BendAngle);
         }
     }
 
@@ -119,15 +104,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// </summary>
     public class ConstraintBendVariableRadius : ConstraintOnSegmentShape
     {
-        /// <summary>
-        ///     Bend angle field.
-        /// </summary>
-        private RebarShapeBendAngle m_bendAngle;
-
-        /// <summary>
-        ///     Measure length including bar thickness or not.
-        /// </summary>
-        private bool m_measureIncludingBarThickness;
 
         /// <summary>
         ///     Radius dimension field.
@@ -139,17 +115,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// </summary>
         private int m_segment;
 
-        /// <summary>
-        ///     Bend orientation field.
-        /// </summary>
-        private RebarShapeVertexTurn m_turn;
-
         public ConstraintBendVariableRadius(RebarShapeDefBySegment def)
             : base(def)
         {
-            m_bendAngle = RebarShapeBendAngle.Obtuse;
-            m_turn = RebarShapeVertexTurn.Left;
-            m_measureIncludingBarThickness = true;
+            BendAngle = RebarShapeBendAngle.Obtuse;
+            Turn = RebarShapeVertexTurn.Left;
+            MeasureIncludingBarThickness = true;
         }
 
         /// <summary>
@@ -170,20 +141,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     Bend orientation property.
         /// </summary>
-        public RebarShapeVertexTurn Turn
-        {
-            get => m_turn;
-            set => m_turn = value;
-        }
+        public RebarShapeVertexTurn Turn { get; set; }
 
         /// <summary>
         ///     Bend angle property.
         /// </summary>
-        public RebarShapeBendAngle BendAngle
-        {
-            get => m_bendAngle;
-            set => m_bendAngle = value;
-        }
+        public RebarShapeBendAngle BendAngle { get; set; }
 
         /// <summary>
         ///     Radius dimension property.
@@ -202,11 +165,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     Measure including bar thickness or not.
         /// </summary>
-        public bool MeasureIncludingBarThickness
-        {
-            get => m_measureIncludingBarThickness;
-            set => m_measureIncludingBarThickness = value;
-        }
+        public bool MeasureIncludingBarThickness { get; set; }
 
         /// <summary>
         ///     Add Dimension to constrain the bend radius.
@@ -214,8 +173,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.AddBendVariableRadius(
-                m_segment, m_turn, m_bendAngle, m_radiusParameter.Parameter,
-                m_measureIncludingBarThickness);
+                m_segment, Turn, BendAngle, m_radiusParameter.Parameter,
+                MeasureIncludingBarThickness);
         }
     }
 
@@ -224,15 +183,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// </summary>
     public class ConstraintParallelToSegment : ConstraintOnSegmentShape
     {
-        /// <summary>
-        ///     Measure segment's length to outside of bend 0 or not.
-        /// </summary>
-        private bool m_measureToOutsideOfBend0;
-
-        /// <summary>
-        ///     Measure segment's length to outside of bend 1 or not.
-        /// </summary>
-        private bool m_measureToOutsideOfBend1;
 
         /// <summary>
         ///     Dimension to constrain the length of segment.
@@ -247,8 +197,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public ConstraintParallelToSegment(RebarShapeDefBySegment def)
             : base(def)
         {
-            m_measureToOutsideOfBend0 = true;
-            m_measureToOutsideOfBend1 = true;
+            MeasureToOutsideOfBend0 = true;
+            MeasureToOutsideOfBend1 = true;
         }
 
         /// <summary>
@@ -283,20 +233,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     Measure segment's length to outside of bend 0 or not.
         /// </summary>
-        public bool MeasureToOutsideOfBend0
-        {
-            get => m_measureToOutsideOfBend0;
-            set => m_measureToOutsideOfBend0 = value;
-        }
+        public bool MeasureToOutsideOfBend0 { get; set; }
 
         /// <summary>
         ///     Measure segment's length to outside of bend 1 or not.
         /// </summary>
-        public bool MeasureToOutsideOfBend1
-        {
-            get => m_measureToOutsideOfBend1;
-            set => m_measureToOutsideOfBend1 = value;
-        }
+        public bool MeasureToOutsideOfBend1 { get; set; }
 
         /// <summary>
         ///     Add Dimension to constrain the segment length.
@@ -304,8 +246,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.AddConstraintParallelToSegment(
-                m_segment, m_parameter.Parameter, m_measureToOutsideOfBend0,
-                m_measureToOutsideOfBend1);
+                m_segment, m_parameter.Parameter, MeasureToOutsideOfBend0,
+                MeasureToOutsideOfBend1);
         }
     }
 
@@ -314,25 +256,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// </summary>
     public class ConstraintToSegment : ConstraintOnSegmentShape
     {
-        /// <summary>
-        ///     X coordinate of constraint direction.
-        /// </summary>
-        private double m_constraintDirCoordX;
-
-        /// <summary>
-        ///     Y coordinate of constraint direction.
-        /// </summary>
-        private double m_constraintDirCoordY;
-
-        /// <summary>
-        ///     Measure segment's length to outside of bend 0 or not.
-        /// </summary>
-        private bool m_measureToOutsideOfBend0;
-
-        /// <summary>
-        ///     Measure segment's length to outside of bend 1 or not.
-        /// </summary>
-        private bool m_measureToOutsideOfBend1;
 
         /// <summary>
         ///     Dimension to constraint the length of segment in specified direction.
@@ -344,17 +267,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// </summary>
         private int m_segment;
 
-        /// <summary>
-        ///     Sign of Z coordinate of cross product of constraint direction by segment direction.
-        /// </summary>
-        private int m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir;
-
         public ConstraintToSegment(RebarShapeDefBySegment def)
             : base(def)
         {
-            m_measureToOutsideOfBend0 = true;
-            m_measureToOutsideOfBend1 = false;
-            m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir = -1;
+            MeasureToOutsideOfBend0 = true;
+            MeasureToOutsideOfBend1 = false;
+            SignOfZCoordOfCrossProductOfConstraintDirBySegmentDir = -1;
         }
 
         /// <summary>
@@ -389,47 +307,27 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     X coordinate of constraint direction.
         /// </summary>
-        public double ConstraintDirCoordX
-        {
-            get => m_constraintDirCoordX;
-            set => m_constraintDirCoordX = value;
-        }
+        public double ConstraintDirCoordX { get; set; }
 
         /// <summary>
         ///     Y coordinate of constraint direction.
         /// </summary>
-        public double ConstraintDirCoordY
-        {
-            get => m_constraintDirCoordY;
-            set => m_constraintDirCoordY = value;
-        }
+        public double ConstraintDirCoordY { get; set; }
 
         /// <summary>
         ///     Sign of Z coordinate of cross product of constraint direction by segment direction.
         /// </summary>
-        public int SignOfZCoordOfCrossProductOfConstraintDirBySegmentDir
-        {
-            get => m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir;
-            set => m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir = value;
-        }
+        public int SignOfZCoordOfCrossProductOfConstraintDirBySegmentDir { get; set; }
 
         /// <summary>
         ///     Measure segment's length to outside of bend 0 or not.
         /// </summary>
-        public bool MeasureToOutsideOfBend0
-        {
-            get => m_measureToOutsideOfBend0;
-            set => m_measureToOutsideOfBend0 = value;
-        }
+        public bool MeasureToOutsideOfBend0 { get; set; }
 
         /// <summary>
         ///     Measure segment's length to outside of bend 1 or not.
         /// </summary>
-        public bool MeasureToOutsideOfBend1
-        {
-            get => m_measureToOutsideOfBend1;
-            set => m_measureToOutsideOfBend1 = value;
-        }
+        public bool MeasureToOutsideOfBend1 { get; set; }
 
         /// <summary>
         ///     Add dimension to constrain the length of segment in the specified direction.
@@ -437,9 +335,9 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.AddConstraintToSegment(m_segment,
-                m_parameter.Parameter, m_constraintDirCoordX, m_constraintDirCoordY,
-                m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir,
-                m_measureToOutsideOfBend0, m_measureToOutsideOfBend1);
+                m_parameter.Parameter, ConstraintDirCoordX, ConstraintDirCoordY,
+                SignOfZCoordOfCrossProductOfConstraintDirBySegmentDir,
+                MeasureToOutsideOfBend0, MeasureToOutsideOfBend1);
         }
     }
 
@@ -448,25 +346,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// </summary>
     public class ListeningDimensionBendToBend : ConstraintOnSegmentShape
     {
-        /// <summary>
-        ///     X coordinate of constraint direction.
-        /// </summary>
-        private double m_constraintDirCoordX;
-
-        /// <summary>
-        ///     Y coordinate of constraint direction.
-        /// </summary>
-        private double m_constraintDirCoordY;
-
-        /// <summary>
-        ///     End reference of segment 0.
-        /// </summary>
-        private EndReference m_end;
-
-        /// <summary>
-        ///     End reference of segment 1.
-        /// </summary>
-        private EndReference m_end1;
 
         /// <summary>
         ///     Dimension to constraint the length of two bends in the specified direction.
@@ -486,10 +365,10 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public ListeningDimensionBendToBend(RebarShapeDefBySegment def)
             : base(def)
         {
-            m_end = EndReference.Begin;
-            m_end1 = EndReference.End;
-            m_constraintDirCoordX = 0;
-            m_constraintDirCoordY = 0;
+            End0 = EndReference.Begin;
+            End1 = EndReference.End;
+            ConstraintDirCoordX = 0;
+            ConstraintDirCoordY = 0;
         }
 
         /// <summary>
@@ -510,20 +389,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     X coordinate of constraint direction.
         /// </summary>
-        public double ConstraintDirCoordX
-        {
-            get => m_constraintDirCoordX;
-            set => m_constraintDirCoordX = value;
-        }
+        public double ConstraintDirCoordX { get; set; }
 
         /// <summary>
         ///     Y coordinate of constraint direction.
         /// </summary>
-        public double ConstraintDirCoordY
-        {
-            get => m_constraintDirCoordY;
-            set => m_constraintDirCoordY = value;
-        }
+        public double ConstraintDirCoordY { get; set; }
 
         /// <summary>
         ///     Reference of segment 0.
@@ -543,11 +414,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     End reference of segment 0.
         /// </summary>
-        public EndReference End0
-        {
-            get => m_end;
-            set => m_end = value;
-        }
+        public EndReference End0 { get; set; }
 
         /// <summary>
         ///     Reference of segment 1.
@@ -567,11 +434,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     End reference of segment 1.
         /// </summary>
-        public EndReference End1
-        {
-            get => m_end1;
-            set => m_end1 = value;
-        }
+        public EndReference End1 { get; set; }
 
         /// <summary>
         ///     Add listening dimension to constrain the length of two bend in the specified direction.
@@ -579,8 +442,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.AddListeningDimensionBendToBend(
-                m_parameter.Parameter, m_constraintDirCoordX, m_constraintDirCoordY,
-                m_segment, (int)m_end, m_segment1, (int)m_end1);
+                m_parameter.Parameter, ConstraintDirCoordX, ConstraintDirCoordY,
+                m_segment, (int)End0, m_segment1, (int)End1);
         }
     }
 
@@ -589,20 +452,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// </summary>
     public class ListeningDimensionSegmentToBend : ConstraintOnSegmentShape
     {
-        /// <summary>
-        ///     X coordinate of constraint direction.
-        /// </summary>
-        private double m_constraintDirCoordX;
-
-        /// <summary>
-        ///     Y coordinate of constraint direction.
-        /// </summary>
-        private double m_constraintDirCoordY;
-
-        /// <summary>
-        ///     End reference of segment 1.
-        /// </summary>
-        private EndReference m_end1;
 
         /// <summary>
         ///     Dimension to constrain the length between a segment and a bend
@@ -623,9 +472,9 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public ListeningDimensionSegmentToBend(RebarShapeDefBySegment def)
             : base(def)
         {
-            m_constraintDirCoordX = 0;
-            m_constraintDirCoordY = 0;
-            m_end1 = EndReference.End;
+            ConstraintDirCoordX = 0;
+            ConstraintDirCoordY = 0;
+            End1 = EndReference.End;
         }
 
         /// <summary>
@@ -646,20 +495,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     X coordinate of constraint direction.
         /// </summary>
-        public double ConstraintDirCoordX
-        {
-            get => m_constraintDirCoordX;
-            set => m_constraintDirCoordX = value;
-        }
+        public double ConstraintDirCoordX { get; set; }
 
         /// <summary>
         ///     Y coordinate of constraint direction.
         /// </summary>
-        public double ConstraintDirCoordY
-        {
-            get => m_constraintDirCoordY;
-            set => m_constraintDirCoordY = value;
-        }
+        public double ConstraintDirCoordY { get; set; }
 
         /// <summary>
         ///     Reference of segment 0.
@@ -694,11 +535,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     End reference of segment 1.
         /// </summary>
-        public EndReference End1
-        {
-            get => m_end1;
-            set => m_end1 = value;
-        }
+        public EndReference End1 { get; set; }
 
         /// <summary>
         ///     Add listening dimension to constrain the length between a segment and a bend
@@ -707,8 +544,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.AddListeningDimensionSegmentToBend(
-                m_parameter.Parameter, m_constraintDirCoordX, m_constraintDirCoordY,
-                m_segment, m_segment1, (int)m_end1);
+                m_parameter.Parameter, ConstraintDirCoordX, ConstraintDirCoordY,
+                m_segment, m_segment1, (int)End1);
         }
     }
 
@@ -717,15 +554,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// </summary>
     public class ListeningDimensionSegmentToSegment : ConstraintOnSegmentShape
     {
-        /// <summary>
-        ///     X coordinate of constraint direction.
-        /// </summary>
-        private double m_constraintDirCoordX;
-
-        /// <summary>
-        ///     Y coordinate of constraint direction.
-        /// </summary>
-        private double m_constraintDirCoordY;
 
         /// <summary>
         ///     Dimension to constrain the perpendicular distance between two segment.
@@ -746,8 +574,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public ListeningDimensionSegmentToSegment(RebarShapeDefBySegment def)
             : base(def)
         {
-            m_constraintDirCoordX = 1;
-            m_constraintDirCoordY = 0;
+            ConstraintDirCoordX = 1;
+            ConstraintDirCoordY = 0;
         }
 
         /// <summary>
@@ -767,20 +595,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     X coordinate of constraint direction.
         /// </summary>
-        public double ConstraintDirCoordX
-        {
-            get => m_constraintDirCoordX;
-            set => m_constraintDirCoordX = value;
-        }
+        public double ConstraintDirCoordX { get; set; }
 
         /// <summary>
         ///     Y coordinate of constraint direction.
         /// </summary>
-        public double ConstraintDirCoordY
-        {
-            get => m_constraintDirCoordY;
-            set => m_constraintDirCoordY = value;
-        }
+        public double ConstraintDirCoordY { get; set; }
 
         /// <summary>
         ///     The second segment to be constrained.
@@ -816,7 +636,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.AddListeningDimensionSegmentToSegment(
-                m_parameter.Parameter, m_constraintDirCoordX, m_constraintDirCoordY,
+                m_parameter.Parameter, ConstraintDirCoordX, ConstraintDirCoordY,
                 m_segment, m_segment1);
         }
     }
@@ -885,10 +705,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// </summary>
     public class SetSegmentAs180DegreeBend : ConstraintOnSegmentShape
     {
-        /// <summary>
-        ///     If measure to outside of bend.
-        /// </summary>
-        private bool m_measureToOutsideOfBend;
 
         /// <summary>
         ///     Dimension to constrain the bend's radius.
@@ -903,7 +719,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public SetSegmentAs180DegreeBend(RebarShapeDefBySegment def)
             : base(def)
         {
-            m_measureToOutsideOfBend = true;
+            MeasureToOutsideOfBend = true;
         }
 
         /// <summary>
@@ -938,16 +754,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     If measure the length to outside of bend.
         /// </summary>
-        public bool MeasureToOutsideOfBend
-        {
-            get => m_measureToOutsideOfBend;
-            set => m_measureToOutsideOfBend = value;
-        }
+        public bool MeasureToOutsideOfBend { get; set; }
 
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.SetSegmentAs180DegreeBend(
-                m_segment, m_radiusParameter.Parameter, m_measureToOutsideOfBend);
+                m_segment, m_radiusParameter.Parameter, MeasureToOutsideOfBend);
         }
     }
 
@@ -961,21 +773,11 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// </summary>
         private int m_segment;
 
-        /// <summary>
-        ///     X coordinate of constraint direction.
-        /// </summary>
-        private double m_vecCoordX;
-
-        /// <summary>
-        ///     Y coordinate of constraint direction.
-        /// </summary>
-        private double m_vecCoordY;
-
         public SetSegmentFixedDirection(RebarShapeDefBySegment def)
             : base(def)
         {
-            m_vecCoordX = 1;
-            m_vecCoordY = 0;
+            VecCoordX = 1;
+            VecCoordY = 0;
         }
 
         /// <summary>
@@ -996,20 +798,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     X coordinate of constraint direction.
         /// </summary>
-        public double VecCoordX
-        {
-            get => m_vecCoordX;
-            set => m_vecCoordX = value;
-        }
+        public double VecCoordX { get; set; }
 
         /// <summary>
         ///     Y coordinate of constraint direction.
         /// </summary>
-        public double VecCoordY
-        {
-            get => m_vecCoordY;
-            set => m_vecCoordY = value;
-        }
+        public double VecCoordY { get; set; }
 
         /// <summary>
         ///     Add dimension to constrain the direction of the segment.
@@ -1017,7 +811,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.SetSegmentFixedDirection(
-                m_segment, m_vecCoordX, m_vecCoordY);
+                m_segment, VecCoordX, VecCoordY);
         }
     }
 

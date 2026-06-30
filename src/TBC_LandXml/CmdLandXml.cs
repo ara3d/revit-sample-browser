@@ -13,12 +13,12 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Xml;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Xml;
 using W = System.Windows.Forms;
 
 #endregion // Namespaces
@@ -36,23 +36,24 @@ namespace BuildingCoder
             var app = commandData.Application;
             var doc = app.ActiveUIDocument.Document;
 
-            var dlg = new W.OpenFileDialog();
+            OpenFileDialog dlg = new()
+            {
+                // select file to open
 
-            // select file to open
+                Filter = "LandXML files (*.xml)|*.xml",
 
-            dlg.Filter = "LandXML files (*.xml)|*.xml";
-
-            dlg.Title = "Import LandXML and "
-                        + "Create TopographySurface";
+                Title = "Import LandXML and "
+                            + "Create TopographySurface"
+            };
 
             if (dlg.ShowDialog() != W.DialogResult.OK) return Result.Cancelled;
 
-            var xmlDoc = new XmlDocument();
+            XmlDocument xmlDoc = new();
             xmlDoc.Load(dlg.FileName);
 
             var pts = Util.ParseLandXmlPoints(xmlDoc);
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create Topography Surface");
 
             //TopographySurface surface = doc.Create.NewTopographySurface( pntList );

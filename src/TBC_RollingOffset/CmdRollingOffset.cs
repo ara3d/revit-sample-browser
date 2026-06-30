@@ -12,14 +12,16 @@
 
 #region Namespaces
 
-using System;
-using System.Diagnostics;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 #endregion // Namespaces
 
@@ -163,8 +165,8 @@ namespace BuildingCoder
             //  }
             //}
 
-            var picker
-                = new JtPairPicker<Pipe>(uidoc);
+            JtPairPicker<Pipe> picker
+                = new(uidoc);
 
             var rc = picker.Pick();
 
@@ -198,7 +200,7 @@ namespace BuildingCoder
             var c0 = pipes[0].GetCurve();
             var c1 = pipes[1].GetCurve();
 
-            if (!(c0 is Line) || !(c1 is Line))
+            if (c0 is not Line || c1 is not Line)
             {
                 message = $"{_prompt} Expected straight pipes.";
 
@@ -250,13 +252,13 @@ namespace BuildingCoder
                 v.DotProduct(v1.Normalize()));
 
             Debug.Assert(Util.IsEqual(v.GetLength(),
-                    Math.Sqrt(distanceAcross * distanceAcross
-                              + distanceAlong * distanceAlong)),
+                    Math.Sqrt((distanceAcross * distanceAcross)
+                              + (distanceAlong * distanceAlong))),
                 "expected Pythagorean equality here");
 
             var angle = 45 * Math.PI / 180.0;
 
-            var angle2 = 0.5 * Math.PI - angle;
+            var angle2 = (0.5 * Math.PI) - angle;
 
             var length = distanceAcross * Math.Tan(angle2);
 
@@ -269,11 +271,11 @@ namespace BuildingCoder
 
             v1 = v1.Normalize();
 
-            var q0 = p0 + remainingPipeLength * v1;
+            var q0 = p0 + (remainingPipeLength * v1);
 
-            var q1 = p1 - remainingPipeLength * v1;
+            var q1 = p1 - (remainingPipeLength * v1);
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
 
             var pipe = pipes[0];
 
@@ -305,7 +307,7 @@ namespace BuildingCoder
                 (pipes[1].Location as LocationCurve).Curve
                     = Line.CreateBound(p1, q1);
 
-                var creator = new Creator(doc);
+                Creator creator = new(doc);
 
                 var line = Line.CreateBound(q0, q1);
 

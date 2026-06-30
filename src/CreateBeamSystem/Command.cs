@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Diagnostics;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
@@ -16,15 +16,15 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "CreateBeamSystem");
+            Transaction tran = new(commandData.Application.ActiveUIDocument.Document, "CreateBeamSystem");
             tran.Start();
 
             try
             {
                 // initialize precondition data of the program
-                var data = new BeamSystemData(commandData);
+                BeamSystemData data = new(commandData);
                 // display form to collect user's setting for beam system
-                using (var form = new BeamSystemForm(data))
+                using (BeamSystemForm form = new(data))
                 {
                     if (form.ShowDialog() != DialogResult.OK)
                     {
@@ -34,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
                 }
 
                 // create beam system using the parameters saved in BeamSystemData
-                var builder = new BeamSystemBuilder(data);
+                BeamSystemBuilder builder = new(data);
                 builder.CreateBeamSystem();
             }
             catch (ErrorMessageException errorEx)

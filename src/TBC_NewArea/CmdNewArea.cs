@@ -32,7 +32,7 @@ namespace BuildingCoder
         {
             var rc = Result.Failed;
 
-            if (commandData.View is not ViewPlan {ViewType: ViewType.AreaPlan} view)
+            if (commandData.View is not ViewPlan { ViewType: ViewType.AreaPlan } view)
             {
                 message = "Please run this command in an area plan view.";
                 return rc;
@@ -52,13 +52,13 @@ namespace BuildingCoder
             }
             else
             {
-                using var t = new Transaction(doc);
+                using Transaction t = new(doc);
                 t.Start("Create New Area");
 
                 var loc = room.Location;
                 var lp = loc as LocationPoint;
                 var p = lp.Point;
-                var q = new UV(p.X, p.Y);
+                UV q = new(p.X, p.Y);
                 var area = doc.Create.NewArea(view, q);
                 rc = Result.Succeeded;
                 t.Commit();

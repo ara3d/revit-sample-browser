@@ -15,13 +15,13 @@ namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
         /// </summary>
         public static string StripTags(this string source)
         {
-            char[] array = new char[source.Length];
-            int arrayIndex = 0;
-            bool inside = false;
+            var array = new char[source.Length];
+            var arrayIndex = 0;
+            var inside = false;
 
-            for (int i = 0; i < source.Length; i++)
+            for (var i = 0; i < source.Length; i++)
             {
-                char let = source[i];
+                var let = source[i];
                 if (let == '<')
                 {
                     inside = true;
@@ -55,38 +55,24 @@ namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
         /// </summary>
         public static string RemoveFromEnd(this string s, string suffix)
         {
-            if (s.EndsWith(suffix))
-            {
-                return s.Substring(0, s.Length - suffix.Length);
-            }
-            else
-            {
-                return s;
-            }
+            return s.EndsWith(suffix) ? s.Substring(0, s.Length - suffix.Length) : s;
         }
 
         public static string RemovePrefix(this string input, string prefix)
         {
-            if (input.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
-            {
-                return input.Remove(0, prefix.Length);
-            }
-            return input;
+            return input.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ? input.Remove(0, prefix.Length) : input;
         }
 
 
         public static string Truncate(this string value, int maxChars)
         {
-            if (value == null) return null;
-            if (maxChars <= 3) return value;
-
-            return value.Length <= maxChars ? value : value.Substring(0, maxChars - 3) + "...";
+            return value == null ? null : maxChars <= 3 ? value : value.Length <= maxChars ? value : value.Substring(0, maxChars - 3) + "...";
         }
 
         public static string ReplaceMany(this string input, IEnumerable<(string, string)> replacements)
         {
-            string result = input;
-            foreach(var replacement in replacements)
+            var result = input;
+            foreach (var replacement in replacements)
             {
                 result = result.Replace(replacement.Item1, replacement.Item2);
             }

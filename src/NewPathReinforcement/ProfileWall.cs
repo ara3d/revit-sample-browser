@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 {
     /// <summary>
@@ -33,12 +31,12 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 
         public override List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
-            var needFace = new List<Edge>();
-            var needPoints = new List<List<XYZ>>();
+            List<Edge> needFace = new();
+            List<List<XYZ>> needPoints = new();
             var location = m_data.Location as LocationCurve;
             var curve = location.Curve;
             var xyzs = curve.Tessellate() as List<XYZ>;
-            var zAxis = new Vector4(0, 0, 1);
+            Vector4 zAxis = new(0, 0, 1);
 
             //if Location curve of wall is line, then return first face
             if (xyzs.Count == 2) needFace = faces[0];
@@ -74,16 +72,15 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         public override Matrix4 GetTo2DMatrix()
         {
             //get the location curve
-            var location = m_data.Location as LocationCurve;
-            var xAxis = new Vector4(1, 0, 0);
-            var yAxis = new Vector4(0, 1, 0);
-            var zAxis = new Vector4(0, 0, 1);
-            var origin = new Vector4(0, 0, 0);
-            if (location != null)
+            Vector4 xAxis = new(1, 0, 0);
+            Vector4 yAxis = new(0, 1, 0);
+            Vector4 zAxis = new(0, 0, 1);
+            Vector4 origin = new(0, 0, 0);
+            if (m_data.Location is LocationCurve location)
             {
                 var curve = location.Curve;
 
-                if (!(curve is Line)) throw new Exception("Path Reinforcement cannot build on this Wall");
+                if (curve is not Line) throw new Exception("Path Reinforcement cannot build on this Wall");
 
                 var start = curve.GetEndPoint(0);
                 var end = curve.GetEndPoint(1);
@@ -110,11 +107,11 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points,
             bool flip)
         {
-            IList<Curve> curves = new List<Curve>();
+            IList<Curve> curves = [];
             for (var i = 0; i < points.Count - 1; i++)
             {
-                var p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
-                var p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
+                XYZ p1 = new(points[i].X, points[i].Y, points[i].Z);
+                XYZ p2 = new(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
                 var curve = Line.CreateBound(p1, p2);
                 curves.Add(curve);
             }

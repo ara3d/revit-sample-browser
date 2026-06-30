@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
 using Color = System.Drawing.Color;
 using Control = System.Windows.Forms.Control;
 
@@ -48,7 +48,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 
         private static Line2D GetLine2D(Line line)
         {
-            var result = new Line2D
+            Line2D result = new()
             {
                 StartPnt = new PointF((float)line.GetEndPoint(0).X, (float)line.GetEndPoint(0).Y),
                 EndPnt = new PointF((float)line.GetEndPoint(1).X, (float)line.GetEndPoint(1).Y)
@@ -69,7 +69,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
         {
             // deal with first line in profile
             Objects.Clear();
-            var firstSketch = new LineSketch(GetLine2D(profile[0]));
+            LineSketch firstSketch = new(GetLine2D(profile[0]));
             m_boundingBox = firstSketch.BoundingBox;
             firstSketch.IsDirection = true;
             Objects.Add(firstSketch);
@@ -77,7 +77,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             // all other lines
             for (var i = 1; i < profile.Count; i++)
             {
-                var sketch = new LineSketch(GetLine2D(profile[i]));
+                LineSketch sketch = new(GetLine2D(profile[i]));
                 m_boundingBox = RectangleF.Union(BoundingBox, sketch.BoundingBox);
                 Objects.Add(sketch);
             }
@@ -85,8 +85,8 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 
         private PointF[] CalculateCanvasRegion()
         {
-            var realWidth = m_canvas.Width * (1 - 2 * MarginRatio);
-            var realHeight = m_canvas.Height * (1 - 2 * MarginRatio);
+            var realWidth = m_canvas.Width * (1 - (2 * MarginRatio));
+            var realHeight = m_canvas.Height * (1 - (2 * MarginRatio));
             var minX = m_canvas.Width * MarginRatio;
             var minY = m_canvas.Height * MarginRatio;
             // ratio of width to height

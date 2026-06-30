@@ -12,12 +12,11 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -35,8 +34,8 @@ namespace BuildingCoder
             var uidoc = uiapp.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var selector
-                = new JtSelectorMulti<Room>(
+            JtSelectorMulti<Room> selector
+                = new(
                     uidoc, BuiltInCategory.OST_Rooms, "room",
                     e => e is Room);
 
@@ -44,14 +43,14 @@ namespace BuildingCoder
 
             var rooms = selector.Selected;
 
-            var msg = new List<string>();
+            List<string> msg = new();
 
             var n = rooms.Count;
 
             msg.Add($"{n} room{Util.PluralSuffix(n)} selected{Util.DotOrColon(n)}\r\n");
 
-            var opt
-                = new SpatialElementBoundaryOptions();
+            SpatialElementBoundaryOptions opt
+                = new();
 
             IList<IList<BoundarySegment>> loops;
 

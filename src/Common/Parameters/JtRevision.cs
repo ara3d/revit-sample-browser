@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-﻿using System.Diagnostics;
 using Autodesk.Revit.DB;
+using System.Diagnostics;
 
 namespace BuildingCoder
 {

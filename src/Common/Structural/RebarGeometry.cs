@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
-using Ara3D.RevitSampleBrowser.Common.Geometry;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.Common.Structural
 {
@@ -12,8 +12,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Structural
     {
         public static bool IsVertical(Face face, Line line, Transform faceTrans, Transform lineTrans)
         {
-            var points = face.Triangulate().Vertices as List<XYZ>;
-            if (points == null || points.Count < 3)
+            if (face.Triangulate().Vertices is not List<XYZ> points || points.Count < 3)
                 return false;
 
             var first = points[0];
@@ -42,10 +41,12 @@ namespace Ara3D.RevitSampleBrowser.Common.Structural
                    XyzMath.IsEqual(XyzMath.DotMatrix(vector2, vector3), 0);
         }
 
-        public static bool IsVertical(Line line1, Line line2) =>
-            Math.Abs(XyzMath.DotMatrix(
+        public static bool IsVertical(Line line1, Line line2)
+        {
+            return Math.Abs(XyzMath.DotMatrix(
                 XyzMath.SubXyz(line1.GetEndPoint(0), line1.GetEndPoint(1)),
                 XyzMath.SubXyz(line2.GetEndPoint(0), line2.GetEndPoint(1)))) < XyzMath.Precision;
+        }
 
         public static RebarHookOrientation GetHookOrient(XYZ curveVec, XYZ normal, XYZ hookVec)
         {
@@ -72,13 +73,10 @@ namespace Ara3D.RevitSampleBrowser.Common.Structural
             var eps = 1.0e-8;
             if (Math.Abs(normal.X) <= eps)
             {
-                if (normal.Y > 0) return false;
-                return true;
+                return normal.Y <= 0;
             }
 
-            if (normal.X > 0) return true;
-            if (normal.X < 0) return false;
-            return true;
+            return normal.X is > 0 or >= 0;
         }
     }
 }

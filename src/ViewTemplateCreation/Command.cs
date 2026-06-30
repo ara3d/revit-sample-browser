@@ -1,11 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
+using Ara3D.RevitSampleBrowser.Common.Views;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Views;
+using System;
 namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -18,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
             try
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
-                var form = new ViewTemplateCreationForm(document);
+                ViewTemplateCreationForm form = new(document);
                 form.ShowDialog();
 
                 return Result.Succeeded;

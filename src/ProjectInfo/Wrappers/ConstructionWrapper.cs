@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.ComponentModel;
 using Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters;
 using Autodesk.Revit.DB;
+using System;
+using System.ComponentModel;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {

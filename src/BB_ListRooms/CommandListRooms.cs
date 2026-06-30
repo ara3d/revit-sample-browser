@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.Bowerbird.RevitSamples
 {
@@ -17,9 +18,9 @@ namespace Ara3D.Bowerbird.RevitSamples
             if (doc == null) return;
             Rooms = doc.GetRooms().ToList();
 
-            var builder = new DataTableBuilder(typeof(RoomData));
+            DataTableBuilder builder = new(typeof(RoomData));
             builder.AddRows(Rooms.Select(r => r.GetRoomData()));
-            var form = new DataTableForm(builder);
+            DataTableForm form = new(builder);
             form.Show();
         }
     }

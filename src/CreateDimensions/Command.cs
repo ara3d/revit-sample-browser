@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
 {
@@ -19,7 +19,7 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
         private const double Precision = 0.0000001;
         private string m_errorMessage = " ";
         private ExternalCommandData m_revit;
-        private readonly ArrayList m_walls = new ArrayList();
+        private readonly ArrayList m_walls = [];
 
         public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
         {
@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
 
         private bool Initialize()
         {
-            var selections = new ElementSet();
+            ElementSet selections = new();
             foreach (var elementId in m_revit.Application.ActiveUIDocument.Selection.GetElementIds())
             {
                 selections.Insert(m_revit.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -88,19 +88,19 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
         {
             if (!Initialize()) return false;
 
-            var transaction = new Transaction(m_revit.Application.ActiveUIDocument.Document, "Add Dimensions");
+            Transaction transaction = new(m_revit.Application.ActiveUIDocument.Document, "Add Dimensions");
             transaction.Start();
             foreach (var wall in m_walls)
             {
-                if (!(wall is Wall wallTemp)) continue;
+                if (wall is not Wall wallTemp) continue;
 
                 var location = wallTemp.Location;
-                if (!(location is LocationCurve locationline)) continue;
+                if (location is not LocationCurve locationline) continue;
 
 
                 Line newLine = null;
 
-                var referenceArray = new ReferenceArray();
+                ReferenceArray referenceArray = new();
 
                 AnalyticalPanel analyticalModel = null;
                 var document = wallTemp.Document;
@@ -112,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
                     if (associatedElementId != ElementId.InvalidElementId)
                     {
                         var associatedElement = document.GetElement(associatedElementId);
-                        if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                        if (associatedElement is not null and AnalyticalPanel panel)
                             analyticalModel = panel;
                     }
                 }
@@ -125,7 +125,7 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
                         newLine = aCurve as Line;
                     if (aCurve.GetEndPoint(0).Z != aCurve.GetEndPoint(1).Z)
                     {
-                        var amSelector = new AnalyticalModelSelector(aCurve)
+                        AnalyticalModelSelector amSelector = new(aCurve)
                         {
                             CurveSelector = AnalyticalCurveSelector.StartPoint
                         };
@@ -148,11 +148,11 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
                     var app = m_revit.Application;
                     var doc = app.ActiveUIDocument.Document;
 
-                    var p1 = new XYZ(
+                    XYZ p1 = new(
                         newLine.GetEndPoint(0).X + 5,
                         newLine.GetEndPoint(0).Y + 5,
                         newLine.GetEndPoint(0).Z);
-                    var p2 = new XYZ(
+                    XYZ p2 = new(
                         newLine.GetEndPoint(1).X + 5,
                         newLine.GetEndPoint(1).Y + 5,
                         newLine.GetEndPoint(1).Z);

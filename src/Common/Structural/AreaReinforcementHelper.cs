@@ -1,16 +1,18 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Linq;
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 
 namespace Ara3D.RevitSampleBrowser.Common.Structural
 {
     public static class AreaReinforcementHelper
     {
-        public static bool IsRectangular(CurveArray curves) =>
-            IsRectangular(curves.Cast<Curve>().ToList());
+        public static bool IsRectangular(CurveArray curves)
+        {
+            return IsRectangular(curves.Cast<Curve>().ToList());
+        }
 
         public static bool IsRectangular(IList<Curve> curves)
         {

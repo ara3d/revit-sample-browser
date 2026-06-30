@@ -1,15 +1,15 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 namespace Ara3D.RevitSampleBrowser.Selections.CS
@@ -30,12 +30,12 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         {
             m_application = commandData.Application;
             m_document = m_application.ActiveUIDocument;
-            var trans = new Transaction(m_document.Document, "PickforDeletion");
+            Transaction trans = new(m_document.Document, "PickforDeletion");
             trans.Start();
             try
             {
                 // Select elements. Click "Finish" or "Cancel" buttons on the dialog bar to complete the selection operation.
-                var elemDeleteList = new List<ElementId>();
+                List<ElementId> elemDeleteList = [];
                 var eRefList = m_document.Selection.PickObjects(ObjectType.Element,
                     "Please pick some element to delete. ESC for Cancel.");
                 foreach (var eRef in eRefList)
@@ -87,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
                 var pickedRefer = PickPointOnWallFace();
                 if (pickedRefer != null)
                 {
-                    var trans = new Transaction(m_document.Document, "PlaceAtPointOnWallFace");
+                    Transaction trans = new(m_document.Document, "PlaceAtPointOnWallFace");
                     trans.Start();
                     // Place the 36" x 48" window at the reference.
                     PlaceWindowAtReference(pickedRefer);
@@ -137,7 +137,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         /// <returns>The specific FamilySymbol.</returns>
         public FamilySymbol FindFamilySymbol(string symbolName)
         {
-            var elemCollector = new FilteredElementCollector(m_document.Document);
+            FilteredElementCollector elemCollector = new(m_document.Document);
             elemCollector.WhereElementIsElementType();
             var query = from element in elemCollector where element.Name == symbolName select element;
             var elemType = query.Single();
@@ -165,10 +165,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
             {
                 m_application = commandData.Application;
                 m_document = m_application.ActiveUIDocument;
-                if (m_document.Document.IsFamilyDocument)
-                    m_creationBase = m_document.Document.FamilyCreate;
-                else
-                    m_creationBase = m_document.Document.Create;
+                m_creationBase = m_document.Document.IsFamilyDocument ? m_document.Document.FamilyCreate : m_document.Document.Create;
 
                 //Pick a face from UI, create a new sketch plane via the face and set it to the current view.
                 var faceRef = m_document.Selection.PickObject(ObjectType.Face,
@@ -179,7 +176,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
                 var faceSketchPlane = CreateSketchPlane(planarFace.FaceNormal, planarFace.Origin);
                 if (faceSketchPlane != null)
                 {
-                    var changeSketchPlane = new Transaction(m_document.Document, "Change Sketch Plane.");
+                    Transaction changeSketchPlane = new(m_document.Document, "Change Sketch Plane.");
                     changeSketchPlane.Start();
                     m_document.Document.ActiveView.SketchPlane = faceSketchPlane;
                     m_document.Document.ActiveView.ShowActiveWorkPlane();
@@ -192,7 +189,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
                 var point = m_document.Selection.PickPoint(snapType, "Please pick a point to place component.");
 
                 // Create a model curve by a circle with picked point as center.
-                var createModelCurve = new Transaction(m_document.Document, "Create a circle.");
+                Transaction createModelCurve = new(m_document.Document, "Create a circle.");
                 createModelCurve.Start();
                 Curve circle = Arc.Create(point, 5, 0, Math.PI * 2, faceSketchPlane.GetPlane().XVec,
                     faceSketchPlane.GetPlane().YVec);
@@ -220,7 +217,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
             var geometryPlane = Plane.CreateByNormalAndOrigin(normal, origin);
 
             // Then create a sketch plane using the Geometry Plane
-            var createSketchPlane = new Transaction(m_document.Document, "Create a sketch plane.");
+            Transaction createSketchPlane = new(m_document.Document, "Create a sketch plane.");
             createSketchPlane.Start();
             var plane = SketchPlane.Create(m_document.Document, geometryPlane);
             createSketchPlane.Commit();
@@ -241,17 +238,15 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         {
             try
             {
-                var manager = new SelectionManager(commandData);
+                SelectionManager manager = new(commandData);
                 var result = DialogResult.None;
-                while (result == DialogResult.None || result == DialogResult.Retry)
+                while (result is DialogResult.None or DialogResult.Retry)
                 {
                     // Picking Objects.
                     if (result == DialogResult.Retry) manager.SelectObjects();
                     // Show the dialog.
-                    using (var selectionForm = new SelectionForm(manager))
-                    {
-                        result = selectionForm.ShowDialog();
-                    }
+                    using SelectionForm selectionForm = new(manager);
+                    result = selectionForm.ShowDialog();
                 }
 
                 return Result.Succeeded;

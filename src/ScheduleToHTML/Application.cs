@@ -12,13 +12,13 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.ScheduleToHTML.CS.Properties;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using Ara3D.RevitSampleBrowser.ScheduleToHTML.CS.Properties;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
 using Size = System.Drawing.Size;
 
 namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
@@ -48,7 +48,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
         {
             var rp = application.CreateRibbonPanel("Schedule To HTML");
 
-            var pbd = new PushButtonData("ScheduleToHTML", "Export to HTML",
+            PushButtonData pbd = new("ScheduleToHTML", "Export to HTML",
                 AddAssemblyPath,
                 typeof(ScheduleHtmlExportCommand).FullName)
             {
@@ -75,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 
         private static BitmapSource GetSmallIcon(Icon icon)
         {
-            var smallIcon = new Icon(icon, new Size(16, 16));
+            Icon smallIcon = new(icon, new Size(16, 16));
             return Imaging.CreateBitmapSourceFromHIcon(
                 smallIcon.Handle,
                 Int32Rect.Empty,

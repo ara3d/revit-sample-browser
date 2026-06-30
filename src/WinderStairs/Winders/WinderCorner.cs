@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
@@ -41,9 +41,9 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 
         public double Distance2 { get; protected set; }
 
-        public XYZ StartPoint => CornerPoint - Direction1 * Distance1;
+        public XYZ StartPoint => CornerPoint - (Direction1 * Distance1);
 
-        public XYZ EndPoint => CornerPoint + Direction2 * Distance2;
+        public XYZ EndPoint => CornerPoint + (Direction2 * Distance2);
 
         public virtual void Move(XYZ vector)
         {

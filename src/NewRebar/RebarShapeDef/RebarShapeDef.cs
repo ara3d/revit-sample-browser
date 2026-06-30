@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
+using System;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
 {
@@ -14,8 +14,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
         public RebarShapeDef(RebarShapeDefinition shapeDef)
         {
             RebarshapeDefinition = shapeDef;
-            Parameters = new List<RebarShapeParameter>();
-            Constraints = new List<ConstraintOnRebarShape>();
+            Parameters = [];
+            Constraints = [];
         }
 
         public RebarShapeDefinition RebarshapeDefinition { get; }
@@ -75,12 +75,17 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
                 throw new Exception("The Rebar shape definition is not completed.");
         }
 
-        public List<Type> AllParameterTypes() => new List<Type>
+        public List<Type> AllParameterTypes()
         {
+            return [
             typeof(RebarShapeParameterDouble),
             typeof(RebarShapeParameterFormula)
-        };
+        ];
+        }
 
-        public virtual List<Type> AllowedConstraintTypes() => new List<Type>();
+        public virtual List<Type> AllowedConstraintTypes()
+        {
+            return [];
+        }
     }
 }

@@ -12,14 +12,14 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.Properties;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
 using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.Properties;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             application.CreateRibbonTab("Create Geometry");
             var rp = application.CreateRibbonPanel("Create Geometry", "Create Geometry using BRepBuilder");
 
-            var pbd1 = new PushButtonData("CreateCube", "Create Cube",
+            PushButtonData pbd1 = new("CreateCube", "Create Cube",
                 AddinAssmeblyPath,
                 "Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.CreateCube")
             {
@@ -63,7 +63,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             };
             _ = rp.AddItem(pbd1) as PushButton;
 
-            var pbd2 = new PushButtonData("CreateNURBS", "Create NURBS Surface",
+            PushButtonData pbd2 = new("CreateNURBS", "Create NURBS Surface",
                 AddinAssmeblyPath,
                 "Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.CreateNURBS")
             {
@@ -72,7 +72,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             };
             _ = rp.AddItem(pbd2) as PushButton;
 
-            var pbd3 = new PushButtonData("CreatePeriodic", "Create Periodic Surface",
+            PushButtonData pbd3 = new("CreatePeriodic", "Create Periodic Surface",
                 AddinAssmeblyPath,
                 "Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.CreatePeriodic")
             {

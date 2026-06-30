@@ -130,8 +130,8 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         private void CalculateEndPoint()
         {
-            m_endPnt.X = m_startPnt.X + m_length * m_normal.X;
-            m_endPnt.Y = m_startPnt.Y + m_length * m_normal.Y;
+            m_endPnt.X = m_startPnt.X + (m_length * m_normal.X);
+            m_endPnt.Y = m_startPnt.Y + (m_length * m_normal.Y);
         }
     }
 }

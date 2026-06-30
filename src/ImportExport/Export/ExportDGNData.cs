@@ -1,30 +1,17 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     public class ExportDgnData : ExportDataWithViews
     {
         private List<string> m_enumLayerMapping;
-
-        private string m_exportFileVersion;
-
-        private List<string> m_exportFileVersions;
-
-        private string m_exportLayerMapping;
-
-        private bool m_hideReferencePlane;
-
-        private bool m_hideScopeBox;
-
-        private bool m_hideUnreferenceViewTags;
-
         private List<string> m_layerMapping;
 
         public ExportDgnData(ExternalCommandData commandData, ExportFormat exportFormat)
@@ -33,47 +20,27 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Initialize();
         }
 
-        public string ExportLayerMapping
-        {
-            get => m_exportLayerMapping;
-            set => m_exportLayerMapping = value;
-        }
+        public string ExportLayerMapping { get; set; }
 
-        public bool HideScopeBox
-        {
-            get => m_hideScopeBox;
-            set => m_hideScopeBox = value;
-        }
+        public bool HideScopeBox { get; set; }
 
-        public bool HideUnreferenceViewTags
-        {
-            get => m_hideUnreferenceViewTags;
-            set => m_hideUnreferenceViewTags = value;
-        }
+        public bool HideUnreferenceViewTags { get; set; }
 
-        public bool HideReferencePlane
-        {
-            get => m_hideReferencePlane;
-            set => m_hideReferencePlane = value;
-        }
+        public bool HideReferencePlane { get; set; }
 
-        public string ExportFileVersion
-        {
-            get => m_exportFileVersion;
-            set => m_exportFileVersion = value;
-        }
+        public string ExportFileVersion { get; set; }
 
-        public ReadOnlyCollection<string> LayerMapping => new ReadOnlyCollection<string>(m_layerMapping);
+        public ReadOnlyCollection<string> LayerMapping => new(m_layerMapping);
 
-        public List<string> ExportFileVersions => m_exportFileVersions;
+        public List<string> ExportFileVersions { get; private set; }
 
-        public ReadOnlyCollection<string> EnumLayerMapping => new ReadOnlyCollection<string>(m_enumLayerMapping);
+        public ReadOnlyCollection<string> EnumLayerMapping => new(m_enumLayerMapping);
 
         private void Initialize()
         {
             //Layer Settings:
-            m_layerMapping = new List<string>();
-            m_enumLayerMapping = new List<string>();
+            m_layerMapping = [];
+            m_enumLayerMapping = [];
             m_layerMapping.Add("AIA - American Institute of Architects standard");
             m_enumLayerMapping.Add("AIA");
             m_layerMapping.Add("ISO13567 - ISO standard 13567");
@@ -84,11 +51,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             m_enumLayerMapping.Add("BS1192");
 
             //Export format:
-            m_exportFileVersions = new List<string>
-            {
+            ExportFileVersions =
+            [
                 "MicroStation V8 Format",
                 "MicroStation V7 Format"
-            };
+            ];
 
             Filter = "Microstation DGN Files |*.dgn";
             Title = "Export DGN";
@@ -98,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
         {
             base.Export();
 
-            ICollection<ElementId> views = new List<ElementId>();
+            ICollection<ElementId> views = [];
             if (CurrentViewOnly)
                 views.Add(ActiveDocument.ActiveView.Id);
             else
@@ -108,22 +75,19 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                 }
 
             //parameter : DWGExportOptions dwgExportOptions
-            var dgnExportOptions = new DGNExportOptions
+            DGNExportOptions dgnExportOptions = new()
             {
                 // default values
                 FileVersion = DGNFileFormat.DGNVersion8
             };
-            m_exportLayerMapping = m_enumLayerMapping[0];
+            ExportLayerMapping = m_enumLayerMapping[0];
 
             // set values from selected options
-            dgnExportOptions.LayerMapping = m_exportLayerMapping;
-            if (m_exportFileVersion == "MicroStation V7 Format")
-                dgnExportOptions.FileVersion = DGNFileFormat.DGNVersion7;
-            else
-                dgnExportOptions.FileVersion = DGNFileFormat.DGNVersion8;
-            dgnExportOptions.HideScopeBox = m_hideScopeBox;
-            dgnExportOptions.HideUnreferenceViewTags = m_hideUnreferenceViewTags;
-            dgnExportOptions.HideReferencePlane = m_hideReferencePlane;
+            dgnExportOptions.LayerMapping = ExportLayerMapping;
+            dgnExportOptions.FileVersion = ExportFileVersion == "MicroStation V7 Format" ? DGNFileFormat.DGNVersion7 : DGNFileFormat.DGNVersion8;
+            dgnExportOptions.HideScopeBox = HideScopeBox;
+            dgnExportOptions.HideUnreferenceViewTags = HideUnreferenceViewTags;
+            dgnExportOptions.HideReferencePlane = HideReferencePlane;
             var mainModule = Process.GetCurrentProcess().MainModule;
             var revitFolder = Path.GetDirectoryName(mainModule.FileName);
             dgnExportOptions.SeedName = Path.Combine(revitFolder, @"ACADInterop\V8-Imperial-Seed3D.dgn");

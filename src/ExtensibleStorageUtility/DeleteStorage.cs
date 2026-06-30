@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System.Collections.Generic;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
 {
     /// <summary>
@@ -25,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
             }
             else
             {
-                var tErase = new Transaction(document, "Erase EStorage");
+                Transaction tErase = new(document, "Erase EStorage");
                 tErase.Start();
                 var schemas = Schema.ListSchemas();
                 foreach (var schema in schemas)

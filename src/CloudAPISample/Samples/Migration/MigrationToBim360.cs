@@ -12,6 +12,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.View;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,10 +23,6 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Windows;
-using Ara3D.RevitSampleBrowser.CloudAPISample.CS.View;
-using Autodesk.Revit.DB;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 {
     /// <summary>
@@ -64,7 +63,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
             var models = Directory.GetFiles(directory, "*.rvt", SearchOption.AllDirectories);
             var count = 0;
 
-            var ops = new OpenOptions
+            OpenOptions ops = new()
             {
                 OpenForeignOption = OpenForeignOption.DoNotOpen,
                 DetachFromCentralOption = DetachFromCentralOption.DetachAndPreserveWorksets
@@ -72,7 +71,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 
             // Open all documents and analyze if document has links. 
             // If so, save the relationship info into "mapLocalModelPathToLinksName"
-            var mapLocalModelPathToLinksName = new Dictionary<string, List<string>>();
+            Dictionary<string, List<string>> mapLocalModelPathToLinksName = [];
             foreach (var model in models)
             {
                 var name = Path.GetFileName(model);
@@ -84,7 +83,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
                 try
                 {
                     var doc = Application.Application.OpenDocumentFile(modelpath, ops);
-                    var links = new List<string>();
+                    List<string> links = [];
                     foreach (var linkInstance in doc.GetElements<RevitLinkType>())
                     {
                         links.Add(linkInstance.Name);
@@ -113,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 
             // Begin Uploading
             count = 0;
-            var mapModelsNameToGuid = new Dictionary<string, string>();
+            Dictionary<string, string> mapModelsNameToGuid = [];
             foreach (var model in models)
             {
                 var name = Path.GetFileName(model);
@@ -159,9 +158,9 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 
             view.UpdateReloadingProgress("Ready to start.", 2);
 
-            var ops = new OpenOptions();
-            var transOp = new TransactWithCentralOptions();
-            var swcOptions = new SynchronizeWithCentralOptions();
+            OpenOptions ops = new();
+            TransactWithCentralOptions transOp = new();
+            SynchronizeWithCentralOptions swcOptions = new();
             var count = 0;
 
             // Read mapping info

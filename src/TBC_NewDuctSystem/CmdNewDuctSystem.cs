@@ -34,10 +34,10 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("New Duct System");
 
-            var connectorSet = new ConnectorSet();
+            ConnectorSet connectorSet = new();
 
             Connector baseConnector = null;
 
@@ -63,30 +63,30 @@ namespace BuildingCoder
                     switch (family.FamilyCategory.Name)
                     {
                         case "Mechanical Equipment":
-                        {
-                            // find the "Out" and "SupplyAir" connectors
-                            // on the base equipment
-
-                            if (null != fi.MEPModel)
                             {
-                                csi = fi.MEPModel.ConnectorManager
-                                    .Connectors.ForwardIterator();
+                                // find the "Out" and "SupplyAir" connectors
+                                // on the base equipment
 
-                                while (csi.MoveNext())
+                                if (null != fi.MEPModel)
                                 {
-                                    var conn = csi.Current as Connector;
+                                    csi = fi.MEPModel.ConnectorManager
+                                        .Connectors.ForwardIterator();
 
-                                    if (conn.Direction == FlowDirectionType.Out
-                                        && conn.DuctSystemType == DuctSystemType.SupplyAir)
+                                    while (csi.MoveNext())
                                     {
-                                        baseConnector = conn;
-                                        break;
+                                        var conn = csi.Current as Connector;
+
+                                        if (conn.Direction == FlowDirectionType.Out
+                                            && conn.DuctSystemType == DuctSystemType.SupplyAir)
+                                        {
+                                            baseConnector = conn;
+                                            break;
+                                        }
                                     }
                                 }
-                            }
 
-                            break;
-                        }
+                                break;
+                            }
                         case "Air Terminals":
                             // add selected Air Terminals to
                             // connector set for new mechanical system

@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
@@ -24,19 +25,19 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 CreateAnalyticalMember.CreateMember(document);
 
                 // Move the Analytical Panel using SketchEditScope 
-                var sketchEditScope = new SketchEditScope(document, "Move panel with SketchEditScope");
+                SketchEditScope sketchEditScope = new(document, "Move panel with SketchEditScope");
                 sketchEditScope.StartWithNewSketch(analyticalPanel.Id);
 
                 // Start transaction
-                using (var transaction = new Transaction(document, "Offset panel"))
+                using (Transaction transaction = new(document, "Offset panel"))
                 {
                     transaction.Start();
 
                     // Get Sketch
                     if (document.GetElement(analyticalPanel.SketchId) is Sketch sketch)
                         foreach (CurveArray curveArray in sketch.Profile)
-                            // Iterate through the Curves forming the Analytical Panel and 
-                            // create new ones with a slight offset from the original ones before deleting them
+                        // Iterate through the Curves forming the Analytical Panel and 
+                        // create new ones with a slight offset from the original ones before deleting them
                         {
                             foreach (Curve curve in curveArray)
                             {
@@ -45,9 +46,9 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                                 {
                                     // Create new offseted Start and End points from the original line coordinates
                                     var offset = 5.0;
-                                    var newLineStart = new XYZ(line.GetEndPoint(0).X + offset,
+                                    XYZ newLineStart = new(line.GetEndPoint(0).X + offset,
                                         line.GetEndPoint(0).Y + offset, 0);
-                                    var newLineEnd = new XYZ(line.GetEndPoint(1).X + offset, line.GetEndPoint(1).Y + offset,
+                                    XYZ newLineEnd = new(line.GetEndPoint(1).X + offset, line.GetEndPoint(1).Y + offset,
                                         0);
 
                                     Curve offsetedLine = Line.CreateBound(newLineStart, newLineEnd);

@@ -13,11 +13,12 @@
 
 #region Namespaces
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion // Namespaces
 
@@ -35,7 +36,7 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var floors = new List<Element>();
+            List<Element> floors = new();
             if (!Util.GetSelectedElementsOrAll(
                 floors, uidoc, typeof(Floor)))
             {
@@ -46,7 +47,7 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            var faces = new List<Face>();
+            List<Face> faces = new();
             var opt = app.Application.Create.NewGeometryOptions();
 
             foreach (Floor floor in floors)
@@ -65,9 +66,9 @@ namespace BuildingCoder
                 "{0} side face{1} found.",
                 n, Util.PluralSuffix(n));
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Draw Face Triangle Normals");
-            var creator = new Creator(doc);
+            Creator creator = new(doc);
             foreach (var f in faces) creator.DrawFaceTriangleNormals(f);
             t.Commit();
 

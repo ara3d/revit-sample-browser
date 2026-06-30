@@ -8,16 +8,27 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents
 {
     public static class ElementIdExtensions
     {
-        public static long Value(this ElementId id) => id.Value;
+        public static long Value(this ElementId id)
+        {
+            return id.Value;
+        }
 
-        public static bool IsInvalid(this ElementId id) =>
-            ElementId.InvalidElementId == id;
+        public static bool IsInvalid(this ElementId id)
+        {
+            return ElementId.InvalidElementId == id;
+        }
 
-        public static bool IsValid(this ElementId id) => !id.IsInvalid();
+        public static bool IsValid(this ElementId id)
+        {
+            return !id.IsInvalid();
+        }
     }
 
     public static class ElementIdFactory
     {
-        public static ElementId Create(long id) => new ElementId(id);
+        public static ElementId Create(long id)
+        {
+            return new ElementId(id);
+        }
     }
 }

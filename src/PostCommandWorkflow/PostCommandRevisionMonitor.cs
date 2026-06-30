@@ -83,7 +83,7 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
                 if (revisionCount <= m_storedRevisionCount)
                 {
                     // Show dialog with explanation and options
-                    var td = new TaskDialog("Revisions not created.")
+                    TaskDialog td = new("Revisions not created.")
                     {
                         MainIcon = TaskDialogIcon.TaskDialogIconWarning,
                         MainInstruction =
@@ -102,27 +102,27 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
                     switch (result)
                     {
                         case TaskDialogResult.CommandLink1: // Add revision now
-                        {
-                            // cancel first save
-                            args.Cancel();
+                            {
+                                // cancel first save
+                                args.Cancel();
 
-                            // add event to hide the default "Document not saved" dialog
-                            uiApp.DialogBoxShowing += HideDocumentNotSaved;
+                                // add event to hide the default "Document not saved" dialog
+                                uiApp.DialogBoxShowing += HideDocumentNotSaved;
 
-                            // post command for editing revisions
-                            PromptToEditRevisionsAndResave(uiApp);
-                            break;
-                        }
+                                // post command for editing revisions
+                                PromptToEditRevisionsAndResave(uiApp);
+                                break;
+                            }
                         case TaskDialogResult.CommandLink2: // Cancel save
-                        {
-                            args.Cancel();
-                            break;
-                        }
+                            {
+                                args.Cancel();
+                                break;
+                            }
                         case TaskDialogResult.CommandLink3: // Proceed with save
-                        {
-                            // do nothing
-                            break;
-                        }
+                            {
+                                // do nothing
+                                break;
+                            }
                     }
                 }
                 else
@@ -165,7 +165,7 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
 
             // Setup event to be notified when revisions command starts (this is a good place to raise this external event)
             var id = RevitCommandId.LookupPostableCommandId(PostableCommand.SheetIssuesOrRevisions);
-            if (m_binding == null) m_binding = application.CreateAddInCommandBinding(id);
+            m_binding ??= application.CreateAddInCommandBinding(id);
             m_binding.BeforeExecuted += ReactToRevisionsAndSchedulesCommand;
 
             // Post the revision editing command
@@ -198,7 +198,7 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
         private static int GetRevisionCount(Document doc)
         {
             // Find revision objects
-            var collector = new FilteredElementCollector(doc);
+            FilteredElementCollector collector = new(doc);
             collector.OfCategory(BuiltInCategory.OST_Revisions);
             return collector.ToElementIds().Count;
         }

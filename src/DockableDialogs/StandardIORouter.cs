@@ -10,7 +10,10 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
     {
         private readonly TextBox m_outputTextBox;
 
-        public StandardIoRouter(TextBox output) => m_outputTextBox = output;
+        public StandardIoRouter(TextBox output)
+        {
+            m_outputTextBox = output;
+        }
 
         public override Encoding Encoding => Encoding.UTF8;
 

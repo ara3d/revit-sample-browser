@@ -1,17 +1,16 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Autodesk.Revit.Creation;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using Autodesk.Revit.Creation;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.Truss.CS
 {
     /// <summary>
@@ -67,7 +66,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             m_topChord = new LineTool();
             m_bottomChord = new LineTool();
             m_truss = truss;
-            m_graphicsPaths = new ArrayList();
+            m_graphicsPaths = [];
             GetTrussGeometryInfo();
         }
 
@@ -95,7 +94,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
 
         public List<XYZ> GetTrussPoints()
         {
-            var xyzArray = new List<XYZ>();
+            List<XYZ> xyzArray = [];
             try
             {
                 IEnumerator iter = m_truss.Members.GetEnumerator();
@@ -132,7 +131,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             m_endLocation = trussLocation.GetEndPoint(1);
             //use baseline of truss as the X axis
             var diff = m_endLocation - m_startLocation;
-            var xAxis = new Vector4(new XYZ(diff.X, diff.Y, diff.Z));
+            Vector4 xAxis = new(new XYZ(diff.X, diff.Y, diff.Z));
             xAxis.Normalize();
             //get Z Axis
             var zAxis = Vector4.CrossProduct(xAxis, new Vector4(new XYZ(0, 0, 1)));
@@ -160,7 +159,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             var bounds = GetBoundsPoints();
             var min = bounds[0];
             var max = bounds[1];
-            var center = new XYZ((min.X + max.X) / 2, (min.Y + max.Y) / 2, 0);
+            XYZ center = new((min.X + max.X) / 2, (min.Y + max.Y) / 2, 0);
             return new Matrix4(new Vector4((float)center.X, (float)center.Y, 0));
         }
 
@@ -200,7 +199,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             //get the max and min point on the face
             foreach (var point in m_points)
             {
-                var v = new Vector4(point);
+                Vector4 v = new(point);
                 var v1 = inverseMatrix.Transform(v);
 
                 if (bFirstPoint)
@@ -224,7 +223,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             //return an array with max and min value of all points
             var resultPoints = new XYZ[2]
             {
-                new XYZ(minX, minY, 0), new XYZ(maxX, maxY, 0)
+                new(minX, minY, 0), new(maxX, maxY, 0)
             };
             return resultPoints;
         }
@@ -237,8 +236,8 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
                 var point1 = m_points[i];
                 var point2 = m_points[i + 1];
 
-                var v1 = new Vector4(point1);
-                var v2 = new Vector4(point2);
+                Vector4 v1 = new(point1);
+                Vector4 v2 = new(point2);
 
                 v1 = m_transformMatrix.Transform(v1);
                 v2 = m_transformMatrix.Transform(v2);
@@ -301,11 +300,11 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
                 var point = (Point)chord.Points[i];
                 var point2 = (Point)chord.Points[i + 1];
 
-                var xyz = new XYZ(point.X, point.Y, 0);
-                var xyz2 = new XYZ(point2.X, point2.Y, 0);
+                XYZ xyz = new(point.X, point.Y, 0);
+                XYZ xyz2 = new(point2.X, point2.Y, 0);
 
-                var v1 = new Vector4(xyz);
-                var v2 = new Vector4(xyz2);
+                Vector4 v1 = new(xyz);
+                Vector4 v2 = new(xyz2);
 
                 v1 = m_restoreMatrix.Transform(v1);
                 v2 = m_restoreMatrix.Transform(v2);
@@ -393,13 +392,13 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
                 var point1 = m_points[i];
                 var point2 = m_points[i + 1];
 
-                var v1 = new Vector4(point1);
-                var v2 = new Vector4(point2);
+                Vector4 v1 = new(point1);
+                Vector4 v2 = new(point2);
 
                 v1 = m_transformMatrix.Transform(v1);
                 v2 = m_transformMatrix.Transform(v2);
 
-                var path = new GraphicsPath();
+                GraphicsPath path = new();
                 path.AddLine(new Point((int)v1.X, (int)v1.Y), new Point((int)v2.X, (int)v2.Y));
                 m_graphicsPaths.Add(path);
             }
@@ -407,7 +406,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
 
         public int SelectTrussMember(int x, int y)
         {
-            var point = new Point(x, y);
+            Point point = new(x, y);
             for (var i = 0; i < m_graphicsPaths.Count; i++)
             {
                 var path = (GraphicsPath)m_graphicsPaths[i];
@@ -424,7 +423,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
 
         public void DrawSelectedLineRed(Graphics graphics)
         {
-            var redPen = new Pen(Color.Red, (float)2.0);
+            Pen redPen = new(Color.Red, (float)2.0);
             //draw the selected beam as red line
             if (m_selectMemberIndex != -1)
             {

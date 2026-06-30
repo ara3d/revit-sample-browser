@@ -12,14 +12,12 @@
 
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using System.Collections.Generic;
 
 #endregion // Namespaces
 
@@ -47,7 +45,7 @@ namespace BuildingCoder
             var app = uiapp.Application;
             var doc = uidoc.Document;
 
-            var walls = new List<Element>();
+            List<Element> walls = new();
 
             //XYZ p;
             //List<XYZ> wall_start_points
@@ -68,10 +66,10 @@ namespace BuildingCoder
             }
 
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             tx.Start("Create model curve copies of analytical model curves");
 
-            var creator = new Creator(doc);
+            Creator creator = new(doc);
 
             foreach (Wall wall in walls)
             {
@@ -101,7 +99,7 @@ namespace BuildingCoder
                 }
 #endif // USING_ANALYTICAL_MODEL_BEFORE_REVIT_2023
 
-                ElementId id = Util.GetAnalyticalElementId(wall);
+                var id = Util.GetAnalyticalElementId(wall);
 
             }
 

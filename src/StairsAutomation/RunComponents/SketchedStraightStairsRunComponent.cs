@@ -1,10 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
@@ -52,23 +52,16 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 
         public double RunElevation { get; }
 
-        public double TopElevation
-        {
-            get
-            {
-                if (m_stairsRun == null) throw new NotSupportedException("Stairs run hasn't been constructed yet.");
-                return m_stairsRun.TopElevation;
-            }
-        }
+        public double TopElevation => m_stairsRun == null ? throw new NotSupportedException("Stairs run hasn't been constructed yet.") : m_stairsRun.TopElevation;
 
         public IList<Curve> GetStairsPath()
         {
             // Proceed up the middle of the run to the run extent
-            var start = new XYZ(m_width / 2.0, 0, RunElevation);
+            XYZ start = new(m_width / 2.0, 0, RunElevation);
             var end = start + m_runExtent;
             var curve1 = Line.CreateBound(start, end);
 
-            var ret = new List<Curve> { curve1 };
+            List<Curve> ret = [curve1];
             return Transform(ret);
         }
 
@@ -120,11 +113,11 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
         private IList<Curve> GenerateUntransformedRunBoundaryCurves()
         {
             // Start at 0, 0 and extend to the run extent
-            var start = new XYZ(0, 0, RunElevation);
+            XYZ start = new(0, 0, RunElevation);
             var end = start + m_runExtent;
             var curve1 = Line.CreateBound(start, end);
 
-            var ret = new List<Curve> { curve1 };
+            List<Curve> ret = [curve1];
 
             // Start offset along the width and extend to the run extent
             start = new XYZ(m_width, 0, RunElevation);
@@ -137,12 +130,12 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 
         private IList<Curve> GenerateRunRiserCurves()
         {
-            var ret = new List<Curve>();
+            List<Curve> ret = [];
 
             // Generate all curves but the last by incrementing along the tread depth
             for (var i = 0; i < m_riserNumber - 1; i++)
             {
-                var start = new XYZ(0, i * m_desiredTreadDepth, RunElevation);
+                XYZ start = new(0, i * m_desiredTreadDepth, RunElevation);
                 var end = start + m_widthOffset;
 
                 ret.Add(Line.CreateBound(start, end));

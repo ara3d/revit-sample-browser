@@ -1,13 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.Exceptions;
+using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.Exceptions;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.DragAndDrop
@@ -30,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.DragAndDrop
 
         public static FurnitureFamilyDragAndDropForm GetTheForm(Document document)
         {
-            if (_sForm == null) _sForm = new FurnitureFamilyDragAndDropForm(document);
+            _sForm ??= new FurnitureFamilyDragAndDropForm(document);
             _sForm.UpdateLoadedFamilies();
             return _sForm;
         }

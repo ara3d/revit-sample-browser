@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.PointClouds;
 using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.PointClouds;
 
 namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
@@ -141,7 +141,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         {
             if (File.Exists(m_fileName))
             {
-                var reader = new StreamReader(m_fileName);
+                StreamReader reader = new(m_fileName);
                 var xmlDoc = XDocument.Load(new XmlTextReader(reader));
                 reader.Close();
 

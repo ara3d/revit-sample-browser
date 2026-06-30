@@ -10,15 +10,13 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Windows.Media.Imaging;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility;
 using Ara3D.RevitSampleBrowser.DockableDialogs.CS.TopLevelCommands;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
+using System.Windows.Media.Imaging;
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
 {
     [Transaction(TransactionMode.Manual)]
@@ -47,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
 
             panel.AddSeparator();
 
-            var pushButtonRegisterPageData = new PushButtonData(SampleBrowserUtils.RegisterPage, SampleBrowserUtils.RegisterPage,
+            PushButtonData pushButtonRegisterPageData = new(SampleBrowserUtils.RegisterPage, SampleBrowserUtils.RegisterPage,
                 AssemblyPathHelper.GetAssemblyFullName(), typeof(ExternalCommandRegisterPage).FullName)
             {
                 LargeImage = new BitmapImage(new Uri($"{AssemblyPathHelper.GetApplicationResourcesPath()}Register.png"))
@@ -55,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
             var pushButtonRegisterPage = panel.AddItem(pushButtonRegisterPageData) as PushButton;
             pushButtonRegisterPage.AvailabilityClassName = typeof(ExternalCommandRegisterPage).FullName;
 
-            var pushButtonShowPageData = new PushButtonData(DialogHelper.ShowPage, DialogHelper.ShowPage,
+            PushButtonData pushButtonShowPageData = new(DialogHelper.ShowPage, DialogHelper.ShowPage,
                 AssemblyPathHelper.GetAssemblyFullName(), typeof(ExternalCommandShowPage).FullName)
             {
                 LargeImage = new BitmapImage(new Uri($"{AssemblyPathHelper.GetApplicationResourcesPath()}Show.png"))
@@ -63,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
             var pushButtonShowPage = panel.AddItem(pushButtonShowPageData) as PushButton;
             pushButtonShowPage.AvailabilityClassName = typeof(ExternalCommandShowPage).FullName;
 
-            var pushButtonHidePageData = new PushButtonData(SampleBrowserUtils.HidePage, SampleBrowserUtils.HidePage,
+            PushButtonData pushButtonHidePageData = new(SampleBrowserUtils.HidePage, SampleBrowserUtils.HidePage,
                 AssemblyPathHelper.GetAssemblyFullName(), typeof(ExternalCommandHidePage).FullName)
             {
                 LargeImage = new BitmapImage(new Uri($"{AssemblyPathHelper.GetApplicationResourcesPath()}Hide.png"))
@@ -124,9 +122,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
 
         public MainPage.MainPage GetMainWindow()
         {
-            if (!IsMainWindowAvailable())
-                throw new InvalidOperationException("Main window not constructed.");
-            return m_mainPage;
+            return !IsMainWindowAvailable() ? throw new InvalidOperationException("Main window not constructed.") : m_mainPage;
         }
 
         public ApiUtility GetDockableApiUtility()

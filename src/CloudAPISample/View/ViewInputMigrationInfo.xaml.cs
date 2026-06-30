@@ -12,13 +12,13 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration;
+using Microsoft.Win32;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Windows;
-using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration;
-using Microsoft.Win32;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 {
@@ -44,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 
         private void OnBtnImport_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog { Filter = "Json file (*.json)|*.json|All files (*.*)|*.*" };
+            OpenFileDialog openFileDialog = new() { Filter = "Json file (*.json)|*.json|All files (*.*)|*.*" };
             if (openFileDialog.ShowDialog() == true)
             {
                 var model = ((MigrationToBim360)DataContext).Model;
@@ -63,11 +63,11 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 
         private void OnBtnExport_Click(object sender, RoutedEventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog { Filter = "Json file (*.json)|*.json" };
+            SaveFileDialog saveFileDialog = new() { Filter = "Json file (*.json)|*.json" };
             if (saveFileDialog.ShowDialog() == true)
             {
                 var model = ((MigrationToBim360)DataContext).Model;
-                var info = new SerializableProjectInfo
+                SerializableProjectInfo info = new()
                 {
                     AccountGuid = model.AccountGuid,
                     ProjectGuid = model.ProjectGuid,

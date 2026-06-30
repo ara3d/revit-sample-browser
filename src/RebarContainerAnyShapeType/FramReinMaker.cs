@@ -1,11 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 {
@@ -24,27 +24,27 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
     /// </summary>
     public class FramReinMaker : IFrameReinMaker
     {
-        protected List<RebarHookType> m_hookTypes = new List<RebarHookType>();
+        protected List<RebarHookType> m_hookTypes = [];
 
         protected readonly FamilyInstance HostObject;
 
-        protected List<RebarBarType> RebarBottomTypes = new List<RebarBarType>();
-        protected List<RebarBarType> RebarTopCenterTypes = new List<RebarBarType>();
+        protected List<RebarBarType> RebarBottomTypes = [];
+        protected List<RebarBarType> RebarTopCenterTypes = [];
 
-        protected List<RebarBarType> RebarTopEndTypes = new List<RebarBarType>();
-        protected List<RebarBarType> RebarTransverseCenterTypes = new List<RebarBarType>();
-        protected List<RebarBarType> RebarTransverseEndTypes = new List<RebarBarType>();
-        protected List<RebarBarType> RebarTransverseTypes = new List<RebarBarType>();
+        protected List<RebarBarType> RebarTopEndTypes = [];
+        protected List<RebarBarType> RebarTransverseCenterTypes = [];
+        protected List<RebarBarType> RebarTransverseEndTypes = [];
+        protected List<RebarBarType> RebarTransverseTypes = [];
 
-        protected List<RebarBarType> RebarVerticalTypes = new List<RebarBarType>();
+        protected List<RebarBarType> RebarVerticalTypes = [];
 
         /// <summary>
         ///     the API create handle
         /// </summary>
         protected readonly Document RevitDoc;
 
-        protected List<RebarHookType> m_topHookTypes = new List<RebarHookType>();
-        protected List<RebarHookType> TransverseHookTypes = new List<RebarHookType>();
+        protected List<RebarHookType> m_topHookTypes = [];
+        protected List<RebarHookType> TransverseHookTypes = [];
 
         protected FramReinMaker(ExternalCommandData commandData, FamilyInstance hostObject)
         {
@@ -153,23 +153,23 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         private bool GetHookTypes(ExternalCommandData commandData)
         {
             // Initialize the m_hookTypes which used to store all hook types.
-            var filteredElementCollector =
-                new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document);
+            FilteredElementCollector filteredElementCollector =
+                new(commandData.Application.ActiveUIDocument.Document);
             filteredElementCollector.OfClass(typeof(RebarHookType));
             m_hookTypes = filteredElementCollector.Cast<RebarHookType>().ToList();
             m_topHookTypes = filteredElementCollector.Cast<RebarHookType>().ToList();
             TransverseHookTypes = filteredElementCollector.Cast<RebarHookType>().ToList();
 
             // If no hook types in Revit return false, otherwise true
-            return 0 == m_hookTypes.Count ? false : true;
+            return 0 != m_hookTypes.Count;
         }
 
         private bool GetRebarTypes(ExternalCommandData commandData)
         {
             // Initialize the List<RebarBarType> which used to store all reinforcement bar types.
             // Get all reinforcement bar types in Revit and store them in proper List<RebarBarType>
-            var filteredElementCollector =
-                new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document);
+            FilteredElementCollector filteredElementCollector =
+                new(commandData.Application.ActiveUIDocument.Document);
             filteredElementCollector.OfClass(typeof(RebarBarType));
             RebarVerticalTypes = filteredElementCollector.Cast<RebarBarType>().ToList();
             RebarTransverseCenterTypes = filteredElementCollector.Cast<RebarBarType>().ToList();
@@ -181,7 +181,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             RebarTransverseTypes = filteredElementCollector.Cast<RebarBarType>().ToList();
 
             // If no reinforcement bar types in Revit return false, otherwise true
-            return 0 == RebarVerticalTypes.Count ? false : true;
+            return 0 != RebarVerticalTypes.Count;
         }
     }
 }

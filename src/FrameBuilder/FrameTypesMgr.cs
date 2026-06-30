@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
@@ -15,8 +15,8 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
         public FrameTypesMgr(ExternalCommandData commandData)
         {
             CommandData = commandData;
-            m_symbolMaps = new Dictionary<string, FamilySymbol>();
-            m_symbols = new List<FamilySymbol>();
+            m_symbolMaps = [];
+            m_symbols = [];
         }
 
         private FrameTypesMgr()
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 
         public int Size => m_symbolMaps.Count;
 
-        public ReadOnlyCollection<FamilySymbol> FramingSymbols => new ReadOnlyCollection<FamilySymbol>(m_symbols);
+        public ReadOnlyCollection<FamilySymbol> FramingSymbols => new(m_symbols);
 
         public bool AddSymbol(FamilySymbol framingSymbol)
         {

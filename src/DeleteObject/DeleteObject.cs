@@ -16,10 +16,10 @@ namespace Ara3D.RevitSampleBrowser.DeleteObject.CS
             ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-            var trans = new Transaction(doc, "Ara3D.RevitSampleBrowser.DeleteObject");
+            Transaction trans = new(doc, "Ara3D.RevitSampleBrowser.DeleteObject");
             trans.Start();
 
-            var collection = new ElementSet();
+            ElementSet collection = new();
             foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
                 collection.Insert(doc.GetElement(elementId));
 

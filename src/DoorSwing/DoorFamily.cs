@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
 
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
@@ -19,7 +19,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         private readonly Family m_family;
 
         // the geometry of one of this family's door which neither flipped nor mirrored.
-        private DoorGeometry m_geometry;
 
         // one door instance of this family.
         private readonly FamilyInstance m_oneInstance;
@@ -43,7 +42,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                     var paramValue = DoorSwingResource.Undefined;
 
                     // get current opening value.  
-                    var fss = new List<FamilySymbol>();
+                    List<FamilySymbol> fss = new();
                     foreach (var elementId in m_family.GetFamilySymbolIds())
                     {
                         fss.Add((FamilySymbol)m_app.ActiveUIDocument.Document.GetElement(elementId));
@@ -63,15 +62,14 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             set => m_basalOpeningValue = value;
         }
 
-        public DoorGeometry Geometry =>
-            m_geometry ?? (m_geometry =
+        public DoorGeometry Geometry => field ??=
                 // create one instance of DoorFamilyGeometry class.
-                new DoorGeometry(m_oneInstance));
+                new DoorGeometry(m_oneInstance);
 
         public void UpdateOpeningFeature()
         {
             // get current Left/Right feature's value of this door family.
-            var ffs = new List<FamilySymbol>();
+            List<FamilySymbol> ffs = new();
             foreach (var elementId in m_family.GetFamilySymbolIds())
             {
                 ffs.Add((FamilySymbol)m_app.ActiveUIDocument.Document.GetElement(elementId));
@@ -109,7 +107,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             doc.Regenerate();
 
             // door symbol.
-            var ffs = new List<FamilySymbol>();
+            List<FamilySymbol> ffs = new();
             foreach (var elementId in m_family.GetFamilySymbolIds())
             {
                 ffs.Add((FamilySymbol)m_app.ActiveUIDocument.Document.GetElement(elementId));

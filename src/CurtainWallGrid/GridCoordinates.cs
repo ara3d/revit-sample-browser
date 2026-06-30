@@ -1,13 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Drawing;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     public class GridCoordinates
@@ -103,7 +101,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             //translate the origin to bound center
             var min = m_boundPoints[0];
             var max = m_boundPoints[1];
-            var center = new PointF((min.X + max.X) / 2, (min.Y + max.Y) / 2);
+            PointF center = new((min.X + max.X) / 2, (min.Y + max.Y) / 2);
             return new Matrix4(new Vector4(center.X, center.Y, 0));
         }
 
@@ -113,11 +111,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var inverseMatrix = matrix.Inverse();
             float minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
-            var resultPoints = new List<PointF>();
+            List<PointF> resultPoints = [];
 
             foreach (var point in Drawing.Geometry.GridVertexesXyz)
             {
-                var v = new Vector4(point);
+                Vector4 v = new(point);
                 var v1 = inverseMatrix.Transform(v);
 
                 if (bFirstPoint)
@@ -148,14 +146,14 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var startXyz = m_myDocument.WallGeometry.StartXyz;
             var endXyz = m_myDocument.WallGeometry.EndXyz;
             var sub = endXyz - startXyz;
-            var xAxis = new Vector4(new XYZ(sub.X, sub.Y, sub.Z));
+            Vector4 xAxis = new(new XYZ(sub.X, sub.Y, sub.Z));
             xAxis.Normalize();
             //because in the windows UI, Y axis is downward
-            var yAxis = new Vector4(new XYZ(0, 0, -1));
+            Vector4 yAxis = new(new XYZ(0, 0, -1));
             yAxis.Normalize();
             var zAxis = Vector4.CrossProduct(xAxis, yAxis);
             zAxis.Normalize();
-            var origin = new Vector4(Drawing.Geometry.GridVertexesXyz[0]);
+            Vector4 origin = new(Drawing.Geometry.GridVertexesXyz[0]);
 
             return new Matrix4(xAxis, yAxis, zAxis, origin);
         }

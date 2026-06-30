@@ -1,6 +1,6 @@
+using Autodesk.Revit.DB;
 using System;
 using System.Linq;
-using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {

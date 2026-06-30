@@ -3,12 +3,12 @@
 // Adapted from CableTraySample by Gavin_WS / Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/CableTraySample
 
-using System;
-using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
+using System;
+using System.Diagnostics;
 
 namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
 {
@@ -30,18 +30,18 @@ namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
 
-                using var transaction = new Transaction(doc, "Cable tray elbow fitting");
+                using Transaction transaction = new(doc, "Cable tray elbow fitting");
                 transaction.Start();
 
                 var idType = Util.FindCableTrayTypeId(doc, "Default");
                 var idLevel = Util.FindLevelId(doc, "Level 1");
 
-                var start1 = new XYZ(-30.498257567, 38.420015690, 10.058014598);
-                var end1 = new XYZ(-20.435555001, 30.837225417, 10.058014598);
+                XYZ start1 = new(-30.498257567, 38.420015690, 10.058014598);
+                XYZ end1 = new(-20.435555001, 30.837225417, 10.058014598);
                 var tray1 = CableTray.Create(doc, idType, start1, end1, idLevel);
 
-                var start2 = new XYZ(-20.435555001, 30.837225417, 10.058014598);
-                var end2 = new XYZ(-20.435555001, 30.837225417, 13.338854493);
+                XYZ start2 = new(-20.435555001, 30.837225417, 10.058014598);
+                XYZ end2 = new(-20.435555001, 30.837225417, 13.338854493);
                 var tray2 = CableTray.Create(doc, idType, start2, end2, idLevel);
 
                 Connector c1end = null;

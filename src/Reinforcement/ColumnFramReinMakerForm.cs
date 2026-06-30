@@ -1,9 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 {

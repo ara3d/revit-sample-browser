@@ -1,12 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-
-using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
     /// <summary>
@@ -19,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         private Matrix4 m_scaleMatrix; //save the matrix use to scale
         private readonly Matrix4 m_to2DMatrix; //save the matrix use to transform 3D to 2D
         private Tool m_tool; //current using tool
-        private readonly Queue<Tool> m_tools = new Queue<Tool>(); //all tool can use in pictureBox       
+        private readonly Queue<Tool> m_tools = new(); //all tool can use in pictureBox       
 
         public NewOpeningsForm()
         {
@@ -58,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
         private void TransFormPoints(Point[] pts)
         {
-            var matrix = new Matrix(
+            Matrix matrix = new(
                 1, 0, 0, 1, openingPictureBox.Width / 2, openingPictureBox.Height / 2);
             matrix.Invert();
             matrix.TransformPoints(pts);
@@ -66,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
         private List<Vector4> GenerateCircle4Point(List<Point> points)
         {
-            var rotation = new Matrix();
+            Matrix rotation = new();
 
             //get the circle center and bound point
             var center = points[0];
@@ -91,14 +90,14 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         /// <param name="ps">contain the points to be transform</param>
         private List<Vector4> TransForm2DTo3D(Point[] ps)
         {
-            var result = new List<Vector4>();
+            List<Vector4> result = [];
             TransFormPoints(ps);
             var transFormMatrix = Matrix4.Multiply(
                 m_scaleMatrix.Inverse(), m_moveToCenterMatrix);
             transFormMatrix = Matrix4.Multiply(transFormMatrix, m_to2DMatrix);
             foreach (var point in ps)
             {
-                var v = new Vector4(point.X, point.Y, 0);
+                Vector4 v = new(point.X, point.Y, 0);
                 v = transFormMatrix.TransForm(v);
                 result.Add(v);
             }
@@ -138,15 +137,15 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
                             ps3D = GenerateCircle4Point(curve);
                             break;
                         case ToolType.Rectangle:
-                        {
-                            var ps = new Point[4]
                             {
-                                curve[0], new Point(curve[0].X, curve[1].Y),
-                                curve[1], new Point(curve[1].X, curve[0].Y)
+                                var ps = new Point[4]
+                            {
+                                curve[0], new(curve[0].X, curve[1].Y),
+                                curve[1], new(curve[1].X, curve[0].Y)
                             };
-                            ps3D = TransForm2DTo3D(ps);
-                            break;
-                        }
+                                ps3D = TransForm2DTo3D(ps);
+                                break;
+                            }
                         default:
                             ps3D = TransForm2DTo3D(curve.ToArray());
                             break;
@@ -182,7 +181,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
                 1, 0, 0, 1, size.Width / 2, size.Height / 2);
 
             //draw profile
-            var scaleSize = new Size((int)(0.85 * size.Width), (int)(0.85 * size.Height));
+            Size scaleSize = new((int)(0.85 * size.Width), (int)(0.85 * size.Height));
             m_scaleMatrix = ComputerScaleMatrix(scaleSize);
             var trans = Comuter3DTo2DMatrix();
             m_profile.Draw2D(e.Graphics, Pens.Blue, trans);
@@ -194,25 +193,25 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             {
                 case MouseButtons.Left:
                 case MouseButtons.Right:
-                {
-                    var g = openingPictureBox.CreateGraphics();
+                    {
+                        var g = openingPictureBox.CreateGraphics();
 
-                    m_tool.OnMouseDown(g, e);
-                    m_tool.OnRightMouseClick(g, e);
-                    break;
-                }
+                        m_tool.OnMouseDown(g, e);
+                        m_tool.OnRightMouseClick(g, e);
+                        break;
+                    }
                 case MouseButtons.Middle:
-                {
-                    m_tool.OnMidMouseDown(null, null);
-                    m_tool = m_tools.Peek();
-                    m_tools.Enqueue(m_tool);
-                    m_tools.Dequeue();
-                    var graphic = openingPictureBox.CreateGraphics();
-                    graphic.DrawString(m_tool.ToolType.ToString(),
-                        SystemFonts.DefaultFont, SystemBrushes.Highlight, 2, 5);
-                    Refresh();
-                    break;
-                }
+                    {
+                        m_tool.OnMidMouseDown(null, null);
+                        m_tool = m_tools.Peek();
+                        m_tools.Enqueue(m_tool);
+                        m_tools.Dequeue();
+                        var graphic = openingPictureBox.CreateGraphics();
+                        graphic.DrawString(m_tool.ToolType.ToString(),
+                            SystemFonts.DefaultFont, SystemBrushes.Highlight, 2, 5);
+                        Refresh();
+                        break;
+                    }
             }
         }
 
@@ -226,7 +225,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         {
             var graphics = openingPictureBox.CreateGraphics();
             m_tool.OnMouseMove(graphics, e);
-            var paintArg = new PaintEventArgs(graphics, new Rectangle());
+            PaintEventArgs paintArg = new(graphics, new Rectangle());
             openingPictureBox_Paint(null, paintArg);
         }
     }

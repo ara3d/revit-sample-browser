@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 {
@@ -17,10 +17,8 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
         {
             try
             {
-                using (var patternForm = new PatternForm(commandData))
-                {
-                    patternForm.ShowDialog();
-                }
+                using PatternForm patternForm = new(commandData);
+                patternForm.ShowDialog();
 
                 return Result.Succeeded;
             }

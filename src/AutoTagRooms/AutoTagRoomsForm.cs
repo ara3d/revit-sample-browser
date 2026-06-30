@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
@@ -70,7 +71,7 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
 
                 if (tmpRoom.LevelId == level.Id)
                 {
-                    var item = new ListViewItem(tmpRoom.Name);
+                    ListViewItem item = new(tmpRoom.Name);
 
                     // Shows the number of each type of RoomTags that the room has
                     foreach (var type in m_roomsData.RoomTagTypes)

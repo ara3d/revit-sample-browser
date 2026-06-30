@@ -23,23 +23,21 @@
 #endregion // Header
 
 #region Namespaces
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using TreeNode = System.Windows.Forms.TreeNode;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 #endregion // Namespaces
 
 namespace AdnRme
 {
-  [Transaction( TransactionMode.ReadOnly )]
-  public class CmdElectricalConnectors : IExternalCommand
-  {
-    #region Test code
+    [Transaction(TransactionMode.ReadOnly)]
+    public class CmdElectricalConnectors : IExternalCommand
+    {
+        #region Test code
 #if TEST_CODE
     /// <summary>
     /// Get the connected connector of one connector
@@ -103,113 +101,113 @@ namespace AdnRme
       }
     }
 #endif // TEST_CODE
-    #endregion // Test code
+        #endregion // Test code
 
-    public Result Execute(
-      ExternalCommandData commandData,
-      ref String message,
-      ElementSet elements )
-    {
-      UIApplication app = commandData.Application;
-      Document doc = app.ActiveUIDocument.Document;
-      //
-      // retrieve electrical equipment:
-      //
-      List<Element> equipment = Util.GetElectricalEquipment( doc );
-      int n = equipment.Count;
-      Debug.WriteLine( string.Format( 
-        "Retrieved {0} electrical equipment instance{1}{2}",
-        n, Util.PluralSuffix( n ), Util.DotOrColon( n ) ) );
-      //
-      // determine which equipment has parents;
-      // the remaining ones are root nodes:
-      //
-      Dictionary<ElementId, ElementId> equipmentParents 
-        = new Dictionary<ElementId, ElementId>();
-
-      foreach( FamilyInstance fi in equipment )
-      {
-        foreach( Connector c in fi.MEPModel.ConnectorManager.Connectors )
+        public Result Execute(
+          ExternalCommandData commandData,
+          ref String message,
+          ElementSet elements)
         {
-          ConnectorSet refs = c.AllRefs;
-          foreach( Connector c2 in refs )
-          {
-            Debug.Assert( null != c2.Owner, 
-              "expected valid connector owner" );
+            var app = commandData.Application;
+            var doc = app.ActiveUIDocument.Document;
+            //
+            // retrieve electrical equipment:
+            //
+            var equipment = Util.GetElectricalEquipment(doc);
+            var n = equipment.Count;
+            Debug.WriteLine(string.Format(
+              "Retrieved {0} electrical equipment instance{1}{2}",
+              n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+            //
+            // determine which equipment has parents;
+            // the remaining ones are root nodes:
+            //
+            Dictionary<ElementId, ElementId> equipmentParents
+              = [];
 
-            Debug.Assert( c2.Owner is ElectricalSystem, 
-              "expected panel element to be electrical system" );
-
-            ElectricalSystem eq = c2.Owner as ElectricalSystem;
-            foreach( Element e2 in eq.Elements )
+            foreach (FamilyInstance fi in equipment)
             {
-              Debug.Assert( e2 is FamilyInstance, 
-                "expected electrical system element to be family instance" );
-
-              if( !e2.Id.Equals( fi.Id ) )
-              {
-                if( equipment.Exists( 
-                  delegate( Element e ) 
-                  { return e.Id.Equals( e2.Id ); } ) )
+                foreach (Connector c in fi.MEPModel.ConnectorManager.Connectors)
                 {
-                  equipmentParents[e2.Id] = eq.Id;
+                    var refs = c.AllRefs;
+                    foreach (Connector c2 in refs)
+                    {
+                        Debug.Assert(null != c2.Owner,
+                          "expected valid connector owner");
+
+                        Debug.Assert(c2.Owner is ElectricalSystem,
+                          "expected panel element to be electrical system");
+
+                        var eq = c2.Owner as ElectricalSystem;
+                        foreach (Element e2 in eq.Elements)
+                        {
+                            Debug.Assert(e2 is FamilyInstance,
+                              "expected electrical system element to be family instance");
+
+                            if (!e2.Id.Equals(fi.Id))
+                            {
+                                if (equipment.Exists(
+                                  delegate (Element e)
+                                  { return e.Id.Equals(e2.Id); }))
+                                {
+                                    equipmentParents[e2.Id] = eq.Id;
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
-        }
-      }
 
-      //n = equipment.RemoveAll( delegate( Element e ) { return subequipment.Exists( delegate( Element e2 ) { return e2.Id.Equals( e.Id ); } ); } );
+            //n = equipment.RemoveAll( delegate( Element e ) { return subequipment.Exists( delegate( Element e2 ) { return e2.Id.Equals( e.Id ); } ); } );
 
-      //
-      // populate parent to children mapping:
-      //
-      ElementId nullId = ElementId.InvalidElementId;
-      MapParentToChildren mapParentToChildren = new MapParentToChildren();
+            //
+            // populate parent to children mapping:
+            //
+            var nullId = ElementId.InvalidElementId;
+            MapParentToChildren mapParentToChildren = [];
 
-      foreach( FamilyInstance fi in equipment )
-      {
-        //ElementId parentId = equipmentParents.ContainsKey( fi.Id ) ? equipmentParents[fi.Id] : nullId;
-        //mapParentToChildren.Add( parentId, fi );
-
-        //
-        // handle root nodes;
-        // non-roots are handled below a children:
-        //
-        if( !equipmentParents.ContainsKey( fi.Id ) )
-        {
-          mapParentToChildren.Add( nullId, fi );
-        }
-        
-        foreach( Connector c in fi.MEPModel.ConnectorManager.Connectors )
-        {
-          ConnectorSet refs = c.AllRefs;
-          foreach( Connector c2 in refs )
-          {
-            Debug.Assert( null != c2.Owner, 
-              "expected valid connector owner" );
-
-            Debug.Assert( c2.Owner is ElectricalSystem, 
-              "expected panel element to be electrical system" );
-
-            ElectricalSystem eq = c2.Owner as ElectricalSystem;
-            mapParentToChildren.Add( fi.Id, eq );
-            foreach( Element e2 in eq.Elements )
+            foreach (FamilyInstance fi in equipment)
             {
-              Debug.Assert( e2 is FamilyInstance, 
-                "expected electrical system element to be family instance" );
+                //ElementId parentId = equipmentParents.ContainsKey( fi.Id ) ? equipmentParents[fi.Id] : nullId;
+                //mapParentToChildren.Add( parentId, fi );
 
-              if( !e2.Id.Equals( fi.Id ) )
-              {
-                mapParentToChildren.Add( eq.Id, e2 );
-              }
+                //
+                // handle root nodes;
+                // non-roots are handled below a children:
+                //
+                if (!equipmentParents.ContainsKey(fi.Id))
+                {
+                    mapParentToChildren.Add(nullId, fi);
+                }
+
+                foreach (Connector c in fi.MEPModel.ConnectorManager.Connectors)
+                {
+                    var refs = c.AllRefs;
+                    foreach (Connector c2 in refs)
+                    {
+                        Debug.Assert(null != c2.Owner,
+                          "expected valid connector owner");
+
+                        Debug.Assert(c2.Owner is ElectricalSystem,
+                          "expected panel element to be electrical system");
+
+                        var eq = c2.Owner as ElectricalSystem;
+                        mapParentToChildren.Add(fi.Id, eq);
+                        foreach (Element e2 in eq.Elements)
+                        {
+                            Debug.Assert(e2 is FamilyInstance,
+                              "expected electrical system element to be family instance");
+
+                            if (!e2.Id.Equals(fi.Id))
+                            {
+                                mapParentToChildren.Add(eq.Id, e2);
+                            }
+                        }
+                    }
+                }
             }
-          }
-        }
-      }
 
-      #region Test code
+            #region Test code
 #if TEST_CODE
       //
       // retrieve electrical systems:
@@ -250,24 +248,24 @@ namespace AdnRme
         }
       }
 #endif // TEST_CODE
-      #endregion // Test code
+            #endregion // Test code
 
-      //
-      // get the electrical equipment category id:
-      //
-      Categories categories = doc.Settings.Categories;
-      ElementId electricalEquipmentCategoryId = categories.get_Item( 
-        BuiltInCategory.OST_ElectricalEquipment ).Id;
+            //
+            // get the electrical equipment category id:
+            //
+            Categories categories = doc.Settings.Categories;
+            ElementId electricalEquipmentCategoryId = categories.get_Item(
+              BuiltInCategory.OST_ElectricalEquipment).Id;
 
-      //
-      // display hierarchical structure in tree view:
-      //
-      CmdInspectElectricalForm2 dialog 
-        = new CmdInspectElectricalForm2( 
-          mapParentToChildren, electricalEquipmentCategoryId, equipment );
+            //
+            // display hierarchical structure in tree view:
+            //
+            CmdInspectElectricalForm2 dialog
+              = new(
+                mapParentToChildren, electricalEquipmentCategoryId, equipment);
 
-      dialog.Show();
-      return Result.Failed;
+            dialog.Show();
+            return Result.Failed;
+        }
     }
-  }
 }

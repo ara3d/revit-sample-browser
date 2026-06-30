@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.Threading;
-using Autodesk.Revit.DB;
-using OfficeOpenXml;
 
 namespace ExcelExporterImporter.Common
 {
@@ -35,14 +35,14 @@ namespace ExcelExporterImporter.Common
             var iColStart = 3;
             var cols = worksheet.Dimension.Columns; //Indicates the number of columns the table has
             var rows = worksheet.Dimension.Rows; //Indicates the number of rows the table has
-            var fields = new Dictionary<int, ScheduleField>();
+            Dictionary<int, ScheduleField> fields = new();
             var fieldsCount = schedule.Definition.GetFieldCount();
             var progressUnit = 1000 / rows;
             //================Create a list with parameters that are read-only=========================
             var readonlyParameters = RevitUtilities.GetListReadOnlyParamater(parametersSettings);
             if (cols >= iColStart && rows >= FirstDataRow)
             {
-                var fieldDictionary = new Dictionary<string, ScheduleField>();
+                Dictionary<string, ScheduleField> fieldDictionary = new();
                 //We will search the list of column names via the information from the schedules
                 for (var fieldIndex = 0; fieldIndex < fieldsCount; fieldIndex++)
                 {
@@ -69,7 +69,7 @@ namespace ExcelExporterImporter.Common
                     if (fieldDictionary.ContainsKey(columnName)) fields.Add(columnIndex, fieldDictionary[columnName]);
                 }
 
-                var transaction = new Transaction(doc);
+                Transaction transaction = new(doc);
                 transaction.Start("Schedule Import from Excel");
                 try
                 {
@@ -85,7 +85,7 @@ namespace ExcelExporterImporter.Common
                         //We validate that the line has an id
                         if (string.IsNullOrEmpty(Convert.ToString(worksheet.Cells[rowIndex, 1].Value))) continue;
                         //We validate that the id is good
-                        var element = doc.GetElement((string) worksheet.Cells[rowIndex, 1].Value);
+                        var element = doc.GetElement((string)worksheet.Cells[rowIndex, 1].Value);
                         if (element != null)
                         {
                             progress.SetStatus(

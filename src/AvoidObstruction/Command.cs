@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
@@ -14,12 +14,12 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
+            Transaction transaction = new(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
             {
                 transaction.Start();
 
-                var resolver = new Resolver(commandData);
+                Resolver resolver = new(commandData);
                 resolver.Resolve();
             }
             catch (Exception e)

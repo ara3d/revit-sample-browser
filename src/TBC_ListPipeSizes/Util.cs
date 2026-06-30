@@ -1,5 +1,5 @@
-using System.IO;
 using Autodesk.Revit.DB;
+using System.IO;
 
 namespace BuildingCoder
 {
@@ -20,7 +20,7 @@ namespace BuildingCoder
                 = new FilteredElementCollector(doc)
                     .OfClass(typeof(Segment));
 
-            using var file = new StreamWriter(
+            using StreamWriter file = new(
                 filename, true);
             foreach (Segment segment in segments)
             {

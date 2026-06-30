@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
+using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
@@ -24,17 +24,17 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             switch (Roof)
             {
                 case FootPrintRoof _:
-                {
-                    var para = roof.get_Parameter(BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
-                    SubItems.Add(LevelConverter.GetLevelById(para.AsElementId()).Name);
-                    break;
-                }
+                    {
+                        var para = roof.get_Parameter(BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
+                        SubItems.Add(LevelConverter.GetLevelById(para.AsElementId()).Name);
+                        break;
+                    }
                 case ExtrusionRoof _:
-                {
-                    var para = roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
-                    SubItems.Add(LevelConverter.GetLevelById(para.AsElementId()).Name);
-                    break;
-                }
+                    {
+                        var para = roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
+                        SubItems.Add(LevelConverter.GetLevelById(para.AsElementId()).Name);
+                        break;
+                    }
             }
 
             SubItems.Add(roof.RoofType.Name);
@@ -55,17 +55,17 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
                 switch (Roof)
                 {
                     case FootPrintRoof _:
-                    {
-                        var para = Roof.get_Parameter(BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
-                        SubItems[2].Text = LevelConverter.GetLevelById(para.AsElementId()).Name;
-                        break;
-                    }
+                        {
+                            var para = Roof.get_Parameter(BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
+                            SubItems[2].Text = LevelConverter.GetLevelById(para.AsElementId()).Name;
+                            break;
+                        }
                     case ExtrusionRoof _:
-                    {
-                        var para = Roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
-                        SubItems[2].Text = LevelConverter.GetLevelById(para.AsElementId()).Name;
-                        break;
-                    }
+                        {
+                            var para = Roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
+                            SubItems[2].Text = LevelConverter.GetLevelById(para.AsElementId()).Name;
+                            break;
+                        }
                 }
 
                 SubItems[3].Text = Roof.RoofType.Name;

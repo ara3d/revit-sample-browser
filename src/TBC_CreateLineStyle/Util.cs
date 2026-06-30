@@ -1,5 +1,5 @@
-using System.Linq;
 using Autodesk.Revit.DB;
+using System.Linq;
 
 namespace BuildingCoder
 {
@@ -21,7 +21,7 @@ namespace BuildingCoder
             var lineCat = categories.get_Item(
                 BuiltInCategory.OST_Lines);
 
-            using var t = new Transaction(doc);
+            using Transaction t = new(doc);
             t.Start("Create LineStyle");
 
             var newLineStyleCat = categories

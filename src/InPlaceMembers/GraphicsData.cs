@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 {
@@ -35,9 +35,9 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 
         protected double[,] Origin = { { 1.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
-        protected XYZ OriginMax = new XYZ(double.MinValue, double.MinValue, double.MinValue);
+        protected XYZ OriginMax = new(double.MinValue, double.MinValue, double.MinValue);
 
-        protected XYZ OriginMin = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
+        protected XYZ OriginMin = new(double.MaxValue, double.MaxValue, double.MaxValue);
 
         protected XYZ TransferedMax;
 
@@ -65,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
                 if (width < 1) width = 1;
                 if (height < 1) height = 1;
 
-                var rec = new RectangleF(minX, minY, width, height);
+                RectangleF rec = new(minX, minY, width, height);
                 return rec;
             }
         }
@@ -160,9 +160,9 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 
         public GraphicsData()
         {
-            m_originCurves = new List<List<XYZ>>();
-            m_transferedCurves = new List<List<XYZ>>();
-            m_curves2D = new List<PointF[]>();
+            m_originCurves = [];
+            m_transferedCurves = [];
+            m_curves2D = [];
         }
 
         public override event UpdateViewDelegate UpdateViewEvent;
@@ -206,7 +206,7 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
         {
             var size = points.Count;
             var points2D = new PointF[size];
-            var transferedPoints = new List<XYZ>();
+            List<XYZ> transferedPoints = new();
             for (var i = 0; i < size; i++)
             {
                 var point = points[i];
@@ -242,9 +242,9 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             var z = point.Z;
 
             return new XYZ(
-                x * Origin[0, 0] + y * Origin[0, 1] + z * Origin[0, 2],
-                x * Origin[1, 0] + y * Origin[1, 1] + z * Origin[1, 2],
-                x * Origin[2, 0] + y * Origin[2, 1] + z * Origin[2, 2]);
+                (x * Origin[0, 0]) + (y * Origin[0, 1]) + (z * Origin[0, 2]),
+                (x * Origin[1, 0]) + (y * Origin[1, 1]) + (z * Origin[1, 2]),
+                (x * Origin[2, 0]) + (y * Origin[2, 1]) + (z * Origin[2, 2]));
         }
 
         /// <summary>
@@ -257,9 +257,9 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             //transform the origin of the old coordinate system in the new coordinate system
 
             return new XYZ(
-                point.X - (TransferedMax.X + TransferedMin.X) / 2,
-                point.Y - (TransferedMax.Y + TransferedMin.Y) / 2,
-                point.Z - (TransferedMax.Z + TransferedMin.Z) / 2);
+                point.X - ((TransferedMax.X + TransferedMin.X) / 2),
+                point.Y - ((TransferedMax.Y + TransferedMin.Y) / 2),
+                point.Z - ((TransferedMax.Z + TransferedMin.Z) / 2));
         }
     }
 
@@ -270,9 +270,9 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             var result = new double[3, 3];
 
             for (var i = 0; i < 3; i++)
-            for (var j = 0; j < 3; j++)
-            for (var k = 0; k < 3; k++)
-                result[i, j] += m1[i, k] * m2[k, j];
+                for (var j = 0; j < 3; j++)
+                    for (var k = 0; k < 3; k++)
+                        result[i, j] += m1[i, k] * m2[k, j];
 
             return result;
         }

@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BuildingCoder
 {
@@ -13,10 +13,7 @@ namespace BuildingCoder
 
             public ColumnType(int d1, int d2)
             {
-                if (d1 > d2)
-                    _dim = new[] {d1, d2};
-                else
-                    _dim = new[] {d2, d1};
+                _dim = d1 > d2 ? (new[] { d1, d2 }) : (new[] { d2, d1 });
             }
 
             public int H => _dim[0];
@@ -38,10 +35,10 @@ namespace BuildingCoder
 
         internal static Result CreateColumnTypes(Document doc)
         {
-            var L1 = new[] {100, 200, 150, 500, 400, 300, 250, 250};
-            var L2 = new[] {200, 200, 150, 500, 400, 300, 250, 250};
+            var L1 = new[] { 100, 200, 150, 500, 400, 300, 250, 250 };
+            var L2 = new[] { 200, 200, 150, 500, 400, 300, 250, 250 };
 
-            var all = new List<ColumnType>();
+            List<ColumnType> all = new();
 
             for (var i = 0; i < L1.Length; ++i) all.Add(new ColumnType(L1[i], L2[i]));
 
@@ -61,8 +58,8 @@ namespace BuildingCoder
 
             if (0 == existing.Count()) return Result.Cancelled;
 
-            var AlreadyExists = new List<ColumnType>();
-            var ToBeMade = new List<ColumnType>();
+            List<ColumnType> AlreadyExists = new();
+            List<ColumnType> ToBeMade = new();
 
             for (var i = 0; i < all.Count; ++i)
             {
@@ -77,7 +74,7 @@ namespace BuildingCoder
 
             if (ToBeMade.Count == 0) return Result.Cancelled;
 
-            using var tx = new Transaction(doc);
+            using Transaction tx = new(doc);
             if (tx.Start("Make types") == TransactionStatus.Started)
             {
                 var first = existing.First();

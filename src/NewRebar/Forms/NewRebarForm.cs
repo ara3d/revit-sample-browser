@@ -1,14 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
@@ -21,17 +20,17 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
         /// <summary>
         ///     Control binding source, provides data source for RebarBarType list box.
         /// </summary>
-        private readonly BindingSource m_barTypesBinding = new BindingSource();
+        private readonly BindingSource m_barTypesBinding = [];
 
         /// <summary>
         ///     All RebarBarTypes of Revit current document.
         /// </summary>
-        private readonly List<RebarBarType> m_rebarBarTypes = new List<RebarBarType>();
+        private readonly List<RebarBarType> m_rebarBarTypes = [];
 
         /// <summary>
         ///     All RebarShape of Revit current document.
         /// </summary>
-        private readonly List<RebarShape> m_rebarShapes = new List<RebarShape>();
+        private readonly List<RebarShape> m_rebarShapes = [];
         ///// <summary>
         ///// Revit Application object.
         ///// </summary>
@@ -45,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
         /// <summary>
         ///     Control binding source, provides data source for RebarShapes list box.
         /// </summary>
-        private readonly BindingSource m_shapesBinding = new BindingSource();
+        private readonly BindingSource m_shapesBinding = [];
 
         public NewRebarForm()
         {
@@ -57,7 +56,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
         {
             m_rvtDoc = rvtDoc;
 
-            var filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
+            FilteredElementCollector filteredElementCollector = new(m_rvtDoc);
             filteredElementCollector.OfClass(typeof(RebarBarType));
             m_rebarBarTypes = filteredElementCollector.Cast<RebarBarType>().ToList();
 
@@ -108,7 +107,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
 
             // Make sure the input name is started with letter and 
             // just contains letters, numbers and underlines.
-            var regex = new Regex("^[a-zA-Z]\\w+$");
+            Regex regex = new("^[a-zA-Z]\\w+$");
             if (!regex.IsMatch(nameTextBox.Text.Trim()))
             {
                 TaskDialog.Show("Revit",
@@ -156,7 +155,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
 
             var doCreate = false;
 
-            using (var form = new NewRebarShapeForm(m_rvtDoc, shapeDef))
+            using (NewRebarShapeForm form = new(m_rvtDoc, shapeDef))
             {
                 // Present a form to customize the shape.
                 if (DialogResult.OK == form.ShowDialog())

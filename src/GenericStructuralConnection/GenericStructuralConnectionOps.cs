@@ -1,12 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.Linq;
-using System.Text;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
     public class GenericStructuralConnectionOps
@@ -18,18 +19,16 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ids = SelectionHelper.SelectConnectionElements(activeDoc);
             if (ids.Count() > 0)
             {
-                using (var tran = new Transaction(activeDoc.Document, "Create generic structural connection"))
+                using Transaction tran = new(activeDoc.Document, "Create generic structural connection");
+                tran.Start();
+
+                StructuralConnectionHandler.CreateGenericConnection(activeDoc.Document, ids);
+
+                var ts = tran.Commit();
+                if (ts != TransactionStatus.Committed)
                 {
-                    tran.Start();
-
-                    StructuralConnectionHandler.CreateGenericConnection(activeDoc.Document, ids);
-
-                    var ts = tran.Commit();
-                    if (ts != TransactionStatus.Committed)
-                    {
-                        message = "Failed to commit the current transaction !";
-                        ret = Result.Failed;
-                    }
+                    message = "Failed to commit the current transaction !";
+                    ret = Result.Failed;
                 }
             }
             else
@@ -49,18 +48,16 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 
             if (conn != null)
             {
-                using (var tran = new Transaction(activeDoc.Document, "Delete generic structural connection"))
+                using Transaction tran = new(activeDoc.Document, "Delete generic structural connection");
+                tran.Start();
+
+                activeDoc.Document.Delete(conn.Id);
+
+                var ts = tran.Commit();
+                if (ts != TransactionStatus.Committed)
                 {
-                    tran.Start();
-
-                    activeDoc.Document.Delete(conn.Id);
-
-                    var ts = tran.Commit();
-                    if (ts != TransactionStatus.Committed)
-                    {
-                        message = "Failed to commit the current transaction !";
-                        return Result.Failed;
-                    }
+                    message = "Failed to commit the current transaction !";
+                    return Result.Failed;
                 }
             }
             else
@@ -79,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
-                var msgBuilder = new StringBuilder();
+                StringBuilder msgBuilder = new();
                 msgBuilder.AppendLine($"Connection id : {conn.Id}");
 
                 if (activeDoc.Document.GetElement(conn.GetTypeId()) is StructuralConnectionHandlerType connType)
@@ -114,8 +111,8 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             {
                 var ids = SelectionHelper.SelectConnectionElements(activeDoc);
                 if (ids.Count() > 0)
-                    using (var transaction =
-                           new Transaction(activeDoc.Document, "Update generic structural connection"))
+                    using (Transaction transaction =
+                           new(activeDoc.Document, "Update generic structural connection"))
                     {
                         transaction.Start();
 

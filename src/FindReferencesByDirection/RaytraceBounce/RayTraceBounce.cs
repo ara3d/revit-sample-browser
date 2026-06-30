@@ -1,14 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
-using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
-using Ara3D.RevitSampleBrowser.Common.Documents;
-using Ara3D.RevitSampleBrowser.Common.Geometry;
-using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using System;
 namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -32,7 +28,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
                     return Result.Cancelled;
                 }
 
-                var form = new RayTraceBounceForm(commandData, m_view);
+                RayTraceBounceForm form = new(commandData, m_view);
                 form.ShowDialog();
                 return Result.Succeeded;
             }

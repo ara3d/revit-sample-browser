@@ -2,14 +2,13 @@
 // Adapted from CreateAndPrintSheetsAndViews by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CreateAndPrintSheetsAndViews
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
 {
@@ -28,8 +27,8 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             List<string> report,
             Element part)
         {
-            bool rc = false;
-            string product_code = Util.GetProductCode(part);
+            var rc = false;
+            var product_code = Util.GetProductCode(part);
             if (null != product_code
                 && product_codes.Contains(product_code))
             {
@@ -49,10 +48,8 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
         {
             // https://thebuildingcoder.typepad.com/blog/2013/03/export-wall-parts-individually-to-dxf.html#3
 
-            TaskDialogShowingEventArgs e2
-                = e as TaskDialogShowingEventArgs;
 
-            if (null != e2 && e2.DialogId.Equals(
+            if (e is TaskDialogShowingEventArgs e2 && e2.DialogId.Equals(
                 "TaskDialog_Really_Print_Or_Export_Temp_View_Modes"))
             {
                 e.OverrideResult(
@@ -65,32 +62,32 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             ref string message,
             ElementSet elements)
         {
-            UIApplication uiapp = commandData.Application;
-            UIDocument uidoc = uiapp.ActiveUIDocument;
-            Document doc = uidoc.Document;
+            var uiapp = commandData.Application;
+            var uidoc = uiapp.ActiveUIDocument;
+            var doc = uidoc.Document;
 
             uiapp.DialogBoxShowing
                 += new EventHandler<DialogBoxShowingEventArgs>(
                     OnDialogBoxShowing);
 
-            List<ElementId> ids = new FabricationPartSelector(uidoc).Ids;
+            var ids = new FabricationPartSelector(uidoc).Ids;
 
-            int n = ids.Count;
+            var n = ids.Count;
 
             if (0 == n)
             {
                 return Result.Cancelled;
             }
 
-            int nPartsProcessed = 0;
-            int nPartsNotProcessed = 0;
-            List<string> report = new List<string>();
+            var nPartsProcessed = 0;
+            var nPartsNotProcessed = 0;
+            List<string> report = [];
 
-            using (Transaction t = new Transaction(doc))
+            using (Transaction t = new(doc))
             {
-                foreach (ElementId id in ids)
+                foreach (var id in ids)
                 {
-                    FabricationPart part
+                    var part
                         = doc.GetElement(id) as FabricationPart;
 
                     t.Start(string.Format(
@@ -109,10 +106,10 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
                 }
             }
 
-            string s = $"{nPartsProcessed} parts processed, "
-                + $"{nPartsNotProcessed} not:";
+            var s = $"{nPartsProcessed} parts processed, "
+                    + $"{nPartsNotProcessed} not:";
 
-            string s2 = string.Join(", ", report);
+            var s2 = string.Join(", ", report);
             Util.InfoMsg2(s, s2);
 
             return Result.Succeeded;

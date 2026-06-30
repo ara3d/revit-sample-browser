@@ -12,13 +12,13 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Coroutine;
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Coroutine;
-using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration;
 using MessageBox = System.Windows.MessageBox;
 using UserControl = System.Windows.Controls.UserControl;
 
@@ -46,12 +46,10 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 
         private void OnBtnBrowseDirectory_Click(object sender, RoutedEventArgs e)
         {
-            using (var fbd = new FolderBrowserDialog())
-            {
-                var result = fbd.ShowDialog();
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                    tbLocalFolder.Text = fbd.SelectedPath;
-            }
+            using FolderBrowserDialog fbd = new();
+            var result = fbd.ShowDialog();
+            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                tbLocalFolder.Text = fbd.SelectedPath;
         }
 
         private void OnBtnReveal_Click(object sender, RoutedEventArgs e)
@@ -65,7 +63,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
         private void OnBtnConfig_Click(object sender, RoutedEventArgs e)
         {
             var ctx = (MigrationToBim360)DataContext;
-            var viewConfiguration = new ViewInputMigrationInfo(ctx);
+            ViewInputMigrationInfo viewConfiguration = new(ctx);
             viewConfiguration.Show();
         }
 

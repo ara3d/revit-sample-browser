@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Ara3D.Collections;
 using Ara3D.Geometry;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.DirectContext3D;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 using View = Autodesk.Revit.DB.View;
 
 namespace Ara3D.Bowerbird.RevitSamples
@@ -22,9 +24,9 @@ namespace Ara3D.Bowerbird.RevitSamples
             var last = Vector3.UnitZ * length;
             var mid = first.Lerp(last, percentTail);
 
-            var a = first + -Vector3.UnitX * minorRadius;
-            var b = mid + -Vector3.UnitX * minorRadius;
-            var c = mid + -Vector3.UnitX * majorRadius;
+            var a = first + (-Vector3.UnitX * minorRadius);
+            var b = mid + (-Vector3.UnitX * minorRadius);
+            var c = mid + (-Vector3.UnitX * majorRadius);
 
             var profile = Intrinsics.MakeArray(first, a, b, c, last).Map(v => v.Point3D);
             var surface = SurfaceConstructors.Revolve(profile, Vector3.UnitZ, radialSegments);
@@ -46,8 +48,7 @@ namespace Ara3D.Bowerbird.RevitSamples
             var directContext3DService = ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.DirectContext3DService);
             directContext3DService.AddServer(this);
 
-            var msDirectContext3DService = directContext3DService as MultiServerService;
-            if (msDirectContext3DService == null)
+            if (directContext3DService is not MultiServerService msDirectContext3DService)
                 throw new Exception("Expected a MultiServerService");
 
             // Get current list 
@@ -60,17 +61,61 @@ namespace Ara3D.Bowerbird.RevitSamples
             app.ActiveUIDocument?.UpdateAllOpenViews();
         }
 
-        public Guid GetServerId() => Guid;
-        public ExternalServiceId GetServiceId() => ExternalServices.BuiltInExternalServices.DirectContext3DService;
-        public string GetName() => Name;
-        public string GetVendorId() => "Ara 3D Inc.";
-        public string GetDescription() => "Demonstrates using the DirectContext3D API";
-        public bool CanExecute(View dBView) => dBView.ViewType == ViewType.ThreeD;
-        public string GetApplicationId() => "Bowerbird";
-        public string GetSourceId() => "";
-        public bool UsesHandles() => false;
-        public Outline GetBoundingBox(View dBView) => m_boundingBox;
-        public bool UseInTransparentPass(View dBView) => true;
+        public Guid GetServerId()
+        {
+            return Guid;
+        }
+
+        public ExternalServiceId GetServiceId()
+        {
+            return ExternalServices.BuiltInExternalServices.DirectContext3DService;
+        }
+
+        public string GetName()
+        {
+            return Name;
+        }
+
+        public string GetVendorId()
+        {
+            return "Ara 3D Inc.";
+        }
+
+        public string GetDescription()
+        {
+            return "Demonstrates using the DirectContext3D API";
+        }
+
+        public bool CanExecute(View dBView)
+        {
+            return dBView.ViewType == ViewType.ThreeD;
+        }
+
+        public string GetApplicationId()
+        {
+            return "Bowerbird";
+        }
+
+        public string GetSourceId()
+        {
+            return "";
+        }
+
+        public bool UsesHandles()
+        {
+            return false;
+        }
+
+        public Outline GetBoundingBox(View dBView)
+        {
+            return m_boundingBox;
+        }
+
+        public bool UseInTransparentPass(View dBView)
+        {
+            return true;
+        }
+
         public RenderMesh Mesh;
         public BufferStorage FaceBufferStorage;
         //public BufferStorage EdgeBufferStorage;
@@ -79,8 +124,7 @@ namespace Ara3D.Bowerbird.RevitSamples
         {
             if (Mesh == null)
                 return;
-            if (FaceBufferStorage == null)
-                FaceBufferStorage = new BufferStorage(Mesh);
+            FaceBufferStorage ??= new BufferStorage(Mesh);
             FaceBufferStorage.Render();
         }
     }
