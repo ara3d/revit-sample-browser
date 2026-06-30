@@ -87,9 +87,9 @@ public sealed class McpPromptProvider
     static readonly Dictionary<string, string> PromptBodies = new()
     {
         ["inspect_current_context"] =
-            "Call aec.get_host_context, aec.list_capabilities, and aec.get_model_statistics. Summarize what model and view I am in, what tools/resources are available, and what I can safely do next.",
+            "Call aec.get_host_context, aec.get_active_view, aec.list_capabilities, and aec.get_model_statistics. Summarize what model and view I am in, what tools/resources are available, and what I can safely do next.",
         ["explain_selection"] =
-            "Call aec.get_selection, then aec.read_elements and aec.read_parameters for the selected ids. Explain what is selected, key parameters, and any obvious issues.",
+            "Call aec.get_selection, then aec.resolve_element_refs with include_selection true, then aec.read_elements and aec.read_parameters for the selected ids. Explain what is selected, key parameters, and any obvious issues.",
         ["plan_safe_model_edit"] =
             "Before making any model edits, inspect context, propose aec.create_change_set operations, run aec.validate_change_set and aec.preview_changes, and ask for approval if risk is medium or high.",
         ["find_elements_natural_language"] =
@@ -107,7 +107,7 @@ public sealed class McpPromptProvider
         ["export_delivery_package"] =
             "Export a delivery package with aec.export_ifc, aec.export_dwg, aec.export_pdf, and aec.export_schedule_excel. Report output paths.",
         ["analyze_rooms"] =
-            "Query rooms with aec.query_elements, compute material quantities with aec.compute_material_quantities, create a room schedule with aec.create_schedule, and visualize with aec.color_by_parameter.",
+            "Query rooms with aec.query_elements, compute material quantities with aec.compute_material_quantities, create a room schedule with aec.create_schedule, create a visualization change set with aec.color_by_parameter, preview with aec.preview_changes, and apply with aec.apply_changes.",
         ["build_structural_frame"] =
             "Create structural framing using aec.create_level, aec.create_grid_line, aec.create_column, and aec.create_beam based on my grid specification.",
         ["validate_and_fix_names"] =

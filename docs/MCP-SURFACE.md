@@ -22,9 +22,11 @@ At startup the server registers **92 built-in tools** (65 new domain tools + 27 
 | Tool | Description | Tier | Revit |
 |------|-------------|------|-------|
 | `aec.get_host_context` | Returns host app, document, units, active view, selection mode, and capabilities. | semantic | Yes |
+| `aec.get_active_view` | Returns active view id, name, type, level, template, and section box state. | semantic | Yes |
 | `aec.list_capabilities` | Lists registered tools, resources, prompts, and risk classes exposed by this server. | semantic | No |
 | `aec.get_selection` | Returns the current Revit selection with stable element references. | semantic | Yes |
-| `aec.query_elements` | Structured query over category, class, level, name, and element ids. | semantic | Yes |
+| `aec.query_elements` | Structured query over category, class, type, level, parameters, visibility, and element ids. | semantic | Yes |
+| `aec.resolve_element_refs` | Resolves element references from element ids, unique ids, and current selection. | semantic | Yes |
 | `aec.read_elements` | Returns hydrated element summaries for the given element ids. | semantic | Yes |
 | `aec.read_parameters` | Returns parameter metadata and values for an element. | semantic | Yes |
 | `aec.get_model_statistics` | Returns counts by category, class, level, workset, and phase. | semantic | Yes |
@@ -140,7 +142,7 @@ At startup the server registers **92 built-in tools** (65 new domain tools + 27 
 | Tool | Description | Tier | Revit | Notes |
 |------|-------------|------|-------|-------|
 | `aec.capture_view_image` | Exports the active view to a PNG and returns the output path. | semantic | Yes | |
-| `aec.color_by_parameter` | Applies view overrides to elements grouped by a parameter value. | semantic | Yes | Requires change-set preview/apply for writes |
+| `aec.color_by_parameter` | Creates a change set to color elements grouped by a parameter value. | semantic | Yes | Apply via `aec.apply_changes` |
 
 ### `aec.*` — Change-set safety
 
@@ -224,8 +226,8 @@ python scripts/build_mcp_manifest.py
 
 | Prompt | Suggested tools |
 |--------|-----------------|
-| `inspect_current_context` | `aec.get_host_context` → `aec.list_capabilities` → `aec.get_model_statistics` |
-| `explain_selection` | `aec.get_selection` → `aec.read_elements` → `aec.read_parameters` |
+| `inspect_current_context` | `aec.get_host_context` → `aec.get_active_view` → `aec.list_capabilities` → `aec.get_model_statistics` |
+| `explain_selection` | `aec.get_selection` → `aec.resolve_element_refs` → `aec.read_elements` → `aec.read_parameters` |
 | `plan_safe_model_edit` | `aec.create_change_set` → `aec.validate_change_set` → `aec.preview_changes` → `aec.apply_changes` |
 | `find_elements_natural_language` | `aec.query_elements` |
 | `create_custom_tool` | `dev.search_examples` → `dev.generate_tool_spec` → `dev.generate_bowerbird_script` → `dev.compile_script` → `dev.review_tool_for_safety` → `dev.create_mcp_tool_from_script` |
@@ -234,7 +236,7 @@ python scripts/build_mcp_manifest.py
 | `audit_model_health` | `aec.audit_model_health` → `aec.get_model_warnings_detailed` → `aec.find_unplaced_rooms` → `aec.find_elements_without_parameter` |
 | `create_building_massing` | `aec.create_mass_from_profile` → `aec.apply_mass_floors` → `aec.compute_mass_properties` → `aec.create_curtain_system_on_faces` |
 | `export_delivery_package` | `aec.export_ifc` → `aec.export_dwg` → `aec.export_pdf` → `aec.export_schedule_excel` |
-| `analyze_rooms` | `aec.query_elements` → `aec.compute_material_quantities` → `aec.create_schedule` → `aec.color_by_parameter` |
+| `analyze_rooms` | `aec.query_elements` → `aec.compute_material_quantities` → `aec.create_schedule` → `aec.color_by_parameter` → `aec.apply_changes` |
 | `build_structural_frame` | `aec.create_level` → `aec.create_grid_line` → `aec.create_column` → `aec.create_beam` |
 | `validate_and_fix_names` | `aec.validate_naming_convention` → `aec.read_parameters` → `aec.set_parameters_bulk` |
 | `create_geometry_visualization` | `aec.create_direct_shape_extrusion` → `aec.get_element_geometry_json` → `aec.capture_view_image` |
@@ -261,6 +263,8 @@ python scripts/build_mcp_manifest.py
 | `aec://exports/last` | `application/json` | Most recent export path and metadata. |
 | `standards://firm/index` | `application/json` | Index of firm standards markdown files. |
 | `audit://agent/history` | `application/json` | Recent agent tool audit log entries. |
+| `audit://changesets/{changeSetId}` | `application/json` | Change set audit record. |
+| `audit://transactions/{transactionId}` | `application/json` | Applied transaction audit record. |
 
 ### Dynamic resources
 
@@ -291,4 +295,4 @@ python scripts/build_mcp_manifest.py
 | Resources | [`src/BB_McpServer/McpResourceProvider.cs`](../src/BB_McpServer/McpResourceProvider.cs) |
 | Prompts | [`src/BB_McpServer/McpPromptProvider.cs`](../src/BB_McpServer/McpPromptProvider.cs) |
 | Demo runbook | [`docs/MCP-DEMOS.md`](MCP-DEMOS.md) |
-| Product plan | [`docs/MCP-PLAN.md`](MCP-PLAN.md) |
+| Product roadmap | [`docs/MCP-PRODUCT-ROADMAP.md`](MCP-PRODUCT-ROADMAP.md) |

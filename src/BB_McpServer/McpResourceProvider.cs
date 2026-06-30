@@ -38,6 +38,8 @@ public sealed class McpResourceProvider
             Resource("aec://model/schedule/{name}", "Live schedule data as JSON (dynamic URI)", "application/json"),
             Resource("standards://firm/index", "Firm standards markdown index", "application/json"),
             Resource("audit://agent/history", "Recent agent tool audit entries", "application/json"),
+            Resource("audit://changesets/{changeSetId}", "Change set audit record (dynamic URI)", "application/json"),
+            Resource("audit://transactions/{transactionId}", "Applied transaction audit record (dynamic URI)", "application/json"),
         };
 
         var standardsRoot = RepoPaths.StandardsRoot(_registry.Context?.RepoRoot);
@@ -77,6 +79,10 @@ public sealed class McpResourceProvider
             "aec://exports/last" => JsonResource(uri, ReadLastExport()),
             "standards://firm/index" => JsonResource(uri, ReadStandardsIndex(context)),
             "audit://agent/history" => JsonResource(uri, context?.Audit.GetEntries().ToString()),
+            _ when uri.StartsWith("audit://changesets/", StringComparison.OrdinalIgnoreCase)
+                => JsonResource(uri, ReadChangeSetAudit(context, uri["audit://changesets/".Length..])),
+            _ when uri.StartsWith("audit://transactions/", StringComparison.OrdinalIgnoreCase)
+                => JsonResource(uri, ReadTransactionAudit(context, uri["audit://transactions/".Length..])),
             _ when uri.StartsWith("standards://firm/", StringComparison.OrdinalIgnoreCase)
                 => TextResource(uri, ReadStandardsFile(context, uri["standards://firm/".Length..])),
             _ when uri.StartsWith("dev://samples/", StringComparison.OrdinalIgnoreCase)
@@ -341,4 +347,20 @@ public sealed class McpResourceProvider
                 ["rows"] = rows,
             };
         });
+
+    static string ReadChangeSetAudit(HostContext context, string changeSetId)
+    {
+        var set = context?.ChangeSetSession?.Get(changeSetId);
+        if (set == null)
+            return new JObject { ["error"] = "change_set_not_found", ["change_set_id"] = changeSetId }.ToString();
+        return context.ChangeSetSession.ToAuditJson(set).ToString();
+    }
+
+    static string ReadTransactionAudit(HostContext context, string transactionId)
+    {
+        var tx = context?.ChangeSetSession?.GetTransaction(transactionId);
+        if (tx == null)
+            return new JObject { ["error"] = "transaction_not_found", ["transaction_id"] = transactionId }.ToString();
+        return context.ChangeSetSession.TransactionToAuditJson(tx).ToString();
+    }
 }

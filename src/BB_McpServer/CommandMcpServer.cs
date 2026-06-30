@@ -48,7 +48,9 @@ public class CommandMcpServer : NamedCommand
 
 Reload MCP in Cursor (Settings → Tools & MCP), then try:
 - aec.get_host_context
+- aec.get_active_view
 - aec.query_elements
+- aec.resolve_element_refs
 - dev.search_examples
 - inspect_current_context prompt";
 

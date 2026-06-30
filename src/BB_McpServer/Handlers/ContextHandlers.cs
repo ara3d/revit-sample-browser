@@ -95,6 +95,55 @@ public sealed class GetHostContextHandler : ToolHandlerBase
     }
 }
 
+public sealed class GetActiveViewHandler : ToolHandlerBase
+{
+    public override McpToolDescriptor Descriptor => Desc(
+        "aec.get_active_view",
+        "Returns the active view id, name, type, level, template, and section box state.",
+        Schema.Object(),
+        requiresRevit: true);
+
+    public override Task<McpToolResult> InvokeAsync(JObject arguments, HostContext context)
+    {
+        var result = context.Bridge.RunOnRevitThread(app =>
+        {
+            var doc = app.ActiveUIDocument?.Document;
+            if (doc == null)
+                return McpToolResult.Failure("No document open", "no_document");
+
+            var view = doc.ActiveView;
+            if (view == null)
+                return McpToolResult.Failure("No active view", "no_active_view");
+
+            var levelName = view.GenLevel?.Name;
+            var template = view.ViewTemplateId != ElementId.InvalidElementId
+                ? doc.GetElement(view.ViewTemplateId)?.Name
+                : null;
+
+            JObject sectionBox = null;
+            if (view is View3D view3d && view3d.IsSectionBoxActive)
+            {
+                var box = view3d.GetSectionBox();
+                sectionBox = McpHandlerHelpers.BboxToJson(box);
+            }
+
+            return McpToolResult.Success(new JObject
+            {
+                ["view_id"] = view.Id.Value,
+                ["name"] = view.Name,
+                ["view_type"] = view.ViewType.ToString(),
+                ["level"] = levelName,
+                ["view_template"] = template,
+                ["is_template"] = view.IsTemplate,
+                ["can_be_printed"] = view.CanBePrinted,
+                ["section_box"] = sectionBox,
+                ["image_resource"] = "aec://view/active/image",
+            });
+        });
+        return TaskResult(result);
+    }
+}
+
 public sealed class ListCapabilitiesHandler : ToolHandlerBase
 {
     public override McpToolDescriptor Descriptor => Desc(

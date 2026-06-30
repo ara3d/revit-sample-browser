@@ -1,4 +1,5 @@
 using Ara3D.Bowerbird.RevitSamples.AecAgent;
+using Autodesk.Revit.DB;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
@@ -43,6 +44,7 @@ public sealed class CreateChangeSetHandler : ToolHandlerBase
             ["operation_count"] = set.Operations.Count,
             ["risk_level"] = set.RiskLevel,
             ["requires_approval"] = set.RequiresApproval,
+            ["audit_resource"] = $"audit://changesets/{set.Id}",
         }));
     }
 }
@@ -54,7 +56,8 @@ public sealed class ValidateChangeSetHandler : ToolHandlerBase
         "Validates a change set against the current model context.",
         Schema.ObjectReq(("change_set_id", Schema.String("Change set id")), "change_set_id"),
         ToolRiskClass.Write,
-        tier: "semantic");
+        tier: "semantic",
+        requiresRevit: true);
 
     public override Task<McpToolResult> InvokeAsync(JObject arguments, HostContext context)
     {
@@ -65,17 +68,23 @@ public sealed class ValidateChangeSetHandler : ToolHandlerBase
         if (!context.ChangeSetSession.TryGet(id, out var set))
             return TaskResult(McpToolResult.Failure("Unknown change set.", "unknown_change_set"));
 
-        var issues = new JArray();
-        if (set.Operations.Count == 0)
-            issues.Add(new JObject { ["code"] = "empty", ["message"] = "Change set has no operations." });
-
-        return TaskResult(McpToolResult.Success(new JObject
+        var result = context.Bridge.RunOnRevitThread(app =>
         {
-            ["change_set_id"] = id,
-            ["valid"] = issues.Count == 0,
-            ["issues"] = issues,
-            ["risk_level"] = set.RiskLevel,
-        }));
+            var doc = app.ActiveUIDocument?.Document;
+            if (doc == null)
+                return McpToolResult.Failure("No document open", "no_document");
+
+            var (valid, issues) = ChangeSetApplier.Validate(doc, set);
+            return McpToolResult.Success(new JObject
+            {
+                ["change_set_id"] = id,
+                ["valid"] = valid,
+                ["issues"] = issues,
+                ["risk_level"] = set.RiskLevel,
+                ["requires_approval"] = set.RequiresApproval,
+            });
+        });
+        return TaskResult(result);
     }
 }
 
@@ -86,7 +95,8 @@ public sealed class PreviewChangesHandler : ToolHandlerBase
         "Returns a human-readable preview of a change set before execution.",
         Schema.ObjectReq(("change_set_id", Schema.String("Change set id")), "change_set_id"),
         ToolRiskClass.Write,
-        tier: "semantic");
+        tier: "semantic",
+        requiresRevit: true);
 
     public override Task<McpToolResult> InvokeAsync(JObject arguments, HostContext context)
     {
@@ -97,27 +107,26 @@ public sealed class PreviewChangesHandler : ToolHandlerBase
         if (!context.ChangeSetSession.TryGet(id, out var set))
             return TaskResult(McpToolResult.Failure("Unknown change set.", "unknown_change_set"));
 
-        var summary = set.Operations
-            .GroupBy(o => o.Kind)
-            .Select(g => new JObject
-            {
-                ["kind"] = g.Key.ToString(),
-                ["count"] = g.Count(),
-            })
-            .ToList();
-
-        var approvalToken = set.RequiresApproval
-            ? context.ChangeSetSession.CreateApprovalToken(id)
-            : null;
-
-        return TaskResult(McpToolResult.Success(new JObject
+        var result = context.Bridge.RunOnRevitThread(app =>
         {
-            ["change_set_id"] = id,
-            ["intent"] = set.Intent,
-            ["summary"] = new JArray(summary),
-            ["risk_level"] = set.RiskLevel,
-            ["approval_token"] = approvalToken,
-        }));
+            var doc = app.ActiveUIDocument?.Document;
+            if (doc == null)
+                return McpToolResult.Failure("No document open", "no_document");
+
+            var preview = ChangeSetApplier.BuildPreview(doc, set);
+            var approvalToken = set.RequiresApproval
+                ? context.ChangeSetSession.CreateApprovalToken(id)
+                : null;
+
+            preview["approval_token"] = approvalToken;
+            preview["audit_resource"] = $"audit://changesets/{id}";
+            preview["next_step"] = set.RequiresApproval
+                ? "Call aec.apply_changes with change_set_id and approval_token."
+                : "Call aec.apply_changes with change_set_id.";
+
+            return McpToolResult.Success(preview);
+        });
+        return TaskResult(result);
     }
 }
 
@@ -152,55 +161,48 @@ public sealed class ApplyChangesHandler : ToolHandlerBase
             if (doc == null)
                 return McpToolResult.Failure("No document open", "no_document");
 
-            var applied = 0;
-            using var tx = new Autodesk.Revit.DB.Transaction(doc, $"MCP: {set.Intent}");
-            tx.Start();
-            foreach (var op in set.Operations)
+            var (valid, issues) = ChangeSetApplier.Validate(doc, set);
+            if (!valid)
             {
-                if (ApplyOperation(doc, op))
-                    applied++;
+                return McpToolResult.Failure("Change set failed validation.", "validation_failed", new JObject
+                {
+                    ["issues"] = issues,
+                });
             }
-            tx.Commit();
-            context.ChangeSetSession.MarkApplied(set);
+
+            int applied;
+            System.Collections.Generic.List<long> changedIds;
+            using (var tx = new Transaction(doc, $"MCP: {set.Intent}"))
+            {
+                tx.Start();
+                (applied, changedIds) = ChangeSetApplier.Apply(doc, set);
+                tx.Commit();
+            }
+
+            var transaction = new AppliedTransaction
+            {
+                ChangeSetId = id,
+                Intent = set.Intent,
+                AppliedOperations = applied,
+                ChangedElementIds = changedIds,
+                Details = new JObject
+                {
+                    ["view_name"] = doc.ActiveView?.Name,
+                    ["transaction_name"] = $"MCP: {set.Intent}",
+                },
+            };
+            context.ChangeSetSession.MarkApplied(set, transaction);
 
             return McpToolResult.Success(new JObject
             {
                 ["change_set_id"] = id,
+                ["transaction_id"] = transaction.Id,
                 ["applied_operations"] = applied,
+                ["changed_element_ids"] = new JArray(changedIds),
+                ["audit_resource"] = $"audit://transactions/{transaction.Id}",
             });
         });
         return TaskResult(result);
-    }
-
-    static bool ApplyOperation(Autodesk.Revit.DB.Document doc, ChangeOp op)
-    {
-        switch (op.Kind)
-        {
-            case ChangeOpKind.SetParameter:
-            {
-                var elementId = op.Payload["element_id"]?.Value<long?>();
-                var name = op.Payload["parameter_name"]?.Value<string>();
-                var value = op.Payload["value"]?.Value<string>();
-                if (elementId == null || string.IsNullOrEmpty(name)) return false;
-                var e = doc.GetElement(new Autodesk.Revit.DB.ElementId(elementId.Value));
-                var p = e?.LookupParameter(name);
-                if (p == null || p.IsReadOnly) return false;
-                return p.Set(value);
-            }
-            case ChangeOpKind.SetViewOverride:
-            {
-                var elementId = op.Payload["element_id"]?.Value<long?>();
-                if (elementId == null) return false;
-                var color = new Autodesk.Revit.DB.Color(200, 100, 100);
-                var ogs = new Autodesk.Revit.DB.OverrideGraphicSettings()
-                    .SetProjectionLineColor(color)
-                    .SetSurfaceForegroundPatternColor(color);
-                doc.ActiveView.SetElementOverrides(new Autodesk.Revit.DB.ElementId(elementId.Value), ogs);
-                return true;
-            }
-            default:
-                return false;
-        }
     }
 }
 
@@ -220,8 +222,12 @@ public sealed class UndoLastAgentChangeHandler : ToolHandlerBase
         {
             ["last_change_set_id"] = last?.Id,
             ["last_intent"] = last?.Intent,
+            ["last_transaction_id"] = last?.LastTransactionId,
             ["undo_available"] = false,
             ["message"] = "Use Revit Undo (Ctrl+Z) for the last MCP transaction when available.",
+            ["audit_resource"] = last?.LastTransactionId != null
+                ? $"audit://transactions/{last.LastTransactionId}"
+                : null,
         }));
     }
 }

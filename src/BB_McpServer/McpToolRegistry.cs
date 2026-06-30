@@ -60,9 +60,11 @@ public sealed class McpToolRegistry
         Register(new EchoHandler());
         Register(new RevitDocumentInfoHandler());
         Register(new GetHostContextHandler());
+        Register(new GetActiveViewHandler());
         Register(new ListCapabilitiesHandler());
         Register(new GetSelectionHandler());
         Register(new QueryElementsHandler());
+        Register(new ResolveElementRefsHandler());
         Register(new ReadElementsHandler());
         Register(new ReadParametersHandler());
         Register(new GetModelStatisticsHandler());
