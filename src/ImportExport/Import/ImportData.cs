@@ -17,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             CommandData = commandData;
             ActiveDoc = commandData.Application.ActiveUIDocument.Document;
             Filter = string.Empty;
-            Initialize();
+            ImportFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         }
 
         public ExternalCommandData CommandData { get; }
@@ -26,21 +26,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 
         public string Filter { get; protected set; }
 
-        public string ImportFolder { get; private set; }
+        public string ImportFolder { get; }
 
         public string Title { get; protected set; }
 
-        private void Initialize()
-        {
-            //The directory into which the file will be imported
-            var dllFilePath = Assembly.GetExecutingAssembly().Location;
-            ImportFolder = Path.GetDirectoryName(dllFilePath);
-            ImportFileFullName = string.Empty;
-        }
-
         public virtual bool Import()
-        {
-            return ImportFileFullName == null ? throw new NullReferenceException() : true;
-        }
+            => ImportFileFullName == null ? throw new NullReferenceException() : true;
     }
 }
