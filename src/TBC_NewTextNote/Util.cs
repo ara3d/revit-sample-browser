@@ -2,7 +2,6 @@
 
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using Autodesk.Revit.DB;
 
@@ -27,19 +26,6 @@ namespace BuildingCoder
                 TextAlignFlags.TEF_ALIGN_MIDDLE);
 
             t.Commit();
-        }
-
-        /// <summary>
-        ///     Return the first text note type matching the given name.
-        /// </summary>
-        internal static TextNoteType GetTextNoteTypeByName(
-            Document doc,
-            string name)
-        {
-            return new FilteredElementCollector(doc)
-                    .OfClass(typeof(TextNoteType))
-                    .First(q => q.Name.Equals(name))
-                as TextNoteType;
         }
 
         [DllImport("user32.dll")]

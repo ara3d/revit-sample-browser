@@ -238,7 +238,8 @@ namespace BuildingCoder
         {
             //Document doc = ActiveDocument; // for VSTA macro version
 
-            var westView = Util.FindView(doc, "West");
+            var westView = Util.GetFirstElementOfTypeNamed(
+                doc, typeof(View), "West") as View;
 
             if (null == westView)
             {

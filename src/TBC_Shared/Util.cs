@@ -17,11 +17,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Color = System.Drawing.Color;
@@ -2521,6 +2526,1043 @@ const T f = ( ay * bx ) - ( ax * by );
         //  }
         //}
         //#endregion // Compatibility fix for spelling error change
+
+        #region Consolidated geometry helpers
+
+        public static IEnumerable<Solid> GetSolidsFromGeometry(
+            IEnumerable<GeometryObject> geometryElement)
+        {
+            foreach (var geometry in geometryElement)
+            {
+                var solid = geometry as Solid;
+                if (solid != null)
+                    yield return solid;
+
+                var instance = geometry as GeometryInstance;
+                if (instance != null)
+                    foreach (var instanceSolid in GetSolidsFromGeometry(
+                        instance.GetInstanceGeometry()))
+                        yield return instanceSolid;
+
+                var element = geometry as GeometryElement;
+                if (element != null)
+                    foreach (var elementSolid in GetSolidsFromGeometry(element))
+                        yield return elementSolid;
+            }
+        }
+
+        public static IEnumerable<Solid> GetSolidsFromElement(
+            Element element)
+        {
+            var geometry = element
+                .get_Geometry(new Options
+                {
+                    ComputeReferences = true,
+                    IncludeNonVisibleObjects = true
+                });
+
+            if (geometry == null)
+                return Enumerable.Empty<Solid>();
+
+            return GetSolidsFromGeometry(geometry)
+                .Where(x => x.Volume > 0);
+        }
+
+        public static List<Solid> GetElemSolids(GeometryElement geomElem)
+        {
+            if (geomElem == null)
+                return new List<Solid>();
+
+            return GetSolidsFromGeometry(geomElem)
+                .Where(s => s.Faces.Size > 0)
+                .ToList();
+        }
+
+        /// <summary>
+        ///     Use the formula
+        ///     area = sign * 0.5 * sum( xi * ( yi+1 - yi-1 ) )
+        ///     to determine the winding direction (clockwise
+        ///     or counter) and area of a 2D polygon.
+        ///     Cf. also GetPolygonPlane.
+        /// </summary>
+        public static double GetSignedPolygonArea(List<UV> p)
+        {
+            var n = p.Count;
+            var sum = p[0].U * (p[1].V - p[n - 1].V);
+            for (var i = 1; i < n - 1; ++i) sum += p[i].U * (p[i + 1].V - p[i - 1].V);
+            sum += p[n - 1].U * (p[0].V - p[n - 2].V);
+            return 0.5 * sum;
+        }
+
+        /// <summary>
+        ///     Eliminate the Z coordinate.
+        /// </summary>
+        public static UV Flatten(XYZ point)
+        {
+            return new UV(point.X, point.Y);
+        }
+
+        /// <summary>
+        ///     Eliminate the Z coordinate.
+        /// </summary>
+        public static List<UV> Flatten(List<XYZ> polygon)
+        {
+            var z = polygon[0].Z;
+            var a = new List<UV>(polygon.Count);
+            foreach (var p in polygon)
+            {
+                Debug.Assert(IsEqual(p.Z, z),
+                    "expected horizontal polygon");
+                a.Add(Flatten(p));
+            }
+
+            return a;
+        }
+
+        /// <summary>
+        ///     Eliminate the Z coordinate.
+        /// </summary>
+        public static List<List<UV>> Flatten(List<List<XYZ>> polygons)
+        {
+            var z = polygons[0][0].Z;
+            var a = new List<List<UV>>(polygons.Count);
+            foreach (var polygon in polygons)
+            {
+                Debug.Assert(IsEqual(polygon[0].Z, z),
+                    "expected horizontal polygons");
+                a.Add(Flatten(polygon));
+            }
+
+            return a;
+        }
+
+        /// <summary>
+        ///     Return the plane properties of a given polygon,
+        ///     i.e. the plane normal, area, and its distance
+        ///     from the origin.
+        /// </summary>
+        public static bool GetPolygonPlane(
+            List<XYZ> polygon,
+            out XYZ normal,
+            out double dist,
+            out double area)
+        {
+            normal = XYZ.Zero;
+            dist = area = 0.0;
+            var n = null == polygon ? 0 : polygon.Count;
+            var rc = 2 < n;
+            switch (n)
+            {
+                case 3:
+                {
+                    var a = polygon[0];
+                    var b = polygon[1];
+                    var c = polygon[2];
+                    var v = b - a;
+                    normal = v.CrossProduct(c - a);
+                    dist = normal.DotProduct(a);
+                    break;
+                }
+                case 4:
+                {
+                    var a = polygon[0];
+                    var b = polygon[1];
+                    var c = polygon[2];
+                    var d = polygon[3];
+
+                    normal = (a - c).CrossProduct(b - d);
+
+                    dist = 0.25 *
+                           (normal.X * (a.X + b.X + c.X + d.X)
+                            + normal.Y * (a.Y + b.Y + c.Y + d.Y)
+                            + normal.Z * (a.Z + b.Z + c.Z + d.Z));
+                    break;
+                }
+                case > 4:
+                {
+                    XYZ a;
+                    var b = polygon[n - 2];
+                    var c = polygon[n - 1];
+                    var s = XYZ.Zero;
+
+                    for (var i = 0; i < n; ++i)
+                    {
+                        a = b;
+                        b = c;
+                        c = polygon[i];
+
+                        normal = new XYZ(
+                            normal.X + b.Y * (c.Z - a.Z),
+                            normal.Y + b.Z * (c.X - a.X),
+                            normal.Z + b.X * (c.Y - a.Y));
+
+                        s += c;
+                    }
+
+                    dist = s.DotProduct(normal) / n;
+                    break;
+                }
+            }
+
+            if (rc)
+            {
+                var length = normal.GetLength();
+                rc = !IsZero(length);
+                Debug.Assert(rc);
+
+                if (rc)
+                {
+                    normal /= length;
+                    dist /= length;
+                    area = 0.5 * length;
+                }
+            }
+
+            return rc;
+        }
+
+        public static double[] GetPolygonAreas(List<List<XYZ>> polygons)
+        {
+            int i = 0, n = polygons.Count;
+            var areas = new double[n];
+            double dist, area;
+            XYZ normal;
+            foreach (var polygon in polygons)
+                if (GetPolygonPlane(polygon, out normal, out dist, out area))
+                    areas[i++] = area;
+            return areas;
+        }
+
+        public static Transform GetTransformToZ(XYZ v)
+        {
+            Transform t;
+
+            var a = XYZ.BasisZ.AngleTo(v);
+
+            if (IsZero(a))
+            {
+                t = Transform.Identity;
+            }
+            else
+            {
+                var axis = IsEqual(a, Math.PI)
+                    ? XYZ.BasisX
+                    : v.CrossProduct(XYZ.BasisZ);
+
+                t = Transform.CreateRotation(axis, a);
+            }
+
+            return t;
+        }
+
+        public static List<XYZ> ApplyTransform(
+            List<XYZ> polygon,
+            Transform t)
+        {
+            var n = polygon.Count;
+
+            var polygonTransformed
+                = new List<XYZ>(n);
+
+            foreach (var p in polygon) polygonTransformed.Add(t.OfPoint(p));
+            return polygonTransformed;
+        }
+
+        /// <summary>
+        ///     Offset the generated boundary polygon loop
+        ///     model lines downwards to separate them from
+        ///     the slab edge.
+        /// </summary>
+        private const double SlabBoundary_offset = 0.1;
+
+        /// <summary>
+        ///     Determine the boundary polygons of the lowest
+        ///     horizontal planar face of the given solid.
+        /// </summary>
+        private static bool GetBoundary(
+            List<List<XYZ>> polygons,
+            Solid solid)
+        {
+            PlanarFace lowest = null;
+            var faces = solid.Faces;
+            foreach (Face f in faces)
+            {
+                var pf = f as PlanarFace;
+                if (null != pf && IsHorizontal(pf))
+                    if (null == lowest
+                        || pf.Origin.Z < lowest.Origin.Z)
+                        lowest = pf;
+            }
+
+            if (null != lowest)
+            {
+                XYZ p, q = XYZ.Zero;
+                bool first;
+                int i, n;
+                var loops = lowest.EdgeLoops;
+                foreach (EdgeArray loop in loops)
+                {
+                    var vertices = new List<XYZ>();
+                    first = true;
+                    foreach (Edge e in loop)
+                    {
+                        var points = e.Tessellate();
+                        p = points[0];
+                        if (!first)
+                            Debug.Assert(p.IsAlmostEqualTo(q),
+                                "expected subsequent start point"
+                                + " to equal previous end point");
+                        n = points.Count;
+                        q = points[n - 1];
+                        for (i = 0; i < n - 1; ++i)
+                        {
+                            var v = points[i];
+                            v -= SlabBoundary_offset * XYZ.BasisZ;
+                            vertices.Add(v);
+                        }
+                    }
+
+                    q -= SlabBoundary_offset * XYZ.BasisZ;
+                    Debug.Assert(q.IsAlmostEqualTo(vertices[0]),
+                        "expected last end point to equal"
+                        + " first start point");
+                    polygons.Add(vertices);
+                }
+            }
+
+            return null != lowest;
+        }
+
+        /// <summary>
+        ///     Return all floor slab boundary loop polygons
+        ///     for the given floors, offset downwards from the
+        ///     bottom floor faces by a certain amount.
+        /// </summary>
+        public static List<List<XYZ>> GetFloorBoundaryPolygons(
+            List<Element> floors,
+            Options opt)
+        {
+            var polygons = new List<List<XYZ>>();
+
+            foreach (Floor floor in floors)
+            {
+                var geo = floor.get_Geometry(opt);
+
+                foreach (var obj in geo)
+                {
+                    var solid = obj as Solid;
+                    if (solid != null) GetBoundary(polygons, solid);
+                }
+            }
+
+            return polygons;
+        }
+
+        /// <summary>
+        ///     Offset the generated boundary polygon loop
+        ///     model lines outwards to separate them from
+        ///     the wall edge, measured in feet.
+        /// </summary>
+        private const double _wallProfileOffset = 1.0;
+
+        /// <summary>
+        ///     Determine the elevation boundary profile
+        ///     polygons of the exterior vertical planar
+        ///     face of the given wall solid.
+        /// </summary>
+        private static bool GetWallProfile(
+            List<List<XYZ>> polygons,
+            Solid solid,
+            XYZ v,
+            XYZ w)
+        {
+            double d, dmax = 0;
+            PlanarFace outermost = null;
+            var faces = solid.Faces;
+            foreach (Face f in faces)
+            {
+                var pf = f as PlanarFace;
+                if (null != pf
+                    && IsVertical(pf)
+                    && IsZero(v.DotProduct(pf.FaceNormal)))
+                {
+                    d = pf.Origin.DotProduct(w);
+                    if (null == outermost
+                        || dmax < d)
+                    {
+                        outermost = pf;
+                        dmax = d;
+                    }
+                }
+            }
+
+            if (null != outermost)
+            {
+                var voffset = _wallProfileOffset * w;
+                XYZ p, q = XYZ.Zero;
+                bool first;
+                int i, n;
+                var loops = outermost.EdgeLoops;
+                foreach (EdgeArray loop in loops)
+                {
+                    var vertices = new List<XYZ>();
+                    first = true;
+                    foreach (Edge e in loop)
+                    {
+                        var points = e.Tessellate();
+                        p = points[0];
+                        if (!first)
+                            Debug.Assert(p.IsAlmostEqualTo(q),
+                                "expected subsequent start point"
+                                + " to equal previous end point");
+                        n = points.Count;
+                        q = points[n - 1];
+                        for (i = 0; i < n - 1; ++i)
+                        {
+                            var a = points[i];
+                            a += voffset;
+                            vertices.Add(a);
+                        }
+                    }
+
+                    q += voffset;
+                    Debug.Assert(q.IsAlmostEqualTo(vertices[0]),
+                        "expected last end point to equal"
+                        + " first start point");
+                    polygons.Add(vertices);
+                }
+            }
+
+            return null != outermost;
+        }
+
+        /// <summary>
+        ///     Return all wall profile boundary loop polygons
+        ///     for the given walls, offset out from the outer
+        ///     face of the wall by a certain amount.
+        /// </summary>
+        public static List<List<XYZ>> GetWallProfilePolygons(
+            List<Element> walls,
+            Options opt)
+        {
+            XYZ p, q, v, w;
+            var polygons = new List<List<XYZ>>();
+
+            foreach (Wall wall in walls)
+            {
+                var desc = ElementDescription(wall);
+
+                if (wall.Location is not LocationCurve curve)
+                    throw new Exception($"{desc}: No wall curve found.");
+                p = curve.Curve.GetEndPoint(0);
+                q = curve.Curve.GetEndPoint(1);
+                v = q - p;
+                v = v.Normalize();
+                w = XYZ.BasisZ.CrossProduct(v).Normalize();
+                if (wall.Flipped) w = -w;
+
+                var geo = wall.get_Geometry(opt);
+
+                foreach (var obj in geo)
+                {
+                    var solid = obj as Solid;
+                    if (solid != null) GetWallProfile(polygons, solid, v, w);
+                }
+            }
+
+            return polygons;
+        }
+
+        #endregion // Consolidated geometry helpers
+
+        #region Consolidated export helpers
+
+        internal static void SetWhiteRenderBackground(View3D view)
+        {
+            var rs = view.GetRenderingSettings();
+            rs.BackgroundStyle = BackgroundStyle.Color;
+
+            var cbs
+                = (ColorBackgroundSettings) rs
+                    .GetBackgroundSettings();
+
+            cbs.Color = new Autodesk.Revit.DB.Color(255, 0, 0);
+            rs.SetBackgroundSettings(cbs);
+            view.SetRenderingSettings(rs);
+        }
+
+        internal static string ExportToImage(Document doc)
+        {
+            var tempFileName = Path.ChangeExtension(
+                Path.GetRandomFileName(), "png");
+
+            string tempImageFile;
+
+            try
+            {
+                tempImageFile = Path.Combine(
+                    Path.GetTempPath(), tempFileName);
+            }
+            catch (IOException)
+            {
+                return null;
+            }
+
+            IList<ElementId> views = new List<ElementId>();
+
+            try
+            {
+                var collector = new FilteredElementCollector(
+                    doc);
+
+                var viewFamilyType = collector
+                    .OfClass(typeof(ViewFamilyType))
+                    .OfType<ViewFamilyType>()
+                    .FirstOrDefault(x =>
+                        x.ViewFamily == ViewFamily.ThreeDimensional);
+
+                var view3D = viewFamilyType != null
+                    ? View3D.CreateIsometric(doc, viewFamilyType.Id)
+                    : null;
+
+                if (view3D != null)
+                {
+                    var white = new Autodesk.Revit.DB.Color(255, 255, 255);
+
+                    view3D.SetBackground(
+                        ViewDisplayBackground.CreateGradient(
+                            white, white, white));
+
+                    views.Add(view3D.Id);
+
+                    var graphicDisplayOptions
+                        = view3D.get_Parameter(
+                            BuiltInParameter.MODEL_GRAPHICS_STYLE);
+
+                    graphicDisplayOptions.Set(6);
+                }
+            }
+            catch (Autodesk.Revit.Exceptions.InvalidOperationException)
+            {
+            }
+
+            var ieo = new ImageExportOptions
+            {
+                FilePath = tempImageFile,
+                FitDirection = FitDirectionType.Horizontal,
+                HLRandWFViewsFileType = ImageFileType.PNG,
+                ImageResolution = ImageResolution.DPI_150,
+                ShouldCreateWebSite = false
+            };
+
+            if (views.Count > 0)
+            {
+                ieo.SetViewsAndSheets(views);
+                ieo.ExportRange = ExportRange.SetOfViews;
+            }
+            else
+            {
+                ieo.ExportRange = ExportRange
+                    .VisibleRegionOfCurrentView;
+            }
+
+            ieo.ZoomType = ZoomFitType.FitToPage;
+            ieo.ViewName = "tmp";
+
+            if (ImageExportOptions.IsValidFileName(
+                    tempImageFile))
+                try
+                {
+                    doc.ExportImage(ieo);
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            else
+                return string.Empty;
+
+            var files = Directory.GetFiles(
+                Path.GetTempPath(),
+                $"{Path.GetFileNameWithoutExtension(tempFileName)}*.*");
+
+            return files.Length > 0
+                ? files[0]
+                : string.Empty;
+        }
+
+        internal static Result ExportToImage2(Document doc)
+        {
+            var r = Result.Failed;
+
+            using var tx = new Transaction(doc);
+            tx.Start("Export Image");
+            var filepath = ExportToImage(doc);
+            tx.RollBack();
+
+            if (0 < filepath.Length)
+            {
+                Process.Start(filepath);
+                r = Result.Succeeded;
+            }
+
+            return r;
+        }
+
+        internal static Result ExportToImage3(Document doc)
+        {
+            var r = Result.Failed;
+
+            using var tx = new Transaction(doc);
+            tx.Start("Export Image");
+
+            var desktop_path = Environment.GetFolderPath(
+                Environment.SpecialFolder.Desktop);
+
+            var view = doc.ActiveView;
+
+            var filepath = Path.Combine(desktop_path,
+                view.Name);
+
+            var img = new ImageExportOptions();
+
+            img.ZoomType = ZoomFitType.FitToPage;
+            img.PixelSize = 32;
+            img.ImageResolution = ImageResolution.DPI_600;
+            img.FitDirection = FitDirectionType.Horizontal;
+            img.ExportRange = ExportRange.CurrentView;
+            img.HLRandWFViewsFileType = ImageFileType.PNG;
+            img.FilePath = filepath;
+            img.ShadowViewsFileType = ImageFileType.PNG;
+
+            doc.ExportImage(img);
+
+            tx.RollBack();
+
+            filepath = Path.ChangeExtension(
+                filepath, "png");
+
+            Process.Start(filepath);
+
+            r = Result.Succeeded;
+
+            return r;
+        }
+
+        /// <summary>
+        ///     Export current view to IFC.
+        /// </summary>
+        internal static Result ExportToIfc(Document doc)
+        {
+            var r = Result.Failed;
+
+            using var tx = new Transaction(doc);
+            tx.Start("Export IFC");
+
+            var desktop_path = Environment.GetFolderPath(
+                Environment.SpecialFolder.Desktop);
+
+            IFCExportOptions opt = null;
+
+            doc.Export(desktop_path, doc.Title, opt);
+
+            tx.RollBack();
+
+            r = Result.Succeeded;
+
+            return r;
+        }
+
+        #endregion // Consolidated export helpers
+
+        #region Consolidated room and view helpers
+
+        /// <summary>
+        ///     Return the neighbouring room to the given one
+        ///     on the other side of the midpoint of the given
+        ///     boundary segment.
+        /// </summary>
+        public static Room GetRoomNeighbourAt(
+            BoundarySegment bs,
+            Room r)
+        {
+            var doc = r.Document;
+
+            var w = doc.GetElement(bs.ElementId) as Wall;
+
+            var wallThickness = w.Width;
+
+            var derivatives = bs.GetCurve()
+                .ComputeDerivatives(0.5, true);
+
+            var midPoint = derivatives.Origin;
+
+            Debug.Assert(
+                midPoint.IsAlmostEqualTo(
+                    bs.GetCurve().Evaluate(0.5, true)),
+                "expected same result from Evaluate and derivatives");
+
+            var tangent = derivatives.BasisX.Normalize();
+
+            var normal = new XYZ(tangent.Y,
+                tangent.X * -1, tangent.Z);
+
+            var p = midPoint + wallThickness * normal;
+
+            var otherRoom = doc.GetRoomAtPoint(p);
+
+            if (null != otherRoom)
+                if (otherRoom.Id == r.Id)
+                {
+                    normal = new XYZ(tangent.Y * -1,
+                        tangent.X, tangent.Z);
+
+                    p = midPoint + wallThickness * normal;
+
+                    otherRoom = doc.GetRoomAtPoint(p);
+
+                    Debug.Assert(null == otherRoom
+                                 || otherRoom.Id != r.Id,
+                        "expected different room on other side");
+                }
+
+            return otherRoom;
+        }
+
+        /// <summary>
+        ///     Return the first elevation view found in the
+        ///     given element id collection or null.
+        /// </summary>
+        internal static View FindElevationView(
+            Document doc,
+            ICollection<ElementId> ids)
+        {
+            View view = null;
+
+            foreach (var id in ids)
+            {
+                view = doc.GetElement(id) as View;
+
+                if (view.IsTemplate
+                    && ViewType.Internal == view.ViewType)
+                {
+                    view = null;
+                    continue;
+                }
+
+                if (view is {ViewType: ViewType.Elevation})
+                    break;
+
+                view = null;
+            }
+
+            return view;
+        }
+
+        /// <summary>
+        ///     Return a reference to the topmost face of the given element.
+        /// </summary>
+        internal static Reference FindTopMostReference(Element e)
+        {
+            Reference ret = null;
+            var doc = e.Document;
+
+            var opt = doc.Application.Create
+                .NewGeometryOptions();
+
+            opt.ComputeReferences = true;
+
+            var geo = e.get_Geometry(opt);
+
+            foreach (var obj in geo)
+            {
+                var inst = obj as GeometryInstance;
+
+                if (null != inst)
+                {
+                    geo = inst.GetSymbolGeometry();
+                    break;
+                }
+            }
+
+            var solid = geo.OfType<Solid>()
+                .First(sol => null != sol);
+
+            var z = double.MinValue;
+
+            foreach (Face f in solid.Faces)
+            {
+                var b = f.GetBoundingBox();
+                var p = b.Min;
+                var q = b.Max;
+                var midparam = p + 0.5 * (q - p);
+                var midpoint = f.Evaluate(midparam);
+                var normal = f.ComputeNormal(midparam);
+
+                if (PointsUpwards(normal))
+                    if (midpoint.Z > z)
+                    {
+                        z = midpoint.Z;
+                        ret = f.Reference;
+                    }
+            }
+
+            return ret;
+        }
+
+        #endregion // Consolidated room and view helpers
+
+        #region Consolidated material helpers
+
+        /// <summary>
+        ///     Return a filtered element collector for materials.
+        /// </summary>
+        internal static FilteredElementCollector FilterForMaterials(
+            Document doc)
+        {
+            return new FilteredElementCollector(doc)
+                .OfClass(typeof(Material));
+        }
+
+        /// <summary>
+        ///     Replacement for deprecated Face.MaterialElement.
+        /// </summary>
+        internal static string FaceMaterialName(
+            Document doc,
+            Face face)
+        {
+            var id = face.MaterialElementId;
+            var m = doc.GetElement(id) as Material;
+            return m.Name;
+        }
+
+        /// <summary>
+        ///     Return family instance element material.
+        /// </summary>
+        public static Material GetFamilyInstanceMaterial(
+            Document doc,
+            FamilyInstance fi)
+        {
+            Material material = null;
+
+            foreach (Parameter p in fi.Parameters)
+            {
+                var def = p.Definition;
+
+                if (p.StorageType == StorageType.ElementId
+                    && GroupTypeId.Materials == def.GetGroupTypeId()
+                    && def.GetDataType() == SpecTypeId.Reference.Material)
+                {
+                    var materialId = p.AsElementId();
+
+                    if (-1 == materialId.Value)
+                    {
+                        if (null != fi.Category)
+                        {
+                            material = fi.Category.Material;
+
+                            if (null == material)
+                            {
+                                var id = Material.Create(doc, "GoodConditionMat");
+                                var mat = doc.GetElement(id) as Material;
+
+                                mat.Color = new Autodesk.Revit.DB.Color(255, 0, 0);
+
+                                fi.Category.Material = mat;
+
+                                material = fi.Category.Material;
+                            }
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            return material;
+        }
+
+        /// <summary>
+        ///     Return materials by recursively traversing geometry solids.
+        /// </summary>
+        public static List<string> GetMaterialsFromGeometry(
+            Document doc,
+            GeometryElement geo)
+        {
+            var materials = new List<string>();
+
+            foreach (var o in geo)
+                if (o is Solid solid)
+                    foreach (Face face in solid.Faces)
+                        materials.Add(FaceMaterialName(doc, face));
+                else if (o is GeometryInstance instance)
+                    materials.AddRange(GetMaterialsFromGeometry(
+                        doc, instance.SymbolGeometry));
+
+            return materials;
+        }
+
+        #endregion // Consolidated material helpers
+
+        #region Consolidated misc sample helpers
+
+        internal static void LogIdlingMessage(string msg)
+        {
+            var dt = DateTime.Now.ToString("u");
+            Debug.Print($"{dt} {msg}");
+        }
+
+        internal static void PrintLibraryPathMap(
+            IDictionary<string, string> map,
+            string description)
+        {
+            Debug.Print("\n{0}:\n", description);
+
+            foreach (var pair in map)
+                Debug.Print("{0} -> {1}", pair.Key, pair.Value);
+        }
+
+        public static BitmapSource ConvertBitmapToBitmapSource(
+            Bitmap bmp)
+        {
+            return Imaging
+                .CreateBitmapSourceFromHBitmap(
+                    bmp.GetHbitmap(),
+                    IntPtr.Zero,
+                    Int32Rect.Empty,
+                    BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        /// <summary>
+        ///     Create a new group of the specified elements
+        ///     in the current active view at the given offset.
+        /// </summary>
+        internal static void CreateGroup(
+            Document doc,
+            ICollection<ElementId> ids,
+            XYZ offset)
+        {
+            var group = doc.Create.NewGroup(ids);
+
+            var location = group.Location
+                as LocationPoint;
+
+            var p = location.Point + offset;
+
+            doc.Create.PlaceGroup(
+                p, group.GroupType);
+
+            group.UngroupMembers();
+        }
+
+        public static Dictionary<string, string> GetFilePaths(
+            Autodesk.Revit.ApplicationServices.Application app,
+            bool onlyImportedFiles)
+        {
+            var docs = app.Documents;
+            var n = docs.Size;
+
+            var dict
+                = new Dictionary<string, string>(n);
+
+            foreach (Document doc in docs)
+                if (!onlyImportedFiles
+                    || null == doc.ActiveView)
+                {
+                    var path = doc.PathName;
+                    var i = path.LastIndexOf("\\") + 1;
+                    var name = path.Substring(i);
+                    dict.Add(name, path);
+                }
+
+            return dict;
+        }
+
+        internal static void SetModelCurvesColor(
+            ModelCurveArray modelCurves,
+            View view,
+            Autodesk.Revit.DB.Color color)
+        {
+            foreach (var curve in modelCurves
+                .Cast<ModelCurve>())
+            {
+                var overrides = view.GetElementOverrides(
+                    curve.Id);
+
+                overrides.SetProjectionLineColor(color);
+
+                view.SetElementOverrides(curve.Id, overrides);
+            }
+        }
+
+        /// <summary>
+        ///     Return the first wall found that
+        ///     uses the given wall type.
+        /// </summary>
+        public static Wall GetFirstWallUsingType(
+            Document doc,
+            WallType wallType)
+        {
+            var bip
+                = BuiltInParameter.ELEM_TYPE_PARAM;
+
+            var provider
+                = new ParameterValueProvider(
+                    new ElementId(bip));
+
+            FilterNumericRuleEvaluator evaluator
+                = new FilterNumericEquals();
+
+            FilterRule rule = new FilterElementIdRule(
+                provider, evaluator, wallType.Id);
+
+            var filter
+                = new ElementParameterFilter(rule);
+
+            var collector
+                = new FilteredElementCollector(doc)
+                    .OfClass(typeof(Wall))
+                    .WherePasses(filter);
+
+            return collector.FirstElement() as Wall;
+        }
+
+        #endregion // Consolidated misc sample helpers
+
+        #region Consolidated XYZ comparers
+
+        /// <summary>
+        ///     Define equality between XYZ objects, ensuring
+        ///     that almost equal points compare equal.
+        /// </summary>
+        public class XyzEqualityComparer : IEqualityComparer<XYZ>
+        {
+            private readonly double _eps;
+
+            public XyzEqualityComparer()
+                : this(0)
+            {
+            }
+
+            public XyzEqualityComparer(double eps)
+            {
+                _eps = eps;
+            }
+
+            public bool Equals(XYZ p, XYZ q)
+            {
+                return 0 < _eps
+                    ? _eps > p.DistanceTo(q)
+                    : p.IsAlmostEqualTo(q);
+            }
+
+            public int GetHashCode(XYZ p)
+            {
+                return PointString(p).GetHashCode();
+            }
+        }
+
+        #endregion // Consolidated XYZ comparers
     }
 
     #region Extension Method Classes

@@ -12,21 +12,6 @@ namespace BuildingCoder
     internal static partial class Util
     {
         /// <summary>
-        ///     Return a 3D view from the given document.
-        /// </summary>
-        internal static View3D Get3DView(Document doc)
-        {
-            var collector = new FilteredElementCollector(doc);
-
-            collector.OfClass(typeof(View3D));
-
-            foreach (View3D v in collector)
-                if (v is {IsTemplate: false, Name: "{3D}"})
-                    return v;
-            return null;
-        }
-
-        /// <summary>
         ///     Return reference to ceiling face to place
         ///     lighting fixture above a given point.
         /// </summary>

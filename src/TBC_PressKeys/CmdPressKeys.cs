@@ -121,8 +121,8 @@ namespace BuildingCoder
 
             var wallTypeName = "Generic - 203";
 
-            var wallType = Util.GetFirstWallTypeNamed(
-                doc, wallTypeName);
+            var wallType = Util.GetFirstElementOfTypeNamed(
+                doc, typeof(WallType), wallTypeName) as WallType;
 
             var wall = Util.GetFirstWallUsingType(
                 doc, wallType);

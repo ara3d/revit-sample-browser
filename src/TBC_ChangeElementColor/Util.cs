@@ -124,7 +124,7 @@ namespace BuildingCoder
                 foreach (var id in landings)
                 {
                     var land = doc.GetElement(id);
-                    var solids = GetElemSolids(
+                    var solids = Util.GetElemSolids(
                         land.get_Geometry(new Options()));
 
                     isLand = SolidsContainFace(solids, selected_face);
@@ -176,24 +176,5 @@ namespace BuildingCoder
             return false;
         }
 
-        internal static List<Solid> GetElemSolids(GeometryElement geomElem)
-        {
-            var solids = new List<Solid>();
-
-            if (null != geomElem)
-                foreach (var geomObj in geomElem)
-                    switch (geomObj)
-                    {
-                        case Solid solid when solid.Faces.Size > 0:
-                            solids.Add(solid);
-                            continue;
-                        case GeometryInstance geomInst:
-                            solids.AddRange(GetElemSolids(
-                                geomInst.GetInstanceGeometry()));
-                            break;
-                    }
-
-            return solids;
-        }
     }
 }

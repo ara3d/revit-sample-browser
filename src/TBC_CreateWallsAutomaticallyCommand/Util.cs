@@ -69,45 +69,6 @@ namespace BuildingCoder
                     familyInstance));
         }
 
-        internal static IEnumerable<Solid> GetSolidsFromElement(
-            Element element)
-        {
-            var geometry = element
-                .get_Geometry(new Options
-                {
-                    ComputeReferences = true,
-                    IncludeNonVisibleObjects = true
-                });
-
-            if (geometry == null)
-                return Enumerable.Empty<Solid>();
-
-            return GetSolidsFromGeometry(geometry)
-                .Where(x => x.Volume > 0);
-        }
-
-        internal static IEnumerable<Solid> GetSolidsFromGeometry(
-            IEnumerable<GeometryObject> geometryElement)
-        {
-            foreach (var geometry in geometryElement)
-            {
-                var solid = geometry as Solid;
-                if (solid != null)
-                    yield return solid;
-
-                var instance = geometry as GeometryInstance;
-                if (instance != null)
-                    foreach (var instanceSolid in GetSolidsFromGeometry(
-                        instance.GetInstanceGeometry()))
-                        yield return instanceSolid;
-
-                var element = geometry as GeometryElement;
-                if (element != null)
-                    foreach (var elementSolid in GetSolidsFromGeometry(element))
-                        yield return elementSolid;
-            }
-        }
-
         internal static IEnumerable<CurveLoop> GetCountoursFromSolid(
             Solid solid,
             Element element)

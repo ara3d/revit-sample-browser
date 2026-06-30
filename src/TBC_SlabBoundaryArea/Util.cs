@@ -15,22 +15,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_SlabBoundaryArea sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Use the formula
-        ///     area = sign * 0.5 * sum( xi * ( yi+1 - yi-1 ) )
-        ///     to determine the winding direction (clockwise
-        ///     or counter) and area of a 2D polygon.
-        ///     Cf. also GetPolygonPlane.
-        /// </summary>
-        public static double GetSignedPolygonArea(List<UV> p)
-        {
-            var n = p.Count;
-            var sum = p[0].U * (p[1].V - p[n - 1].V);
-            for (var i = 1; i < n - 1; ++i) sum += p[i].U * (p[i + 1].V - p[i - 1].V);
-            sum += p[n - 1].U * (p[0].V - p[n - 2].V);
-            return 0.5 * sum;
-        }
-
         public static Result GetPlanarFaceOuterLoops(
             ExternalCommandData commandData,
             ref string message,
@@ -205,48 +189,6 @@ namespace BuildingCoder
             }
 
             return eaMin;
-        }
-
-        /// <summary>
-        ///     Eliminate the Z coordinate.
-        /// </summary>
-        public static UV Flatten(XYZ point)
-        {
-            return new UV(point.X, point.Y);
-        }
-
-        /// <summary>
-        ///     Eliminate the Z coordinate.
-        /// </summary>
-        public static List<UV> Flatten(List<XYZ> polygon)
-        {
-            var z = polygon[0].Z;
-            var a = new List<UV>(polygon.Count);
-            foreach (var p in polygon)
-            {
-                Debug.Assert(IsEqual(p.Z, z),
-                    "expected horizontal polygon");
-                a.Add(Flatten(p));
-            }
-
-            return a;
-        }
-
-        /// <summary>
-        ///     Eliminate the Z coordinate.
-        /// </summary>
-        public static List<List<UV>> Flatten(List<List<XYZ>> polygons)
-        {
-            var z = polygons[0][0].Z;
-            var a = new List<List<UV>>(polygons.Count);
-            foreach (var polygon in polygons)
-            {
-                Debug.Assert(IsEqual(polygon[0].Z, z),
-                    "expected horizontal polygons");
-                a.Add(Flatten(polygon));
-            }
-
-            return a;
         }
     }
 }

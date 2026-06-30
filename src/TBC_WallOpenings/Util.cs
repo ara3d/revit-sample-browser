@@ -83,7 +83,7 @@ namespace BuildingCoder
                     r => r.Proximity)
                 .Select(r
                     => r.GetReference().GlobalPoint)
-                .Distinct(new WallOpeningXyzEqualityComparer()));
+                .Distinct(new XyzEqualityComparer()));
 
             var q = wallOrigin + _wallOpeningOffset * XYZ.BasisZ;
 
@@ -122,19 +122,6 @@ namespace BuildingCoder
                     End = pointList[i + 1]
                 });
             return wallOpenings;
-        }
-
-        private class WallOpeningXyzEqualityComparer : IEqualityComparer<XYZ>
-        {
-            public bool Equals(XYZ a, XYZ b)
-            {
-                return IsEqual(a, b);
-            }
-
-            public int GetHashCode(XYZ a)
-            {
-                return PointString(a).GetHashCode();
-            }
         }
     }
 }

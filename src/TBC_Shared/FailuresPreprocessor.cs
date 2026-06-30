@@ -1,15 +1,21 @@
 #region Namespaces
 
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
 #endregion // Namespaces
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_PreprocessFailure sample.</summary>
-    internal static partial class Util
+    /// <summary>
+    ///     No-op failures preprocessor that allows failure handling to continue.
+    /// </summary>
+    internal class ContinueFailuresPreprocessor : IFailuresPreprocessor
     {
+        public FailureProcessingResult PreprocessFailures(
+            FailuresAccessor failuresAccessor)
+        {
+            return FailureProcessingResult.Continue;
+        }
     }
 
     /// <summary>

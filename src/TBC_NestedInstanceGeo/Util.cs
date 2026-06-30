@@ -15,7 +15,7 @@ namespace BuildingCoder
 
             var a
                 = new Dictionary<XYZ, int>(
-                    new NestedInstanceGeoXyzEqualityComparer());
+                    new XyzEqualityComparer());
 
             foreach (Face f in s.Faces)
             {
@@ -40,23 +40,6 @@ namespace BuildingCoder
                     "expected every vertex of solid to appear in exactly three faces");
 
                 vertices.Add(p);
-            }
-        }
-
-        /// <summary>
-        ///     Define equality between XYZ objects, ensuring
-        ///     that almost equal points compare equal.
-        /// </summary>
-        private class NestedInstanceGeoXyzEqualityComparer : IEqualityComparer<XYZ>
-        {
-            public bool Equals(XYZ p, XYZ q)
-            {
-                return p.IsAlmostEqualTo(q);
-            }
-
-            public int GetHashCode(XYZ p)
-            {
-                return PointString(p).GetHashCode();
             }
         }
     }

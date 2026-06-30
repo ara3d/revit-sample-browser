@@ -184,7 +184,7 @@ namespace BuildingCoder
                 transaction.Commit();
             }
 
-            sketchEditScope.Commit(new FailuresPreprocessor());
+            sketchEditScope.Commit(new ContinueFailuresPreprocessor());
         }
 
         public void MakeHole(Document doc)
@@ -217,16 +217,7 @@ namespace BuildingCoder
                 transaction.Commit();
             }
 
-            sketchEditScope.Commit(new FailuresPreprocessor());
-        }
-    }
-
-    internal class FailuresPreprocessor : IFailuresPreprocessor
-    {
-        public FailureProcessingResult PreprocessFailures(
-            FailuresAccessor failuresAccessor)
-        {
-            return FailureProcessingResult.Continue;
+            sketchEditScope.Commit(new ContinueFailuresPreprocessor());
         }
     }
 }

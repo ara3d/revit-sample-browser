@@ -23,6 +23,7 @@ using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 
 #endregion // Namespaces
 
@@ -202,7 +203,7 @@ namespace BuildingCoder
                 Util.PointString(pts[1]),
                 Util.PointString(normal));
 
-            var view = Util.Get3DView(doc);
+            var view = ElementQuery.Get3DView(doc);
 
             if (null == view)
             {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -61,7 +62,7 @@ namespace BuildingCoder
 
         internal static List<Solid> GetElementSolids(Element e)
         {
-            return null;
+            return GetSolidsFromElement(e).ToList();
         }
 
         internal static void GetCurtainWallPanelGeometry(

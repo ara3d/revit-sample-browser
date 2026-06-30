@@ -30,32 +30,5 @@ namespace BuildingCoder
             var normal = f.ComputeNormal(midpoint);
             return PointsUpwards(normal);
         }
-
-        /// <summary>
-        ///     Define equality between XYZ objects, ensuring
-        ///     that almost equal points compare equal.
-        /// </summary>
-        public class XyzEqualityComparer : IEqualityComparer<XYZ>
-        {
-            private readonly double _eps;
-
-            public XyzEqualityComparer(double eps)
-            {
-                Debug.Assert(0 < eps,
-                    "expected a positive tolerance");
-
-                _eps = eps;
-            }
-
-            public bool Equals(XYZ p, XYZ q)
-            {
-                return _eps > p.DistanceTo(q);
-            }
-
-            public int GetHashCode(XYZ p)
-            {
-                return PointString(p).GetHashCode();
-            }
-        }
     }
 }

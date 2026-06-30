@@ -16,20 +16,6 @@ namespace BuildingCoder
     internal static partial class Util
     {
         /// <summary>
-        ///     Return all family symbols in the given document
-        ///     matching the given built-in category.
-        ///     Todo: Compare this with the FamilySymbolFilter class.
-        /// </summary>
-        public static FilteredElementCollector
-            GetFamilySymbols(
-                Document doc,
-                BuiltInCategory bic)
-        {
-            return GetElementsOfType(doc,
-                typeof(FamilySymbol), bic);
-        }
-
-        /// <summary>
         ///     Return the first family symbol found in the given document
         ///     matching the given built-in category, or null if none is found.
         /// </summary>
@@ -37,7 +23,8 @@ namespace BuildingCoder
             Document doc,
             BuiltInCategory bic)
         {
-            var s = GetFamilySymbols(doc, bic)
+            var s = GetElementsOfType(doc,
+                    typeof(FamilySymbol), bic)
                 .FirstElement() as FamilySymbol;
 
             Debug.Assert(null != s, $"expected at least one {bic.ToString()} symbol in project");

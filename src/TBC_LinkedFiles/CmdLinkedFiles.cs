@@ -42,7 +42,9 @@ namespace BuildingCoder
                 = Util.GetFilePaths(app, true);
 
             var links
-                = Util.GetLinkedFiles(doc).ToElements();
+                = Util.GetElementsOfType(doc,
+                    typeof(Instance),
+                    BuiltInCategory.OST_RvtLinks).ToElements();
 
             var n = links.Count;
             Debug.Print(

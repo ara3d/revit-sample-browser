@@ -7,11 +7,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_PickRoomInclLinked sample.</summary>
-    internal static partial class Util
-    {
-    }
-
     internal class ElementInLinkSelectionFilter<T> : ISelectionFilter where T : Element
     {
         private readonly Document _doc;
