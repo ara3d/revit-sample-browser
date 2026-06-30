@@ -84,6 +84,87 @@ public sealed class McpToolRegistry
         Register(new CreateMcpToolFromScriptHandler());
         Register(new ExportAllJsonHandler());
         Register(new ListRoomsHandler());
+
+        // Geometry
+        Register(new CreateDirectShapeBoxHandler());
+        Register(new CreateDirectShapeCylinderHandler());
+        Register(new CreateDirectShapeExtrusionHandler());
+        Register(new GetElementGeometryJsonHandler());
+        Register(new ComputeElementBoundingBoxHandler());
+        Register(new ComputeMaterialQuantitiesHandler());
+        Register(new FindIntersectingElementsHandler());
+        Register(new ComputeWallFaceAreasHandler());
+
+        // Massing
+        Register(new CreateMassBoxHandler());
+        Register(new CreateMassFromProfileHandler());
+        Register(new ApplyMassFloorsHandler());
+        Register(new ComputeMassPropertiesHandler());
+        Register(new CreateCurtainSystemOnFacesHandler());
+        Register(new CreateDividedSurfaceHandler());
+
+        // Building creation
+        Register(new CreateWallHandler());
+        Register(new CreateFloorHandler());
+        Register(new CreateCeilingHandler());
+        Register(new CreateRoomHandler());
+        Register(new CreateColumnHandler());
+        Register(new CreateBeamHandler());
+        Register(new CreateLevelHandler());
+        Register(new CreateGridLineHandler());
+        Register(new PlaceFamilyInstanceHandler());
+        Register(new CreateRectangularFloorPlanHandler());
+
+        // Views and sheets
+        Register(new Create3dViewHandler());
+        Register(new CreatePlanViewHandler());
+        Register(new CreateSectionViewHandler());
+        Register(new CreateSheetHandler());
+        Register(new PlaceViewOnSheetHandler());
+        Register(new ApplyViewTemplateHandler());
+        Register(new ListViewsAndSheetsHandler());
+        Register(new IsolateCategoryInViewHandler());
+
+        // Schedules
+        Register(new CreateScheduleHandler());
+        Register(new ReadScheduleDataHandler());
+        Register(new AddScheduleFilterHandler());
+        Register(new AddScheduleSortHandler());
+        Register(new ExportScheduleCsvHandler());
+        Register(new ExportScheduleHtmlHandler());
+        Register(new ListSchedulesHandler());
+        Register(new DuplicateScheduleHandler());
+
+        // Export / import
+        Register(new ExportDwgHandler());
+        Register(new ExportIfcHandler());
+        Register(new ExportPdfHandler());
+        Register(new ExportGbxmlHandler());
+        Register(new Export3dMeshJsonHandler());
+        Register(new ExportColladaHandler());
+        Register(new ExportAllElementsJsonHandler());
+        Register(new ExportRoomsJsonHandler());
+        Register(new ExportScheduleExcelHandler());
+
+        // Validation
+        Register(new GetModelWarningsDetailedHandler());
+        Register(new FindUnplacedRoomsHandler());
+        Register(new FindElementsWithoutParameterHandler());
+        Register(new ValidateNamingConventionHandler());
+        Register(new FindLevelLessElementsHandler());
+        Register(new CheckRoomDoorRelationshipsHandler());
+        Register(new FindOverlappingRoomsHandler());
+        Register(new AuditModelHealthHandler());
+        Register(new CheckMepSystemCompletenessHandler());
+
+        // Parameters
+        Register(new SetParametersBulkHandler());
+        Register(new CopyParametersBetweenElementsHandler());
+        Register(new ExportParametersCsvHandler());
+        Register(new ImportParametersCsvHandler());
+        Register(new ListProjectParametersHandler());
+        Register(new FindElementsByParameterValueHandler());
+        Register(new ComputeParameterStatisticsHandler());
     }
 
     void RegisterDescriptorTools(string repoRoot)
