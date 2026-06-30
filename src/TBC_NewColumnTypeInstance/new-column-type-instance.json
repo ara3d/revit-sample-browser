@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_column_type_instance",
+  "description": "Create a new column type and insert an instance of it",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewColumnTypeInstance",
+  "sample": "TBC_NewColumnTypeInstance",
+  "source": "src/TBC_NewColumnTypeInstance/CmdNewColumnTypeInstance.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

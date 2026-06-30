@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_cross_fitting",
+  "description": "Create a new pipe cross fitting",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewCrossFitting",
+  "sample": "TBC_NewCrossFitting",
+  "source": "src/TBC_NewCrossFitting/CmdNewCrossFitting.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

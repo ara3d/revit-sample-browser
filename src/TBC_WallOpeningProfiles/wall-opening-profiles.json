@@ -1,0 +1,15 @@
+{
+  "name": "revit_wall_opening_profiles",
+  "description": "Determine and display all wall opening edges including elevation profile lines",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdWallOpeningProfiles",
+  "sample": "TBC_WallOpeningProfiles",
+  "source": "src/TBC_WallOpeningProfiles/CmdWallOpeningProfiles.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

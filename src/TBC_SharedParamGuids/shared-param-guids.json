@@ -1,0 +1,15 @@
+{
+  "name": "revit_shared_param_guids",
+  "description": "List all shared parameter GUIDs",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdSharedParamGuids",
+  "sample": "TBC_SharedParamGuids",
+  "source": "src/TBC_SharedParamGuids/CmdSharedParamGuids.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

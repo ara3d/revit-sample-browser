@@ -1,0 +1,15 @@
+{
+  "name": "revit_get_materials",
+  "description": "Retrieve building element materials",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdGetMaterials",
+  "sample": "TBC_GetMaterials",
+  "source": "src/TBC_GetMaterials/CmdGetMaterials.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

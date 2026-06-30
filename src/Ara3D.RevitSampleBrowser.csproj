@@ -108,6 +108,14 @@
       <HintPath>..\vendor\revit\2025\RevitAPIIFC.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="RevitAPIMacros">
+      <HintPath>..\vendor\revit\2025\RevitAPIMacros.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUIMacros">
+      <HintPath>..\vendor\revit\2025\RevitAPIUIMacros.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="RevitAPIUI">
       <HintPath>..\vendor\revit\2025\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
@@ -118,6 +126,10 @@
     </Reference>
     <Reference Include="UIFramework">
       <HintPath>..\vendor\revit\2025\UIFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UIFrameworkServices">
+      <HintPath>..\vendor\revit\2025\UIFrameworkServices.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -451,6 +463,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\**\*.cs" />
+    <Compile Include="TBC_Shared\**\*.cs" />
+    <Compile Include="TBC_*\**\*.cs" Exclude="TBC_Shared\**" />
+    <EmbeddedResource Include="TBC_*\**\*.resx" Exclude="TBC_Shared\**" />
     <Compile Include="Revit2025Aliases.cs" />
 
 
@@ -2654,7 +2669,6 @@
     <MakeDir Directories="$(RevitAddinsDir)" />
     <MakeDir Directories="$(RevitSampleBrowserAddinDir)" />
     <Copy SourceFiles="$(ProjectDir)Ara3D.RevitSampleBrowser.addin" DestinationFolder="$(RevitAddinsDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(RevitSampleBrowserOutput)" DestinationFiles="@(RevitSampleBrowserOutput->'$(RevitSampleBrowserAddinDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 </Project>
 

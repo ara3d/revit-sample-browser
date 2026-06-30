@@ -1,0 +1,15 @@
+{
+  "name": "revit_slab_sides",
+  "description": "Determine floor slab side faces",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdSlabSides",
+  "sample": "TBC_SlabSides",
+  "source": "src/TBC_SlabSides/CmdSlabSides.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_room_neighbours",
+  "description": "Determine neighbouring room at midpoint of each room boundary segment",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdRoomNeighbours",
+  "sample": "TBC_RoomNeighbours",
+  "source": "src/TBC_RoomNeighbours/CmdRoomNeighbours.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

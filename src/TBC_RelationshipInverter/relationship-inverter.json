@@ -1,0 +1,15 @@
+{
+  "name": "revit_relationship_inverter",
+  "description": "Determine opening > wall host relationships and invert them to wall > opening",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdRelationshipInverter",
+  "sample": "TBC_RelationshipInverter",
+  "source": "src/TBC_RelationshipInverter/CmdRelationshipInverter.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

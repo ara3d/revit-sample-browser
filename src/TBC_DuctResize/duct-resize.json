@@ -1,0 +1,15 @@
+{
+  "name": "revit_duct_resize",
+  "description": "Ensure that branch ducts are no larger than the main duct they are tapping into",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdDuctResize",
+  "sample": "TBC_DuctResize",
+  "source": "src/TBC_DuctResize/CmdDuctResize.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

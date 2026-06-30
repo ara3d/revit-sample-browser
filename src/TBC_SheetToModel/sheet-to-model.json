@@ -1,0 +1,15 @@
+{
+  "name": "revit_sheet_to_model",
+  "description": "Convert sheet to model coordinates and convert DWF markup to model elements",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdSheetToModel",
+  "sample": "TBC_SheetToModel",
+  "source": "src/TBC_SheetToModel/CmdSheetToModel.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_dimension_label",
+  "description": "Create a new dimension label in a family document",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewDimensionLabel",
+  "sample": "TBC_NewDimensionLabel",
+  "source": "src/TBC_NewDimensionLabel/CmdNewDimensionLabel.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

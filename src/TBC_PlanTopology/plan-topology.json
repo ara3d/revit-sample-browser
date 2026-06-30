@@ -1,0 +1,15 @@
+{
+  "name": "revit_plan_topology",
+  "description": "List plan topology and its rooms and circuits with no rooms",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdPlanTopology",
+  "sample": "TBC_PlanTopology",
+  "source": "src/TBC_PlanTopology/CmdPlanTopology.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

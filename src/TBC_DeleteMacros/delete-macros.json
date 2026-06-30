@@ -1,0 +1,15 @@
+{
+  "name": "revit_delete_macros",
+  "description": "Retrieve MacroManager and delete all macros",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdDeleteMacros",
+  "sample": "TBC_DeleteMacros",
+  "source": "src/TBC_DeleteMacros/CmdDeleteMacros.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_create_shared_params",
+  "description": "Create shared parameters for Doors, Walls, inserted DWG, Model Groups and Model Lines",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdCreateSharedParams",
+  "sample": "TBC_CreateSharedParams",
+  "source": "src/TBC_CreateSharedParams/CmdCreateSharedParams.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

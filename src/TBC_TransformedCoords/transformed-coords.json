@@ -1,0 +1,15 @@
+{
+  "name": "revit_transformed_coords",
+  "description": "Determine transformed vertex coordinates for family instance symbol geometry",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdTransformedCoords",
+  "sample": "TBC_TransformedCoords",
+  "source": "src/TBC_TransformedCoords/CmdTransformedCoords.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

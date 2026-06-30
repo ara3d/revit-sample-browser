@@ -1,0 +1,15 @@
+{
+  "name": "revit_curtain_wall_geom",
+  "description": "Retrieve curtain wall geometry",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdCurtainWallGeom",
+  "sample": "TBC_CurtainWallGeom",
+  "source": "src/TBC_CurtainWallGeom/CmdCurtainWallGeom.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

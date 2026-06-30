@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_area",
+  "description": "Create a new area element",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewArea",
+  "sample": "TBC_NewArea",
+  "source": "src/TBC_NewArea/CmdNewArea.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

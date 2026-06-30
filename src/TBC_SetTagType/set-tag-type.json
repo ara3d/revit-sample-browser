@@ -1,0 +1,15 @@
+{
+  "name": "revit_set_tag_type",
+  "description": "Create a wall, door, door tag, then create and set a new door tag type",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdSetTagType",
+  "sample": "TBC_SetTagType",
+  "source": "src/TBC_SetTagType/CmdSetTagType.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

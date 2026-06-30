@@ -1,0 +1,15 @@
+{
+  "name": "revit_wall_layer_volumes",
+  "description": "Calculate compound wall layer volumes",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdWallLayerVolumes",
+  "sample": "TBC_WallLayerVolumes",
+  "source": "src/TBC_WallLayerVolumes/CmdWallLayerVolumes.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

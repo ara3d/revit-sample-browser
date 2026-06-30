@@ -1,0 +1,15 @@
+{
+  "name": "revit_rect_duct_corners",
+  "description": "Determine the corners of a rectangular duct",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdRectDuctCorners",
+  "sample": "TBC_RectDuctCorners",
+  "source": "src/TBC_RectDuctCorners/CmdRectDuctCorners.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

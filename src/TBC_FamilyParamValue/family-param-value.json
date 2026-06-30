@@ -1,0 +1,15 @@
+{
+  "name": "revit_family_param_value",
+  "description": "List family parameter values defined on the types in a family document",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdFamilyParamValue",
+  "sample": "TBC_FamilyParamValue",
+  "source": "src/TBC_FamilyParamValue/CmdFamilyParamValue.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

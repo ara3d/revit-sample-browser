@@ -1,0 +1,15 @@
+{
+  "name": "revit_detail_curves",
+  "description": "Create detail curves, an arc and a line",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdDetailCurves",
+  "sample": "TBC_DetailCurves",
+  "source": "src/TBC_DetailCurves/CmdDetailCurves.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

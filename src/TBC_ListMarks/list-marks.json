@@ -1,0 +1,15 @@
+{
+  "name": "revit_list_marks",
+  "description": "List all door marks",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdListMarks",
+  "sample": "TBC_ListMarks",
+  "source": "src/TBC_ListMarks/CmdListMarks.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

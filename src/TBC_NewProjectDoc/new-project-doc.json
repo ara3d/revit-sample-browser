@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_project_doc",
+  "description": "Create a new project document",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewProjectDoc",
+  "sample": "TBC_NewProjectDoc",
+  "source": "src/TBC_NewProjectDoc/CmdNewProjectDoc.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

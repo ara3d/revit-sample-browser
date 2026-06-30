@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_lighting_fixture",
+  "description": "Insert a new lighting fixture family instance",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewLightingFixture",
+  "sample": "TBC_NewLightingFixture",
+  "source": "src/TBC_NewLightingFixture/CmdNewLightingFixture.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

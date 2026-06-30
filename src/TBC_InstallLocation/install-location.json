@@ -1,0 +1,15 @@
+{
+  "name": "revit_install_location",
+  "description": "Determine Revit product install location",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdInstallLocation",
+  "sample": "TBC_InstallLocation",
+  "source": "src/TBC_InstallLocation/CmdInstallLocation.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

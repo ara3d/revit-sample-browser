@@ -1,0 +1,15 @@
+{
+  "name": "revit_export_ifc",
+  "description": "Export current view to IFC",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdExportIfc",
+  "sample": "TBC_ExportIfc",
+  "source": "src/TBC_ExportIfc/CmdExportIfc.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

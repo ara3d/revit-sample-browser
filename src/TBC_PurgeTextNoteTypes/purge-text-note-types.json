@@ -1,0 +1,15 @@
+{
+  "name": "revit_purge_text_note_types",
+  "description": "Delete all unused TextNote types",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdPurgeTextNoteTypes",
+  "sample": "TBC_PurgeTextNoteTypes",
+  "source": "src/TBC_PurgeTextNoteTypes/CmdPurgeTextNoteTypes.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

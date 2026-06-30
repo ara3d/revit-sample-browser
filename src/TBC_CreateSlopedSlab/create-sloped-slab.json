@@ -1,0 +1,15 @@
+{
+  "name": "revit_create_sloped_slab",
+  "description": "Create Sloped Floor",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdCreateSlopedSlab",
+  "sample": "TBC_CreateSlopedSlab",
+  "source": "src/TBC_CreateSlopedSlab/CmdCreateSlopedSlab.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

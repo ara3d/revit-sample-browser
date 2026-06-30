@@ -1,0 +1,15 @@
+{
+  "name": "revit_wall_openings",
+  "description": "Determine wall opening side faces and report their start and end points along location line",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdWallOpenings",
+  "sample": "TBC_WallOpenings",
+  "source": "src/TBC_WallOpenings/CmdWallOpenings.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

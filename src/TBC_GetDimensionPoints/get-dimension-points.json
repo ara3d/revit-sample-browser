@@ -1,0 +1,15 @@
+{
+  "name": "revit_get_dimension_points",
+  "description": "Determine dimension segment start and end points",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdGetDimensionPoints",
+  "sample": "TBC_GetDimensionPoints",
+  "source": "src/TBC_GetDimensionPoints/CmdGetDimensionPoints.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

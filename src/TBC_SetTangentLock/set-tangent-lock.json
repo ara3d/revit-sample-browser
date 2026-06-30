@@ -1,0 +1,15 @@
+{
+  "name": "revit_set_tangent_lock",
+  "description": "Set tangent lock on adjoining curve elements",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdSetTangentLock",
+  "sample": "TBC_SetTangentLock",
+  "source": "src/TBC_SetTangentLock/CmdSetTangentLock.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

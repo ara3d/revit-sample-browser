@@ -1,0 +1,15 @@
+{
+  "name": "revit_list_walls",
+  "description": "List wall lengths and areas",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdListWalls",
+  "sample": "TBC_ListWalls",
+  "source": "src/TBC_ListWalls/CmdListWalls.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_mid_curve",
+  "description": "Create a series of model line segments between two curve elements",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdMidCurve",
+  "sample": "TBC_MidCurve",
+  "source": "src/TBC_MidCurve/CmdMidCurve.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_linked_file_elements",
+  "description": "List elements in linked files",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdLinkedFileElements",
+  "sample": "TBC_LinkedFileElements",
+  "source": "src/TBC_LinkedFileElements/CmdLinkedFileElements.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_change_linked_file_path",
+  "description": "Change linked RVT file path",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdChangeLinkedFilePath",
+  "sample": "TBC_ChangeLinkedFilePath",
+  "source": "src/TBC_ChangeLinkedFilePath/CmdChangeLinkedFilePath.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

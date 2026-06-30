@@ -1,0 +1,15 @@
+{
+  "name": "revit_wall_layers",
+  "description": "List and determine position of all wall compound layers",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdWallLayers",
+  "sample": "TBC_WallLayers",
+  "source": "src/TBC_WallLayers/CmdWallLayers.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

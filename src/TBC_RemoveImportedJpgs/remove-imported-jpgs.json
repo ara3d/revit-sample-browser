@@ -1,0 +1,15 @@
+{
+  "name": "revit_remove_imported_jpgs",
+  "description": "Remove imported JPG image files",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdRemoveImportedJpgs",
+  "sample": "TBC_RemoveImportedJpgs",
+  "source": "src/TBC_RemoveImportedJpgs/CmdRemoveImportedJpgs.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

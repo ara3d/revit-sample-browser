@@ -1,0 +1,15 @@
+{
+  "name": "revit_brep_builder",
+  "description": "Create a direct shape using BrepBuilder and Boolean operation",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdBrepBuilder",
+  "sample": "TBC_BrepBuilder",
+  "source": "src/TBC_BrepBuilder/CmdBrepBuilder.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

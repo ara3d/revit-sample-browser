@@ -1,0 +1,15 @@
+{
+  "name": "revit_list_railing_types",
+  "description": "List all railing and stair types",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdListRailingTypes",
+  "sample": "TBC_ListRailingTypes",
+  "source": "src/TBC_ListRailingTypes/CmdListRailingTypes.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_rolling_offset",
+  "description": "Calculate a rolling offset pipe between two selected pipe segments",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdRollingOffset",
+  "sample": "TBC_RollingOffset",
+  "source": "src/TBC_RollingOffset/CmdRollingOffset.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

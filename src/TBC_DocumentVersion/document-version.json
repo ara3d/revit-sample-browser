@@ -1,0 +1,15 @@
+{
+  "name": "revit_document_version",
+  "description": "List DocumentVersion data, i.e. document GUID and save count",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdDocumentVersion",
+  "sample": "TBC_DocumentVersion",
+  "source": "src/TBC_DocumentVersion/CmdDocumentVersion.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

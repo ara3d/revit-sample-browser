@@ -1,0 +1,15 @@
+{
+  "name": "revit_dimension_walls_iterate_faces",
+  "description": "Create dimensioning elements between opposing walls by iterating over their faces",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdDimensionWallsIterateFaces",
+  "sample": "TBC_DimensionWallsIterateFaces",
+  "source": "src/TBC_DimensionWallsIterateFaces/CmdDimensionWallsIterateFaces.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

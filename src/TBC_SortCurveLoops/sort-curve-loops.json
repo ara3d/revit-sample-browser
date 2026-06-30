@@ -1,0 +1,15 @@
+{
+  "name": "revit_sort_curve_loops",
+  "description": "Retrieve and sort outer and inner face curve loops",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdSortCurveLoops",
+  "sample": "TBC_SortCurveLoops",
+  "source": "src/TBC_SortCurveLoops/CmdSortCurveLoops.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

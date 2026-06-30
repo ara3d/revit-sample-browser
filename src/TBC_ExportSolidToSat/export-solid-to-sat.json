@@ -1,0 +1,15 @@
+{
+  "name": "revit_export_solid_to_sat",
+  "description": "Create a solid in memory and export it to a SAT file",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdExportSolidToSat",
+  "sample": "TBC_ExportSolidToSat",
+  "source": "src/TBC_ExportSolidToSat/CmdExportSolidToSat.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

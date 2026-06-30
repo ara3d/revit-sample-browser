@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_line_load",
+  "description": "Create a new structural line load elements",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewLineLoad",
+  "sample": "TBC_NewLineLoad",
+  "source": "src/TBC_NewLineLoad/CmdNewLineLoad.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

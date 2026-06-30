@@ -1,0 +1,15 @@
+{
+  "name": "revit_wall_profile_area",
+  "description": "Determine wall elevation profile boundary loop polygon areas",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdWallProfileArea",
+  "sample": "TBC_WallProfileArea",
+  "source": "src/TBC_WallProfileArea/CmdWallProfileArea.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

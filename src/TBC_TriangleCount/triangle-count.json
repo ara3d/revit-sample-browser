@@ -1,0 +1,15 @@
+{
+  "name": "revit_triangle_count",
+  "description": "Determine model total triangle count using custom exporter",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdTriangleCount",
+  "sample": "TBC_TriangleCount",
+  "source": "src/TBC_TriangleCount/CmdTriangleCount.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

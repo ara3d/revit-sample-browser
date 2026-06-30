@@ -1,0 +1,1659 @@
+[
+  {
+    "className": "CmdAnalyticalModelGeom",
+    "folder": "TBC_AnalyticalModelGeom",
+    "slug": "analytical-model-geom",
+    "sourceFile": "CmdAnalyticalModelGeom.cs",
+    "bcSamples": {
+      "title": "Analytical Model Geometry",
+      "description": "Retrieve analytical model geometry"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdAzimuth",
+    "folder": "TBC_Azimuth",
+    "slug": "azimuth",
+    "sourceFile": "CmdAzimuth.cs",
+    "bcSamples": {
+      "title": "Azimuth",
+      "description": "Calculate azimuth"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdBim360Links",
+    "folder": "TBC_Bim360Links",
+    "slug": "bim360-links",
+    "sourceFile": "CmdBim360Links.cs",
+    "bcSamples": {
+      "title": "BIM360 Links",
+      "description": "Retrieve and list BIM360 linked models"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdBoundingBox",
+    "folder": "TBC_BoundingBox",
+    "slug": "bounding-box",
+    "sourceFile": "CmdBoundingBox.cs",
+    "bcSamples": {
+      "title": "Bounding Box",
+      "description": "Retrieve Element Bounding Box"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdBrepBuilder",
+    "folder": "TBC_BrepBuilder",
+    "slug": "brep-builder",
+    "sourceFile": "CmdBrepBuilder.cs",
+    "bcSamples": {
+      "title": "DirectShape from BrepBuilder and Boolean",
+      "description": "Create a direct shape using BrepBuilder and Boolean operation"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCategories",
+    "folder": "TBC_Categories",
+    "slug": "categories",
+    "sourceFile": "CmdCategories.cs",
+    "bcSamples": {
+      "title": "Categories",
+      "description": "List document and built-in categories"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCategorySupportsTypeParameter",
+    "folder": "TBC_CategorySupportsTypeParameter",
+    "slug": "category-supports-type-parameter",
+    "sourceFile": "CmdCategorySupportsTypeParameter.cs",
+    "bcSamples": {
+      "title": "Category Supports Type Parameter",
+      "description": "Boolean predicate to determine whether a given category supports type parameter"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdChangeElementColor",
+    "folder": "TBC_ChangeElementColor",
+    "slug": "change-element-color",
+    "sourceFile": "CmdChangeElementColor.cs",
+    "bcSamples": {
+      "title": "Change element colour",
+      "description": "Using OverrideGraphicSettings for active view"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdChangeLinkedFilePath",
+    "folder": "TBC_ChangeLinkedFilePath",
+    "slug": "change-linked-file-path",
+    "sourceFile": "CmdChangeLinkedFilePath.cs",
+    "bcSamples": {
+      "title": "Change Linked File Path",
+      "description": "Change linked RVT file path"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCloseDocument",
+    "folder": "TBC_CloseDocument",
+    "slug": "close-document",
+    "sourceFile": "CmdCloseDocument.cs",
+    "bcSamples": {
+      "title": "Close Document",
+      "description": "Close active document by sending Windows message"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCollectorPerformance",
+    "folder": "TBC_CollectorPerformance",
+    "slug": "collector-performance",
+    "sourceFile": "CmdCollectorPerformance.cs",
+    "bcSamples": {
+      "title": "Collector Performance",
+      "description": "Benchmark Revit 2011 API collector performance"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdColumnRound",
+    "folder": "TBC_ColumnRound",
+    "slug": "column-round",
+    "sourceFile": "CmdColumnRound.cs",
+    "bcSamples": {
+      "title": "Cylindrical Column",
+      "description": "Determine whether column is round"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCoordsOfViewOnSheet",
+    "folder": "TBC_CoordsOfViewOnSheet",
+    "slug": "coords-of-view-on-sheet",
+    "sourceFile": "CmdCoordsOfViewOnSheet.cs",
+    "bcSamples": {
+      "title": "Coords Of View On Sheet",
+      "description": "Retrieve coordinates of view on sheet"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCopyWallType",
+    "folder": "TBC_CopyWallType",
+    "slug": "copy-wall-type",
+    "sourceFile": "CmdCopyWallType.cs",
+    "bcSamples": {
+      "title": "Copy Wall Type",
+      "description": "Duplicate a system type from on project to another to partially transfer project standards"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCreateGableWall",
+    "folder": "TBC_CreateGableWall",
+    "slug": "create-gable-wall",
+    "sourceFile": "CmdCreateGableWall.cs",
+    "bcSamples": {
+      "title": "Create Gable Wall",
+      "description": "Create gable wall specifying non-rectangular wall profile"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCreateLineStyle",
+    "folder": "TBC_CreateLineStyle",
+    "slug": "create-line-style",
+    "sourceFile": "CmdCreateLineStyle.cs",
+    "bcSamples": {
+      "title": "Create Line Style",
+      "description": "Create a new line style using NewSubcategory"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCreateSharedParams",
+    "folder": "TBC_CreateSharedParams",
+    "slug": "create-shared-params",
+    "sourceFile": "CmdCreateSharedParams.cs",
+    "bcSamples": {
+      "title": "Create Shared Parameters",
+      "description": "Create shared parameters for Doors, Walls, inserted DWG, Model Groups and Model Lines"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCreateSlopedSlab",
+    "folder": "TBC_CreateSlopedSlab",
+    "slug": "create-sloped-slab",
+    "sourceFile": "CmdCreateSlopedSlab.cs",
+    "bcSamples": {
+      "title": "Create Sloped Floor",
+      "description": "Create Sloped Floor"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CreateWallsAutomaticallyCommand",
+    "folder": "TBC_CreateWallsAutomaticallyCommand",
+    "slug": "create-walls-automatically-command",
+    "sourceFile": "CmdFaceWall.cs",
+    "bcSamples": null,
+    "needsSplit": true
+  },
+  {
+    "className": "CmdCropToRoom",
+    "folder": "TBC_CropToRoom",
+    "slug": "crop-to-room",
+    "sourceFile": "CmdCropToRoom.cs",
+    "bcSamples": {
+      "title": "Crop 3D View to Room",
+      "description": "Set 3D view crop box to room extents"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdCurtainWallGeom",
+    "folder": "TBC_CurtainWallGeom",
+    "slug": "curtain-wall-geom",
+    "sourceFile": "CmdCurtainWallGeom.cs",
+    "bcSamples": {
+      "title": "Curtain Wall Geometry",
+      "description": "Retrieve curtain wall geometry"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDeleteMacros",
+    "folder": "TBC_DeleteMacros",
+    "slug": "delete-macros",
+    "sourceFile": "CmdDeleteMacros.cs",
+    "bcSamples": {
+      "title": "Delete Macros",
+      "description": "Retrieve MacroManager and delete all macros"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDemoCheck",
+    "folder": "TBC_DemoCheck",
+    "slug": "demo-check",
+    "sourceFile": "CmdDemoCheck.cs",
+    "bcSamples": {
+      "title": "Demo Version Check",
+      "description": "Check whether the running Revit application is a demo version"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDetailCurves",
+    "folder": "TBC_DetailCurves",
+    "slug": "detail-curves",
+    "sourceFile": "CmdDetailCurves.cs",
+    "bcSamples": {
+      "title": "Detail Curves",
+      "description": "Create detail curves, an arc and a line"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDimensionInstanceOrigin",
+    "folder": "TBC_DimensionInstanceOrigin",
+    "slug": "dimension-instance-origin",
+    "sourceFile": "CmdDimensionInstanceOrigin.cs",
+    "bcSamples": {
+      "title": "Dimension Family Instance Origin",
+      "description": "Create dimensioning between the origins of family instances"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDimensionWallsFindRefs",
+    "folder": "TBC_DimensionWallsFindRefs",
+    "slug": "dimension-walls-find-refs",
+    "sourceFile": "CmdDimensionWallsFindRefs.cs",
+    "bcSamples": {
+      "title": "Dimension Two Walls Finding References",
+      "description": "Create dimensioning elements between opposing walls by using FindReferencesByDirection"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDimensionWallsIterateFaces",
+    "folder": "TBC_DimensionWallsIterateFaces",
+    "slug": "dimension-walls-iterate-faces",
+    "sourceFile": "CmdDimensionWallsIterateFaces.cs",
+    "bcSamples": {
+      "title": "Dimension Two Walls Iterating Faces",
+      "description": "Create dimensioning elements between opposing walls by iterating over their faces"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDisallowJoin",
+    "folder": "TBC_DisallowJoin",
+    "slug": "disallow-join",
+    "sourceFile": "CmdDisallowJoin.cs",
+    "bcSamples": {
+      "title": "Disallow Join",
+      "description": "Allow or disallow join at wall ends"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDocumentVersion",
+    "folder": "TBC_DocumentVersion",
+    "slug": "document-version",
+    "sourceFile": "CmdDocumentVersion.cs",
+    "bcSamples": {
+      "title": "Document Version",
+      "description": "List DocumentVersion data, i.e. document GUID and save count"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDuctResize",
+    "folder": "TBC_DuctResize",
+    "slug": "duct-resize",
+    "sourceFile": "CmdDuctResize.cs",
+    "bcSamples": {
+      "title": "Duct Resize",
+      "description": "Ensure that branch ducts are no larger than the main duct they are tapping into"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDuplicateElements",
+    "folder": "TBC_DuplicateElements",
+    "slug": "duplicate-elements",
+    "sourceFile": "CmdDuplicateElements.cs",
+    "bcSamples": {
+      "title": "Duplicate Elements",
+      "description": "Duplicate selected elements"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdDutAbbreviation",
+    "folder": "TBC_DutAbbreviation",
+    "slug": "dut-abbreviation",
+    "sourceFile": "CmdDutAbbreviation.cs",
+    "bcSamples": null,
+    "needsSplit": false
+  },
+  {
+    "className": "CmdEditFloor",
+    "folder": "TBC_EditFloor",
+    "slug": "edit-floor",
+    "sourceFile": "CmdEditFloor.cs",
+    "bcSamples": {
+      "title": "Edit Floor",
+      "description": "Generate a new floor element from the curve array of an existing one"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdElectricalLoad",
+    "folder": "TBC_ElectricalLoad",
+    "slug": "electrical-load",
+    "sourceFile": "CmdElectricalLoad.cs",
+    "bcSamples": {
+      "title": "Electrical load",
+      "description": "Retrieve electrical load from selected family instance"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdElevationWatcher",
+    "folder": "TBC_ElevationWatcher",
+    "slug": "elevation-watcher",
+    "sourceFile": "CmdElevationWatcher.cs",
+    "bcSamples": {
+      "title": "Elevation Watcher DocumentChanged",
+      "description": "React to elevation view creation subscribing to DocumentChanged event"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdEllipticalArc",
+    "folder": "TBC_EllipticalArc",
+    "slug": "elliptical-arc",
+    "sourceFile": "CmdEllipticalArc.cs",
+    "bcSamples": {
+      "title": "Elliptical Arc",
+      "description": "Create a new elliptical arc geometry object with a given start and end angle"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdExportIfc",
+    "folder": "TBC_ExportIfc",
+    "slug": "export-ifc",
+    "sourceFile": "CmdExportIfc.cs",
+    "bcSamples": {
+      "title": "Export IFC",
+      "description": "Export current view to IFC"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdExportImage",
+    "folder": "TBC_ExportImage",
+    "slug": "export-image",
+    "sourceFile": "CmdExportImage.cs",
+    "bcSamples": {
+      "title": "Export Image",
+      "description": "Export a preview JPG 3D image of the family or project"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdExportSolidToSat",
+    "folder": "TBC_ExportSolidToSat",
+    "slug": "export-solid-to-sat",
+    "sourceFile": "CmdExportSolidToSat.cs",
+    "bcSamples": {
+      "title": "Export Solid to SAT",
+      "description": "Create a solid in memory and export it to a SAT file"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdExteriorWalls",
+    "folder": "TBC_ExteriorWalls",
+    "slug": "exterior-walls",
+    "sourceFile": "CmdExteriorWalls.cs",
+    "bcSamples": {
+      "title": "Exterior Walls",
+      "description": "Determine exterior walls of building by placing a large surrounding room"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdFaceWall",
+    "folder": "TBC_FaceWall",
+    "slug": "face-wall",
+    "sourceFile": "CmdFaceWall.cs",
+    "bcSamples": {
+      "title": "FaceWall Create",
+      "description": "Demonstrate FaceWall.Create - create and insert a conceptual mass family instance, then create sloped walls on all its faces"
+    },
+    "needsSplit": true
+  },
+  {
+    "className": "CmdFailureGatherer",
+    "folder": "TBC_FailureGatherer",
+    "slug": "failure-gatherer",
+    "sourceFile": "CmdFailureGatherer.cs",
+    "bcSamples": {
+      "title": "Gather Failure Warning Descriptions",
+      "description": "Gather and show warning messages with IFailuresPreprocessor"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdFamilyParamGuid",
+    "folder": "TBC_FamilyParamGuid",
+    "slug": "family-param-guid",
+    "sourceFile": "CmdFamilyParamGuid.cs",
+    "bcSamples": {
+      "title": "Family Parameter Guid",
+      "description": "Determine family parameter IsShared and GUID properties using System.Reflection"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdFamilyParamValue",
+    "folder": "TBC_FamilyParamValue",
+    "slug": "family-param-value",
+    "sourceFile": "CmdFamilyParamValue.cs",
+    "bcSamples": {
+      "title": "Family Parameter Values",
+      "description": "List family parameter values defined on the types in a family document"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdFilledRegionCoords",
+    "folder": "TBC_FilledRegionCoords",
+    "slug": "filled-region-coords",
+    "sourceFile": "CmdFilledRegionCoords.cs",
+    "bcSamples": {
+      "title": "FilledRegion Coordinates",
+      "description": "Retrieve FilledRegion coordinates"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdFlatten",
+    "folder": "TBC_Flatten",
+    "slug": "flatten",
+    "sourceFile": "CmdFlatten.cs",
+    "bcSamples": {
+      "title": "Flatten Model to DirectShape",
+      "description": "Convert all Revit elements to DirectShapes retaining shape and category"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdFlowMismatch",
+    "folder": "TBC_FlowMismatch",
+    "slug": "flow-mismatch",
+    "sourceFile": "CmdFlowMismatch.cs",
+    "bcSamples": {
+      "title": "Flow Mismatch",
+      "description": "Check MEP systems for flow mismatch and unconnected parts"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdGetDimensionPoints",
+    "folder": "TBC_GetDimensionPoints",
+    "slug": "get-dimension-points",
+    "sourceFile": "CmdGetDimensionPoints.cs",
+    "bcSamples": {
+      "title": "Get Dimension Points",
+      "description": "Determine dimension segment start and end points"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdGetMaterials",
+    "folder": "TBC_GetMaterials",
+    "slug": "get-materials",
+    "sourceFile": "CmdGetMaterials.cs",
+    "bcSamples": {
+      "title": "Element Materials",
+      "description": "Retrieve building element materials"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdGetSketchElements",
+    "folder": "TBC_GetSketchElements",
+    "slug": "get-sketch-elements",
+    "sourceFile": "CmdGetSketchElements.cs",
+    "bcSamples": {
+      "title": "Get Sketch Elements",
+      "description": "Retrieve sketch elements for a selected wall, floor, roof, filled region, etc."
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdIdling",
+    "folder": "TBC_Idling",
+    "slug": "idling",
+    "sourceFile": "CmdIdling.cs",
+    "bcSamples": {
+      "title": "Idling",
+      "description": "Subscribe to the Idling event"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdImportsInFamilies",
+    "folder": "TBC_ImportsInFamilies",
+    "slug": "imports-in-families",
+    "sourceFile": "CmdImportsInFamilies.cs",
+    "bcSamples": {
+      "title": "Imports in Families",
+      "description": "List all imported symbols in all families in project"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdInstallLocation",
+    "folder": "TBC_InstallLocation",
+    "slug": "install-location",
+    "sourceFile": "CmdInstallLocation.cs",
+    "bcSamples": {
+      "title": "Install Location",
+      "description": "Determine Revit product install location"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdIntersectJunctionBox",
+    "folder": "TBC_IntersectJunctionBox",
+    "slug": "intersect-junction-box",
+    "sourceFile": "CmdIntersectJunctionBox.cs",
+    "bcSamples": {
+      "title": "Conduits Intersecting Junction",
+      "description": "Determine conduit elements intersecting a junction box"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdItemExecuted",
+    "folder": "TBC_ItemExecuted",
+    "slug": "item-executed",
+    "sourceFile": "CmdItemExecuted.cs",
+    "bcSamples": {
+      "title": "Item Executed and List Command Buttons",
+      "description": "List all ribbon panel command buttons and subscribe to Autodesk.Windows.ComponentManager.ItemExecuted"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdLandXml",
+    "folder": "TBC_LandXml",
+    "slug": "land-xml",
+    "sourceFile": "CmdLandXml.cs",
+    "bcSamples": {
+      "title": "LandXML Import",
+      "description": "Import LandXML data and create TopographySurface"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdLibraryPaths",
+    "folder": "TBC_LibraryPaths",
+    "slug": "library-paths",
+    "sourceFile": "CmdLibraryPaths.cs",
+    "bcSamples": {
+      "title": "Library Paths",
+      "description": "List existing and update application options library paths"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdLinkedFileElements",
+    "folder": "TBC_LinkedFileElements",
+    "slug": "linked-file-elements",
+    "sourceFile": "CmdLinkedFileElements.cs",
+    "bcSamples": {
+      "title": "Linked File Elements",
+      "description": "List elements in linked files"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdLinkedFiles",
+    "folder": "TBC_LinkedFiles",
+    "slug": "linked-files",
+    "sourceFile": "CmdLinkedFiles.cs",
+    "bcSamples": {
+      "title": "Linked Files",
+      "description": "Determine linked files and their full path"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdLinq",
+    "folder": "TBC_Linq",
+    "slug": "linq",
+    "sourceFile": "CmdLinq.cs",
+    "bcSamples": null,
+    "needsSplit": false
+  },
+  {
+    "className": "CmdListAllRooms",
+    "folder": "TBC_ListAllRooms",
+    "slug": "list-all-rooms",
+    "sourceFile": "CmdListAllRooms.cs",
+    "bcSamples": {
+      "title": "List Room Data",
+      "description": "List properties from all rooms"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdListMarks",
+    "folder": "TBC_ListMarks",
+    "slug": "list-marks",
+    "sourceFile": "CmdListMarks.cs",
+    "bcSamples": {
+      "title": "List Marks",
+      "description": "List all door marks"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdListPipeSizes",
+    "folder": "TBC_ListPipeSizes",
+    "slug": "list-pipe-sizes",
+    "sourceFile": "CmdListPipeSizes.cs",
+    "bcSamples": {
+      "title": "List Pipe Sizes",
+      "description": "List pipe sizes in a project"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdListRailingTypes",
+    "folder": "TBC_ListRailingTypes",
+    "slug": "list-railing-types",
+    "sourceFile": "CmdListRailingTypes.cs",
+    "bcSamples": {
+      "title": "List Railing Types",
+      "description": "List all railing and stair types"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdListSharedParams",
+    "folder": "TBC_ListSharedParams",
+    "slug": "list-shared-params",
+    "sourceFile": "CmdListSharedParams.cs",
+    "bcSamples": {
+      "title": "List Shared Parameters",
+      "description": "List all shared parameters defined in document and saved on wall instances"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdListViews",
+    "folder": "TBC_ListViews",
+    "slug": "list-views",
+    "sourceFile": "CmdListViews.cs",
+    "bcSamples": {
+      "title": "List Views",
+      "description": "Determine all all the view ports of a drawing sheet and vice versa"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdListWalls",
+    "folder": "TBC_ListWalls",
+    "slug": "list-walls",
+    "sourceFile": "CmdListWalls.cs",
+    "bcSamples": {
+      "title": "List Walls",
+      "description": "List wall lengths and areas"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdMepElementShape",
+    "folder": "TBC_MepElementShape",
+    "slug": "mep-element-shape",
+    "sourceFile": "CmdMepElementShape.cs",
+    "bcSamples": {
+      "title": "MEP Element Shape",
+      "description": "Determine element shape, i.e. MEP element cross section"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdMidCurve",
+    "folder": "TBC_MidCurve",
+    "slug": "mid-curve",
+    "sourceFile": "CmdMidCurve.cs",
+    "bcSamples": {
+      "title": "MidCurve",
+      "description": "Create a series of model line segments between two curve elements"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdMirror",
+    "folder": "TBC_Mirror",
+    "slug": "mirror",
+    "sourceFile": "CmdMirror.cs",
+    "bcSamples": {
+      "title": "Mirror Elements",
+      "description": "Mirror selected elements"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdMultistoryStairSubelements",
+    "folder": "TBC_MultistoryStairSubelements",
+    "slug": "multistory-stair-subelements",
+    "sourceFile": "CmdMultiStoryStairSubelements.cs",
+    "bcSamples": {
+      "title": "MultistoryStairSubelements",
+      "description": "Access all subelements of all MultistoryStair instances"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNamedGuidStorage",
+    "folder": "TBC_NamedGuidStorage",
+    "slug": "named-guid-storage",
+    "sourceFile": "CmdNamedGuidStorage.cs",
+    "bcSamples": {
+      "title": "Named Guid Storage",
+      "description": "Test the named Guid storage class"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNestedFamilies",
+    "folder": "TBC_NestedFamilies",
+    "slug": "nested-families",
+    "sourceFile": "CmdNestedFamilies.cs",
+    "bcSamples": {
+      "title": "Nested Families",
+      "description": "List nested family files and instances in a family document"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNestedInstanceGeo",
+    "folder": "TBC_NestedInstanceGeo",
+    "slug": "nested-instance-geo",
+    "sourceFile": "CmdNestedInstanceGeo.cs",
+    "bcSamples": {
+      "title": "Nested Instance Geometry",
+      "description": "Determine nested instance geometry and structure"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewArea",
+    "folder": "TBC_NewArea",
+    "slug": "new-area",
+    "sourceFile": "CmdNewArea.cs",
+    "bcSamples": {
+      "title": "New Area",
+      "description": "Create a new area element"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewBeamTypeInstance",
+    "folder": "TBC_NewBeamTypeInstance",
+    "slug": "new-beam-type-instance",
+    "sourceFile": "CmdNewBeamTypeInstance.cs",
+    "bcSamples": {
+      "title": "New Beam Type and Instance",
+      "description": "Create a new beam type and insert an instance of it"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewBlend",
+    "folder": "TBC_NewBlend",
+    "slug": "new-blend",
+    "sourceFile": "CmdNewBlend.cs",
+    "bcSamples": {
+      "title": "New Blend",
+      "description": "Create a new blend using the NewBlend method"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewColumnTypeInstance",
+    "folder": "TBC_NewColumnTypeInstance",
+    "slug": "new-column-type-instance",
+    "sourceFile": "CmdNewColumnTypeInstance.cs",
+    "bcSamples": {
+      "title": "New Column Type and Instance",
+      "description": "Create a new column type and insert an instance of it"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewCrossFitting",
+    "folder": "TBC_NewCrossFitting",
+    "slug": "new-cross-fitting",
+    "sourceFile": "CmdNewCrossFitting.cs",
+    "bcSamples": {
+      "title": "New Cross Fitting",
+      "description": "Create a new pipe cross fitting"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewDimensionLabel",
+    "folder": "TBC_NewDimensionLabel",
+    "slug": "new-dimension-label",
+    "sourceFile": "CmdNewDimensionLabel.cs",
+    "bcSamples": {
+      "title": "New Dimension Label",
+      "description": "Create a new dimension label in a family document"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewDuctSystem",
+    "folder": "TBC_NewDuctSystem",
+    "slug": "new-duct-system",
+    "sourceFile": "CmdNewDuctSystem.cs",
+    "bcSamples": {
+      "title": "New Duct System",
+      "description": "Create a new duct system via the NewMechanicalSystem API call"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewExtrusionRoof",
+    "folder": "TBC_NewExtrusionRoof",
+    "slug": "new-extrusion-roof",
+    "sourceFile": "CmdNewExtrusionRoof.cs",
+    "bcSamples": {
+      "title": "New Extrusion Roof",
+      "description": "Create a strangely stair shaped new extrusion roof"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewLightingFixture",
+    "folder": "TBC_NewLightingFixture",
+    "slug": "new-lighting-fixture",
+    "sourceFile": "CmdNewLightingFixture.cs",
+    "bcSamples": {
+      "title": "New Lighting Fixture",
+      "description": "Insert a new lighting fixture family instance"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewLineLoad",
+    "folder": "TBC_NewLineLoad",
+    "slug": "new-line-load",
+    "sourceFile": "CmdNewLineLoad.cs",
+    "bcSamples": {
+      "title": "New Line Loads",
+      "description": "Create a new structural line load elements"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewProjectDoc",
+    "folder": "TBC_NewProjectDoc",
+    "slug": "new-project-doc",
+    "sourceFile": "CmdNewProjectDoc.cs",
+    "bcSamples": {
+      "title": "New Project Document",
+      "description": "Create a new project document"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewRailing",
+    "folder": "TBC_NewRailing",
+    "slug": "new-railing",
+    "sourceFile": "CmdNewRailing.cs",
+    "bcSamples": {
+      "title": "Cannot Create Railing Instance",
+      "description": "Cannot create a new railing instance"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewSpotElevation",
+    "folder": "TBC_NewSpotElevation",
+    "slug": "new-spot-elevation",
+    "sourceFile": "CmdNewSpotElevation.cs",
+    "bcSamples": {
+      "title": "New Spot Elevation on Beam",
+      "description": "Insert a new spot elevation on top surface of beam"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewSprinkler",
+    "folder": "TBC_NewSprinkler",
+    "slug": "new-sprinkler",
+    "sourceFile": "CmdNewSprinkler.cs",
+    "bcSamples": {
+      "title": "New Sprinkler",
+      "description": "Insert a new sprinkler family instance"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewSweptBlend",
+    "folder": "TBC_NewSweptBlend",
+    "slug": "new-swept-blend",
+    "sourceFile": "CmdNewSweptBlend.cs",
+    "bcSamples": {
+      "title": "New Swept Blend",
+      "description": "Create a new swept blend element"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewTextNote",
+    "folder": "TBC_NewTextNote",
+    "slug": "new-text-note",
+    "sourceFile": "CmdNewTextNote.cs",
+    "bcSamples": {
+      "title": "New Text Note Width",
+      "description": "Create a new text note and determine its exact width"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdNewWallLayer",
+    "folder": "TBC_NewWallLayer",
+    "slug": "new-wall-layer",
+    "sourceFile": "CmdNewWallLayer.cs",
+    "bcSamples": {
+      "title": "New Wall Layer",
+      "description": "Create a new wall type with a new compound structure layer"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdOmniClassParams",
+    "folder": "TBC_OmniClassParams",
+    "slug": "omni-class-params",
+    "sourceFile": "CmdOmniClassParams.cs",
+    "bcSamples": null,
+    "needsSplit": false
+  },
+  {
+    "className": "CmdParamValuesForCats",
+    "folder": "TBC_ParamValuesForCats",
+    "slug": "param-values-for-cats",
+    "sourceFile": "CmdParamValuesForCats.cs",
+    "bcSamples": {
+      "title": "Parameter Values for Categories",
+      "description": "Retrieve all parameter values for all elements of the given categories"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdParameterUnitConverter",
+    "folder": "TBC_ParameterUnitConverter",
+    "slug": "parameter-unit-converter",
+    "sourceFile": "CmdParameterUnitConverter.cs",
+    "bcSamples": null,
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPartAtom",
+    "folder": "TBC_PartAtom",
+    "slug": "part-atom",
+    "sourceFile": "CmdPartAtom.cs",
+    "bcSamples": {
+      "title": "Part Atom",
+      "description": "Extract part atom from family file"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPickPoint3d",
+    "folder": "TBC_PickPoint3d",
+    "slug": "pick-point3d",
+    "sourceFile": "CmdPickPoint3d.cs",
+    "bcSamples": {
+      "title": "Pick Point in 3D",
+      "description": "Set active work plane to pick a point in 3d"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPickRoomInclLinked",
+    "folder": "TBC_PickRoomInclLinked",
+    "slug": "pick-room-incl-linked",
+    "sourceFile": "CmdPickRoomInclLinked.cs",
+    "bcSamples": {
+      "title": "Pick room in model or link",
+      "description": "Selection filter to pick a room either in current project or linked model"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPlaceFamilyInstance",
+    "folder": "TBC_PlaceFamilyInstance",
+    "slug": "place-family-instance",
+    "sourceFile": "CmdPlaceFamilyInstance.cs",
+    "bcSamples": {
+      "title": "Place Family Instance",
+      "description": "Call PromptForFamilyInstancePlacement to place family instances and use the DocumentChanged event to capture the newly added element ids"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPlanTopology",
+    "folder": "TBC_PlanTopology",
+    "slug": "plan-topology",
+    "sourceFile": "CmdPlanTopology.cs",
+    "bcSamples": {
+      "title": "Plan Topology",
+      "description": "List plan topology and its rooms and circuits with no rooms"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPostRequestInstancePlacement",
+    "folder": "TBC_PostRequestInstancePlacement",
+    "slug": "post-request-instance-placement",
+    "sourceFile": "CmdPostRequestInstancePlacement.cs",
+    "bcSamples": {
+      "title": "Post Request for Family Instance Placement",
+      "description": "Exercise the PostRequestForElementTypePlacement method"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPreprocessFailure",
+    "folder": "TBC_PreprocessFailure",
+    "slug": "preprocess-failure",
+    "sourceFile": "CmdPreprocessFailure.cs",
+    "bcSamples": {
+      "title": "Preprocess Failure",
+      "description": "Suppress warning message by implementing the IFailuresPreprocessor interface"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPressKeys",
+    "folder": "TBC_PressKeys",
+    "slug": "press-keys",
+    "sourceFile": "CmdPressKeys.cs",
+    "bcSamples": {
+      "title": "Press Keys to Launch Command",
+      "description": "Press keys to launch 'Create Similar' and other Revit commands"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPreviewImage",
+    "folder": "TBC_PreviewImage",
+    "slug": "preview-image",
+    "sourceFile": "CmdPreviewImage.cs",
+    "bcSamples": {
+      "title": "Preview Image",
+      "description": "Display the element type preview image of all family instances"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdProcessVisibleDwg",
+    "folder": "TBC_ProcessVisibleDwg",
+    "slug": "process-visible-dwg",
+    "sourceFile": "CmdProcessVisibleDwg.cs",
+    "bcSamples": {
+      "title": "Process Visible DWG Elements",
+      "description": "Extract geometry from visible import instance layers in the current view"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdProjectParameterGuids",
+    "folder": "TBC_ProjectParameterGuids",
+    "slug": "project-parameter-guids",
+    "sourceFile": "CmdProjectParameterGuids.cs",
+    "bcSamples": {
+      "title": "Project Parameter GUIDs",
+      "description": "Determine and report all project parameter GUIDs"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPurgeLineStyles",
+    "folder": "TBC_PurgeLineStyles",
+    "slug": "purge-line-styles",
+    "sourceFile": "CmdPurgeLineStyles.cs",
+    "bcSamples": {
+      "title": "Purge Solid-Red-1 Line Styles",
+      "description": "Purge all the _Solid-Red-1 line styles"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdPurgeTextNoteTypes",
+    "folder": "TBC_PurgeTextNoteTypes",
+    "slug": "purge-text-note-types",
+    "sourceFile": "CmdPurgeTextNoteTypes.cs",
+    "bcSamples": {
+      "title": "Purge TextNote Types",
+      "description": "Delete all unused TextNote types"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdRebarCurves",
+    "folder": "TBC_RebarCurves",
+    "slug": "rebar-curves",
+    "sourceFile": "CmdRebarCurves.cs",
+    "bcSamples": {
+      "title": "Rebar Curves",
+      "description": "Retrieve and duplicate all rebar centreline curves with model curves"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdRectDuctCorners",
+    "folder": "TBC_RectDuctCorners",
+    "slug": "rect-duct-corners",
+    "sourceFile": "CmdRectDuctCorners.cs",
+    "bcSamples": {
+      "title": "Rectangular Duct Corners",
+      "description": "Determine the corners of a rectangular duct"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdRelationshipInverter",
+    "folder": "TBC_RelationshipInverter",
+    "slug": "relationship-inverter",
+    "sourceFile": "CmdRelationshipInverter.cs",
+    "bcSamples": {
+      "title": "Relationship Inverter",
+      "description": "Determine opening > wall host relationships and invert them to wall > opening"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdRemoveDwfLinks",
+    "folder": "TBC_RemoveDwfLinks",
+    "slug": "remove-dwf-links",
+    "sourceFile": "CmdRemoveDwfLinks.cs",
+    "bcSamples": {
+      "title": "Remove DWF Links",
+      "description": "Remove DWF links"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdRemoveImportedJpgs",
+    "folder": "TBC_RemoveImportedJpgs",
+    "slug": "remove-imported-jpgs",
+    "sourceFile": "CmdRemoveImportedJpgs.cs",
+    "bcSamples": {
+      "title": "Remove Imported Images",
+      "description": "Remove imported JPG image files"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdRollingOffset",
+    "folder": "TBC_RollingOffset",
+    "slug": "rolling-offset",
+    "sourceFile": "CmdRollingOffset.cs",
+    "bcSamples": {
+      "title": "Rolling Offset",
+      "description": "Calculate a rolling offset pipe between two selected pipe segments"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdRoomNeighbours",
+    "folder": "TBC_RoomNeighbours",
+    "slug": "room-neighbours",
+    "sourceFile": "CmdRoomNeighbours.cs",
+    "bcSamples": {
+      "title": "Room Neighbours",
+      "description": "Determine neighbouring room at midpoint of each room boundary segment"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdRoomWallAdjacency",
+    "folder": "TBC_RoomWallAdjacency",
+    "slug": "room-wall-adjacency",
+    "sourceFile": "CmdRoomWallAdjacency.cs",
+    "bcSamples": {
+      "title": "Room Wall Adjacency",
+      "description": "Determine part of wall face area that bounds a room"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdRotatedBeamLocation",
+    "folder": "TBC_RotatedBeamLocation",
+    "slug": "rotated-beam-location",
+    "sourceFile": "CmdRotatedBeamLocation.cs",
+    "bcSamples": {
+      "title": "Rotated Beam Location",
+      "description": "Determine rotated beam location"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSelectionChanged",
+    "folder": "TBC_SelectionChanged",
+    "slug": "selection-changed",
+    "sourceFile": "CmdSelectionChanged.cs",
+    "bcSamples": {
+      "title": "Selection Changed Event",
+      "description": "Implement and subscribe to a custom element selection changed event using UI Automation"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSetGridEndpoint",
+    "folder": "TBC_SetGridEndpoint",
+    "slug": "set-grid-endpoint",
+    "sourceFile": "CmdSetGridEndpoint.cs",
+    "bcSamples": {
+      "title": "Set Grid Endpoint",
+      "description": "Move selected grid endpoints in Y direction using SetCurveInView"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSetRoomOccupancy",
+    "folder": "TBC_SetRoomOccupancy",
+    "slug": "set-room-occupancy",
+    "sourceFile": "CmdSetRoomOccupancy.cs",
+    "bcSamples": {
+      "title": "Set Room Occupancy",
+      "description": "Set room occupancy via built-in parameter ROOM_OCCUPANCY"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSetTagType",
+    "folder": "TBC_SetTagType",
+    "slug": "set-tag-type",
+    "sourceFile": "CmdSetTagType.cs",
+    "bcSamples": {
+      "title": "Set Tag Type",
+      "description": "Create a wall, door, door tag, then create and set a new door tag type"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSetTangentLock",
+    "folder": "TBC_SetTangentLock",
+    "slug": "set-tangent-lock",
+    "sourceFile": "CmdSetTangentLock.cs",
+    "bcSamples": {
+      "title": "Set Tangent Lock",
+      "description": "Set tangent lock on adjoining curve elements"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSetWallType",
+    "folder": "TBC_SetWallType",
+    "slug": "set-wall-type",
+    "sourceFile": "CmdSetWallType.cs",
+    "bcSamples": {
+      "title": "Set Wall Type",
+      "description": "Set the wall type of a selected wall"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSharedParamGuids",
+    "folder": "TBC_SharedParamGuids",
+    "slug": "shared-param-guids",
+    "sourceFile": "CmdSharedParamGuids.cs",
+    "bcSamples": {
+      "title": "Shared Parameter GUIDs",
+      "description": "List all shared parameter GUIDs"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSheetData",
+    "folder": "TBC_SheetData",
+    "slug": "sheet-data",
+    "sourceFile": "CmdSheetData.cs",
+    "bcSamples": {
+      "title": "Sheet Data Export",
+      "description": "Export sheet data to XML file"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSheetSize",
+    "folder": "TBC_SheetSize",
+    "slug": "sheet-size",
+    "sourceFile": "CmdSheetSize.cs",
+    "bcSamples": {
+      "title": "Sheet Size",
+      "description": "List title block element types and title block and view sheet instances and sizes"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSheetToModel",
+    "folder": "TBC_SheetToModel",
+    "slug": "sheet-to-model",
+    "sourceFile": "CmdSheetToModel.cs",
+    "bcSamples": {
+      "title": "Sheet to Model Coordinates",
+      "description": "Convert sheet to model coordinates and convert DWF markup to model elements"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSlabBoundary",
+    "folder": "TBC_SlabBoundary",
+    "slug": "slab-boundary",
+    "sourceFile": "CmdSlabBoundary.cs",
+    "bcSamples": {
+      "title": "Slab Boundaries",
+      "description": "Determine polygonal floor slab boundary loops"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSlabBoundaryArea",
+    "folder": "TBC_SlabBoundaryArea",
+    "slug": "slab-boundary-area",
+    "sourceFile": "CmdSlabBoundaryArea.cs",
+    "bcSamples": {
+      "title": "Floor Boundary Polygon Areas",
+      "description": "Determine floor slab boundary loop polygon areas"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSlabSides",
+    "folder": "TBC_SlabSides",
+    "slug": "slab-sides",
+    "sourceFile": "CmdSlabSides.cs",
+    "bcSamples": {
+      "title": "Slab Sides",
+      "description": "Determine floor slab side faces"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSlopedWall",
+    "folder": "TBC_SlopedWall",
+    "slug": "sloped-wall",
+    "sourceFile": "CmdSlopedWall.cs",
+    "bcSamples": {
+      "title": "Sloped Wall",
+      "description": "Create a sloped wall"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSortCurveLoops",
+    "folder": "TBC_SortCurveLoops",
+    "slug": "sort-curve-loops",
+    "sourceFile": "CmdSortCurveLoops.cs",
+    "bcSamples": {
+      "title": "Sort Curve Loops",
+      "description": "Retrieve and sort outer and inner face curve loops"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSpaceAdjacency",
+    "folder": "TBC_SpaceAdjacency",
+    "slug": "space-adjacency",
+    "sourceFile": "CmdSpaceAdjacency.cs",
+    "bcSamples": {
+      "title": "Space Adjacency",
+      "description": "Analyse and report space adjacencies"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdStatusBar",
+    "folder": "TBC_StatusBar",
+    "slug": "status-bar",
+    "sourceFile": "CmdStatusBar.cs",
+    "bcSamples": {
+      "title": "Status Bar Text",
+      "description": "Set the status bar text using Windows API"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSteelStairBeams",
+    "folder": "TBC_SteelStairBeams",
+    "slug": "steel-stair-beams",
+    "sourceFile": "CmdSteelStairBeams.cs",
+    "bcSamples": {
+      "title": "Steel Stair Beams",
+      "description": "Create a series of connected mitered steel beams for a steel stair"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdSwitchDoc",
+    "folder": "TBC_SwitchDoc",
+    "slug": "switch-doc",
+    "sourceFile": "CmdSwitchDoc.cs",
+    "bcSamples": {
+      "title": "Switch Document Show Elements",
+      "description": "Use ShowElements to switch documents and views"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdTransformedCoords",
+    "folder": "TBC_TransformedCoords",
+    "slug": "transformed-coords",
+    "sourceFile": "CmdTransformedCoords.cs",
+    "bcSamples": {
+      "title": "Transformed Coordinates",
+      "description": "Determine transformed vertex coordinates for family instance symbol geometry"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdTriangleCount",
+    "folder": "TBC_TriangleCount",
+    "slug": "triangle-count",
+    "sourceFile": "CmdTriangleCount.cs",
+    "bcSamples": {
+      "title": "Triangle Count",
+      "description": "Determine model total triangle count using custom exporter"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdUnrotateNorth",
+    "folder": "TBC_UnrotateNorth",
+    "slug": "unrotate-north",
+    "sourceFile": "CmdUnrotateNorth.cs",
+    "bcSamples": {
+      "title": "Unrotate North",
+      "description": "Transform element location back to original coordinates to cancel effect of rotating project north"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdUpdateReferencingSheet",
+    "folder": "TBC_UpdateReferencingSheet",
+    "slug": "update-referencing-sheet",
+    "sourceFile": "CmdUpdateReferencingSheet.cs",
+    "bcSamples": {
+      "title": "Update Referencing Sheet",
+      "description": "Update 'Referencing Sheet' parameter value displayed in section view header"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdViewsShowingElements",
+    "folder": "TBC_ViewsShowingElements",
+    "slug": "views-showing-elements",
+    "sourceFile": "CmdViewsShowingElements.cs",
+    "bcSamples": {
+      "title": "Views Showing Elements",
+      "description": "Determine all views displaying a given set of elements"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallBottomFace",
+    "folder": "TBC_WallBottomFace",
+    "slug": "wall-bottom-face",
+    "sourceFile": "CmdWallBottomFace.cs",
+    "bcSamples": {
+      "title": "Wall Bottom Face",
+      "description": "Determine the bottom face of a wall"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallDimensions",
+    "folder": "TBC_WallDimensions",
+    "slug": "wall-dimensions",
+    "sourceFile": "CmdWallDimensions.cs",
+    "bcSamples": {
+      "title": "Wall Dimensions",
+      "description": "Extract wall solid and list all its dimensions"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallFooting",
+    "folder": "TBC_WallFooting",
+    "slug": "wall-footing",
+    "sourceFile": "CmdWallFooting.cs",
+    "bcSamples": {
+      "title": "Wall Footing",
+      "description": "Determine wall footing from selected wall"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallLayerVolumes",
+    "folder": "TBC_WallLayerVolumes",
+    "slug": "wall-layer-volumes",
+    "sourceFile": "CmdWallLayerVolumes.cs",
+    "bcSamples": {
+      "title": "Wall Layer Volumes",
+      "description": "Calculate compound wall layer volumes"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallLayers",
+    "folder": "TBC_WallLayers",
+    "slug": "wall-layers",
+    "sourceFile": "CmdWallLayers.cs",
+    "bcSamples": {
+      "title": "Wall Layers",
+      "description": "List and determine position of all wall compound layers"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallNeighbours",
+    "folder": "TBC_WallNeighbours",
+    "slug": "wall-neighbours",
+    "sourceFile": "CmdWallNeighbours.cs",
+    "bcSamples": {
+      "title": "Wall Neighbours",
+      "description": "Determine wall neighbours, i.e. wall joined at end points"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallOpeningProfiles",
+    "folder": "TBC_WallOpeningProfiles",
+    "slug": "wall-opening-profiles",
+    "sourceFile": "CmdWallOpeningProfiles.cs",
+    "bcSamples": {
+      "title": "Wall Opening Profiles",
+      "description": "Determine and display all wall opening edges including elevation profile lines"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallOpenings",
+    "folder": "TBC_WallOpenings",
+    "slug": "wall-openings",
+    "sourceFile": "CmdWallOpenings.cs",
+    "bcSamples": {
+      "title": "Wall Opening Side Faces",
+      "description": "Determine wall opening side faces and report their start and end points along location line"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallProfile",
+    "folder": "TBC_WallProfile",
+    "slug": "wall-profile",
+    "sourceFile": "CmdWallProfile.cs",
+    "bcSamples": {
+      "title": "Wall Profile",
+      "description": "Determine wall elevation profile boundary loop polygons"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallProfileArea",
+    "folder": "TBC_WallProfileArea",
+    "slug": "wall-profile-area",
+    "sourceFile": "CmdWallProfileArea.cs",
+    "bcSamples": {
+      "title": "Wall Profile Polygon Areas",
+      "description": "Determine wall elevation profile boundary loop polygon areas"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWallTopFaces",
+    "folder": "TBC_WallTopFaces",
+    "slug": "wall-top-faces",
+    "sourceFile": "CmdWallTopFaces.cs",
+    "bcSamples": {
+      "title": "Wall Top Faces",
+      "description": "Retrieve top faces of selected or all wall"
+    },
+    "needsSplit": false
+  },
+  {
+    "className": "CmdWindowHandle",
+    "folder": "TBC_WindowHandle",
+    "slug": "window-handle",
+    "sourceFile": "CmdWindowHandle.cs",
+    "bcSamples": {
+      "title": "Window Handle",
+      "description": "Determine Revit window handle and display a modeless form"
+    },
+    "needsSplit": false
+  }
+]

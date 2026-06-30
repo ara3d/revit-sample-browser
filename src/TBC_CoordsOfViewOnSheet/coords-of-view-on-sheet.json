@@ -1,0 +1,15 @@
+{
+  "name": "revit_coords_of_view_on_sheet",
+  "description": "Retrieve coordinates of view on sheet",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdCoordsOfViewOnSheet",
+  "sample": "TBC_CoordsOfViewOnSheet",
+  "source": "src/TBC_CoordsOfViewOnSheet/CmdCoordsOfViewOnSheet.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

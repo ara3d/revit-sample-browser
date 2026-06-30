@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_railing",
+  "description": "Cannot create a new railing instance",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewRailing",
+  "sample": "TBC_NewRailing",
+  "source": "src/TBC_NewRailing/CmdNewRailing.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

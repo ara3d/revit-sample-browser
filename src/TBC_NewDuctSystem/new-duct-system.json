@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_duct_system",
+  "description": "Create a new duct system via the NewMechanicalSystem API call",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewDuctSystem",
+  "sample": "TBC_NewDuctSystem",
+  "source": "src/TBC_NewDuctSystem/CmdNewDuctSystem.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_wall_neighbours",
+  "description": "Determine wall neighbours, i.e. wall joined at end points",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdWallNeighbours",
+  "sample": "TBC_WallNeighbours",
+  "source": "src/TBC_WallNeighbours/CmdWallNeighbours.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

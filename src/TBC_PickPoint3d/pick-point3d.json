@@ -1,0 +1,15 @@
+{
+  "name": "revit_pick_point3d",
+  "description": "Set active work plane to pick a point in 3d",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdPickPoint3d",
+  "sample": "TBC_PickPoint3d",
+  "source": "src/TBC_PickPoint3d/CmdPickPoint3d.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

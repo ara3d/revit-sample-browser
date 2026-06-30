@@ -26,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser
             Type = type ?? throw new ArgumentNullException(nameof(type));
             Namespace = SampleBrowserUtils.NormalizeSampleNamespace(type.Namespace);
             Name = $"{Namespace}.{Type.Name}";
-            FolderPath = $"{ThisFolderPath}\\{Namespace.Replace(".", "\\")}";
+            FolderPath = ResolveFolderPath(type);
 
             if (!Directory.Exists(FolderPath))
             {
@@ -34,9 +34,30 @@ namespace Ara3D.RevitSampleBrowser
                 return;
             }
 
-            ReadmePath = Directory.GetFiles(FolderPath, "*.rtf").FirstOrDefault();
+            ReadmePath = Directory.GetFiles(FolderPath, "*.rtf").FirstOrDefault()
+                ?? Directory.GetFiles(FolderPath, "*.md").FirstOrDefault();
             if (ReadmePath == null)
-                Debug.WriteLine($"Could not find any rtf files in {FolderPath}");
+                Debug.WriteLine($"Could not find any rtf or md files in {FolderPath}");
+        }
+
+        private static string ResolveFolderPath(Type type)
+        {
+            var ns = SampleBrowserUtils.NormalizeSampleNamespace(type.Namespace);
+            var defaultPath = Path.Combine(ThisFolderPath, ns.Replace(".", "\\"));
+            if (Directory.Exists(defaultPath))
+                return defaultPath;
+
+            if (type.Namespace != null && type.Namespace.StartsWith("BuildingCoder"))
+            {
+                var suffix = type.Name.StartsWith("Cmd", StringComparison.Ordinal)
+                    ? type.Name.Substring(3)
+                    : type.Name;
+                var tbcPath = Path.Combine(ThisFolderPath, "TBC_" + suffix);
+                if (Directory.Exists(tbcPath))
+                    return tbcPath;
+            }
+
+            return defaultPath;
         }
 
         public void Activate(ExternalCommandData commandData, UIControlledApplication uiControlledApplication)

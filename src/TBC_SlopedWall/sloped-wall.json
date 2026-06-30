@@ -1,0 +1,15 @@
+{
+  "name": "revit_sloped_wall",
+  "description": "Create a sloped wall",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdSlopedWall",
+  "sample": "TBC_SlopedWall",
+  "source": "src/TBC_SlopedWall/CmdSlopedWall.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

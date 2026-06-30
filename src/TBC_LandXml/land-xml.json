@@ -1,0 +1,15 @@
+{
+  "name": "revit_land_xml",
+  "description": "Import LandXML data and create TopographySurface",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdLandXml",
+  "sample": "TBC_LandXml",
+  "source": "src/TBC_LandXml/CmdLandXml.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

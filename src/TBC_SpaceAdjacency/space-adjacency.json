@@ -1,0 +1,15 @@
+{
+  "name": "revit_space_adjacency",
+  "description": "Analyse and report space adjacencies",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdSpaceAdjacency",
+  "sample": "TBC_SpaceAdjacency",
+  "source": "src/TBC_SpaceAdjacency/CmdSpaceAdjacency.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

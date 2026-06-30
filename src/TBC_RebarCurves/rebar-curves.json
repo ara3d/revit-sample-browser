@@ -1,0 +1,15 @@
+{
+  "name": "revit_rebar_curves",
+  "description": "Retrieve and duplicate all rebar centreline curves with model curves",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdRebarCurves",
+  "sample": "TBC_RebarCurves",
+  "source": "src/TBC_RebarCurves/CmdRebarCurves.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_edit_floor",
+  "description": "Generate a new floor element from the curve array of an existing one",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdEditFloor",
+  "sample": "TBC_EditFloor",
+  "source": "src/TBC_EditFloor/CmdEditFloor.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

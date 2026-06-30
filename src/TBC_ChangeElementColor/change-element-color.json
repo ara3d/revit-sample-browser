@@ -1,0 +1,15 @@
+{
+  "name": "revit_change_element_color",
+  "description": "Using OverrideGraphicSettings for active view",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdChangeElementColor",
+  "sample": "TBC_ChangeElementColor",
+  "source": "src/TBC_ChangeElementColor/CmdChangeElementColor.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

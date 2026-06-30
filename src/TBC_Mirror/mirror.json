@@ -1,0 +1,15 @@
+{
+  "name": "revit_mirror",
+  "description": "Mirror selected elements",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdMirror",
+  "sample": "TBC_Mirror",
+  "source": "src/TBC_Mirror/CmdMirror.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

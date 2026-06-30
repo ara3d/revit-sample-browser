@@ -1,0 +1,15 @@
+{
+  "name": "revit_copy_wall_type",
+  "description": "Duplicate a system type from on project to another to partially transfer project standards",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdCopyWallType",
+  "sample": "TBC_CopyWallType",
+  "source": "src/TBC_CopyWallType/CmdCopyWallType.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

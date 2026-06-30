@@ -1,0 +1,15 @@
+{
+  "name": "revit_wall_footing",
+  "description": "Determine wall footing from selected wall",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdWallFooting",
+  "sample": "TBC_WallFooting",
+  "source": "src/TBC_WallFooting/CmdWallFooting.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

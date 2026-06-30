@@ -1,0 +1,15 @@
+{
+  "name": "revit_list_all_rooms",
+  "description": "List properties from all rooms",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdListAllRooms",
+  "sample": "TBC_ListAllRooms",
+  "source": "src/TBC_ListAllRooms/CmdListAllRooms.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_categories",
+  "description": "List document and built-in categories",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdCategories",
+  "sample": "TBC_Categories",
+  "source": "src/TBC_Categories/CmdCategories.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

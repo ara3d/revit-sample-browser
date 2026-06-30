@@ -1,0 +1,15 @@
+{
+  "name": "revit_new_beam_type_instance",
+  "description": "Create a new beam type and insert an instance of it",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdNewBeamTypeInstance",
+  "sample": "TBC_NewBeamTypeInstance",
+  "source": "src/TBC_NewBeamTypeInstance/CmdNewBeamTypeInstance.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

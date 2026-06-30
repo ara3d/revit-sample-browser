@@ -1,0 +1,15 @@
+{
+  "name": "revit_process_visible_dwg",
+  "description": "Extract geometry from visible import instance layers in the current view",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdProcessVisibleDwg",
+  "sample": "TBC_ProcessVisibleDwg",
+  "source": "src/TBC_ProcessVisibleDwg/CmdProcessVisibleDwg.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}

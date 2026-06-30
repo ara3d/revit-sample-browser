@@ -1,0 +1,15 @@
+{
+  "name": "revit_slab_boundary",
+  "description": "Determine polygonal floor slab boundary loops",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdSlabBoundary",
+  "sample": "TBC_SlabBoundary",
+  "source": "src/TBC_SlabBoundary/CmdSlabBoundary.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Imported from The Building Coder; refactor for headless MCP execution."
+}
