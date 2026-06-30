@@ -5,7 +5,6 @@
 | **Sample** | Toposolid |
 | **Class** | `ToposolidFromDwg` |
 | **Source** | `src/Toposolid/Command.cs` |
-| **SDK ReadMe** | `src/Toposolid/ReadMe_Toposolid.rtf` |
 | **MCP rating** | 2/5 |
 
 Builds a toposolid from polyline and line geometry extracted from a picked imported DWG.

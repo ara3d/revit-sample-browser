@@ -5,7 +5,6 @@
 | **Sample** | PanelSchedule |
 | **Class** | `SheetImport` |
 | **Source** | `src/PanelSchedule/SheetImport.cs` |
-| **SDK ReadMe** | `src/PanelSchedule/ReadMe_PanelSchedule.rtf` |
 | **MCP rating** | 4/5 |
 
 Places all panel schedule instance views onto the active sheet, spacing them horizontally by each instance width.

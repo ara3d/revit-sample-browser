@@ -5,7 +5,6 @@
 | **Sample** | FamilyCreation/DWGFamilyCreation |
 | **Class** | `Command` |
 | **Source** | `src/FamilyCreation/DWGFamilyCreation/Command.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/DWGFamilyCreation/ReadMe_DWGFamilyCreation.rtf` |
 | **MCP rating** | 2/5 |
 
 Imports a bundled `Desk.dwg` into a family floor plan and adds type parameters recording the file name and import date.

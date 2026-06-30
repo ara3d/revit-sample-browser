@@ -5,7 +5,6 @@
 | **Sample** | SpanDirection |
 | **Class** | `Command` |
 | **Source** | `src/SpanDirection/Command.cs` |
-| **SDK ReadMe** | `src/SpanDirection/ReadMe_SpanDirection.rtf` |
 | **MCP rating** | 4/5 |
 
 Reports a structural floor's span direction angle and the names of its span-direction symbol types.

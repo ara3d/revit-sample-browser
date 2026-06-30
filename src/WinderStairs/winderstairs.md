@@ -5,7 +5,6 @@
 | **Sample** | WinderStairs |
 | **Class** | `Command` |
 | **Source** | `src/WinderStairs/Command.cs` |
-| **SDK ReadMe** | `src/WinderStairs/Readme_WinderStairs.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates L-shaped or U-shaped winder stair runs from two or three connected model lines or walls.

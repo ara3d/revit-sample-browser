@@ -5,7 +5,6 @@
 | **Sample** | DatumsModification |
 | **Class** | `DatumPropagation` |
 | **Source** | `src/DatumsModification/DatumsModificationCmd.cs` |
-| **SDK ReadMe** | `src/DatumsModification/ReadMe_DatumsModification.rtf` |
 | **MCP rating** | 2/5 |
 
 Propagates view-specific appearance of a single selected datum to other views chosen from its propagation view list.

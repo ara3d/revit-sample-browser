@@ -5,7 +5,6 @@
 | **Sample** | DirectionCalculation |
 | **Class** | `FindSouthFacingWindowsWithoutProjectLocation` |
 | **Source** | `src/DirectionCalculation/Commands.cs` |
-| **SDK ReadMe** | `src/DirectionCalculation/ReadMe_DirectionCalculation.rtf` |
 | **MCP rating** | 5/5 |
 
 Finds windows whose facing direction is south using model Y-axis as north/south, then selects those instances.

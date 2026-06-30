@@ -5,7 +5,6 @@
 | **Sample** | {SampleFolder} |
 | **Class** | `{FullClassName}` |
 | **Source** | `src/{SourcePath}` |
-| **SDK ReadMe** | `src/{ReadMePath}` *(if present)* |
 | **MCP rating** | {McpRating}/5 |
 
 {One sentence stating what this command does.}

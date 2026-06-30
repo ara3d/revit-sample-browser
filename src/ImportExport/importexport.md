@@ -5,7 +5,6 @@
 | **Sample** | ImportExport |
 | **Class** | `Command` |
 | **Source** | `src/ImportExport/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 5/5 |
 
 Provides a unified dialog for importing and exporting Revit data formats (DWG, DWF, images, GBXML, etc.).

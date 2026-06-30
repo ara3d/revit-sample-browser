@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `OptimizeStraights` |
 | **Source** | `src/FabricationPartLayout/OptimizeStraights.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Optimizes straight fabrication part lengths within the current selection using the built-in length optimizer.

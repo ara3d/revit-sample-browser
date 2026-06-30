@@ -5,7 +5,6 @@
 | **Sample** | TagBeam |
 | **Class** | `Command` |
 | **Source** | `src/TagBeam/Command.cs` |
-| **SDK ReadMe** | `src/TagBeam/ReadMe_TagBeam.rtf` |
 | **MCP rating** | 4/5 |
 
 Tags both ends of each selected structural beam using user-chosen tag mode, family symbol, leader, and orientation.

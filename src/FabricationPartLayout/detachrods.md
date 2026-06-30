@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `DetachRods` |
 | **Source** | `src/FabricationPartLayout/HangerRods.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Detaches hanger rods from their structural host on a user-picked fabrication hanger part.

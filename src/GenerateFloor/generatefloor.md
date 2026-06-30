@@ -5,7 +5,6 @@
 | **Sample** | GenerateFloor |
 | **Class** | `Command` |
 | **Source** | `src/GenerateFloor/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Creates a floor from a profile, floor type, and level chosen in a dialog.

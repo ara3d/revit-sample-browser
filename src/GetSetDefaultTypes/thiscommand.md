@@ -5,7 +5,6 @@
 | **Sample** | GetSetDefaultTypes |
 | **Class** | `ThisCommand` |
 | **Source** | `src/GetSetDefaultTypes/ThisCommand.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Shows dockable panes for viewing and editing default family and element types in the active document.

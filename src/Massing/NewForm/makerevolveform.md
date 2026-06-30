@@ -5,7 +5,6 @@
 | **Sample** | Massing/NewForm |
 | **Class** | `MakeRevolveForm` |
 | **Source** | `src/Massing/NewForm/Command.cs` |
-| **SDK ReadMe** | `src/Massing/NewForm/ReadMe_NewForm.rtf` |
 | **MCP rating** | 2/5 |
 
 Revolves a triangular profile about a reference-line axis through π/4 radians to create a mass form.

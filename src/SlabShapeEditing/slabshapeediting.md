@@ -5,7 +5,6 @@
 | **Sample** | SlabShapeEditing |
 | **Class** | `Command` |
 | **Source** | `src/SlabShapeEditing/Command.cs` |
-| **SDK ReadMe** | `src/SlabShapeEditing/ReadMe_SlabShapeEditing.rtf` |
 | **MCP rating** | 4/5 |
 
 Edits a selected floor's shape by adding, moving, and modifying slab shape vertices and creases through a 2D profile editor.

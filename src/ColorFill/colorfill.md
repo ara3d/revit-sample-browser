@@ -5,7 +5,6 @@
 | **Sample** | ColorFill |
 | **Class** | `Command` |
 | **Source** | `src/ColorFill/Command.cs` |
-| **SDK ReadMe** | `src/ColorFill/ReadMe_ColorFill.rtf` |
 | **MCP rating** | 4/5 |
 
 Applies color fill schemes to views through a manager/form that edits `ColorFill` placement on categories or filters.

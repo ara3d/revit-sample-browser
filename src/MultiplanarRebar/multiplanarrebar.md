@@ -5,7 +5,6 @@
 | **Sample** | MultiplanarRebar |
 | **Class** | `Command` |
 | **Source** | `src/MultiplanarRebar/Command.cs` |
-| **SDK ReadMe** | `src/MultiplanarRebar/ReadMe_MultiplanarRebar.rtf` |
 | **MCP rating** | 2/5 |
 
 Adds multi-planar rebar to selected sloped concrete corbel structural connections using user-specified bar types and spacing.

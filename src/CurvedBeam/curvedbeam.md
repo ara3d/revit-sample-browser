@@ -5,7 +5,6 @@
 | **Sample** | CurvedBeam |
 | **Class** | `Command` |
 | **Source** | `src/CurvedBeam/CurvedBeam.cs` |
-| **SDK ReadMe** | `src/CurvedBeam/ReadMe_CurvedBeam.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates structural framing beams along hard-coded arc, partial ellipse, or NURBS spline curves at a user-chosen level and family type.

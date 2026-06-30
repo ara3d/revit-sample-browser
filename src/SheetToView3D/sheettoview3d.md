@@ -5,7 +5,6 @@
 | **Sample** | SheetToView3D |
 | **Class** | `Command` |
 | **Source** | `src/SheetToView3D/SheetToView3D.cs` |
-| **SDK ReadMe** | `src/SheetToView3D/ReadMe_SheetToView3D.rtf` |
 | **MCP rating** | 5/5 |
 
 Creates a perspective 3D view whose camera is placed at the sheet click mapped into model space through viewport transforms.

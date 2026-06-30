@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `ExportToMaj` |
 | **Source** | `src/FabricationPartLayout/ExportToMAJ.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 5/5 |
 
 Exports selected fabrication parts to a MAJ fabrication job file via a save dialog.

@@ -5,7 +5,6 @@
 | **Sample** | Journaling |
 | **Class** | `Command` |
 | **Source** | `src/Journaling/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 1/5 |
 
 Demonstrates journaling modes by running scripted document operations that replay through Revit’s journal mechanism.

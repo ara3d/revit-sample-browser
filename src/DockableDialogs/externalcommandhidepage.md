@@ -5,7 +5,6 @@
 | **Sample** | DockableDialogs |
 | **Class** | `ExternalCommandHidePage` |
 | **Source** | `src/DockableDialogs/TopLevelCommands/ExternalCommandHidePage.cs` |
-| **SDK ReadMe** | `src/DockableDialogs/ReadMe_DockableDialogs.rtf` |
 | **MCP rating** | 1/5 |
 
 Hides the registered dockable pane in Revit when a document is open.

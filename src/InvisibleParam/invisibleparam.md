@@ -5,7 +5,6 @@
 | **Sample** | InvisibleParam |
 | **Class** | `Command` |
 | **Source** | `src/InvisibleParam/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 
 Creates visible and invisible shared parameters on the Walls category using a temporary shared parameter file.

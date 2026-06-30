@@ -5,7 +5,6 @@
 | **Sample** | LevelsProperty |
 | **Class** | `Command` |
 | **Source** | `src/LevelsProperty/Command.cs` |
-| **SDK ReadMe** | `src/LevelsProperty/ReadMe_LevelsProperty.rtf` |
 | **MCP rating** | 5/5 |
 
 Lists every `Level` in the active document, displays name and elevation in a dialog, and supports creating, renaming, elevating, or deleting levels through the API.

@@ -5,7 +5,6 @@
 | **Sample** | CurtainWallGrid |
 | **Class** | `Command` |
 | **Source** | `src/CurtainWallGrid/Command.cs` |
-| **SDK ReadMe** | `src/CurtainWallGrid/ReadMe_CurtainWallGrid.rtf` |
 | **MCP rating** | 4/5 |
 
 Launches an interactive editor for adding, moving, and deleting curtain wall grid lines on a selected curtain wall.

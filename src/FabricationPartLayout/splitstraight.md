@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `SplitStraight` |
 | **Source** | `src/FabricationPartLayout/SplitStraight.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Splits a selected fabrication straight duct or pipe at its midpoint into two connected parts.

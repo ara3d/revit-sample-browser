@@ -5,7 +5,6 @@
 | **Sample** | DuplicateGraphics |
 | **Class** | `CommandClearExternalGraphics` |
 | **Source** | `src/DuplicateGraphics/Command.cs` |
-| **SDK ReadMe** | `src/DuplicateGraphics/ReadMe_DuplicateGraphics.rtf` |
 | **MCP rating** | 2/5 |
 
 Unregisters all DirectContext3D drawing servers created by the DuplicateGraphics external application.

@@ -5,7 +5,6 @@
 | **Sample** | DockableDialogs |
 | **Class** | `ExternalCommandShowPage` |
 | **Source** | `src/DockableDialogs/TopLevelCommands/ExternalCommandShowPage.cs` |
-| **SDK ReadMe** | `src/DockableDialogs/ReadMe_DockableDialogs.rtf` |
 | **MCP rating** | 1/5 |
 
 Shows the previously registered dockable pane when a document is open.

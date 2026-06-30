@@ -5,7 +5,6 @@
 | **Sample** | PhysicalProp |
 | **Class** | `DumpMaterialPhysicalParameters` |
 | **Source** | `src/PhysicalProp/Command.cs` |
-| **SDK ReadMe** | `src/PhysicalProp/ReadMe_PhysicalProp.rtf` |
 | **MCP rating** | 5/5 |
 
 Reads structural physical properties from the material assigned to a single selected structural family instance and displays them in a task dialog.

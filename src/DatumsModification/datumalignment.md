@@ -5,7 +5,6 @@
 | **Sample** | DatumsModification |
 | **Class** | `DatumAlignment` |
 | **Source** | `src/DatumsModification/DatumsModificationCmd.cs` |
-| **SDK ReadMe** | `src/DatumsModification/ReadMe_DatumsModification.rtf` |
 | **MCP rating** | 2/5 |
 
 Aligns multiple selected grid or level datums in the active view to match a user-chosen reference datum's position along the shared axis.

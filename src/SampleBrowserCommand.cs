@@ -133,7 +133,12 @@ namespace Ara3D.RevitSampleBrowser
                     if (!(item.Tag is SampleData data))
                         return;
                     if (File.Exists(data.ReadmePath))
-                        Form.richTextBox1.LoadFile(data.ReadmePath);
+                    {
+                        if (string.Equals(Path.GetExtension(data.ReadmePath), ".md", StringComparison.OrdinalIgnoreCase))
+                            Form.richTextBox1.Text = File.ReadAllText(data.ReadmePath);
+                        else
+                            Form.richTextBox1.LoadFile(data.ReadmePath);
+                    }
                 }
             }
             catch (Exception ex)

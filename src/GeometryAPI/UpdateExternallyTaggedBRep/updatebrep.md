@@ -5,7 +5,6 @@
 | **Sample** | GeometryAPI/UpdateExternallyTaggedBRep |
 | **Class** | `UpdateBRep` |
 | **Source** | `src/GeometryAPI/UpdateExternallyTaggedBRep/UpdateBRep.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 
 Replaces the externally tagged BRep in the `DirectShape` created by `CreateBRep` with a resized podium geometry.

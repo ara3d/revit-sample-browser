@@ -5,7 +5,6 @@
 | **Sample** | AnalysisVisualizationFramework / SpatialFieldGradient |
 | **Class** | `SpatialFieldGradient` |
 | **Source** | `src/AnalysisVisualizationFramework/SpatialFieldGradient/Command.cs` |
-| **SDK ReadMe** | `src/AnalysisVisualizationFramework/SpatialFieldGradient/ReadMe_SpatialFieldGradient.rtf` |
 | **MCP rating** | 2/5 |
 
 Paints a color gradient spatial field on picked faces using the Analysis Visualization Framework.

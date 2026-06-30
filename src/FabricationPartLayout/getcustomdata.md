@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `GetCustomData` |
 | **Source** | `src/FabricationPartLayout/CustomData.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Reads and displays all fabrication custom data fields defined in the loaded configuration for a picked fabrication part.

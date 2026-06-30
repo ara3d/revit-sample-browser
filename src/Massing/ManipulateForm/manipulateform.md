@@ -5,7 +5,6 @@
 | **Sample** | Massing/ManipulateForm |
 | **Class** | `Command` |
 | **Source** | `src/Massing/ManipulateForm/Command.cs` |
-| **SDK ReadMe** | `src/Massing/ManipulateForm/ReadMe_ManipulateForm.rtf` |
 | **MCP rating** | 2/5 |
 
 Builds a loft `Form` from rectangular profiles, then programmatically adds profiles and edges and moves sub-elements to show massing form manipulation APIs.

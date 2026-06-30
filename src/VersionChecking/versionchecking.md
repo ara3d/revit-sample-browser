@@ -5,7 +5,6 @@
 | **Sample** | VersionChecking |
 | **Class** | `Command` |
 | **Source** | `src/VersionChecking/VersionChecking.cs` |
-| **SDK ReadMe** | `src/VersionChecking/ReadMe_VersionChecking.rtf` |
 | **MCP rating** | 5/5 |
 
 Reads Revit product name, version number, and build from `Application` and displays them in a form.

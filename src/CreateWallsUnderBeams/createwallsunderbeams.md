@@ -5,7 +5,6 @@
 | **Sample** | CreateWallsUnderBeams |
 | **Class** | `CreateWallsUnderBeams` |
 | **Source** | `src/CreateWallsUnderBeams/CreateWallsUnderBeams.cs` |
-| **SDK ReadMe** | `src/CreateWallsUnderBeams/ReadMe_CreateWallsUnderBeams.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates one wall along each selected horizontal beam's location curve, offset slightly below the beam elevation.

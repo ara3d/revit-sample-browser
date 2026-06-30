@@ -5,7 +5,6 @@
 | **Sample** | AutoTagRooms |
 | **Class** | `Command` |
 | **Source** | `src/AutoTagRooms/Command.cs` |
-| **SDK ReadMe** | `src/AutoTagRooms/ReadMe_AutoTagRooms.rtf` |
 | **MCP rating** | 4/5 |
 
 Lists rooms and existing tags by level, then creates room tags for untagged rooms using a chosen tag type.

@@ -5,7 +5,6 @@
 | **Sample** | GeometryAPI/UpdateExternallyTaggedBRep |
 | **Class** | `CreateBRep` |
 | **Source** | `src/GeometryAPI/UpdateExternallyTaggedBRep/CreateBRep.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Creates an `ExternallyTaggedBRep` (“Podium”), adds it to a new `DirectShape`, and verifies retrieval by external geometry ids.

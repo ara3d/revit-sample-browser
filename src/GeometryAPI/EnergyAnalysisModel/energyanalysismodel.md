@@ -5,7 +5,6 @@
 | **Sample** | GeometryAPI/EnergyAnalysisModel |
 | **Class** | `Command` |
 | **Source** | `src/GeometryAPI/EnergyAnalysisModel/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 
 Initializes energy analysis model data and lets the user browse analysis options and results in a dialog.

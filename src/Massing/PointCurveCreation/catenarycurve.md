@@ -5,7 +5,6 @@
 | **Sample** | Massing/PointCurveCreation |
 | **Class** | `CatenaryCurve` |
 | **Source** | `src/Massing/PointCurveCreation/Command.cs` |
-| **SDK ReadMe** | `src/Massing/PointCurveCreation/ReadMe_PointCurveCreation.rtf` |
 | **MCP rating** | 2/5 |
 
 Places reference points along hyperbolic-cosine (catenary) curves for several scaling factors and connects each set with `NewCurveByPoints`.

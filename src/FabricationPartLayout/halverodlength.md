@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `HalveRodLength` |
 | **Source** | `src/FabricationPartLayout/HangerRods.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Halves each rod length on a picked fabrication hanger when rods are detached from structure.

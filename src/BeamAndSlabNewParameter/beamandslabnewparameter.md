@@ -5,7 +5,6 @@
 | **Sample** | BeamAndSlabNewParameter |
 | **Class** | `Command` |
 | **Source** | `src/BeamAndSlabNewParameter/BeamAndSlabNewParameter.cs` |
-| **SDK ReadMe** | `src/BeamAndSlabNewParameter/ReadMe_BeamAndSlabNewParameter.rtf` |
 | **MCP rating** | 2/5 |
 
 Adds a shared instance parameter to beams and slabs, stores GUID values, and finds elements by that parameter.

@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `CreateAnalyticalMember` |
 | **Source** | `src/ContextualAnalyticalModel/CreateAnalyticalMember.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a straight `AnalyticalMember` between two XYZ endpoints and exposes static helpers used by other commands in this sample.

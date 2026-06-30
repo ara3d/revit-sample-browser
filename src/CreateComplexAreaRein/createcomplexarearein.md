@@ -5,7 +5,6 @@
 | **Sample** | CreateComplexAreaRein |
 | **Class** | `Command` |
 | **Source** | `src/CreateComplexAreaRein/CreateComplexAreaRein.cs` |
-| **SDK ReadMe** | `src/CreateComplexAreaRein/ReadMe_CreateComplexAreaRein.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates area reinforcement on a single selected structural rectangular floor slab, then applies user-chosen bar layout parameters through a dialog.

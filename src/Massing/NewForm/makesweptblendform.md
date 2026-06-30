@@ -5,7 +5,6 @@
 | **Sample** | Massing/NewForm |
 | **Class** | `MakeSweptBlendForm` |
 | **Source** | `src/Massing/NewForm/Command.cs` |
-| **SDK ReadMe** | `src/Massing/NewForm/ReadMe_NewForm.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates a swept blend form from two triangular profiles along a vertical path curve.

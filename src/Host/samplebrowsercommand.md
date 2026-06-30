@@ -5,7 +5,6 @@
 | **Sample** | Host |
 | **Class** | `SampleBrowserCommand` |
 | **Source** | `src/SampleBrowserCommand.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 1/5 |
 
 Opens the Revit Sample Browser WinForms shell that lists and runs other sample commands from the assembly.

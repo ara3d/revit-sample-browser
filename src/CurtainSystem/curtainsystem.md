@@ -5,7 +5,6 @@
 | **Sample** | CurtainSystem |
 | **Class** | `Command` |
 | **Source** | `src/CurtainSystem/Command.cs` |
-| **SDK ReadMe** | `src/CurtainSystem/ReadMe_CurtainSystem.rtf` |
 | **MCP rating** | 4/5 |
 
 Validates a selected mass form and opens a dialog to create, list, and delete curtain systems on mass faces.

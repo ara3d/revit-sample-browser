@@ -5,7 +5,6 @@
 | **Sample** | PowerCircuit |
 | **Class** | `Command` |
 | **Source** | `src/PowerCircuit/Command.cs` |
-| **SDK ReadMe** | `src/PowerCircuit/ReadMe_PowerCircuit.rtf` |
 | **MCP rating** | 2/5 |
 
 Manages electrical circuits for the current selection through a sequence of WinForms dialogs and `CircuitOperationData.Operate()`.

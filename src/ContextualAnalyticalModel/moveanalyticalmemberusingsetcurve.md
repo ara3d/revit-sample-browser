@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `MoveAnalyticalMemberUsingSetCurve` |
 | **Source** | `src/ContextualAnalyticalModel/MoveAnalyticalMemberUsingSetCurve.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Repositions an analytical member by assigning a new curve with `SetCurve`, which breaks connectivity at shared end nodes.

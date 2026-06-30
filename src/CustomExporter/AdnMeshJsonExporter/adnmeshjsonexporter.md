@@ -5,7 +5,6 @@
 | **Sample** | CustomExporter/AdnMeshJsonExporter |
 | **Class** | `Command` |
 | **Source** | `src/CustomExporter/AdnMeshJsonExporter/Command.cs` |
-| **SDK ReadMe** | `src/CustomExporter/AdnMeshJsonExporter/Readme_AdnMeshJsonExporter.rtf` |
 | **MCP rating** | 5/5 |
 
 Exports tessellated 3D mesh geometry from the active 3D view to ADN mesh JSON format using a custom `IExportContext`.

@@ -5,7 +5,6 @@
 | **Sample** | Massing/PointCurveCreation |
 | **Class** | `SineCurve` |
 | **Source** | `src/Massing/PointCurveCreation/Command.cs` |
-| **SDK ReadMe** | `src/Massing/PointCurveCreation/ReadMe_PointCurveCreation.rtf` |
 | **MCP rating** | 2/5 |
 
 Samples 500 points along `z = cos(x) * 10` and builds a `CurveByPoints` through the reference points.

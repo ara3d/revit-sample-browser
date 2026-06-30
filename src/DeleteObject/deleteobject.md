@@ -5,7 +5,6 @@
 | **Sample** | DeleteObject |
 | **Class** | `Command` |
 | **Source** | `src/DeleteObject/DeleteObject.cs` |
-| **SDK ReadMe** | `src/DeleteObject/ReadMe_DeleteObject.rtf` |
 | **MCP rating** | 4/5 |
 
 Deletes all elements in the current selection, rolling back if any deletion fails.

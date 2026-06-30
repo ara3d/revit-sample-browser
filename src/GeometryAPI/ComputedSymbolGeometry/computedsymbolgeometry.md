@@ -5,7 +5,6 @@
 | **Sample** | GeometryAPI/ComputedSymbolGeometry |
 | **Class** | `Command` |
 | **Source** | `src/GeometryAPI/ComputedSymbolGeometry/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 
 Extracts and displays computed symbol geometry for family instances in the active document.

@@ -5,7 +5,6 @@
 | **Sample** | FamilyCreation/WindowWizard |
 | **Class** | `Command` |
 | **Source** | `src/FamilyCreation/WindowWizard/Command.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/WindowWizard/ReadMe_WindowWizard.rtf` |
 | **MCP rating** | 2/5 |
 
 Launches a multi-step wizard that builds a parametric window family from user inputs in a window family template.

@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `AddAssociation` |
 | **Source** | `src/ContextualAnalyticalModel/AddAssociation.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a one-to-one association between a selected analytical element and a selected physical element using `AnalyticalToPhysicalAssociationManager`.

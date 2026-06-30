@@ -5,7 +5,6 @@
 | **Sample** | StringSearch |
 | **Class** | `Command` |
 | **Source** | `src/StringSearch/Command.cs` |
-| **SDK ReadMe** | `src/StringSearch/Readme_StringSearch.rtf` |
 | **MCP rating** | 4/5 |
 | **Upstream** | [jeremytammik/StringSearch](https://github.com/jeremytammik/StringSearch) (MIT) |
 

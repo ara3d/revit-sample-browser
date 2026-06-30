@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `ReleaseConditionsAnalyticalMember` |
 | **Source** | `src/ContextualAnalyticalModel/ReleaseConditionsAnalyticalMember.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Reads and updates end release conditions and release types on a sample analytical member.

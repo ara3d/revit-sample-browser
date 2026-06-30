@@ -5,7 +5,6 @@
 | **Sample** | InCanvasControlAPI |
 | **Class** | `Command` |
 | **Source** | `src/InCanvasControlAPI/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 1/5 |
 
 Places an in-canvas issue marker control on a user-picked element and registers it for tracking.

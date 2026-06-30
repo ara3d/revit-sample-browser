@@ -5,7 +5,6 @@
 | **Sample** | AllViews |
 | **Class** | `Command` |
 | **Source** | `src/AllViews/AllViews.cs` |
-| **SDK ReadMe** | `src/AllViews/ReadMe_AllViews.rtf` |
 | **MCP rating** | 5/5 |
 
 Lists project views, lets the user pick a subset, and generates a sheet with viewports arranged using a golden-ratio layout.

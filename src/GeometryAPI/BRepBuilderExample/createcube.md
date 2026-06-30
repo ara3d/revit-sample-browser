@@ -5,7 +5,6 @@
 | **Sample** | GeometryAPI/BRepBuilderExample |
 | **Class** | `CreateCube` |
 | **Source** | `src/GeometryAPI/BRepBuilderExample/CreateCube.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Builds a 100×100×100 solid cube with `BRepBuilder` and places it in the model as a `DirectShape`.

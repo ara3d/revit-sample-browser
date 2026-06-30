@@ -5,7 +5,6 @@
 | **Sample** | FindReferencesByDirection/FindColumns |
 | **Class** | `Command` |
 | **Source** | `src/FindReferencesByDirection/FindColumns/FindColumns.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 5/5 |
 
 Ray-traces from wall faces to find structural columns embedded alongside or within walls, then selects those columns.

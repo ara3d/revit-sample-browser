@@ -5,7 +5,6 @@
 | **Sample** | AttachedDetailGroup |
 | **Class** | `AttachedDetailGroupHideAllCommand` |
 | **Source** | `src/AttachedDetailGroup/AttachedDetailGroupHideAllCommand.cs` |
-| **SDK ReadMe** | `src/AttachedDetailGroup/Readme_AttachedDetailGroup.rtf` |
 | **MCP rating** | 4/5 |
 
 Hides all attached detail groups on the selected model group in the active view.

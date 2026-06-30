@@ -5,7 +5,6 @@
 | **Sample** | DirectionCalculation |
 | **Class** | `FindSouthFacingWallsWithProjectLocation` |
 | **Source** | `src/DirectionCalculation/Commands.cs` |
-| **SDK ReadMe** | `src/DirectionCalculation/ReadMe_DirectionCalculation.rtf` |
 | **MCP rating** | 5/5 |
 
 Finds exterior walls facing south after transforming wall normals by the active project location's north direction, then selects those walls.

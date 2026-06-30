@@ -5,7 +5,6 @@
 | **Sample** | PerformanceAdviserControl |
 | **Class** | `UiCommand` |
 | **Source** | `src/PerformanceAdviserControl/UICommand.cs` |
-| **SDK ReadMe** | `src/PerformanceAdviserControl/ReadMe_PerformanceAdviserControl.rtf` |
 | **MCP rating** | 1/5 |
 
 Opens a dialog that lists all Performance Adviser rules and lets the user choose which to run against the active document.

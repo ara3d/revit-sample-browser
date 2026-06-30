@@ -5,7 +5,6 @@
 | **Sample** | GeometryAPI/BRepBuilderExample |
 | **Class** | `CreateNurbs` |
 | **Source** | `src/GeometryAPI/BRepBuilderExample/CreateNURBS.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Creates an open-shell NURBS surface with trimmed boundary edges and displays it as a generic-model `DirectShape`.

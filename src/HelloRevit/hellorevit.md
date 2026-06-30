@@ -5,7 +5,6 @@
 | **Sample** | HelloRevit |
 | **Class** | `Command` |
 | **Source** | `src/HelloRevit/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 
 Minimal starter command that demonstrates `TaskDialog` usage with command links for Revit and document information.

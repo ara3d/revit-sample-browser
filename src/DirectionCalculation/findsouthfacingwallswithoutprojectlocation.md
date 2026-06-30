@@ -5,7 +5,6 @@
 | **Sample** | DirectionCalculation |
 | **Class** | `FindSouthFacingWallsWithoutProjectLocation` |
 | **Source** | `src/DirectionCalculation/Commands.cs` |
-| **SDK ReadMe** | `src/DirectionCalculation/ReadMe_DirectionCalculation.rtf` |
 | **MCP rating** | 5/5 |
 
 Finds exterior walls whose outward normal faces south using the model Y-axis as north/south, then updates the selection to those walls.

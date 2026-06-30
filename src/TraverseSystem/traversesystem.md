@@ -5,7 +5,6 @@
 | **Sample** | TraverseSystem |
 | **Class** | `Command` |
 | **Source** | `src/TraverseSystem/Command.cs` |
-| **SDK ReadMe** | `src/TraverseSystem/ReadMe_TraverseSystem.rtf` |
 | **MCP rating** | 2/5 |
 
 Traverses a well-connected mechanical or piping system from a single selected element and writes the tree to `traversal.xml`.

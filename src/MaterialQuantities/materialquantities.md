@@ -5,7 +5,6 @@
 | **Sample** | MaterialQuantities |
 | **Class** | `Command` |
 | **Source** | `src/MaterialQuantities/MaterialQuantities.cs` |
-| **SDK ReadMe** | `src/MaterialQuantities/ReadMe_MaterialQuantities.rtf` |
 | **MCP rating** | 5/5 |
 
 Calculates net and gross material volumes and areas for all walls, floors, and roofs, writing CSV-style totals to `CalculateMaterialQuantities.txt`.

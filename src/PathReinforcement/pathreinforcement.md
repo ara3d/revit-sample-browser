@@ -5,7 +5,6 @@
 | **Sample** | PathReinforcement |
 | **Class** | `Command` |
 | **Source** | `src/PathReinforcement/Command.cs` |
-| **SDK ReadMe** | `src/PathReinforcement/ReadMe_PathReinforcement.rtf` |
 | **MCP rating** | 2/5 |
 
 Opens an editor dialog for a selected `PathReinforcement` element, listing rebar bar types and exposing path reinforcement properties.

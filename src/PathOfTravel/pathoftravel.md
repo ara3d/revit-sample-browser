@@ -5,7 +5,6 @@
 | **Sample** | PathOfTravel |
 | **Class** | `Command` |
 | **Source** | `src/PathOfTravel/Command.cs` |
-| **SDK ReadMe** | `src/PathOfTravel/Readme_PathOfTravel.rtf` |
 | **MCP rating** | 3/5 |
 
 Creates egress `PathOfTravel` elements on a floor plan from room points to doors using bulk or single-room workflows.

@@ -5,7 +5,6 @@
 | **Sample** | DeckProperties |
 | **Class** | `Command` |
 | **Source** | `src/DeckProperties/Command.cs` |
-| **SDK ReadMe** | `src/DeckProperties/ReadMe_DeckProperties.rtf` |
 | **MCP rating** | 4/5 |
 
 Reads and displays compound structure layer data for selected floors, emphasizing structural deck layers, materials, and deck profile parameters.

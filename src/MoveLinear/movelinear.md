@@ -5,7 +5,6 @@
 | **Sample** | MoveLinear |
 | **Class** | `Command` |
 | **Source** | `src/MoveLinear/Command.cs` |
-| **SDK ReadMe** | `src/MoveLinear/ReadMe_MoveLinear.rtf` |
 | **MCP rating** | 4/5 |
 
 Moves a single linear-hosted element by replacing its `LocationCurve` with a new line offset 100 feet in X at the start and 100 feet in Y at the end.

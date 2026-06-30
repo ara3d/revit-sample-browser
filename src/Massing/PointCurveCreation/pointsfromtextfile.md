@@ -5,7 +5,6 @@
 | **Sample** | Massing/PointCurveCreation |
 | **Class** | `PointsFromTextFile` |
 | **Source** | `src/Massing/PointCurveCreation/Command.cs` |
-| **SDK ReadMe** | `src/Massing/PointCurveCreation/ReadMe_PointCurveCreation.rtf` |
 | **MCP rating** | 2/5 |
 
 Reads comma-separated XYZ coordinates from `sphere.csv` beside the add-in and creates a reference point at each location.

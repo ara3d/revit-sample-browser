@@ -5,7 +5,6 @@
 | **Sample** | FrameBuilder |
 | **Class** | `Command` |
 | **Source** | `src/FrameBuilder/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Builds a structural frame (columns, beams, braces) from dimensions and family types entered in a dialog.

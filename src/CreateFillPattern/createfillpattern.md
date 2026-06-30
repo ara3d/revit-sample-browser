@@ -5,7 +5,6 @@
 | **Sample** | CreateFillPattern |
 | **Class** | `Command` |
 | **Source** | `src/CreateFillPattern/Command.cs` |
-| **SDK ReadMe** | `src/CreateFillPattern/Readme_CreateFillPattern.rtf` |
 | **MCP rating** | 4/5 |
 
 Opens a dialog to list, create, and apply model fill patterns and line patterns to selected wall surfaces and cut faces.

@@ -5,7 +5,6 @@
 | **Sample** | GeometryAPI/GeometryCreation_BooleanOperation |
 | **Class** | `Command` |
 | **Source** | `src/GeometryAPI/GeometryCreation_BooleanOperation/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 
 Demonstrates constructive solid geometry by boolean-combining primitive solids and visualizing the result with the Analysis Visualization Framework.

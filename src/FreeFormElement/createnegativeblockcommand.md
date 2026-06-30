@@ -5,7 +5,6 @@
 | **Sample** | FreeFormElement |
 | **Class** | `CreateNegativeBlockCommand` |
 | **Source** | `src/FreeFormElement/CreateNegativeBlockCommand.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Creates a generic-model family block that represents the negative volume of a selected solid element within a user-defined XY boundary.

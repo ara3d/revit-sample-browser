@@ -5,7 +5,6 @@
 | **Sample** | DatumsModification |
 | **Class** | `DatumStyleModification` |
 | **Source** | `src/DatumsModification/DatumsModificationCmd.cs` |
-| **SDK ReadMe** | `src/DatumsModification/ReadMe_DatumsModification.rtf` |
 | **MCP rating** | 2/5 |
 
 Applies bubble visibility, 2D vs model extent, and leader elbow settings to selected datums in the active view.

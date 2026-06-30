@@ -5,7 +5,6 @@
 | **Sample** | ModelessDialog/ModelessForm_IdlingEvent |
 | **Class** | `Command` |
 | **Source** | `src/ModelessDialog/ModelessForm_IdlingEvent/Command.cs` |
-| **SDK ReadMe** | `src/ModelessDialog/ModelessForm_IdlingEvent/Readme_ModelessForm_IdlingEvent.rtf` |
 | **MCP rating** | 1/5 |
 
 Shows a modeless dialog that drives Revit operations through the `Idling` event instead of `ExternalEvent`.

@@ -5,7 +5,6 @@
 | **Sample** | GridCreation |
 | **Class** | `Command` |
 | **Source** | `src/GridCreation/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Creates structural grids from selected curves, orthogonal spacing, or radial/arc layouts via a multi-step dialog workflow.

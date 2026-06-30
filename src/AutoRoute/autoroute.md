@@ -5,7 +5,6 @@
 | **Sample** | AutoRoute |
 | **Class** | `Command` |
 | **Source** | `src/AutoRoute/Command.cs` |
-| **SDK ReadMe** | `src/AutoRoute/ReadMe_AutoRoute.rtf` |
 | **MCP rating** | 2/5 |
 
 Automatically routes ductwork and fittings between a supply air handler and two terminals, creating a mechanical system.

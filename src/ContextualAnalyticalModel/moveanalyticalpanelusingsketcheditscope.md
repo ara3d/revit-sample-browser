@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `MoveAnalyticalPanelUsingSketchEditScope` |
 | **Source** | `src/ContextualAnalyticalModel/MoveAnalyticalPanelUsingSketchEditScope.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Offsets every boundary line of an analytical panel sketch, which moves the panel and breaks connectivity to a connected member.

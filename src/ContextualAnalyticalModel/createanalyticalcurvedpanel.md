@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `CreateAnalyticalCurvedPanel` |
 | **Source** | `src/ContextualAnalyticalModel/CreateAnalyticalCurvedPanel.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a curved analytical floor panel from a hard-coded `Arc` and sets its structural role and analysis type.

@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -34,10 +33,29 @@ namespace Ara3D.RevitSampleBrowser
                 return;
             }
 
-            ReadmePath = Directory.GetFiles(FolderPath, "*.rtf").FirstOrDefault()
-                ?? Directory.GetFiles(FolderPath, "*.md").FirstOrDefault();
+            ReadmePath = FindMarkdownDoc(FolderPath, Type.Name);
             if (ReadmePath == null)
-                Debug.WriteLine($"Could not find any rtf or md files in {FolderPath}");
+                Debug.WriteLine($"Could not find a markdown doc for {Name} under {FolderPath}");
+        }
+
+        private static string FindMarkdownDoc(string startFolder, string className)
+        {
+            for (var dir = startFolder;
+                 !string.IsNullOrEmpty(dir) && dir.StartsWith(ThisFolderPath, StringComparison.OrdinalIgnoreCase);
+                 dir = Path.GetDirectoryName(dir))
+            {
+                foreach (var md in Directory.GetFiles(dir, "*.md"))
+                {
+                    if (Path.GetFileName(md).StartsWith("_", StringComparison.Ordinal))
+                        continue;
+
+                    var text = File.ReadAllText(md);
+                    if (text.Contains("**Class**") && text.Contains($"| `{className}` |"))
+                        return md;
+                }
+            }
+
+            return null;
         }
 
         private static string ResolveFolderPath(Type type)

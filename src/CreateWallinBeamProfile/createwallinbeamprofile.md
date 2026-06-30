@@ -5,7 +5,6 @@
 | **Sample** | CreateWallinBeamProfile |
 | **Class** | `CreateWallinBeamProfile` |
 | **Source** | `src/CreateWallinBeamProfile/CreateWallinBeamProfile.cs` |
-| **SDK ReadMe** | `src/CreateWallinBeamProfile/ReadMe_CreateWallinBeamProfile.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a single wall whose profile follows a closed loop formed by selected structural beam location curves lying in one vertical plane.

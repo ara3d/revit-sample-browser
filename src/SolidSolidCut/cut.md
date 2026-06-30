@@ -5,7 +5,6 @@
 | **Sample** | SolidSolidCut |
 | **Class** | `Cut` |
 | **Source** | `src/SolidSolidCut/Command.cs` |
-| **SDK ReadMe** | `src/SolidSolidCut/ReadMe_SolidSolidCut.rtf` |
 | **MCP rating** | 2/5 |
 
 Applies a solid-solid cut so one family solid element cuts another in a family document.

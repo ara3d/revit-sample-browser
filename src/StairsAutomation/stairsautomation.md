@@ -5,7 +5,6 @@
 | **Sample** | StairsAutomation |
 | **Class** | `Command` |
 | **Source** | `src/StairsAutomation/Command.cs` |
-| **SDK ReadMe** | `src/StairsAutomation/Readme_StairsAutomationSample.rtf` |
 | **MCP rating** | 4/5 |
 
 Generates one of five predefined stair configurations on each run, cycling through straight, curved, and multi-run layouts.

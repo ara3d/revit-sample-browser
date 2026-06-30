@@ -5,7 +5,6 @@
 | **Sample** | MaterialProperties |
 | **Class** | `MaterialProperties` |
 | **Source** | `src/MaterialProperties/MaterialProperties.cs` |
-| **SDK ReadMe** | `src/MaterialProperties/ReadMe_MaterialProperties.rtf` |
 | **MCP rating** | 5/5 |
 
 Displays physical material properties for a selected structural beam, column, or brace and lets the user assign a different material or override unit weight.

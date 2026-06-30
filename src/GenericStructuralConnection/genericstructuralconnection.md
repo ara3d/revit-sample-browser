@@ -5,7 +5,6 @@
 | **Sample** | GenericStructuralConnection |
 | **Class** | `Command` |
 | **Source** | `src/GenericStructuralConnection/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 
 Demonstrates creating, reading, updating, deleting, and managing detailed structural connections via a menu-driven dialog.

@@ -5,7 +5,6 @@
 | **Sample** | DocumentChanged |
 | **Class** | `Command` |
 | **Source** | `src/DocumentChanged/ChangesMonitor.cs` |
-| **SDK ReadMe** | `src/DocumentChanged/ReadMe_DocumentChanged.rtf` |
 | **MCP rating** | 1/5 |
 
 Re-shows the modeless changes log window that tracks `DocumentChanged` events registered by the sample's `ExternalApplication`.

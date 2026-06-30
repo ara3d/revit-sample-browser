@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `Ancillaries` |
 | **Source** | `src/FabricationPartLayout/Ancillaries.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Reports ancillary usage on a user-picked fabrication part, grouped and counted by type and name.

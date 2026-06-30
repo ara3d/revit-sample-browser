@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `CreateCustomAreaLoad` |
 | **Source** | `src/ContextualAnalyticalModel/CustomAreaLoad.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a uniform area load on a selected analytical host from a user-defined rectangular boundary.

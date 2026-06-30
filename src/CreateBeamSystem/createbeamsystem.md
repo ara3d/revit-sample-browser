@@ -5,7 +5,6 @@
 | **Sample** | CreateBeamSystem |
 | **Class** | `Command` |
 | **Source** | `src/CreateBeamSystem/Command.cs` |
-| **SDK ReadMe** | `src/CreateBeamSystem/ReadMe_CreateBeamSystem.rtf` |
 | **MCP rating** | 4/5 |
 
 Collects a closed polygon sketch from the user and creates a `BeamSystem` with chosen layout rule and beam type in the active view.

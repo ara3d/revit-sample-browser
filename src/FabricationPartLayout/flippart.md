@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `FlipPart` |
 | **Source** | `src/FabricationPartLayout/FlipPart.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Flips a user-picked fabrication part when `CanFlipPart` returns true.

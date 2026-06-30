@@ -5,7 +5,6 @@
 | **Sample** | Toposolid |
 | **Class** | `SimplifyToposolid` |
 | **Source** | `src/Toposolid/Command.cs` |
-| **SDK ReadMe** | `src/Toposolid/ReadMe_Toposolid.rtf` |
 | **MCP rating** | 2/5 |
 
 Reduces inner vertices of a user-picked toposolid using `Toposolid.Simplify`.

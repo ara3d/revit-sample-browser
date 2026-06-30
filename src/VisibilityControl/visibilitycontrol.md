@@ -5,7 +5,6 @@
 | **Sample** | VisibilityControl |
 | **Class** | `Command` |
 | **Source** | `src/VisibilityControl/Command.cs` |
-| **SDK ReadMe** | `src/VisibilityControl/ReadMe_VisibilityControl.rtf` |
 | **MCP rating** | 4/5 |
 
 Provides a dialog to toggle category visibility in the active view or isolate elements by category.

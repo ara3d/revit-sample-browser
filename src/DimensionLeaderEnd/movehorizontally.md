@@ -5,7 +5,6 @@
 | **Sample** | DimensionLeaderEnd |
 | **Class** | `MoveHorizontally` |
 | **Source** | `src/DimensionLeaderEnd/Command.cs` |
-| **SDK ReadMe** | `src/DimensionLeaderEnd/ReadMe_DimensionLeaderEnd.rtf` |
 | **MCP rating** | 3/5 |
 
 Offsets dimension leader end positions along the dimension line direction by a fixed negative delta for selected dimensions.

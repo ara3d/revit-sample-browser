@@ -5,7 +5,6 @@
 | **Sample** | FamilyCreation/GenericModelCreation |
 | **Class** | `Command` |
 | **Source** | `src/FamilyCreation/GenericModelCreation/Command.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/GenericModelCreation/ReadMe_GenericModelCreation.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates a generic model family (or uses the active family) and adds sample extrusion, blend, revolution, sweep, and swept-blend forms.

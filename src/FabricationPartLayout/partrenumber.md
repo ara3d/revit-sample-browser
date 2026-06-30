@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `PartRenumber` |
 | **Source** | `src/FabricationPartLayout/PartRenumber.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Clears and reassigns item numbers on selected fabrication parts, grouping identical parts via `IsSameAs`.

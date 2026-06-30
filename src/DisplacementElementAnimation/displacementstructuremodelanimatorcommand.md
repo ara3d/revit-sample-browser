@@ -5,7 +5,6 @@
 | **Sample** | DisplacementElementAnimation |
 | **Class** | `DisplacementStructureModelAnimatorCommand` |
 | **Source** | `src/DisplacementElementAnimation/DisplacementStructureModelAnimatorCommand.cs` |
-| **SDK ReadMe** | `src/DisplacementElementAnimation/ReadMe_DisplacementElementAnimation.rtf` |
 | **MCP rating** | 1/5 |
 
 Starts a continuous structural displacement animation that moves selected elements through staged offsets using displacement paths.

@@ -5,7 +5,6 @@
 | **Sample** | FamilyCreation/AutoParameter |
 | **Class** | `AddParameterToFamily` |
 | **Source** | `src/FamilyCreation/AutoParameter/Command.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/AutoParameter/ReadMe_AutoParameter.rtf` |
 | **MCP rating** | 4/5 |
 
 Adds family and shared parameters defined in text files to the active family document.

@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `ChangeService` |
 | **Source** | `src/FabricationPartLayout/ChangeService.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Changes the fabrication service and palette for all selected fabrication parts to the first loaded service (palette index 0).

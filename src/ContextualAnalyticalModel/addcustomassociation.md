@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `AddCustomAssociation` |
 | **Source** | `src/ContextualAnalyticalModel/AddCustomAssociation.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 4/5 |
 
 Associates multiple analytical elements with multiple physical elements in one operation through `AnalyticalToPhysicalAssociationManager`.

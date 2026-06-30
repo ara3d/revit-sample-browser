@@ -5,7 +5,6 @@
 | **Sample** | Massing/NewForm |
 | **Class** | `MakeCapForm` |
 | **Source** | `src/Massing/NewForm/Command.cs` |
-| **SDK ReadMe** | `src/Massing/NewForm/ReadMe_NewForm.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates a triangular cap form from three model-line profile references using `FamilyCreate.NewFormByCap`.

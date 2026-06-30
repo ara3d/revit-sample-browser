@@ -5,7 +5,6 @@
 | **Sample** | ElementFilterSample |
 | **Class** | `Command` |
 | **Source** | `src/ElementFilterSample/Command.cs` |
-| **SDK ReadMe** | `src/ElementFilterSample/ReadMe_ViewFilters.rtf` |
 | **MCP rating** | 5/5 |
 
 Opens a dialog to browse, create, edit, and apply view filters (`ParameterFilterElement`) in the active document.

@@ -5,7 +5,6 @@
 | **Sample** | ProjectInfo |
 | **Class** | `Command` |
 | **Source** | `src/ProjectInfo/Command.cs` |
-| **SDK ReadMe** | `src/ProjectInfo/ReadMe_ProjectInfo.rtf` |
 | **MCP rating** | 5/5 |
 
 Opens a property-grid editor for project information, site location, construction, and energy analysis settings on the active document.

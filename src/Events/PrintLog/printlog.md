@@ -5,7 +5,6 @@
 | **Sample** | Events / PrintLog |
 | **Class** | `Command` |
 | **Source** | `src/Events/PrintLog/Command.cs` |
-| **SDK ReadMe** | `src/Events/PrintLog/ReadMe_PrintLog.rtf` |
 | **MCP rating** | 1/5 |
 
 Prints all printable views in the active document to a file, triggering `ViewPrint` and `DocumentPrint` events handled by the sample's external application.

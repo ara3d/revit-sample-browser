@@ -5,7 +5,6 @@
 | **Sample** | TransactionControl |
 | **Class** | `Command` |
 | **Source** | `src/TransactionControl/Command.cs` |
-| **SDK ReadMe** | `src/TransactionControl/ReadMe_TransactionControl.rtf` |
 | **MCP rating** | 2/5 |
 
 Opens an interactive form for experimenting with `Transaction`, `TransactionGroup`, and wall create/move/delete operations.

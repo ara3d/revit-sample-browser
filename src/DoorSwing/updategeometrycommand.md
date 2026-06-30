@@ -5,7 +5,6 @@
 | **Sample** | DoorSwing |
 | **Class** | `UpdateGeometryCommand` |
 | **Source** | `src/DoorSwing/Command.cs` |
-| **SDK ReadMe** | `src/DoorSwing/ReadMe_DoorSwing.rtf` |
 | **MCP rating** | 2/5 |
 
 Updates door instance geometry to match current To/From room parameter values for the selection or entire project.

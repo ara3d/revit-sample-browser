@@ -5,7 +5,6 @@
 | **Sample** | DoorSwing |
 | **Class** | `UpdateParamsCommand` |
 | **Source** | `src/DoorSwing/Command.cs` |
-| **SDK ReadMe** | `src/DoorSwing/ReadMe_DoorSwing.rtf` |
 | **MCP rating** | 2/5 |
 
 Refreshes door opening, To/From room, and public-door parameters from current door geometry for selected doors or the whole model.

@@ -5,7 +5,6 @@
 | **Sample** | AnalyticalSupportData_Info |
 | **Class** | `Command` |
 | **Source** | `src/AnalyticalSupportData_Info/AnalyticalSupportData_Info.cs` |
-| **SDK ReadMe** | `src/AnalyticalSupportData_Info/ReadMe_AnalyticalSupportData_Info.rtf` |
 | **MCP rating** | 5/5 |
 
 Reports analytical support information for the current selection by resolving associated `AnalyticalElement` data and showing it in a grid.

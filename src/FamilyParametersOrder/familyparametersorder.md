@@ -5,7 +5,6 @@
 | **Sample** | FamilyParametersOrder |
 | **Class** | `Command` |
 | **Source** | `src/FamilyParametersOrder/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 
 Opens a dialog to sort parameters in loaded family files according to user-defined ordering rules.

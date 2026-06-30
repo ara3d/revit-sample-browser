@@ -5,7 +5,6 @@
 | **Sample** | Massing/DistanceToPanels |
 | **Class** | `SetDistanceParam` |
 | **Source** | `src/Massing/DistanceToPanels/Command.cs` |
-| **SDK ReadMe** | `src/Massing/DistanceToPanels/ReadMe_DistanceToPanels.rtf` |
 | **MCP rating** | 2/5 |
 
 Computes the 3D distance from a selected family instance to every divided-surface panel tile and writes the value into each panel's `Distance` instance parameter.

@@ -5,7 +5,6 @@
 | **Sample** | PlacementOptions |
 | **Class** | `Command` |
 | **Source** | `src/PlacementOptions/Command.cs` |
-| **SDK ReadMe** | `src/PlacementOptions/Readme_PlacementOptions.rtf` |
 | **MCP rating** | 4/5 |
 
 Demonstrates programmatic family placement using `UIDocument.PromptForFamilyInstancePlacement` with custom `FamilyPlacementOptions` for face-based and sketch-based families.

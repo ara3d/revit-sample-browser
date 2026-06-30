@@ -5,7 +5,6 @@
 | **Sample** | FabricationPartLayout |
 | **Class** | `StretchAndFit` |
 | **Source** | `src/FabricationPartLayout/StretchAndFit.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Stretches a fabrication fitting from one open connector to connect with a second selected element.

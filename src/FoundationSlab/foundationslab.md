@@ -5,7 +5,6 @@
 | **Sample** | FoundationSlab |
 | **Class** | `Command` |
 | **Source** | `src/FoundationSlab/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Creates foundation slabs from user-specified boundary geometry, levels, and slab types through a configuration dialog.

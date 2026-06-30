@@ -5,7 +5,6 @@
 | **Sample** | NewHostedSweep |
 | **Class** | `Command` |
 | **Source** | `src/NewHostedSweep/Command.cs` |
-| **SDK ReadMe** | `src/NewHostedSweep/ReadMe_NewHostedSweep.rtf` |
 | **MCP rating** | 2/5 |
 
 Launches a dialog-driven workflow to create or modify hosted sweeps (fascia, gutter, slab edge) on picked roof or slab edges.

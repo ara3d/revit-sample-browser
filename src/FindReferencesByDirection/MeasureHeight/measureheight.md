@@ -5,7 +5,6 @@
 | **Sample** | FindReferencesByDirection/MeasureHeight |
 | **Class** | `Command` |
 | **Source** | `src/FindReferencesByDirection/MeasureHeight/MeasureHeight.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 5/5 |
 
 Measures vertical distance from a selected roof-hosted window (skylight) down to a floor face using ray casting.

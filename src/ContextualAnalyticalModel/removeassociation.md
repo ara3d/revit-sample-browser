@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `RemoveAssociation` |
 | **Source** | `src/ContextualAnalyticalModel/RemoveAssociation.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Removes the analytical–physical association for a user-selected element via `AnalyticalToPhysicalAssociationManager`.

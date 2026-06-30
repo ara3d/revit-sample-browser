@@ -5,7 +5,6 @@
 | **Sample** | CapitalizeAllTextNotes |
 | **Class** | `Command` |
 | **Source** | `src/CapitalizeAllTextNotes/Command.cs` |
-| **SDK ReadMe** | `src/CapitalizeAllTextNotes/Readme_CapitalizeAllTextNotes.rtf` |
 | **MCP rating** | 4/5 |
 
 Sets all-caps formatting on every `TextNote` in the document that is not already fully capitalized.

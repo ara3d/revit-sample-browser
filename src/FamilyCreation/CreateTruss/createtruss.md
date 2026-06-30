@@ -5,7 +5,6 @@
 | **Sample** | FamilyCreation/CreateTruss |
 | **Class** | `Command` |
 | **Source** | `src/FamilyCreation/CreateTruss/CreateTruss.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/CreateTruss/ReadMe_CreateTruss.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates a mono truss in a truss family using named reference planes, model curves, and locked alignments.

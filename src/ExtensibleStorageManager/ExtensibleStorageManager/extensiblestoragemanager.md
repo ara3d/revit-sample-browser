@@ -5,7 +5,6 @@
 | **Sample** | ExtensibleStorageManager / ExtensibleStorageManager |
 | **Class** | `Command` |
 | **Source** | `src/ExtensibleStorageManager/ExtensibleStorageManager/Application/Command.cs` |
-| **SDK ReadMe** | `src/ExtensibleStorageManager/ExtensibleStorageManager/ReadMe_ExtensibleStorageManager.rtf` |
 | **MCP rating** | 2/5 |
 
 Opens a WPF dialog for browsing, creating, and editing extensible storage schemas and entity data on document elements.

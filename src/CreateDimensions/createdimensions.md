@@ -5,7 +5,6 @@
 | **Sample** | CreateDimensions |
 | **Class** | `Command` |
 | **Source** | `src/CreateDimensions/Command.cs` |
-| **SDK ReadMe** | `src/CreateDimensions/ReadMe_CreateDimensions.rtf` |
 | **MCP rating** | 4/5 |
 
 Adds linear dimensions to selected basic walls in the active 2D view, referencing analytical panel contour geometry associated with each wall.

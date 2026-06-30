@@ -5,7 +5,6 @@
 | **Sample** | CloudAPISample |
 | **Class** | `RunSampleCommand` |
 | **Source** | `src/CloudAPISample/Application.cs` |
-| **SDK ReadMe** | `src/CloudAPISample/ReadMe_CloudAPISample.rtf` |
 | **MCP rating** | 1/5 |
 
 Launches the Cloud API tutorial menu via `SampleEngine`, registering BIM 360 migration samples behind a ribbon button.

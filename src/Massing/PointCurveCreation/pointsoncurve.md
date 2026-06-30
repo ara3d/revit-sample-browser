@@ -5,7 +5,6 @@
 | **Sample** | Massing/PointCurveCreation |
 | **Class** | `PointsOnCurve` |
 | **Source** | `src/Massing/PointCurveCreation/Command.cs` |
-| **SDK ReadMe** | `src/Massing/PointCurveCreation/ReadMe_PointCurveCreation.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates a diagonal model line, then places reference points along it at normalized parameters from 0.1 to 1.0 using `PointOnEdge`.

@@ -5,7 +5,6 @@
 | **Sample** | PlaceFamilyInstanceByFace |
 | **Class** | `Command` |
 | **Source** | `src/PlaceFamilyInstanceByFace/Command.cs` |
-| **SDK ReadMe** | `src/PlaceFamilyInstanceByFace/ReadMe_PlaceFamilyInstanceByFace.rtf` |
 | **MCP rating** | 4/5 |
 
 Launches a two-step workflow to place face-based, point-based, or line-based family instances on geometry extracted from the current selection.

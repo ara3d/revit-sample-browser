@@ -5,7 +5,6 @@
 | **Sample** | ReferencePlane |
 | **Class** | `Command` |
 | **Source** | `src/ReferencePlane/Command.cs` |
-| **SDK ReadMe** | `src/ReferencePlane/ReadMe_ReferencePlane.rtf` |
 | **MCP rating** | 4/5 |
 
 Manages reference planes in the active document: list existing planes and create new ones relative to walls or floors.

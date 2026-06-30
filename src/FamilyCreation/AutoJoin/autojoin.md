@@ -5,7 +5,6 @@
 | **Sample** | FamilyCreation/AutoJoin |
 | **Class** | `Command` |
 | **Source** | `src/FamilyCreation/AutoJoin/Command.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/AutoJoin/ReadMe_AutoJoin.rtf` |
 | **MCP rating** | 2/5 |
 
 Joins overlapping solid generic forms in a family document, either from the current selection or automatically across the model.

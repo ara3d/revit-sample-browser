@@ -5,7 +5,6 @@
 | **Sample** | Units |
 | **Class** | `Command` |
 | **Source** | `src/Units/Command.cs` |
-| **SDK ReadMe** | `src/Units/Readme_Units.rtf` |
 | **MCP rating** | 5/5 |
 
 Displays and edits project unit formatting (discipline specs, decimal symbols, digit grouping) then commits changes with `Document.SetUnits`.

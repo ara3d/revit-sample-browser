@@ -5,7 +5,6 @@
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `CreateAreaLoadWithRefPoint` |
 | **Source** | `src/ContextualAnalyticalModel/CreateAreaLoadWithRefPoint.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates an area load on a selected analytical host with per-reference-point force vectors and curve-end bindings.

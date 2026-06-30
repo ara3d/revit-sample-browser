@@ -5,7 +5,6 @@
 | **Sample** | CreateTrianglesTopography |
 | **Class** | `Command` |
 | **Source** | `src/CreateTrianglesTopography/Command.cs` |
-| **SDK ReadMe** | `src/CreateTrianglesTopography/ReadMe_CreateTrianglesTopography.rtf` |
 | **MCP rating** | 3/5 |
 
 Builds a topography surface from triangle mesh data loaded from an embedded JSON file beside the add-in assembly.

@@ -5,7 +5,6 @@
 | **Sample** | AddSpaceAndZone |
 | **Class** | `Command` |
 | **Source** | `src/AddSpaceAndZone/Command.cs` |
-| **SDK ReadMe** | `src/AddSpaceAndZone/ReadMe_AddSpaceAndZone.rtf` |
 | **MCP rating** | 4/5 |
 
 Opens a dialog to query, create, and manage MEP **Space** and **Zone** elements by level and phase.

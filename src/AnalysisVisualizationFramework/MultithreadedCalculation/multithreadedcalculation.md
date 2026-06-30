@@ -5,7 +5,6 @@
 | **Sample** | AnalysisVisualizationFramework / MultithreadedCalculation |
 | **Class** | `MultithreadedCalculation` |
 | **Source** | `src/AnalysisVisualizationFramework/MultithreadedCalculation/MultithreadedCalculation.cs` |
-| **SDK ReadMe** | `src/AnalysisVisualizationFramework/MultithreadedCalculation/ReadMe_MultithreadedCalculation.rtf` |
 | **MCP rating** | 2/5 |
 
 Demonstrates multithreaded AVF (Analysis Visualization Framework) field updates on a user-picked element using `SpatialFieldManager` and an `IUpdater`.

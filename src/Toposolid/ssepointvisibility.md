@@ -5,7 +5,6 @@
 | **Sample** | Toposolid |
 | **Class** | `SsePointVisibility` |
 | **Source** | `src/Toposolid/Command.cs` |
-| **SDK ReadMe** | `src/Toposolid/ReadMe_Toposolid.rtf` |
 | **MCP rating** | 2/5 |
 
 Hides SSE (shape-editing) points for the toposolid category in the active document.

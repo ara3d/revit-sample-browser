@@ -5,7 +5,6 @@
 | **Sample** | CustomExporter/Custom2DExporter |
 | **Class** | `Command` |
 | **Source** | `src/CustomExporter/Custom2DExporter/Command.cs` |
-| **SDK ReadMe** | `src/CustomExporter/Custom2DExporter/ReadMe_Custom2DExporter.rtf` |
 | **MCP rating** | 5/5 |
 
 Exports tessellated 2D geometry and text from the active printable plan, section, or elevation view using a custom `IExportContext`.

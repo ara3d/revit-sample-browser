@@ -5,7 +5,6 @@
 | **Sample** | GeometryAPI/BRepBuilderExample |
 | **Class** | `CreatePeriodic` |
 | **Source** | `src/GeometryAPI/BRepBuilderExample/CreatePeriodic.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 
 Builds periodic cylindrical solids—a cylinder and a truncated cone—using `BRepBuilder` and publishes each as a `DirectShape`.

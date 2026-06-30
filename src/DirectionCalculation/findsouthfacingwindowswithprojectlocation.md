@@ -5,7 +5,6 @@
 | **Sample** | DirectionCalculation |
 | **Class** | `FindSouthFacingWindowsWithProjectLocation` |
 | **Source** | `src/DirectionCalculation/Commands.cs` |
-| **SDK ReadMe** | `src/DirectionCalculation/ReadMe_DirectionCalculation.rtf` |
 | **MCP rating** | 5/5 |
 
 Finds windows facing south relative to the active project location north, then selects those instances.

@@ -5,7 +5,6 @@
 | **Sample** | Events / SelectionChanged |
 | **Class** | `Command` |
 | **Source** | `src/Events/SelectionChanged/Command.cs` |
-| **SDK ReadMe** | `src/Events/SelectionChanged/ReadMe_SelectionChanged.rtf` |
 | **MCP rating** | 1/5 |
 
 Shows or focuses a WPF info window that logs `SelectionChanged` UI events as the user changes the active selection.

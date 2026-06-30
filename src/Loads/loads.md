@@ -5,7 +5,6 @@
 | **Sample** | Loads |
 | **Class** | `Loads` |
 | **Source** | `src/Loads/Loads.cs` |
-| **SDK ReadMe** | `src/Loads/ReadMe_Loads.rtf` |
 | **MCP rating** | 4/5 |
 
 Opens a structural settings-style dialog to view and edit load cases, load natures, load combinations, usages, and combination formulas in the current project.

@@ -5,7 +5,6 @@
 | **Sample** | TagBeam |
 | **Class** | `CreateText` |
 | **Source** | `src/TagBeam/Command.cs` |
-| **SDK ReadMe** | `src/TagBeam/ReadMe_TagBeam.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a text note beside the first end of a selected rebar's centerline, labeling its category and name.

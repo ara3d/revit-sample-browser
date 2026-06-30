@@ -5,7 +5,6 @@
 | **Sample** | SinePlotter |
 | **Class** | `Command` |
 | **Source** | `src/SinePlotter/Command.cs` |
-| **SDK ReadMe** | `src/SinePlotter/Readme_SinePlotter.rtf` |
 | **MCP rating** | 1/5 |
 
 Arrays family instances along a sine curve using ribbon-entered period, amplitude, cycle count, partition count, and prism type.

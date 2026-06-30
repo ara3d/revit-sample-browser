@@ -5,7 +5,6 @@
 | **Sample** | InPlaceMembers |
 | **Class** | `Command` |
 | **Source** | `src/InPlaceMembers/Command.cs` |
-| **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 
 Reads properties and analytical model graphics from a selected in-place structural family instance and displays them in a form.

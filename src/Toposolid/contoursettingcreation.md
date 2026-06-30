@@ -5,7 +5,6 @@
 | **Sample** | Toposolid |
 | **Class** | `ContourSettingCreation` |
 | **Source** | `src/Toposolid/Command.cs` |
-| **SDK ReadMe** | `src/Toposolid/ReadMe_Toposolid.rtf` |
 | **MCP rating** | 2/5 |
 
 Adds contour range and single-contour items to the first `ToposolidType` in the active document.
