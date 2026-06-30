@@ -32,9 +32,9 @@ namespace BuildingCoder
             return 0 < n ? ":" : ".";
         }
 
-        public static string RealString(double a)
+        public static string RealString(double a, string format = "0.##")
         {
-            return a.ToString("0.##");
+            return a.ToString(format);
         }
 
         public static string HashString(double a)

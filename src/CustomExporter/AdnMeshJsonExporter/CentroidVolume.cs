@@ -42,8 +42,8 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 
         public override string ToString()
         {
-            return Util.RealString(Volume) + "@"
-                   + Util.PointString(Centroid);
+            return BuildingCoder.Util.RealString(Volume) + "@"
+                   + BuildingCoder.Util.PointString(Centroid);
         }
     }
 }

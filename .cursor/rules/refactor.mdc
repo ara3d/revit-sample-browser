@@ -1,0 +1,47 @@
+---
+description: Rules for parallel dedup refactor into src/Common
+globs:
+  - src/**/*.cs
+alwaysApply: false
+---
+
+# Refactor rules (dedup → src/Common)
+
+Follow [docs/STYLES.md](../../docs/STYLES.md) at repo root. Behavior-preserving edits only.
+
+## Hard constraints
+
+1. **Never invent shared APIs.** Consult [refactor-map.md](../../refactor-map.md) for canonical homes and signatures.
+2. **Respect folder ownership.** Edit only files in your assigned sample folder(s). Do not touch `src/Common/` during call-site migration batches.
+3. **Build before done:** `dotnet build src/Ara3D.RevitSampleBrowser.csproj -c Debug -v minimal`
+4. **Do not change runtime behavior** unless fixing an obvious bug; note intentional behavior changes in the commit message.
+
+## Style (from STYLES.md)
+
+- Prefer static functions and extension methods
+- Prefer expression-bodied members and LINQ
+- Minimize side effects; keep functions short
+- Remove dead code after migrating call sites
+- Delete boilerplate comments that restate names/types
+
+## Migration pattern
+
+When removing a duplicate local helper:
+
+1. Find the canonical method in `refactor-map.md`
+2. Update call sites to use `BuildingCoder.Util.*` or the documented Common type
+3. Delete the local duplicate method (or entire `#region` if empty)
+4. Remove unused usings
+5. Build and fix errors
+
+## Common namespaces
+
+| Domain | Typical namespace |
+|--------|-------------------|
+| Formatting / partial Util | `BuildingCoder` |
+| Geometry helpers | `BuildingCoder` or `Ara3D.RevitSampleBrowser.Common.Geometry` |
+| Document / MEP | `Ara3D.RevitSampleBrowser.Common.Documents`, `.Common.Mep` |
+
+## csproj
+
+After Phase 0.5 globbing, do **not** add explicit `<Compile Include>` for new `.cs` files under globbed trees.

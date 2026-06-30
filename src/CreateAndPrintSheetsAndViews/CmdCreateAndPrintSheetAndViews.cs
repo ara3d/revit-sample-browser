@@ -114,7 +114,7 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             transform.BasisX = vUp.CrossProduct(vRight);
             transform.BasisY = vUp;
             transform.BasisZ = vRight;
-            Debug.Assert(Util.IsEqual(1, transform.Determinant), "expected 1 determinant");
+            Debug.Assert(BuildingCoder.Util.IsEqual(1, transform.Determinant), "expected 1 determinant");
 
             BoundingBoxXYZ sectionBox = new()
             {
@@ -158,10 +158,10 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             var conset = conmgr.Connectors;
             var start = GetPrimaryConnector(conset);
             var twcs = start.CoordinateSystem;
-            Debug.Assert(Util.IsEqual(1, twcs.Determinant), "expected 1 twcs determinant");
+            Debug.Assert(BuildingCoder.Util.IsEqual(1, twcs.Determinant), "expected 1 twcs determinant");
             twcs.BasisY = -twcs.BasisY;
             twcs.BasisZ = -twcs.BasisZ;
-            Debug.Assert(Util.IsEqual(1, twcs.Determinant), "expected 1 flipped twcs determinant");
+            Debug.Assert(BuildingCoder.Util.IsEqual(1, twcs.Determinant), "expected 1 flipped twcs determinant");
             return twcs;
         }
 

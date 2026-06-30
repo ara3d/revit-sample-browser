@@ -106,7 +106,7 @@ namespace AdnRme
                     a[i++] = s;
                 }
                 // todo: present the element ids in a separete edit box for easier copy and paste:
-                var msg = string.Format("{0} unhosted element{1}:\n\n", nUnhosted, Util.PluralSuffix(nUnhosted))
+                var msg = string.Format("{0} unhosted element{1}:\n\n", nUnhosted, BuildingCoder.Util.PluralSuffix(nUnhosted))
                           + string.Join("\n", a);
                 Util.InfoMsg(msg);
             }

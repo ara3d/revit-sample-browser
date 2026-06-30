@@ -45,7 +45,7 @@ namespace AdnRme
             var cfm = Const.SecondsPerMinute * flow;
             var cfmPerSf = cfm / area;
             Debug.WriteLine(string.Format("Space {0} flow {1} CFM / area {2} f^2 --> {3} CFM/SF",
-              space.Number, Util.RealString(cfm), Util.RealString(area), Util.RealString(cfmPerSf)));
+              space.Number, BuildingCoder.Util.RealString(cfm), BuildingCoder.Util.RealString(area), BuildingCoder.Util.RealString(cfmPerSf)));
             var pCfmPerSf = Util.GetSpaceParameter(space, ParameterName.CfmPerSf);
             pCfmPerSf.Set(cfmPerSf);
         }

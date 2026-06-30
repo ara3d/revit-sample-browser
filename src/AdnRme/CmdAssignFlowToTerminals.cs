@@ -80,7 +80,7 @@ namespace AdnRme
 
                 Debug.WriteLine(string.Format(
                   "Space {0} contains {1} air terminal{2}{3} {4}",
-                  key, n, Util.PluralSuffix(n), Util.DotOrColon(n), ids));
+                  key, n, BuildingCoder.Util.PluralSuffix(n), BuildingCoder.Util.DotOrColon(n), ids));
 
                 nTerminals += n;
             }
@@ -88,7 +88,7 @@ namespace AdnRme
 
             Debug.WriteLine(string.Format(
               "Processing a total of {0} space{1} containing {2} air terminal{3}.",
-              n, Util.PluralSuffix(n), nTerminals, Util.PluralSuffix(nTerminals)));
+              n, BuildingCoder.Util.PluralSuffix(n), nTerminals, BuildingCoder.Util.PluralSuffix(nTerminals)));
 
             return terminalsPerSpace;
         }
@@ -132,9 +132,9 @@ namespace AdnRme
                          + " --> flow {5} CFM per terminal, rounded to {6} = {7} f^3/s";
 
             Debug.WriteLine(string.Format(format,
-              space.Number, Util.RealString(calculatedSupplyAirFlow), Util.RealString(flowCfm),
-              n, Util.PluralSuffix(n), Util.RealString(flowCfmPerOutlet),
-              Util.RealString(flowCfmPerOutletRounded), Util.RealString(flowPerOutlet)));
+              space.Number, BuildingCoder.Util.RealString(calculatedSupplyAirFlow), BuildingCoder.Util.RealString(flowCfm),
+              n, BuildingCoder.Util.PluralSuffix(n), BuildingCoder.Util.RealString(flowCfmPerOutlet),
+              BuildingCoder.Util.RealString(flowCfmPerOutletRounded), BuildingCoder.Util.RealString(flowPerOutlet)));
 
             AssignFlowToTerminals(terminals, flowPerOutlet);
         }

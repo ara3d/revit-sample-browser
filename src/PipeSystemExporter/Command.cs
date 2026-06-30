@@ -44,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
                 .OfClass(typeof(Pipe));
 
             var n = col.GetElementCount();
-            Debug.Print($"{n} pipe{Util.PluralSuffix(n)}{Util.DotOrColon(n)}");
+            Debug.Print($"{n} pipe{BuildingCoder.Util.PluralSuffix(n)}{BuildingCoder.Util.DotOrColon(n)}");
 
             foreach (Pipe pipe in col)
             {
@@ -55,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
                 var pts = Util.GetConnectorPoints(pipe);
                 Debug.Assert(2 == pts.Count, "expected two endpoints on pipe");
                 Debug.Print(
-                    $"  pipe '{pipe.Name}' {diamMm}mm {Util.RealString(diameter)} {Util.PointString(pts[0])} {Util.PointString(pts[1])}");
+                    $"  pipe '{pipe.Name}' {diamMm}mm {BuildingCoder.Util.RealString(diameter, "0.####")} {BuildingCoder.Util.PointString(pts[0])} {BuildingCoder.Util.PointString(pts[1])}");
             }
 
             col = new FilteredElementCollector(doc)
@@ -64,7 +64,7 @@ namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
                 .OfClass(typeof(FamilyInstance));
 
             n = col.GetElementCount();
-            Debug.Print($"{n} fitting{Util.PluralSuffix(n)}{Util.DotOrColon(n)}");
+            Debug.Print($"{n} fitting{BuildingCoder.Util.PluralSuffix(n)}{BuildingCoder.Util.DotOrColon(n)}");
 
             foreach (FamilyInstance fitting in col)
             {
@@ -72,7 +72,7 @@ namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
                 n = pts.Count;
                 Debug.Assert(n is 1 or 2 or 3, "expected one, two or three endpoints on fitting");
                 var s = 1 == n ? "plug" : 2 == n ? "elbow" : "tee";
-                var t = string.Join(" ", pts.Select(p => Util.PointString(p)));
+                var t = string.Join(" ", pts.Select(p => BuildingCoder.Util.PointString(p)));
                 Debug.Print($"  {s} '{fitting.Symbol.FamilyName}' '{fitting.Name}' {t}");
             }
 

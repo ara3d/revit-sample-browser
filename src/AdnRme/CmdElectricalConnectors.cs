@@ -117,7 +117,7 @@ namespace AdnRme
             var n = equipment.Count;
             Debug.WriteLine(string.Format(
               "Retrieved {0} electrical equipment instance{1}{2}",
-              n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+              n, BuildingCoder.Util.PluralSuffix(n), BuildingCoder.Util.DotOrColon(n)));
             //
             // determine which equipment has parents;
             // the remaining ones are root nodes:
@@ -216,7 +216,7 @@ namespace AdnRme
       doc.get_Elements( typeof( ElectricalSystem ), systems );
       n = systems.Count;
       Debug.WriteLine( string.Format( "Retrieved {0} electrical system{1}{2}",
-        n, Util.PluralSuffix( n ), Util.DotOrColon( n ) ) );
+        n, BuildingCoder.Util.PluralSuffix( n ), BuildingCoder.Util.DotOrColon( n ) ) );
       //
       // iterate over all electrical systems and recursively add 
       // connected ecomponents starting from the system base equipment:

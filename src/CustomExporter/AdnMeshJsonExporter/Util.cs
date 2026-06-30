@@ -8,19 +8,6 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 {
     internal static class Util
     {
-        public static string RealString(double a)
-        {
-            return a.ToString("0.##");
-        }
-
-        public static string PointString(XYZ p)
-        {
-            return string.Format("({0},{1},{2})",
-                RealString(p.X),
-                RealString(p.Y),
-                RealString(p.Z));
-        }
-
         public static double SignedParallelipedVolume(
             XYZ a,
             XYZ b,

@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 
             public int GetHashCode(XYZ v)
             {
-                return Util.PointString(v).GetHashCode();
+                return BuildingCoder.Util.PointString(v).GetHashCode();
             }
         }
 

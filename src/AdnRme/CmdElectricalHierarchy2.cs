@@ -114,7 +114,7 @@ namespace AdnRme
                     equipment = Util.GetElectricalEquipment(doc);
                     var n = equipment.Count;
                     Debug.WriteLine(string.Format("Retrieved {0} electrical equipment instance{1}{2}",
-                      n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+                      n, BuildingCoder.Util.PluralSuffix(n), BuildingCoder.Util.DotOrColon(n)));
                     Dictionary<string, FamilyInstance> mapPanel = [];
                     foreach (FamilyInstance e in equipment)
                     {
@@ -158,7 +158,7 @@ namespace AdnRme
                     var systems = c.OfClass(typeof(ElectricalSystem)).ToElements();
                     n = systems.Count;
                     Debug.WriteLine(string.Format("Retrieved {0} electrical system{1}{2}",
-                      n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+                      n, BuildingCoder.Util.PluralSuffix(n), BuildingCoder.Util.DotOrColon(n)));
                     foreach (ElectricalSystem system in systems)
                     {
                         var panelName = system.PanelName;
@@ -211,7 +211,7 @@ namespace AdnRme
                     var circuitElements = Util.GetCircuitElements(doc);
                     n = circuitElements.Count;
                     Debug.WriteLine(string.Format("Retrieved {0} circuit element{1}...",
-                      n, Util.PluralSuffix(n)));
+                      n, BuildingCoder.Util.PluralSuffix(n)));
                     n = 0;
                     foreach (var e in circuitElements)
                     {
@@ -257,7 +257,7 @@ namespace AdnRme
                         }
                     }
                     Debug.WriteLine(string.Format("{0} circuit element{1} were the electrical systems.",
-                      n, Util.PluralSuffix(n)));
+                      n, BuildingCoder.Util.PluralSuffix(n)));
                     //
                     // get the electrical equipment category id:
                     //

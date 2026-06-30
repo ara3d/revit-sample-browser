@@ -210,7 +210,7 @@ namespace AdnRme
                 var equipment = Util.GetElectricalEquipment(doc);
                 var n = equipment.Count;
                 Debug.WriteLine(string.Format("Retrieved {0} electrical equipment instance{1}{2}",
-                  n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+                  n, BuildingCoder.Util.PluralSuffix(n), BuildingCoder.Util.DotOrColon(n)));
                 Dictionary<string, List<Element>> mapPanelAndSystemToEquipment = [];
                 foreach (FamilyInstance elecEqip in equipment)
                 {
@@ -225,7 +225,7 @@ namespace AdnRme
                 var systems = Util.GetElectricalSystems(doc);
                 n = systems.Count;
                 Debug.WriteLine(string.Format("Retrieved {0} electrical system{1}.",
-                  n, Util.PluralSuffix(n)));
+                  n, BuildingCoder.Util.PluralSuffix(n)));
                 //
                 // all circuits which are fed from the same family instance have 
                 // the same panel name, so you can retrieve all of these circuits.
@@ -251,9 +251,9 @@ namespace AdnRme
                     mapPanelToSystems[panelName].Add(system);
                 }
                 n = mapPanelToSystems.Count;
-                //Debug.WriteLine( string.Format( "Mapping from the {0} panel{1} to systems, system name :circuit name(connectors/unused connectors):", n, Util.PluralSuffix( n ) ) );
+                //Debug.WriteLine( string.Format( "Mapping from the {0} panel{1} to systems, system name :circuit name(connectors/unused connectors):", n, BuildingCoder.Util.PluralSuffix( n ) ) );
                 Debug.WriteLine(string.Format("Mapping from the {0} panel{1} to electrical systems == circuits:",
-                  n, Util.PluralSuffix(n)));
+                  n, BuildingCoder.Util.PluralSuffix(n)));
                 List<string> keys = [.. mapPanelToSystems.Keys];
                 keys.Sort();
                 string s;
@@ -292,7 +292,7 @@ namespace AdnRme
                   {
                     ConnectorManager cmgr = system.ConnectorManager;
                     n = cmgr.Connectors.Size;
-                    Debug.WriteLine( string.Format( "    system {0} has {1} connector{2}{3}", system.Name, n, Util.PluralSuffix( n ), Util.DotOrColon( n ) ) );
+                    Debug.WriteLine( string.Format( "    system {0} has {1} connector{2}{3}", system.Name, n, BuildingCoder.Util.PluralSuffix( n ), BuildingCoder.Util.DotOrColon( n ) ) );
                     foreach( Connector connector in system.ConnectorManager.Connectors )
                     {
                       Element owner = connector.Owner;
@@ -314,7 +314,7 @@ namespace AdnRme
                 var circuitElements = Util.GetCircuitElements(doc);
                 n = circuitElements.Count;
                 Debug.WriteLine(string.Format("Retrieved {0} circuit element{1}{2}",
-                  n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+                  n, BuildingCoder.Util.PluralSuffix(n), BuildingCoder.Util.DotOrColon(n)));
                 Dictionary<string, List<Element>> mapPanelAndCircuitToElements = [];
                 foreach (var e in circuitElements)
                 {
@@ -336,7 +336,7 @@ namespace AdnRme
                 }
                 n = mapPanelAndCircuitToElements.Count;
                 Debug.WriteLine(string.Format("Mapped circuit elements to {0} panel:circuit{1}{2}",
-                  n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+                  n, BuildingCoder.Util.PluralSuffix(n), BuildingCoder.Util.DotOrColon(n)));
                 keys.Clear();
                 keys.AddRange(mapPanelAndCircuitToElements.Keys);
                 keys.Sort(new PanelCircuitComparer());
@@ -371,7 +371,7 @@ namespace AdnRme
         Util.GetElementsWithParameter( circuitElements, bipPanel, app );
         n = circuitElements.Count;
         Debug.WriteLine( string.Format( "Retrieved {0} circuit element{1}{2}",
-          n, Util.PluralSuffix( n ), Util.DotOrColon( n ) ) );
+          n, BuildingCoder.Util.PluralSuffix( n ), BuildingCoder.Util.DotOrColon( n ) ) );
         Dictionary<string, List<Element>> mapCircuitToElements = new Dictionary<string, List<Element>>();
         foreach( Element e in circuitElements )
         {
@@ -401,7 +401,7 @@ namespace AdnRme
         }
         n = mapCircuitToElements.Count;
         Debug.WriteLine( string.Format( "Mapped circuit elements to {0} panel:circuit{1}{2}",
-          n, Util.PluralSuffix( n ), Util.DotOrColon( n ) ) );
+          n, BuildingCoder.Util.PluralSuffix( n ), BuildingCoder.Util.DotOrColon( n ) ) );
         keys.Clear();
         keys.AddRange( mapCircuitToElements.Keys );
         keys.Sort( new PanelCircuitComparer() );
@@ -435,7 +435,7 @@ namespace AdnRme
                 }
                 n = mapSystemBrowser.Count;
                 Debug.WriteLine(string.Format("Mapped equipment + circuit elements to {0} panel:system{1}{2}",
-                  n, Util.PluralSuffix(n), Util.DotOrColon(n)));
+                  n, BuildingCoder.Util.PluralSuffix(n), BuildingCoder.Util.DotOrColon(n)));
                 keys.Clear();
                 keys.AddRange(mapSystemBrowser.Keys);
                 keys.Sort(new PanelSystemComparer());

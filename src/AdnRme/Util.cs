@@ -64,16 +64,6 @@ namespace AdnRme
         #endregion // Exceptions
 
         #region Formatting
-        public static string PluralSuffix(int n)
-        {
-            return 1 == n ? "" : "s";
-        }
-
-        public static string DotOrColon(int n)
-        {
-            return 0 == n ? "." : ":";
-        }
-
         public static string IdList(IList<FamilyInstance> elements)
         {
             var s = string.Empty;
@@ -88,10 +78,7 @@ namespace AdnRme
             return s;
         }
 
-        public static string RealString(double a)
-        {
-            return a.ToString("0.##");
-        }
+        #endregion // Formatting
 
         public static string ElementDescription(Element e)
         {
@@ -124,7 +111,6 @@ namespace AdnRme
         {
             return (e is not FamilyInstance inst ? e.Category.Name : inst.Symbol.Family.Name) + " " + e.Name;
         }
-        #endregion // Formatting
 
         #region Message
         const string _caption = "Revit MEP API Sample";
@@ -386,8 +372,10 @@ namespace AdnRme
 
             collector.WherePasses(filter);
             var c = collector.ToElements();
+#if DEBUG
             var n4 = c.Count;
             Debug.Assert(n2 == n4, "expected to reproduce same result");
+#endif
 
             return c;
         }

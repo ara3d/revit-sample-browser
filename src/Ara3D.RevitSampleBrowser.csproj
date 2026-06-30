@@ -323,1688 +323,929 @@
     <Content Include="B1_Shared\Resources\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Revit2025Aliases.cs" />
+    <Compile Include="**\*.cs"
+              Exclude="Common\**\*.cs;TBC_*\**\*.cs;N3P_*\**\*.cs;BB_*\**\*.cs;B1_*\**\*.cs;bin\**;obj\**" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <Compile Include="BoundaryConditions\ConversionValue.cs" />
-
-    <Compile Include="AddSpaceAndZone\Command.cs" />
-    <Compile Include="AddSpaceAndZone\DataManager.cs" />
-    <Compile Include="AddSpaceAndZone\MainForm.cs">
+    <Compile Update="AddSpaceAndZone\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddSpaceAndZone\MainForm.Designer.cs">
+    <Compile Update="AddSpaceAndZone\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddSpaceAndZone\SpaceItem.cs" />
-    <Compile Include="AddSpaceAndZone\SpaceManager.cs" />
-    <Compile Include="AddSpaceAndZone\SpaceNode.cs" />
-    <Compile Include="AddSpaceAndZone\ZoneEditorForm.cs">
+    <Compile Update="AddSpaceAndZone\ZoneEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddSpaceAndZone\ZoneEditorForm.Designer.cs">
+    <Compile Update="AddSpaceAndZone\ZoneEditorForm.Designer.cs">
       <DependentUpon>ZoneEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddSpaceAndZone\ZoneManager.cs" />
-    <Compile Include="AddSpaceAndZone\ZoneNode.cs" />
-    <Compile Include="AllViews\AllViews.cs" />
-    <Compile Include="AllViews\AllViewsForm.cs">
+    <Compile Update="AllViews\AllViewsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AllViews\AllViewsForm.Designer.cs">
+    <Compile Update="AllViews\AllViewsForm.Designer.cs">
       <DependentUpon>AllViewsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AnalysisVisualizationFramework\DistanceToSurfaces\Command.cs" />
-    <Compile Include="AnalysisVisualizationFramework\MultithreadedCalculation\MultithreadedCalculation.cs" />
-    <Compile Include="AnalysisVisualizationFramework\SpatialFieldGradient\Command.cs" />
-    <Compile Include="AnalyticalSupportData_Info\AnalyticalSupportData_Info.cs" />
-    <Compile Include="AnalyticalSupportData_Info\AnalyticalSupportData_InfoForm.cs">
+    <Compile Update="AnalyticalSupportData_Info\AnalyticalSupportData_InfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AnalyticalSupportData_Info\AnalyticalSupportData_InfoForm.Designer.cs">
+    <Compile Update="AnalyticalSupportData_Info\AnalyticalSupportData_InfoForm.Designer.cs">
       <DependentUpon>AnalyticalSupportData_InfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="APIAppStartup\AppSample.cs" />
-    <Compile Include="APIAppStartup\Properties\Resources.Designer.cs" />
-    <Compile Include="APIAppStartup\SplashWindow.cs">
+    <Compile Update="APIAppStartup\SplashWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="APIAppStartup\SplashWindow.Designer.cs">
+    <Compile Update="APIAppStartup\SplashWindow.Designer.cs">
       <DependentUpon>SplashWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="AppearanceAssetEditing\AppearanceAssetEditingForm.cs">
+    <Compile Update="AppearanceAssetEditing\AppearanceAssetEditingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AppearanceAssetEditing\AppearanceAssetEditingForm.Designer.cs">
+    <Compile Update="AppearanceAssetEditing\AppearanceAssetEditingForm.Designer.cs">
       <DependentUpon>AppearanceAssetEditingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AppearanceAssetEditing\Application.cs" />
-    <Compile Include="AppearanceAssetEditing\Command.cs" />
-    <Compile Include="AppearanceAssetEditing\Properties\Resources.Designer.cs" />
-    <Compile Include="AppearanceAssetEditing\Request.cs" />
-    <Compile Include="AppearanceAssetEditing\RequestHandler.cs" />
-    <Compile Include="AreaReinCurve\AreaReinCurve.cs" />
-
-    <Compile Include="AreaReinParameters\AreaReinData.cs" />
-    <Compile Include="AreaReinParameters\AreaReinEnum.cs" />
-    <Compile Include="AreaReinParameters\AreaReinParameters.cs" />
-    <Compile Include="AreaReinParameters\AreaReinParametersForm.cs">
+    <Compile Update="AreaReinParameters\AreaReinParametersForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AreaReinParameters\AreaReinParametersForm.Designer.cs">
+    <Compile Update="AreaReinParameters\AreaReinParametersForm.Designer.cs">
       <DependentUpon>AreaReinParametersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AreaReinParameters\FloorAreaReinData.cs" />
-    <Compile Include="AreaReinParameters\HookTypeConverter.cs" />
-    <Compile Include="AreaReinParameters\WallAreaReinData.cs" />
-    <Compile Include="AttachedDetailGroup\Application.cs" />
-    <Compile Include="AttachedDetailGroup\AttachedDetailGroupHideAllCommand.cs" />
-    <Compile Include="AttachedDetailGroup\AttachedDetailGroupShowAllCommand.cs" />
-    <Compile Include="AttachedDetailGroup\Properties\Resources.Designer.cs" />
-    <Compile Include="AutoRoute\Command.cs" />
-    <Compile Include="AutoTagRooms\AutoTagRoomsForm.cs">
+    <Compile Update="AutoTagRooms\AutoTagRoomsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AutoTagRooms\AutoTagRoomsForm.Designer.cs">
+    <Compile Update="AutoTagRooms\AutoTagRoomsForm.Designer.cs">
       <DependentUpon>AutoTagRoomsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AutoTagRooms\Command.cs" />
-    <Compile Include="AutoTagRooms\RoomsData.cs" />
-    <Compile Include="AvoidObstruction\Command.cs" />
-    <Compile Include="AvoidObstruction\Detector.cs" />
-    <Compile Include="AvoidObstruction\Resolver.cs" />
-    <Compile Include="AvoidObstruction\Section.cs" />
-    <Compile Include="BeamAndSlabNewParameter\BeamAndSlabNewParameter.cs" />
-    <Compile Include="BeamAndSlabNewParameter\BeamAndSlabNewParameterForm.cs">
+    <Compile Update="BeamAndSlabNewParameter\BeamAndSlabNewParameterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BoundaryConditions\BCProperties.cs" />
-    <Compile Include="BoundaryConditions\BoundaryConditionsData.cs" />
-    <Compile Include="BoundaryConditions\BoundaryConditionsForm.cs">
+    <Compile Update="BoundaryConditions\BoundaryConditionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BoundaryConditions\BoundaryConditionsForm.Designer.cs">
+    <Compile Update="BoundaryConditions\BoundaryConditionsForm.Designer.cs">
       <DependentUpon>BoundaryConditionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BoundaryConditions\Command.cs" />
-    <Compile Include="BoundaryConditions\SpringModulusForm.cs">
+    <Compile Update="BoundaryConditions\SpringModulusForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BoundaryConditions\SpringModulusForm.Designer.cs">
+    <Compile Update="BoundaryConditions\SpringModulusForm.Designer.cs">
       <DependentUpon>SpringModulusForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapitalizeAllTextNotes\Command.cs" />
-    <Compile Include="CableTraySample\CmdCableTray.cs" />
-    <Compile Include="CableTraySample\CmdCableTray2.cs" />
-    <Compile Include="CableTraySample\CmdCableTray3.cs" />
-    <Compile Include="CableTraySample\CmdCableTray4.cs" />
-    <Compile Include="CableTraySample\CmdConduit.cs" />
-    <Compile Include="CableTraySample\Util.cs" />
-    <Compile Include="CloudAPISample\Application.cs" />
-    <Compile Include="CloudAPISample\Coroutine\Coroutine.cs" />
-    <Compile Include="CloudAPISample\Coroutine\CoroutineScheduler.cs" />
-    <Compile Include="CloudAPISample\SampleContext.cs" />
-    <Compile Include="CloudAPISample\SampleEngine.cs" />
-    <Compile Include="CloudAPISample\Samples\Migration\IMigrationModel.cs" />
-    <Compile Include="CloudAPISample\Samples\Migration\MigrationToBim360.cs" />
-    <Compile Include="CloudAPISample\Samples\Migration\UIMigrationViewModel.cs" />
-    <Compile Include="CloudAPISample\View\ViewInputMigrationInfo.xaml.cs">
+    <Compile Update="CloudAPISample\View\ViewInputMigrationInfo.xaml.cs">
       <DependentUpon>ViewInputMigrationInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CloudAPISample\View\ViewMigrationToBim360.xaml.cs">
+    <Compile Update="CloudAPISample\View\ViewMigrationToBim360.xaml.cs">
       <DependentUpon>ViewMigrationToBim360.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CloudAPISample\View\ViewSamplePortal.xaml.cs">
+    <Compile Update="CloudAPISample\View\ViewSamplePortal.xaml.cs">
       <DependentUpon>ViewSamplePortal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ColorFill\ColorFillForm.cs">
+    <Compile Update="ColorFill\ColorFillForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColorFill\ColorFillForm.Designer.cs">
+    <Compile Update="ColorFill\ColorFillForm.Designer.cs">
       <DependentUpon>ColorFillForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ColorFill\ColorFillMgr.cs" />
-    <Compile Include="ColorFill\Command.cs" />
-    <Compile Include="CompoundStructure\Command.cs" />
-    <Compile Include="ContextualAnalyticalModel\AddAssociation.cs" />
-    <Compile Include="ContextualAnalyticalModel\AddCustomAssociation.cs" />
-    <Compile Include="ContextualAnalyticalModel\AnalyticalNodeConnStatus.cs" />
-    <Compile Include="ContextualAnalyticalModel\CreateAnalytcalPanel.cs" />
-    <Compile Include="ContextualAnalyticalModel\CreateAnalyticalCurvedPanel.cs" />
-    <Compile Include="ContextualAnalyticalModel\CreateAnalyticalMember.cs" />
-    <Compile Include="ContextualAnalyticalModel\CreateAreaLoadWithRefPoint.cs" />
-    <Compile Include="ContextualAnalyticalModel\CustomAreaLoad.cs" />
-    <Compile Include="ContextualAnalyticalModel\CustomLineLoad.cs" />
-    <Compile Include="ContextualAnalyticalModel\CustomPointLoad.cs" />
-    <Compile Include="ContextualAnalyticalModel\FlipAnalyticalMember.cs" />
-    <Compile Include="ContextualAnalyticalModel\MemberForcesAnalyticalMember.cs" />
-    <Compile Include="ContextualAnalyticalModel\ModifyPanelContour.cs" />
-    <Compile Include="ContextualAnalyticalModel\MoveAnalyticalMemberUsingElementTransformUtils.cs" />
-    <Compile Include="ContextualAnalyticalModel\MoveAnalyticalMemberUsingSetCurve.cs" />
-    <Compile Include="ContextualAnalyticalModel\MoveAnalyticalNodeUsingElementTransformUtils.cs" />
-    <Compile Include="ContextualAnalyticalModel\MoveAnalyticalPanelUsingElementTransformUtils.cs" />
-    <Compile Include="ContextualAnalyticalModel\MoveAnalyticalPanelUsingSketchEditScope.cs" />
-    <Compile Include="ContextualAnalyticalModel\ReleaseConditionsAnalyticalMember.cs" />
-    <Compile Include="ContextualAnalyticalModel\RemoveAssociation.cs" />
-    <Compile Include="ContextualAnalyticalModel\SetOuterContourForPanels.cs" />
-    <Compile Include="CreateAndPrintSheetsAndViews\CmdCreateAndPrintSheetAndViews.cs" />
-    <Compile Include="CreateAndPrintSheetsAndViews\Command.cs" />
-    <Compile Include="CreateAndPrintSheetsAndViews\FabricationPartSelectionFilter.cs" />
-    <Compile Include="CreateAndPrintSheetsAndViews\FabricationPartSelector.cs" />
-    <Compile Include="CreateAndPrintSheetsAndViews\Util.cs" />
-    <Compile Include="CreateBeamsColumnsBraces\CreateBeamsColumnsBraces.cs" />
-    <Compile Include="CreateBeamsColumnsBraces\CreateBeamsColumnsBracesForm.cs">
+    <Compile Update="CreateBeamsColumnsBraces\CreateBeamsColumnsBracesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateBeamSystem\BeamSystemBuilder.cs" />
-    <Compile Include="CreateBeamSystem\BeamSystemData.cs" />
-    <Compile Include="CreateBeamSystem\BeamSystemForm.cs">
+    <Compile Update="CreateBeamSystem\BeamSystemForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateBeamSystem\BeamSystemForm.Designer.cs">
+    <Compile Update="CreateBeamSystem\BeamSystemForm.Designer.cs">
       <DependentUpon>BeamSystemForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateBeamSystem\BeamSystemParams.cs" />
-    <Compile Include="CreateBeamSystem\BeamSystemSketch.cs" />
-    <Compile Include="CreateBeamSystem\BeamTypeConverter.cs" />
-    <Compile Include="CreateBeamSystem\Command.cs" />
-    <Compile Include="CreateBeamSystem\ErrorMessageException.cs" />
-    <Compile Include="CreateBeamSystem\Line2D.cs" />
-    <Compile Include="CreateBeamSystem\LineSketch.cs" />
-    <Compile Include="CreateBeamSystem\ObjectSketch.cs" />
-    <Compile Include="CreateComplexAreaRein\AreaReinData.cs" />
-    <Compile Include="CreateComplexAreaRein\CreateComplexAreaRein.cs" />
-    <Compile Include="CreateComplexAreaRein\CreateComplexAreaReinForm.cs">
+    <Compile Update="CreateComplexAreaRein\CreateComplexAreaReinForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateComplexAreaRein\CreateComplexAreaReinForm.Designer.cs">
+    <Compile Update="CreateComplexAreaRein\CreateComplexAreaReinForm.Designer.cs">
       <DependentUpon>CreateComplexAreaReinForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateComplexAreaRein\GeomHelper.cs" />
-    <Compile Include="CreateDimensions\Command.cs" />
-    <Compile Include="CreateDuctworkStiffener\Command.cs" />
-    <Compile Include="CreateFillPattern\Command.cs" />
-    <Compile Include="CreateFillPattern\FillPatternForm.cs">
+    <Compile Update="CreateFillPattern\FillPatternForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateFillPattern\FillPatternForm.Designer.cs">
+    <Compile Update="CreateFillPattern\FillPatternForm.Designer.cs">
       <DependentUpon>FillPatternForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateSimpleAreaRein\AreaReinData.cs" />
-    <Compile Include="CreateSimpleAreaRein\CreateSimpleAreaRein.cs" />
-    <Compile Include="CreateSimpleAreaRein\CreateSimpleAreaReinForm.cs">
+    <Compile Update="CreateSimpleAreaRein\CreateSimpleAreaReinForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateSimpleAreaRein\CreateSimpleAreaReinForm.Designer.cs">
+    <Compile Update="CreateSimpleAreaRein\CreateSimpleAreaReinForm.Designer.cs">
       <DependentUpon>CreateSimpleAreaReinForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateSimpleAreaRein\GeomHelper.cs" />
-    <Compile Include="CreateTrianglesTopography\Command.cs" />
-    <Compile Include="CreateTrianglesTopography\TrianglesData.cs" />
-    <Compile Include="CreateViewSection\Command.cs" />
-    <Compile Include="CreateWallinBeamProfile\CreateWallinBeamProfile.cs" />
-    <Compile Include="CreateWallinBeamProfile\CreateWallinBeamProfileForm.cs">
+    <Compile Update="CreateWallinBeamProfile\CreateWallinBeamProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateWallinBeamProfile\CreateWallinBeamProfileForm.designer.cs">
+    <Compile Update="CreateWallinBeamProfile\CreateWallinBeamProfileForm.designer.cs">
       <DependentUpon>CreateWallinBeamProfileForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateWallsUnderBeams\CreateWallsUnderBeams.cs" />
-    <Compile Include="CreateWallsUnderBeams\CreateWallsUnderBeamsForm.cs">
+    <Compile Update="CreateWallsUnderBeams\CreateWallsUnderBeamsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateWallsUnderBeams\CreateWallsUnderBeamsForm.Designer.cs">
+    <Compile Update="CreateWallsUnderBeams\CreateWallsUnderBeamsForm.Designer.cs">
       <DependentUpon>CreateWallsUnderBeamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CurtainSystem\Command.cs" />
-    <Compile Include="CurtainSystem\CurtainSystem\MassChecker.cs" />
-    <Compile Include="CurtainSystem\CurtainSystem\SystemData.cs" />
-    <Compile Include="CurtainSystem\Data\MyDocument.cs" />
-    <Compile Include="CurtainSystem\Properties\Resources.Designer.cs" />
-    <Compile Include="CurtainSystem\UI\CreateCurtainSystemDialog.cs">
+    <Compile Update="CurtainSystem\UI\CreateCurtainSystemDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CurtainSystem\UI\CreateCurtainSystemDialog.Designer.cs">
+    <Compile Update="CurtainSystem\UI\CreateCurtainSystemDialog.Designer.cs">
       <DependentUpon>CreateCurtainSystemDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="CurtainSystem\UI\CurtainForm.cs">
+    <Compile Update="CurtainSystem\UI\CurtainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CurtainSystem\UI\CurtainForm.Designer.cs">
+    <Compile Update="CurtainSystem\UI\CurtainForm.Designer.cs">
       <DependentUpon>CurtainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CurtainSystem\Utility\MathTools.cs" />
-    <Compile Include="CurtainWallGrid\Command.cs" />
-    <Compile Include="CurtainWallGrid\GridCoordinates.cs" />
-    <Compile Include="CurtainWallGrid\GridDrawing.cs" />
-    <Compile Include="CurtainWallGrid\GridForm.cs">
+    <Compile Update="CurtainWallGrid\GridForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CurtainWallGrid\GridForm.Designer.cs">
+    <Compile Update="CurtainWallGrid\GridForm.Designer.cs">
       <DependentUpon>GridForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CurtainWallGrid\GridGeometry.cs" />
-    <Compile Include="CurtainWallGrid\GridLine2D.cs" />
-    <Compile Include="CurtainWallGrid\GridProperties.cs" />
-    <Compile Include="CurtainWallGrid\MyDocument.cs" />
-    <Compile Include="CurtainWallGrid\Properties\Resources.Designer.cs" />
-    <Compile Include="CurtainWallGrid\WallDrawing.cs" />
-    <Compile Include="CurtainWallGrid\WallGeometry.cs" />
-    <Compile Include="CurvedBeam\CurvedBeam.cs" />
-    <Compile Include="CurvedBeam\CurvedBeamForm.cs">
+    <Compile Update="CurvedBeam\CurvedBeamForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CurvedBeam\CurvedBeamForm.Designer.cs">
+    <Compile Update="CurvedBeam\CurvedBeamForm.Designer.cs">
       <DependentUpon>CurvedBeamForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CurvedBeam\Properties\Resources.Designer.cs" />
-    <Compile Include="CustomExporter\Custom2DExporter\Command.cs" />
-    <Compile Include="CustomExporter\Custom2DExporter\Export2DView.cs">
+    <Compile Update="CustomExporter\Custom2DExporter\Export2DView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustomExporter\Custom2DExporter\Export2DView.Designer.cs">
+    <Compile Update="CustomExporter\Custom2DExporter\Export2DView.Designer.cs">
       <DependentUpon>Export2DView.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomExporter\Custom2DExporter\TessellatedGeomAndText2DExportContext.cs" />
-    <Compile Include="CustomExporter\AdnMeshJsonExporter\AdnMeshData.cs" />
-    <Compile Include="CustomExporter\AdnMeshJsonExporter\CentroidVolume.cs" />
-    <Compile Include="CustomExporter\AdnMeshJsonExporter\Command.cs" />
-    <Compile Include="CustomExporter\AdnMeshJsonExporter\ExportContextAdnMesh.cs" />
-    <Compile Include="CustomExporter\AdnMeshJsonExporter\NormalLookupXyz.cs" />
-    <Compile Include="CustomExporter\AdnMeshJsonExporter\PointInt.cs" />
-    <Compile Include="CustomExporter\AdnMeshJsonExporter\Util.cs" />
-    <Compile Include="CustomExporter\AdnMeshJsonExporter\VertexLookupInt.cs" />
-    <Compile Include="AdnRme\AboutBox.cs">
+    <Compile Update="AdnRme\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdnRme\AboutBox.Designer.cs">
+    <Compile Update="AdnRme\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdnRme\Bip.cs" />
-    <Compile Include="AdnRme\CmdAbout.cs" />
-    <Compile Include="AdnRme\CmdAssignFlowToTerminals.cs" />
-    <Compile Include="AdnRme\CmdChangeSize.cs" />
-    <Compile Include="AdnRme\CmdElectricalConnectors.cs" />
-    <Compile Include="AdnRme\CmdElectricalHierarchy2.cs" />
-    <Compile Include="AdnRme\CmdElectricalSystemBrowser.cs" />
-    <Compile Include="AdnRme\CmdInspectElectricalForm.cs">
+    <Compile Update="AdnRme\CmdInspectElectricalForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdnRme\CmdInspectElectricalForm.Designer.cs">
+    <Compile Update="AdnRme\CmdInspectElectricalForm.Designer.cs">
       <DependentUpon>CmdInspectElectricalForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdnRme\CmdInspectElectricallForm2.cs">
+    <Compile Update="AdnRme\CmdInspectElectricallForm2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdnRme\CmdInspectElectricallForm2.designer.cs">
+    <Compile Update="AdnRme\CmdInspectElectricallForm2.designer.cs">
       <DependentUpon>CmdInspectElectricallForm2.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdnRme\CmdPopulateCfmPerSf.cs" />
-    <Compile Include="AdnRme\CmdResetDemo.cs" />
-    <Compile Include="AdnRme\CmdUnhostedElements.cs" />
-    <Compile Include="AdnRme\Const.cs" />
-    <Compile Include="AdnRme\FamilySelector.cs">
+    <Compile Update="AdnRme\FamilySelector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdnRme\FamilySelector.Designer.cs">
+    <Compile Update="AdnRme\FamilySelector.Designer.cs">
       <DependentUpon>FamilySelector.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdnRme\PanelTreeNodeHelper.cs" />
-    <Compile Include="AdnRme\ParameterName.cs" />
-    <Compile Include="AdnRme\ParameterValue.cs" />
-    <Compile Include="AdnRme\ProgressForm.cs">
+    <Compile Update="AdnRme\ProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdnRme\ProgressForm.Designer.cs">
+    <Compile Update="AdnRme\ProgressForm.Designer.cs">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdnRme\Util.cs" />
-    <Compile Include="AdnRme\WaitCursor.cs" />
-    <Compile Include="DatumsModification\AlignmentSetting.cs">
+    <Compile Update="DatumsModification\AlignmentSetting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DatumsModification\AlignmentSetting.Designer.cs">
+    <Compile Update="DatumsModification\AlignmentSetting.Designer.cs">
       <DependentUpon>AlignmentSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="DatumsModification\DatumsModificationApp.cs" />
-    <Compile Include="DatumsModification\DatumsModificationCmd.cs" />
-    <Compile Include="DatumsModification\DatumStyleSetting.cs">
+    <Compile Update="DatumsModification\DatumStyleSetting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DatumsModification\DatumStyleSetting.Designer.cs">
+    <Compile Update="DatumsModification\DatumStyleSetting.Designer.cs">
       <DependentUpon>DatumStyleSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="DatumsModification\Properties\Resources.Designer.cs" />
-    <Compile Include="DatumsModification\PropogateSetting.cs">
+    <Compile Update="DatumsModification\PropogateSetting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DatumsModification\PropogateSetting.Designer.cs">
+    <Compile Update="DatumsModification\PropogateSetting.Designer.cs">
       <DependentUpon>PropogateSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="DeckProperties\Command.cs" />
-    <Compile Include="DeckProperties\GenericForm.cs">
+    <Compile Update="DeckProperties\GenericForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DeckProperties\GenericForm.Designer.cs">
+    <Compile Update="DeckProperties\GenericForm.Designer.cs">
       <DependentUpon>GenericForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DeleteDimensions\DeleteDimesions.cs" />
-    <Compile Include="DeleteObject\DeleteObject.cs" />
-    <Compile Include="DimensionLeaderEnd\Command.cs" />
-    <Compile Include="DirectionCalculation\Commands.cs" />
-    <Compile Include="DirectionCalculation\FindSouthFacing.cs" />
-    <Compile Include="DirectionCalculation\FindSouthFacingWalls.cs" />
-    <Compile Include="DirectionCalculation\FindSouthFacingWindows.cs" />
-    <Compile Include="DisableCommand\Application.cs" />
-    <Compile Include="DisplacementElementAnimation\Application.cs" />
-    <Compile Include="DisplacementElementAnimation\DisplacementStructureModelAnimator.cs" />
-    <Compile Include="DisplacementElementAnimation\DisplacementStructureModelAnimatorCommand.cs" />
-    <Compile Include="DisplacementElementAnimation\Properties\Resources.Designer.cs" />
-    <Compile Include="DockableDialogs\APIUtility\APIUtility.cs" />
-    <Compile Include="DockableDialogs\StandardIORouter.cs" />
-    <Compile Include="DockableDialogs\APIUtility\APIUtilityCommandParser.cs" />
-    <Compile Include="DockableDialogs\Application\ThisApplication.cs" />
-    <Compile Include="DockableDialogs\DockingSetupDialog\DockingSetupDialog.xaml.cs">
+    <Compile Update="DockableDialogs\DockingSetupDialog\DockingSetupDialog.xaml.cs">
       <DependentUpon>DockingSetupDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DockableDialogs\ExternalEvents\APIExternalEventHandler.cs" />
-    <Compile Include="DockableDialogs\ExternalEvents\MacroAPIExternalEventHandler.cs" />
-    <Compile Include="DockableDialogs\ExternalEvents\ModelessCommand.cs" />
-    <Compile Include="DockableDialogs\MainPage\MainPage.xaml.cs">
+    <Compile Update="DockableDialogs\MainPage\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DockableDialogs\TopLevelCommands\ExternalCommandHidePage.cs" />
-    <Compile Include="DockableDialogs\TopLevelCommands\ExternalCommandRegisterPage.cs" />
-    <Compile Include="DockableDialogs\TopLevelCommands\ExternalCommandShowPage.cs" />
-    <Compile Include="DocumentChanged\ChangesInfoForm.cs">
+    <Compile Update="DocumentChanged\ChangesInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DocumentChanged\ChangesInfoForm.Designer.cs">
+    <Compile Update="DocumentChanged\ChangesInfoForm.Designer.cs">
       <DependentUpon>ChangesInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DocumentChanged\ChangesMonitor.cs" />
-    <Compile Include="DoorSwing\Command.cs" />
-    <Compile Include="DoorSwing\DoorFamily.cs" />
-    <Compile Include="DoorSwing\DoorFamilyGeometry.cs" />
-    <Compile Include="DoorSwing\DoorSwingData.cs" />
-    <Compile Include="DoorSwing\DoorSwingResource.Designer.cs" />
-    <Compile Include="DoorSwing\ExternalApplication.cs" />
-    <Compile Include="DoorSwing\InitializeForm.cs">
+    <Compile Update="DoorSwing\InitializeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DoorSwing\InitializeForm.Designer.cs">
+    <Compile Update="DoorSwing\InitializeForm.Designer.cs">
       <DependentUpon>InitializeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DuplicateGraphics\Application.cs" />
-    <Compile Include="DuplicateGraphics\Command.cs" />
-    <Compile Include="DuplicateGraphics\RevitElementDrawingServer.cs" />
-    <Compile Include="DuplicateViews\Application.cs" />
-    <Compile Include="DuplicateViews\DuplicateAcrossDocumentsCommand.cs" />
-    <Compile Include="DuplicateViews\Properties\Resources.Designer.cs" />
-    <Compile Include="DynamicModelUpdate\Application.cs" />
-    <Compile Include="DynamicModelUpdate\SectionUpdater.cs" />
-    <Compile Include="ElementFilterSample\Command.cs" />
-    <Compile Include="ElementFilterSample\Extensions.cs" />
-    <Compile Include="ElementFilterSample\FilterData.cs" />
-    <Compile Include="ElementFilterSample\NewFilterForm.cs">
+    <Compile Update="ElementFilterSample\NewFilterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ElementFilterSample\NewFilterForm.Designer.cs">
+    <Compile Update="ElementFilterSample\NewFilterForm.Designer.cs">
       <DependentUpon>NewFilterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ElementFilterSample\ViewFiltersForm.cs">
+    <Compile Update="ElementFilterSample\ViewFiltersForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ElementFilterSample\ViewFiltersForm.Designer.cs">
+    <Compile Update="ElementFilterSample\ViewFiltersForm.Designer.cs">
       <DependentUpon>ViewFiltersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ErrorHandling\Command.cs" />
-    <Compile Include="Events\AutoStamp\Application.cs" />
-    <Compile Include="Events\AutoStamp\EventsReactor.cs" />
-    <Compile Include="Events\AutoUpdate\ExternalApplication.cs" />
-    <Compile Include="Events\CancelSave\CancelSave.cs" />
-    <Compile Include="Events\CancelSave\LogManager.cs" />
-    <Compile Include="Events\EventsMonitor\Command.cs" />
-    <Compile Include="Events\EventsMonitor\EventManager.cs" />
-    <Compile Include="Events\EventsMonitor\EventsInfoWindows.cs">
+    <Compile Update="Events\EventsMonitor\EventsInfoWindows.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\EventsMonitor\EventsInfoWindows.designer.cs">
+    <Compile Update="Events\EventsMonitor\EventsInfoWindows.designer.cs">
       <DependentUpon>EventsInfoWindows.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\EventsMonitor\EventsSettingForm.cs">
+    <Compile Update="Events\EventsMonitor\EventsSettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\EventsMonitor\EventsSettingForm.designer.cs">
+    <Compile Update="Events\EventsMonitor\EventsSettingForm.designer.cs">
       <DependentUpon>EventsSettingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\EventsMonitor\ExternalApplication.cs" />
-    <Compile Include="Events\EventsMonitor\JournalProcessor.cs" />
-    <Compile Include="Events\EventsMonitor\LogManager.cs" />
-    <Compile Include="Events\PrintLog\Application.cs" />
-    <Compile Include="Events\PrintLog\Command.cs" />
-    <Compile Include="Events\PrintLog\EventsReactor.cs" />
-    <Compile Include="Events\PrintLog\EventsWatches.cs" />
-    <Compile Include="Events\ProgressNotifier\Command.cs" />
-    <Compile Include="Events\ProgressNotifier\MainWindow.xaml.cs">
+    <Compile Update="Events\ProgressNotifier\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Events\ProgressNotifier\ProgressItem.cs" />
-    <Compile Include="Events\ProgressNotifier\ProgressStack.cs" />
-    <Compile Include="Events\SelectionChanged\Command.cs" />
-    <Compile Include="Events\SelectionChanged\InfoWindow.xaml.cs">
+    <Compile Update="Events\SelectionChanged\InfoWindow.xaml.cs">
       <DependentUpon>InfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Events\SelectionChanged\LogManager.cs" />
-    <Compile Include="Events\SelectionChanged\SelectionChanged.cs" />
-    <Compile Include="Events\SelectionChanged\SelectionChangedEventArgsExtension.cs" />
-    <Compile Include="ExportPDFSettingsSample\Application.cs" />
-
-    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\Application\Application.cs" />
-    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\Application\Command.cs" />
-    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\User\StorageCommand.cs" />
-    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\User\UICommand.xaml.cs">
+    <Compile Update="ExtensibleStorageManager\ExtensibleStorageManager\User\UICommand.xaml.cs">
       <DependentUpon>UICommand.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\User\UIData.xaml.cs">
+    <Compile Update="ExtensibleStorageManager\ExtensibleStorageManager\User\UIData.xaml.cs">
       <DependentUpon>UIData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ExtensibleStorageManager\SchemaWrapperTools\FieldData.cs" />
-    <Compile Include="ExtensibleStorageManager\SchemaWrapperTools\SchemaDataWrapper.cs" />
-    <Compile Include="ExtensibleStorageManager\SchemaWrapperTools\SchemaWrapper.cs" />
-    <Compile Include="ExtensibleStorageUtility\DeleteStorage.cs" />
-    <Compile Include="ExtensibleStorageUtility\QueryStorage.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="ExternalCommand\ExternalCommandRegistration\AvailabilityClass.cs" />
-    <Compile Include="ExternalCommand\ExternalCommandRegistration\ExternalCommandClass.cs" />
-    <Compile Include="ExternalCommand\ExternalCommandRegistration\ExternalCommandResource.Designer.cs" />
-    <Compile Include="ExternalCommand\RevitAddInUtilitySample\Program.cs" />
-    <Compile Include="ExternalCommand\RevitAddInUtilitySample\Properties\Resources.Designer.cs" />
-    <Compile Include="ExternalCommand\RevitAddInUtilitySample\Properties\Settings.Designer.cs" />
-    <Compile Include="ExternalCommand\RevitAddInUtilitySample\RevitAddInUtilityForm.cs">
+    <Compile Update="ExternalCommand\RevitAddInUtilitySample\RevitAddInUtilityForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExternalCommand\RevitAddInUtilitySample\RevitAddInUtilityForm.Designer.cs">
+    <Compile Update="ExternalCommand\RevitAddInUtilitySample\RevitAddInUtilityForm.Designer.cs">
       <DependentUpon>RevitAddInUtilityForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExternalResourceServer\ExternalResourceDBServer\Application.cs" />
-    <Compile Include="ExternalResourceServer\ExternalResourceDBServer\SampleExternalResourceDBServer.cs" />
-    <Compile Include="ExternalResourceServer\ExternalResourceDBServer\ServerInterfaceExtensionsForRevitLinks.cs" />
-    <Compile Include="ExternalResourceServer\ExternalResourceUIServer\Application.cs" />
-    <Compile Include="ExternalResourceServer\ExternalResourceUIServer\SampleExternalResourceUIServer.cs" />
-    <Compile Include="FabricationPartLayout\Ancillaries.cs" />
-    <Compile Include="FabricationPartLayout\ButtonPaletteExclusions.cs" />
-    <Compile Include="FabricationPartLayout\ChangeService.cs" />
-    <Compile Include="FabricationPartLayout\ConvertToFabrication.cs" />
-    <Compile Include="FabricationPartLayout\CustomData.cs" />
-    <Compile Include="FabricationPartLayout\ExportToMAJ.cs" />
-    <Compile Include="FabricationPartLayout\ExportToPCF.cs" />
-    <Compile Include="FabricationPartLayout\FabPartGeometry.cs" />
-    <Compile Include="FabricationPartLayout\FabricationPartLayout.cs" />
-    <Compile Include="FabricationPartLayout\FlipPart.cs" />
-    <Compile Include="FabricationPartLayout\HangerRods.cs" />
-    <Compile Include="FabricationPartLayout\ItemFile.cs" />
-    <Compile Include="FabricationPartLayout\OptimizeStraights.cs" />
-    <Compile Include="FabricationPartLayout\PartInfo.cs" />
-    <Compile Include="FabricationPartLayout\PartRenumber.cs" />
-    <Compile Include="FabricationPartLayout\SplitStraight.cs" />
-    <Compile Include="FabricationPartLayout\StretchAndFit.cs" />
-    <Compile Include="FamilyCreation\AutoJoin\AutoJoin.cs" />
-    <Compile Include="FamilyCreation\AutoJoin\Command.cs" />
-    <Compile Include="FamilyCreation\AutoJoin\Intersection.cs" />
-    <Compile Include="FamilyCreation\AutoParameter\Command.cs" />
-    <Compile Include="FamilyCreation\AutoParameter\FamilyParameterAssigner.cs" />
-    <Compile Include="FamilyCreation\CreateAirHandler\Command.cs" />
-    <Compile Include="FamilyCreation\CreateTruss\CreateTruss.cs" />
-    <Compile Include="FamilyCreation\DWGFamilyCreation\Command.cs" />
-    <Compile Include="FamilyCreation\DWGFamilyCreation\Properties\Resources.Designer.cs" />
-    <Compile Include="FamilyCreation\GenericModelCreation\Command.cs" />
-    <Compile Include="FamilyCreation\TypeRegeneration\Command.cs" />
-    <Compile Include="FamilyCreation\TypeRegeneration\MessageForm.cs">
+    <Compile Update="FamilyCreation\TypeRegeneration\MessageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FamilyCreation\TypeRegeneration\MessageForm.Designer.cs">
+    <Compile Update="FamilyCreation\TypeRegeneration\MessageForm.Designer.cs">
       <DependentUpon>MessageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FamilyCreation\ValidateParameters\Application.cs" />
-    <Compile Include="FamilyCreation\ValidateParameters\Command.cs" />
-    <Compile Include="FamilyCreation\ValidateParameters\MessageForm.cs">
+    <Compile Update="FamilyCreation\ValidateParameters\MessageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FamilyCreation\ValidateParameters\MessageForm.Designer.cs">
+    <Compile Update="FamilyCreation\ValidateParameters\MessageForm.Designer.cs">
       <DependentUpon>MessageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FamilyCreation\WindowWizard\Command.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\CreatAlignment.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\CreateDimension.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\CreateExtrusion.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\CreateReferencePlane.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\DoubleHungWinCreation.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\ValidateWindowParameter.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\WindowCreation.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\WindowParameter.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\WindowWizard.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\WizardUI.cs">
+    <Compile Update="FamilyCreation\WindowWizard\WizardUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FamilyCreation\WindowWizard\WizardUI.Designer.cs">
+    <Compile Update="FamilyCreation\WindowWizard\WizardUI.Designer.cs">
       <DependentUpon>WizardUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="FamilyParametersOrder\Command.cs" />
-    <Compile Include="FamilyParametersOrder\ExternalApplication.cs" />
-    <Compile Include="FamilyParametersOrder\SortFamilyFilesParamsForm.cs">
+    <Compile Update="FamilyParametersOrder\SortFamilyFilesParamsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FamilyParametersOrder\SortFamilyFilesParamsForm.Designer.cs">
+    <Compile Update="FamilyParametersOrder\SortFamilyFilesParamsForm.Designer.cs">
       <DependentUpon>SortFamilyFilesParamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FamilyParametersOrder\SortLoadedFamiliesParamsForm.cs">
+    <Compile Update="FamilyParametersOrder\SortLoadedFamiliesParamsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FamilyParametersOrder\SortLoadedFamiliesParamsForm.Designer.cs">
+    <Compile Update="FamilyParametersOrder\SortLoadedFamiliesParamsForm.Designer.cs">
       <DependentUpon>SortLoadedFamiliesParamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FindReferencesByDirection\FindColumns\FindColumns.cs" />
-    <Compile Include="FindReferencesByDirection\MeasureHeight\MeasureHeight.cs" />
-    <Compile Include="FindReferencesByDirection\RaytraceBounce\Properties\Resources.Designer.cs" />
-    <Compile Include="FindReferencesByDirection\RaytraceBounce\RayTraceBounce.cs" />
-    <Compile Include="FindReferencesByDirection\RaytraceBounce\RayTraceBounceForm.cs">
+    <Compile Update="FindReferencesByDirection\RaytraceBounce\RayTraceBounceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FindReferencesByDirection\RaytraceBounce\RayTraceBounceForm.Designer.cs">
+    <Compile Update="FindReferencesByDirection\RaytraceBounce\RayTraceBounceForm.Designer.cs">
       <DependentUpon>RayTraceBounceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FoundationSlab\Command.cs" />
-    <Compile Include="FoundationSlab\FoundationSlabForm.cs">
+    <Compile Update="FoundationSlab\FoundationSlabForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FoundationSlab\FoundationSlabForm.Designer.cs">
+    <Compile Update="FoundationSlab\FoundationSlabForm.Designer.cs">
       <DependentUpon>FoundationSlabForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FoundationSlab\RegularSlab.cs" />
-    <Compile Include="FoundationSlab\SlabData.cs" />
-    <Compile Include="FrameBuilder\Command.cs" />
-    <Compile Include="FrameBuilder\CreateFrameForm.cs">
+    <Compile Update="FrameBuilder\CreateFrameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrameBuilder\CreateFrameForm.Designer.cs">
+    <Compile Update="FrameBuilder\CreateFrameForm.Designer.cs">
       <DependentUpon>CreateFrameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrameBuilder\DuplicateTypeForm.cs">
+    <Compile Update="FrameBuilder\DuplicateTypeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrameBuilder\DuplicateTypeForm.Designer.cs">
+    <Compile Update="FrameBuilder\DuplicateTypeForm.Designer.cs">
       <DependentUpon>DuplicateTypeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrameBuilder\EditTypeNameForm.cs">
+    <Compile Update="FrameBuilder\EditTypeNameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrameBuilder\EditTypeNameForm.Designer.cs">
+    <Compile Update="FrameBuilder\EditTypeNameForm.Designer.cs">
       <DependentUpon>EditTypeNameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrameBuilder\ErrorMessageException.cs" />
-    <Compile Include="FrameBuilder\FrameBuilder.cs" />
-    <Compile Include="FrameBuilder\FrameData.cs" />
-    <Compile Include="FrameBuilder\FrameTypeParameters.cs" />
-    <Compile Include="FrameBuilder\FrameTypesMgr.cs" />
-    <Compile Include="FreeFormElement\Application.cs" />
-    <Compile Include="FreeFormElement\CreateNegativeBlockCommand.cs" />
-    <Compile Include="FreeFormElement\Properties\Resources.Designer.cs" />
-    <Compile Include="GenerateFloor\Command.cs" />
-    <Compile Include="GenerateFloor\Data.cs" />
-    <Compile Include="GenerateFloor\GenerateFloorForm.cs">
+    <Compile Update="GenerateFloor\GenerateFloorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GenerateFloor\GenerateFloorForm.Designer.cs">
+    <Compile Update="GenerateFloor\GenerateFloorForm.Designer.cs">
       <DependentUpon>GenerateFloorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GenericStructuralConnection\Command.cs" />
-    <Compile Include="GenericStructuralConnection\CommandOptions.cs" />
-    <Compile Include="GenericStructuralConnection\DetailedStructuralConnectionOps.cs" />
-    <Compile Include="GenericStructuralConnection\GenericStructuralConnectionOps.cs" />
-    <Compile Include="GenericStructuralConnection\StructuralConnectionForm.cs">
+    <Compile Update="GenericStructuralConnection\StructuralConnectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GenericStructuralConnection\StructuralConnectionForm.Designer.cs">
+    <Compile Update="GenericStructuralConnection\StructuralConnectionForm.Designer.cs">
       <DependentUpon>StructuralConnectionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GenericStructuralConnection\StructuralConnectionSelectionFilter.cs" />
-    <Compile Include="GeometryAPI\BRepBuilderExample\Application.cs" />
-    <Compile Include="GeometryAPI\BRepBuilderExample\CreateCube.cs" />
-    <Compile Include="GeometryAPI\BRepBuilderExample\CreateNURBS.cs" />
-    <Compile Include="GeometryAPI\BRepBuilderExample\CreatePeriodic.cs" />
-    <Compile Include="GeometryAPI\BRepBuilderExample\Properties\Resources.Designer.cs" />
-    <Compile Include="GeometryAPI\ComputedSymbolGeometry\Command.cs" />
-    <Compile Include="GeometryAPI\ComputedSymbolGeometry\ComputedSymbolGeometry.cs" />
-    <Compile Include="GeometryAPI\EnergyAnalysisModel\Command.cs" />
-    <Compile Include="GeometryAPI\EnergyAnalysisModel\EnergyAnalysisModel.cs" />
-    <Compile Include="GeometryAPI\EnergyAnalysisModel\OptionsAndAnalysisForm.cs">
+    <Compile Update="GeometryAPI\EnergyAnalysisModel\OptionsAndAnalysisForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GeometryAPI\EnergyAnalysisModel\OptionsAndAnalysisForm.Designer.cs">
+    <Compile Update="GeometryAPI\EnergyAnalysisModel\OptionsAndAnalysisForm.Designer.cs">
       <DependentUpon>OptionsAndAnalysisForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GeometryAPI\GeometryCreation_BooleanOperation\AnalysisVisualizationFramework.cs" />
-    <Compile Include="GeometryAPI\GeometryCreation_BooleanOperation\BooleanOperation.cs" />
-    <Compile Include="GeometryAPI\GeometryCreation_BooleanOperation\Command.cs" />
-    <Compile Include="GeometryAPI\GeometryCreation_BooleanOperation\GeometryCreation.cs" />
-    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\Command.cs" />
-    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\ProximityDetection.cs" />
-    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\ProximityDetectionAndWallJoinControlForm.cs">
+    <Compile Update="GeometryAPI\ProximityDetection_WallJoinControl\ProximityDetectionAndWallJoinControlForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\ProximityDetectionAndWallJoinControlForm.Designer.cs">
+    <Compile Update="GeometryAPI\ProximityDetection_WallJoinControl\ProximityDetectionAndWallJoinControlForm.Designer.cs">
       <DependentUpon>ProximityDetectionAndWallJoinControlForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\WallJoinControl.cs" />
-    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\Application.cs" />
-    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\CreateBRep.cs" />
-    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\Podium.cs" />
-    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\Properties\Resources.Designer.cs" />
-    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\UpdateBRep.cs" />
-    <Compile Include="GetSetDefaultTypes\DefaultElementTypes.xaml.cs">
+    <Compile Update="GetSetDefaultTypes\DefaultElementTypes.xaml.cs">
       <DependentUpon>DefaultElementTypes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GetSetDefaultTypes\DefaultFamilyTypes.xaml.cs">
+    <Compile Update="GetSetDefaultTypes\DefaultFamilyTypes.xaml.cs">
       <DependentUpon>DefaultFamilyTypes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GetSetDefaultTypes\ThisApplication.cs" />
-    <Compile Include="GetSetDefaultTypes\ThisCommand.cs" />
-    <Compile Include="GridCreation\Command.cs" />
-    <Compile Include="GridCreation\CreateGridsData.cs" />
-    <Compile Include="GridCreation\CreateOrthogonalGridsData.cs" />
-    <Compile Include="GridCreation\CreateOrthogonalGridsForm.cs">
+    <Compile Update="GridCreation\CreateOrthogonalGridsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GridCreation\CreateOrthogonalGridsForm.Designer.cs">
+    <Compile Update="GridCreation\CreateOrthogonalGridsForm.Designer.cs">
       <DependentUpon>CreateOrthogonalGridsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GridCreation\CreateRadialAndArcGridsData.cs" />
-    <Compile Include="GridCreation\CreateRadialAndArcGridsForm.cs">
+    <Compile Update="GridCreation\CreateRadialAndArcGridsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GridCreation\CreateRadialAndArcGridsForm.Designer.cs">
+    <Compile Update="GridCreation\CreateRadialAndArcGridsForm.Designer.cs">
       <DependentUpon>CreateRadialAndArcGridsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GridCreation\CreateWithSelectedCurvesForm.cs">
+    <Compile Update="GridCreation\CreateWithSelectedCurvesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GridCreation\CreateWithSelectedCurvesForm.Designer.cs">
+    <Compile Update="GridCreation\CreateWithSelectedCurvesForm.Designer.cs">
       <DependentUpon>CreateWithSelectedCurvesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GridCreation\CreateWithSeletedCurvesData.cs" />
-    <Compile Include="GridCreation\EnumsAndValues.cs" />
-    <Compile Include="GridCreation\GridCreationOptionData.cs" />
-    <Compile Include="GridCreation\GridCreationOptionForm.cs">
+    <Compile Update="GridCreation\GridCreationOptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GridCreation\GridCreationOptionForm.Designer.cs">
+    <Compile Update="GridCreation\GridCreationOptionForm.Designer.cs">
       <DependentUpon>GridCreationOptionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GridCreation\Properties\Resources.Designer.cs" />
-    <Compile Include="GridCreation\Properties\Settings.Designer.cs" />
-    <Compile Include="HideCategory\HideCategoryCommand.cs" />
-    <Compile Include="FindExteriorWalls\FindExteriorWallsCommand.cs" />
-    <Compile Include="FindExteriorWalls\FindExteriorWallsExtensions.cs" />
-    <Compile Include="FindExteriorWalls\WallsSelectionFilter.cs" />
-    <Compile Include="HelloRevit\Command.cs" />
-    <Compile Include="ImportExport\Command.cs" />
-    <Compile Include="ImportExport\Export\ExportBaseOptionsData.cs" />
-    <Compile Include="ImportExport\Export\ExportBaseOptionsForm.cs">
+    <Compile Update="ImportExport\Export\ExportBaseOptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportBaseOptionsForm.Designer.cs">
+    <Compile Update="ImportExport\Export\ExportBaseOptionsForm.Designer.cs">
       <DependentUpon>ExportBaseOptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportData.cs" />
-    <Compile Include="ImportExport\Export\ExportDataWithViews.cs" />
-    <Compile Include="ImportExport\Export\ExportDGNData.cs" />
-    <Compile Include="ImportExport\Export\ExportDGNOptionsForm.cs">
+    <Compile Update="ImportExport\Export\ExportDGNOptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportDGNOptionsForm.Designer.cs">
+    <Compile Update="ImportExport\Export\ExportDGNOptionsForm.Designer.cs">
       <DependentUpon>ExportDGNOptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportDWFData.cs" />
-    <Compile Include="ImportExport\Export\ExportDWFOptionForm.cs">
+    <Compile Update="ImportExport\Export\ExportDWFOptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportDWFOptionForm.Designer.cs">
+    <Compile Update="ImportExport\Export\ExportDWFOptionForm.Designer.cs">
       <DependentUpon>ExportDWFOptionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportDWGData.cs" />
-    <Compile Include="ImportExport\Export\ExportDWGOptionsData.cs" />
-    <Compile Include="ImportExport\Export\ExportDXFData.cs" />
-    <Compile Include="ImportExport\Export\ExportFBXData.cs" />
-    <Compile Include="ImportExport\Export\ExportGBXMLData.cs" />
-    <Compile Include="ImportExport\Export\ExportIMGData.cs" />
-    <Compile Include="ImportExport\Export\ExportIMGOptionsForm.cs">
+    <Compile Update="ImportExport\Export\ExportIMGOptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportIMGOptionsForm.Designer.cs">
+    <Compile Update="ImportExport\Export\ExportIMGOptionsForm.Designer.cs">
       <DependentUpon>ExportIMGOptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportPDFData.cs" />
-    <Compile Include="ImportExport\Export\ExportPDFOptionsForm.cs">
+    <Compile Update="ImportExport\Export\ExportPDFOptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportPDFOptionsForm.Designer.cs">
+    <Compile Update="ImportExport\Export\ExportPDFOptionsForm.Designer.cs">
       <DependentUpon>ExportPDFOptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportSATData.cs" />
-    <Compile Include="ImportExport\Export\ExportWithViewsForm.cs">
+    <Compile Update="ImportExport\Export\ExportWithViewsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportExport\Export\ExportWithViewsForm.Designer.cs">
+    <Compile Update="ImportExport\Export\ExportWithViewsForm.Designer.cs">
       <DependentUpon>ExportWithViewsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportExport\Export\SelectViewsData.cs" />
-    <Compile Include="ImportExport\Export\SelectViewsForm.cs">
+    <Compile Update="ImportExport\Export\SelectViewsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportExport\Export\SelectViewsForm.Designer.cs">
+    <Compile Update="ImportExport\Export\SelectViewsForm.Designer.cs">
       <DependentUpon>SelectViewsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportExport\Import\ImportData.cs" />
-    <Compile Include="ImportExport\Import\ImportDWGData.cs" />
-    <Compile Include="ImportExport\Import\ImportDWGForm.cs">
+    <Compile Update="ImportExport\Import\ImportDWGForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportExport\Import\ImportDWGForm.Designer.cs">
+    <Compile Update="ImportExport\Import\ImportDWGForm.Designer.cs">
       <DependentUpon>ImportDWGForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportExport\Import\ImportGBXMLData.cs" />
-    <Compile Include="ImportExport\Import\ImportImageData.cs" />
-    <Compile Include="ImportExport\MainData.cs" />
-    <Compile Include="ImportExport\MainForm.cs">
+    <Compile Update="ImportExport\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportExport\MainForm.Designer.cs">
+    <Compile Update="ImportExport\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="InCanvasControlAPI\Application.cs" />
-    <Compile Include="InCanvasControlAPI\Command.cs" />
-    <Compile Include="InCanvasControlAPI\IssueMarker.cs" />
-    <Compile Include="InCanvasControlAPI\IssueMarkerTracking.cs" />
-    <Compile Include="InCanvasControlAPI\IssueMarkerTrackingManager.cs" />
-    <Compile Include="InCanvasControlAPI\IssueMarkerUpdater.cs" />
-    <Compile Include="InCanvasControlAPI\IssueSelectHandler.cs" />
-    <Compile Include="InCanvasControlAPI\ResourceProvider.cs" />
-    <Compile Include="InPlaceMembers\Command.cs" />
-    <Compile Include="InPlaceMembers\GraphicsData.cs" />
-    <Compile Include="InPlaceMembers\InPlaceMembersForm.cs">
+    <Compile Update="InPlaceMembers\InPlaceMembersForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InPlaceMembers\InPlaceMembersForm.Designer.cs">
+    <Compile Update="InPlaceMembers\InPlaceMembersForm.Designer.cs">
       <DependentUpon>InPlaceMembersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="InPlaceMembers\PictureBox3D.cs">
+    <Compile Update="InPlaceMembers\PictureBox3D.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="InPlaceMembers\Properties.cs" />
-    <Compile Include="InvisibleParam\Command.cs" />
-    <Compile Include="Journaling\Command.cs" />
-    <Compile Include="Journaling\Journaling.cs" />
-    <Compile Include="Journaling\JournalingForm.cs">
+    <Compile Update="Journaling\JournalingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Journaling\JournalingForm.Designer.cs">
+    <Compile Update="Journaling\JournalingForm.Designer.cs">
       <DependentUpon>JournalingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LevelsProperty\Command.cs" />
-    <Compile Include="LevelsProperty\LevelsDataSource.cs" />
-    <Compile Include="LevelsProperty\LevelsForm.cs">
+    <Compile Update="LevelsProperty\LevelsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LevelsProperty\LevelsForm.Designer.cs">
+    <Compile Update="LevelsProperty\LevelsForm.Designer.cs">
       <DependentUpon>LevelsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LevelsProperty\Properties\Resources.Designer.cs" />
-    <Compile Include="ListImportInstances\IReportImportData.cs" />
-    <Compile Include="ListImportInstances\ListImportInstancesCommand.cs" />
-    <Compile Include="ListImportInstances\SimpleTextFileBasedReporter.cs" />
-    <Compile Include="Loads\LoadCaseDeal.cs" />
-    <Compile Include="Loads\LoadCaseMap.cs" />
-    <Compile Include="Loads\LoadCaseTabPage.cs">
+    <Compile Update="Loads\LoadCaseTabPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Loads\LoadCombinationDeal.cs" />
-    <Compile Include="Loads\LoadCombinationFormulaMap.cs" />
-    <Compile Include="Loads\LoadCombinationMap.cs" />
-    <Compile Include="Loads\LoadCombinationsTabPage.cs">
+    <Compile Update="Loads\LoadCombinationsTabPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Loads\LoadCombinationUsageMap.cs" />
-    <Compile Include="Loads\Loads.cs" />
-    <Compile Include="Loads\LoadsForm.cs">
+    <Compile Update="Loads\LoadsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Loads\LoadsForm.Designer.cs">
+    <Compile Update="Loads\LoadsForm.Designer.cs">
       <DependentUpon>LoadsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Massing\DistanceToPanels\Command.cs" />
-    <Compile Include="Massing\DividedSurfaceByIntersects\Command.cs" />
-    <Compile Include="Massing\ManipulateForm\Command.cs" />
-    <Compile Include="Massing\MeasurePanelArea\Command.cs" />
-    <Compile Include="Massing\MeasurePanelArea\FormPanelArea.cs">
+    <Compile Update="Massing\MeasurePanelArea\FormPanelArea.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Massing\MeasurePanelArea\FormPanelArea.Designer.cs">
+    <Compile Update="Massing\MeasurePanelArea\FormPanelArea.Designer.cs">
       <DependentUpon>FormPanelArea.cs</DependentUpon>
     </Compile>
-    <Compile Include="Massing\NewForm\Command.cs" />
-    <Compile Include="Massing\PanelEdgeLengthAngle\Command.cs" />
-    <Compile Include="Massing\ParameterValuesFromImage\Command.cs" />
-    <Compile Include="Massing\PointCurveCreation\Command.cs" />
-    <Compile Include="MaterialProperties\MaterialProperties.cs" />
-    <Compile Include="MaterialProperties\MaterialPropertiesForm.cs">
+    <Compile Update="MaterialProperties\MaterialPropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MaterialQuantities\MaterialQuantities.cs" />
-    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\Application.cs" />
-    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\Command.cs" />
-    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\ModelessForm.cs">
+    <Compile Update="ModelessDialog\ModelessForm_ExternalEvent\ModelessForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\ModelessForm.Designer.cs">
+    <Compile Update="ModelessDialog\ModelessForm_ExternalEvent\ModelessForm.Designer.cs">
       <DependentUpon>ModelessForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\Request.cs" />
-    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\RequestHandler.cs" />
-    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\Application.cs" />
-    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\Command.cs" />
-    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\ModelessForm.cs">
+    <Compile Update="ModelessDialog\ModelessForm_IdlingEvent\ModelessForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\ModelessForm.Designer.cs">
+    <Compile Update="ModelessDialog\ModelessForm_IdlingEvent\ModelessForm.Designer.cs">
       <DependentUpon>ModelessForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\Request.cs" />
-    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\RequestHandler.cs" />
-    <Compile Include="ModelLines\Command.cs" />
-    <Compile Include="ModelLines\Information.cs" />
-    <Compile Include="ModelLines\ModelLines.cs" />
-    <Compile Include="ModelLines\ModelLinesForm.cs">
+    <Compile Update="ModelLines\ModelLinesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModelLines\ModelLinesForm.Designer.cs">
+    <Compile Update="ModelLines\ModelLinesForm.Designer.cs">
       <DependentUpon>ModelLinesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModelLines\SketchPlaneForm.cs">
+    <Compile Update="ModelLines\SketchPlaneForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModelLines\SketchPlaneForm.Designer.cs">
+    <Compile Update="ModelLines\SketchPlaneForm.Designer.cs">
       <DependentUpon>SketchPlaneForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MoveLinear\Command.cs" />
-    <Compile Include="MultiplanarRebar\Command.cs" />
-    <Compile Include="MultiplanarRebar\CorbelFrame.cs" />
-    <Compile Include="MultiplanarRebar\MultiplanarRebarHelper.cs" />
-    <Compile Include="MultiplanarRebar\CorbelReinforcementOptions.cs" />
-    <Compile Include="MultiplanarRebar\CorbelReinforcementOptionsForm.cs">
+    <Compile Update="MultiplanarRebar\CorbelReinforcementOptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MultiplanarRebar\CorbelReinforcementOptionsForm.Designer.cs">
+    <Compile Update="MultiplanarRebar\CorbelReinforcementOptionsForm.Designer.cs">
       <DependentUpon>CorbelReinforcementOptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MultiplanarRebar\Properties\Resources.Designer.cs" />
-    <Compile Include="SampleBrowserApplication.cs" />
-    <Compile Include="SampleBrowserMainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SampleBrowserMainForm.Designer.cs">
-      <DependentUpon>SampleBrowserMainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MultiThreading\WorkThread\Application.cs" />
-    <Compile Include="MultiThreading\WorkThread\Command.cs" />
-    <Compile Include="MultiThreading\WorkThread\FaceAnalyzer.cs" />
-    <Compile Include="MultiThreading\WorkThread\SharedResults.cs" />
-    <Compile Include="MultiThreading\WorkThread\ThreadAgent.cs" />
-    <Compile Include="NetworkPressureLossReport\AVFViewer.cs" />
-    <Compile Include="NetworkPressureLossReport\Command.cs" />
-    <Compile Include="NetworkPressureLossReport\CSVExporter.cs" />
-    <Compile Include="NetworkPressureLossReport\NetworkDialog.xaml.cs">
+    <Compile Update="NetworkPressureLossReport\NetworkDialog.xaml.cs">
       <DependentUpon>NetworkDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NetworkPressureLossReport\NetworkInfo.cs" />
-    <Compile Include="NetworkPressureLossReport\SectionInfo.cs" />
-    <Compile Include="NetworkPressureLossReport\SegmentInfo.cs" />
-    <Compile Include="NewHostedSweep\Command.cs" />
-    <Compile Include="NewHostedSweep\Creators\CreationMgr.cs" />
-    <Compile Include="NewHostedSweep\Creators\FasciaCreator.cs" />
-    <Compile Include="NewHostedSweep\Creators\GutterCreator.cs" />
-    <Compile Include="NewHostedSweep\Creators\HostedSweepCreator.cs" />
-    <Compile Include="NewHostedSweep\Creators\SlabEdgeCreator.cs" />
-    <Compile Include="NewHostedSweep\Data\CreationData.cs" />
-    <Compile Include="NewHostedSweep\Data\ModificationData.cs" />
-    <Compile Include="NewHostedSweep\Forms\CreationDataTypeConvertor.cs" />
-    <Compile Include="NewHostedSweep\Forms\EdgeFetchForm.cs">
+    <Compile Update="NewHostedSweep\Forms\EdgeFetchForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewHostedSweep\Forms\EdgeFetchForm.Designer.cs">
+    <Compile Update="NewHostedSweep\Forms\EdgeFetchForm.Designer.cs">
       <DependentUpon>EdgeFetchForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewHostedSweep\Forms\EdgeFormUITypeEditor.cs" />
-    <Compile Include="NewHostedSweep\Forms\HostedSweepModifyForm.cs">
+    <Compile Update="NewHostedSweep\Forms\HostedSweepModifyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewHostedSweep\Forms\HostedSweepModifyForm.Designer.cs">
+    <Compile Update="NewHostedSweep\Forms\HostedSweepModifyForm.Designer.cs">
       <DependentUpon>HostedSweepModifyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewHostedSweep\Forms\MainForm.cs">
+    <Compile Update="NewHostedSweep\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewHostedSweep\Forms\MainForm.Designer.cs">
+    <Compile Update="NewHostedSweep\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewHostedSweep\Geom\ElementGeometry.cs" />
-    <Compile Include="NewHostedSweep\Geom\TrackBall.cs" />
-    <Compile Include="NewOpenings\ArcTool.cs" />
-    <Compile Include="NewOpenings\CircleTool.cs" />
-    <Compile Include="NewOpenings\command.cs" />
-    <Compile Include="NewOpenings\EmptyTool.cs" />
-    <Compile Include="NewOpenings\ITool.cs" />
-    <Compile Include="NewOpenings\LineTool.cs" />
-    <Compile Include="NewOpenings\NewOpeningsForm.cs">
+    <Compile Update="NewOpenings\NewOpeningsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewOpenings\NewOpeningsForm.Designer.cs">
+    <Compile Update="NewOpenings\NewOpeningsForm.Designer.cs">
       <DependentUpon>NewOpeningsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewOpenings\Profile.cs" />
-    <Compile Include="NewOpenings\ProfileFloor.cs" />
-    <Compile Include="NewOpenings\ProfileWall.cs" />
-    <Compile Include="NewOpenings\RectTool.cs" />
-    <Compile Include="NewPathReinforcement\Command.cs" />
-    <Compile Include="NewPathReinforcement\LineTool.cs" />
-    <Compile Include="NewPathReinforcement\MathTools.cs" />
-    <Compile Include="NewPathReinforcement\NewPathReinforcementForm.cs">
+    <Compile Update="NewPathReinforcement\NewPathReinforcementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewPathReinforcement\NewPathReinforcementForm.Designer.cs">
+    <Compile Update="NewPathReinforcement\NewPathReinforcementForm.Designer.cs">
       <DependentUpon>NewPathReinforcementForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewPathReinforcement\Profile.cs" />
-    <Compile Include="NewPathReinforcement\ProfileFloor.cs" />
-    <Compile Include="NewPathReinforcement\ProfileWall.cs" />
-    <Compile Include="NewRebar\Command.cs" />
-    <Compile Include="NewRebar\Constraints\ConstraintOnArcShape.cs" />
-    <Compile Include="NewRebar\Constraints\ConstraintOnRebarShape.cs" />
-    <Compile Include="NewRebar\Constraints\ConstraintOnSegmentShape.cs" />
-    <Compile Include="NewRebar\Forms\AddConstraintForm.cs">
+    <Compile Update="NewRebar\Forms\AddConstraintForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewRebar\Forms\AddConstraintForm.Designer.cs">
+    <Compile Update="NewRebar\Forms\AddConstraintForm.Designer.cs">
       <DependentUpon>AddConstraintForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewRebar\Forms\AddParameterForm.cs">
+    <Compile Update="NewRebar\Forms\AddParameterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewRebar\Forms\AddParameterForm.Designer.cs">
+    <Compile Update="NewRebar\Forms\AddParameterForm.Designer.cs">
       <DependentUpon>AddParameterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewRebar\Forms\NewRebarForm.cs">
+    <Compile Update="NewRebar\Forms\NewRebarForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewRebar\Forms\NewRebarForm.Designer.cs">
+    <Compile Update="NewRebar\Forms\NewRebarForm.Designer.cs">
       <DependentUpon>NewRebarForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewRebar\Forms\NewRebarShapeForm.cs">
+    <Compile Update="NewRebar\Forms\NewRebarShapeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewRebar\Forms\NewRebarShapeForm.Designer.cs">
+    <Compile Update="NewRebar\Forms\NewRebarShapeForm.Designer.cs">
       <DependentUpon>NewRebarShapeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewRebar\Geom\GeometrySupport.cs" />
-    <Compile Include="NewRebar\Parameters\RebarShapeParameter.cs" />
-    <Compile Include="NewRebar\Parameters\RebarShapeParameterDouble.cs" />
-    <Compile Include="NewRebar\Parameters\RebarShapeParameterFormula.cs" />
-    <Compile Include="NewRebar\RebarCreator.cs" />
-    <Compile Include="NewRebar\RebarShapeDef\RebarShapeDef.cs" />
-    <Compile Include="NewRebar\RebarShapeDef\RebarShapeDefByArc.cs" />
-    <Compile Include="NewRebar\RebarShapeDef\RebarShapeDefBySegment.cs" />
-    <Compile Include="NewRebar\TypeConverter\TypeConverterRebarShapeParameter.cs" />
-    <Compile Include="NewRebar\TypeConverter\TypeConverterSegmentId.cs" />
-    <Compile Include="NewRoof\Command.cs" />
-    <Compile Include="NewRoof\RoofForms\CustomTypeConverter.cs" />
-    <Compile Include="NewRoof\RoofForms\ExtrusionRoofWrapper.cs" />
-    <Compile Include="NewRoof\RoofForms\FootPrintRoofWrapper.cs" />
-    <Compile Include="NewRoof\RoofForms\GraphicsControl.cs">
+    <Compile Update="NewRoof\RoofForms\GraphicsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="NewRoof\RoofForms\GraphicsControl.Designer.cs">
+    <Compile Update="NewRoof\RoofForms\GraphicsControl.Designer.cs">
       <DependentUpon>GraphicsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewRoof\RoofForms\RoofEditorForm.cs">
+    <Compile Update="NewRoof\RoofForms\RoofEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewRoof\RoofForms\RoofEditorForm.Designer.cs">
+    <Compile Update="NewRoof\RoofForms\RoofEditorForm.Designer.cs">
       <DependentUpon>RoofEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewRoof\RoofForms\RoofForm.cs">
+    <Compile Update="NewRoof\RoofForms\RoofForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewRoof\RoofForms\RoofForm.Designer.cs">
+    <Compile Update="NewRoof\RoofForms\RoofForm.Designer.cs">
       <DependentUpon>RoofForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewRoof\RoofForms\RoofItem.cs" />
-    <Compile Include="NewRoof\RoofsManager\ExtrusionRoofManager.cs" />
-    <Compile Include="NewRoof\RoofsManager\FootPrintRoofManager.cs" />
-    <Compile Include="NewRoof\RoofsManager\RoofsManager.cs" />
-    <Compile Include="Openings\BoundingBox.cs" />
-    <Compile Include="Openings\Command.cs" />
-    <Compile Include="Openings\CreateModelLineOptionsForm.cs">
+    <Compile Update="Openings\CreateModelLineOptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Openings\CreateModelLineOptionsForm.Designer.cs">
+    <Compile Update="Openings\CreateModelLineOptionsForm.Designer.cs">
       <DependentUpon>CreateModelLineOptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Openings\Line2D.cs" />
-    <Compile Include="Openings\Line3D.cs" />
-    <Compile Include="Openings\LineSketch.cs" />
-    <Compile Include="Openings\ObjectSketch.cs" />
-    <Compile Include="Openings\OpeningForm.cs">
+    <Compile Update="Openings\OpeningForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Openings\OpeningForm.Designer.cs">
+    <Compile Update="Openings\OpeningForm.Designer.cs">
       <DependentUpon>OpeningForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Openings\OpeningInfo.cs" />
-    <Compile Include="Openings\OpeningProperty.cs" />
-    <Compile Include="Openings\UCS.cs" />
-    <Compile Include="Openings\Vector.cs" />
-    <Compile Include="Openings\WireFrame.cs" />
-    <Compile Include="PanelSchedule\CSVTranslator.cs" />
-    <Compile Include="PanelSchedule\HTMLTranslator.cs" />
-    <Compile Include="PanelSchedule\InstanceViewCreation.cs" />
-    <Compile Include="PanelSchedule\PanelScheduleExport.cs" />
-    <Compile Include="PanelSchedule\SheetImport.cs" />
-    <Compile Include="PanelSchedule\Translator.cs" />
-    <Compile Include="ParameterUtils\Command.cs" />
-    <Compile Include="ParameterUtils\PropertiesForm.cs">
+    <Compile Update="ParameterUtils\PropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ParameterUtils\PropertiesForm.Designer.cs">
+    <Compile Update="ParameterUtils\PropertiesForm.Designer.cs">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PathOfTravel\Command.cs" />
-    <Compile Include="PathOfTravel\CreateForm.cs">
+    <Compile Update="PathOfTravel\CreateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PathOfTravel\CreateForm.Designer.cs">
+    <Compile Update="PathOfTravel\CreateForm.Designer.cs">
       <DependentUpon>CreateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PathReinforcement\BarTypeConverter.cs" />
-    <Compile Include="PathReinforcement\Command.cs" />
-    <Compile Include="PathReinforcement\MathTools.cs" />
-    <Compile Include="PathReinforcement\PathReinforcementForm.cs">
+    <Compile Update="PathReinforcement\PathReinforcementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PathReinforcement\PathReinforcementForm.Designer.cs">
+    <Compile Update="PathReinforcement\PathReinforcementForm.Designer.cs">
       <DependentUpon>PathReinforcementForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PathReinforcement\PathReinProperties.cs" />
-    <Compile Include="PathReinforcement\Profile.cs" />
-    <Compile Include="PerformanceAdviserControl\Application.cs" />
-    <Compile Include="PerformanceAdviserControl\FlippedDoorCheck.cs" />
-    <Compile Include="PerformanceAdviserControl\RuleInfo.cs" />
-    <Compile Include="PerformanceAdviserControl\TestDisplayDialog.cs">
+    <Compile Update="PerformanceAdviserControl\TestDisplayDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PerformanceAdviserControl\TestDisplayDialog.Designer.cs">
+    <Compile Update="PerformanceAdviserControl\TestDisplayDialog.Designer.cs">
       <DependentUpon>TestDisplayDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="PerformanceAdviserControl\UICommand.cs" />
-    <Compile Include="PhysicalProp\Command.cs" />
-    <Compile Include="PipeSystemExporter\Command.cs" />
-    <Compile Include="PipeSystemExporter\Util.cs" />
-    <Compile Include="PlaceFamilyInstanceByFace\BasedType.cs">
+    <Compile Update="PlaceFamilyInstanceByFace\BasedType.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PlaceFamilyInstanceByFace\BasedType.Designer.cs">
+    <Compile Update="PlaceFamilyInstanceByFace\BasedType.Designer.cs">
       <DependentUpon>BasedType.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlaceFamilyInstanceByFace\Command.cs" />
-    <Compile Include="PlaceFamilyInstanceByFace\FamilyInstanceCreator.cs" />
-    <Compile Include="PlaceFamilyInstanceByFace\PlaceFamilyInstanceForm.cs">
+    <Compile Update="PlaceFamilyInstanceByFace\PlaceFamilyInstanceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PlaceFamilyInstanceByFace\PlaceFamilyInstanceForm.Designer.cs">
+    <Compile Update="PlaceFamilyInstanceByFace\PlaceFamilyInstanceForm.Designer.cs">
       <DependentUpon>PlaceFamilyInstanceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlaceFamilyInstanceByFace\PointUserControl.cs">
+    <Compile Update="PlaceFamilyInstanceByFace\PointUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PlaceFamilyInstanceByFace\PointUserControl.designer.cs">
+    <Compile Update="PlaceFamilyInstanceByFace\PointUserControl.designer.cs">
       <DependentUpon>PointUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlacementOptions\Command.cs" />
-    <Compile Include="PlacementOptions\FacebasedForm.cs">
+    <Compile Update="PlacementOptions\FacebasedForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PlacementOptions\FacebasedForm.Designer.cs">
+    <Compile Update="PlacementOptions\FacebasedForm.Designer.cs">
       <DependentUpon>FacebasedForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlacementOptions\OptionsForm.cs">
+    <Compile Update="PlacementOptions\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PlacementOptions\OptionsForm.Designer.cs">
+    <Compile Update="PlacementOptions\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlacementOptions\SketchbasedForm.cs">
+    <Compile Update="PlacementOptions\SketchbasedForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PlacementOptions\SketchbasedForm.Designer.cs">
+    <Compile Update="PlacementOptions\SketchbasedForm.Designer.cs">
       <DependentUpon>SketchbasedForm.cs</DependentUpon>
     </Compile>
-
-    <Compile Include="PointCloudEngine\FileBasedPointCloud.cs" />
-    <Compile Include="PointCloudEngine\PointCloudAccessBase.cs" />
-    <Compile Include="PointCloudEngine\PointCloudCellStorage.cs" />
-    <Compile Include="PointCloudEngine\PointCloudEngineSample.cs" />
-    <Compile Include="PointCloudEngine\PredefinedPointCloud.cs" />
-    <Compile Include="PointCloudEngine\PredefinedPointCloudEngine.cs" />
-    <Compile Include="PostCommandWorkflow\Application.cs" />
-    <Compile Include="PostCommandWorkflow\PostCommandRevisionMonitor.cs" />
-    <Compile Include="PostCommandWorkflow\PostCommandRevisionMonitorCommand.cs" />
-    <Compile Include="PostCommandWorkflow\Properties\Resources.Designer.cs" />
-    <Compile Include="PowerCircuit\CircuitOperationData.cs" />
-    <Compile Include="PowerCircuit\CircuitOperationForm.cs">
+    <Compile Update="PowerCircuit\CircuitOperationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PowerCircuit\CircuitOperationForm.Designer.cs">
+    <Compile Update="PowerCircuit\CircuitOperationForm.Designer.cs">
       <DependentUpon>CircuitOperationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PowerCircuit\Command.cs" />
-    <Compile Include="PowerCircuit\EditCircuitForm.cs">
+    <Compile Update="PowerCircuit\EditCircuitForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PowerCircuit\EditCircuitForm.Designer.cs">
+    <Compile Update="PowerCircuit\EditCircuitForm.Designer.cs">
       <DependentUpon>EditCircuitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PowerCircuit\ElectricalSystemItem.cs" />
-    <Compile Include="PowerCircuit\Enum.cs" />
-    <Compile Include="PowerCircuit\Properties\Resources.Designer.cs" />
-    <Compile Include="PowerCircuit\SelectCircuitForm.cs">
+    <Compile Update="PowerCircuit\SelectCircuitForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PowerCircuit\SelectCircuitForm.Designer.cs">
+    <Compile Update="PowerCircuit\SelectCircuitForm.Designer.cs">
       <DependentUpon>SelectCircuitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProjectInfo\Command.cs" />
-    <Compile Include="ProjectInfo\Converters\AngleConverter.cs" />
-    <Compile Include="ProjectInfo\Converters\CityConverter.cs" />
-    <Compile Include="ProjectInfo\Converters\ConstructionWrapperConverter.cs" />
-    <Compile Include="ProjectInfo\Converters\Converters.cs" />
-    <Compile Include="ProjectInfo\Converters\ElementIdConverter.cs" />
-    <Compile Include="ProjectInfo\Converters\ProjectLocationConverter.cs" />
-    <Compile Include="ProjectInfo\Converters\RevitEnumConverter.cs" />
-    <Compile Include="ProjectInfo\Converters\TimeZoneConverter.cs" />
-    <Compile Include="ProjectInfo\ProjectInfoForm.cs">
+    <Compile Update="ProjectInfo\ProjectInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProjectInfo\ProjectInfoForm.Designer.cs">
+    <Compile Update="ProjectInfo\ProjectInfoForm.Designer.cs">
       <DependentUpon>ProjectInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProjectInfo\RevitVersionAttribute.cs" />
-    <Compile Include="ProjectInfo\Wrappers\ConstructionWrapper.cs" />
-    <Compile Include="ProjectInfo\Wrappers\EnergyDataSettingsWrapper.cs" />
-    <Compile Include="ProjectInfo\Wrappers\MEPBuildingConstructionWrapper.cs" />
-    <Compile Include="ProjectInfo\Wrappers\ProjectInfoWrapper.cs" />
-    <Compile Include="ProjectInfo\Wrappers\SiteLocationWrapper.cs" />
-    <Compile Include="ProjectInfo\Wrappers\WrapperCustomDescriptor.cs" />
-    <Compile Include="ProjectInfo\Wrappers\Wrappers.cs" />
-    <Compile Include="ReadonlySharedParameters\ReadonlySharedParameterApplicaton.cs" />
-    <Compile Include="ReadonlySharedParameters\ReadonlySharedParametersCommands.cs" />
-    <Compile Include="ReadonlySharedParameters\SharedParameterBindingManager.cs" />
-    <Compile Include="RebarContainerAnyShapeType\BeamFramReinMaker.cs" />
-    <Compile Include="RebarContainerAnyShapeType\BeamFramReinMakerForm.cs">
+    <Compile Update="RebarContainerAnyShapeType\BeamFramReinMakerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RebarContainerAnyShapeType\BeamFramReinMakerForm.Designer.cs">
+    <Compile Update="RebarContainerAnyShapeType\BeamFramReinMakerForm.Designer.cs">
       <DependentUpon>BeamFramReinMakerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="RebarContainerAnyShapeType\BeamGeometrySupport.cs" />
-    <Compile Include="RebarContainerAnyShapeType\ColumnFramReinMaker.cs" />
-    <Compile Include="RebarContainerAnyShapeType\ColumnFramReinMakerForm.cs">
+    <Compile Update="RebarContainerAnyShapeType\ColumnFramReinMakerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RebarContainerAnyShapeType\ColumnFramReinMakerForm.Designer.cs">
+    <Compile Update="RebarContainerAnyShapeType\ColumnFramReinMakerForm.Designer.cs">
       <DependentUpon>ColumnFramReinMakerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="RebarContainerAnyShapeType\ColumnGeometrySupport.cs" />
-    <Compile Include="RebarContainerAnyShapeType\Command.cs" />
-    <Compile Include="RebarContainerAnyShapeType\FrameReinMakerFactory.cs" />
-    <Compile Include="RebarContainerAnyShapeType\FramReinMaker.cs" />
-    <Compile Include="RebarContainerAnyShapeType\GeomData.cs" />
-    <Compile Include="RebarContainerAnyShapeType\GeometrySupport.cs" />
-
-    <Compile Include="RebarFreeForm\AddSharedParams.cs" />
-    <Compile Include="RebarFreeForm\Application.cs" />
-    <Compile Include="RebarFreeForm\Command.cs" />
-    <Compile Include="RebarFreeForm\CurveElementRegenUpdater.cs" />
-    <Compile Include="RebarFreeForm\RebarUpdateServer.cs" />
-    <Compile Include="ReferencePlane\Command.cs" />
-    <Compile Include="ReferencePlane\ReferencePlaneForm.cs">
+    <Compile Update="ReferencePlane\ReferencePlaneForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ReferencePlane\ReferencePlaneForm.Designer.cs">
+    <Compile Update="ReferencePlane\ReferencePlaneForm.Designer.cs">
       <DependentUpon>ReferencePlaneForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ReferencePlane\ReferencePlaneMgr.cs" />
-    <Compile Include="Reinforcement\BeamFramReinMaker.cs" />
-    <Compile Include="Reinforcement\BeamFramReinMakerForm.cs">
+    <Compile Update="Reinforcement\BeamFramReinMakerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reinforcement\BeamFramReinMakerForm.Designer.cs">
+    <Compile Update="Reinforcement\BeamFramReinMakerForm.Designer.cs">
       <DependentUpon>BeamFramReinMakerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reinforcement\BeamGeometrySupport.cs" />
-    <Compile Include="Reinforcement\ColumnFramReinMaker.cs" />
-    <Compile Include="Reinforcement\ColumnFramReinMakerForm.cs">
+    <Compile Update="Reinforcement\ColumnFramReinMakerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reinforcement\ColumnFramReinMakerForm.Designer.cs">
+    <Compile Update="Reinforcement\ColumnFramReinMakerForm.Designer.cs">
       <DependentUpon>ColumnFramReinMakerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reinforcement\ColumnGeometrySupport.cs" />
-    <Compile Include="Reinforcement\Command.cs" />
-    <Compile Include="Reinforcement\FrameReinMakerFactory.cs" />
-    <Compile Include="Reinforcement\FramReinMaker.cs" />
-    <Compile Include="Reinforcement\GeomData.cs" />
-    <Compile Include="Reinforcement\GeometrySupport.cs" />
-    <Compile Include="SampleBrowserCommand.cs" />
-    <Compile Include="Ribbon\AddInCommand.cs" />
-    <Compile Include="Ribbon\Ribbon.cs" />
-    <Compile Include="RoofsRooms\Command.cs" />
-    <Compile Include="SpatialElementGeometryCalculator\Command.cs" />
-    <Compile Include="SpatialElementGeometryCalculator\DebugHandler.cs" />
-    <Compile Include="SpatialElementGeometryCalculator\LogCreator.cs" />
-    <Compile Include="SpatialElementGeometryCalculator\OpeningHandler.cs" />
-    <Compile Include="SpatialElementGeometryCalculator\ShapeCreator.cs" />
-    <Compile Include="SpatialElementGeometryCalculator\SolidHandler.cs" />
-    <Compile Include="SpatialElementGeometryCalculator\SpatialDataCache.cs" />
-    <Compile Include="SetoutPoints\CmdGeomVertices.cs" />
-    <Compile Include="SetoutPoints\CmdRenumber.cs" />
-    <Compile Include="SetoutPoints\GeomVertices.cs" />
-    <Compile Include="RoomSchedule\Command.cs" />
-    <Compile Include="CropViewToRoom\Command.cs" />
-    <Compile Include="CropViewToRoom\RoomCropGeometry.cs" />
-    <Compile Include="DirectShapeFromFace\CreateDirectShapeCommand.cs" />
-    <Compile Include="DirectShapeFromFace\CreateDirectShapeInitialCommand.cs" />
-    <Compile Include="DirectShapeFromFace\CreateDirectShapeSimpleCommand.cs" />
-    <Compile Include="StlImport\StlImportCommand.cs" />
-    <Compile Include="StlImport\StlImportProperties.cs" />
-    <Compile Include="StlImport\StlImportPropertiesCommands.cs" />
-    <Compile Include="PathOfTravelDoors\Command.cs" />
-    <Compile Include="PathOfTravelDoors\PathOfTravelDoorFinder.cs" />
-    <Compile Include="PathOfTravelDoors\WriteDoorMarksCommand.cs" />
-    <Compile Include="RoomVolumeDirectShape\Command.cs" />
-    <Compile Include="RoomVolumeDirectShape\RoomPropertyHelper.cs" />
-    <Compile Include="RoomVolumeDirectShape\RoomVolumeGeometry.cs" />
-    <Compile Include="RoomSchedule\CtrlApplication.cs" />
-    <Compile Include="RoomSchedule\EventsReactor.cs" />
-    <Compile Include="RoomSchedule\RoomScheduleForm.cs">
+    <Compile Update="RoomSchedule\RoomScheduleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RoomSchedule\RoomScheduleForm.Designer.cs">
+    <Compile Update="RoomSchedule\RoomScheduleForm.Designer.cs">
       <DependentUpon>RoomScheduleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="RoomSchedule\RoomsData.cs" />
-    <Compile Include="RoomSchedule\XlsDBConnector.cs" />
-    <Compile Include="Rooms\Command.cs" />
-    <Compile Include="Rooms\RoomInfoForm.cs">
+    <Compile Update="Rooms\RoomInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Rooms\RoomInfoForm.Designer.cs">
+    <Compile Update="Rooms\RoomInfoForm.Designer.cs">
       <DependentUpon>RoomInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Rooms\RoomsData.cs" />
-    <Compile Include="RotateFramingObjects\RotateFramingObjects.cs" />
-    <Compile Include="RotateFramingObjects\RotateFramingObjectsForm.cs">
+    <Compile Update="RotateFramingObjects\RotateFramingObjectsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RoutingPreferenceTools\RoutingPreferenceAnalysis\Analyzer.cs" />
-    <Compile Include="RoutingPreferenceTools\RoutingPreferenceAnalysis\Command.cs" />
-    <Compile Include="RoutingPreferenceTools\RoutingPreferenceAnalysis\MainWindow.xaml.cs">
+    <Compile Update="RoutingPreferenceTools\RoutingPreferenceAnalysis\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RoutingPreferenceTools\RoutingPreferenceAnalysis\PartIdInfo.cs" />
-    <Compile Include="RoutingPreferenceTools\RoutingPreferenceBuilder\CommandReadPreferences.cs" />
-    <Compile Include="RoutingPreferenceTools\RoutingPreferenceBuilder\CommandWritePreferences.cs" />
-    <Compile Include="RoutingPreferenceTools\RoutingPreferenceBuilder\RoutingPreferenceBuilder.cs" />
-    <Compile Include="RoutingPreferenceTools\RoutingPreferenceBuilder\RoutingPreferenceBuilderUtility.cs" />
-    <Compile Include="RvtSamples\Application.cs" />
-    <Compile Include="RvtSamples\Properties\Resource.Designer.cs" />
-    <Compile Include="RvtSamples\SampleItem.cs" />
-    <Compile Include="SampleData.cs" />
-    <Compile Include="ScheduleAutomaticFormatter\Application.cs" />
-    <Compile Include="ScheduleAutomaticFormatter\Properties\Resources.Designer.cs" />
-    <Compile Include="ScheduleAutomaticFormatter\ScheduleFormatter.cs" />
-    <Compile Include="ScheduleAutomaticFormatter\ScheduleFormatterCommand.cs" />
-    <Compile Include="ScheduleCreation\Command.cs" />
-    <Compile Include="ScheduleToHTML\Application.cs" />
-    <Compile Include="ScheduleToHTML\Properties\Resources.Designer.cs" />
-    <Compile Include="ScheduleToHTML\ScheduleHTMLExportCommand.cs" />
-    <Compile Include="ScheduleToHTML\ScheduleHTMLExporter.cs" />
-    <Compile Include="Selections\Command.cs" />
-    <Compile Include="Selections\SelectionFilters.cs" />
-    <Compile Include="Selections\SelectionForm.cs">
+    <Compile Update="Selections\SelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Selections\SelectionForm.Designer.cs">
+    <Compile Update="Selections\SelectionForm.Designer.cs">
       <DependentUpon>SelectionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Selections\SelectionManager.cs" />
-    <Compile Include="ShaftHolePuncher\Command.cs" />
-    <Compile Include="ShaftHolePuncher\Tool.cs" />
-    <Compile Include="ShaftHolePuncher\LineTool.cs" />
-    <Compile Include="ShaftHolePuncher\Profile.cs" />
-    <Compile Include="ShaftHolePuncher\ProfileBeam.cs" />
-    <Compile Include="ShaftHolePuncher\ProfileFloor.cs" />
-    <Compile Include="ShaftHolePuncher\ProfileNull.cs" />
-    <Compile Include="ShaftHolePuncher\ProfileWall.cs" />
-    <Compile Include="ShaftHolePuncher\RectangleTool.cs" />
-    <Compile Include="ShaftHolePuncher\ShaftHolePuncherForm.cs">
+    <Compile Update="ShaftHolePuncher\ShaftHolePuncherForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ShaftHolePuncher\ShaftHolePuncherForm.Designer.cs">
+    <Compile Update="ShaftHolePuncher\ShaftHolePuncherForm.Designer.cs">
       <DependentUpon>ShaftHolePuncherForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SharedCoordinateSystem\Command.cs" />
-    <Compile Include="SharedCoordinateSystem\CoordinateSystemData.cs" />
-    <Compile Include="SharedCoordinateSystem\CoordinateSystemDataForm.cs">
+    <Compile Update="SharedCoordinateSystem\CoordinateSystemDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SharedCoordinateSystem\CoordinateSystemDataForm.Designer.cs">
+    <Compile Update="SharedCoordinateSystem\CoordinateSystemDataForm.Designer.cs">
       <DependentUpon>CoordinateSystemDataForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SharedCoordinateSystem\DuplicateForm.cs">
+    <Compile Update="SharedCoordinateSystem\DuplicateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SharedCoordinateSystem\DuplicateForm.Designer.cs">
+    <Compile Update="SharedCoordinateSystem\DuplicateForm.Designer.cs">
       <DependentUpon>DuplicateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SharedCoordinateSystem\PlaceInfo.cs" />
-    <Compile Include="SheetToView3D\SheetToView3D.cs" />
-    <Compile Include="SinePlotter\Application.cs" />
-    <Compile Include="SinePlotter\Command.cs" />
-    <Compile Include="SinePlotter\FamilyInstancePlotter.cs" />
-    <Compile Include="Site\Application.cs" />
-    <Compile Include="Site\Properties\Resources.Designer.cs" />
-    <Compile Include="Site\SiteAddRetainingPondCommand.cs" />
-    <Compile Include="Site\SiteDeleteRegionAndPointsCommand.cs" />
-    <Compile Include="Site\SiteLowerTerrainInRegionCommand.cs" />
-    <Compile Include="Site\SiteMoveRegionAndPointsCommand.cs" />
-    <Compile Include="Site\SiteNormalizeTerrainInRegionCommand.cs" />
-    <Compile Include="Site\SiteRaiseTerrainInRegionCommand.cs" />
-    <Compile Include="Site\TopographyEditFailuresPreprocessor.cs" />
-    <Compile Include="SlabProperties\Command.cs" />
-    <Compile Include="SlabProperties\SlabProperitiesForm.cs">
+    <Compile Update="SlabProperties\SlabProperitiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SlabShapeEditing\Command.cs" />
-    <Compile Include="SlabShapeEditing\LineTool.cs" />
-    <Compile Include="SlabShapeEditing\MathTools.cs" />
-    <Compile Include="SlabShapeEditing\Properties\Resources.Designer.cs" />
-    <Compile Include="SlabShapeEditing\SlabProfile.cs" />
-    <Compile Include="SlabShapeEditing\SlabShapeEditingForm.cs">
+    <Compile Update="SlabShapeEditing\SlabShapeEditingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SlabShapeEditing\SlabShapeEditingForm.Designer.cs">
+    <Compile Update="SlabShapeEditing\SlabShapeEditingForm.Designer.cs">
       <DependentUpon>SlabShapeEditingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SolidSolidCut\Command.cs" />
-    <Compile Include="SpanDirection\Command.cs" />
-    <Compile Include="SpotDimension\Command.cs" />
-    <Compile Include="SpotDimension\SpotDimensionInfoDlg.cs">
+    <Compile Update="SpotDimension\SpotDimensionInfoDlg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SpotDimension\SpotDimensionInfoDlg.Designer.cs">
+    <Compile Update="SpotDimension\SpotDimensionInfoDlg.Designer.cs">
       <DependentUpon>SpotDimensionInfoDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpotDimension\SpotDimensionParams.cs" />
-    <Compile Include="SpotDimension\SpotDimensionsData.cs" />
-    <Compile Include="StairsAutomation\Command.cs" />
-    <Compile Include="StairsAutomation\IStairsConfiguration.cs" />
-    <Compile Include="StairsAutomation\LandingComponents\IStairsLandingComponent.cs" />
-    <Compile Include="StairsAutomation\LandingComponents\StairsRectangleLandingComponent.cs" />
-    <Compile Include="StairsAutomation\RunComponents\CurvedStairsRunComponent.cs" />
-    <Compile Include="StairsAutomation\RunComponents\IStairsRunComponent.cs" />
-    <Compile Include="StairsAutomation\RunComponents\SketchedCurvedStairsRunComponent.cs" />
-    <Compile Include="StairsAutomation\RunComponents\SketchedStraightStairsRunComponent.cs" />
-    <Compile Include="StairsAutomation\RunComponents\StraightStairsRunComponent.cs" />
-    <Compile Include="StairsAutomation\RunComponents\TransformedStairsComponent.cs" />
-    <Compile Include="StairsAutomation\StairsAutomationUtility.cs" />
-    <Compile Include="StairsAutomation\StairsConfiguration.cs" />
-    <Compile Include="StairsAutomation\StairsSingleCurvedRun.cs" />
-    <Compile Include="StairsAutomation\StairsSingleSketchedCurvedRun.cs" />
-    <Compile Include="StairsAutomation\StairsSingleSketchedStraightRun.cs" />
-    <Compile Include="StairsAutomation\StairsSingleStraightRun.cs" />
-    <Compile Include="StairsAutomation\StairsStandardConfiguration.cs" />
-    <Compile Include="StructSample\Command.cs" />
-    <Compile Include="StructuralLayerFunction\Command.cs" />
-    <Compile Include="StructuralLayerFunction\StructuralLayerFunctionForm.cs">
+    <Compile Update="StructuralLayerFunction\StructuralLayerFunctionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GetElementImage\Command.cs" />
-    <Compile Include="GetElementImage\ImageExporter.cs" />
-    <Compile Include="GetCentroid\CentroidVolume.cs" />
-    <Compile Include="GetCentroid\Command.cs" />
-    <Compile Include="GetCentroid\CompareCentroidCommand.cs" />
-    <Compile Include="GetCentroid\GetCentroidSelection.cs" />
-    <Compile Include="GetCentroid\SolidCentroidCalculator.cs" />
-    <Compile Include="StringSearch\AboutBox.cs">
+    <Compile Update="StringSearch\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StringSearch\AboutBox.Designer.cs">
+    <Compile Update="StringSearch\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="StringSearch\Command.cs" />
-    <Compile Include="StringSearch\HelpDlg.cs">
+    <Compile Update="StringSearch\HelpDlg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StringSearch\HelpDlg.Designer.cs">
+    <Compile Update="StringSearch\HelpDlg.Designer.cs">
       <DependentUpon>HelpDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="StringSearch\JtLogFile.cs" />
-    <Compile Include="StringSearch\Properties\Resources.Designer.cs">
+    <Compile Update="StringSearch\Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="StringSearch\SearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="StringSearch\SearchForm.Designer.cs">
+      <DependentUpon>SearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="StringSearch\SearchHitNavigator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="StringSearch\SearchHitNavigator.Designer.cs">
+      <DependentUpon>SearchHitNavigator.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TagBeam\TagBeamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="TagBeam\TagBeamForm.Designer.cs">
+      <DependentUpon>TagBeamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TransactionControl\CreateWallForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="TransactionControl\CreateWallForm.Designer.cs">
+      <DependentUpon>CreateWallForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TransactionControl\TransactionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="TransactionControl\TransactionForm.Designer.cs">
+      <DependentUpon>TransactionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Truss\TrussForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Truss\TrussForm.Designer.cs">
+      <DependentUpon>TrussForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="UIAPI\DragAndDrop\DragAndDrop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UIAPI\DragAndDrop\DragAndDrop.Designer.cs">
+      <DependentUpon>DragAndDrop.cs</DependentUpon>
+    </Compile>
+    <Compile Update="UIAPI\OptionsDialog\Options.xaml.cs">
+      <DependentUpon>Options.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UIAPI\OptionsDialog\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UIAPI\OptionsDialog\UserControl2.xaml.cs">
+      <DependentUpon>UserControl2.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UIAPI\OptionsDialog\UserControl3.xaml.cs">
+      <DependentUpon>UserControl3.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UIAPI\PreviewControl\PreviewModel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UIAPI\PreviewControl\PreviewModel.Designer.cs">
+      <DependentUpon>PreviewModel.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Units\FormatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Units\FormatForm.Designer.cs">
+      <DependentUpon>FormatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Units\UnitsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Units\UnitsForm.Designer.cs">
+      <DependentUpon>UnitsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="VersionChecking\VersionCheckingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="VersionChecking\VersionCheckingForm.Designer.cs">
+      <DependentUpon>VersionCheckingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ViewPrinter\PrintMgrForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ViewPrinter\PrintMgrForm.Designer.cs">
+      <DependentUpon>PrintMgrForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ViewPrinter\PrintSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ViewPrinter\PrintSetupForm.Designer.cs">
+      <DependentUpon>PrintSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ViewPrinter\ReNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ViewPrinter\ReNameForm.Designer.cs">
+      <DependentUpon>ReNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ViewPrinter\SaveAsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ViewPrinter\SaveAsForm.Designer.cs">
+      <DependentUpon>SaveAsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ViewPrinter\ViewSheetSetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ViewPrinter\ViewSheetSetForm.Designer.cs">
+      <DependentUpon>ViewSheetSetForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ViewTemplateCreation\ViewTemplateCreationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ViewTemplateCreation\ViewTemplateCreationForm.Designer.cs">
+      <DependentUpon>ViewTemplateCreationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="VisibilityControl\VisibilityCtrlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="VisibilityControl\VisibilityCtrlForm.Designer.cs">
+      <DependentUpon>VisibilityCtrlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="WinderStairs\Forms\LWinderOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="WinderStairs\Forms\LWinderOptions.Designer.cs">
+      <DependentUpon>LWinderOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Update="WinderStairs\Forms\UWinderOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="WinderStairs\Forms\UWinderOptions.Designer.cs">
+      <DependentUpon>UWinderOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Update="SampleBrowserMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SampleBrowserMainForm.Designer.cs">
+      <DependentUpon>SampleBrowserMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="StringSearch\Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StringSearch\PropertyComparer.cs" />
-    <Compile Include="StringSearch\SearchForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StringSearch\SearchForm.Designer.cs">
-      <DependentUpon>SearchForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StringSearch\SearchHit.cs" />
-    <Compile Include="StringSearch\SearchHitNavigator.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StringSearch\SearchHitNavigator.Designer.cs">
-      <DependentUpon>SearchHitNavigator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StringSearch\SearchOptions.cs" />
-    <Compile Include="StringSearch\SortableBindingList.cs" />
-    <Compile Include="StringSearch\StringSearcher.cs" />
-    <Compile Include="StringSearch\StringSearchHost.cs" />
-    <Compile Include="ExportCncFab\Commands.cs" />
-    <Compile Include="ExportCncFab\ExportParameters.cs" />
-    <Compile Include="ExportCncFab\Util.cs" />
-    <Compile Include="SvgExport\Command.cs" />
-    <Compile Include="TagBeam\Command.cs" />
-    <Compile Include="TagBeam\FamilySymbolWrapper.cs" />
-    <Compile Include="TagBeam\TagBeamData.cs" />
-    <Compile Include="TagBeam\TagBeamForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TagBeam\TagBeamForm.Designer.cs">
-      <DependentUpon>TagBeamForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Toposolid\Command.cs" />
-    <Compile Include="TransactionControl\Command.cs" />
-    <Compile Include="TransactionControl\CreateWallForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TransactionControl\CreateWallForm.Designer.cs">
-      <DependentUpon>CreateWallForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TransactionControl\TransactionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TransactionControl\TransactionForm.Designer.cs">
-      <DependentUpon>TransactionForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TraverseSystem\Command.cs" />
-    <Compile Include="TraverseSystem\TraversalTree.cs" />
-
-    <Compile Include="Truss\Command.cs" />
-    <Compile Include="Truss\LineTool.cs" />
-    <Compile Include="Truss\Properties\Resources.Designer.cs" />
-    <Compile Include="Truss\TrussForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Truss\TrussForm.Designer.cs">
-      <DependentUpon>TrussForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Truss\TrussGeometry.cs" />
-    <Compile Include="UIAPI\ApplicationAvailabilityClass.cs" />
-    <Compile Include="UIAPI\ApplicationOptions.cs" />
-    <Compile Include="UIAPI\DragAndDrop\DragAndDrop.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UIAPI\DragAndDrop\DragAndDrop.Designer.cs">
-      <DependentUpon>DragAndDrop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UIAPI\DragAndDrop\DragAndDropCommand.cs" />
-    <Compile Include="UIAPI\ExternalApplication.cs" />
-    <Compile Include="UIAPI\OptionsDialog\AddTabCommand.cs" />
-    <Compile Include="UIAPI\OptionsDialog\Options.xaml.cs">
-      <DependentUpon>Options.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIAPI\OptionsDialog\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIAPI\OptionsDialog\UserControl2.xaml.cs">
-      <DependentUpon>UserControl2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIAPI\OptionsDialog\UserControl3.xaml.cs">
-      <DependentUpon>UserControl3.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIAPI\PreviewControl\PreviewCommand.cs" />
-    <Compile Include="UIAPI\PreviewControl\PreviewModel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UIAPI\PreviewControl\PreviewModel.Designer.cs">
-      <DependentUpon>PreviewModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UIAPI\Properties\Resources.Designer.cs" />
-    <Compile Include="Units\Command.cs" />
-    <Compile Include="Units\FormatForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Units\FormatForm.Designer.cs">
-      <DependentUpon>FormatForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Units\UnitsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Units\UnitsForm.Designer.cs">
-      <DependentUpon>UnitsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VersionChecking\VersionChecking.cs" />
-    <Compile Include="VersionChecking\VersionCheckingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VersionChecking\VersionCheckingForm.Designer.cs">
-      <DependentUpon>VersionCheckingForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ViewPrinter\Command.cs" />
-    <Compile Include="ViewPrinter\PrintMgr.cs" />
-    <Compile Include="ViewPrinter\PrintMgrForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewPrinter\PrintMgrForm.Designer.cs">
-      <DependentUpon>PrintMgrForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ViewPrinter\PrintSetupForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewPrinter\PrintSetupForm.Designer.cs">
-      <DependentUpon>PrintSetupForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ViewPrinter\PrintSTP.cs" />
-    <Compile Include="ViewPrinter\ReNameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewPrinter\ReNameForm.Designer.cs">
-      <DependentUpon>ReNameForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ViewPrinter\SaveAsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewPrinter\SaveAsForm.Designer.cs">
-      <DependentUpon>SaveAsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ViewPrinter\ViewSheets.cs" />
-    <Compile Include="ViewPrinter\ViewSheetSetForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewPrinter\ViewSheetSetForm.Designer.cs">
-      <DependentUpon>ViewSheetSetForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ViewTemplateCreation\Command.cs" />
-    <Compile Include="ViewTemplateCreation\ViewTemplateCreationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewTemplateCreation\ViewTemplateCreationForm.Designer.cs">
-      <DependentUpon>ViewTemplateCreationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VisibilityControl\Command.cs" />
-    <Compile Include="VisibilityControl\VisibilityCtrl.cs" />
-    <Compile Include="VisibilityControl\VisibilityCtrlForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisibilityControl\VisibilityCtrlForm.Designer.cs">
-      <DependentUpon>VisibilityCtrlForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinderStairs\Command.cs" />
-    <Compile Include="WinderStairs\Forms\LWinderOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WinderStairs\Forms\LWinderOptions.Designer.cs">
-      <DependentUpon>LWinderOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinderStairs\Forms\UWinderOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WinderStairs\Forms\UWinderOptions.Designer.cs">
-      <DependentUpon>UWinderOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinderStairs\Properties\Resources.Designer.cs" />
-    <Compile Include="WinderStairs\Winders\LWinder.cs" />
-    <Compile Include="WinderStairs\Winders\UWinder.cs" />
-    <Compile Include="WinderStairs\Winders\Winder.cs" />
-    <Compile Include="WinderStairs\Winders\WinderCorner.cs" />
-    <Compile Include="WinderStairs\Winders\WinderSinglePoint.cs" />
-    <Compile Include="WinderStairs\Winders\WinderStraight.cs" />
-    <Compile Include="WinderStairs\WinderUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AddSpaceAndZone\MainForm.resx">
