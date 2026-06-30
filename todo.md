@@ -6,9 +6,9 @@
 
 | Metric | Value |
 |--------|-------|
-| Total commands | 460 |
-| Command docs created | 460 / 460 |
-| MCP descriptors created | 302 / 302 |
+| Total commands | 462 |
+| Command docs created | 462 / 462 |
+| MCP descriptors created | 304 / 304 |
 | Last updated | 2026-06-30
 
 ### MCP rating distribution (preliminary)
@@ -981,7 +981,7 @@ Columns: **Doc** = Task A ? **MCP** = Task B (`?` when rating is 1 or 2)
 
 ## The Building Coder (TBC) samples
 
-Imported 152 commands from The Building Coder.
+Imported 170 commands from The Building Coder.
 
 | Doc | MCP | Class | Command doc | MCP descriptor | Source | Rating |
 |-----|-----|-------|-------------|----------------|--------|--------|
