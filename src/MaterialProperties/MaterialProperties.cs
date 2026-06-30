@@ -41,9 +41,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
         private UIApplication m_revit;
         private FamilyInstance m_selectedComponent; //selected beam, column or brace
 
-        /// <summary>
-        ///     get the material type of selected element
-        /// </summary>
         public StructuralAssetClass CurrentType
         {
             get
@@ -57,9 +54,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             }
         }
 
-        /// <summary>
-        ///     get the material attribute of selected element
-        /// </summary>
         public object CurrentMaterial
         {
             get
@@ -79,9 +73,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
         /// </summary>
         public ArrayList ConcreteCollection { get; } = new ArrayList();
 
-        /// <summary>
-        ///     three basic material types in Revit
-        /// </summary>
         public ArrayList MaterialTypes
         {
             get
@@ -131,12 +122,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     get a datatable contains parameters' information of certain element
-        /// </summary>
-        /// <param name="o">Revit element</param>
-        /// <param name="substanceKind">the material type of this element</param>
-        /// <returns>datatable contains parameters' names and values</returns>
         public DataTable GetParameterTable(object o, StructuralAssetClass substanceKind)
         {
             //create an empty datatable
@@ -276,10 +261,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             return parameterTable;
         }
 
-        /// <summary>
-        ///     Update cache material
-        /// </summary>
-        /// <param name="obj">new material</param>
         public void UpdateMaterial(object obj)
         {
             if (null == obj) throw new ArgumentNullException();
@@ -288,9 +269,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             }
         }
 
-        /// <summary>
-        ///     set the material of selected component
-        /// </summary>
         public void SetMaterial()
         {
             if (null == m_cacheMaterial || null == m_currentMaterial) return;
@@ -340,9 +318,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             }
         }
 
-        /// <summary>
-        ///     get current material of selected component
-        /// </summary>
         private Material GetCurrentMaterial()
         {
             if (null != m_cacheMaterial)
@@ -358,10 +333,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             return material;
         }
 
-        /// <summary>
-        ///     get selected beam, column or brace
-        /// </summary>
-        /// <returns></returns>
         private void GetSelectedComponent()
         {
             var componentCollection = new ElementSet();
@@ -402,10 +373,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             }
         }
 
-        /// <summary>
-        ///     get all materials exist in current document
-        /// </summary>
-        /// <returns></returns>
         private void GetAllMaterial()
         {
             var collector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
@@ -444,10 +411,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             }
         }
 
-        /// <summary>
-        ///     Create an empty table with parameter's name column and value column
-        /// </summary>
-        /// <returns></returns>
         private DataTable CreateTable()
         {
             // Create a new DataTable.
@@ -519,24 +482,14 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
     /// </summary>
     public class MaterialMap
     {
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="material"></param>
         public MaterialMap(Material material)
         {
             MaterialName = material.Name;
             Material = material;
         }
 
-        /// <summary>
-        ///     Get the material name
-        /// </summary>
         public string MaterialName { get; }
 
-        /// <summary>
-        ///     Get the material
-        /// </summary>
         public Material Material { get; }
     }
 }

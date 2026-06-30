@@ -18,7 +18,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
-            // get UI input of options
             m_model.SetTier(comboBoxTier.SelectedText);
             m_model.Options.ExportMullions = checkBoxExportMullions.Checked;
             m_model.Options.IncludeShadingSurfaces = checkBoxIncludeShadingSurfaces.Checked;
@@ -27,14 +26,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
             m_model.Initialize();
             m_model.RefreshAnalysisData(treeViewAnalyticalData);
 
-            // expand all child
             treeViewAnalyticalData.ExpandAll();
             Refresh();
         }
 
-        /// <summary>
-        ///     Set default Tier as SecondLevelBoundaries
-        /// </summary>
+        // Index 3 corresponds to SecondLevelBoundaries in comboBoxTier.
         private void InitializeOptionsUi()
         {
             comboBoxTier.SelectedIndex = 3;

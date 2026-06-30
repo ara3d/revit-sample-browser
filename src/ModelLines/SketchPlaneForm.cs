@@ -14,10 +14,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
         // Private members
         private readonly ModelLines m_dataBuffer; // A reference of ModelLines.
 
-        /// <summary>
-        ///     Constructor of SketchPlaneForm
-        /// </summary>
-        /// <param name="dataBuffer">a reference of ModelLines class</param>
         public SketchPlaneForm(ModelLines dataBuffer)
         {
             // Required for Windows Form Designer support
@@ -27,19 +23,12 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             m_dataBuffer = dataBuffer;
         }
 
-        /// <summary>
-        ///     Check the data which the user input are integrated or not
-        /// </summary>
-        /// <returns>If the data are integrated return true, otherwise false</returns>
         private bool AssertDataIntegrity()
         {
             return normalUserControl.AssertPointIntegrity()
                    && originUserControl.AssertPointIntegrity();
         }
 
-        /// <summary>
-        ///     The event method for okButton click
-        /// </summary>
         private void okButton_Click(object sender, EventArgs e)
         {
             // First, check data integrity 
@@ -67,9 +56,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             Close();
         }
 
-        /// <summary>
-        ///     The event method for cancelButton click
-        /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

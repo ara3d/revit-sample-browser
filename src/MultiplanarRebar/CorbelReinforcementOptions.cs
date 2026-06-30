@@ -13,10 +13,6 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
     /// </summary>
     public class CorbelReinforcementOptions
     {
-        /// <summary>
-        ///     Constructor to initialize the fields.
-        /// </summary>
-        /// <param name="revitDoc">Revit DB Document</param>
         public CorbelReinforcementOptions(Document revitDoc)
         {
             RevitDoc = revitDoc;
@@ -25,44 +21,20 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             RebarBarTypes = filteredElementCollector.Cast<RebarBarType>().ToList();
         }
 
-        /// <summary>
-        ///     Active Revit DB Document.
-        /// </summary>
         public Document RevitDoc { get; set; }
 
-        /// <summary>
-        ///     List of RebarBarTypes in active document.
-        /// </summary>
         public List<RebarBarType> RebarBarTypes { get; set; }
 
-        /// <summary>
-        ///     RebarBarType for corbel top straight bars.
-        /// </summary>
         public RebarBarType TopBarType { get; set; }
 
-        /// <summary>
-        ///     RebarBarType for corbel stirrup bars.
-        /// </summary>
         public RebarBarType StirrupBarType { get; set; }
 
-        /// <summary>
-        ///     RebarBarType for corbel multi-planar bar.
-        /// </summary>
         public RebarBarType MultiplanarBarType { get; set; }
 
-        /// <summary>
-        ///     RebarBarType for corbel host straight bars.
-        /// </summary>
         public RebarBarType HostStraightBarType { get; set; }
 
-        /// <summary>
-        ///     Count of corbel straight bars.
-        /// </summary>
         public int TopBarCount { get; set; }
 
-        /// <summary>
-        ///     Count of corbel stirrup bars.
-        /// </summary>
         public int StirrupBarCount { get; set; }
     }
 }

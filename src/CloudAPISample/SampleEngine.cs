@@ -34,7 +34,6 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS
             CoroutineScheduler.Run();
         }
 
-        /// <inheritdoc />
         public void Dispose()
         {
             foreach (var context in m_allContext)

@@ -12,9 +12,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 {
-    /// <summary>
-    ///     ADN mesh data custom exporter external command mainline.
-    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

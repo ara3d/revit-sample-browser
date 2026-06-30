@@ -8,23 +8,13 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand.
-    ///     This class shows how to compute the distance from divided surface panels to a user-specified point
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class SetDistanceParam : IExternalCommand
     {
-        /// <summary>
-        ///     The Revit application instance
-        /// </summary>
         private UIApplication m_uiApp;
 
-        /// <summary>
-        ///     The active Revit document
-        /// </summary>
         private UIDocument m_uiDoc;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -99,11 +89,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Get the Autodesk.Revit.DB.XYZ point of the selected target element
-        /// </summary>
-        /// <param name="collection">Selected elements</param>
-        /// <returns>the Autodesk.Revit.DB.XYZ point of the selected target element</returns>
         private XYZ GetTargetPoint(ElementSet collection)
         {
             FamilyInstance targetElement = null;

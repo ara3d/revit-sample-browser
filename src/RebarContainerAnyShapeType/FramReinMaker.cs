@@ -15,10 +15,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
     /// </summary>
     public interface IFrameReinMaker
     {
-        /// <summary>
-        ///     Main function of Maker interface
-        /// </summary>
-        /// <returns>indicate the result of run</returns>
         bool Run();
     }
 
@@ -28,14 +24,8 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
     /// </summary>
     public class FramReinMaker : IFrameReinMaker
     {
-        /// <summary>
-        ///     a list to store all the hook types
-        /// </summary>
         protected List<RebarHookType> m_hookTypes = new List<RebarHookType>();
 
-        /// <summary>
-        ///     the family instance to places reinforcement on
-        /// </summary>
         protected readonly FamilyInstance HostObject;
 
         protected List<RebarBarType> RebarBottomTypes = new List<RebarBarType>();
@@ -46,9 +36,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         protected List<RebarBarType> RebarTransverseEndTypes = new List<RebarBarType>();
         protected List<RebarBarType> RebarTransverseTypes = new List<RebarBarType>();
 
-        /// <summary>
-        ///     a set to store all the reinforcement types
-        /// </summary>
         protected List<RebarBarType> RebarVerticalTypes = new List<RebarBarType>();
 
         /// <summary>
@@ -59,11 +46,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         protected List<RebarHookType> m_topHookTypes = new List<RebarHookType>();
         protected List<RebarHookType> TransverseHookTypes = new List<RebarHookType>();
 
-        /// <summary>
-        ///     The constructor of FramReinMaker
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
-        /// <param name="hostObject">the host family instance</param>
         protected FramReinMaker(ExternalCommandData commandData, FamilyInstance hostObject)
         {
             // Get and store reinforcement create handle and host family instance
@@ -129,10 +111,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return true; // only return true
         }
 
-        /// <summary>
-        ///     This is a virtual method which used to collect creation information
-        /// </summary>
-        /// <returns>true if the informatin collection is successful, otherwise false</returns>
         protected virtual bool DisplayForm()
         {
             return true; // only return true
@@ -172,11 +150,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return item;
         }
 
-        /// <summary>
-        ///     get all the hook types in current project, and store in m_hookTypes data
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
-        /// <returns>true if some hook types can be gotton, otherwise false</returns>
         private bool GetHookTypes(ExternalCommandData commandData)
         {
             // Initialize the m_hookTypes which used to store all hook types.
@@ -191,11 +164,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return 0 == m_hookTypes.Count ? false : true;
         }
 
-        /// <summary>
-        ///     get all the rebar types in current project, and store in m_rebarTypes data
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
-        /// <returns>true if some rebar types can be got, otherwise false</returns>
         private bool GetRebarTypes(ExternalCommandData commandData)
         {
             // Initialize the List<RebarBarType> which used to store all reinforcement bar types.

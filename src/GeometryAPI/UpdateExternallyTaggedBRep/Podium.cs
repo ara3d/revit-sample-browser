@@ -6,9 +6,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
     public class Podium
     {
-        /// <summary>
-        ///     ExternalGeometryId of the created ExternallyTaggedBRep by Podium class.
-        /// </summary>
+        /// <summary>ExternalGeometryId used when creating and updating the podium BRep.</summary>
         public static readonly ExternalGeometryId ExternalId = new ExternalGeometryId("externalID");
 
         private double m_halfPodiumDepth;
@@ -20,7 +18,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 
         private double m_podiumHeight;
 
-        // Dimension data for the various podium parts.
         private double m_podiumWidth;
         private double m_riser1DepthPos;
         private double m_riser2DepthPos;
@@ -59,30 +56,28 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             var brepBuilder = new BRepBuilder(BRepType.Solid);
             var persistentIds = new BRepBuilderPersistentIds(brepBuilder);
 
-            // 1. Planes
             var riser1 = Plane.CreateByOriginAndBasis(new XYZ(0, m_riser1DepthPos, m_halfStepHeight), new XYZ(1, 0, 0),
-                new XYZ(0, 0, 1)); // XZ plane
+                new XYZ(0, 0, 1));
             var riser2 = Plane.CreateByOriginAndBasis(
                 new XYZ(0, m_riser2DepthPos, m_tread1HeightPos + m_halfStepHeight), new XYZ(1, 0, 0),
-                new XYZ(0, 0, 1)); // XZ plane
+                new XYZ(0, 0, 1));
             var riser3 = Plane.CreateByOriginAndBasis(
                 new XYZ(0, m_riser3DepthPos, m_tread2HeightPos + m_halfStepHeight), new XYZ(1, 0, 0),
-                new XYZ(0, 0, 1)); // XZ plane
+                new XYZ(0, 0, 1));
             var back = Plane.CreateByOriginAndBasis(new XYZ(0, m_halfPodiumDepth, m_halfPodiumHeight), new XYZ(1, 0, 0),
-                new XYZ(0, 0, 1)); // XZ plane
-            var bottom = Plane.CreateByOriginAndBasis(new XYZ(0, 0, 0), new XYZ(1, 0, 0), new XYZ(0, 1, 0)); // XY plane
+                new XYZ(0, 0, 1));
+            var bottom = Plane.CreateByOriginAndBasis(new XYZ(0, 0, 0), new XYZ(1, 0, 0), new XYZ(0, 1, 0));
             var tread1 = Plane.CreateByOriginAndBasis(new XYZ(0, m_riser1DepthPos + m_halfStepDepth, m_tread1HeightPos),
-                new XYZ(1, 0, 0), new XYZ(0, 1, 0)); // XY plane
+                new XYZ(1, 0, 0), new XYZ(0, 1, 0));
             var tread2 = Plane.CreateByOriginAndBasis(new XYZ(0, m_riser2DepthPos + m_halfStepDepth, m_tread2HeightPos),
-                new XYZ(1, 0, 0), new XYZ(0, 1, 0)); // XY plane
+                new XYZ(1, 0, 0), new XYZ(0, 1, 0));
             var top = Plane.CreateByOriginAndBasis(new XYZ(0, 0, m_podiumHeight), new XYZ(1, 0, 0),
-                new XYZ(0, 1, 0)); // XY plane
+                new XYZ(0, 1, 0));
             var left = Plane.CreateByOriginAndBasis(new XYZ(-m_halfPodiumWidth, 0, m_halfPodiumHeight),
-                new XYZ(0, 1, 0), new XYZ(0, 0, 1)); // YZ plane
+                new XYZ(0, 1, 0), new XYZ(0, 0, 1));
             var right = Plane.CreateByOriginAndBasis(new XYZ(m_halfPodiumWidth, 0, m_halfPodiumHeight),
-                new XYZ(0, 1, 0), new XYZ(0, 0, 1)); // YZ plane
+                new XYZ(0, 1, 0), new XYZ(0, 0, 1));
 
-            // 2. Faces
             var faceRiser1Id = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(riser1, null),
                 false /*bFaceIsReversed*/);
             persistentIds.AddSubTag(new ExternalGeometryId("faceRiser1"), faceRiser1Id);
@@ -114,8 +109,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
                 brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(right, null), false /*bFaceIsReversed*/);
             persistentIds.AddSubTag(new ExternalGeometryId("faceRight"), faceRightId);
 
-            // 3. Edge geometry
-            // Bottom horizontal edges
             var edgeBottomFront = BRepBuilderEdgeGeometry.Create(new XYZ(-m_halfPodiumWidth, m_riser1DepthPos, 0),
                 new XYZ(m_halfPodiumWidth, m_riser1DepthPos, 0));
             var edgeBottomRight = BRepBuilderEdgeGeometry.Create(new XYZ(m_halfPodiumWidth, m_riser1DepthPos, 0),
@@ -125,7 +118,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             var edgeBottomLeft = BRepBuilderEdgeGeometry.Create(new XYZ(-m_halfPodiumWidth, m_halfPodiumDepth, 0),
                 new XYZ(-m_halfPodiumWidth, m_riser1DepthPos, 0));
 
-            // Tread 1 horizontal edges
             var edgeTread1Front = BRepBuilderEdgeGeometry.Create(
                 new XYZ(-m_halfPodiumWidth, m_riser1DepthPos, m_stepHeight),
                 new XYZ(m_halfPodiumWidth, m_riser1DepthPos, m_stepHeight));
@@ -139,7 +131,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
                 new XYZ(-m_halfPodiumWidth, m_riser2DepthPos, m_stepHeight),
                 new XYZ(-m_halfPodiumWidth, m_riser1DepthPos, m_stepHeight));
 
-            // Tread 2 horizontal edges
             var edgeTread2Front = BRepBuilderEdgeGeometry.Create(
                 new XYZ(-m_halfPodiumWidth, m_riser2DepthPos, m_stepHeight * 2),
                 new XYZ(m_halfPodiumWidth, m_riser2DepthPos, m_stepHeight * 2));
@@ -153,7 +144,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
                 new XYZ(-m_halfPodiumWidth, m_riser3DepthPos, m_stepHeight * 2),
                 new XYZ(-m_halfPodiumWidth, m_riser2DepthPos, m_stepHeight * 2));
 
-            // Top horizontal edges
             var edgeTopFront = BRepBuilderEdgeGeometry.Create(
                 new XYZ(-m_halfPodiumWidth, m_riser3DepthPos, m_podiumHeight),
                 new XYZ(m_halfPodiumWidth, m_riser3DepthPos, m_podiumHeight));
@@ -167,7 +157,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
                 new XYZ(-m_halfPodiumWidth, m_halfPodiumDepth, m_podiumHeight),
                 new XYZ(-m_halfPodiumWidth, m_riser3DepthPos, m_podiumHeight));
 
-            // Left vertical edges
             var edgeLeftRiser1 = BRepBuilderEdgeGeometry.Create(new XYZ(-m_halfPodiumWidth, m_riser1DepthPos, 0),
                 new XYZ(-m_halfPodiumWidth, m_riser1DepthPos, m_stepHeight));
             var edgeLeftRiser2 = BRepBuilderEdgeGeometry.Create(
@@ -179,7 +168,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             var edgeLeftBack = BRepBuilderEdgeGeometry.Create(new XYZ(-m_halfPodiumWidth, m_halfPodiumDepth, 0),
                 new XYZ(-m_halfPodiumWidth, m_halfPodiumDepth, m_podiumHeight));
 
-            // Right vertical edges
             var edgeRightRiser1 = BRepBuilderEdgeGeometry.Create(new XYZ(m_halfPodiumWidth, m_riser1DepthPos, 0),
                 new XYZ(m_halfPodiumWidth, m_riser1DepthPos, m_stepHeight));
             var edgeRightRiser2 = BRepBuilderEdgeGeometry.Create(
@@ -191,7 +179,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             var edgeRightBack = BRepBuilderEdgeGeometry.Create(new XYZ(m_halfPodiumWidth, m_halfPodiumDepth, 0),
                 new XYZ(m_halfPodiumWidth, m_halfPodiumDepth, m_podiumHeight));
 
-            // 4. Edges
             var edgeBottomFrontId = brepBuilder.AddEdge(edgeBottomFront);
             persistentIds.AddSubTag(new ExternalGeometryId("edgeBottom"), edgeBottomFrontId);
             var edgeBottomRightId = brepBuilder.AddEdge(edgeBottomRight);
@@ -241,7 +228,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             var edgeRightBackId = brepBuilder.AddEdge(edgeRightBack);
             persistentIds.AddSubTag(new ExternalGeometryId("edgeRightBack"), edgeRightBackId);
 
-            // 5. Loops
             var loopBottomId = brepBuilder.AddLoop(faceBottomId);
             var loopTread1Id = brepBuilder.AddLoop(faceTread1Id);
             var loopTread2Id = brepBuilder.AddLoop(faceTread2Id);
@@ -253,8 +239,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             var loopLeftId = brepBuilder.AddLoop(faceLeftId);
             var loopRightId = brepBuilder.AddLoop(faceRightId);
 
-            // 6. Co-edges
-            // Bottom face
             brepBuilder.AddCoEdge(loopBottomId, edgeBottomFrontId, true /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopBottomId, edgeBottomLeftId, true /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopBottomId, edgeBottomBackId, true /*bCoEdgeIsReversed*/);
@@ -262,7 +246,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             brepBuilder.FinishLoop(loopBottomId);
             brepBuilder.FinishFace(faceBottomId);
 
-            // Tread 1 face
             brepBuilder.AddCoEdge(loopTread1Id, edgeTread1FrontId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopTread1Id, edgeTread1RightId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopTread1Id, edgeTread1BackId, false /*bCoEdgeIsReversed*/);
@@ -270,7 +253,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             brepBuilder.FinishLoop(loopTread1Id);
             brepBuilder.FinishFace(faceTread1Id);
 
-            // Tread 2 face
             brepBuilder.AddCoEdge(loopTread2Id, edgeTread2FrontId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopTread2Id, edgeTread2RightId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopTread2Id, edgeTread2BackId, false /*bCoEdgeIsReversed*/);
@@ -278,7 +260,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             brepBuilder.FinishLoop(loopTread2Id);
             brepBuilder.FinishFace(faceTread2Id);
 
-            // Top face
             brepBuilder.AddCoEdge(loopTopId, edgeTopFrontId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopTopId, edgeTopRightId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopTopId, edgeTopBackId, false /*bCoEdgeIsReversed*/);
@@ -286,7 +267,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             brepBuilder.FinishLoop(loopTopId);
             brepBuilder.FinishFace(faceTopId);
 
-            // Riser1 face
             brepBuilder.AddCoEdge(loopRiser1Id, edgeBottomFrontId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopRiser1Id, edgeRightRiser1Id, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopRiser1Id, edgeTread1FrontId, true /*bCoEdgeIsReversed*/);
@@ -294,7 +274,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             brepBuilder.FinishLoop(loopRiser1Id);
             brepBuilder.FinishFace(faceRiser1Id);
 
-            // Riser2 face
             brepBuilder.AddCoEdge(loopRiser2Id, edgeTread1BackId, true /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopRiser2Id, edgeRightRiser2Id, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopRiser2Id, edgeTread2FrontId, true /*bCoEdgeIsReversed*/);
@@ -302,7 +281,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             brepBuilder.FinishLoop(loopRiser2Id);
             brepBuilder.FinishFace(faceRiser2Id);
 
-            // Riser3 face
             brepBuilder.AddCoEdge(loopRiser3Id, edgeTread2BackId, true /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopRiser3Id, edgeRightRiser3Id, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopRiser3Id, edgeTopFrontId, true /*bCoEdgeIsReversed*/);
@@ -310,7 +288,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             brepBuilder.FinishLoop(loopRiser3Id);
             brepBuilder.FinishFace(faceRiser3Id);
 
-            // Back face
             brepBuilder.AddCoEdge(loopBackId, edgeBottomBackId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopBackId, edgeLeftBackId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopBackId, edgeTopBackId, true /*bCoEdgeIsReversed*/);
@@ -318,7 +295,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             brepBuilder.FinishLoop(loopBackId);
             brepBuilder.FinishFace(faceBackId);
 
-            // Right face
             brepBuilder.AddCoEdge(loopRightId, edgeBottomRightId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopRightId, edgeRightBackId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopRightId, edgeTopRightId, true /*bCoEdgeIsReversed*/);
@@ -330,7 +306,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
             brepBuilder.FinishLoop(loopRightId);
             brepBuilder.FinishFace(faceRightId);
 
-            // Left face
             brepBuilder.AddCoEdge(loopLeftId, edgeBottomLeftId, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopLeftId, edgeLeftRiser1Id, false /*bCoEdgeIsReversed*/);
             brepBuilder.AddCoEdge(loopLeftId, edgeTread1LeftId, true /*bCoEdgeIsReversed*/);

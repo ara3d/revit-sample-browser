@@ -11,9 +11,6 @@ using Document = Autodesk.Revit.Creation.Document;
 
 namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 {
-    /// <summary>
-    ///     main class to create simple AreaReinforcement on selected wall or floor
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -21,9 +18,6 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
     {
         private UIDocument m_currentDoc;
 
-        /// <summary>
-        ///     ExternalCommandData
-        /// </summary>
         public static ExternalCommandData CommandData { get; private set; }
 
         public Result Execute(ExternalCommandData revit,
@@ -62,10 +56,6 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             return Result.Cancelled;
         }
 
-        /// <summary>
-        ///     create simple AreaReinforcement on selected wall or floor
-        /// </summary>
-        /// <returns></returns>
         private bool Create()
         {
             var elems = new ElementSet();
@@ -107,18 +97,12 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             return false;
         }
 
-        /// <summary>
-        ///     create simple AreaReinforcement on horizontal floor
-        /// </summary>
-        /// <param name="floor"></param>
-        /// <returns>is successful</returns>
         private bool CreateAreaReinOnFloor(Floor floor)
         {
             var helper = new GeomHelper();
             Reference refer = null;
             IList<Curve> curves = new List<Curve>();
 
-            //check whether floor is horizontal rectangular 
             //and prepare necessary to create AreaReinforcement
             if (!helper.GetFloorGeom(floor, ref refer, ref curves))
             {
@@ -134,7 +118,6 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             //allow use select parameters to create
             if (createForm.ShowDialog() == DialogResult.OK)
             {
-                //define the Major Direction of AreaReinforcement,
                 //we get direction of first Line on the Floor as the Major Direction
                 var firstLine = (Line)curves[0];
                 var majorDirection = new XYZ(
@@ -161,11 +144,6 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             return false;
         }
 
-        /// <summary>
-        ///     create simple AreaReinforcement on vertical straight rectangular wall
-        /// </summary>
-        /// <param name="wall"></param>
-        /// <returns>is successful</returns>
         private bool CreateAreaReinOnWall(Wall wall)
         {
             //make sure selected is basic wall
@@ -178,7 +156,6 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             var helper = new GeomHelper();
             Reference refer = null;
             IList<Curve> curves = new List<Curve>();
-            //check whether wall is vertical rectangular and analytical model shape is line
             if (!helper.GetWallGeom(wall, ref refer, ref curves))
             {
                 var appEx = new ApplicationException(
@@ -193,7 +170,6 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             //allow use select parameters to create
             if (createForm.ShowDialog() == DialogResult.OK)
             {
-                //define the Major Direction of AreaReinforcement,
                 //we get direction of first Line on the Floor as the Major Direction
                 var firstLine = (Line)curves[0];
                 var majorDirection = new XYZ(

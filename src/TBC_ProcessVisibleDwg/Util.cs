@@ -13,11 +13,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_ProcessVisibleDwg sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Pick a DWG import instance, extract polylines
-        ///     from it visible in the current view and create
-        ///     filled regions from them.
-        /// </summary>
         public static void ProcessVisible(UIDocument uidoc)
         {
             var doc = uidoc.Document;

@@ -18,18 +18,12 @@ namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
     {
         private Floor m_slab; //Store the selected floor
 
-        /// <summary>
-        ///     Default constructor of StructuralLayerFunction
-        /// </summary>
         public Command()
         {
             //Construct the data members for the property
             Functions = new ArrayList();
         }
 
-        /// <summary>
-        ///     With the selected floor, export the function of each of its structural layers
-        /// </summary>
         public ArrayList Functions { get; }
 
         public Result Execute(ExternalCommandData commandData,

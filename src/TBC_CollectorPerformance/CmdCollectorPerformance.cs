@@ -72,7 +72,6 @@ namespace BuildingCoder
     #region Filter for elements in a specific view having a specific phase
 
 
-
     #endregion // Filter for elements in a specific view having a specific phase
 
     #region Parameter filter using display name
@@ -139,12 +138,6 @@ namespace BuildingCoder
       options.View = view;
       return element.get_Geometry( options );
     }
-
-    /// <summary>
-    /// Gets any 2D view where the element is displayed
-    /// </summary>
-    /// <param name="element"></param>
-    /// <returns>A 2D view where the element is displayed</returns>
     private View _get2DViewForElement( Element element )
     {
       FilteredElementCollector collector;

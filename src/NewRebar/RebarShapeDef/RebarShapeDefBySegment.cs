@@ -7,9 +7,6 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
 {
-    /// <summary>
-    ///     This class wraps RebarShapeDefinitionBySegments.
-    /// </summary>
     public class RebarShapeDefBySegment : RebarShapeDef
     {
         public RebarShapeDefBySegment(RebarShapeDefinitionBySegments segmentShapeDef)
@@ -17,10 +14,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
         {
         }
 
-        /// <summary>
-        ///     Get all the constraints supported by RebarShapeDefinitionBySegments.
-        /// </summary>
-        /// <returns>all the constraints supported by RebarShapeDefinitionBySegments</returns>
         public override List<Type> AllowedConstraintTypes()
         {
             var allowedTypes = base.AllowedConstraintTypes();

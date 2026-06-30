@@ -10,23 +10,12 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 {
-    /// <summary>
-    /// </summary>
     public partial class PatternForm : Form
     {
-        /// <summary>
-        ///     Current revit document
-        /// </summary>
         private readonly Document m_doc;
 
-        /// <summary>
-        ///     Current UI document
-        /// </summary>
         private readonly UIDocument m_docUi;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public PatternForm(ExternalCommandData commandData)
         {
             m_docUi = commandData.Application.ActiveUIDocument;
@@ -36,11 +25,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             IniTreeView();
         }
 
-        /// <summary>
-        ///     Select all elements in current document with specified element type filter
-        /// </summary>
-        /// <typeparam name="T">Target element type</typeparam>
-        /// <returns>List of the elements</returns>
         private List<T> GetAllElements<T>()
         {
             var elementFilter = new ElementClassFilter(typeof(T));
@@ -49,19 +33,11 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             return collector.Cast<T>().ToList();
         }
 
-        /// <summary>
-        ///     Close the window after close button is clicked
-        /// </summary>
-        /// <param name="sender">This object</param>
-        /// <param name="e">A object contains the event data</param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     Initial nodes of treeviews
-        /// </summary>
         private void IniTreeView()
         {
             treeViewLinePattern.Nodes.Clear();
@@ -93,11 +69,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             }
         }
 
-        /// <summary>
-        ///     Create a fillpattern element
-        /// </summary>
-        /// <param name="patternName">The fillpattern name</param>
-        /// <returns>Created fillpattern element</returns>
         private FillPatternElement GetOrCreateFacePattern(string patternName)
         {
             var target = FillPatternTarget.Model;
@@ -105,7 +76,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
             if (fillPatternElement == null)
             {
-                //Create a fillpattern with specified angle and spacing
                 var fillPattern = new FillPattern(patternName, target,
                     FillPatternHostOrientation.ToView, 0.5, 0.5, 0.5);
 
@@ -118,11 +88,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             return fillPatternElement;
         }
 
-        /// <summary>
-        ///     Create a complex fillpattern element
-        /// </summary>
-        /// <param name="patternName">The fillpattern name</param>
-        /// <returns>Created fillpattern element</returns>
         private FillPatternElement GetOrCreateComplexFacePattern(string patternName)
         {
             var target = FillPatternTarget.Model;
@@ -130,7 +95,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
             if (fillPatternElement == null)
             {
-                // Create the fill pattern
                 var fillPattern = new FillPattern(patternName, target,
                     FillPatternHostOrientation.ToHost);
 
@@ -147,7 +111,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
 
                 fillPattern.SetFillGrids(grids);
 
-                // Create the fill pattern element. Now document is modified; transaction is needed
                 var t = new Transaction(m_doc, "Create fill pattern");
                 t.Start();
                 fillPatternElement = FillPatternElement.Create(m_doc, fillPattern);
@@ -158,15 +121,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             return fillPatternElement;
         }
 
-        /// <summary>
-        ///     Create a fillgrid
-        /// </summary>
-        /// <param name="origin"></param>
-        /// <param name="offset"></param>
-        /// <param name="angle"></param>
-        /// <param name="shift"></param>
-        /// <param name="segments"></param>
-        /// <returns></returns>
         private FillGrid CreateGrid(UV origin, double offset, double angle,
             double shift, params double[] segments)
         {
@@ -192,11 +146,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             return fillGrid;
         }
 
-        /// <summary>
-        ///     Create a linepattern element
-        /// </summary>
-        /// <param name="patternName">The linepattern name</param>
-        /// <returns>Created linepattern element</returns>
         private LinePatternElement CreateLinePatternElement(string patternName)
         {
             //Create list of segments which define the line pattern
@@ -218,11 +167,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             return linePatternElement;
         }
 
-        /// <summary>
-        ///     Create a fillpattern element and apply it to target material
-        /// </summary>
-        /// <param name="sender">This object</param>
-        /// <param name="e">A object contains the event data</param>
         private void buttonCreateFillPattern_Click(object sender, EventArgs e)
         {
             var targetWall = GetSelectedWall();
@@ -243,11 +187,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             Close();
         }
 
-        /// <summary>
-        ///     Create a linepattern element and apply it to grids
-        /// </summary>
-        /// <param name="sender">This object</param>
-        /// <param name="e">A object contains the event data</param>
         private void buttonCreateLinePattern_Click(object sender, EventArgs e)
         {
             var lstGridTypeIds = new List<ElementId>();
@@ -264,19 +203,12 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             foreach (var typeId in lstGridTypeIds)
             {
                 var gridType = m_doc.GetElement(typeId);
-                //set the parameter value of End Segment Pattern
                 SetParameter("End Segment Pattern", myLinePatternElement.Id, gridType);
             }
 
             Close();
         }
 
-        /// <summary>
-        ///     Set a parameter value of a target element
-        /// </summary>
-        /// <param name="paramName">The parameter name</param>
-        /// <param name="eid">Id value of the parameter</param>
-        /// <param name="elem">Target element</param>
         private void SetParameter(string paramName, ElementId eid, Element elem)
         {
             foreach (Parameter param in elem.Parameters)
@@ -292,11 +224,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             }
         }
 
-        /// <summary>
-        ///     Apply fillpattern to surface
-        /// </summary>
-        /// <param name="sender">This object</param>
-        /// <param name="e">A object contains the event data</param>
         private void buttonApplyToSurface_Click(object sender, EventArgs e)
         {
             var targetWall = GetSelectedWall();
@@ -326,10 +253,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             Close();
         }
 
-        /// <summary>
-        ///     Get a selected wall
-        /// </summary>
-        /// <returns>Selected wall</returns>
         private Wall GetSelectedWall()
         {
             Wall wall = null;
@@ -344,11 +267,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             return wall;
         }
 
-        /// <summary>
-        ///     Apply fillpatterns to cutting surface
-        /// </summary>
-        /// <param name="sender">This object</param>
-        /// <param name="e">A object contains the event data</param>
         private void buttonApplyToCutSurface_Click(object sender, EventArgs e)
         {
             var targetWall = GetSelectedWall();
@@ -379,11 +297,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             Close();
         }
 
-        /// <summary>
-        ///     Apply linepattern to grids
-        /// </summary>
-        /// <param name="sender">This object</param>
-        /// <param name="e">A object contains the event data</param>
         private void buttonApplyToGrids_Click(object sender, EventArgs e)
         {
             var lstGridTypeIds = new List<ElementId>();
@@ -407,17 +320,12 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             foreach (var typeId in lstGridTypeIds)
             {
                 var gridType = m_doc.GetElement(typeId);
-                //set the parameter value of End Segment Pattern
                 SetParameter("End Segment Pattern", eid, gridType);
             }
 
             Close();
         }
 
-        /// <summary>
-        ///     Get selected GridType Ids
-        /// </summary>
-        /// <param name="lstGridTypeIds">Selected GridType Ids</param>
         private void GetSelectedGridTypeIds(List<ElementId> lstGridTypeIds)
         {
             foreach (var elemId in m_docUi.Selection.GetElementIds())
@@ -432,11 +340,6 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             }
         }
 
-        /// <summary>
-        ///     To create a brick-like patternss
-        /// </summary>
-        /// <param name="sender">This object</param>
-        /// <param name="e">A object contains the event data</param>
         private void buttonCreateComplexFillPattern_Click(object sender, EventArgs e)
         {
             var targetWall = GetSelectedWall();

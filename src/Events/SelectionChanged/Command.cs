@@ -6,10 +6,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
-    /// <summary>
-    ///     This class inherits IExternalCommand interface and is used to show the SelectionChanged event
-    ///     monitor window
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -19,7 +15,6 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
             ref string message,
             ElementSet elements)
         {
-            // track the selected events by showing the information in the information windows.
             if (SelectionChanged.InfoWindow == null)
             {
                 SelectionChanged.InfoWindow = new InfoWindow();

@@ -16,10 +16,10 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private const double Precision = 0.0000001; //store the precision   
-        private string m_errorMessage = " "; // store error message
-        private ExternalCommandData m_revit; //store external command
-        private readonly ArrayList m_walls = new ArrayList(); //store the wall of selected
+        private const double Precision = 0.0000001;
+        private string m_errorMessage = " ";
+        private ExternalCommandData m_revit;
+        private readonly ArrayList m_walls = new ArrayList();
 
         public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
         {
@@ -37,7 +37,6 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
                         return Result.Failed;
                 }
 
-                //try too adds a dimension from the start of the wall to the end of the wall into the project
                 if (!AddDimension())
                 {
                     message = m_errorMessage;
@@ -53,9 +52,6 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
             }
         }
 
-        /// <summary>
-        ///     find out the wall, insert it into a array list
-        /// </summary>
         private bool Initialize()
         {
             var selections = new ElementSet();
@@ -64,14 +60,12 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
                 selections.Insert(m_revit.Application.ActiveUIDocument.Document.GetElement(elementId));
             }
 
-            //nothing was selected
             if (0 == selections.Size)
             {
                 m_errorMessage += "Please select Basic walls";
                 return false;
             }
 
-            //find out wall
             foreach (Element e in selections)
             {
                 if (e is Wall wall)
@@ -81,7 +75,6 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
                 }
             }
 
-            //no wall was selected
             if (0 == m_walls.Count)
             {
                 m_errorMessage += "Please select Basic walls";
@@ -91,30 +84,22 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
             return true;
         }
 
-        /// <summary>
-        ///     find out every wall in the selection and add a dimension from the start of the wall to its end
-        /// </summary>
-        /// <returns>if add successfully, true will be returned, else false will be returned</returns>
         public bool AddDimension()
         {
             if (!Initialize()) return false;
 
             var transaction = new Transaction(m_revit.Application.ActiveUIDocument.Document, "Add Dimensions");
             transaction.Start();
-            //get out all the walls in this array, and create a dimension from its start to its end
             foreach (var wall in m_walls)
             {
                 if (!(wall is Wall wallTemp)) continue;
 
-                //get location curve
                 var location = wallTemp.Location;
                 if (!(location is LocationCurve locationline)) continue;
 
-                //New Line
 
                 Line newLine = null;
 
-                //get reference
                 var referenceArray = new ReferenceArray();
 
                 AnalyticalPanel analyticalModel = null;
@@ -160,7 +145,6 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
 
                 try
                 {
-                    //try to add new a dimension
                     var app = m_revit.Application;
                     var doc = app.ActiveUIDocument.Document;
 
@@ -177,7 +161,6 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
                     doc.Create.NewDimension(
                         doc.ActiveView, newLine2, referenceArray);
                 }
-                // catch the exceptions
                 catch (Exception ex)
                 {
                     m_errorMessage += ex.ToString();

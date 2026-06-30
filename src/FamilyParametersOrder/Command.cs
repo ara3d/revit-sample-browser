@@ -12,9 +12,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        ///     Used to disable SortLoadedFamiliesParamsForm opened when document is opened.
-        /// </summary>
+        // When false, suppresses the DocumentOpened handler while the file-sort dialog is open.
         public static bool SortDialogIsOpened = true;
 
         public virtual Result Execute(ExternalCommandData commandData
@@ -22,7 +20,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
         {
             try
             {
-                // Show UI
                 using (var form = new SortFamilyFilesParamsForm(commandData.Application))
                 {
                     SortDialogIsOpened = false;

@@ -79,9 +79,6 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
             Close();
         }
 
-        /// <summary>
-        ///     The cancelButton click event method
-        /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             // Only set result to be cancel and close the form

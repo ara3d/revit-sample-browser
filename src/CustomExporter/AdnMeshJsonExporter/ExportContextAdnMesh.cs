@@ -8,27 +8,15 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 {
-    /// <summary>
-    ///     Custom exporter IExportContext implementation to capture ADN mesh data.
-    /// </summary>
     internal class ExportContextAdnMesh : IExportContext
     {
         readonly Document _doc;
 
-        /// <summary>
-        ///     Stack of transformations for link and instance elements.
-        /// </summary>
         readonly Stack<Transform> _transformationStack
             = new Stack<Transform>();
 
-        /// <summary>
-        ///     List of triangle vertices.
-        /// </summary>
         readonly VertexLookupInt _vertices = new VertexLookupInt();
 
-        /// <summary>
-        ///     List of triangles, defined as triples of vertex indices.
-        /// </summary>
         readonly List<int> _triangles = new List<int>();
 
         /// <summary>
@@ -38,9 +26,6 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 
         readonly NormalLookupXyz _normals = new NormalLookupXyz();
 
-        /// <summary>
-        ///     Calculate center of gravity of current element.
-        /// </summary>
         readonly CentroidVolume _centroidVolume = new CentroidVolume();
 
         Color _color;

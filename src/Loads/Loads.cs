@@ -19,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         // Mainly used data definition
         private LoadCombinationDeal m_combinationDeal; // the deal class on load combination page
 
-        /// <summary>
-        ///     Default constructor of Loads
-        /// </summary>
         public Loads()
         {
             LoadUsageNames = new List<string>();
@@ -75,9 +72,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         /// </summary>
         public LoadCaseDeal LoadCasesDeal { get; private set; }
 
-        /// <summary>
-        ///     Store the reference of revit
-        /// </summary>
         public Application RevitApplication { get; private set; }
 
         /// <summary>
@@ -95,9 +89,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         /// </summary>
         public List<string> LoadCombinationNames { get; }
 
-        /// <summary>
-        ///     Show the error information while contact with revit
-        /// </summary>
         public string ErrorInformation { get; set; }
 
         /// <summary>
@@ -106,14 +97,8 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         /// </summary>
         public List<LoadCombinationMap> LoadCombinationMap { get; private set; }
 
-        /// <summary>
-        ///     Store all load combination formula names
-        /// </summary>
         public List<FormulaMap> FormulaMap { get; private set; }
 
-        /// <summary>
-        ///     Store all load usage
-        /// </summary>
         public List<UsageMap> UsageMap { get; private set; }
 
         public Result Execute(ExternalCommandData commandData,
@@ -159,13 +144,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             m_combinationDeal.PrepareData();
         }
 
-        /// <summary>
-        ///     Create new Load Combination
-        /// </summary>
-        /// <param name="name">The new Load Combination name</param>
-        /// <param name="typeId">The index of new Load Combination Type</param>
-        /// <param name="stateId">The index of new Load Combination State</param>
-        /// <returns>true if the creation was successful; otherwise, false</returns>
         public bool NewLoadCombination(string name, int typeId, int stateId)
         {
             // In order to refresh the combination DataGridView,
@@ -176,22 +154,12 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             return m_combinationDeal.NewLoadCombination(name, typeId, stateId);
         }
 
-        /// <summary>
-        ///     Delete the selected Load Combination
-        /// </summary>
-        /// <param name="index">The selected index in the DataGridView</param>
-        /// <returns>true if the delete operation was successful; otherwise, false</returns>
         public bool DeleteCombination(int index)
         {
             // Just go to run DeleteCombination method of LoadCombinationDeal class
             return m_combinationDeal.DeleteCombination(index);
         }
 
-        /// <summary>
-        ///     Create a new load combination usage
-        /// </summary>
-        /// <param name="usageName">The new Load Usage name</param>
-        /// <returns>true if the process is successful; otherwise, false</returns>
         public bool NewLoadUsage(string usageName)
         {
             // In order to refresh the usage DataGridView,
@@ -202,11 +170,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             return m_combinationDeal.NewLoadUsage(usageName);
         }
 
-        /// <summary>
-        ///     Delete the selected Load Usage
-        /// </summary>
-        /// <param name="index">The selected index in the DataGridView</param>
-        /// <returns>true if the delete operation was successful; otherwise, false</returns>
         public bool DeleteUsage(int index)
         {
             // Just go to run DeleteUsage method of LoadCombinationDeal class
@@ -254,11 +217,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             return m_combinationDeal.AddFormula(caseName);
         }
 
-        /// <summary>
-        ///     Delete the selected Load Formula
-        /// </summary>
-        /// <param name="index">The selected index in the DataGridView</param>
-        /// <returns>true if the delete operation was successful; otherwise, false</returns>
         public bool DeleteFormula(int index)
         {
             // Just remove that data.

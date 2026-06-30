@@ -71,12 +71,9 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS
         }
     }
 
-    /// <summary>
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class RunSampleCommand : IExternalCommand, IExternalCommandAvailability
     {
-        /// <inheritdoc />
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             // Start to run samples.
@@ -87,7 +84,6 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS
             return Result.Succeeded;
         }
 
-        /// <inheritdoc />
         public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
         {
             return true;

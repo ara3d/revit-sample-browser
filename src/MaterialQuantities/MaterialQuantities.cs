@@ -187,9 +187,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
             Doc = d;
         }
 
-        /// <summary>
-        ///     Executes the calculation.
-        /// </summary>
         public void CalculateMaterialQuantities()
         {
             CollectElements();
@@ -422,24 +419,12 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
     /// </summary>
     public class MaterialQuantities
     {
-        /// <summary>
-        ///     Gross volume (cubic ft)
-        /// </summary>
         public double GrossVolume { get; set; }
 
-        /// <summary>
-        ///     Gross area (sq. ft)
-        /// </summary>
         public double GrossArea { get; set; }
 
-        /// <summary>
-        ///     Net volume (cubic ft)
-        /// </summary>
         public double NetVolume { get; set; }
 
-        /// <summary>
-        ///     Net area (sq. ft)
-        /// </summary>
         public double NetArea { get; set; }
     }
 }

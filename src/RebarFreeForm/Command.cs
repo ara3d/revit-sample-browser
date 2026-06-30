@@ -75,7 +75,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         return Result.Failed;
                     }
 
-                    // iterate through the rebar handles and prompt for face selection for each of them, to get user input
                     foreach (var handle in handles)
                     {
                         if (handle.GetHandleType() == RebarHandleType.StartOfBar ||

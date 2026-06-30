@@ -11,10 +11,6 @@ using BuildingCoder;
 
 namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
 {
-    /// <summary>
-    ///     Calculate and report tessellation-based centroid and volume
-    ///     for selected or picked elements.
-    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

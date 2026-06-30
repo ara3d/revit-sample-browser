@@ -12,11 +12,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS
 {
-    /// <summary>
-    ///     This class wraps the creation of Rebar. Its "Execute" method shows
-    ///     the main dialog for user and after that a Rebar will be created
-    ///     if user click OK button on the main dialog.
-    /// </summary>
     public class RebarCreator
     {
         /// <summary>
@@ -39,11 +34,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
         /// </summary>
         private readonly UIDocument m_rvtUiDoc;
 
-        /// <summary>
-        ///     Constructor, initialize fields and do some assert.
-        ///     If the Assert throw exception, creation will fail.
-        /// </summary>
-        /// <param name="commandData">ExternalCommandData</param>
         public RebarCreator(ExternalCommandData commandData)
         {
             m_rvtUiDoc = commandData.Application.ActiveUIDocument;

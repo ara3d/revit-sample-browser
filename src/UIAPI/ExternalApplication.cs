@@ -38,13 +38,6 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Loads the default Mass template automatically rather than showing UI.
-        /// </summary>
-        /// <param name="application">
-        ///     An object that is passed to the external application
-        ///     which contains the controlled application.
-        /// </param>
         private void CreateCommandBinding(UIControlledApplication application)
         {
             var wallCreate = RevitCommandId.LookupCommandId("ID_NEW_REVIT_DESIGN_MODEL");

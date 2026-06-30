@@ -6,7 +6,6 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_CurtainWallGeom sample.</summary>
     internal static partial class Util
     {
         internal static void ListWallGeom(Wall w, Application app)

@@ -57,10 +57,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
         // Current creating roof kind.
         public CreateRoofKind RoofKind;
 
-        /// <summary>
-        ///     The constructor of RoofsManager class.
-        /// </summary>
-        /// <param name="commandData">The ExternalCommandData</param>
         public RoofsManager(ExternalCommandData commandData)
         {
             m_commandData = commandData;
@@ -81,19 +77,10 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             Initialize();
         }
 
-        /// <summary>
-        ///     Get the Level elements.
-        /// </summary>
         public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levels);
 
-        /// <summary>
-        ///     Get the RoofTypes.
-        /// </summary>
         public ReadOnlyCollection<RoofType> RoofTypes => new ReadOnlyCollection<RoofType>(m_roofTypes);
 
-        /// <summary>
-        ///     Get the RoofTypes.
-        /// </summary>
         public ReadOnlyCollection<Autodesk.Revit.DB.ReferencePlane> ReferencePlanes =>
             new ReadOnlyCollection<Autodesk.Revit.DB.ReferencePlane>(m_referencePlanes);
 
@@ -107,19 +94,10 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
         /// </summary>
         public ElementSet ExtrusionRoofs { get; private set; }
 
-        /// <summary>
-        ///     Get the footprint roof lines.
-        /// </summary>
         public CurveArray FootPrint { get; }
 
-        /// <summary>
-        ///     Get the extrusion profile lines.
-        /// </summary>
         public CurveArray Profile { get; }
 
-        /// <summary>
-        ///     Initialize the data member
-        /// </summary>
         private void Initialize()
         {
             var doc = m_commandData.Application.ActiveUIDocument.Document;
@@ -225,12 +203,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             return FootPrint;
         }
 
-        /// <summary>
-        ///     Create a footprint roof.
-        /// </summary>
-        /// <param name="level">The base level of the roof to be created.</param>
-        /// <param name="roofType">The type of the newly created roof.</param>
-        /// <returns>Return a new created footprint roof.</returns>
         public FootPrintRoof CreateFootPrintRoof(Level level, RoofType roofType)
         {
             var roof = m_footPrintRoofManager.CreateFootPrintRoof(FootPrint, level, roofType);
@@ -281,15 +253,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             return Profile;
         }
 
-        /// <summary>
-        ///     Create a extrusion roof.
-        /// </summary>
-        /// <param name="refPlane">The reference plane for the extrusion roof.</param>
-        /// <param name="level">The reference level of the roof to be created.</param>
-        /// <param name="roofType">The type of the newly created roof.</param>
-        /// <param name="extrusionStart">The extrusion start point.</param>
-        /// <param name="extrusionEnd">The extrusion end point.</param>
-        /// <returns>Return a new created extrusion roof.</returns>
         public ExtrusionRoof CreateExtrusionRoof(Autodesk.Revit.DB.ReferencePlane refPlane,
             Level level, RoofType roofType, double extrusionStart, double extrusionEnd)
         {

@@ -38,7 +38,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
             {
                 m_doc = revit.Application.ActiveUIDocument.Document;
 
-                //selected is not one rectangular AreaReinforcement
                 if (!PreData(selected))
                 {
                     message = "Please select only one rectangular AreaReinforcement.";
@@ -46,7 +45,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
                     return Result.Failed;
                 }
 
-                //fail to turn off layers
                 if (!TurnOffLayers())
                 {
                     message = "Can't turn off layers as expected or can't find these layers.";
@@ -54,7 +52,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
                     return Result.Failed;
                 }
 
-                //fail to remove hooks
                 if (!ChangeHookType())
                 {
                     message = "Can't remove HookTypes as expected.";
@@ -75,7 +72,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
                 return Result.Failed;
             }
 
-            //command is successful
             var msg = "All layers but Major Direction Layer or Exterior Direction Layer ";
             msg += "have been turn off; ";
             msg += "Removed the Hooks from one boundary curve of the Major Direction Layer ";
@@ -85,14 +81,8 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     check whether the selected is expected, prepare necessary data
-        /// </summary>
-        /// <param name="selected">selected elements</param>
-        /// <returns>whether the selected AreaReinforcement is expected</returns>
         private bool PreData(ElementSet selected)
         {
-            //selected is not only one AreaReinforcement
             if (selected.Size != 1) return false;
             foreach (var o in selected)
             {
@@ -100,7 +90,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
                 if (null == m_areaRein) return false;
             }
 
-            //whether the selected AreaReinforcement is rectangular
             var curves = new CurveArray();
             m_areaReinCurves = new List<AreaReinforcementCurve>();
             var curveIds = m_areaRein.GetBoundaryCurveIds();
@@ -122,13 +111,8 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
             return flag;
         }
 
-        /// <summary>
-        ///     turn off all layers but the Major Direction Layer or Exterior Direction Layer
-        /// </summary>
-        /// <returns>whether the command is successful</returns>
         private bool TurnOffLayers()
         {
-            //AreaReinforcement is on the floor or slab
             var flag = ParameterAccess.SetParaInt(m_areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_1, 0);
             flag &= ParameterAccess.SetParaInt(m_areaRein,
@@ -136,7 +120,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
             flag &= ParameterAccess.SetParaInt(m_areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_2, 0);
 
-            //AreaReinforcement is on the wall
             if (!flag)
             {
                 flag = true;
@@ -148,14 +131,8 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
             return flag;
         }
 
-        /// <summary>
-        ///     remove the hooks from one boundary curve of the Major Direction Layer
-        ///     or Exterior Direction Layer
-        /// </summary>
-        /// <returns>whether the command is successful</returns>
         private bool ChangeHookType()
         {
-            //find two vertical AreaReinforcementCurve
             var line0 = m_areaReinCurves[0].Curve as Line;
             var line1 = m_areaReinCurves[1].Curve as Line;
             AreaReinforcementCurve temp = null;
@@ -164,7 +141,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
             else
                 temp = m_areaReinCurves[2];
 
-            //remove hooks
             ParameterAccess.SetParaInt(m_areaReinCurves[0],
                 BuiltInParameter.REBAR_SYSTEM_OVERRIDE, -1);
             var para = m_areaReinCurves[0].get_Parameter(

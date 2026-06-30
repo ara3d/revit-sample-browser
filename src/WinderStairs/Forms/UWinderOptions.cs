@@ -12,118 +12,75 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
     /// </summary>
     public partial class UWinderOptions : Form
     {
-        /// <summary>
-        ///     Default constructor.
-        /// </summary>
         public UWinderOptions()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Number of straight steps at start.
-        /// </summary>
         public uint NumStepsAtStart
         {
             get => uint.Parse(numAtStartTextBox.Text);
             set => numAtStartTextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Number of steps in the first winder corner.
-        /// </summary>
         public uint NumStepsInCorner1
         {
             get => uint.Parse(numInCorner1TextBox.Text);
             set => numInCorner1TextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Number of straight steps in middle.
-        /// </summary>
         public uint NumStepsInMiddle
         {
             get => uint.Parse(numInMiddleTextBox.Text);
             set => numInMiddleTextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Number of steps in the second winder corner.
-        /// </summary>
         public uint NumStepsInCorner2
         {
             get => uint.Parse(numInCorner2TextBox.Text);
             set => numInCorner2TextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Number of straight steps at end.
-        /// </summary>
         public uint NumStepsAtEnd
         {
             get => uint.Parse(numAtEndTextBox.Text);
             set => numAtEndTextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Winder stairs run width.
-        /// </summary>
         public double RunWidth
         {
             get => double.Parse(runWidthTextBox.Text);
             set => runWidthTextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Center point offset distance from the first corner.
-        /// </summary>
         public double CenterOffsetE1
         {
             get => double.Parse(centerOffsetE1TextBox.Text);
             set => centerOffsetE1TextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Center point offset distance from the first corner.
-        /// </summary>
         public double CenterOffsetF1
         {
             get => double.Parse(centerOffsetF1TextBox.Text);
             set => centerOffsetF1TextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Center point offset distance from the second corner.
-        /// </summary>
         public double CenterOffsetE2
         {
             get => double.Parse(centerOffsetE2TextBox.Text);
             set => centerOffsetE2TextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Center point offset distance from the second corner.
-        /// </summary>
         public double CenterOffsetF2
         {
             get => double.Parse(centerOffsetF2TextBox.Text);
             set => centerOffsetF2TextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     A switch indicates whether to support DMU(dynamic model update).
-        /// </summary>
         public bool Dmu => dmuCheckBox.Checked;
 
-        /// <summary>
-        ///     A switch to control the sketch drawing of winder stairs.
-        /// </summary>
         public bool Sketch => sketchCheckBox.Checked;
 
-        /// <summary>
-        ///     Validate the UI input and it will warn if there are invalid user inputs.
-        /// </summary>
-        /// <returns>true if all input is fine.</returns>
         private bool ValidateInput()
         {
             double runWidth;
@@ -224,9 +181,6 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
             return true;
         }
 
-        /// <summary>
-        ///     Submit the UI input.
-        /// </summary>
         private void okButton_Click(object sender, EventArgs e)
         {
             if (ValidateInput())
@@ -236,9 +190,6 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
             }
         }
 
-        /// <summary>
-        ///     Cancel the UI input.
-        /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             Close();

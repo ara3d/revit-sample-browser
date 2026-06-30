@@ -11,18 +11,11 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
     /// </summary>
     public partial class AddConstraint : Form
     {
-        /// <summary>
-        ///     Default constructor.
-        /// </summary>
         public AddConstraint()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Constructor, Initialize fields.
-        /// </summary>
-        /// <param name="constraintTypes"></param>
         public AddConstraint(List<Type> constraintTypes)
             : this()
         {
@@ -30,9 +23,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
             constraintTypesComboBox.DisplayMember = "Name";
         }
 
-        /// <summary>
-        ///     Return the type from constraintTypesComboBox selection.
-        /// </summary>
         public Type ConstraintType => constraintTypesComboBox.SelectedItem as Type;
 
         /// <summary>

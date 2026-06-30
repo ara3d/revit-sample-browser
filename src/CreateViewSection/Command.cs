@@ -12,34 +12,24 @@ using Ara3D.RevitSampleBrowser.Common.Documents;
 using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 {
-    /// <summary>
-    ///     The main class which given a linear element, such as a wall, floor or beam,
-    ///     generates a section view across the mid point of the element.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private const double Precision = 0.0000000001; // Define a precision of double data
+        private const double Precision = 0.0000000001;
 
-        // 0 - wall, 1 - beam, 2 - floor, -1 - invalid
-        private const double Length = 10; // Define half length and width of BoudingBoxXYZ
-        private const double Height = 5; // Define height of the BoudingBoxXYZ
+        private const double Length = 10;
+        private const double Height = 5;
 
-        private BoundingBoxXYZ m_box; // Store the BoundingBoxXYZ reference used in creation
-        private Element m_currentComponent; // Store the selected element
+        private BoundingBoxXYZ m_box;
+        private Element m_currentComponent;
 
-        private string m_errorInformation; // Store the error information
+        private string m_errorInformation;
 
-        // Private Members
-        private UIDocument m_project; // Store the current document in revit   
-        private SelectType m_type; // Indicate the type of the selected element.
+        private UIDocument m_project;
+        private SelectType m_type;
 
-        // Methods
-        /// <summary>
-        ///     Default constructor of Command
-        /// </summary>
         public Command()
         {
             m_type = SelectType.Invalid;
@@ -52,21 +42,18 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             {
                 m_project = commandData.Application.ActiveUIDocument;
 
-                // Get the selected element and store it to data member.
                 if (!GetSelectedElement())
                 {
                     message = m_errorInformation;
                     return Result.Failed;
                 }
 
-                // Create a BoundingBoxXYZ instance which used in NewViewSection() method
                 if (!GenerateBoundingBoxXyz())
                 {
                     message = m_errorInformation;
                     return Result.Failed;
                 }
 
-                // Create a section view. 
                 var transaction = new Transaction(m_project.Document, "CreateSectionView");
                 transaction.Start();
                 //ViewSection section = m_project.Document.Create.NewViewSection(m_box);
@@ -89,11 +76,9 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
                     return Result.Failed;
                 }
 
-                // Modify some parameters to make it look better.
                 section.get_Parameter(BuiltInParameter.VIEW_DETAIL_LEVEL).Set(2);
                 transaction.Commit();
 
-                // If everything goes right, give successful information and return succeeded.
                 TaskDialog.Show("Revit", "Create view section succeeded.");
                 return Result.Succeeded;
             }
@@ -104,13 +89,8 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             }
         }
 
-        /// <summary>
-        ///     Get the selected element, and check whether it is a wall, a floor or a beam.
-        /// </summary>
-        /// <returns>true if the process succeed; otherwise, false.</returns>
         private bool GetSelectedElement()
         {
-            // First get the selection, and make sure only one element in it.
             var collection = new ElementSet();
             foreach (var elementId in m_project.Selection.GetElementIds())
             {
@@ -124,7 +104,6 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
                 return false;
             }
 
-            // Get the selected element.
             foreach (Element e in collection)
             {
                 m_currentComponent = e;
@@ -132,10 +111,8 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 
             switch (m_currentComponent)
             {
-                // Make sure the element to be a wall, beam or a floor.
                 case Wall _:
                 {
-                    // Check whether the wall is a linear wall
                     if (!(m_currentComponent.Location is LocationCurve location))
                     {
                         m_errorInformation = "The selected wall should be linear.";
@@ -144,7 +121,7 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 
                     if (location.Curve is Line)
                     {
-                        m_type = SelectType.Wall; // when the element is a linear wall
+                        m_type = SelectType.Wall;
                         return true;
                     }
 
@@ -152,27 +129,21 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
                     return false;
                 }
                 case FamilyInstance beam when StructuralType.Beam == beam.StructuralType:
-                    m_type = SelectType.Beam; // when the element is a beam
+                    m_type = SelectType.Beam;
                     return true;
                 case Floor _:
-                    m_type = SelectType.Floor; // when the element is a floor.
+                    m_type = SelectType.Floor;
                     return true;
                 default:
-                    // If it is not a wall, a beam or a floor, give error information.
                     m_errorInformation = "Please select an element, such as a wall, a beam or a floor.";
                     return false;
             }
         }
 
-        /// <summary>
-        ///     Generate a BoundingBoxXYZ instance which used in NewViewSection() method
-        /// </summary>
-        /// <returns>true if the instance can be created; otherwise, false.</returns>
         private bool GenerateBoundingBoxXyz()
         {
             var transaction = new Transaction(m_project.Document, "GenerateBoundingBox");
             transaction.Start();
-            // First new a BoundingBoxXYZ, and set the MAX and Min property.
             m_box = new BoundingBoxXYZ
             {
                 Enabled = true
@@ -182,28 +153,19 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             m_box.Max = maxPoint;
             m_box.Min = minPoint;
 
-            // Set Transform property is the most important thing.
-            // It define the Orgin and the directions(include RightDirection, 
-            // UpDirection and ViewDirection) of the created view.
+            // BoundingBoxXYZ.Transform sets view origin and basis (RightDirection, UpDirection, ViewDirection).
             var transform = GenerateTransform();
             if (null == transform) return false;
             m_box.Transform = transform;
             transaction.Commit();
 
-            // If all went well, return true.
             return true;
         }
 
-        /// <summary>
-        ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ
-        /// </summary>
-        /// <returns>the reference of Transform, return null if it can't be generated</returns>
         private Transform GenerateTransform()
         {
             switch (m_type)
             {
-                // Because different element have different ways to create Transform.
-                // So, this method just call corresponding method.
                 case SelectType.Wall:
                     return GenerateWallTransform();
                 case SelectType.Beam:
@@ -216,32 +178,21 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             }
         }
 
-        /// <summary>
-        ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ,
-        ///     when the user select a wall, this method will be called
-        /// </summary>
-        /// <returns>the reference of Transform, return null if it can't be generated</returns>
         private Transform GenerateWallTransform()
         {
             var wall = m_currentComponent as Wall;
 
-            // Because the architecture wall and curtain wall don't have analytical Model lines.
-            // So Use Location property of wall object is better choice.
-            // First get the location line of the wall
+            // Architecture and curtain walls lack analytical model lines; use Location instead.
             var location = wall.Location as LocationCurve;
             var locationLine = location.Curve as Line;
             var transform = Transform.Identity;
 
-            // Second find the middle point of the wall and set it as Origin property.
             var mPoint = ElementQuery.FindMidPoint(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
-            // midPoint is mid point of the wall location, but not the wall's.
-            // The different is the elevation of the point. Then change it.
-
+            // Offset Z from location curve to wall vertical midpoint.
             var midPoint = new XYZ(mPoint.X, mPoint.Y, mPoint.Z + GetWallMidOffsetFromLocation(wall));
 
             transform.Origin = midPoint;
 
-            // At last find out the directions of the created view, and set it as Basis property.
             var basisZ = ElementQuery.FindDirection(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
             var basisX = ElementQuery.FindRightDirection(basisZ);
             var basisY = ElementQuery.FindUpDirection(basisZ);
@@ -252,18 +203,11 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             return transform;
         }
 
-        /// <summary>
-        ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ,
-        ///     when the user select a beam, this method will be called
-        /// </summary>
-        /// <returns>the reference of Transform, return null if it can't be generated</returns>
         private Transform GenerateBeamTransform()
         {
             Transform transform = null;
             var instance = m_currentComponent as FamilyInstance;
 
-            // First check whether the beam is horizontal.
-            // In order to predigest the calculation, only allow it to be horizontal
             var startOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END0_ELEVATION).AsDouble();
             var endOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END1_ELEVATION).AsDouble();
             if (-Precision > startOffset - endOffset || Precision < startOffset - endOffset)
@@ -285,16 +229,13 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
                 return transform;
             }
 
-            // Now I am sure I can create a transform instance.
             transform = Transform.Identity;
 
-            // Third find the middle point of the line and set it as Origin property.
             var startPoint = curve.GetEndPoint(0);
             var endPoint = curve.GetEndPoint(1);
             var midPoint = ElementQuery.FindMidPoint(startPoint, endPoint);
             transform.Origin = midPoint;
 
-            // At last find out the directions of the created view, and set it as Basis property.   
             var basisZ = ElementQuery.FindDirection(startPoint, endPoint);
             var basisX = ElementQuery.FindRightDirection(basisZ);
             var basisY = ElementQuery.FindUpDirection(basisZ);
@@ -305,17 +246,11 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             return transform;
         }
 
-        /// <summary>
-        ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ,
-        ///     when the user select a floor, this method will be called
-        /// </summary>
-        /// <returns>the reference of Transform, return null if it can't be generated</returns>
         private Transform GenerateFloorTransform()
         {
             Transform transform = null;
             var floor = m_currentComponent as Floor;
 
-            // First get the Analytical Model lines
             AnalyticalPanel model = null;
             var document = floor.Document;
             var assocManager =
@@ -350,14 +285,11 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
                 return transform;
             }
 
-            // Now I am sure I can create a transform instance.
             transform = Transform.Identity;
 
-            // Third find the middle point of the floor and set it as Origin property.
             var midPoint = ElementQuery.FindMiddlePoint(curves);
             transform.Origin = midPoint;
 
-            // At last find out the directions of the created view, and set it as Basis property.
             var basisZ = ViewHelper.FindFloorViewDirection(curves);
             var basisX = ElementQuery.FindRightDirection(basisZ);
             var basisY = ElementQuery.FindUpDirection(basisZ);
@@ -370,19 +302,15 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 
         private double GetWallMidOffsetFromLocation(Wall wall)
         {
-            // First get the "Base Offset" property.
             var baseOffset = wall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET).AsDouble();
 
-            // Second get the "Unconnected Height" property. 
             var height = wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble();
 
-            // Get the middle of of wall elevation from the wall location.
-            // The elevation of wall location equals the elevation of "Base Constraint" level
+            // Wall location Z is at the base constraint level.
             var midOffset = baseOffset + height / 2;
             return midOffset;
         }
 
-        // Define a enum to indicate the selected element type
         private enum SelectType
         {
             Wall = 0,
@@ -392,9 +320,6 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
         }
     }
 
-    /// <summary>
-    ///     Create a drafting view.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class CreateDraftingView : IExternalCommand

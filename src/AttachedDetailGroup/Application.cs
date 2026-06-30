@@ -11,16 +11,10 @@ using Size = System.Drawing.Size;
 
 namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        /// <summary>
-        ///     The path to this add-in assembly.
-        /// </summary>
         private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
@@ -35,15 +29,10 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Sets up the add-in panel for this sample.
-        /// </summary>
         private void CreateAttachedDetailGroupPanel(UIControlledApplication application)
         {
-            // Create the ribbon panel.
             var rp = application.CreateRibbonPanel("Attached Detail Group");
 
-            // Create the show all detail groups pushbutton.
             var pbdShowAllDetailGroups = new PushButtonData("ShowAttachedDetailGroups", "Show Attached\nDetail Groups",
                 AddAssemblyPath,
                 typeof(AttachedDetailGroupShowAllCommand).FullName)
@@ -54,7 +43,6 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
             var pbShowAllDetailGroups = rp.AddItem(pbdShowAllDetailGroups) as PushButton;
             SetIconsForPushButton(pbShowAllDetailGroups, Resources.ShowAllDetailGroupsIcon);
 
-            // Create the hide all detail groups pushbutton.
             var pbdHideAllDetailGroups = new PushButtonData("HideAttachedDetailGroups", "Hide Attached\nDetail Groups",
                 AddAssemblyPath,
                 typeof(AttachedDetailGroupHideAllCommand).FullName)
@@ -66,22 +54,12 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
             SetIconsForPushButton(pbHideAllDetailGroups, Resources.HideAllDetailGroupsIcon);
         }
 
-        /// <summary>
-        ///     Utility for adding icons to the button.
-        /// </summary>
-        /// <param name="button">The push button.</param>
-        /// <param name="icon">The icon.</param>
         private static void SetIconsForPushButton(PushButton button, Icon icon)
         {
             button.LargeImage = GetStdIcon(icon);
             button.Image = GetSmallIcon(icon);
         }
 
-        /// <summary>
-        ///     Gets the standard sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetStdIcon(Icon icon)
         {
             return Imaging.CreateBitmapSourceFromHIcon(
@@ -90,11 +68,6 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
                 BitmapSizeOptions.FromEmptyOptions());
         }
 
-        /// <summary>
-        ///     Gets the small sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetSmallIcon(Icon icon)
         {
             var smallIcon = new Icon(icon, new Size(16, 16));

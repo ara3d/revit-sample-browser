@@ -8,25 +8,14 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     public class ExportImgData : ExportDataWithViews
     {
-        /// <summary>
-        ///     String list of image type
-        /// </summary>
         private List<string> m_imageType;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
-        /// <param name="exportFormat">Format to export</param>
         public ExportImgData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
             Initialize();
         }
 
-        /// <summary>
-        ///     Initialize the variables
-        /// </summary>
         private void Initialize()
         {
             //Image type
@@ -50,10 +39,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Title = "Export IMG";
         }
 
-        /// <summary>
-        ///     Collect the parameters and export
-        /// </summary>
-        /// <returns></returns>
         public override bool Export()
         {
             base.Export();

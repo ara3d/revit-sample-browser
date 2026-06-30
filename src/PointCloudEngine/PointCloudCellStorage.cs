@@ -9,9 +9,6 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
-    /// <summary>
-    ///     This class is used to calculate and store points for a given cell.
-    /// </summary>
     public class PointCloudCellStorage
     {
         private const int SMaxNumberOfPoints = 1000000;
@@ -21,16 +18,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         private readonly Random m_random = new Random();
         private readonly bool m_randomize;
 
-        /// <summary>
-        ///     Creates a new instance of a rectangular cell.
-        /// </summary>
-        /// <param name="lowerLeft">The lower left point of the cell.</param>
-        /// <param name="upperRight">The upper right point of the cell.</param>
-        /// <param name="color">The color used for points in the cell.</param>
-        /// <param name="randomize">
-        ///     True to apply randomization to the number and location of points, false for a regular
-        ///     arrangement of points.
-        /// </param>
         public PointCloudCellStorage(XYZ lowerLeft, XYZ upperRight, int color, bool randomize)
         {
             LowerLeft = lowerLeft;
@@ -42,10 +29,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
             NumberOfPoints = 0;
         }
 
-        /// <summary>
-        ///     Constructs a new instance of a rectangular cell from an XML element.
-        /// </summary>
-        /// <param name="rootElement">The XML element representing the cell.</param>
         public PointCloudCellStorage(XElement rootElement)
         {
             LowerLeft = SerializationHelper.GetXyz(rootElement.Element("LowerLeft"));

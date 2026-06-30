@@ -8,18 +8,11 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
     public class FormulaMap
     {
         // Methods
-        /// <summary>
-        ///     Default constructor of FormulaMap
-        /// </summary>
         public FormulaMap()
         {
             Factor = 0;
         }
 
-        /// <summary>
-        ///     constructor with the case name
-        /// </summary>
-        /// <param name="caseName">The value set to Case Property</param>
         public FormulaMap(string caseName)
         {
             Factor = 1;
@@ -38,14 +31,8 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         }
         // Private Members
 
-        /// <summary>
-        ///     Factor
-        /// </summary>
         public double Factor { get; set; }
 
-        /// <summary>
-        ///     Load Case
-        /// </summary>
         public string Case { get; set; }
     }
 }

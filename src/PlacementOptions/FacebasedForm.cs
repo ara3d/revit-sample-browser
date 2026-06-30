@@ -15,9 +15,6 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
     {
         private readonly List<FamilySymbol> m_familySymbolList;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public FacebasedForm(List<FamilySymbol> symbolList)
         {
             InitializeComponent();

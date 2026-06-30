@@ -8,19 +8,11 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     this class controls the class which subscribes handle events and the events' information UI.
-    ///     like a bridge between them.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        ///     store the family manager
-        /// </summary>
         private FamilyManager m_familyManager;
 
         public Result Execute(ExternalCommandData commandData,
@@ -28,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
             ElementSet elements)
         {
             var document = commandData.Application.ActiveUIDocument.Document;
-            // only a family document can retrieve family manager
+            // FamilyManager is only available in family documents.
             if (document.IsFamilyDocument)
             {
                 m_familyManager = document.FamilyManager;
@@ -45,16 +37,9 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
             return Result.Failed;
         }
 
-        /// <summary>
-        ///     implementation of validate parameters, get all family types and parameters,
-        ///     use the function FamilyType.HasValue() to make sure if the parameter needs to
-        ///     validate. Then along to the storage type to validate the parameters.
-        /// </summary>
-        /// <returns>error information list</returns>
         public static List<string> ValidateParameters(FamilyManager familyManager)
         {
             var errorInfo = new List<string>();
-            // go though all parameters
             foreach (FamilyType type in familyManager.Types)
             {
                 var right = true;
@@ -90,7 +75,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
                                     break;
                             }
                     }
-                    // output the parameters which failed during validating.
                     catch
                     {
                         errorInfo.Add(

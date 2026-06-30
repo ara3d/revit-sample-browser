@@ -7,29 +7,17 @@ using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.VersionChecking.CS
 {
-    /// <summary>
-    ///     UI that display the version information
-    /// </summary>
     public partial class VersionCheckingForm : Form
     {
         // a instance of Command class
         private readonly Command m_dataBuffer;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="dataBuffer">a instance of Command class</param>
         public VersionCheckingForm(Command dataBuffer)
         {
             InitializeComponent();
             m_dataBuffer = dataBuffer;
         }
 
-        /// <summary>
-        ///     display the version information in a multiline text box
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void VersionCheckingForm_Load(object sender, EventArgs e)
         {
             versionInformationTextBox.ReadOnly = true;
@@ -45,11 +33,6 @@ namespace Ara3D.RevitSampleBrowser.VersionChecking.CS
             DialogHelper.CenterOnScreen(this);
         }
 
-        /// <summary>
-        ///     close UI
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void closeButton_Click(object sender, EventArgs e)
         {
             Close();

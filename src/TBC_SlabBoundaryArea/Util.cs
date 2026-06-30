@@ -12,7 +12,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SlabBoundaryArea sample.</summary>
     internal static partial class Util
     {
         public static Result GetPlanarFaceOuterLoops(

@@ -18,7 +18,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
 
@@ -31,7 +30,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Failed;
                 }
 
-                // get the 2 end connectors
                 var connectors = new List<Connector>();
                 foreach (Connector c in part.ConnectorManager.Connectors)
                 {

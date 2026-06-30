@@ -10,10 +10,6 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 {
-    /// <summary>
-    ///     The data format specifying one solid for the WebGL viewer, defining its centre,
-    ///     colour, id, triangular facets, their vertex coordinates, indices and normals.
-    /// </summary>
     internal class AdnMeshData
     {
         int FacetCount { get; set; }

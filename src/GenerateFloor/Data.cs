@@ -12,11 +12,6 @@ using Document = Autodesk.Revit.DB.Document;
 using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 {
-    /// <summary>
-    ///     obtain all data for this sample.
-    ///     all possible types for floor
-    ///     the level that walls based
-    /// </summary>
     public class Data
     {
         private const double Precision = 0.00000001;
@@ -24,49 +19,20 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
         private Document m_document;
         private Hashtable m_floorTypes;
 
-        /// <summary>
-        ///     A floor type to be used by the new floor instead of the default type.
-        /// </summary>
         public FloorType FloorType { get; set; }
 
-        /// <summary>
-        ///     The level on which the floor is to be placed.
-        /// </summary>
         public Level Level { get; set; }
 
-        /// <summary>
-        ///     A array of planar lines and arcs that represent the horizontal profile of the floor.
-        /// </summary>
         public CurveArray Profile { get; set; }
 
-        /// <summary>
-        ///     If set, specifies that the floor is structural in nature.
-        /// </summary>
         public bool Structural { get; set; }
 
-        /// <summary>
-        ///     Points to be draw.
-        /// </summary>
         public PointF[] Points { get; set; }
 
-        /// <summary>
-        ///     the graphics' max length
-        /// </summary>
         public double MaxLength { get; set; }
 
-        /// <summary>
-        ///     List of all floor types name could be used by the floor.
-        /// </summary>
         public List<string> FloorTypesName { get; set; }
 
-        /// <summary>
-        ///     Obtain all data which is necessary for generate floor.
-        /// </summary>
-        /// <param name="commandData">
-        ///     An object that is passed to the external application
-        ///     which contains data related to the command,
-        ///     such as the application object and active view.
-        /// </param>
         public void ObtainData(ExternalCommandData commandData)
         {
             if (null == commandData) throw new ArgumentNullException(nameof(commandData));
@@ -91,19 +57,11 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
             Structural = true;
         }
 
-        /// <summary>
-        ///     Set the floor type to generate by its name.
-        /// </summary>
-        /// <param name="typeName">the floor type's name</param>
         public void ChooseFloorType(string typeName)
         {
             FloorType = m_floorTypes[typeName] as FloorType;
         }
 
-        /// <summary>
-        ///     Obtain all types are available for floor.
-        /// </summary>
-        /// <param name="elements">all elements within the Document.</param>
         private void ObtainFloorTypes(FilteredElementIterator elements)
         {
             m_floorTypes = new Hashtable();
@@ -120,10 +78,6 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
             }
         }
 
-        /// <summary>
-        ///     Obtain the wall's level
-        /// </summary>
-        /// <param name="walls">the selection of walls that make a closed outline </param>
         private void ObtainLevel(ElementSet walls)
         {
             Level temp = null;
@@ -141,10 +95,6 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
             }
         }
 
-        /// <summary>
-        ///     Obtain a profile to generate floor.
-        /// </summary>
-        /// <param name="walls">the selection of walls that make a closed outline</param>
         private void ObtainProfile(ElementSet walls)
         {
             var temp = new CurveArray();
@@ -157,9 +107,6 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
             SortCurves(temp);
         }
 
-        /// <summary>
-        ///     Generate 2D data for preview pane.
-        /// </summary>
         private void Generate2D()
         {
             var tempArray = new ArrayList();
@@ -192,10 +139,6 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
             Points.SetValue(end, tempArray.Count / 2);
         }
 
-        /// <summary>
-        ///     Chaining the profile.
-        /// </summary>
-        /// <param name="lines">none-chained profile</param>
         private void SortCurves(CurveArray lines)
         {
             var temp = lines.get_Item(0).GetEndPoint(1);
@@ -222,13 +165,6 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
                 throw new InvalidOperationException("The selected walls should be closed.");
         }
 
-        /// <summary>
-        ///     Get the connected curve for current curve
-        /// </summary>
-        /// <param name="profile">a closed outline made by the selection of walls</param>
-        /// <param name="connected">current curve's end point</param>
-        /// <param name="line">current curve</param>
-        /// <returns>a appropriate curve for generate floor</returns>
         private Curve GetNext(CurveArray profile, XYZ connected, Curve line)
         {
             foreach (Curve c in profile)

@@ -32,9 +32,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 {
-    /// <summary>
-    /// String search external command implementation.
-    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

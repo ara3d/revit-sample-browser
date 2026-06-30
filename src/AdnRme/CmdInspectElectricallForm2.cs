@@ -105,10 +105,6 @@ namespace AdnRme
     #endregion // PopulateFromMapParentToChildren
 
     #region Constructor
-    /// <summary>
-    /// Constructor used to populate from a dictionary mapping element ids 
-    /// to a list of child elements.
-    /// </summary>
     public CmdInspectElectricalForm2(
       MapParentToChildren map,
       ElementId electricalEquipmentCategoryId,
@@ -140,9 +136,6 @@ namespace AdnRme
     #endregion // Selected equipment changed
   }
 
-  /// <summary>
-  /// Helper class for string comparison of child elements for sorting the tree node order.
-  /// </summary>
   class ElectricalElementComparer : IComparer<Element>
   {
     ElementId _electricalEquipmentCategoryId;

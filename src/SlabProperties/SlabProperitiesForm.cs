@@ -15,9 +15,6 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
     {
         private Button m_closeButton;
 
-        /// <summary>
-        ///     Required designer variable.
-        /// </summary>
         private readonly Container m_components = null;
 
         private Label m_degreeLabel;
@@ -41,21 +38,13 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     overload the constructor
-        /// </summary>
-        /// <param name="dataBuffer">To store the data of a slab</param>
         public SlabPropertiesForm(Command dataBuffer)
         {
             InitializeComponent();
 
-            // get all the data
             m_dataBuffer = dataBuffer;
         }
 
-        /// <summary>
-        ///     Clean up any resources being used.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -66,10 +55,6 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        ///     Required method for Designer support - do not modify
-        ///     the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             m_layerGroupBox = new GroupBox();
@@ -202,21 +187,11 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
             PerformLayout();
         }
 
-        /// <summary>
-        ///     Close the Form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void closeButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     Display the properties on the form when the form load
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void SlabPropertiesForm_Load(object sender, EventArgs e)
         {
             m_levelTextBox.Text = m_dataBuffer.Level;
@@ -229,7 +204,6 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
 
             for (var i = 0; i < numberOfLayers; i++)
             {
-                // Get each layer's Material name and Young Modulus properties
                 m_dataBuffer.SetLayer(i);
 
                 m_layerRichTextBox.Text += $"Layer {(i + 1)}\r\n";

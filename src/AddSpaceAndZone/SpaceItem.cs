@@ -5,11 +5,6 @@ using Autodesk.Revit.DB.Mechanical;
 
 namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 {
-    /// <summary>
-    ///     The SpaceItem class inherit ListViewItem Class, it is used
-    ///     to display the Spaces is a ListView, each SpaceItem contains
-    ///     a Space element.
-    /// </summary>
     public class SpaceItem : ListViewItem
     {
         public SpaceItem(Space space) : base(space.Name)
@@ -22,9 +17,6 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
                 SubItems.Add("Default");
         }
 
-        /// <summary>
-        ///     Get the Space element in the SpaceItem.
-        /// </summary>
         public Space Space { get; }
     }
 }

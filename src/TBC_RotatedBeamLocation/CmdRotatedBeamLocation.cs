@@ -19,9 +19,6 @@ using Autodesk.Revit.UI;
 
 #endregion // Namespaces
 
-// C:\a\doc\revit\blog\img\three_beams.png
-// C:\a\doc\revit\blog\img\rotated_beam.jpg
-
 namespace BuildingCoder
 {
     [Transaction(TransactionMode.Manual)]

@@ -14,9 +14,6 @@ using QuantumConcepts.Formats.StereoLithography;
 
 namespace Ara3D.RevitSampleBrowser.StlImport.CS
 {
-    /// <summary>
-    ///     Imports an STL file into a Generic Model DirectShape element.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

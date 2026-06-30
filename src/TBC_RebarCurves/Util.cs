@@ -9,7 +9,6 @@ using Autodesk.Revit.DB.Structure;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_RebarCurves sample.</summary>
     internal static partial class Util
     {
         public static IList<Curve> GetRebarCurves(Document doc)

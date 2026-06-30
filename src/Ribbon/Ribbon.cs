@@ -12,20 +12,6 @@ using Autodesk.Revit.UI.Events;
 
 namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication,
-    ///     show user how to create RibbonItems by API in Revit.
-    ///     we add one RibbonPanel:
-    ///     1. contains a SplitButton for user to create Non-Structural or Structural Wall;
-    ///     2. contains a StackedButton which is consisted with one PushButton and two Comboboxes,
-    ///     PushButton is used to reset all the RibbonItem, Comboboxes are use to select Level and WallShape
-    ///     3. contains a RadioButtonGroup for user to select WallType.
-    ///     4. Adds a Slide-Out Panel to existing panel with following functionalities:
-    ///     5. a text box is added to set mark for new wall, mark is a instance parameter for wall,
-    ///     Eg: if user set text as "wall", then Mark for each new wall will be "wall1", "wall2", "wall3"....
-    ///     6. a StackedButton which consisted of a PushButton (delete all the walls) and a PulldownButton (move all the walls
-    ///     in X or Y direction)
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -60,7 +46,6 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         {
             try
             {
-                // create customer Ribbon Items
                 CreateRibbonSamplePanel(application);
 
                 return Result.Succeeded;
@@ -101,25 +86,8 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     This method is used to create RibbonSample panel, and add wall related command buttons to it:
-        ///     1. contains a SplitButton for user to create Non-Structural or Structural Wall;
-        ///     2. contains a StackedBotton which is consisted with one PushButton and two Comboboxes,
-        ///     PushButon is used to reset all the RibbonItem, Comboboxes are use to select Level and WallShape
-        ///     3. contains a RadioButtonGroup for user to select WallType.
-        ///     4. Adds a Slide-Out Panel to existing panel with following functionalities:
-        ///     5. a text box is added to set mark for new wall, mark is a instance parameter for wall,
-        ///     Eg: if user set text as "wall", then Mark for each new wall will be "wall1", "wall2", "wall3"....
-        ///     6. a StackedButton which consisted of a PushButton (delete all the walls) and a PulldownButton (move all the walls
-        ///     in X or Y direction)
-        /// </summary>
-        /// <param name="application">
-        ///     An object that is passed to the external application
-        ///     which contains the controlled application.
-        /// </param>
         private void CreateRibbonSamplePanel(UIControlledApplication application)
         {
-            // create a Ribbon panel which contains three stackable buttons and one single push button.
             var firstPanelName = "Ribbon Sample";
             var ribbonSamplePanel = application.CreateRibbonPanel(firstPanelName);
 
@@ -151,7 +119,6 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
                 ribbonSamplePanel.AddStackedItems(pushButtonData, comboBoxDataLevel, comboBoxDataShape);
             ((PushButton)ribbonItemsStacked[0]).Image =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Reset.png"), UriKind.Absolute));
-            //Add options to WallShapeComboBox
             var comboboxWallShape = (ComboBox)ribbonItemsStacked[2];
             var comboBoxMemberData = new ComboBoxMemberData("RectangleWall", "RectangleWall");
             var comboboxMember = comboboxWallShape.AddItem(comboBoxMemberData);
@@ -213,10 +180,8 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
                 Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "MoveWalls.png"), UriKind.Absolute))
             };
 
-            // create stackable buttons
             var ribbonItems = ribbonSamplePanel.AddStackedItems(deleteWallsButtonData, moveWallsButtonData);
 
-            // add two push buttons as sub-items of the moveWalls PulldownButton. 
             var moveWallItem = ribbonItems[1] as PulldownButton;
 
             var moveX = moveWallItem.AddPushButton(new PushButtonData("XDirection", "X Direction", AddInPath,

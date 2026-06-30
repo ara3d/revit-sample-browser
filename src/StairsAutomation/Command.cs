@@ -13,9 +13,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         private static int _stairsIndex;
         private static readonly int[] StairsConfigs = { 0, 3, 4, 1, 2 };
 
-        /// <summary>
-        ///     The implementation of the automatic stairs creation command.
-        /// </summary>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var activeDocument = commandData.Application.ActiveUIDocument;

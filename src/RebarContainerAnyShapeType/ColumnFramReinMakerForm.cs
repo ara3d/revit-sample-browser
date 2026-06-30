@@ -7,18 +7,11 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 {
-    /// <summary>
-    ///     The form is used for collecting information of column reinforcement creation
-    /// </summary>
     public partial class ColumnFramReinMakerForm : Form
     {
         // Private members
         private readonly ColumnFramReinMaker m_dataBuffer;
 
-        /// <summary>
-        ///     constructor for ColumnFramReinMakerForm
-        /// </summary>
-        /// <param name="dataBuffer">the ColumnFramReinMaker reference</param>
         public ColumnFramReinMakerForm(ColumnFramReinMaker dataBuffer)
         {
             // Required for Windows Form Designer support
@@ -35,9 +28,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             endSpacingTextBox.Text = 0.1.ToString("0.0");
         }
 
-        /// <summary>
-        ///     Bing the data source for all combo boxes
-        /// </summary>
         private void BingingDataSource()
         {
             // bind the verticalRebarTypeComboBox
@@ -108,9 +98,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             Close(); // close the form
         }
 
-        /// <summary>
-        ///     When the user click the cancel, just close the form
-        /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel; // set dialog result

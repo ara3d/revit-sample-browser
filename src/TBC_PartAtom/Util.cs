@@ -12,11 +12,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_PartAtom sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Faster ExtractPartAtom reimplementation,
-        ///     independent of Revit API, for standalone
-        ///     external use. By Hеvard Dagsvik, Symetri.
-        /// </summary>
         internal static string GetFamilyXmlData(
             string family_file_path)
         {

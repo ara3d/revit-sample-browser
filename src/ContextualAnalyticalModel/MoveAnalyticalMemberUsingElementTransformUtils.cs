@@ -13,16 +13,12 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            // Expected results: the first Analytical Member has been moved and the connection with the second Analytical Member was kept
             try
             {
-                // Get the document
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-                // Create the first Analytical Member
                 var analyticalMember = CreateAnalyticalMember.CreateMember(document);
 
-                // Create the second Analytical Member that is convergent with the first one
                 CreateAnalyticalMember.CreateConvergentMember(document);
 
                 // Move the first Analytical Member using ElementTransformUtils

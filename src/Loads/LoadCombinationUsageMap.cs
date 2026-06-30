@@ -23,11 +23,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             m_dataBuffer = dataBuffer;
         }
 
-        /// <summary>
-        ///     constructor with Set = false
-        /// </summary>
-        /// <param name="dataBuffer">The reference of Loads</param>
-        /// <param name="name">The value set to Name property</param>
         public UsageMap(Loads dataBuffer, string name)
         {
             m_dataBuffer = dataBuffer;
@@ -35,12 +30,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             m_name = name;
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="dataBuffer">The reference of Loads</param>
-        /// <param name="set">The value set to Set property</param>
-        /// <param name="name">The value set to Name property</param>
         public UsageMap(Loads dataBuffer, bool set, string name)
         {
             m_dataBuffer = dataBuffer;
@@ -48,14 +37,8 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             m_name = name;
         }
 
-        /// <summary>
-        ///     is selected in Usage DataGridView control
-        /// </summary>
         public bool Set { get; set; }
 
-        /// <summary>
-        ///     usage name
-        /// </summary>
         public string Name
         {
             get => m_name;

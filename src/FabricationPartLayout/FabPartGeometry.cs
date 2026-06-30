@@ -21,7 +21,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var doc = uidoc.Document;
 
@@ -62,7 +61,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 foreach (var eid in parts)
                 {
-                    // get all rods and kist with rods 
                     if (doc.GetElement(eid) is FabricationPart part)
                     {
                         var options = new Options

@@ -12,23 +12,14 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
     {
         private PointF m_movePoint; //record the coordinate of location where mouse just moved to. 
 
-        /// <summary>
-        ///     default constructor
-        /// </summary>
         public LineTool()
         {
             Points = new ArrayList();
             m_movePoint = Point.Empty;
         }
 
-        /// <summary>
-        ///     Get all the points of this tool
-        /// </summary>
         public ArrayList Points { get; set; }
 
-        /// <summary>
-        ///     Get coordinate of location where mouse just moved to.
-        /// </summary>
         public PointF MovePoint
         {
             get => m_movePoint;

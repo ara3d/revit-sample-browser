@@ -30,9 +30,6 @@ namespace BuildingCoder
 
         // Shared by Joshua Lumley in
         // https://thebuildingcoder.typepad.com/blog/2021/02/addin-file-learning-python-and-ifcjs.html#comment-5276653852
-        /// <summary>
-        ///     Generate add-in manifest on the fly
-        /// </summary>
         private static void GenerateAddInManifest(
             string dll_folder,
             string dll_name)

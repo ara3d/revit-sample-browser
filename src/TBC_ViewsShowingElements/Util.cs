@@ -5,13 +5,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_ViewsShowingElements sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     View extension predicate method: does
-        ///     this view intersect the given bounding box?
-        /// </summary>
         public static bool IntersectsBoundingBox(
             this View view,
             BoundingBoxXYZ targetBoundingBox)
@@ -64,10 +59,6 @@ namespace BuildingCoder
                 viewOutline, 0);
         }
 
-        /// <summary>
-        ///     Return an enumeration of all views in this
-        ///     document that can display elements at all.
-        /// </summary>
         internal static IEnumerable<View>
             FindAllViewsThatCanDisplayElements(
                 this Document doc)
@@ -87,10 +78,6 @@ namespace BuildingCoder
                 .Where(v => !v.IsTemplate);
         }
 
-        /// <summary>
-        ///     Return all views that display
-        ///     any of the given elements.
-        /// </summary>
         public static IEnumerable<View>
             FindAllViewsWhereAllElementsVisible(
                 this IEnumerable<Element> elements)
@@ -119,9 +106,6 @@ namespace BuildingCoder
                 select v;
         }
 
-        /// <summary>
-        ///     Determine whether an element is visible in a view.
-        /// </summary>
         public static bool IsElementVisibleInView(
             this View view,
             Element el)

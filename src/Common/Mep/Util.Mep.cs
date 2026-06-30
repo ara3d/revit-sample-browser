@@ -28,12 +28,6 @@ namespace BuildingCoder
     {
         #region MEP utilities
 
-        /// <summary>
-        ///     Return the given element's connector manager,
-        ///     using either the family instance MEPModel or
-        ///     directly from the MEPCurve connector manager
-        ///     for ducts and pipes.
-        /// </summary>
         private static ConnectorManager GetConnectorManager(
             Element e)
         {
@@ -49,15 +43,6 @@ namespace BuildingCoder
                 : mc.ConnectorManager;
         }
 
-        /// <summary>
-        ///     Return the element's connector at the given
-        ///     location, and its other connector as well,
-        ///     in case there are exactly two of them.
-        /// </summary>
-        /// <param name="e">An element, e.g. duct, pipe or family instance</param>
-        /// <param name="location">The location of one of its connectors</param>
-        /// <param name="otherConnector">The other connector, in case there are just two of them</param>
-        /// <returns>The connector at the given location</returns>
         private static Connector GetConnectorAt(
             Element e,
             XYZ location,
@@ -86,10 +71,6 @@ namespace BuildingCoder
             return targetConnector;
         }
 
-        /// <summary>
-        ///     Return the connector set element
-        ///     closest to the given point.
-        /// </summary>
         private static Connector GetConnectorClosestTo(
             ConnectorSet connectors,
             XYZ p)
@@ -110,10 +91,6 @@ namespace BuildingCoder
             return targetConnector;
         }
 
-        /// <summary>
-        ///     Return the connector on the element
-        ///     closest to the given point.
-        /// </summary>
         public static Connector GetConnectorClosestTo(
             Element e,
             XYZ p)
@@ -125,13 +102,6 @@ namespace BuildingCoder
                 : GetConnectorClosestTo(cm.Connectors, p);
         }
 
-        /// <summary>
-        ///     Connect two MEP elements at a given point p.
-        /// </summary>
-        /// <exception cref="ArgumentException">
-        ///     Thrown if
-        ///     one of the given elements lacks connectors.
-        /// </exception>
         public static void Connect(
             XYZ p,
             Element a,
@@ -159,9 +129,6 @@ namespace BuildingCoder
             //cb.ConnectTo( ca );
         }
 
-        /// <summary>
-        ///     Compare Connector objects based on their location point.
-        /// </summary>
         public class ConnectorXyzComparer : IEqualityComparer<Connector>
         {
             public bool Equals(Connector x, Connector y)
@@ -177,9 +144,6 @@ namespace BuildingCoder
             }
         }
 
-        /// <summary>
-        ///     Get distinct connectors from a set of MEP elements.
-        /// </summary>
         public static HashSet<Connector> GetDistinctConnectors(
             List<Connector> cons)
         {

@@ -20,9 +20,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         private int m_loadNatureDataGridViewSelectedIndex;
 
         // Methods
-        /// <summary>
-        ///     Initialize the data on this page.
-        /// </summary>
         private void InitializeLoadCasePage()
         {
             InitializeLoadCasesDataGridView();
@@ -33,9 +30,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             addLoadNaturesButton.Enabled = false;
         }
 
-        /// <summary>
-        ///     Initialize the loadCasesDataGridView
-        /// </summary>
         private void InitializeLoadCasesDataGridView()
         {
             m_loadCasesName = new DataGridViewTextBoxColumn();
@@ -85,9 +79,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             loadCasesDataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
         }
 
-        /// <summary>
-        ///     Initialize the loadNaturesDataGridView
-        /// </summary>
         private void InitializeLoadNaturesDataGridView()
         {
             m_loadNatureName = new DataGridViewTextBoxColumn();
@@ -103,43 +94,23 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             loadNaturesDataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
         }
 
-        /// <summary>
-        ///     Respond the loadCasesDataGridView_CellClick event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void loadCasesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             Initilize();
             m_loadCaseDataGridViewSelectedIndex = e.RowIndex;
         }
 
-        /// <summary>
-        ///     Respond the loadNaturesDataGridView_CellClick event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void loadNaturesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             Initilize();
             m_loadNatureDataGridViewSelectedIndex = e.RowIndex;
         }
 
-        /// <summary>
-        ///     Respond the loadCasesDataGridView_ColumnHeaderMouseClick event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void loadCasesDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             m_loadCaseDataGridViewSelectedIndex = e.RowIndex;
         }
 
-        /// <summary>
-        ///     Respond the loadNaturesDataGridView_RowHeaderMouseClick event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void loadNaturesDataGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             m_loadNatureDataGridViewSelectedIndex = e.RowIndex;
@@ -268,9 +239,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             Refresh();
         }
 
-        /// <summary>
-        ///     enable button
-        /// </summary>
         private void Initilize()
         {
             if (loadCasesDataGridView.Focused)

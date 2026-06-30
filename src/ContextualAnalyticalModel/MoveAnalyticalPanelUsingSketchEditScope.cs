@@ -13,10 +13,8 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            //Expected results: the Analytical Panel has been moved and the connection with the Analytical Member has been broken
             try
             {
-                //Get the Document
                 var document = commandData.Application.ActiveUIDocument.Document;
 
                 // Create Analytical Panel
@@ -52,13 +50,11 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                                     var newLineEnd = new XYZ(line.GetEndPoint(1).X + offset, line.GetEndPoint(1).Y + offset,
                                         0);
 
-                                    // Define the new line with offseted coordinates
                                     Curve offsetedLine = Line.CreateBound(newLineStart, newLineEnd);
 
                                     // Remove the old line
                                     document.Delete(line.Reference.ElementId);
 
-                                    // Create the new line
                                     document.Create.NewModelCurve(offsetedLine, sketch.SketchPlane);
                                 }
                             }

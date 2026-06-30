@@ -14,10 +14,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// </summary>
         protected readonly RebarShapeDef.RebarShapeDef ShapeDef;
 
-        /// <summary>
-        ///     Constructor, initialize fields.
-        /// </summary>
-        /// <param name="def">RebarShapeDef object</param>
         protected ConstraintOnRebarShape(RebarShapeDef.RebarShapeDef def)
         {
             ShapeDef = def;

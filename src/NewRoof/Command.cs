@@ -17,9 +17,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS
     {
         // public buffer
 
-        /// <summary>
-        ///     singleton in the external application
-        /// </summary>
         public static View ActiveView { get; private set; }
 
         public Result Execute(ExternalCommandData commandData,
@@ -30,7 +27,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS
             {
                 ActiveView = commandData.Application.ActiveUIDocument.Document.ActiveView;
 
-                //// Create a new instance of class DataManager
                 var roofsManager = new RoofsManager.RoofsManager(commandData);
                 LevelConverter.SetStandardValues(roofsManager.Levels);
 

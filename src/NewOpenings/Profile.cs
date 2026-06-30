@@ -17,36 +17,16 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
     /// </summary>
     public abstract class Profile
     {
-        /// <summary>
-        ///     Application creator
-        /// </summary>
         protected readonly Application AppCreator;
 
-        /// <summary>
-        ///     command data
-        /// </summary>
         protected readonly ExternalCommandData CommandData;
 
-        /// <summary>
-        ///     Wall or Floor element
-        /// </summary>
         protected readonly Element DataProfile;
 
-        /// <summary>
-        ///     Document creator
-        /// </summary>
         protected readonly Document DocCreator;
 
-        /// <summary>
-        ///     geometry object [face]
-        /// </summary>
         protected readonly List<Edge> Face;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="elem">Selected element</param>
-        /// <param name="commandData">ExternalCommandData</param>
         public Profile(Element elem, ExternalCommandData commandData)
         {
             DataProfile = elem;
@@ -58,18 +38,8 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             Face = GetNeedFace(faces);
         }
 
-        /// <summary>
-        ///     Abstract method to create Opening
-        /// </summary>
         public abstract void DrawOpening(List<Vector4> points, ToolType type);
 
-        /// <summary>
-        ///     Draw profile of wall or floor in 2D
-        /// </summary>
-        /// <param name="graphics">form graphic</param>
-        /// <param name="pen">pen use to draw line in pictureBox</param>
-        /// <param name="matrix4">matrix used to transform points between 3d and 2d.</param>
-        /// >
         public void Draw2D(Graphics graphics, Pen pen, Matrix4 matrix4)
         {
             foreach (var edge in Face)
@@ -91,10 +61,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Get edges of element's profile
-        /// </summary>
-        /// <param name="elem">Selected element</param>
         public List<List<Edge>> GetFaces(Element elem)
         {
             var faceEdges = new List<List<Edge>>();
@@ -134,10 +100,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             return faceEdges;
         }
 
-        /// <summary>
-        ///     Get Face Normal
-        /// </summary>
-        /// <param name="face">Edges in a face</param>
         private Vector4 GetFaceNormal(List<Edge> face)
         {
             var eg0 = face[0];
@@ -164,18 +126,11 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             return result;
         }
 
-        /// <summary>
-        ///     Get First Face
-        /// </summary>
-        /// <param name="faces">edges in all faces</param>
         private List<Edge> GetNeedFace(List<List<Edge>> faces)
         {
             return DataProfile is Wall ? GetWallFace(faces) : faces[0];
         }
 
-        /// <summary>
-        ///     Get a matrix which can transform points to 2D
-        /// </summary>
         public Matrix4 To2DMatrix()
         {
             if (DataProfile is Wall) return WallMatrix();
@@ -208,10 +163,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             return result;
         }
 
-        /// <summary>
-        ///     Wall matrix
-        /// </summary>
-        /// <returns></returns>
         public Matrix4 WallMatrix()
         {
             //get the location curve
@@ -242,11 +193,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             return new Matrix4(xAxis, yAxis, zAxis, origin);
         }
 
-        /// <summary>
-        ///     Get wall face
-        /// </summary>
-        /// <param name="faces"></param>
-        /// <returns></returns>
         private List<Edge> GetWallFace(List<List<Edge>> faces)
         {
             var location = DataProfile.Location as LocationCurve;
@@ -274,9 +220,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             return faces[0];
         }
 
-        /// <summary>
-        ///     Get a matrix which can move points to origin
-        /// </summary>
         public Matrix4 ToCenterMatrix()
         {
             //translate the origin to bound center
@@ -287,9 +230,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             return new Matrix4(new Vector4(center.X, center.Y, 0));
         }
 
-        /// <summary>
-        ///     Get Face Bounds
-        /// </summary>
         public PointF[] GetFaceBounds()
         {
             var matrix = To2DMatrix();

@@ -14,14 +14,8 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
         /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        ///     Second column to store Level's Elevation
-        /// </summary>
         public double Elevation { get; set; }
 
-        /// <summary>
-        ///     Record Level's ID
-        /// </summary>
         public ElementId LevelIdValue { get; set; }
     }
 }

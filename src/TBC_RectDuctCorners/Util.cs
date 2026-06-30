@@ -10,7 +10,6 @@ using Autodesk.Revit.DB.Mechanical;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_RectDuctCorners sample.</summary>
     internal static partial class Util
     {
         public static XYZ Test1(Connector connector)
@@ -27,9 +26,6 @@ namespace BuildingCoder
                     connector.Width / 2, 0));
         }
 
-        /// <summary>
-        ///     Return the first rectangular connector of the given duct element.
-        /// </summary>
         public static bool GetFirstRectangularConnector(
             Duct duct,
             out Connector c1)
@@ -55,9 +51,6 @@ namespace BuildingCoder
             return null != c1;
         }
 
-        /// <summary>
-        ///     Return true if the given face contains the given connector.
-        /// </summary>
         public static bool FaceContainsConnector(
             Face face,
             Connector c)
@@ -70,13 +63,6 @@ namespace BuildingCoder
                    && Math.Abs(result.Distance) < 1e-9;
         }
 
-        /// <summary>
-        ///     Analyse the given duct element:
-        ///     determine its first rectangular connector,
-        ///     retrieve its solid,
-        ///     find the face containing the connector,
-        ///     and list its four vertices.
-        /// </summary>
         public static bool AnalyseDuct(Duct duct)
         {
             var rc = false;
@@ -126,11 +112,6 @@ namespace BuildingCoder
             return rc;
         }
 
-        /// <summary>
-        ///     Return elbow connectors.
-        ///     Return null if the given element is not a
-        ///     family instance with exactly two connectors.
-        /// </summary>
         public static List<Connector> GetElbowConnectors(Element e)
         {
             List<Connector> cons = null;
@@ -160,11 +141,7 @@ namespace BuildingCoder
             return cons;
         }
 
-        /// <summary>
-        ///     Return elbow centre point.
-        ///     Return null if the start and end points
-        ///     and direction vectors are not all coplanar.
-        /// </summary>
+        // Returns null when connector geometry is not coplanar.
         public static XYZ GetElbowCentre(Element e)
         {
             XYZ pc = null;

@@ -11,12 +11,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_PurgeLineStyles sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Purge all graphic styles whose name contains
-        ///     the given substring. Watch out what you do!
-        ///     If your substring is empty, this might delete
-        ///     all graphic styles in the entire project!
-        /// </summary>
         public static void PurgeGraphicStyles(
             Document doc,
             string name_substring)

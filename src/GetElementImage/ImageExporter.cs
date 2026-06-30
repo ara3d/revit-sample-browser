@@ -15,12 +15,7 @@ namespace Ara3D.RevitSampleBrowser.GetElementImage.CS
 {
     class ImageExporter
     {
-        /// <summary>
-        ///     View points to export:
-        ///     distance -- from element centre (defined by the bounding box).
-        ///     yaw -- horizontal angle, 0-360 degrees; 0 means looking North, 180 means looking South
-        ///     pitch -- vertical angle, -90 to +90 degrees, 0 being on the same height as the element centre and 90 looking from the top
-        /// </summary>
+        // View data: name, distance factor, yaw (0=N), pitch (90=top).
         readonly object[][] _viewDataToExport =
         {
             new object[] { "Isometric", 1, 45, 35 },

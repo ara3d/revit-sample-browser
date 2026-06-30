@@ -47,11 +47,6 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Adds a new retaining pond.
-        /// </summary>
-        /// <param name="uiDoc">The document.</param>
-        /// <param name="pondRadius">The radius of the pond.</param>
         private void AddNewRetainingPond(UIDocument uiDoc, double pondRadius)
         {
             var doc = uiDoc.Document;
@@ -73,14 +68,12 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var point = SiteTopographyHelper.PickPointNearToposurface(uiDoc, targetSurface, "Pick point for center of pond.");
             var elevation = point.Z;
 
-            // Add subregion first, so that any previously existing points can be removed to avoid distorting the new region
 
             // Find material "Water"
             var collector = new FilteredElementCollector(doc);
             collector.OfClass(typeof(Material));
             var mat = collector.Cast<Material>().FirstOrDefault(m => m.Name == "Water");
 
-            // Create subregion curves
             var curves = new List<Curve>
             {
                 Arc.Create(point, pondRadius, 0, Math.PI, XYZ.BasisX, XYZ.BasisY),
@@ -113,7 +106,6 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
                     elevation = SiteTopographyHelper.GetAverageElevation(region.TopographySurface.GetPoints());
                 }
 
-                // Add the topography points to the target surface via edit scope.
                 using (var editScope = new TopographyEditScope(doc, "Edit TS"))
                 {
                     editScope.Start(targetSurface.Id);

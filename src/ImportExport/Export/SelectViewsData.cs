@@ -5,40 +5,18 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Data class which stores views information for export
-    /// </summary>
     public class SelectViewsData
     {
-        /// <summary>
-        ///     Revit command data
-        /// </summary>
         private readonly ExternalCommandData m_commandData;
 
-        /// <summary>
-        ///     Whether contain 3D view in selected views
-        /// </summary>
         private bool m_contain3DView;
 
-        /// <summary>
-        ///     All printable sheets
-        /// </summary>
         private ViewSet m_printableSheets;
 
-        /// <summary>
-        ///     All printable views(except sheets)
-        /// </summary>
         private ViewSet m_printableViews;
 
-        /// <summary>
-        ///     All selected views in UI
-        /// </summary>
         private ViewSet m_selectedViews;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData"></param>
         public SelectViewsData(ExternalCommandData commandData)
         {
             m_commandData = commandData;
@@ -49,45 +27,30 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             GetAllPrintableViews();
         }
 
-        /// <summary>
-        ///     All printable views(except sheets)
-        /// </summary>
         public ViewSet PrintableViews
         {
             get => m_printableViews;
             set => m_printableViews = value;
         }
 
-        /// <summary>
-        ///     All printable sheets
-        /// </summary>
         public ViewSet PrintableSheets
         {
             get => m_printableSheets;
             set => m_printableSheets = value;
         }
 
-        /// <summary>
-        ///     All selected views in UI
-        /// </summary>
         public ViewSet SelectedViews
         {
             get => m_selectedViews;
             set => m_selectedViews = value;
         }
 
-        /// <summary>
-        ///     Whether contain 3D view in selected views
-        /// </summary>
         public bool Contain3DView
         {
             get => m_contain3DView;
             set => m_contain3DView = value;
         }
 
-        /// <summary>
-        ///     Get all printable views and sheets
-        /// </summary>
         private void GetAllPrintableViews()
         {
             var collector = new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document);

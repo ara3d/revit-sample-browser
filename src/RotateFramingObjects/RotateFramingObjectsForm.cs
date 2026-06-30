@@ -41,9 +41,6 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
         /// </summary>
         public bool IsReset { get; set; }
 
-        /// <summary>
-        ///     Clean up any resources being used.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -54,10 +51,6 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        ///     Required method for Designer support - do not modify
-        ///     the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             AbsoluteRadio = new RadioButton();

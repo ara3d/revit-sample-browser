@@ -6,11 +6,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     this class controls the class which subscribes handle events and the events' information UI.
-    ///     like a bridge between them.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -21,13 +16,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-            //only a family document  can retrieve family manager
             if (doc.IsFamilyDocument)
             {
                 if (null != doc.OwnerFamily && null != doc.OwnerFamily.FamilyCategory
                                             && doc.OwnerFamily.FamilyCategory.Name != doc.Settings.Categories
                                                 .get_Item(BuiltInCategory.OST_Windows).Name)
-                    // FamilyCategory.Name is not "Windows".
                 {
                     message = "Please make sure you opened a template of Window.";
                     return Result.Failed;

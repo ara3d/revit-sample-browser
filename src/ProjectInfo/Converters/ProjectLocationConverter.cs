@@ -8,24 +8,12 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
-    /// <summary>
-    ///     Converts ProjectLocation with string
-    /// </summary>
     public class ProjectLocationConverter : TypeConverter
     {
-        /// <summary>
-        ///     User defined location
-        /// </summary>
         public const string UserDefined = "User Defined";
 
-        /// <summary>
-        ///     All project locations in current document
-        /// </summary>
         public static readonly List<ProjectLocation> ProjectLocations;
 
-        /// <summary>
-        ///     Initialize ProjectLocations
-        /// </summary>
         static ProjectLocationConverter()
         {
             ProjectLocations = new List<ProjectLocation>();
@@ -35,22 +23,11 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             }
         }
 
-        /// <summary>
-        ///     Returns whether this object supports a standard set of values that can be
-        ///     picked from a list, using the specified context.
-        /// </summary>
-        /// <returns>true</returns>
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
         {
             return true;
         }
 
-        /// <summary>
-        ///     Returns whether the collection of standard values returned from
-        ///     System.ComponentModel.TypeConverter.GetStandardValues()
-        ///     is an exclusive list.
-        /// </summary>
-        /// <returns>true</returns>
         public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
         {
             return true;

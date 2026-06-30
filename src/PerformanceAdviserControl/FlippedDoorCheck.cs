@@ -13,9 +13,6 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
     /// </summary>
     public class FlippedDoorCheck : IPerformanceAdviserRule
     {
-        /// <summary>
-        ///     A short description of the rule
-        /// </summary>
         private readonly string m_description = "An API-based rule to search for and return any doors that are face-flipped";
 
         /// <summary>
@@ -28,14 +25,8 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         /// </summary>
         private List<ElementId> m_flippedDoors;
 
-        /// <summary>
-        ///     A short name for the rule
-        /// </summary>
         private readonly string m_name = "Flipped Door Check";
 
-        /// <summary>
-        ///     Set up rule name, description, and error handling
-        /// </summary>
         public FlippedDoorCheck()
         {
             FailureDefinition.CreateFailureDefinition(m_doorWarningId, FailureSeverity.Warning,
@@ -108,10 +99,6 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
             }
         }
 
-        /// <summary>
-        ///     Gets the description of the rule
-        /// </summary>
-        /// <returns>The rule description</returns>
         public string GetDescription()
         {
             return m_description;
@@ -128,19 +115,11 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
             return new ElementCategoryFilter(BuiltInCategory.OST_Doors);
         }
 
-        /// <summary>
-        ///     Gets the name of the rule
-        /// </summary>
-        /// <returns>The rule name</returns>
         public string GetName()
         {
             return m_name;
         }
 
-        /// <summary>
-        ///     Returns true if this rule will iterate through elements and check them, false otherwise
-        /// </summary>
-        /// <returns>True</returns>
         public bool WillCheckElements()
         {
             return true;

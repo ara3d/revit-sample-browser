@@ -8,29 +8,16 @@ using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {
-    /// <summary>
-    ///     Wrapper class for SiteLocation
-    /// </summary>
     public class SiteLocationWrapper : IWrapper
     {
-        /// <summary>
-        ///     SiteLocation
-        /// </summary>
         private readonly SiteLocation m_siteLocation;
 
-        /// <summary>
-        ///     Initializes private variables.
-        /// </summary>
-        /// <param name="siteLocation"></param>
         public SiteLocationWrapper(SiteLocation siteLocation)
         {
             m_siteLocation = siteLocation;
             //m_citys = RevitStartInfo.RevitApp.Cities;
         }
 
-        /// <summary>
-        ///     Gets or sets TimeZone
-        /// </summary>
         [DisplayName("Time Zone")]
         [TypeConverter(typeof(TimeZoneConverter))]
         public string TimeZone => ValueFormatting.TimeZoneDoubleToString(m_siteLocation.TimeZone, RevitStartInfo.TimeZones);
@@ -39,9 +26,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
         //{
         //    m_siteLocation.TimeZone = GetTimeZoneFromString(value);
         //}
-        /// <summary>
-        ///     Gets or sets Longitude
-        /// </summary>
         [DisplayName("Longitude")]
         [TypeConverter(typeof(AngleConverter))]
         public double Longitude
@@ -50,9 +34,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_siteLocation.Longitude = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Latitude
-        /// </summary>
         [DisplayName("Latitude")]
         [TypeConverter(typeof(AngleConverter))]
         public double Latitude
@@ -74,15 +55,9 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             }
         }
 
-        /// <summary>
-        ///     Gets the handle object.
-        /// </summary>
         [Browsable(false)]
         public object Handle => m_siteLocation;
 
-        /// <summary>
-        ///     Gets the name of the handle.
-        /// </summary>
         [Browsable(false)]
         public string Name
         {

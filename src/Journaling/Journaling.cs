@@ -30,10 +30,6 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
         private List<WallType> m_wallTypeList; // Store all wall types in revit
 
         // Methods
-        /// <summary>
-        ///     The default constructor
-        /// </summary>
-        /// <param name="commandData">the external command data which revit give RevitAPI</param>
         public Journaling(ExternalCommandData commandData)
         {
             // Initialize the data members
@@ -79,13 +75,6 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
             }
         }
 
-        /// <summary>
-        ///     Set the necessary data which support the wall creation
-        /// </summary>
-        /// <param name="startPoint">the start point of the wall</param>
-        /// <param name="endPoint">the end point of the wall</param>
-        /// <param name="level">the level which the wall base on</param>
-        /// <param name="type">the type of the wall</param>
         public void SetNecessaryData(XYZ startPoint, XYZ endPoint, Level level, WallType type)
         {
             m_startPoint = startPoint; // start point
@@ -94,9 +83,6 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
             m_createType = type; // the wall type
         }
 
-        /// <summary>
-        ///     Get the levels and wall types from revit and insert into the lists
-        /// </summary>
         private void InitializeListData()
         {
             // Assert the lists have been constructed
@@ -184,9 +170,6 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
             return true;
         }
 
-        /// <summary>
-        ///     Create a wall with the collected data or the data read from journal
-        /// </summary>
         private void CreateWall()
         {
             // Get the create classes.

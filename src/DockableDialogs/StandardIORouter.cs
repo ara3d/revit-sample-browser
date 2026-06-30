@@ -6,9 +6,6 @@ using System.Windows.Controls;
 
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
 {
-    /// <summary>
-    ///     Routes Console.WriteLine and other standard IO to a TextBox.
-    /// </summary>
     public class StandardIoRouter : TextWriter
     {
         private readonly TextBox m_outputTextBox;

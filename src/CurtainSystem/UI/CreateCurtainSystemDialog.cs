@@ -7,9 +7,6 @@ using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
 
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
 {
-    /// <summary>
-    ///     the winForm for user to create a new curtain system
-    /// </summary>
     public partial class CreateCurtainSystemDialog : Form
     {
         // the flag for curtain system creation, if it's true, the curtain system
@@ -18,62 +15,27 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
         private bool m_byFaceArray;
         private readonly MyDocument m_mydocument;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="mydoc">
-        ///     the document of the sample
-        /// </param>
         public CreateCurtainSystemDialog(MyDocument mydoc)
         {
             m_mydocument = mydoc;
 
             InitializeComponent();
 
-            //
             // initialize data
-            //
             // by default, create the curtain system by reference array
             m_byFaceArray = false;
         }
 
-        /// <summary>
-        ///     check/uncheck the "by face array" flag
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void byFaceArrayCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             m_byFaceArray = byFaceArrayCheckBox.Checked;
         }
 
-        /// <summary>
-        ///     select all the faces
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void selectAllButton_Click(object sender, EventArgs e)
         {
             for (var i = 0; i < facesCheckedListBox.Items.Count; i++) facesCheckedListBox.SetItemChecked(i, true);
         }
 
-        /// <summary>
-        ///     reverse the selection
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void reverseSelButton_Click(object sender, EventArgs e)
         {
             for (var i = 0; i < facesCheckedListBox.Items.Count; i++)
@@ -84,29 +46,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             }
         }
 
-        /// <summary>
-        ///     clear the selected faces
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void clearButton_Click(object sender, EventArgs e)
         {
             for (var i = 0; i < facesCheckedListBox.Items.Count; i++) facesCheckedListBox.SetItemChecked(i, false);
         }
 
-        /// <summary>
-        ///     create a new curtain system by the selected faces
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void createCSButton_Click(object sender, EventArgs e)
         {
             // step 1: get the faces for curtain system creation

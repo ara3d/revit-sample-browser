@@ -5,10 +5,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_ListMarks sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Set the 'Mark' parameter value to sequential
-        ///     numbers on all structural framing elements.
-        /// </summary>
         public static void NumberStructuralFraming(Document doc)
         {
             var beams

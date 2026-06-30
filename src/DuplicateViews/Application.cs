@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-//
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
 // AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
 // MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE. AUTODESK, INC.
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
-//
 // Use, duplication, or disclosure by the U.S. Government is subject to
 // restrictions set forth in FAR 52.227-19 (Commercial Computer
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
@@ -23,16 +21,10 @@ using Size = System.Drawing.Size;
 
 namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        /// <summary>
-        ///     The path to this add-in assembly.
-        /// </summary>
         private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
@@ -62,22 +54,12 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
             SetIconsForPushButton(duplicateAllPb, Resources.ViewCopyAcrossFiles);
         }
 
-        /// <summary>
-        ///     Utility for adding icons to the button.
-        /// </summary>
-        /// <param name="button">The push button.</param>
-        /// <param name="icon">The icon.</param>
         private static void SetIconsForPushButton(RibbonButton button, Icon icon)
         {
             button.LargeImage = GetStdIcon(icon);
             button.Image = GetSmallIcon(icon);
         }
 
-        /// <summary>
-        ///     Gets the standard sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetStdIcon(Icon icon)
         {
             return Imaging.CreateBitmapSourceFromHIcon(
@@ -86,11 +68,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
                 BitmapSizeOptions.FromEmptyOptions());
         }
 
-        /// <summary>
-        ///     Gets the small sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetSmallIcon(Icon icon)
         {
             var smallIcon = new Icon(icon, new Size(16, 16));

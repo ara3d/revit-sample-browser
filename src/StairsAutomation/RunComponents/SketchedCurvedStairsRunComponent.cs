@@ -81,14 +81,8 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             m_appCreate = appCreate;
         }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double RunElevation { get; }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double TopElevation
         {
             get
@@ -98,9 +92,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             }
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public IList<Curve> GetStairsPath()
         {
             var ret = new List<Curve>();
@@ -111,33 +102,21 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return ret;
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public Curve GetFirstCurve()
         {
             return GetRunRiserCurves().First();
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public Curve GetLastCurve()
         {
             return GetRunRiserCurves().Last();
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public XYZ GetRunEndpoint()
         {
             return GetRunBoundaryCurves()[1].GetEndPoint(1);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public StairsRun CreateStairsRun(Document document, ElementId stairsId)
         {
             m_stairsRun = StairsRun.CreateSketchedRun(document, stairsId, GetRunElevation(),
@@ -147,9 +126,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return m_stairsRun;
         }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double Width
         {
             get => m_outerRadius - m_innerRadius;
@@ -161,17 +137,11 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             }
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public double GetRunElevation()
         {
             return RunElevation;
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public IList<Curve> GetRunRiserCurves()
         {
             var incAngle = 0.0;
@@ -196,9 +166,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return ret;
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public IList<Curve> GetRunBoundaryCurves()
         {
             var ret = new List<Curve>();

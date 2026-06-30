@@ -38,11 +38,6 @@ namespace AdnRme
   public class CmdPopulateCfmPerSf : IExternalCommand
   {
     #region Set CFM/SF
-    /// <summary>
-    /// Populate the value of the 'CFM per SF' variable on the given space.
-    /// Throws an exception if something goes wrong.
-    /// </summary>
-    /// <param name="space">Given space element</param>
     static void SetCfmPerSf( Space space )
     {
       double flow = Util.GetSpaceParameterValue( space, Bip.Airflow, "Actual Supply Airflow" );

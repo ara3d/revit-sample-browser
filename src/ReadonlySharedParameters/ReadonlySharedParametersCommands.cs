@@ -185,7 +185,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
             manager.AddCategory(BuiltInCategory.OST_Roofs);
             manager.ParameterGroup = GroupTypeId.IdentityData;
 
-            sharedParametersToCreate.Add(manager); // Look up syntax for this automatic initialization.
+            sharedParametersToCreate.Add(manager);
 
             manager = new SharedParameterBindingManager
             {

@@ -37,52 +37,8 @@ namespace AdnRme
 {
   #region CmdElectricalSystemBrowser
   /// <summary>
-  /// Inspect the electrical system.
-  /// 
-  /// We reproduce the information provided in the Power section of the 
-  /// Revit MEP mechanical system browser and display it in a modeless
-  /// dialogue, i.e. it remains visible after the command has completed.
-  /// 
-  /// The challenge here is to reproduce all the nodes, and the sorting order.
-  /// 
-  /// The system browser has three levels of nodes, panel > system > element,
-  /// as well as one 'Unassigned' top level node, where 'Unassigned' replaces
-  /// the panel. System may also be circuit number.
-  /// 
-  /// In this implementation, the nodes come from two sources:
-  /// 
-  /// - electrical equipment, which always has a system name and is 
-  ///   either unassigned or has a panel name
-  /// - circuit elements, which have a non-empty circuit number 
-  ///   parameter value.
-  /// 
-  /// The electrical equipment can be selected by filtering for its type, 
-  /// ElectricalEquipment, the circuit elements by filtering for 
-  /// BuiltInParameter.RBS_ELEC_CIRCUIT_NUMBER.
-  /// 
-  /// Each of these two sets can be sorted into dictionaries using the keys
-  /// 
-  ///   panel:circuit number or 
-  ///   panel:system name or 
-  ///   Unassigned:system name
-  /// 
-  /// and mapping these to the connected elements.
-  /// 
-  /// These two dictionaries, merged together and appropriately sorted, 
-  /// represent the same information as the system browser.
-  /// 
-  /// Important note: this whole sample was implemented while exploring 
-  /// how the systm is actually hooked up. Once that is fully understood,
-  /// a much more straightforward and efficient algorithm for traversing
-  /// and displaying it can be implemented. So please don't simply reuse 
-  /// this code, understand it first and then rewrite it.
-  /// 
-  /// Important note 2: this sample was originally written for Revit 2008,
-  /// before the introduction of the Connector and ConnectionManager classes,
-  /// or even any MEP-specific API at all. The complex determination of the 
-  /// connection hierarchy based on parameter values performed here can be
-  /// much simplified using the connectors, as demonstrated by 
-  /// CmdElectricalConnectors.
+  /// Reproduces the Power section of the MEP system browser (panel &gt; system &gt; element) in a modeless tree.
+  /// Built on parameter lookups from Revit 2008; prefer CmdElectricalConnectors for new work.
   /// </summary>
   [Transaction( TransactionMode.ReadOnly )]
   public class CmdElectricalSystemBrowser : IExternalCommand
@@ -92,9 +48,6 @@ namespace AdnRme
     #region Sorting comparers
 
     #region NumericalComparer
-    /// <summary>
-    /// Helper class for sorting strings numerically by number.
-    /// </summary>
     class NumericalComparer : IComparer<string>
     {
       public int Compare( string x, string y )
@@ -105,12 +58,7 @@ namespace AdnRme
     #endregion // NumericalComparer
 
     #region PanelCircuitComparer
-    /// <summary>
-    /// Helper class for sorting panel:circuit key strings 
-    /// alphabetically by panel name and numerically by circuit number.
-    /// We also need to handle the format "MDP:1,3,5".
-    /// 2010-06-11: we need to handle "&lt;unnamed&gt;".
-    /// </summary>
+    // Sort panel:circuit keys; handles comma-delimited circuit lists (e.g. MDP:1,3,5).
     class PanelCircuitComparer : IComparer<string>
     {
       public int Compare( string x, string y )
@@ -141,12 +89,7 @@ namespace AdnRme
     #endregion // PanelCircuitComparer
 
     #region PanelSystemComparer
-    /// <summary>
-    /// Helper class for sorting panel:system key strings, 
-    /// first alphabetically by panel name, second either
-    /// alphabetically by system name or numerically by 
-    /// circuit number.
-    /// </summary>
+    // Sort panel:system keys; numeric when the system segment is all digits/commas.
     public class PanelSystemComparer : IComparer<string>
     {
       #region JtIsDigit
@@ -156,9 +99,6 @@ namespace AdnRme
       // Performance: Different methods for testing string input for numeric values...
       // by Justin Rogers
       //
-      /// <summary>
-      /// Test whether all characters in given string are decimal digits.
-      /// </summary>
       public static bool JtIsDigit( string s )
       {
         foreach( char a in s )
@@ -216,10 +156,6 @@ namespace AdnRme
     #endregion // Sorting comparers
 
     #region ListEquipment
-    /// <summary>
-    /// List an electrical equipment instance and insert its data into 
-    /// the dictionary mapping panel + system name to equipment instances.
-    /// </summary>
     static void ListEquipment( 
       FamilyInstance elecEqip, 
       IDictionary<string, List<Element>> mapPanelAndSystemToEquipment )

@@ -7,9 +7,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_ListSharedParams sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Get GUID for a given shared param name.
-        /// </summary>
         public static Guid SharedParamGuid(
             Application app,
             string defGroup,

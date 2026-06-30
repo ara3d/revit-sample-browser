@@ -26,11 +26,6 @@ namespace BuildingCoder
 {
     public static class JtBuiltInCategoryExtensionMethods
         {
-            /// <summary>
-            ///     Return a descriptive string for a built-in
-            ///     category by removing the trailing plural 's'
-            ///     and the OST_ prefix.
-            /// </summary>
             public static string Description(
                 this BuiltInCategory bic)
             {

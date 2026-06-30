@@ -26,7 +26,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
             try
             {
-                // check for a load fabrication config
                 config = FabricationConfiguration.GetFabricationConfiguration(doc);
 
                 if (config == null)
@@ -35,7 +34,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Failed;
                 }
 
-                // pick a fabrication part
                 var refObj = uidoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part to start.");
                 fabPart = doc.GetElement(refObj) as FabricationPart;
             }
@@ -50,11 +48,9 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 return Result.Failed;
             }
 
-            // get ancillary data from selected part and report to user
             var ancillaries = fabPart.GetPartAncillaryUsage();
             var ancillaryDescriptions = new List<string>();
 
-            // create list of ancillary descriptions using the Ancillary UseageType and Name
             foreach (var ancillaryUsage in ancillaries)
             {
                 var ancilType = ancillaryUsage.Type;
@@ -65,7 +61,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
             var results = string.Empty;
 
-            // group and quantify 
             if (ancillaryDescriptions.Count > 0)
             {
                 ancillaryDescriptions.Sort();

@@ -7,14 +7,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SheetSize sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Read the title block parameters to retrieve the
-        ///     label parameters Sheet Number, Author and Client
-        ///     Name
-        /// </summary>
         public static void ReadTitleBlockLabelParameters(
             Document doc)
         {
@@ -66,9 +60,6 @@ namespace BuildingCoder
             }
         }
 
-        /// Return a string value for the specified
-        /// built-in parameter if it is available on
-        /// the given element, else an empty string.
         public static string GetParameterValueString(
             Element e,
             BuiltInParameter bip)

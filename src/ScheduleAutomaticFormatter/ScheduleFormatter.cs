@@ -18,9 +18,6 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
 {
-    /// <summary>
-    ///     A class capable of formatting schedules with alternating background colors on the columns
-    /// </summary>
     public class ScheduleFormatter : IUpdater
     {
         /// <summary>
@@ -37,14 +34,8 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
         /// </summary>
         public Schema Schema { get; set; }
 
-        /// <summary>
-        ///     The add-in id.
-        /// </summary>
         public AddInId AddInId { get; set; }
 
-        /// <summary>
-        ///     GUID of the updater.
-        /// </summary>
         private static Guid UpdaterGuid => new Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
 
         /// <summary>
@@ -110,7 +101,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
             var highlight = new Color(0xd8, 0xd8, 0xd8);
             var applyHighlight = false;
 
-            // Loop over fields in order
             foreach (var id in definition.GetFieldOrder())
             {
                 // Index 0, 2, etc use highlight color
@@ -120,7 +110,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
                 else
                     applyHighlight = false;
 
-                // Get the field style
                 var field = definition.GetField(id);
                 var style = field.GetStyle();
                 var options = style.GetCellStyleOverrideOptions();
@@ -129,7 +118,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
                 options.BackgroundColor = applyHighlight;
                 style.SetCellStyleOverrideOptions(options);
 
-                // Set background color per requirement
                 style.BackgroundColor = applyHighlight ? highlight : white;
                 field.SetStyle(style);
 

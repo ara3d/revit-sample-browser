@@ -28,12 +28,6 @@ namespace BuildingCoder
     {
         #region Geometrical Calculation
 
-        /// <summary>
-        ///     Return arbitrary X and Y axes for the given
-        ///     normal vector according to the AutoCAD
-        ///     Arbitrary Axis Algorithm
-        ///     https://www.autodesk.com/techpubs/autocad/acadr14/dxf/arbitrary_axis_algorithm_al_u05_c.htm
-        /// </summary>
         public static void GetArbitraryAxes(
             XYZ normal,
             out XYZ ax,
@@ -51,26 +45,17 @@ namespace BuildingCoder
             ay = normal.CrossProduct(ax).Normalize();
         }
 
-        /// <summary>
-        ///     Return the midpoint between two points.
-        /// </summary>
         public static XYZ Midpoint(XYZ p, XYZ q)
         {
             return 0.5 * (p + q);
         }
 
-        /// <summary>
-        ///     Return the midpoint of a Line.
-        /// </summary>
         public static XYZ Midpoint(Line line)
         {
             return Midpoint(line.GetEndPoint(0),
                 line.GetEndPoint(1));
         }
 
-        /// <summary>
-        ///     Return the normal of a Line in the XY plane.
-        /// </summary>
         public static XYZ Normal(Line line)
         {
             var p = line.GetEndPoint(0);
@@ -83,9 +68,6 @@ namespace BuildingCoder
             return v.CrossProduct(XYZ.BasisZ).Normalize();
         }
 
-        /// <summary>
-        ///     Return the bounding box of a curve loop.
-        /// </summary>
         public static BoundingBoxXYZ GetBoundingBox(
             CurveLoop curveLoop)
         {
@@ -98,12 +80,6 @@ namespace BuildingCoder
             return bb;
         }
 
-        /// <summary>
-        ///     Return the bottom four XYZ corners of the given
-        ///     bounding box in the XY plane at the given
-        ///     Z elevation in the order lower left, lower
-        ///     right, upper right, upper left:
-        /// </summary>
         public static XYZ[] GetBottomCorners(
             BoundingBoxXYZ b,
             double z)
@@ -117,12 +93,6 @@ namespace BuildingCoder
             };
         }
 
-        /// <summary>
-        ///     Return the bottom four XYZ corners of the given
-        ///     bounding box in the XY plane at the bb minimum
-        ///     Z elevation in the order lower left, lower
-        ///     right, upper right, upper left:
-        /// </summary>
         public static XYZ[] GetBottomCorners(
             BoundingBoxXYZ b)
         {
@@ -320,16 +290,6 @@ const T f = ( ay * bx ) - ( ax * by );
 
         #endregion // Intersect
 
-        /// <summary>
-        ///     Return the 2D intersection point between two
-        ///     unbounded lines defined in the XY plane by the
-        ///     given start and end points and vectors.
-        ///     Return null if the two lines are coincident,
-        ///     in which case the intersection is an infinite
-        ///     line, or non-coincident and parallel, in which
-        ///     case it is empty.
-        ///     https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
-        /// </summary>
         public static XYZ LineLineIntersection(
             XYZ p1, XYZ v1, XYZ p2, XYZ v2)
         {
@@ -350,16 +310,6 @@ const T f = ( ay * bx ) - ( ax * by );
             return p5;
         }
 
-        /// <summary>
-        ///     Return the 2D intersection point between two
-        ///     unbounded lines defined in the XY plane by the
-        ///     start and end points of the two given curves.
-        ///     Return null if the two lines are coincident,
-        ///     in which case the intersection is an infinite
-        ///     line, or non-coincident and parallel, in which
-        ///     case it is empty.
-        ///     https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
-        /// </summary>
         public static XYZ LineLineIntersection(
             Curve c1,
             Curve c2)
@@ -373,26 +323,6 @@ const T f = ( ay * bx ) - ( ax * by );
             return LineLineIntersection(p1, v1, p2, v2);
         }
 
-        /// <summary>
-        ///     Return the 3D intersection point between
-        ///     a line and a plane.
-        ///     https://forums.autodesk.com/t5/revit-api-forum/how-can-we-calculate-the-intersection-between-the-plane-and-the/m-p/9785834
-        ///     https://stackoverflow.com/questions/5666222/3d-line-plane-intersection
-        ///     Determine the point of intersection between
-        ///     a plane defined by a point and a normal vector
-        ///     and a line defined by a point and a direction vector.
-        ///     planePoint - A point on the plane.
-        ///     planeNormal - The normal vector of the plane.
-        ///     linePoint - A point on the line.
-        ///     lineDirection - The direction vector of the line.
-        ///     lineParameter - The intersection distance along the line.
-        ///     Return - The point of intersection between the
-        ///     line and the plane, null if the line is parallel
-        ///     to the plane.
-        ///     If enforceResultOnLine is true, return null if
-        ///     the intersection point is not within the line itself;
-        ///     i.e., suppress results on the extension of the line.
-        /// </summary>
         public static XYZ LinePlaneIntersection(
             Line line,
             Plane plane,
@@ -432,19 +362,6 @@ const T f = ( ay * bx ) - ( ax * by );
             return linePoint + lineParameter * lineDirection;
         }
 
-        /// <summary>
-        ///     Create transformation matrix to transform points
-        ///     from the global space (XYZ) to the local space of
-        ///     a face (UV representation of a bounding box).
-        ///     Revit itself only supports Face.Transform(UV) that
-        ///     translates a UV coordinate into XYZ coordinate space.
-        ///     I reversed that Method to translate XYZ coords to
-        ///     UV coords. At first i thought i could solve the
-        ///     reverse transformation by solving a linear equation
-        ///     with 2 unknown variables. But this wasn't general.
-        ///     I finally found out that the transformation
-        ///     consists of a displacement vector and a rotation matrix.
-        /// </summary>
         public static double[,]
             CalculateMatrixForGlobalToLocalCoordinateSystem(
                 Face face)
@@ -479,10 +396,6 @@ const T f = ( ay * bx ) - ( ax * by );
             };
         }
 
-        /// <summary>
-        ///     Create an arc in the XY plane from a given
-        ///     start point, end point and radius.
-        /// </summary>
         public static Arc CreateArc2dFromRadiusStartAndEndPoint(
             XYZ ps,
             XYZ pe,
@@ -515,9 +428,6 @@ const T f = ( ay * bx ) - ( ax * by );
             return Arc.Create(ps, pe, midPointArc);
         }
 
-        /// <summary>
-        ///     Create a new CurveLoop from a list of points.
-        /// </summary>
         public static CurveLoop CreateCurveLoop(
             List<XYZ> pts)
         {
@@ -531,10 +441,6 @@ const T f = ( ay * bx ) - ( ax * by );
             return curveLoop;
         }
 
-        /// <summary>
-        ///     Offset a list of points by a distance in a
-        ///     given direction in or out of the curve loop.
-        /// </summary>
         public static IEnumerable<XYZ> OffsetPoints(
             List<XYZ> pts,
             double offset,

@@ -28,11 +28,6 @@ namespace BuildingCoder
     {
         #region Consolidated room and view helpers
 
-        /// <summary>
-        ///     Return the neighbouring room to the given one
-        ///     on the other side of the midpoint of the given
-        ///     boundary segment.
-        /// </summary>
         public static Room GetRoomNeighbourAt(
             BoundarySegment bs,
             Room r)
@@ -80,10 +75,6 @@ namespace BuildingCoder
             return otherRoom;
         }
 
-        /// <summary>
-        ///     Return the first elevation view found in the
-        ///     given element id collection or null.
-        /// </summary>
         internal static View FindElevationView(
             Document doc,
             ICollection<ElementId> ids)
@@ -110,9 +101,6 @@ namespace BuildingCoder
             return view;
         }
 
-        /// <summary>
-        ///     Return a reference to the topmost face of the given element.
-        /// </summary>
         internal static Reference FindTopMostReference(Element e)
         {
             Reference ret = null;

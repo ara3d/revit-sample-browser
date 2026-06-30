@@ -30,9 +30,6 @@ using ComboBox = System.Windows.Controls.ComboBox;
 
 namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 {
-    /// <summary>
-    ///     Interaction logic for DefaultFamilyTypes.xaml
-    /// </summary>
     public partial class DefaultFamilyTypes : Page, IDockablePaneProvider
     {
         public static readonly DockablePaneId PaneId = new DockablePaneId(new Guid("{DF0F08C3-447C-4615-B9B9-4843D821012E}"));
@@ -59,10 +56,6 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
             };
         }
 
-        /// <summary>
-        ///     Sets document to the default family type pane.
-        ///     It will get all valid default types for the category and fill the data grid.
-        /// </summary>
         public void SetDocument(Document document)
         {
             if (m_document == document)
@@ -83,12 +76,11 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
                     CategoryName = Enum.GetName(typeof(BuiltInCategory), cid)
                 };
 
-                //RLog.WriteComment(String.Format("The valid default family type candidates of {0} are:", Enum.GetName(typeof(BuiltInCategory), cid)));
                 var collector = new FilteredElementCollector(m_document);
                 collector = collector.OfClass(typeof(FamilySymbol));
                 var query = from FamilySymbol et in collector
                     where et.IsValidDefaultFamilyType(new ElementId(cid))
-                    select et; // Linq query  
+                    select et;
 
                 var defaultFamilyTypeId = m_document.GetDefaultFamilyTypeId(new ElementId(cid));
 
@@ -120,9 +112,9 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 
             var categoryids = new List<BuiltInCategory>
             {
-                // The corresponding UI for OST_MatchModel is "Architecture->Build->Component"
+                // Architecture -> Build -> Component
                 BuiltInCategory.OST_MatchModel,
-                // The corresponding UI for OST_MatchModel is "Annotate->Detail->Component"
+                // Annotate -> Detail -> Component
                 BuiltInCategory.OST_MatchDetail
             };
 
@@ -135,10 +127,6 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
             return categoryids;
         }
 
-        /// <summary>
-        ///     Responses to the type selection changed.
-        ///     It will set the selected type as default type.
-        /// </summary>
         private void DefaultFamilyTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1 && e.RemovedItems.Count == 1)
@@ -155,24 +143,12 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
         }
     }
 
-    /// <summary>
-    ///     The default family type candidate.
-    /// </summary>
     public class DefaultFamilyTypeCandidate
     {
-        /// <summary>
-        ///     The name.
-        /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        ///     The element id.
-        /// </summary>
         public ElementId Id { get; set; }
 
-        /// <summary>
-        ///     The category id.
-        /// </summary>
         public ElementId CateogryId { get; set; }
 
         public override string ToString()
@@ -181,30 +157,15 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
         }
     }
 
-    /// <summary>
-    ///     The element type record for the data grid.
-    /// </summary>
     public class FamilyTypeRecord
     {
-        /// <summary>
-        ///     The category name.
-        /// </summary>
         public string CategoryName { get; set; }
 
-        /// <summary>
-        ///     List of default family type candidates.
-        /// </summary>
         public List<DefaultFamilyTypeCandidate> DefaultFamilyTypeCandidates { get; set; }
 
-        /// <summary>
-        ///     The current default family type.
-        /// </summary>
         public DefaultFamilyTypeCandidate DefaultFamilyType { get; set; }
     }
 
-    /// <summary>
-    ///     The command handler to set current selection as default family type.
-    /// </summary>
     public class DefaultFamilyTypeCommandHandler : IExternalEventHandler
     {
         private ElementId m_builtInCategory;
@@ -231,5 +192,5 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
             m_builtInCategory = categoryId;
             m_defaultTypeId = typeId;
         }
-    } // class CommandHandler
+    }
 }

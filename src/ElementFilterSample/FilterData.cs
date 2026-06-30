@@ -8,41 +8,22 @@ using PFRF = Autodesk.Revit.DB.ParameterFilterRuleFactory;
 namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
     /// <summary>
-    ///     Sample custom immutable class used to represents Revit public FilterRule.
-    ///     This class and its variables will help display the contents of UI controls.
-    ///     This class can build its data caches to Revit FilterRule object.
+    /// Mutable UI model for a Revit filter rule; converts to <see cref="FilterRule"/> via <see cref="AsFilterRule"/>.
     /// </summary>
     public sealed class FilterRuleBuilder
     {
-        /// <summary>
-        ///     Create FilterRuleBuilder for String FilterRule
-        /// </summary>
-        /// <param name="param">Parameter of FilterRule.</param>
-        /// <param name="ruleCriteria">Rule criteria.</param>
-        /// <param name="ruleValue">Rule value.</param>
         public FilterRuleBuilder(BuiltInParameter param, string ruleCriteria, string ruleValue)
         {
             InitializeMemebers();
-            //
-            // set data with specified values
             ParamType = StorageType.String;
             Parameter = param;
             RuleCriteria = ruleCriteria;
             RuleValue = ruleValue;
         }
 
-        /// <summary>
-        ///     Create FilterRuleBuilder for double FilterRule
-        /// </summary>
-        /// <param name="param">Parameter of FilterRule.</param>
-        /// <param name="ruleCriteria">Rule criteria.</param>
-        /// <param name="ruleValue">Rule value.</param>
-        /// <param name="tolerance">Epsilon for double values comparison.</param>
         public FilterRuleBuilder(BuiltInParameter param, string ruleCriteria, double ruleValue, double tolearance)
         {
             InitializeMemebers();
-            //
-            // set data with specified values
             ParamType = StorageType.Double;
             Parameter = param;
             RuleCriteria = ruleCriteria;
@@ -50,74 +31,37 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             Epsilon = tolearance;
         }
 
-        /// <summary>
-        ///     Create FilterRuleBuilder for int FilterRule
-        /// </summary>
-        /// <param name="param">Parameter of FilterRule.</param>
-        /// <param name="ruleCriteria">Rule criteria.</param>
-        /// <param name="ruleValue">Rule value.</param>
         public FilterRuleBuilder(BuiltInParameter param, string ruleCriteria, int ruleValue)
         {
             InitializeMemebers();
-            //
-            // set data with specified values
             ParamType = StorageType.Integer;
             Parameter = param;
             RuleCriteria = ruleCriteria;
             RuleValue = ruleValue.ToString();
         }
 
-        /// <summary>
-        ///     Create FilterRuleBuilder for ElementId FilterRule
-        /// </summary>
-        /// <param name="param">Parameter of FilterRule.</param>
-        /// <param name="ruleCriteria">Rule criteria.</param>
-        /// <param name="ruleValue">Rule value.</param>
         public FilterRuleBuilder(BuiltInParameter param, string ruleCriteria, ElementId ruleValue)
         {
             InitializeMemebers();
-            //
-            // set data with specified values
             ParamType = StorageType.ElementId;
             Parameter = param;
             RuleCriteria = ruleCriteria;
             RuleValue = ruleValue.ToString();
         }
 
-        /// <summary>
-        ///     Parameter of filter rule
-        /// </summary>
         public BuiltInParameter Parameter { get; private set; }
 
-        /// <summary>
-        ///     Filter rule criteria(in String type)
-        /// </summary>
         public string RuleCriteria { get; private set; }
 
-        /// <summary>
-        ///     Rule values in string
-        /// </summary>
         public string RuleValue { get; private set; }
 
-        /// <summary>
-        ///     Parameter storage type of current FilterRule.
-        /// </summary>
         public StorageType ParamType { get; private set; }
 
-        /// <summary>
-        ///     Tolerance of double comparison, valid only when ParamType is double
-        /// </summary>
+        /// <summary>Comparison tolerance; used only when <see cref="ParamType"/> is <see cref="StorageType.Double"/>.</summary>
         public double Epsilon { get; private set; }
 
-        /// <summary>
-        ///     Get ElementId of current parameter
-        /// </summary>
         public ElementId ParamId => new ElementId(Parameter);
 
-        /// <summary>
-        ///     Create API FilterRule according to sample's FilterRuleBuilder
-        /// </summary>
-        /// <returns>API FilterRule converted from current FilterRuleBuilder.</returns>
         public FilterRule AsFilterRule()
         {
             var paramId = new ElementId(Parameter);
@@ -209,14 +153,9 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                     break;
             }
 
-            //
-            // Throw exception for others
             throw new NotImplementedException("This filter rule or criteria is not implemented yet.");
         }
 
-        /// <summary>
-        ///     Make sure all members are initialized with expected values.
-        /// </summary>
         private void InitializeMemebers()
         {
             Parameter = BuiltInParameter.INVALID;
@@ -228,32 +167,14 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
     }
 
     /// <summary>
-    ///     This class used to represents data for one API filter.
-    ///     It consists of BuiltInCategory and filter rules
+    /// UI model for one parameter filter: categories and rules backed by the active document.
     /// </summary>
     public sealed class FilterData
     {
-        /// <summary>
-        ///     Reserves current active document
-        /// </summary>
         private readonly Document m_doc;
-
-        /// <summary>
-        ///     BuiltInCategories of filter
-        /// </summary>
         private List<BuiltInCategory> m_filterCategories;
-
-        /// <summary>
-        ///     Filer rules of filter
-        /// </summary>
         private readonly List<FilterRuleBuilder> m_filterRules;
 
-        /// <summary>
-        ///     Create sample custom FilterData with specified categories and FilterRuleBuilder
-        /// </summary>
-        /// <param name="doc">Revit active document.</param>
-        /// <param name="categories">BuilInCategories of filter.</param>
-        /// <param name="filterRules">FilterRuleBuilder set of filter.</param>
         public FilterData(Document doc,
             ICollection<BuiltInCategory> categories, ICollection<FilterRuleBuilder> filterRules)
         {
@@ -264,12 +185,6 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             m_filterRules.AddRange(filterRules);
         }
 
-        /// <summary>
-        ///     Create sample custom FilterData with specified category id and FilterRuleBuilder
-        /// </summary>
-        /// <param name="doc">Revit active document.</param>
-        /// <param name="categories">BuilInCategory ids of filter.</param>
-        /// <param name="filterRules">FilterRuleBuilder set of filter.</param>
         public FilterData(Document doc,
             ICollection<ElementId> categories, ICollection<FilterRuleBuilder> filterRules)
         {
@@ -284,19 +199,10 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             m_filterRules.AddRange(filterRules);
         }
 
-        /// <summary>
-        ///     Get BuiltInCategories of filter
-        /// </summary>
         public List<BuiltInCategory> FilterCategories => m_filterCategories;
 
-        /// <summary>
-        ///     Get FilterRuleBuilder of API filter's rules
-        /// </summary>
         public List<FilterRuleBuilder> RuleData => m_filterRules;
 
-        /// <summary>
-        ///     Get BuiltInCategory Ids of filter
-        /// </summary>
         public IList<ElementId> GetCategoryIds()
         {
             var catIds = new List<ElementId>();
@@ -308,21 +214,12 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             return catIds;
         }
 
-        /// <summary>
-        ///     Set new categories, this method will possibly update existing criteria
-        /// </summary>
-        /// <param name="newCatIds">New categories for current filter.</param>
-        /// <returns>true if categories or criteria are changed; otherwise false.</returns>
-        /// <remarks>
-        ///     If someone parameter of criteria cannot be supported by new categories,
-        ///     the old criteria will be cleaned and set to empty
-        /// </remarks>
+        /// <returns>true when categories changed or rules were cleared because new categories no longer support them.</returns>
         public bool SetNewCategories(List<BuiltInCategory> newCats)
         {
-            // do nothing if new categories are equals to old categories
             if (ListCompareUtility<BuiltInCategory>.Equals(newCats, m_filterCategories))
                 return false;
-            m_filterCategories = newCats; // update categories
+            m_filterCategories = newCats;
 
             var newCatIds = new List<ElementId>();
             foreach (var cat in newCats)
@@ -330,10 +227,6 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                 newCatIds.Add(new ElementId(cat));
             }
 
-            //
-            // Check if need to update file rules:
-            // . if filer rule is empty, do nothing
-            // . if some parameters of rules cannot be supported by new categories, clean all old rules
             var supportParams =
                 ParameterFilterUtilities.GetFilterableParametersInCommon(m_doc, newCatIds);
             foreach (var rule in m_filterRules)
@@ -349,94 +242,30 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         }
     }
 
-    /// <summary>
-    ///     This class define constant strings to map rule criteria
-    /// </summary>
     public sealed class RuleCriteraNames
     {
-        /// <summary>
-        ///     String represents BeginWith criteria
-        /// </summary>
         public const string BeginWith = "begins with";
-
-        /// <summary>
-        ///     String represents Contains criteria
-        /// </summary>
         public const string Contains = "contains";
-
-        /// <summary>
-        ///     String represents EndWith criteria
-        /// </summary>
         public const string EndsWith = "ends with";
-
-        /// <summary>
-        ///     String represents Equals criteria
-        /// </summary>
         public const string Equals = "equals";
-
-        /// <summary>
-        ///     String represents GreaterThan criteria
-        /// </summary>
         public const string Greater = "is greater than";
-
-        /// <summary>
-        ///     String represents GreaterOrEqual criteria
-        /// </summary>
         public const string GreaterOrEqual = "is greater than or equal to";
-
-        /// <summary>
-        ///     String represents LessOrEqual criteria
-        /// </summary>
         public const string LessOrEqual = "is less than or equal to";
-
-        /// <summary>
-        ///     String represents Less criteria
-        /// </summary>
         public const string Less = "is less than";
-
-        /// <summary>
-        ///     String represents NotBeginWith criteria
-        /// </summary>
         public const string NotBeginWith = "does not begin with";
-
-        /// <summary>
-        ///     String represents NotContains criteria
-        /// </summary>
         public const string NotContains = "does not contain";
-
-        /// <summary>
-        ///     String represents NotEndsWith criteria
-        /// </summary>
         public const string NotEndsWith = "does not end with";
-
-        /// <summary>
-        ///     String represents NotEquals criteria
-        /// </summary>
         public const string NotEquals = "does not equal";
-
-        /// <summary>
-        ///     Invalid criteria
-        /// </summary>
         public const string Invalid = "n/a";
 
-        /// <summary>
-        ///     Hide ctor, this class defines only static members, no need to be created
-        /// </summary>
         private RuleCriteraNames()
         {
         }
 
-        /// <summary>
-        ///     Get all supported criteria(in string) according to StorageType of parameter
-        /// </summary>
-        /// <param name="paramType">Parameter type.</param>
-        /// <returns>String list of criteria supported for specified parameter type.</returns>
         public static ICollection<string> Criterions(StorageType paramType)
         {
             ICollection<string> returns = new List<string>
             {
-                //
-                // all parameter supports following criteria
                 Equals,
                 Greater,
                 GreaterOrEqual,
@@ -444,8 +273,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                 Less,
                 NotEquals
             };
-            // 
-            // Only string parameter support criteria below
+            // String parameters also support substring criteria.
             if (paramType == StorageType.String)
             {
                 returns.Add(BeginWith);

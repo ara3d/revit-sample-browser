@@ -1,5 +1,4 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-//
 // Adapted from DirectShapeFromFace by Frode Tørresdal and Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/DirectShapeFromFace
 
@@ -11,10 +10,6 @@ using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledEx
 
 namespace Ara3D.RevitSampleBrowser.DirectShapeFromFace.CS
 {
-    /// <summary>
-    ///     Creates a DirectShape from a picked face by triangulating the face
-    ///     and applying the family instance total transform when needed.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

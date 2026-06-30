@@ -9,14 +9,8 @@ using TextBox = System.Windows.Forms.TextBox;
 
 namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
-    /// <summary>
-    ///     Stand for the point data of this user control
-    /// </summary>
     public partial class PointUserControl : UserControl
     {
-        /// <summary>
-        ///     Default constructor of ModelLinesForm
-        /// </summary>
         public PointUserControl()
         {
             // Required for Windows Form Designer support
@@ -28,10 +22,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             zCoordinateTextBox.Text = "0";
         }
 
-        /// <summary>
-        ///     Get the point data of this user control
-        /// </summary>
-        /// <returns>the point data stored in this control</returns>
         public XYZ GetPointData()
         {
             var x = Convert.ToDouble(xCoordinateTextBox.Text); // Get x coordinate
@@ -43,10 +33,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             return new XYZ(x, y, z);
         }
 
-        /// <summary>
-        ///     Set the point data of this user control
-        /// </summary>
-        /// <param name="data">the point data</param>
         public void SetPointData(XYZ data)
         {
             xCoordinateTextBox.Text = data.X.ToString("F2");
@@ -54,10 +40,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             zCoordinateTextBox.Text = data.Z.ToString("F2");
         }
 
-        /// <summary>
-        ///     Check the point data which the user input are integrated or not
-        /// </summary>
-        /// <returns>If the data are integrated return true, otherwise false</returns>
         public bool AssertPointIntegrity()
         {
             return !string.IsNullOrEmpty(xCoordinateTextBox.Text) && ! // x coordinate empty
@@ -66,11 +48,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             // If all coordinates are not empty, return true
         }
 
-        /// <summary>
-        ///     This method is called to Validate whether the TextBox data is a number.
-        /// </summary>
-        /// <param name="sender">the event sender(can be all TextBox)</param>
-        /// <param name="e">contain event data(not used)</param>
         private void CoordinateTextBox_Validating(object sender, CancelEventArgs e)
         {
             // Check whether the sender is a TextBox reference
@@ -84,11 +61,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
                 TaskDialog.Show("Revit", "Please input a double data.");
         }
 
-        /// <summary>
-        ///     Check whether the string data can represent a double number
-        /// </summary>
-        /// <param name="number">The test string</param>
-        /// <returns>If the string can represent a number return true, otherwise false</returns>
         public static bool IsNumber(string number)
         {
             // First check whether the string is empty

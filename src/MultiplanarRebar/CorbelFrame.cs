@@ -16,13 +16,6 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
     /// </summary>
     public class Trapezoid
     {
-        /// <summary>
-        ///     Constructor to initialize the fields.
-        /// </summary>
-        /// <param name="top">Top Line</param>
-        /// <param name="vertical">Left Vertical Line</param>
-        /// <param name="bottom">Bottom Line</param>
-        /// <param name="slanted">Right slanted Line</param>
         public Trapezoid(Line top, Line vertical, Line bottom, Line slanted)
         {
             Top = top;
@@ -293,14 +286,8 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
         /// </summary>
         private readonly Line m_extrusionLine;
 
-        /// <summary>
-        ///     Cover distance of corbel host.
-        /// </summary>
         private readonly double m_hostCoverDistance;
 
-        /// <summary>
-        ///     Depth of corbel host.
-        /// </summary>
         private readonly double m_hostDepth;
 
         /// <summary>
@@ -308,14 +295,6 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
         /// </summary>
         private readonly Trapezoid m_profile;
 
-        /// <summary>
-        ///     Constructor to initialize the fields.
-        /// </summary>
-        /// <param name="corbel">Corbel family instance</param>
-        /// <param name="profile">Trapezoid profile</param>
-        /// <param name="path">Extrusion Line</param>
-        /// <param name="hostDepth">Corbel Host Depth</param>
-        /// <param name="hostTopCorverDistance">Corbel Host cover distance</param>
         public CorbelFrame(FamilyInstance corbel, Trapezoid profile,
             Line path, double hostDepth, double hostTopCorverDistance)
         {

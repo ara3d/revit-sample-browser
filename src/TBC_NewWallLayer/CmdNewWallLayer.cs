@@ -21,11 +21,7 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Demonstrate that the compound layer structure can be edited
-    ///     and added to prior from Revit 2012 onwards. This was previously
-    ///     impossible, and the whole compound structure was read-only.
-    /// </summary>
+    /// <summary>Compound wall layers became editable from Revit 2012 onward (previously read-only).</summary>
     [Transaction(TransactionMode.Manual)]
     internal class CmdNewWallLayer : IExternalCommand
     {
@@ -85,11 +81,10 @@ namespace BuildingCoder
             using var t = new Transaction(doc);
             t.Start("Create New Wall Layer");
 
-            //WallTypeSet wallTypes = doc.WallTypes; // 2013 
 
             var wallTypes
                 = new FilteredElementCollector(doc)
-                    .OfClass(typeof(WallType)); // 2014
+                    .OfClass(typeof(WallType));
 
             foreach (WallType wallType in wallTypes)
                 if (0 < wallType.GetCompoundStructure().GetLayers().Count)
@@ -106,7 +101,6 @@ namespace BuildingCoder
                     var layers
                         = structure.GetLayers();
 
-                    // in Revit 2012, we can create a new layer:
 
                     var width = 0.1;
                     var function = oldLayer.Function;

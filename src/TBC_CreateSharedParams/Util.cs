@@ -6,7 +6,6 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_CreateSharedParams sample.</summary>
     internal static partial class Util
     {
         private const string SharedParamsFilename = "C:/tmp/SharedParams.txt";

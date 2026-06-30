@@ -66,7 +66,6 @@ namespace BuildingCoder
             //string ruleString = ParameterValue.SupplyAir;
             //FilterRule rule = new FilterStringRule( provider, evaluator, ruleString, false );
             //ElementParameterFilter filter = new ElementParameterFilter( rule );
-            //collector.WherePasses( filter );
 
             foreach (var e in collector)
             {

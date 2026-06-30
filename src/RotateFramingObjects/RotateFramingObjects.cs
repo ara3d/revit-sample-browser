@@ -172,7 +172,6 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
                             {
                                 var para = paraIterator.Current;
                                 var objectAttribute = para as Parameter;
-                                //set generic property named "Cross-Section Rotation"                           
                                 if (objectAttribute.Definition.Name.Equals(AngleDefinitionName))
                                 {
                                     var originDegree = objectAttribute.AsDouble();
@@ -191,10 +190,8 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
                         {
                             // rotate a column
                             var columnLocation = familyComponent.Location;
-                            // get the location object
                             var pointLocation = columnLocation as LocationPoint;
                             var insertPoint = pointLocation.Point;
-                            // get the location point
                             var temp = pointLocation.Rotation;
                             //existing rotation
                             var directionPoint = new XYZ(0, 0, 1);

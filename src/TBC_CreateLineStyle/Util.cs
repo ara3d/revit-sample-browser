@@ -3,12 +3,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_CreateLineStyle sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Create a new line style using NewSubcategory
-        /// </summary>
         internal static void CreateLineStyle(Document doc)
         {
             var fec

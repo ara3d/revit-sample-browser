@@ -4,12 +4,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_ImportsInFamilies sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Retrieve families used by family instances and annotation symbols.
-        /// </summary>
         internal static Dictionary<string, Family> GetFamilies(Document doc)
         {
             var families = new Dictionary<string, Family>();
@@ -38,9 +34,6 @@ namespace BuildingCoder
             return families;
         }
 
-        /// <summary>
-        ///     List import instances in families and search nested families recursively.
-        /// </summary>
         internal static void ListImportsAndSearchForMore(
             int recursionLevel,
             Document doc,

@@ -6,9 +6,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
 {
-    /// <summary>
-    ///     The command that initializes and starts the model animation.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class DisplacementStructureModelAnimatorCommand : IExternalCommand
     {
@@ -20,9 +17,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
         }
     }
 
-    /// <summary>
-    ///     The command that initializes and starts the model animation step by step.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class DisplacementStructureModelAnimatorCommandStepByStep : IExternalCommand
     {

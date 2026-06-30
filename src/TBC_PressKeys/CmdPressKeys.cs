@@ -40,10 +40,6 @@ namespace BuildingCoder
         [DllImport("user32.dll")]
         private static extern uint MapVirtualKey(
             uint uCode, uint uMapType);
-
-        /// <summary>
-        ///     Post one single keystroke.
-        /// </summary>
         public static void OneKey(IntPtr handle, char letter)
         {
             var scanCode = MapVirtualKey(letter,
@@ -65,17 +61,10 @@ namespace BuildingCoder
                 (uint) KEYBOARD_MSG.WM_KEYUP,
                 letter, keyUpCode);
         }
-
-        /// <summary>
-        ///     Post a sequence of keystrokes.
-        /// </summary>
         public static void Keys(
             IntPtr revitHandle,
             string command)
         {
-            //IntPtr revitHandle = System.Diagnostics.Process // 2018
-            //  .GetCurrentProcess().MainWindowHandle; // 2018
-
             foreach (var letter in command) OneKey(revitHandle, letter);
         }
 
@@ -99,12 +88,6 @@ namespace BuildingCoder
     [Transaction(TransactionMode.Manual)]
     internal class CmdPressKeys : IExternalCommand
     {
-        /// <summary>
-        ///     Here is a part or our code to start a Revit command.
-        ///     The aim of the code is to set a wall type current in the Revit property window.
-        ///     We only start up the wall command with the API and let the user do the drawing of the wall.
-        ///     This solution can also be used to launch other Revit commands.
-        /// </summary>
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,
@@ -115,9 +98,7 @@ namespace BuildingCoder
             var app = uiapp.Application;
             var doc = uidoc.Document;
 
-            var hRvt = uiapp.MainWindowHandle; // 2019
-
-            // Name of target wall type that we want to use:
+            var hRvt = uiapp.MainWindowHandle;
 
             var wallTypeName = "Generic - 203";
 
@@ -127,20 +108,12 @@ namespace BuildingCoder
             var wall = Util.GetFirstWallUsingType(
                 doc, wallType);
 
-            // Select the wall in the UI
-
-            //uidoc.Selection.Elements.Add( wall ); // 2014
-
             var ids = new List<ElementId>(1);
             ids.Add(wall.Id);
-            uidoc.Selection.SetElementIds(ids); // 2015
+            uidoc.Selection.SetElementIds(ids);
 
-            //if( 0 == uidoc.Selection.Elements.Size ) // 2014
-
-            if (0 == uidoc.Selection.GetElementIds().Count) // 2015
+            if (0 == uidoc.Selection.GetElementIds().Count)
             {
-                // No wall with the correct wall type found
-
                 var collector
                     = new FilteredElementCollector(doc);
 
@@ -148,62 +121,37 @@ namespace BuildingCoder
                     .OfClass(typeof(Level))
                     .FirstElement() as Level;
 
-                // place a new wall with the
-                // correct wall type in the project
-
-                //Line geomLine = app.Create.NewLineBound( XYZ.Zero, new XYZ( 2, 0, 0 ) ); // 2013
-                var geomLine = Line.CreateBound(XYZ.Zero, new XYZ(2, 0, 0)); // 2014
+                var geomLine = Line.CreateBound(XYZ.Zero, new XYZ(2, 0, 0));
 
                 var t = new Transaction(
                     doc, "Create dummy wall");
 
                 t.Start();
 
-                //Wall nw = doc.Create.NewWall( geomLine, // 2012
-                //  wallType, ll, 1, 0, false, false );
-
-                var nw = Wall.Create(doc, geomLine, // 2013
+                var nw = Wall.Create(doc, geomLine,
                     wallType.Id, ll.Id, 1, 0, false, false);
 
                 t.Commit();
 
-                // Select the new wall in the project
-
-                //uidoc.Selection.Elements.Add( nw ); // 2014
-
                 ids.Clear();
                 ids.Add(nw.Id);
-                uidoc.Selection.SetElementIds(ids); // 2015
-
-                // Start command create similar. In the
-                // property menu, our wall type is set current
+                uidoc.Selection.SetElementIds(ids);
 
                 Press.Keys(hRvt, "CS");
 
-                // Select the new wall in the project,
-                // so we can delete it
-
-                //uidoc.Selection.Elements.Add( nw ); // 2014
-
                 ids.Clear();
                 ids.Add(nw.Id);
-                uidoc.Selection.SetElementIds(ids); // 2015
+                uidoc.Selection.SetElementIds(ids);
 
-                // Erase the selected wall (remark:
-                // doc.delete(nw) may not be used,
-                // this command will undo)
+                // Use keyboard delete; doc.Delete would not respect undo in this flow.
 
                 Press.Keys(hRvt, "DE");
-
-                // Start up wall command
 
                 Press.Keys(hRvt, "WA");
             }
             else
             {
-                // The correct wall is already selected:
-
-                Press.Keys(hRvt, "CS"); // Start "create similar"
+                Press.Keys(hRvt, "CS");
             }
 
             return Result.Succeeded;

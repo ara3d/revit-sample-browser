@@ -41,20 +41,7 @@ namespace AdnRme
     ElementId _electricalEquipmentCategoryId;
 
     #region Loads
-    /// <summary>
-    /// Store the loads associated with a panel or circuit:
-    /// 
-    /// Provide at the circuit and panel level the total connected load by load type… 
-    /// RME provides four load types: HVAC, lighting, receptacle, and other.
-    /// The project browser only shows a total. If we could subdivide that 
-    /// information based on the category, that would be interesting.
-    /// 
-    /// RBS_ELEC_PANEL_TOTALLOAD_HVAC_PARAM	HVAC Total Connected
-    /// RBS_ELEC_PANEL_TOTALLOAD_LIGHT_PARAM	Lighting Total Connected
-    /// RBS_ELEC_PANEL_TOTALLOAD_POWER_PARAM	Power Total Connected
-    /// RBS_ELEC_PANEL_TOTALLOAD_OTHER_PARAM	Other Total Connected
-    /// RBS_ELEC_PANEL_TOTALLOAD_PARAM	Total Connected
-    /// </summary>
+    // Panel/circuit connected loads by type (HVAC, light, power, other, total).
     class Loads
     {
       public string Hvac;
@@ -264,7 +251,7 @@ namespace AdnRme
         // so the entire tree of H-2 should reside as a child of the 
         // 1,3,5 node of MDP.  
         // Likewise, H-2 circuit 1,3,5 has transformer T2 connected, 
-        // so this should be shown as a child of this node, etc…
+        // so this should be shown as a child of this node, etcâ€¦
         //
         PopulateFullHierarchy( map );
       }
@@ -322,10 +309,6 @@ namespace AdnRme
     #endregion // PopulateFromMapParentToChildren
 
     #region Constructor
-    /// <summary>
-    /// Constructor used to populate from a dictionary mapping element ids 
-    /// to a list of child elements.
-    /// </summary>
     public CmdInspectElectricalForm( 
       MapParentToChildren map,
       ElementId electricalEquipmentCategoryId )

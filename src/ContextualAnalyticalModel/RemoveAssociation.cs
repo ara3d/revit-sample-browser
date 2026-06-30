@@ -8,10 +8,6 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    ///     Break existing relation between physical and analytical elements using AnalyticalToPhysicalAssociationManager
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class RemoveAssociation : IExternalCommand
@@ -27,7 +23,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 var selectedElementId = ElementQuery.GetSelectedObject(activeDoc,
                     "Please select the element for which you want to break relation");
 
-                // Gets the AnalyticalToPhysicalAssociationManager for this Revit document
                 var analyticalToPhysicalmanager =
                     AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(doc);
                 if (analyticalToPhysicalmanager == null)

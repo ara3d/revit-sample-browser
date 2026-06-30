@@ -4,13 +4,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_BoundingBox sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return a rotated bounding box around
-        ///     the origin in the XY plane.
-        /// </summary>
         internal static BoundingBoxXYZ RotateBoundingBox(
             BoundingBoxXYZ b,
             Transform t)
@@ -30,10 +25,6 @@ namespace BuildingCoder
 
             return b;
         }
-
-        /// <summary>
-        ///     XYZ wrapper class implementing IComparable.
-        /// </summary>
         private class XyzComparable : XYZ, IComparable<XYZ>
         {
             public XyzComparable(XYZ a)

@@ -5,27 +5,14 @@ using System.Drawing.Drawing2D;
 
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
-    /// <summary>
-    ///     sketch line and any tag on it
-    /// </summary>
     public class LineSketch : ObjectSketch
     {
-        /// <summary>
-        ///     the rate of direction tag's distance to the line
-        /// </summary>
         private const float DirectionTagDistanceRatio = 0.02f;
 
-        /// <summary>
-        ///     the rate of direction tag's length to the line
-        /// </summary>
         private const float DirectionTagLengthRatio = 0.1f;
 
         private readonly Line2D m_line = new Line2D(); // geometry line to draw
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="line"></param>
         public LineSketch(Line2D line)
         {
             m_line = line;
@@ -34,16 +21,8 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             Pen.Width = 1f;
         }
 
-        /// <summary>
-        ///     whether has direction tag
-        /// </summary>
         public bool IsDirection { get; set; }
 
-        /// <summary>
-        ///     draw the line
-        /// </summary>
-        /// <param name="g">drawing object</param>
-        /// <param name="translate">translation between drawn sketch and geometry object</param>
         public override void Draw(Graphics g, Matrix translate)
         {
             var path = new GraphicsPath();
@@ -55,10 +34,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             g.DrawPath(Pen, path);
         }
 
-        /// <summary>
-        ///     draw 2 shorter parallel lines on each side of the line
-        /// </summary>
-        /// <param name="path"></param>
         private void DrawDirectionTag(GraphicsPath path)
         {
             var leftLine = m_line.Clone();

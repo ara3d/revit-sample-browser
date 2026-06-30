@@ -5,27 +5,12 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Provide a dialog which provides the options of lower priority information for exporting dwg format
-    /// </summary>
     public partial class ExportBaseOptionsForm : Form
     {
-        /// <summary>
-        ///     Whether export the current view only
-        /// </summary>
         private readonly bool m_contain3DView;
 
-        /// <summary>
-        ///     data class
-        /// </summary>
         private readonly ExportBaseOptionsData m_exportOptionsData;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="exportOptionsData">Data class object</param>
-        /// <param name="contain3DView">If views to export contain 3D views</param>
-        /// <param name="exportFormat">export format</param>
         public ExportBaseOptionsForm(ExportBaseOptionsData exportOptionsData, bool contain3DView, string exportFormat)
         {
             InitializeComponent();
@@ -35,9 +20,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             InitializeControl();
         }
 
-        /// <summary>
-        ///     Initialize values and status of controls
-        /// </summary>
         private void InitializeControl()
         {
             comboBoxLayersAndProperties.DataSource = m_exportOptionsData.LayersAndProperties;
@@ -60,11 +42,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                 comboBoxSolids.Enabled = false;
         }
 
-        /// <summary>
-        ///     Transfer information back to ExportOptionData class
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
             m_exportOptionsData.ExportLayersAndProperties =

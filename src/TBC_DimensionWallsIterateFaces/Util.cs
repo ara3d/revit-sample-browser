@@ -6,13 +6,8 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_DimensionWallsIterateFaces sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Create a new dimension element using the given
-        ///     references and dimension line end points.
-        /// </summary>
         internal static void CreateDimensionElement(
             View view,
             XYZ p1,
@@ -38,10 +33,6 @@ namespace BuildingCoder
             t.Commit();
         }
 
-        /// <summary>
-        ///     Return the closest planar face to a given point
-        ///     on the element e with a given normal vector.
-        /// </summary>
         internal static Face GetClosestFace(
             Element e,
             XYZ p,

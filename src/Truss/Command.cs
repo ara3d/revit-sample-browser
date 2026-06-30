@@ -6,9 +6,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Truss.CS
 {
-    /// <summary>
-    ///     The entrance of this example, implements the Execute method of IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

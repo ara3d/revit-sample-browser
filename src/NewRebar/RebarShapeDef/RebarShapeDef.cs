@@ -9,15 +9,8 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
 {
-    /// <summary>
-    ///     This class wraps RebarShapeDefinition object.
-    /// </summary>
     public abstract class RebarShapeDef
     {
-        /// <summary>
-        ///     Constructor, initialize the fields.
-        /// </summary>
-        /// <param name="shapeDef">RebarShapeDefinition object to be wrapped</param>
         public RebarShapeDef(RebarShapeDefinition shapeDef)
         {
             RebarshapeDefinition = shapeDef;
@@ -25,31 +18,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
             Constraints = new List<ConstraintOnRebarShape>();
         }
 
-        /// <summary>
-        ///     Return the real object RebarShapeDefinition.
-        /// </summary>
         public RebarShapeDefinition RebarshapeDefinition { get; }
 
-        /// <summary>
-        ///     Return all the parameters.
-        /// </summary>
         public List<RebarShapeParameter> Parameters { get; }
 
-        /// <summary>
-        ///     Return all the dimensions.
-        /// </summary>
         public List<ConstraintOnRebarShape> Constraints { get; }
 
-        /// <summary>
-        ///     Add a parameter to RebarShapeDefinition.
-        /// </summary>
-        /// <param name="parameterType">
-        ///     Parameter type:
-        ///     (type of RebarShapeParameterDouble or type of RebarShapeParameterFormula)
-        /// </param>
-        /// <param name="name">Parameter name</param>
-        /// <param name="value">Parameter value (double value or formula string)</param>
-        /// <returns></returns>
         public RebarShapeParameter AddParameter(Type parameterType, object name, object value)
         {
             var param =
@@ -101,10 +75,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
                 throw new Exception("The Rebar shape definition is not completed.");
         }
 
-        /// <summary>
-        ///     Return all the parameter types supported by RebarShape definition.
-        /// </summary>
-        /// <returns>All the parameter types supported by RebarShape definition</returns>
         public List<Type> AllParameterTypes() => new List<Type>
         {
             typeof(RebarShapeParameterDouble),

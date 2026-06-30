@@ -8,107 +8,52 @@ using Autodesk.Revit.DB;
 using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 {
-    /// <summary>
-    ///     BoundaryConditions Type Enumeration
-    /// </summary>
     public enum BcType
     {
-        /// <summary>
-        ///     Point BC
-        /// </summary>
         Point = 0,
 
-        /// <summary>
-        ///     Line BC
-        /// </summary>
         Line,
 
-        /// <summary>
-        ///     Area BC
-        /// </summary>
         Area
     }
 
-    /// <summary>
-    ///     BoundaryConditions State Enumeration
-    /// </summary>
     public enum BcState
     {
-        /// <summary>
-        ///     the state of current BC is fixed
-        /// </summary>
         Fixed = 0,
 
-        /// <summary>
-        ///     the state of current BC is Pinned
-        /// </summary>
         Pinned,
 
-        /// <summary>
-        ///     the state of current BC is Roller
-        /// </summary>
         Roller,
 
-        /// <summary>
-        ///     the state of current BC is decided by user
-        /// </summary>
         User
     }
 
-    /// <summary>
-    ///     BoundaryConditions Translation/Rotation Enumeration
-    /// </summary>
     public enum BcTranslationRotation
     {
-        /// <summary>
-        ///     the BC is fixed, can used when any  BCState
-        /// </summary>
         Fixed = 0,
 
-        /// <summary>
-        ///     the BC's Translation/Rotation can released
-        /// </summary>
         Released,
 
-        /// <summary>
-        ///     user can set the BC's Translation/Rotation spring  modulus.
-        ///     Only can be used when the BCState is User
-        /// </summary>
         Spring
     }
 
-    /// <summary>
-    ///     A custom attribute to allow a target to have a pet.
-    ///     this attribute is about the BoundaryConditions Type Enumeration
-    /// </summary>
+    // Restricts decorated members to applicable boundary-condition types.
     public sealed class BcTypeAttribute : Attribute
     {
         private BcType[] m_bcType;
         // Keep a variable internally ...
 
-        /// <summary>
-        ///     The constructor is called when the attribute is set.
-        /// </summary>
-        /// <param name="bcTypes"></param>
         public BcTypeAttribute(BcType[] bcTypes)
         {
             BcType = bcTypes;
         }
 
-        /// <summary>
-        ///     property get or set public variable m_bcTypes
-        /// </summary>
         public BcType[] BcType
         {
             get => m_bcType;
             set => m_bcType = value;
         }
 
-        /// <summary>
-        ///     override Equals method
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (!(obj is BcTypeAttribute temp)) return false;
@@ -125,39 +70,22 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             return false;
         }
 
-        /// <summary>
-        ///     override GetHashCode method
-        /// </summary>
-        /// <returns></returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
     }
 
-    /// <summary>
-    ///     use to create instance as the display object of the PropertyGrid
-    /// </summary>
     public class BcProperties
     {
         // the boundary conditions of which the information will displayed in the UI grid
         private readonly Autodesk.Revit.DB.Structure.BoundaryConditions m_bC;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="bC">
-        ///     the boundary conditions of which the information will displayed in the UI grid
-        /// </param>
         public BcProperties(Autodesk.Revit.DB.Structure.BoundaryConditions bC)
         {
             m_bC = bC;
         }
 
-        /// <summary>
-        ///     BoundaryConditions Type
-        ///     this item will be displayed no matter the point BC,line BC or area BC
-        /// </summary>
         [Category("Structural Analysis")]
         [ReadOnly(true)]
         [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
@@ -167,9 +95,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             set => SetParameterValue("Boundary Conditions Type", GroupTypeId.StructuralAnalysis, value);
         }
 
-        /// <summary>
-        ///     BoundaryConditions State
-        /// </summary>
         [Category("Structural Analysis")]
         [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
         public BcState State
@@ -209,9 +134,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     BoundaryConditions XTranslation
-        /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Translation in")]
         [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
@@ -224,9 +146,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     BoundaryConditions SpringModulus about XTranslation
-        /// </summary>
         [Category("Translation in")]
         public double XTranslationSpringModulus
         {
@@ -234,9 +153,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             set => SetParameterValue("X Spring Modulus", GroupTypeId.TranslationIn, value);
         }
 
-        /// <summary>
-        ///     BoundaryCondition YTranslation
-        /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Translation in")]
         [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
@@ -249,9 +165,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     BoundaryConditions SpringModulus about YTranslation
-        /// </summary>
         [Category("Translation in")]
         public double YTranslationSpringModulus
         {
@@ -259,9 +172,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             set => SetParameterValue("Y Spring Modulus", GroupTypeId.TranslationIn, value);
         }
 
-        /// <summary>
-        ///     BoundaryConditions ZTranslation
-        /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Translation in")]
         [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
@@ -274,9 +184,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     BoundaryConditions SpringModulus about ZTranslation
-        /// </summary>
         [Category("Translation in")]
         public double ZTranslationSpringModulus
         {
@@ -284,10 +191,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             set => SetParameterValue("Z Spring Modulus", GroupTypeId.TranslationIn, value);
         }
 
-        /// <summary>
-        ///     BoundaryConditions XRotation
-        ///     only displayed when the BC Type is point or line
-        /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Rotation about")]
         [BcType(new[] { BcType.Point, BcType.Line })]
@@ -300,9 +203,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     BoundaryConditions SpringModulus about XRotation
-        /// </summary>
         [Category("Rotation about")]
         public double XRotationSpringModulus
         {
@@ -310,10 +210,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             set => SetParameterValue("X Spring Modulus", GroupTypeId.RotationAbout, value);
         }
 
-        /// <summary>
-        ///     BoundaryConditions YRotation
-        ///     Only be displayed when the BC Type is point
-        /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Rotation about")]
         [BcType(new[] { BcType.Point })]
@@ -326,9 +222,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     BoundaryConditions SpringModulus about YRotation
-        /// </summary>
         [Category("Rotation about")]
         public double YRotationSpringModulus
         {
@@ -336,9 +229,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             set => SetParameterValue("Y Spring Modulus", GroupTypeId.RotationAbout, value);
         }
 
-        /// <summary>
-        ///     BoundaryConditions ZRotation
-        /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Rotation about")]
         [BcType(new[] { BcType.Point })]
@@ -351,9 +241,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     BoundaryConditions SpringModulus about ZRotation
-        /// </summary>
         [Category("Rotation about")]
         public double ZRotationSpringModulus
         {
@@ -363,12 +250,7 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             set => SetParameterValue("Z Spring Modulus", GroupTypeId.RotationAbout, value);
         }
 
-        /// <summary>
-        ///     When Spring is selected for Translation/Rotation the user enter a positive value
-        ///     greater than Zero as the corresponding Spring Modulus.
-        ///     And according to its display unit do the conversion between display value and inside value.
-        /// </summary>
-        /// <param name="gridItemLabel">the name of parameter which value is spring</param>
+        // Spring modulus must be positive; unit conversion depends on BC type and axis.
         public void SetSpringModulus(string gridItemLabel)
         {
             using (var springModulusForm = new SpringModulusForm())
@@ -453,10 +335,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     get parameter via matching the appointed name and group.
-        ///     and deal with it according to the type of Parameter's StorageType
-        /// </summary>
         protected object GetParameterValue(string parameterName, ForgeTypeId parameterGroup)
         {
             var parameters = m_bC.Parameters;
@@ -488,14 +366,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             return null;
         }
 
-        /// <summary>
-        ///     when user changed the parameter value via the UI set this changed parameter value
-        /// </summary>
-        /// <param name="parameterName">the name of the changed parameter</param>
-        /// <param name="parameterGroup">
-        ///     because some parameters of boundary conditions have the same name
-        /// </param>
-        /// <param name="value">the new parameter value</param>
         protected void SetParameterValue(string parameterName,
             ForgeTypeId parameterGroup,
             object value)
@@ -531,10 +401,7 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     the BC parameter values rules according to the Revit main program.
-        ///     For example, when the State is Fixed all the Translation/Rotation parameters are Fixed too.
-        /// </summary>
+        // Mirrors Revit UI rules (e.g. Fixed state forces all translation/rotation to Fixed).
         private void MatchBcValuesRule()
         {
             switch (State)

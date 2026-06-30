@@ -7,248 +7,128 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 {
-    /// <summary>
-    ///     Data class which stores the information for importing dwg format
-    /// </summary>
     public class ImportDwgData : ImportData
     {
-        /// <summary>
-        ///     ColorMode for import
-        /// </summary>
         private List<string> m_colorMode;
 
-        /// <summary>
-        ///     All available import color modes
-        /// </summary>
         private List<ImportColorMode> m_enumColorMode;
 
-        /// <summary>
-        ///     All placement for layers to be imported
-        /// </summary>
         private List<ImportPlacement> m_enumPlacement;
 
-        /// <summary>
-        ///     All import unit for import layers
-        /// </summary>
         private List<ImportUnit> m_enumUnit;
 
-        /// <summary>
-        ///     All boolean values for available visible layers
-        /// </summary>
         private List<bool> m_enumVisibleLayersOnly;
 
-        /// <summary>
-        ///     Import color mode
-        /// </summary>
         private ImportColorMode m_importColorMode;
 
-        /// <summary>
-        ///     Custom scale for import
-        /// </summary>
         private double m_importCustomScale;
 
-        /// <summary>
-        ///     OrientToView
-        /// </summary>
         private bool m_importOrientToView;
 
-        /// <summary>
-        ///     Placement for import
-        /// </summary>
         private ImportPlacement m_importPlacement;
 
-        /// <summary>
-        ///     ThisViewOnly
-        /// </summary>
         private bool m_importThisViewOnly;
 
-        /// <summary>
-        ///     Import unit
-        /// </summary>
         private ImportUnit m_importUnit;
 
-        /// <summary>
-        ///     Import view
-        /// </summary>
         private View m_importView;
 
-        /// <summary>
-        ///     Whether import visible layer only
-        /// </summary>
         private bool m_importVisibleLayersOnly;
 
-        /// <summary>
-        ///     Whether active view is 3D
-        /// </summary>
         private bool m_is3DView;
 
-        /// <summary>
-        ///     Placement
-        /// </summary>
         private List<string> m_placement;
 
-        /// <summary>
-        ///     All units for layer to be imported
-        /// </summary>
         private List<string> m_unit;
 
-        /// <summary>
-        ///     All views
-        /// </summary>
         private ViewSet m_views;
 
-        /// <summary>
-        ///     All available layers only
-        /// </summary>
         private List<string> m_visibleLayersOnly;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
-        /// <param name="format">Format to import</param>
         public ImportDwgData(ExternalCommandData commandData, ImportFormat format)
             : base(commandData, format)
         {
             Initialize();
         }
 
-        /// <summary>
-        ///     Get or set whether import this view only
-        /// </summary>
         public bool ImportThisViewOnly
         {
             get => m_importThisViewOnly;
             set => m_importThisViewOnly = value;
         }
 
-        /// <summary>
-        ///     all views for import
-        /// </summary>
         public ViewSet Views
         {
             get => m_views;
             set => m_views = value;
         }
 
-        /// <summary>
-        ///     Import view
-        /// </summary>
         public View ImportView
         {
             get => m_importView;
             set => m_importView = value;
         }
 
-        /// <summary>
-        ///     All available color modes for import
-        /// </summary>
         public ReadOnlyCollection<string> ColorMode => new ReadOnlyCollection<string>(m_colorMode);
 
-        /// <summary>
-        ///     All available import color modes
-        /// </summary>
         public ReadOnlyCollection<ImportColorMode> EnumColorMode =>
             new ReadOnlyCollection<ImportColorMode>(m_enumColorMode);
 
-        /// <summary>
-        ///     Import color mode
-        /// </summary>
         public ImportColorMode ImportColorMode
         {
             get => m_importColorMode;
             set => m_importColorMode = value;
         }
 
-        /// <summary>
-        ///     Custom scale for import
-        /// </summary>
         public double ImportCustomScale
         {
             get => m_importCustomScale;
             set => m_importCustomScale = value;
         }
 
-        /// <summary>
-        ///     Whether import orient to view
-        /// </summary>
         public bool ImportOrientToView
         {
             get => m_importOrientToView;
             set => m_importOrientToView = value;
         }
 
-        /// <summary>
-        ///     All placement for layers to be imported
-        /// </summary>
         public ReadOnlyCollection<string> Placement => new ReadOnlyCollection<string>(m_placement);
 
-        /// <summary>
-        ///     All ImportPlacements for all layers to be imported
-        /// </summary>
         public ReadOnlyCollection<ImportPlacement> EnumPlacement =>
             new ReadOnlyCollection<ImportPlacement>(m_enumPlacement);
 
-        /// <summary>
-        ///     Import placement for import
-        /// </summary>
         public ImportPlacement ImportPlacement
         {
             get => m_importPlacement;
             set => m_importPlacement = value;
         }
 
-        /// <summary>
-        ///     All units for layer to be imported
-        /// </summary>
         public ReadOnlyCollection<string> Unit => new ReadOnlyCollection<string>(m_unit);
 
-        /// <summary>
-        ///     All import unit for import layers
-        /// </summary>
         public ReadOnlyCollection<ImportUnit> EnumUnit => new ReadOnlyCollection<ImportUnit>(m_enumUnit);
 
-        /// <summary>
-        ///     Get or set import unit
-        /// </summary>
         public ImportUnit ImportUnit
         {
             get => m_importUnit;
             set => m_importUnit = value;
         }
 
-        /// <summary>
-        ///     All available layers only
-        /// </summary>
         public ReadOnlyCollection<string> VisibleLayersOnly => new ReadOnlyCollection<string>(m_visibleLayersOnly);
 
-        /// <summary>
-        ///     All boolean values for available visible layers
-        /// </summary>
         public ReadOnlyCollection<bool> EnumVisibleLayersOnly => new ReadOnlyCollection<bool>(m_enumVisibleLayersOnly);
 
-        /// <summary>
-        ///     Whether import visible layer only
-        /// </summary>
         public bool ImportVisibleLayersOnly
         {
             get => m_importVisibleLayersOnly;
             set => m_importVisibleLayersOnly = value;
         }
 
-        /// <summary>
-        ///     Whether active view is 3D
-        /// </summary>
         public bool Is3DView
         {
             get => m_is3DView;
             set => m_is3DView = value;
         }
 
-        /// <summary>
-        ///     Collect the parameters and export
-        /// </summary>
-        /// <returns></returns>
         public override bool Import()
         {
             //parameter: DWGImportOptions
@@ -280,9 +160,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             return imported;
         }
 
-        /// <summary>
-        ///     Initialize the variables
-        /// </summary>
         private void Initialize()
         {
             //ColorMode
@@ -352,9 +229,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             Title = "Import DWG";
         }
 
-        /// <summary>
-        ///     Get all the views to be displayed
-        /// </summary>
         private void GetViews()
         {
             var collector = new FilteredElementCollector(ActiveDoc);

@@ -21,30 +21,25 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
 
-                // get the user selection
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var collection = uidoc.Selection.GetElementIds();
 
                 if (collection.Count > 0)
                 {
-                    // DesignToFabrication needs an ISet<ElementId>
+                    // DesignToFabricationConverter.Convert requires ISet<ElementId>.
                     ISet<ElementId> selIds = new HashSet<ElementId>();
                     foreach (var id in collection)
                     {
                         selIds.Add(id);
                     }
 
-                    // Set the in-line element type identiers to be swapped during the conversion replacing the family with a similar fabrication part
                     IDictionary<ElementId, ElementId> convertInLineIds = new Dictionary<ElementId, ElementId>();
 
-                    // Get all family symbols
                     var familyFinder = new FilteredElementCollector(doc);
                     var families = familyFinder.OfClass(typeof(FamilySymbol)).ToElements().ToList();
 
-                    // Get the family symbol for the damper we are going to convert
                     var fsName = "Fire Damper - Rectangular - Simple";
 
-                    // The found family symbol
                     FamilySymbol fsDamper = null;
                     foreach (FamilySymbol family in families)
                     {
@@ -55,20 +50,15 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         }
                     }
 
-                    // If the damper was found try to find the matching fabrication part type
                     if (fsDamper != null)
                     {
-                        // Get the element type identifier for the family symbol
                         var elemFamSymId = fsDamper.Id;
 
-                        // Get all fabrication part types
                         var fabPartTypeFinder = new FilteredElementCollector(doc);
                         var fabPartTypes = fabPartTypeFinder.OfClass(typeof(FabricationPartType)).ToElements().ToList();
 
-                        // Get the fabrication part type for the damper we are going to convert to
                         var fptName = "Rect FD - Flange";
 
-                        // The found fabrication part type
                         FabricationPartType fptDamper = null;
                         foreach (FabricationPartType partType in fabPartTypes)
                         {
@@ -79,13 +69,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                             }
                         }
 
-                        // The damper was found create the mapping in between the family symbol and the matching fabrication part type
                         if (fptDamper != null)
                         {
-                            // Get the element type identifier for the fabricaion part type
                             var elemFabPartTypeId = fptDamper.Id;
 
-                            // Create the mapping for the family to the fabrication part
                             convertInLineIds.Add(elemFamSymId, elemFabPartTypeId);
                         }
                     }
@@ -96,16 +83,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                         var config = FabricationConfiguration.GetFabricationConfiguration(doc);
 
-                        // get all loaded fabrication services and attempt to convert the design elements 
-                        // to the first loaded service
+                        // Sample converts to the first loaded service.
                         var allLoadedServices = config.GetAllLoadedServices();
 
                         var converter = new DesignToFabricationConverter(doc);
 
-                        // If there is a mapping defined attempt to add it to the converter
                         if (convertInLineIds.Count() > 0)
                         {
-                            // Set the mappings
                             var mappingResult = converter.SetMapForFamilySymbolToFabricationPartType(convertInLineIds);
 
                             if (mappingResult != DesignToFabricationMappingResult.Success)
@@ -145,7 +129,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Succeeded;
                 }
 
-                // inform user they need to select at least one element
                 message = "Please select at least one element.";
 
                 return Result.Failed;

@@ -8,9 +8,6 @@ using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
 {
-    /// <summary>
-    ///     Base class for "Find South Facing..." utilities.
-    /// </summary>
     public class FindSouthFacingBase
     {
         protected Document Document { get; set; }

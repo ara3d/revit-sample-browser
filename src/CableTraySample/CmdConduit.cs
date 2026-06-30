@@ -12,9 +12,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
 {
-    /// <summary>
-    ///     Creates two conduit segments and inserts an elbow fitting between them.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

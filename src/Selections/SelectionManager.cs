@@ -35,42 +35,20 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         Point
     }
 
-    /// <summary>
-    ///     A class for object selection and storage.
-    /// </summary>
     public class SelectionManager
     {
-        /// <summary>
-        ///     store the application
-        /// </summary>
         private readonly UIApplication m_application;
 
-        /// <summary>
-        ///     To store a reference to the commandData.
-        /// </summary>
         private readonly ExternalCommandData m_commandData;
 
-        /// <summary>
-        ///     For basic creation.
-        /// </summary>
         private ItemFactoryBase m_creationBase;
 
-        /// <summary>
-        ///     store the document
-        /// </summary>
         private readonly UIDocument m_document;
 
-        /// <summary>
-        ///     The picked point of element.
-        /// </summary>
         private XYZ m_elemPickedPoint;
 
         private XYZ m_selectedPoint;
 
-        /// <summary>
-        ///     constructor of SelectionManager
-        /// </summary>
-        /// <param name="commandData"></param>
         public SelectionManager(ExternalCommandData commandData)
         {
             m_commandData = commandData;

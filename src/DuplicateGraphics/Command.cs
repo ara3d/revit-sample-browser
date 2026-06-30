@@ -7,9 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
 {
-    /// <summary>
-    ///     Provides the external command to duplicate selected graphics using DirectContext3D.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class CommandDuplicateGraphics : IExternalCommand
@@ -30,9 +27,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
         }
     }
 
-    /// <summary>
-    ///     Provides the external command to clear DirectContext3D graphics.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class CommandClearExternalGraphics : IExternalCommand

@@ -8,9 +8,6 @@ using BuildingCoder;
 
 namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
 {
-    /// <summary>
-    ///     Calculate and store the centroid and volume from a set of triangular facets.
-    /// </summary>
     public class CentroidVolume
     {
         XYZ _centroid;
@@ -38,18 +35,13 @@ namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
             _volume += vol;
         }
 
-        /// <summary>
-        ///     Add a completed partial centroid, weighted by its volume.
-        /// </summary>
         public void AddWeightedContribution(double volume, XYZ centroid)
         {
             _centroid += volume * centroid;
             _volume += volume;
         }
 
-        /// <summary>
-        ///     Set centroid coordinates and volume to their final values when completed.
-        /// </summary>
+        // Signed tetrahedron volume from origin; scale centroid by 1/(4V) and volume by 1/6.
         public void Complete()
         {
             if (_volume.Equals(0))
@@ -61,9 +53,6 @@ namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
             _volume /= 6;
         }
 
-        /// <summary>
-        ///     Finalize a volume-weighted average of completed partial centroids.
-        /// </summary>
         public void CompleteWeightedAverage()
         {
             if (_volume.Equals(0))

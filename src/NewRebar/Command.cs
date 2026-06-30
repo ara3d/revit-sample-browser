@@ -7,9 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.NewRebar.CS
 {
-    /// <summary>
-    ///     This class is the entrance of this project, it implements IExternalCommand.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

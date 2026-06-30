@@ -10,90 +10,40 @@ using Autodesk.Revit.UI.Events;
 
 namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
 {
-    /// <summary>
-    ///     A class that executes an animation of structural model elements using DisplacementElements.
-    /// </summary>
     public class DisplacementStructureModelAnimator
     {
-        /// <summary>
-        ///     The increment by which the displacement parameter is reduced during animation.
-        /// </summary>
         private readonly double m_displacementIncrement = 0.05;
 
-        /// <summary>
-        ///     The displacement parameter (proceeds from 1 -> 0 during the animation)
-        /// </summary>
         private double m_displacementParameter = 1.0;
 
-        /// <summary>
-        ///     The initial height for the initial displacement.
-        /// </summary>
         private readonly double m_initialHeight = 100;
 
-        /// <summary>
-        ///     The maximum ratio of displacement in XY.
-        /// </summary>
         private readonly double m_initialXyRatio = 1.25;
 
-        /// <summary>
-        ///     The index of the current parent element being animated.
-        /// </summary>
         private int m_currentDisplacementIndex;
 
-        /// <summary>
-        ///     The current parent displacement element being animated.
-        /// </summary>
         private DisplacementElement m_displacementElement;
 
-        /// <summary>
-        ///     The collection of top level displacement elements.
-        /// </summary>
         private List<DisplacementElement> m_displacementElements;
 
-        /// <summary>
-        ///     The switch for using Idling event.
-        /// </summary>
         private readonly bool m_isUsingIdling = true;
 
-        /// <summary>
-        ///     The timer that governs the automation.
-        /// </summary>
         private Timer m_timer;
 
-        /// <summary>
-        ///     The model center.  Currently hardcoded.
-        /// </summary>
         private readonly XYZ m_modelCenter = XYZ.Zero;
 
-        /// <summary>
-        ///     The number of milliseconds in between frames.
-        /// </summary>
         private readonly int m_timerInterval = 60;
 
-        /// <summary>
-        ///     Signals that the timer has triggered.
-        /// </summary>
         private bool m_timerTripped;
 
-        /// <summary>
-        ///     The application.
-        /// </summary>
         private readonly UIApplication m_uiApplication;
 
-        /// <summary>
-        ///     Constructs an animator instance.
-        /// </summary>
-        /// <param name="uiApp">The application.</param>
-        /// <param name="isUsingIdling">The switch for using Idling event.</param>
         public DisplacementStructureModelAnimator(UIApplication uiApp, bool isUsingIdling)
         {
             m_uiApplication = uiApp;
             m_isUsingIdling = isUsingIdling;
         }
 
-        /// <summary>
-        ///     Starts the animation by creating the needed displacement elements, and setting up the events to allow it proceed.
-        /// </summary>
         public void StartAnimation()
         {
             // Instantiate or reset animation variables
@@ -162,9 +112,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             }
         }
 
-        /// <summary>
-        ///     Executes the next step on the animation.
-        /// </summary>
         public void AnimateNextStep()
         {
             var groupFinished = false; // Is the current animation group finished?
@@ -212,9 +159,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             }
         }
 
-        /// <summary>
-        ///     Unhides the elements in the next displacement group.
-        /// </summary>
         private void UnhideDisplacedElements()
         {
             if (m_displacementElement != null)
@@ -224,12 +168,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             }
         }
 
-        /// <summary>
-        ///     Find all instances matching category and level, and add to the collection of groups of sorted ids.
-        /// </summary>
-        /// <param name="idGroupsInOrder">The collection of groups of ids, sorted.</param>
-        /// <param name="level">The level to match.</param>
-        /// <param name="category">The category to match.</param>
         private static void AddInstancesOnLevelToIdGroupList(List<ICollection<ElementId>> idGroupsInOrder,
             Level level, BuiltInCategory category)
         {
@@ -244,12 +182,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
                 idGroupsInOrder.Add(idGroup);
         }
 
-        /// <summary>
-        ///     Find all instances matching category and "Reference Level", and add to the collection of groups of sorted ids.
-        /// </summary>
-        /// <param name="idGroupsInOrder">The collection of groups of ids, sorted.</param>
-        /// <param name="level">The level to match.</param>
-        /// <param name="category">The category to match.</param>
         private static void AddInstancesOnReferenceLevelToIdGroupList(List<ICollection<ElementId>> idGroupsInOrder,
             Level level, BuiltInCategory category)
         {
@@ -270,13 +202,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
                 idGroupsInOrder.Add(idGroup);
         }
 
-        /// <summary>
-        ///     Builds a group of displacement elements from a collection of element ids, and
-        ///     sets the displacement to be uniform in Z but vary in XY based on location.
-        /// </summary>
-        /// <param name="doc">The document.</param>
-        /// <param name="ids">The collection of ids.</param>
-        /// <param name="view">The view.</param>
         private void BuildDisplacementElementGroup(Document doc, ICollection<ElementId> ids, View view)
         {
             // The last element will be in the "parent" displacement element.  (At least one element
@@ -311,9 +236,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             view.HideElements(ids);
         }
 
-        /// <summary>
-        ///     Change the displacement location for the current parent element.
-        /// </summary>
         private void ChangeDisplacementLocationForParent()
         {
             // Displacement includes displacement in Z
@@ -322,9 +244,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             m_displacementElement.SetRelativeDisplacement(displacement);
         }
 
-        /// <summary>
-        ///     Change the displacement location for children elements.
-        /// </summary>
         private void ChangeDisplacementLocationsForChildren()
         {
             var subDisplacementElements = m_displacementElement.GetChildren();
@@ -337,21 +256,11 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             }
         }
 
-        /// <summary>
-        ///     Identifies if the displacement element is a parent or a child.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <returns>True if the element is a child of another element.</returns>
         private static bool DisplacementElementIsChild(DisplacementElement element)
         {
             return element.ParentId != ElementId.InvalidElementId;
         }
 
-        /// <summary>
-        ///     Gets the XY displacement for a given element.
-        /// </summary>
-        /// <param name="element">The displacement element.</param>
-        /// <returns>The displacement.</returns>
         private XYZ GetDisplacementXy(DisplacementElement element)
         {
             // If the element is a child, need to take into account the displacement of the parent.
@@ -369,12 +278,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             return GetDisplacementXyFor(e, displacementDueToParent);
         }
 
-        /// <summary>
-        ///     Gets the XY displacement for a given element relative to a parent displacement.
-        /// </summary>
-        /// <param name="e">The element.</param>
-        /// <param name="displacementDueToParent">The parent element displacement.</param>
-        /// <returns>The XY displacement.</returns>
         private XYZ GetDisplacementXyFor(Element e, XYZ displacementDueToParent)
         {
             var displacementDueToParentXy = MoveToElevationZero(displacementDueToParent);
@@ -385,10 +288,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             return displacedLocation;
         }
 
-        /// <summary>
-        ///     Returns the current XY displacement ratio.
-        /// </summary>
-        /// <returns>The XY displacement ratio.</returns>
         private double GetXyDisplacementRatio()
         {
             if (m_displacementParameter == 1.0)
@@ -396,30 +295,16 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             return m_initialXyRatio * 1 / Math.Pow(m_initialHeight - GetHeightDisplacementValue(), 0.75);
         }
 
-        /// <summary>
-        ///     Gets the current displcement in Z.
-        /// </summary>
-        /// <returns></returns>
         private double GetHeightDisplacementValue()
         {
             return m_initialHeight * m_displacementParameter;
         }
 
-        /// <summary>
-        ///     The timer callback for the animation.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
             m_timerTripped = true;
         }
 
-        /// <summary>
-        ///     The idling callback for the animation.
-        /// </summary>
-        /// <param name="senter"></param>
-        /// <param name="e"></param>
         private void IdlingResponse(object senter, IdlingEventArgs e)
         {
             // Set to reraise idling immediately (unaffected by user activity)
@@ -432,11 +317,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             }
         }
 
-        /// <summary>
-        ///     Utility to move a point to the Z=0 projection
-        /// </summary>
-        /// <param name="location">The point.</param>
-        /// <returns>The point at Z=0 projection.</returns>
         private static XYZ MoveToElevationZero(XYZ location)
         {
             return MoveToElevation(location, 0);
@@ -453,11 +333,6 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             return new XYZ(location.X, location.Y, z);
         }
 
-        /// <summary>
-        ///     Utility to get the "center" of the element based on location parameters, projected to Z=0.
-        /// </summary>
-        /// <param name="e">The element.</param>
-        /// <returns>The center location.</returns>
         private static XYZ GetNominalCenterLocation(Element e)
         {
             switch (e.Location)

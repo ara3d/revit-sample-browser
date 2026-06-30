@@ -162,9 +162,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             }
         }
 
-        /// <summary>
-        ///     Create a new footprint roof.
-        /// </summary>
         private void CreateFootPrintRoof()
         {
             try
@@ -197,9 +194,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             }
         }
 
-        /// <summary>
-        ///     Create a extrusion roof.
-        /// </summary>
         private void CreateExtrusionRoof()
         {
             try

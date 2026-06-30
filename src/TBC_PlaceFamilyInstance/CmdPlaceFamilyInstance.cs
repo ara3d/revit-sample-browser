@@ -32,37 +32,24 @@ namespace BuildingCoder
     [Transaction(TransactionMode.Manual)]
     internal class CmdPlaceFamilyInstance : IExternalCommand
     {
-        /// <summary>
-        ///     Set this flag to true to abort after
-        ///     placing the first instance.
-        /// </summary>
         private static readonly bool Place_one_single_instance_then_abort
             = true;
 
         private readonly List<ElementId> _added_element_ids
             = new();
-
-        /// <summary>
-        ///     Send messages to main Revit application window.
-        /// </summary>
-        //IWin32Window _revit_window; // 2018
-        private IntPtr _revit_window; // 2019
+        private IntPtr _revit_window;
 
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,
             ElementSet elements)
         {
-            //_revit_window
-            //  = new JtWindowHandle(
-            //    ComponentManager.ApplicationWindow ); // 2018
-
             var uiapp = commandData.Application;
             var uidoc = uiapp.ActiveUIDocument;
             var app = uiapp.Application;
             var doc = uidoc.Document;
 
-            _revit_window = uiapp.MainWindowHandle; // 2019
+            _revit_window = uiapp.MainWindowHandle;
 
             var collector
                 = new FilteredElementCollector(doc);
@@ -77,9 +64,6 @@ namespace BuildingCoder
 
             app.DocumentChanged
                 += OnDocumentChanged;
-
-            //PromptForFamilyInstancePlacementOptions opt 
-            //  = new PromptForFamilyInstancePlacementOptions();
 
             try
             {
@@ -114,50 +98,21 @@ namespace BuildingCoder
             Debug.Print("{0} id{1} added.",
                 n, Util.PluralSuffix(n));
 
-            // This does not work, because the handler will
-            // be called each time a new instance is added,
-            // overwriting the previous ones recorded:
-
-            //_added_element_ids = e.GetAddedElementIds();
+            // Append each batch; assignment would overwrite prior ids.
 
             _added_element_ids.AddRange(idsAdded);
 
             if (Place_one_single_instance_then_abort
                 && 0 < n)
             {
-                // Why do we send the WM_KEYDOWN message twice?
-                // I tried sending it once only, and that does
-                // not work. Maybe the proper thing to do would 
-                // be something like the Press.OneKey method...
-                //
-                //Press.OneKey( _revit_window.Handle,
-                //  (char) Keys.Escape );
-                //
-                // Nope, that did not work.
-                //
-                // Answer: When you place instances with 
-                // PromptForFamilyInstancePlacement, the previous 
-                // one remains selected just until you drop the 
-                // next one. The first esc key hit removes that 
-                // selection while still allowing you to continue 
-                // adding instances to the model. Only a second 
-                // esc hit aborts the command. 
-
-                //Press.PostMessage( _revit_window.Handle,
-                //  (uint) Press.KEYBOARD_MSG.WM_KEYDOWN,
-                //  (uint) Keys.Escape, 0 ); // 2018
-
-                //Press.PostMessage( _revit_window.Handle,
-                //  (uint) Press.KEYBOARD_MSG.WM_KEYDOWN,
-                //  (uint) Keys.Escape, 0 ); // 2018
 
                 Press.PostMessage(_revit_window,
                     (uint) Press.KEYBOARD_MSG.WM_KEYDOWN,
-                    (uint) Keys.Escape, 0); // 2019
+                    (uint) Keys.Escape, 0);
 
                 Press.PostMessage(_revit_window,
                     (uint) Press.KEYBOARD_MSG.WM_KEYDOWN,
-                    (uint) Keys.Escape, 0); // 2019
+                    (uint) Keys.Escape, 0);
             }
         }
     }

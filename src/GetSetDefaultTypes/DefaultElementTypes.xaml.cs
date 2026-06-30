@@ -10,9 +10,6 @@ using ComboBox = System.Windows.Controls.ComboBox;
 
 namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 {
-    /// <summary>
-    ///     Interaction logic for DefaultElementTypes.xaml
-    /// </summary>
     public partial class DefaultElementTypes : Page, IDockablePaneProvider
     {
         public static readonly DockablePaneId PaneId = new DockablePaneId(new Guid("{B6579F42-2F4A-4552-92EF-24B3A897757D}"));
@@ -178,24 +175,12 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
         }
     }
 
-    /// <summary>
-    ///     The default element type candidate.
-    /// </summary>
     public class DefaultElementTypeCandidate
     {
-        /// <summary>
-        ///     The name.
-        /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        ///     The type group.
-        /// </summary>
         public ElementTypeGroup ElementTypeGroup { get; set; }
 
-        /// <summary>
-        ///     The element id.
-        /// </summary>
         public ElementId Id { get; set; }
 
         public override string ToString()
@@ -209,19 +194,10 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
     /// </summary>
     public class ElementTypeRecord
     {
-        /// <summary>
-        ///     The type group name.
-        /// </summary>
         public string ElementTypeGroupName { get; set; }
 
-        /// <summary>
-        ///     List of default element type candidates.
-        /// </summary>
         public List<DefaultElementTypeCandidate> DefaultElementTypeCandidates { get; set; }
 
-        /// <summary>
-        ///     The current default element type.
-        /// </summary>
         public DefaultElementTypeCandidate DefaultElementType { get; set; }
     }
 
@@ -254,5 +230,5 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
             m_elementTypeGroup = elementTypeGroup;
             m_defaultTypeId = typeId;
         }
-    } // class CommandHandler
+    }
 }

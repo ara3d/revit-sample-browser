@@ -8,36 +8,16 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 {
-    /// <summary>
-    ///     A class that can export a schedule to HTML.
-    /// </summary>
     public class ScheduleHtmlExporter
     {
-        /// <summary>
-        ///     The body section of the table.
-        /// </summary>
         private TableSectionData m_bodySection;
 
-        /// <summary>
-        ///     The header section of the table.
-        /// </summary>
         private TableSectionData m_headerSection;
 
-        /// <summary>
-        ///     The schedule being exported.
-        /// </summary>
         private readonly ViewSchedule m_theSchedule;
 
-        /// <summary>
-        ///     The writer for the HTML file.
-        /// </summary>
         private HtmlTextWriter m_writer;
 
-        /// <summary>
-        ///     A collection of cells which have already been output.  This is needed to deal with
-        ///     cell merging - each cell should be written only once even as all the cells are iterated in
-        ///     order.
-        /// </summary>
         private readonly List<Tuple<int, int>> m_writtenCells = new List<Tuple<int, int>>();
 
         /// <summary>
@@ -49,14 +29,8 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             m_theSchedule = input;
         }
 
-        /// <summary>
-        ///     A predefined color value used for comparison.
-        /// </summary>
         private static Color Black => new Color(0, 0, 0);
 
-        /// <summary>
-        ///     A predefined color value used for comparison.
-        /// </summary>
         private static Color White => new Color(255, 255, 255);
 
         /// <summary>
@@ -94,7 +68,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             }
             catch (IOException e)
             {
-                // set error message and return failure,  finally will close stringWriter if necessary. 
                 errMessage = $"Exception occured generating HTML: {e.Message} Command canceled.";
                 return false;
             }
@@ -109,9 +82,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             return true;
         }
 
-        /// <summary>
-        ///     Writes the header section of the table to the HTML file.
-        /// </summary>
         private void WriteHeader()
         {
             // Clear written cells
@@ -121,7 +91,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             m_writer.AddAttribute(HtmlTextWriterAttribute.Border, "1");
             m_writer.RenderBeginTag(HtmlTextWriterTag.Table);
 
-            // Get header section and write each cell
             m_headerSection = m_theSchedule.GetTableData().GetSectionData(SectionType.Header);
             var numberOfRows = m_headerSection.NumberOfRows;
             var numberOfColumns = m_headerSection.NumberOfColumns;
@@ -133,9 +102,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             m_writer.RenderEndTag();
         }
 
-        /// <summary>
-        ///     Writes the body section of the table to the HTML file.
-        /// </summary>
         private void WriteBody()
         {
             // Clear written cells
@@ -145,7 +111,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             m_writer.AddAttribute(HtmlTextWriterAttribute.Border, "1");
             m_writer.RenderBeginTag(HtmlTextWriterTag.Table);
 
-            // Get body section and write contents
             m_bodySection = m_theSchedule.GetTableData().GetSectionData(SectionType.Body);
             var numberOfRows = m_bodySection.NumberOfRows;
             var numberOfColumns = m_bodySection.NumberOfColumns;
@@ -157,33 +122,17 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             m_writer.RenderEndTag();
         }
 
-        /// <summary>
-        ///     Gets the Color value formatted for HTML (#XXXXXX) output.
-        /// </summary>
-        /// <param name="color">he color.</param>
-        /// <returns>The color string.</returns>
         private static string GetColorHtmlString(Color color)
         {
             return string.Format("#{0}{1}{2}", color.Red.ToString("X"), color.Green.ToString("X"),
                 color.Blue.ToString("X"));
         }
 
-        /// <summary>
-        ///     Compares two colors.
-        /// </summary>
-        /// <param name="color1">The first color.</param>
-        /// <param name="color2">The second color.</param>
-        /// <returns>True if the colors are equal, false otherwise.</returns>
         private bool ColorsEqual(Color color1, Color color2)
         {
             return color1.Red == color2.Red && color1.Green == color2.Green && color1.Blue == color2.Blue;
         }
 
-        /// <summary>
-        ///     Gets the HTML string representing this horizontal alignment.
-        /// </summary>
-        /// <param name="style">The horizontal alignment.</param>
-        /// <returns>The related string.</returns>
         private static string GetAlignString(HorizontalAlignmentStyle style)
         {
             switch (style)
@@ -199,46 +148,27 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             return "";
         }
 
-        /// <summary>
-        ///     Writes a row of the header.
-        /// </summary>
-        /// <param name="iRow">The row number.</param>
-        /// <param name="numberOfColumns">The number of columns to write.</param>
         private void WriteHeaderSectionRow(int iRow, int numberOfColumns)
         {
             WriteSectionRow(SectionType.Header, m_headerSection, iRow, numberOfColumns);
         }
 
-        /// <summary>
-        ///     Writes a row of the body.
-        /// </summary>
-        /// <param name="iRow">The row number.</param>
-        /// <param name="numberOfColumns">The number of columns to write.</param>
         private void WriteBodySectionRow(int iRow, int numberOfColumns)
         {
             WriteSectionRow(SectionType.Body, m_bodySection, iRow, numberOfColumns);
         }
 
-        /// <summary>
-        ///     Writes a row of a table section.
-        /// </summary>
-        /// <param name="iRow">The row number.</param>
-        /// <param name="numberOfColumns">The number of columns to write.</param>
-        /// <param name="secType">The section type.</param>
-        /// <param name="data">The table section data.</param>
         private void WriteSectionRow(SectionType secType, TableSectionData data, int iRow, int numberOfColumns)
         {
             // Start the table row tag.
             m_writer.RenderBeginTag(HtmlTextWriterTag.Tr);
 
-            // Loop over the table section row.
             for (var iCol = data.FirstColumnNumber; iCol < numberOfColumns; iCol++)
             {
                 // Skip already written cells
                 if (m_writtenCells.Contains(new Tuple<int, int>(iRow, iCol)))
                     continue;
 
-                // Get style
                 var style = data.GetTableCellStyle(iRow, iCol);
                 var numberOfStyleTags = 1;
 
@@ -308,11 +238,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             m_writer.RenderEndTag();
         }
 
-        /// <summary>
-        ///     An utility method to replace illegal characters of the Schedule name when creating the HTML file name.
-        /// </summary>
-        /// <param name="stringWithIllegalChar">The Schedule name.</param>
-        /// <returns>The updated string without illegal characters.</returns>
         private static string ReplaceIllegalCharacters(string stringWithIllegalChar)
         {
             var illegalChars = Path.GetInvalidFileNameChars();

@@ -10,7 +10,6 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SheetToModel sample.</summary>
     internal static partial class Util
     {
         public static void QTO_2_PlaceHoldersFromDWFMarkups(

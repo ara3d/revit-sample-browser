@@ -10,24 +10,12 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.DWGFamilyCreation.CS
 {
-    /// <summary>
-    ///     To add an external command to Autodesk Revit
-    ///     the developer should implement an object that
-    ///     supports the IExternalCommand interface.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        ///     Revit application
-        /// </summary>
         private UIApplication m_app;
-
-        /// <summary>
-        ///     Revit document
-        /// </summary>
         private Document m_doc;
 
         public Result Execute(ExternalCommandData commandData,
@@ -49,7 +37,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.DWGFamilyCreation.CS
                     return Result.Failed;
                 }
 
-                // Get the view where the dwg file will be imported
                 var view = GetView();
                 if (null == view)
                 {
@@ -57,14 +44,12 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.DWGFamilyCreation.CS
                     return Result.Failed;
                 }
 
-                // The dwg file which will be imported
                 var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var dwgFile = "Desk.dwg";
                 var dwgFullPath = Path.Combine(assemblyDirectory, dwgFile);
 
                 var transaction = new Transaction(m_doc, "DWGFamilyCreation");
                 transaction.Start();
-                // Import the dwg file into current family document
                 var options = new DWGImportOptions
                 {
                     Placement = ImportPlacement.Origin,
@@ -72,7 +57,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.DWGFamilyCreation.CS
                 };
                 m_doc.Import(dwgFullPath, options, view, out _);
 
-                // Add type parameters to the family
                 AddParameters(dwgFile);
                 transaction.Commit();
             }
@@ -85,32 +69,21 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.DWGFamilyCreation.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Add type parameters to the family
-        /// </summary>
-        /// <param name="dwgFileName">Name of imported dwg file</param>
         private void AddParameters(string dwgFileName)
         {
-            // Get the family manager
             var familyMgr = m_doc.FamilyManager;
 
-            // Add parameter 1: DWGFileName
             familyMgr.NewType("DWGFamilyCreation");
             var paraFileName = familyMgr.AddParameter("DWGFileName", new ForgeTypeId(),
                 SpecTypeId.String.Text, false);
             familyMgr.Set(paraFileName, dwgFileName);
 
-            // Add parameter 2: ImportTime
             var time = DateTime.Now.ToString("yyyy-MM-dd");
             var paraImportTime = familyMgr.AddParameter("ImportTime", new ForgeTypeId(),
                 SpecTypeId.String.Text, false);
             familyMgr.Set(paraImportTime, time);
         }
 
-        /// <summary>
-        ///     Get the view where the dwg file will be imported
-        /// </summary>
-        /// <returns>The view where the dwg file will be imported</returns>
         private View GetView()
         {
             View view = null;

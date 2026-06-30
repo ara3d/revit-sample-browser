@@ -11,11 +11,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
-    /// <summary>
-    ///     A class inherited IExternalApplication interface.
-    ///     This class subscribes to some application level events and
-    ///     creates a custom Ribbon panel which contains three buttons.
-    /// </summary
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -42,7 +37,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                 (Path.GetDirectoryName(currentCommandAssemblyPath))));
 
             // begin to create custom Ribbon panel and command buttons.
-            // create a Ribbon panel.
             var doorPanel = application.CreateRibbonPanel("Door Swing");
 
             // the first button in the DoorSwing panel, use to invoke the InitializeCommand.
@@ -87,12 +81,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     This event is fired whenever a document is saved.
-        ///     Update door's information according to door's current geometry.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">An DocumentSavingEventArgs that contains the DocumentSaving event data.</param>
         private void DocumentSavingHandler(object sender, DocumentSavingEventArgs args)
         {
             var message = "";
@@ -127,12 +115,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
         }
 
-        /// <summary>
-        ///     This event is fired whenever a document is saved as.
-        ///     Update door's information according to door's current geometry.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">An DocumentSavingAsEventArgs that contains the DocumentSavingAs event data.</param>
         private void DocumentSavingAsHandler(object sender, DocumentSavingAsEventArgs args)
         {
             var message = "";

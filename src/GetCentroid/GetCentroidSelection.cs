@@ -13,9 +13,6 @@ using BuildingCoder;
 
 namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
 {
-    /// <summary>
-    ///     Shared selection helper for GetCentroid commands.
-    /// </summary>
     internal static class GetCentroidSelection
     {
         public static IList<ElementId> GetElementIds(

@@ -11,10 +11,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_NewSweptBlend sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Create sweep with multiple loops, for
-        ///     https://forums.autodesk.com/t5/revit-api-forum/how-to-create-a-sweep-with-multiple-closed-loops-in-profile/m-p/8477617
-        /// </summary>
         internal static Sweep CreateSweepWithMultipleLoops(
             Document doc)
         {
@@ -73,11 +69,6 @@ namespace BuildingCoder
 
             return sweep;
         }
-
-        /// <summary>
-        ///     Create a sketch plane. This helper method is
-        ///     copied from the GenericModelCreation SDK sample.
-        /// </summary>
         internal static SketchPlane CreateSketchPlane(
             Document doc,
             XYZ normal,
@@ -93,12 +84,6 @@ namespace BuildingCoder
             if (null == plane) throw new Exception("Sketch plane creation failed.");
             return plane;
         }
-
-        /// <summary>
-        ///     Create a new swept blend form.
-        ///     The NewSweptBlend method requires the
-        ///     input profile to be in the XY plane.
-        /// </summary>
         internal static void CreateNewSweptBlend(Document doc)
         {
             Debug.Assert(doc.IsFamilyDocument,
@@ -162,13 +147,6 @@ namespace BuildingCoder
                 ErrorMsg($"NewSweptBlend exception: {ex.Message}");
             }
         }
-
-        /// <summary>
-        ///     Create a new swept blend form using arcs to
-        ///     define circular start and end profiles and an
-        ///     arc path. The NewSweptBlend method requires
-        ///     the input profiles to be in the XY plane.
-        /// </summary>
         internal static void CreateNewSweptBlendArc(Document doc)
         {
             Debug.Assert(doc.IsFamilyDocument,

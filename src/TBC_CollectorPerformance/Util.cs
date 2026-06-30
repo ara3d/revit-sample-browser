@@ -14,7 +14,6 @@ using View = Autodesk.Revit.DB.View;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_CollectorPerformance sample.</summary>
     internal static partial class Util
     {
 
@@ -488,9 +487,6 @@ namespace BuildingCoder
         #region Delete non-room-separating curve elements
 
         // for https://forums.autodesk.com/t5/revit-api-forum/deleting-lines-that-are-not-assigned-to-the-lt-room-separation/m-p/8765491
-        /// <summary>
-        ///     Delete all non-room-separating curve elements
-        /// </summary>
         private static void DeleteNonRoomSeparators(Document doc)
         {
             var non_room_separator
@@ -511,9 +507,6 @@ namespace BuildingCoder
         #region Filter for sheets based on browser organisation
 
         // for https://forums.autodesk.com/t5/revit-api-forum/change-the-sheet-issue-date-on-sheets-filtered-by-project/td-p/10633770
-        /// <summary>
-        ///     Filter for sheets based on browser organisation
-        /// </summary>
         private static IEnumerable<ElementId> FilterForSheetsByBrowserOrganisation(
             Document doc,
             string folder_name)
@@ -538,10 +531,6 @@ namespace BuildingCoder
         #endregion // Filter for sheets based on browser organisation
 
         #region Retrieve all family names both standard and system
-
-        /// <summary>
-        ///     Retrieve all family names both standard and system
-        /// </summary>
         private static IEnumerable<string> GetFamilyNames(
             Document doc)
         {
@@ -555,10 +544,6 @@ namespace BuildingCoder
         #endregion // Retrieve all family names both standard and system
 
         #region Retrieve generic family symbols whose name contains "test"
-
-        /// <summary>
-        ///     Retrieve generic family symbols whose name contains "test"
-        /// </summary>
         private static FilteredElementCollector
             GetGenericFamilySymbolsNamedTest(
                 Document doc)
@@ -669,11 +654,6 @@ namespace BuildingCoder
         #endregion // Retrieve door family symbols that can be used in a curtain wall
 
         #region Retrieve All (Material) Tags
-
-        /// <summary>
-        ///     Return all tags, optionally
-        ///     material tags only
-        /// </summary>
         private static IEnumerable<IndependentTag> GetMaterialTags(
             Document doc,
             bool material_only)
@@ -691,11 +671,6 @@ namespace BuildingCoder
         #endregion // Retrieve All (Material) Tags
 
         #region Pull Text from Annotation Tags
-
-        /// <summary>
-        ///     Return the text from all annotation tags
-        ///     in a list of strings
-        /// </summary>
         private static List<string> PullTextFromAnnotationTags(
             Document doc)
         {
@@ -754,10 +729,6 @@ namespace BuildingCoder
         #endregion // Retrieve tags associated with rectangular fabrication parts
 
         #region Retrieve openings in wall
-
-        /// <summary>
-        ///     Retrieve all openings in a given wall.
-        /// </summary>
         private static void GetOpeningsInWall(
             Document doc,
             Wall wall)
@@ -799,10 +770,6 @@ namespace BuildingCoder
         #endregion // Retrieve openings in wall
 
         #region Retrieve ducts and pipes intersecting wall
-
-        /// <summary>
-        ///     Retrieve ducts and pipes intersecting a given wall.
-        /// </summary>
         private static FilteredElementCollector GetWallMepClashes(Wall wall)
         {
             var doc = wall.Document;
@@ -1002,10 +969,6 @@ namespace BuildingCoder
         #endregion // Retrieve linked documents
 
         #region Retrieve stairs on level
-
-        /// <summary>
-        ///     Retrieve all stairs on a given level.
-        /// </summary>
         private static FilteredElementCollector
             GetStairsOnLevel(
                 Document doc,
@@ -1067,10 +1030,6 @@ namespace BuildingCoder
         #endregion // Retrieve stairs on level
 
         #region Helper method to create some elements to play with
-
-        /// <summary>
-        ///     Create a new level at the given elevation.
-        /// </summary>
         private static Level CreateLevel(Document doc, int elevation)
         {
             //Level level = doc.Create.NewLevel( elevation ); // 2015
@@ -1481,9 +1440,6 @@ namespace BuildingCoder
         #region Retrieve Family Instances Satisfying Filter Rule
 
         // https://forums.autodesk.com/t5/revit-api-forum/how-to-filter-element-which-satisfy-filter-rule/m-p/8021978
-        /// <summary>
-        ///     Retrieve Family Instances Satisfying Filter Rule
-        /// </summary>
         private static void GetFamilyInstancesSatisfyingFilterRule(
             Document doc)
         {
@@ -1522,10 +1478,6 @@ namespace BuildingCoder
         #endregion // Retrieve Family Instances Satisfying Filter Rule
 
         #region Determine element count for each type of each category
-
-        /// <summary>
-        ///     Determine element count for each type of each category
-        /// </summary>
         private static void GetCountPerTypePerCategory(Document doc)
         {
             var els
@@ -1577,10 +1529,6 @@ namespace BuildingCoder
         #endregion // Get count of all elements of each type of each category
 
         #region Return element id of "Light Source" graphics style
-
-        /// <summary>
-        ///     Return element id of "Light Source" graphics style
-        /// </summary>
         private static ElementId GetLightSourceGraphicsStyleElementId(
             Document doc)
         {
@@ -1644,10 +1592,6 @@ namespace BuildingCoder
         }
 
         #region Retrieve all exterior walls
-
-        /// <summary>
-        ///     Wall type predicate for exterior wall function
-        /// </summary>
         private static bool IsExterior(WallType wallType)
         {
             var p = wallType.get_Parameter(
@@ -1780,10 +1724,6 @@ namespace BuildingCoder
         #endregion // Get all model elements
 
         #region Retrieve a sorted list of all levels
-
-        /// <summary>
-        ///     Return a sorted list of all levels
-        /// </summary>
         private static IOrderedEnumerable<Level> GetSortedLevels(
             Document doc)
         {
@@ -1920,10 +1860,6 @@ namespace BuildingCoder
         #endregion // Retrieve all areas belonging to a specific area scheme
 
         #region Filter for concrete ramps
-
-        /// <summary>
-        ///     Retrieve all ramps
-        /// </summary>
         private static void GetRamps(Document doc)
         {
             var collector
@@ -1933,10 +1869,6 @@ namespace BuildingCoder
 
             foreach (var e in collector) Debug.Print(e.GetType().Name);
         }
-
-        /// <summary>
-        ///     Retrieve all concrete ramps
-        /// </summary>
         private static IEnumerable<Element> GetConcreteRamps(Document doc)
         {
             return new FilteredElementCollector(doc)
@@ -2133,11 +2065,6 @@ namespace BuildingCoder
                     viewSheets.Add(sheet);
                 }
         }
-
-        /// <summary>
-        ///     Predicate for views with template for
-        ///     GetViewsWithTemplate
-        /// </summary>
         private static bool ViewHasTemplate(View v)
         {
             return !v.IsTemplate
@@ -2177,10 +2104,6 @@ namespace BuildingCoder
         #endregion // Filter for views
 
         #region Retrieve all family instances of specific named family and type
-
-        /// <summary>
-        ///     Get instances by family name then type name
-        /// </summary>
         private static IEnumerable<FamilyInstance>
             GetFamilyInstancesByFamilyAndType(
                 Document doc,
@@ -2193,10 +2116,6 @@ namespace BuildingCoder
                 .Where(x => x.Symbol.Family.Name.Equals(familyName)) // family
                 .Where(x => x.Symbol.Name.Equals(typeName)); // family type               
         }
-
-        /// <summary>
-        ///     Get instances by element type
-        /// </summary>
         private static IEnumerable<Element> GetInstancesOfElementType(
             ElementType type)
         {
@@ -2211,11 +2130,6 @@ namespace BuildingCoder
         #endregion // Retrieve all family instances of specific named family and type
 
         #region Return first title block family symbol of specific named family and type
-
-        /// <summary>
-        ///     Get title block family symbol (= definition)
-        ///     by family name then type name
-        /// </summary>
         private static FamilySymbol
             GetTitleBlockSymbolByFamilyAndType(
                 Document doc,
@@ -2229,11 +2143,6 @@ namespace BuildingCoder
                 .Where(x => x.FamilyName.Equals(familyName)) // family
                 .FirstOrDefault(x => x.Name == typeName); // family type
         }
-
-        /// <summary>
-        ///     Predicate returning true for the desired title
-        ///     block type and false for all others.
-        /// </summary>
         private static bool IsCorrectTitleBlock(Element e)
         {
             return false;
@@ -2493,10 +2402,6 @@ TaskDialog.Show( "Revit", collector.Count() +
         ///     Collect the element ids of all elements in the
         ///     linked documents intersecting the given element.
         /// </summary>
-        /// <param name="e">Target element</param>
-        /// <param name="links">Linked documents</param>
-        /// <param name="ids">Return intersecting element ids</param>
-        /// <returns>Number of intersecting elements found</returns>
         private static int GetIntersectingLinkedElementIds(
             Element e,
             IList<RevitLinkInstance> links,
@@ -2711,36 +2616,19 @@ TaskDialog.Show( "Revit", collector.Count() +
         #endregion // More parameter filter samples
 
         #region Methods to measure collector and post processing speed
-
-        /// <summary>
-        ///     An empty method that does nothing.
-        /// </summary>
         private static Element EmptyMethod(Type type)
         {
             return null;
         }
-
-        /// <summary>
-        ///     An empty method that does nothing.
-        /// </summary>
         private static Element EmptyMethod(Type type, string name)
         {
             return null;
         }
-
-        /// <summary>
-        ///     Return all non ElementType elements.
-        /// </summary>
-        /// <returns></returns>
         private static FilteredElementCollector GetNonElementTypeElements(Document doc)
         {
             return new FilteredElementCollector(doc)
                 .WhereElementIsNotElementType();
         }
-
-        /// <summary>
-        ///     Return a collector of all elements of the given type.
-        /// </summary>
         private static FilteredElementCollector CollectorGetElementsOfType(
             Document doc,
             Type type)
@@ -2748,11 +2636,6 @@ TaskDialog.Show( "Revit", collector.Count() +
             return new FilteredElementCollector(doc)
                 .OfClass(type);
         }
-
-        /// <summary>
-        ///     Return the first element of the given
-        ///     type without any further filtering.
-        /// </summary>
         private static Element CollectorGetFirstElementOfType(
             Document doc,
             Type type)

@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-//
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
 // AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
 // MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE. AUTODESK, INC.
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
-//
 // Use, duplication, or disclosure by the U.S. Government is subject to
 // restrictions set forth in FAR 52.227-19 (Commercial Computer
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
@@ -19,10 +17,6 @@ using Autodesk.Revit.UI.Events;
 
 namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
 {
-    /// <summary>
-    ///     This class has the capabilities to monitor when a document is saved, and prompt the user to
-    ///     add a revision before save takes place.
-    /// </summary>
     public class PostCommandRevisionMonitor
     {
         /// <summary>
@@ -45,10 +39,6 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
         /// </summary>
         private int m_storedRevisionCount;
 
-        /// <summary>
-        ///     Constructs a new revision monitor for the given document.
-        /// </summary>
-        /// <param name="doc">The document.</param>
         public PostCommandRevisionMonitor(Document doc)
         {
             m_document = doc;
@@ -125,7 +115,6 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
                         }
                         case TaskDialogResult.CommandLink2: // Cancel save
                         {
-                            // cancel saving only
                             args.Cancel();
                             break;
                         }
@@ -225,10 +214,6 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
             /// </summary>
             private readonly PostCommandRevisionMonitor m_monitor;
 
-            /// <summary>
-            ///     The constructor for the event instance.
-            /// </summary>
-            /// <param name="monitor">The instance of the command.</param>
             public PostCommandRevisionMonitorEvent(PostCommandRevisionMonitor monitor)
             {
                 m_monitor = monitor;

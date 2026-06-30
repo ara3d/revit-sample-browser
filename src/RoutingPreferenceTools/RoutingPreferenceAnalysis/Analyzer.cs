@@ -20,11 +20,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
         private readonly double m_mepSize;
         private readonly RoutingPreferenceManager m_routingPreferenceManager;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="routingPreferenceManager"></param>
-        /// <param name="document"></param>
         public Analyzer(RoutingPreferenceManager routingPreferenceManager, Document document)
         {
             m_routingPreferenceManager = routingPreferenceManager;
@@ -32,12 +27,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             m_mepSize = 0;
         }
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="routingPreferenceManager"></param>
-        /// <param name="mepSize"></param>
-        /// <param name="document"></param>
         public Analyzer(RoutingPreferenceManager routingPreferenceManager, double mepSize, Document document)
         {
             m_routingPreferenceManager = routingPreferenceManager;
@@ -46,10 +35,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             m_mepSize = DocumentUnits.ConvertValueToFeet(mepSize, m_document);
         }
 
-        /// <summary>
-        ///     Get specific size query
-        /// </summary>
-        /// <returns></returns>
         public XDocument GetSpecificSizeQuery()
         {
             var xReportDoc = new XDocument();
@@ -65,10 +50,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             return xReportDoc;
         }
 
-        /// <summary>
-        ///     Get all segments from a the currently selected pipe type, get each size from each segment,
-        ///     collect, sort, and return.
-        /// </summary>
         public static List<double> GetAvailableSegmentSizes(RoutingPreferenceManager routingPreferenceManager,
             Document document)
         {
@@ -90,10 +71,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             return sizesSorted;
         }
 
-        /// <summary>
-        ///     Returns XML data for a variety of potential routing-preference problems.
-        /// </summary>
-        /// <returns></returns>
         public XDocument GetWarnings()
         {
             var xReportDoc = new XDocument();
@@ -146,9 +123,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             return xReportDoc;
         }
 
-        /// <summary>
-        ///     Get basic information about the PipeType
-        /// </summary>
         private XElement GetHeaderInformation()
         {
             var xHeader = new XElement(XName.Get("PipeType"));
@@ -159,14 +133,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             return xHeader;
         }
 
-        /// <summary>
-        ///     Checks to see if any segments in the routing preference manager have sizes that cannot be fitted with fittings
-        ///     defined in a rule group type, such as "Elbow."
-        ///     For example, if a segment rule defines a segment be used from sizes 2" to 12", and there are three elbows rules
-        ///     defined to be used from ranges
-        ///     2"-4", 4"-7", and 9"-14", this method will return warning information specifying the sizes (8", 8.5", etc...) not
-        ///     covered by elbow fittings.
-        /// </summary>
         private XElement GetSegmentRangeNotCoveredWarning(RoutingPreferenceManager routingPreferenceManager,
             RoutingPreferenceRuleGroupType groupType)
         {
@@ -268,13 +234,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             return retval;
         }
 
-        /// <summary>
-        ///     Check to see if the routing preferences specify a preferred junction type but do not have any
-        ///     rules with valid fittings for that type (e.g, "Tee" is the preferred junction type, but only "Tap" fittings
-        ///     are specified in junction rules.)
-        /// </summary>
-        /// <param name="routingPreferenceManager"></param>
-        /// <returns></returns>
         private bool IsPreferredJunctionTypeValid(RoutingPreferenceManager routingPreferenceManager)
         {
             var preferredJunctionType = routingPreferenceManager.PreferredJunctionType;
@@ -340,10 +299,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             return segment.Name;
         }
 
-        /// <summary>
-        ///     Using routing preferences, display found segment and fitting info from the size and pipe type specified in the
-        ///     dialog.
-        /// </summary>
         private List<PartIdInfo> GetPreferredFittingsAndSegments()
         {
             var partIdInfoList = new List<PartIdInfo>();
@@ -364,7 +319,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
 
                 if (groupType != RoutingPreferenceRuleGroupType.Segments)
                     preferredTypes.Add(preferredType);
-                else //Get all segments that support a given size, not just the first segment.
+                else
                     preferredTypes = m_routingPreferenceManager.GetSharedSizes(m_mepSize, ConnectorProfileType.Round);
                 partIdInfoList.Add(new PartIdInfo(groupType,
                     preferredTypes)); //Collect a PartIdInfo object for each group type.

@@ -13,21 +13,12 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
     /// </summary>
     public partial class PathReinforcementForm : Form
     {
-        /// <summary>
-        ///     path reinforcement object
-        /// </summary>
         private Autodesk.Revit.DB.Structure.PathReinforcement m_pathRein;
 
-        /// <summary>
-        ///     profile object
-        /// </summary>
         private readonly Profile m_profile;
 
         private readonly PathReinProperties m_properties;
 
-        /// <summary>
-        ///     Default constructor
-        /// </summary>
         public PathReinforcementForm()
         {
             InitializeComponent();
@@ -48,9 +39,6 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             m_profile = new Profile(pathRein, commandData);
         }
 
-        /// <summary>
-        ///     update the SelectObject of PropertyGrid control
-        /// </summary>
         private void UpdatePropSelectedObject()
         {
             propertyGrid.SelectedObject = null;
@@ -68,11 +56,6 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             Close();
         }
 
-        /// <summary>
-        ///     Ok button click event handler
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void okButton1_Click(object sender, EventArgs e)
         {
             m_properties.Update();

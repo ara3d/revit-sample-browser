@@ -7,7 +7,6 @@ using Autodesk.Revit.UI.Events;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_CloseDocument sample.</summary>
     internal static partial class Util
     {
         internal static void CloseDocProc(object stateInfo)

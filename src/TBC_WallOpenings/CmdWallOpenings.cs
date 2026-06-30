@@ -66,9 +66,6 @@ namespace BuildingCoder
 
         #region Determine walls in linked file intersecting pipe
 
-        /// <summary>
-        ///     Determine walls in linked file intersecting pipe
-        /// </summary>
         public void GetWalls(UIDocument uidoc)
         {
             var doc = uidoc.Document;
@@ -126,9 +123,6 @@ namespace BuildingCoder
             TaskDialog.Show("Count of wall", walls.Count.ToString());
         }
 
-        /// <summary>
-        ///     Compare references with linked file support.
-        /// </summary>
         public class ReferenceComparer : IEqualityComparer<Reference>
         {
             public bool Equals(Reference x, Reference y)
@@ -150,9 +144,6 @@ namespace BuildingCoder
             }
         }
 
-        /// <summary>
-        ///     Return a `StableRepresentation` for a linked wall's exterior face.
-        /// </summary>
         public string GetFaceRefRepresentation(
             Wall wall,
             Document doc,

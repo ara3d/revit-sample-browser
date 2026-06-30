@@ -10,10 +10,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
     /// </summary>
     public class LoadCombinationMap
     {
-        /// <summary>
-        ///     Default constructor of LoadCombinationMap
-        /// </summary>
-        /// <param name="combination">the reference of LoadCombination</param>
         public LoadCombinationMap(LoadCombination combination)
         {
             Name = combination.Name;
@@ -50,29 +46,14 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         }
         // Private Members
 
-        /// <summary>
-        ///     Name property of LoadCombinationMap
-        /// </summary>
         public string Name { get; }
 
-        /// <summary>
-        ///     Formula property of LoadCombinationMap
-        /// </summary>
         public string Formula { get; }
 
-        /// <summary>
-        ///     Type property of LoadCombinationMap
-        /// </summary>
         public string Type { get; }
 
-        /// <summary>
-        ///     State property of LoadCombinationMap
-        /// </summary>
         public string State { get; }
 
-        /// <summary>
-        ///     Usage property of LoadCombinationMap
-        /// </summary>
         public string Usage { get; set; }
     }
 }

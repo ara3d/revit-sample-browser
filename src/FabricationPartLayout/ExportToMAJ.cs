@@ -21,7 +21,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var doc = uidoc.Document;
                 var elementIds = new HashSet<ElementId>();

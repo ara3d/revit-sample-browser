@@ -19,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         /// </summary>
         private FlippedDoorCheck m_flippedDoorApiRule;
 
-        /// <summary>
-        ///     Basic construction
-        /// </summary>
         public Application()
         {
         }

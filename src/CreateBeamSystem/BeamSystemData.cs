@@ -10,45 +10,18 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
-    /// <summary>
-    ///     mixed data class save the data to show in UI
-    ///     and the data used to create beam system
-    /// </summary>
     public class BeamSystemData
     {
-        /// <summary>
-        ///     all beam types loaded in current Revit project
-        ///     it is declared as static only because of PropertyGrid
-        /// </summary>
         private static readonly Dictionary<string, FamilySymbol> BeamTypes = new Dictionary<string, FamilySymbol>();
 
-        /// <summary>
-        ///     a number of beams that intersect end to end
-        ///     so that form a profile used as beam system's profile
-        /// </summary>
         private readonly List<FamilyInstance> m_beams = new List<FamilyInstance>();
 
-        /// <summary>
-        ///     buffer of ExternalCommandData
-        /// </summary>
         private readonly ExternalCommandData m_commandData;
 
-        /// <summary>
-        ///     the lines compose the profile of beam system
-        /// </summary>
         private List<Line> m_lines = new List<Line>();
 
-        /// <summary>
-        ///     properties of beam system
-        /// </summary>
         private BeamSystemParam m_param;
 
-        /// <summary>
-        ///     constructor
-        ///     if precondition in current Revit project isn't enough,
-        ///     ErrorMessageException will be throw out
-        /// </summary>
-        /// <param name="commandData">data from Revit</param>
         public BeamSystemData(ExternalCommandData commandData)
         {
             // initialize members
@@ -62,29 +35,14 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             m_param.LayoutRuleChanged += LayoutRuleChanged;
         }
 
-        /// <summary>
-        ///     properties of beam system
-        /// </summary>
         public BeamSystemParam Param => m_param;
 
-        /// <summary>
-        ///     lines form the profile of beam system
-        /// </summary>
         public ReadOnlyCollection<Line> Lines => new ReadOnlyCollection<Line>(m_lines);
 
-        /// <summary>
-        ///     buffer of ExternalCommandData
-        /// </summary>
         public ExternalCommandData CommandData => m_commandData;
 
-        /// <summary>
-        ///     the data used to show in UI is updated
-        /// </summary>
         public event EventHandler ParamsUpdated;
 
-        /// <summary>
-        ///     change the direction to the next line in the profile
-        /// </summary>
         public void ChangeProfileDirection()
         {
             var tmp = m_lines[0];
@@ -92,20 +50,12 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             m_lines.Add(tmp);
         }
 
-        /// <summary>
-        ///     all beam types loaded in current Revit project
-        ///     it is declared as static only because of PropertyGrid
-        /// </summary>
-        /// <returns></returns>
         public static Dictionary<string, FamilySymbol> GetBeamTypes()
         {
             var beamTypes = new Dictionary<string, FamilySymbol>(BeamTypes);
             return beamTypes;
         }
 
-        /// <summary>
-        ///     initialize members using data from current Revit project
-        /// </summary>
         private void PrepareData()
         {
             var doc = m_commandData.Application.ActiveUIDocument;
@@ -150,11 +100,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
                 throw new ErrorMessageException("There is no Beam families loaded in current project.");
         }
 
-        /// <summary>
-        ///     retrieve the profiles using the selected beams
-        ///     ErrorMessageException will be thrown out if beams can't make a closed profile
-        /// </summary>
-        /// <param name="beams">beams which may form a closed profile</param>
         private void InitializeProfile(List<FamilyInstance> beams)
         {
             // retrieve collection of lines in beams
@@ -176,10 +121,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             if (null == m_lines) throw new ErrorMessageException("The selected beams can't form a closed profile.");
         }
 
-        /// <summary>
-        ///     layout rule of beam system has changed
-        /// </summary>
-        /// <param name="layoutMethod">changed method</param>
         private void LayoutRuleChanged(ref LayoutMethod layoutMethod)
         {
             // create BeamSystemParams instance according to changed LayoutMethod
@@ -192,10 +133,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             m_param.LayoutRuleChanged += LayoutRuleChanged;
         }
 
-        /// <summary>
-        ///     the data used to show in UI is updated
-        /// </summary>
-        /// <param name="e"></param>
         protected virtual void OnParamsUpdated(EventArgs e)
         {
             ParamsUpdated?.Invoke(this, e);

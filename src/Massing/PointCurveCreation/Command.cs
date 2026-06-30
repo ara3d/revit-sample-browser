@@ -9,10 +9,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class used to create reference points following parabolic arcs
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class PointsParabola : IExternalCommand
@@ -56,10 +52,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
         }
     }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class used to create reference points constrained to a model curve
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class PointsOnCurve : IExternalCommand
@@ -94,10 +86,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
         }
     }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class used to create reference points based on comma-delimited XYZ data in a text file
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class PointsFromTextFile : IExternalCommand
@@ -130,10 +118,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
         }
     }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class used to create curve based on points placed using the equation y=cos(x)
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class SineCurve : IExternalCommand
@@ -166,10 +150,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
         }
     }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class used to create curve based on points placed using the equation y=ScalingFactor * CosH(x/ScalingFactor)
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class CatenaryCurve : IExternalCommand
@@ -204,10 +184,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
         }
     }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class used to create loft form based on curves and points created using the equation z = cos(x) + cos(y)
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class CyclicSurface : IExternalCommand

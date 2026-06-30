@@ -9,7 +9,6 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SetTangentLock sample.</summary>
     internal static partial class Util
     {
         private const double SetTangentLock_mm_per_inch = 25.4;

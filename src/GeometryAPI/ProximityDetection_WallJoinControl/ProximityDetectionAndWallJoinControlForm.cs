@@ -10,32 +10,12 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinControl.CS
 {
-    /// <summary>
-    ///     The form that show the operations and results
-    /// </summary>
     public partial class ProximityDetectionAndWallJoinControlForm : Form
     {
-        /// <summary>
-        ///     revit document
-        /// </summary>
         private readonly Document m_doc;
-
-        /// <summary>
-        ///     The object that is responsible for proximity detection
-        /// </summary>
         private readonly ProximityDetection m_proximityDetection;
-
-        /// <summary>
-        ///     The object that is responsible for controlling the joint of walls
-        /// </summary>
         private readonly WallJoinControl m_walljoinControl;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="doc">Revit document</param>
-        /// <param name="proximityDetection">The object that is responsible for proximity detection</param>
-        /// <param name="walljoinControl">The object that is responsible for controlling the joint of walls</param>
         public ProximityDetectionAndWallJoinControlForm(Document doc,
             ProximityDetection proximityDetection,
             WallJoinControl walljoinControl)
@@ -47,37 +27,22 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
             m_walljoinControl = walljoinControl;
         }
 
-        /// <summary>
-        ///     Clear the treeview's data
-        /// </summary>
         private void ClearTreeviewData()
         {
             treeViewResults.Nodes.Clear();
         }
 
-        /// <summary>
-        ///     Refresh the treeview's data by given XML
-        /// </summary>
-        /// <param name="operation">The operation name</param>
-        /// <param name="element">The given XML</param>
         private void RefreshTreeviewData(string operation, XElement element)
         {
             treeViewResults.Nodes.Clear();
 
-            //treeView.Nodes adds first level node
             var node = new TreeNode(operation);
             treeViewResults.Nodes.Add(node);
 
-            // append node
             var spaceNode = XElementToTreeNode(element);
             node.Nodes.Add(spaceNode);
         }
 
-        /// <summary>
-        ///     This method converts XElement nodes to Tree nodes
-        /// </summary>
-        /// <param name="element">XElement to be converted</param>
-        /// <returns>Tree Node that comes from XElement</returns>
         private TreeNode XElementToTreeNode(XElement element)
         {
             if (0 == element.Name.LocalName.Length)
@@ -89,26 +54,18 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 nodename += $" ({att.Name.LocalName}:{att.Value})";
             }
 
-            //TreeNode node = new TreeNode(element.FirstAttribute.Value);
             var node = new TreeNode(nodename);
 
             if (!element.HasElements)
-                // return if it is leaf node
                 return node;
-            // convert its child elements
             foreach (var ele in element.Elements())
             {
                 node.Nodes.Add(XElementToTreeNode(ele));
             }
 
-            // return whole node
             return node;
         }
 
-        /// <summary>
-        ///     Get all of the walls
-        /// </summary>
-        /// <returns>All walls' set</returns>
         private IEnumerable<Wall> GetAllWalls()
         {
             var wallCollector = new FilteredElementCollector(m_doc);
@@ -117,10 +74,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
             return wallCollector.OfType<Wall>();
         }
 
-        /// <summary>
-        ///     Get all of the egresses
-        /// </summary>
-        /// <returns>All egresses' set</returns>
         private ICollection<Element> GetAllEgresses()
         {
             var collector = new FilteredElementCollector(m_doc);
@@ -175,7 +128,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 RefreshTreeviewData("Check walls join/disjoin states",
                     m_walljoinControl.CheckJoinedWalls(GetAllWalls()));
 
-            // expand all child
             treeViewResults.ExpandAll();
 
             tran.Commit();

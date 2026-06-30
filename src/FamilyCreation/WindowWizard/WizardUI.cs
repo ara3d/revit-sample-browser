@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+﻿// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -11,60 +11,26 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
-    /// <summary>
-    ///     The wizard form
-    /// </summary>
     public partial class WizardForm : Form
     {
-        /// <summary>
-        ///     store the bindSource
-        /// </summary>
         private readonly BindingSource m_bindSource = new BindingSource();
 
-        /// <summary>
-        ///     store the copy type button tooltip
-        /// </summary>
         private readonly ToolTip m_copyTip = new ToolTip();
 
-        /// <summary>
-        ///     store the error tooltip
-        /// </summary>
         private readonly ToolTip m_errorTip = new ToolTip();
 
-        /// <summary>
-        ///     store the font
-        /// </summary>
         private readonly Font m_highFont;
 
-        /// <summary>
-        ///     store the font
-        /// </summary>
         private readonly Font m_commonFont;
 
-        /// <summary>
-        ///     store the new type button tooltip
-        /// </summary>
         private readonly ToolTip m_newTip = new ToolTip();
 
-        /// <summary>
-        ///     store the wizard parameter
-        /// </summary>
         private readonly WizardParameter m_para;
 
-        /// <summary>
-        ///     store the family types list
-        /// </summary>
         private readonly List<string> m_types = new List<string>();
 
-        /// <summary>
-        ///     store DoubleHungWinPara list
-        /// </summary>
         private readonly BindingList<DoubleHungWinPara> m_paraList = new BindingList<DoubleHungWinPara>();
 
-        /// <summary>
-        ///     constructor of WizardForm
-        /// </summary>
-        /// <param name="para">the WizardParameter</param>
         public WizardForm(WizardParameter para)
         {
             m_para = para;
@@ -78,11 +44,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             SetPanelVisibility(2);
         }
 
-        /// <summary>
-        ///     The nextbutton click function
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void Step1_NextButton_Click(object sender, EventArgs e)
         {
             if (panel1.Visible)
@@ -108,10 +69,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             }
         }
 
-        /// <summary>
-        ///     set panel visibility
-        /// </summary>
-        /// <param name="panelNum">panel number</param>
         private void SetPanelVisibility(int panelNum)
         {
             switch (panelNum)
@@ -167,11 +124,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             }
         }
 
-        /// <summary>
-        ///     the backbutton click function
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void Step1_BackButton_Click(object sender, EventArgs e)
         {
             if (panel2.Visible)
@@ -181,9 +133,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             else if (panel4.Visible) SetPanelVisibility(3);
         }
 
-        /// <summary>
-        ///     transfer data
-        /// </summary>
         private void TransforData()
         {
             if (m_para.Template == "DoubleHung")
@@ -211,9 +160,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             Update();
         }
 
-        /// <summary>
-        ///     Initialize data
-        /// </summary>
         private void InitializePara()
         {
             var dbhungPara = new DoubleHungWinPara(m_para.Validator.IsMetric);
@@ -236,11 +182,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             SetParaText(dbhungPara);
         }
 
-        /// <summary>
-        ///     The newtype button click function
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void button_newType_Click(object sender, EventArgs e)
         {
             TransforData();
@@ -249,11 +190,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_comboType.Focus();
         }
 
-        /// <summary>
-        ///     The duplicatebutton click function
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void button_duplicateType_Click(object sender, EventArgs e)
         {
             TransforData();
@@ -262,10 +198,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_comboType.Focus();
         }
 
-        /// <summary>
-        ///     set WindowParameter text
-        /// </summary>
-        /// <param name="para">the WindowParameter</param>
         private void SetParaText(WindowParameter para)
         {
             var dbhungPara = para as DoubleHungWinPara;
@@ -276,9 +208,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_comboType.Text = dbhungPara.Type;
         }
 
-        /// <summary>
-        ///     set grid data
-        /// </summary>
         private void SetGridData()
         {
             m_paraList.Clear();
@@ -291,81 +220,42 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             dataGridView1.DataSource = m_paraList;
         }
 
-        /// <summary>
-        ///     m_height textbox's text changed event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_height_TextChanged(object sender, EventArgs e)
         {
             ValidateInput(m_height);
         }
 
-        /// <summary>
-        ///     m_width textbox's text changed event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_width_TextChanged(object sender, EventArgs e)
         {
             ValidateInput(m_width);
         }
 
-        /// <summary>
-        ///     m_inset textbox's text changed event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_inset_TextChanged(object sender, EventArgs e)
         {
             ValidateInput(m_inset);
         }
 
-        /// <summary>
-        ///     m_sillHeight textbox's text changed event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_sillHeight_TextChanged(object sender, EventArgs e)
         {
             ValidateInput(m_sillHeight);
         }
 
-        /// <summary>
-        ///     m_comboType SelectedIndexChanged event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_comboType_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_para.CurrentPara = m_para.WinParaTab[m_comboType.SelectedItem.ToString()] as WindowParameter;
             SetParaText(m_para.CurrentPara);
         }
 
-        /// <summary>
-        ///     m_glassMat SelectedIndexChanged event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_glassMat_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_para.GlassMat = m_glassMat.SelectedItem.ToString();
         }
 
-        /// <summary>
-        ///     m_sashMat SelectedIndexChanged event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_sashMat_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_para.SashMat = m_sashMat.SelectedItem.ToString();
         }
 
-        /// <summary>
-        ///     validate control input value
-        /// </summary>
-        /// <param name="control">the control</param>
         private bool ValidateInput(Control control)
         {
             if (null == control) return true;
@@ -415,11 +305,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             return true;
         }
 
-        /// <summary>
-        ///     m_buttonBrowser click event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_buttonBrowser_Click(object sender, EventArgs e)
         {
             var saveDialog = new SaveFileDialog
@@ -436,20 +321,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                     m_pathName.Text = saveDialog.FileName;
         }
 
-        /// <summary>
-        ///     m_height leave event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_height_Leave(object sender, EventArgs e)
         {
             CheckValue(m_height);
         }
 
-        /// <summary>
-        ///     check input
-        /// </summary>
-        /// <param name="control">the host control</param>
         private void CheckValue(Control control)
         {
             if (string.IsNullOrEmpty(control.Text))
@@ -465,51 +341,26 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             }
         }
 
-        /// <summary>
-        ///     m_width leave event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_width_Leave(object sender, EventArgs e)
         {
             CheckValue(m_width);
         }
 
-        /// <summary>
-        ///     m_inset leave event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_inset_Leave(object sender, EventArgs e)
         {
             CheckValue(m_inset);
         }
 
-        /// <summary>
-        ///     m_sillHeight leave event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_sillHeight_Leave(object sender, EventArgs e)
         {
             CheckValue(m_sillHeight);
         }
 
-        /// <summary>
-        ///     m_comboType leave event
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void m_comboType_Leave(object sender, EventArgs e)
         {
             CheckValue(m_comboType);
         }
 
-        /// <summary>
-        ///     Step1_HelpButton click event to open the help document
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">EventArgs</param>
         private void Step1_HelpButton_Click(object sender, EventArgs e)
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

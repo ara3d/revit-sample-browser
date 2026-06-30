@@ -13,7 +13,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            //Expected results: The Analytical Member is flipped, you can observe the IDs of the end nodes
             try
             {
                 var document = commandData.Application.ActiveUIDocument.Document;

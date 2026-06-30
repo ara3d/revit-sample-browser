@@ -9,9 +9,6 @@ using Autodesk.Revit.DB.Structure;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 {
-    /// <summary>
-    ///     Class used to represent a structural face that is part of a rebar constraint.
-    /// </summary>
     public class TargetFace
     {
         public TargetFace()
@@ -21,19 +18,13 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             Face = null;
         }
 
-        //Actual face to constrain to
         public Face Face { get; set; }
 
-        //The transform of the geometry element where the face belongs
         public Transform Transform { get; set; }
 
-        //offset value used for calculating bars
         public double Offset { get; set; }
     }
 
-    /// <summary>
-    ///     Enum defining the custom handles used by this server to identify the different custom constraints
-    /// </summary>
     public enum BarHandle
     {
         FirstHandle,
@@ -44,79 +35,39 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
     }
 
     /// <summary>
-    ///     Implements the Revit add-in interface IRebarUpdateServer;
-    ///     This class is an external server that is capable of calculating
-    ///     straight sets of bars of variable length, following the constrained structural planar faces;
-    ///     The Rebar FreeForm element created using this server will have 3 custom Rebar Handles,
-    ///     that can each constrain one planar face, and Start/End handles that will search for targets
-    ///     to constrain automatically, then adjust the curves accordingly.
-    ///     Bar geometry results from intersecting faces and interpolation from the intersection results:
-    ///     - First bar is the intersection of First Handle target with Second Handle target;
-    ///     - Last bar is the intersection of First Handle target with Third Handle target;
-    ///     - All other bars are created between the first and last bar so that they have equal distance between them.
+    ///     IRebarUpdateServer that builds straight free-form bar sets from three planar face constraints.
+    ///     First/last bars intersect face pairs; intermediate bars are evenly spaced. Start/end handles auto-search host faces.
     /// </summary>
     public class RebarUpdateServer : IRebarUpdateServer
     {
-        /// <summary>
-        ///     SampleGuid represents the Guid used by the Revit ExternalService framework to identify this custom
-        ///     IRebarUpdateServer
-        ///     For a Rebar to use this custom external server, pass this Guid to the Rebar.CreateFreeForm(..) function.
-        /// </summary>
+        /// <summary>Pass to Rebar.CreateFreeForm to bind this external server.</summary>
         public static Guid SampleGuid = new Guid("64D176BA-EB3E-4E96-877D-46A3B0C17B93");
 
-        /// <summary>
-        ///     Returns the unique id of this server
-        /// </summary>
         public Guid GetServerId()
         {
             return SampleGuid;
         }
 
-        /// <summary>
-        ///     returns the id of the service that handles this server
-        /// </summary>
         public ExternalServiceId GetServiceId()
         {
             return ExternalServices.BuiltInExternalServices.RebarUpdateService;
         }
 
-        /// <summary>
-        ///     Returns name of the server
-        /// </summary>
         public string GetName()
         {
             return "RebarUpdateServerSample";
         }
 
-        /// <summary>
-        ///     Returns information about the vendor.
-        /// </summary>
         public string GetVendorId()
         {
             return "ADSK";
         }
 
-        /// <summary>
-        ///     Returns description of this server.
-        /// </summary>
         public string GetDescription()
         {
             return "Sample to demonstrate implementing an external server to handle rebar constraints calculation";
         }
 
-        /// <summary>
-        ///     Function used to define the Rebar Handles used by this server to calculate the constraints when regenerating the
-        ///     Rebar element.
-        ///     Rebar handles represent abstract "parts" of the Rebar that can be custom constrained to one or more targets.
-        ///     A custom Rebar Handle is defined with a unique key (int),
-        ///     that the external server uses to identify each RebarConstraint that is attached to the Rebar and compute
-        ///     accordingly.
-        /// </summary>
-        /// <param name="data">
-        ///     Class used to pass information from the external application to the public Rebar Element.
-        ///     data receives the custom, start and end Rebar handle definitions used by this server
-        /// </param>
-        /// <returns> true if handle definition was completed successfully, false otherwise</returns>
         public bool GetCustomHandles(RebarHandlesData data)
         {
             data.AddCustomHandle((int)BarHandle.FirstHandle);
@@ -127,16 +78,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return true;
         }
 
-        /// <summary>
-        ///     Function used to compute the custom RebarHandle position in respect to the Rebar geometry,
-        ///     for display of graphical controls during GraphicalConstraintsManager edit mode
-        /// </summary>
-        /// <param name="data">
-        ///     Class used to pass information between the external application and the public Rebar Element.
-        ///     data exposes geometry to the external application and receives the calculated absolute positions of the handles in
-        ///     the model space
-        /// </param>
-        /// <returns> true if execution was completed successfully, false otherwise</returns>
         public bool GetHandlesPosition(RebarHandlePositionData data)
         {
             if (data.GetNumberOfBars() <= 0)
@@ -151,14 +92,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return true;
         }
 
-        /// <summary>
-        ///     Function resolves the User-facing name for the custom-defined Rebar handles
-        /// </summary>
-        /// <param name="handleNameData">
-        ///     Class used to pass information from the external application to the public Rebar Element.
-        ///     data receives the name for the Rebar Handle it specifies
-        /// </param>
-        /// <returns> true if operation was completed successfully, false otherwise</returns>
         public bool GetCustomHandleName(RebarHandleNameData handleNameData)
         {
             switch (handleNameData.GetCustomHandleTag())
@@ -179,28 +112,11 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return true;
         }
 
-        /// <summary>
-        ///     Function used to compute the geometry information of the Rebar element during document regeneration.
-        ///     Geometry information includes:
-        ///     1. Graphical representation of the Rebar or Rebar Set;
-        ///     2. Hook placement;
-        ///     3. Distribution Path for MRA;
-        /// </summary>
-        /// <param name="data">
-        ///     Class used to pass information from the external application to the public Rebar Element.
-        ///     Interfaces with the Rebar Element and exposes information needed for geometric calculation during regeneration,
-        ///     such as constrained geometry, state of changed input information, etc.
-        ///     Receives the result of the custom constraint calculation and
-        ///     updates the element after the entire function finished successfully.
-        /// </param>
-        /// <returns> true if geometry generation was completed successfully, false otherwise</returns>
         public bool GenerateCurves(RebarCurvesData data)
         {
-            // used to store the faces and transforms used in generation of curves
             var firstFace = new TargetFace();
             var secondFace = new TargetFace();
             var thirdFace = new TargetFace();
-            //iterate through the available constraints and extract the needed information
             var constraints = data.GetRebarUpdateCurvesData().GetCustomConstraints();
             foreach (var constraint in constraints)
             {
@@ -234,15 +150,12 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 }
             }
 
-            // check if all the input is present for the calculation, otherwise return error(false).
             if (firstFace.Face == null || secondFace.Face == null || thirdFace.Face == null)
                 return false;
 
             var thisBar = GetCurrentRebar(data.GetRebarUpdateCurvesData());
-            var selectedCurve =
-                //if a curve elem is selected, we override the geometry we get from the intersections and use the selected curve to create our bar geometries
-                GetSelectedCurveElement(thisBar, data.GetRebarUpdateCurvesData());
-            //used to store the resulting curves
+            // Selected model curve overrides intersection geometry for bar shapes.
+            var selectedCurve = GetSelectedCurveElement(thisBar, data.GetRebarUpdateCurvesData());
             var curves = new List<Curve>();
             Curve originalBar = null;
             var singleBar = GetOffsetCurveAtIntersection(firstFace, secondFace);
@@ -254,17 +167,14 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 singleBar = selectedCurve.GeometryCurve.CreateTransformed(trf);
             }
 
-            //we can't make any more bars without the first one.
             if (singleBar == null)
                 return false;
 
-            // check the layout rule to see if we need to create more bars
-            // for this example, any rule that is not single will generate bars in the same way, 
-            // creating them at an equal distance to each other, based only on number of bars
+            // Non-single layout rules here all space intermediate bars evenly by count/spacing.
             var layout = data.GetRebarUpdateCurvesData().GetLayoutRule();
             switch (layout)
             {
-                case RebarLayoutRule.Single: // first bar creation: intersect first face with second face to get a curve
+                case RebarLayoutRule.Single:
                     curves.Add(singleBar);
                     break;
                 case RebarLayoutRule.FixedNumber:
@@ -272,9 +182,8 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 case RebarLayoutRule.MaximumSpacing:
                 case RebarLayoutRule.MinimumClearSpacing:
                     curves.Add(singleBar);
-                    var lastBar = GetOffsetCurveAtIntersection(firstFace, thirdFace); // create last bar
+                    var lastBar = GetOffsetCurveAtIntersection(firstFace, thirdFace);
 
-                    // keep the curves pointing in the same direction
                     var firstBar = selectedCurve != null ? originalBar : singleBar;
                     if (lastBar == null || !AlignBars(ref firstBar, ref lastBar))
                         return false;
@@ -294,28 +203,21 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                     break;
             }
 
-            // check if any curves were created 
             if (curves.Count <= 0)
                 return false;
 
-            // create the distribution path for the bars that were created;
-            // one single bar will not have a distribution path.
             var distribPath = new List<Curve>();
             for (var ii = 0; ii < curves.Count - 1; ii++)
                 distribPath.Add(Line.CreateBound(curves[ii].Evaluate(0.5, true), curves[ii + 1].Evaluate(0.5, true)));
-            // set distribution path if we have a path created
             if (distribPath.Count > 0)
                 data.SetDistributionPath(distribPath);
 
-            // add each curve as separate bar in the set.
             for (var ii = 0; ii < curves.Count; ii++)
             {
                 var barCurve = new List<Curve> { curves[ii] };
                 data.AddBarGeometry(barCurve);
 
-                // set the hook normals for each bar added
-                // important!: hook normals set here will be reset if bar geometry is changed on TrimExtendCurves
-                // so they need to be recalculated then.
+                // Hook normals set here are reset when TrimExtendCurves replaces bar geometry.
                 for (var i = 0; i < 2; i++)
                 {
                     var normal = ComputeNormal(curves[ii], firstFace, i);
@@ -328,59 +230,35 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
         }
 
         /// <summary>
-        ///     Function used to adjust the computed geometry information of the rebar element and has two logical parts:
-        ///     - Selection of structural faces for creation of Start of Bar and End of Bar Constraints when needed
-        ///     (Constraints created here are visible and modifiable in the Graphical Constraints Manager in native Revit)
-        ///     The constraint search is done by listing all the faces from the structural pointed to by the FirstHandle constraint
-        ///     and then picking the face that has the closest intersection point with either the curves in the rebar, or their
-        ///     extensions
-        ///     - Adjustments are done to the start/end of the bars according to the corresponding constraints
-        ///     Each bar will be lengthened to the intersection point of the tangent in the curve's specified end with the
-        ///     corresponding constraint face,
-        ///     or it will be shortened to the intersection point of the curve itself with the corresponding constraint face.
-        ///     - Hook normals for each bar are calculated for the newly modified curves.
-        ///     This function is called after the successful execution of GenerateCurves
+        ///     Auto-creates start/end face constraints when missing, then trims or extends bars; recalculates hook normals afterward.
         /// </summary>
-        /// <param name="data">
-        ///     Class used to pass information from the external application to the public Rebar Element.
-        ///     Interfaces with the Rebar Element and exposes information needed for Constraint creation, face searching, and
-        ///     receives the result of the Start/End constraint calculation.
-        ///     updates are done on the element after the entire function finished successfully.
-        /// </param>
-        /// <returns> true if execution was completed successfully, false otherwise</returns>
         public bool TrimExtendCurves(RebarTrimExtendData data)
         {
             if (GetSelectedCurveElement(GetCurrentRebar(data.GetRebarUpdateCurvesData()),
                     data.GetRebarUpdateCurvesData()) != null)
                 return true;
 
-            // extract the curves from the element.
             IList<Curve> allbars = new List<Curve>();
             for (var ii = 0; ii < data.GetRebarUpdateCurvesData().GetBarsNumber(); ii++)
                 allbars.Add(data.GetRebarUpdateCurvesData().GetBarGeometry(ii)[0]);
-            // Place for caching the faces of the host used in constraint search.
             var hostFaces = new List<TargetFace>();
 
-            // repeat process for each end of the Rebar.
             for (var iBarEnd = 0; iBarEnd < 2; iBarEnd++)
             {
                 var faces = new List<TargetFace>();
-                // get current Start/End constraint
                 var constraint = iBarEnd == 0
                     ? data.GetRebarUpdateCurvesData().GetStartConstraint()
                     : data.GetRebarUpdateCurvesData().GetEndConstraint();
 
-                //if no constraint present, then search for a new one 
                 if (constraint == null)
                 {
-                    if (hostFaces.Count <= 0) // fetch the faces of the structural used for searching constraints.
+                    if (hostFaces.Count <= 0)
                     {
-                        // used compute references to true to make sure we can create constraints with the faces we find
+                        // ComputeReferences required so found faces can become constraint targets.
                         var geomOptions = new Options
                         {
                             ComputeReferences = true
                         };
-                        // the host structural is considered the first structural in the first constraint
                         var elemGeometry = data.GetRebarUpdateCurvesData().GetCustomConstraints()[0].GetTargetElement(0)
                             .get_Geometry(geomOptions);
                         if (elemGeometry == null)
@@ -388,13 +266,11 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         hostFaces = GetFacesFromElement(elemGeometry);
                     }
 
-                    // for each bar try to find the closest face that intersects with it, or its extension, at the specified end
                     foreach (var bar in allbars)
                     {
                         faces.Add(SearchForFace(bar, hostFaces, iBarEnd));
                     }
 
-                    // gather valid references for constraint creation
                     var refs = new List<Reference>();
                     foreach (var face in faces)
                     {
@@ -402,7 +278,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                             refs.Add(face.Face.Reference);
                     }
 
-                    // if we have any valid references, we create the constraint for the specified bar end.
                     if (refs.Count > 0)
                     {
                         if (iBarEnd == 0)
@@ -411,7 +286,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                             data.CreateEndConstraint(refs, false, 0.0);
                     }
                 }
-                else // if constraint is present, extract needed information to calculate trim/extend
+                else
                 {
                     for (var nTarget = 0; nTarget < constraint.NumberOfTargets; nTarget++)
                     {
@@ -426,13 +301,12 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                     }
                 }
 
-                // for each bar, find out where it intersects with the selected faces and replace the original curve with a new one that is shorter or longer.
-                // first search for extension intersection (use tangent curve in the end point of the curve), then search for actual curve intersection
+                // Try tangent extension first, then the bar segment itself.
                 for (var idx = 0; idx < allbars.Count; idx++)
                 {
                     XYZ intersection;
                     var barCurve = allbars[idx];
-                    if (!(barCurve is Line)) // this code only deals with input curves that are straight lines
+                    if (!(barCurve is Line)) // Straight bars only.
                         return false;
                     var tangent = Line.CreateUnbound(barCurve.GetEndPoint(iBarEnd),
                         barCurve.ComputeDerivatives(iBarEnd, true).BasisX.Normalize() * (iBarEnd == 0 ? -1 : 1));
@@ -453,14 +327,12 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         {
                         }
 
-                        // if new curve available, replace the old one.
                         if (newCurve != null)
                             allbars[idx] = newCurve;
                     }
                 }
             }
 
-            // get the FirstHandle constraint and extract the target face to use in determining the hook orientation for each bar
             var firstFace = new TargetFace();
             var constraints = data.GetRebarUpdateCurvesData().GetCustomConstraints();
             foreach (var constraint in constraints)
@@ -480,13 +352,11 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 }
             }
 
-            // add each curve as separate bar in the set.
             for (var ii = 0; ii < allbars.Count; ii++)
             {
                 var barCurve = new List<Curve> { allbars[ii] };
                 data.AddBarGeometry(barCurve);
-                // hook normals are reset when adding new bar geometry, so  we need to
-                // set the hook normals for each bar that was modified
+                // Hook normals reset when bar geometry is replaced.
                 for (var i = 0; i < 2; i++)
                 {
                     var normal = ComputeNormal(allbars[ii], firstFace, i);
@@ -498,11 +368,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return true;
         }
 
-        /// <summary>
-        ///     function used to extract current rebar
-        /// </summary>
-        /// <param name="data"> data used to pass or get information regarding constraints cover</param>
-        /// <returns>Current rebar element being regenerated</returns>
         private Rebar GetCurrentRebar(RebarUpdateCurvesData data)
         {
             var rebarId = data.GetRebarId();
@@ -519,41 +384,22 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return data.GetDocument().GetElement(id) as CurveElement;
         }
 
-        /// <summary>
-        ///     function that finds the closest face to a specified end of a curve of the direction of the curve
-        /// </summary>
-        /// <param name="curve">
-        ///     curve used to find the closest face
-        /// </param>
-        /// ///
-        /// <param name="faces">
-        ///     list of faces that are parsed to find the closest one
-        /// </param>
-        /// ///
-        /// <param name="iEnd">
-        ///     input parameter specifying the curve end for wich the search is taking place
-        /// </param>
-        /// <returns> the FaceTrf that is closest to the curve end</returns>
         private TargetFace SearchForFace(Curve curve, List<TargetFace> faces, int iEnd)
         {
             var bestFace = new TargetFace();
             var minDistance = double.MaxValue;
-            // create tangent to find intersections on the curve's extension
             var tangent = Line.CreateUnbound(curve.GetEndPoint(iEnd),
                 curve.ComputeDerivatives(iEnd, true).BasisX.Normalize() * (iEnd == 0 ? -1 : 1));
-            // iterate through faces and keep the face closest to the specified end of the curve        
             foreach (var hostFace in faces)
             {
                 IntersectionResultArray results;
-                // intersect tangent to find faces outside the curve
                 if (hostFace.Face.Intersect(tangent.CreateTransformed(hostFace.Transform.Inverse), out results) ==
                     SetComparisonResult.Overlap)
                     foreach (IntersectionResult intersect in results)
                     {
                         var distance = hostFace.Transform.OfPoint(intersect.XYZPoint)
                             .DistanceTo(curve.GetEndPoint(iEnd));
-                        // if intersection is not on the curve( "behind" the tangent origin, considering the direction),
-                        // and the distance from the end of the curve to the face is the smallest, keep face.
+                        // Ignore intersections behind the tangent origin (param < 0).
                         var param = tangent.Project(hostFace.Transform.OfPoint(intersect.XYZPoint)).Parameter;
                         if (param >= 0 && distance < minDistance)
                         {
@@ -579,21 +425,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return bestFace;
         }
 
-        /// <summary>
-        ///     calculates the normal of the plane in which hooks for a certain curve should bend.
-        /// </summary>
-        /// <param name="curve">
-        ///     hook normal is calculated for this curve
-        /// </param>
-        /// ///
-        /// <param name="face">
-        ///     face used as a reference for finding the hook normal, together with the curve
-        /// </param>
-        /// ///
-        /// <param name="iEnd">
-        ///     specifies the end at which the hook normal to be calculated
-        /// </param>
-        /// <returns> the plane normal that was calculated</returns>
         private XYZ ComputeNormal(Curve curve, TargetFace face, int iEnd)
         {
             var curveTangent = curve.ComputeDerivatives(iEnd, true).BasisX.Normalize();
@@ -602,26 +433,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return proj == null ? null : face.Face.ComputeNormal(proj.UVPoint).Negate().CrossProduct(curveTangent);
         }
 
-        /// <summary>
-        ///     function that tries to find the first intersection
-        ///     between the provided curve and one of the faces provided.
-        /// </summary>
-        /// <param name="curve">
-        ///     curve that is to be intersected with the faces provided
-        /// </param>
-        /// ///
-        /// <param name="faces">
-        ///     list of faces that are used to find an intersection
-        /// </param>
-        /// ///
-        /// <param name="intersection">
-        ///     output parameter to return the intersection point.
-        /// </param>
-        /// ///
-        /// <param name="offsetFromFace">
-        ///     output parameter to return the offset value stored in Targetface that was used for intersection
-        /// </param>
-        /// <returns> true if an intersection was found, false otherwise</returns>
         private bool GetIntersection(Curve curve, List<TargetFace> faces, out XYZ intersection,
             out double offsetFromFace)
         {
@@ -646,17 +457,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return false;
         }
 
-        /// <summary>
-        ///     Function that generates the bars between the first and last bar of the set, according to the layout rule
-        /// </summary>
-        /// <param name="firstCurve"></param>
-        /// <param name="lastCurve"></param>
-        /// <param name="layout"></param>
-        /// <param name="nbOfBars"></param>
-        /// <param name="spacing"></param>
-        /// <param name="curves"></param>
-        /// <param name="overrideCurve"></param>
-        /// <returns></returns>
         private bool GenerateSet(Curve firstCurve, Curve lastCurve, RebarLayoutRule layout, int nbOfBars,
             double spacing, ref List<Curve> curves, Curve overrideCurve)
         {
@@ -669,7 +469,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 var numberOfBarsWhichCanFit = (int)((startLine.Length - double.Epsilon) / spacing) + 2;
                 switch (layout)
                 {
-                    //check if required number of bars fits between ends  
                     case RebarLayoutRule.NumberWithSpacing when numberOfBarsWhichCanFit != nbOfBars:
                         return false;
                     case RebarLayoutRule.MaximumSpacing:
@@ -696,12 +495,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return true;
         }
 
-        /// <summary>
-        ///     Function that checks if two bars(Curves) have the same "direction"
-        /// </summary>
-        /// <param name="firstBar">bar that stays put, e.g. gives the wanted direction</param>
-        /// <param name="secondBar">bar that flips if it's direction is not the same as the first</param>
-        /// <returns></returns>
         private bool AlignBars(ref Curve firstBar, ref Curve secondBar)
         {
             try
@@ -718,12 +511,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return true;
         }
 
-        /// <summary>
-        ///     Function used to intersect 2 faces to obtain an offseted curve.
-        /// </summary>
-        /// <param name="firstFace"></param>
-        /// <param name="secondFace"></param>
-        /// <returns></returns>
         private Curve GetOffsetCurveAtIntersection(TargetFace firstFace, TargetFace secondFace)
         {
             Curve firstCurve;
@@ -740,18 +527,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             return firstCurve.CreateTransformed(offsetTrf.Multiply(firstFace.Transform));
         }
 
-        /// <summary>
-        ///     function that iterates through a geometry element to get all the faces it is composed of
-        /// </summary>
-        /// <param name="geometryElement">
-        ///     element that needs to be parsed to fetch all the faces
-        /// </param>
-        /// ///
-        /// <param name="trf">
-        ///     transform of the geometry element provided.
-        ///     this is applicable for geometries that come from familyInstance
-        /// </param>
-        /// <returns> list of faces that make up the provided element </returns>
         private List<TargetFace> GetFacesFromElement(GeometryElement geometryElement, Transform trf = null)
         {
             var result = new List<TargetFace>();

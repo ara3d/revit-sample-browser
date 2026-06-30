@@ -35,10 +35,6 @@ namespace BuildingCoder
             var uidoc = uiapp.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            // Interactively select elements of type Room,
-            // either via pre-selection before launching the
-            // command, or interactively via post-selection.
-
             var selector
                 = new JtSelectorMulti<Room>(
                     uidoc, BuiltInCategory.OST_Rooms, "room",

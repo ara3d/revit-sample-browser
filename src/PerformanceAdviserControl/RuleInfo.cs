@@ -4,10 +4,6 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
 {
-    /// <summary>
-    ///     A simple data class that holds Performance Adviser rule information for use with
-    ///     TestDisplayDialog
-    /// </summary>
     public class RuleInfo
     {
         public readonly PerformanceAdviserRuleId Id;

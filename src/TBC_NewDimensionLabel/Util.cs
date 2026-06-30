@@ -11,10 +11,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_NewDimensionLabel sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return a sketch plane from the given document with
-        ///     the specified normal vector, if one exists, else null.
-        /// </summary>
         internal static SketchPlane FindSketchPlane(
             Document doc,
             XYZ normal)

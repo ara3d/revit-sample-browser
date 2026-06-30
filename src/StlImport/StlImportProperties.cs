@@ -8,10 +8,6 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.StlImport.CS
 {
-    /// <summary>
-    ///     Shared import options used by <see cref="StlImportCommand"/> and the
-    ///     property setter commands in this sample.
-    /// </summary>
     public class StlImportProperties
     {
         static StlImportProperties _properties;

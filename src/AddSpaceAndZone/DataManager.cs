@@ -10,9 +10,6 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 {
-    /// <summary>
-    ///     The DataManager Class is used to obtain, create or edit the Space elements and Zone elements.
-    /// </summary>
     public class DataManager
     {
         private readonly ExternalCommandData m_commandData;
@@ -22,10 +19,6 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         private SpaceManager m_spaceManager;
         private ZoneManager m_zoneManager;
 
-        /// <summary>
-        ///     The constructor of DataManager class.
-        /// </summary>
-        /// <param name="commandData">The ExternalCommandData</param>
         public DataManager(ExternalCommandData commandData)
         {
             m_commandData = commandData;
@@ -38,14 +31,8 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
             m_defaultPhase = commandData.Application.ActiveUIDocument.Document.GetElement(phaseId) as Phase;
         }
 
-        /// <summary>
-        ///     Get the Level elements.
-        /// </summary>
         public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levels);
 
-        /// <summary>
-        ///     Initialize the data member, obtain the Space and Zone elements.
-        /// </summary>
         private void Initialize()
         {
             var spaceDictionary = new Dictionary<ElementId, List<Space>>();
@@ -75,9 +62,6 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
             m_zoneManager = new ZoneManager(m_commandData, zoneDictionary);
         }
 
-        /// <summary>
-        ///     Create a Zone element.
-        /// </summary>
         public void CreateZone()
         {
             if (m_defaultPhase == null)
@@ -96,9 +80,6 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
             }
         }
 
-        /// <summary>
-        ///     Create some spaces.
-        /// </summary>
         public void CreateSpaces()
         {
             if (m_defaultPhase == null)
@@ -121,28 +102,16 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
             }
         }
 
-        /// <summary>
-        ///     Get the Space elements.
-        /// </summary>
-        /// <returns>A space list in current level.</returns>
         public List<Space> GetSpaces()
         {
             return m_spaceManager.GetSpaces(m_currentLevel);
         }
 
-        /// <summary>
-        ///     Get the Zone elements.
-        /// </summary>
-        /// <returns>A Zone list in current level.</returns>
         public List<Zone> GetZones()
         {
             return m_zoneManager.GetZones(m_currentLevel);
         }
 
-        /// <summary>
-        ///     Update the current level.
-        /// </summary>
-        /// <param name="level"></param>
         public void Update(Level level)
         {
             m_currentLevel = level;

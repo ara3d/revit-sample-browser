@@ -6,27 +6,15 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
-    /// <summary>
-    ///     The ExtrusionRoofWrapper class is use to edit a extrusion roof in a PropertyGrid.
-    ///     It contains a extrusion roof.
-    /// </summary>
     public class ExtrusionRoofWrapper
     {
-        // To store the extrusion roof which will be edited in a PropertyGrid.
         private readonly ExtrusionRoof m_roof;
 
-        /// <summary>
-        ///     The construct of the ExtrusionRoofWrapper class.
-        /// </summary>
-        /// <param name="roof">The extrusion roof which will be edited in a PropertyGrid.</param>
         public ExtrusionRoofWrapper(ExtrusionRoof roof)
         {
             m_roof = roof;
         }
 
-        /// <summary>
-        ///     The reference plane of the extrusion roof.
-        /// </summary>
         [Category("Constrains")]
         [Description("The reference plane of the extrusion roof.")]
         public string WorkPlane
@@ -38,9 +26,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             }
         }
 
-        /// <summary>
-        ///     The extrusion start point of the extrusion roof.
-        /// </summary>
         [Category("Constrains")]
         [DisplayName("Extrusion Start")]
         [Description(
@@ -59,9 +44,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             }
         }
 
-        /// <summary>
-        ///     The extrusion end point of the extrusion roof.
-        /// </summary>
         [Category("Constrains")]
         [DisplayName("Extrusion End")]
         [Description(
@@ -80,9 +62,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             }
         }
 
-        /// <summary>
-        ///     The reference level of the extrusion roof.
-        /// </summary>
         [TypeConverter(typeof(LevelConverter))]
         [Category("Constrains")]
         [DisplayName("Reference Level")]
@@ -96,15 +75,11 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             }
             set
             {
-                // update reference level
                 var para = m_roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
                 para.Set(value.Id);
             }
         }
 
-        /// <summary>
-        ///     The offset from the reference level of the extrusion roof.
-        /// </summary>
         [Category("Constrains")]
         [DisplayName("Level Offset")]
         [Description("The offset from the reference level.")]

@@ -19,7 +19,6 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-//using Autodesk.Revit.Collections;
 
 #endregion // Namespaces
 
@@ -62,7 +61,6 @@ namespace BuildingCoder
 
             Util.PrintLibraryPathMap(map, "After modifying 'Metric Detail Library' key");
 
-            //app.LibraryPaths = map; // 2011
             app.SetLibraryPaths(map); // 2012
 
             Debug.Print("You might want to clean up your "

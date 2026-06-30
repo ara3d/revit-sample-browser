@@ -7,65 +7,41 @@ using Autodesk.Revit.UI;
 namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
     /// <summary>
-    ///     This class is a manager for application events.
-    ///     In this class, user can subscribe and remove the events according to what he select.
-    ///     This class used the controlled Application as the sender.
-    ///     If you want to use Application or Document as the sender, the usage is same.
-    ///     "+=" is used to register event and "-=" is used to remove event.
+    /// Subscribes and unsubscribes application events via ControlledApplication (UI trigger points).
+    /// Use += / -=; Application or Document work the same when the trigger is API-level.
     /// </summary>
     public class EventManager
     {
-        /// <summary>
-        ///     This list is used to store what user select last time.
-        /// </summary>
         private readonly List<string> m_historySelection;
 
-        /// <summary>
-        ///     Revit application
-        /// </summary>
         private readonly UIControlledApplication m_app;
 
-        /// <summary>
-        ///     Prevent the compiler from generating a default constructor.
-        /// </summary>
         private EventManager()
         {
-            // none any codes, just declare it as private to obey the .Net design rule
         }
 
-        /// <summary>
-        ///     Constructor for application event manager.
-        /// </summary>
-        /// <param name="app"></param>
         public EventManager(UIControlledApplication app)
         {
             m_app = app;
             m_historySelection = new List<string>();
         }
 
-        /// <summary>
-        ///     A public method used to update the events subscription
-        /// </summary>
-        /// <param name="selection"></param>
         public void Update(List<string> selection)
         {
-            // If event has been in history list and not in current selection,
-            // it means user doesn't select this event again, and it should be move.
+            // Unsubscribe events removed since last selection.
             foreach (var eventname in m_historySelection)
             {
                 if (!selection.Contains(eventname))
                     SubtractEvents(eventname);
             }
 
-            // Contrarily,if event has been in current selection and not in history list,
-            // it means this event should be subscribed.
+            // Subscribe newly selected events.
             foreach (var eventname in selection)
             {
                 if (!m_historySelection.Contains(eventname))
                     AddEvents(eventname);
             }
 
-            // generate the history list.
             m_historySelection.Clear();
             foreach (var eventname in selection)
             {
@@ -73,11 +49,6 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             }
         }
 
-        /// <summary>
-        ///     Register event according to event name.
-        ///     The generic handler app_eventsHandlerMethod will be subscribed to this event.
-        /// </summary>
-        /// <param name="eventName"></param>
         private void AddEvents(string eventName)
         {
             switch (eventName)
@@ -157,10 +128,6 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             }
         }
 
-        /// <summary>
-        ///     Remove registered event by its name.
-        /// </summary>
-        /// <param name="eventName">Event name to be subtracted.</param>
         private void SubtractEvents(string eventName)
         {
             switch (eventName)
@@ -240,18 +207,9 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             }
         }
 
-        /// <summary>
-        ///     Generic event handler can be subscribed to any events.
-        ///     It will dump events information(sender and EventArgs) to log window and log file
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="args"></param>
         public void app_eventsHandlerMethod(object obj, EventArgs args)
         {
-            // generate event information and set to information window 
-            // to track what event be touch off.
             ExternalApplication.EventLogManager.TrackEvent(obj, args);
-            // write log file.
             ExternalApplication.EventLogManager.WriteLogFile(obj, args);
         }
     }

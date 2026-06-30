@@ -11,18 +11,11 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
     /// </summary>
     public partial class SpotDimensionInfoDlg : Form
     {
-        /// <summary>
-        ///     Default constructor
-        /// </summary>
         public SpotDimensionInfoDlg()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Overload constructor
-        /// </summary>
-        /// <param name="data"></param>
         public SpotDimensionInfoDlg(ExternalCommandData data)
         {
             m_data = new SpotDimensionsData(data);
@@ -36,9 +29,6 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
         /// </summary>
         public Autodesk.Revit.DB.SpotDimension SelectedSpotDimension { get; private set; }
 
-        /// <summary>
-        ///     Initialize custom component
-        /// </summary>
         private void InitializeCustomComponent()
         {
             viewsComboBox.DataSource = m_data.Views;
@@ -53,36 +43,24 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
             typeParamsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
 
-        /// <summary>
-        ///     Display all the spot dimensions in the selected view
-        /// </summary>
-        /// <param name="viewName"></param>
         private void DisplaySpotDimensionInfos(string viewName)
         {
             spotDimensionsListView.Items.Clear();
 
-            //add SpotDimensions to the listview
             foreach (var tmpSpotDimension in m_data.SpotDimensions)
             {
                 if (tmpSpotDimension.View.Name == viewName)
                 {
-                    //create a list view Item
                     var tmpItem = new ListViewItem(tmpSpotDimension.Id.ToString())
                     {
                         Tag = tmpSpotDimension
                     };
 
-                    //add the item to the listview
                     spotDimensionsListView.Items.Add(tmpItem);
                 }
             }
         }
 
-        /// <summary>
-        ///     When selected another spot dimension then update the DataGridView.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void spotDimensionsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (spotDimensionsListView.FocusedItem != null)
@@ -102,11 +80,6 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
             }
         }
 
-        /// <summary>
-        ///     When selected view changed, then update the list box to show the spot dimensions in that view.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void viewsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (viewsComboBox.SelectedItem is string selectViewName) DisplaySpotDimensionInfos(selectViewName);

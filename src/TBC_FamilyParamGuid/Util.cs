@@ -3,12 +3,9 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_FamilyParamGuid sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Get family parameter IsShared and GUID properties.
-        /// </summary>
+        // Uses reflection on FamilyParameter.m_Parameter to read IsShared/GUID.
         internal static bool GetFamilyParamGuid(
             FamilyParameter fp,
             out string guid)

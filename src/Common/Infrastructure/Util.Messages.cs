@@ -70,13 +70,6 @@ namespace BuildingCoder
                 WinForms.MessageBoxIcon.Error);
         }
 
-        /// <summary>
-        ///     Return a string describing the given element:
-        ///     .NET type name,
-        ///     category name,
-        ///     family and symbol name for a family instance,
-        ///     element id and element name.
-        /// </summary>
         public static string ElementDescription(
             Element e)
         {
@@ -106,18 +99,6 @@ namespace BuildingCoder
             return $"{typeName} {categoryName}{familyName}{symbolName}<{e.Id.Value} {e.Name}>";
         }
 
-        /// <summary>
-        ///     Return a location for the given element using
-        ///     its LocationPoint Point property,
-        ///     LocationCurve start point, whichever
-        ///     is available.
-        /// </summary>
-        /// <param name="p">Return element location point</param>
-        /// <param name="e">Revit Element</param>
-        /// <returns>
-        ///     True if a location point is available
-        ///     for the given element, otherwise false.
-        /// </returns>
         public static bool GetElementLocation(
             out XYZ p,
             Element e)
@@ -151,11 +132,6 @@ namespace BuildingCoder
             return rc;
         }
 
-        /// <summary>
-        ///     Return the location point of a family instance or null.
-        ///     This null coalesces the location so you won't get an
-        ///     error if the FamilyInstance is an invalid object.
-        /// </summary>
         public static XYZ GetFamilyInstanceLocation(
             FamilyInstance fi)
         {

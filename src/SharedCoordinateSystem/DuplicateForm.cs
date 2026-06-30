@@ -15,12 +15,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         private readonly CoordinateSystemDataForm m_dataForm; //the reference of the CoordinateSystemDataForm class
         private readonly string m_locationName; //the name of  selected location
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="coorinateForm"></param>
-        /// <param name="locationName"></param>
         public DuplicateForm(CoordinateSystemData data, CoordinateSystemDataForm coorinateForm,
             string locationName)
         {
@@ -30,14 +24,8 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     duplicate a new project location
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            //check whether the name has been used
             foreach (var name in m_data.LocationNames)
             {
                 if (name == newNameTextBox.Text)
@@ -59,26 +47,16 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                 return;
             }
 
-            DialogResult = DialogResult.OK; // set dialog result
+            DialogResult = DialogResult.OK;
             Close(); // close the form
         }
 
-        /// <summary>
-        ///     cancel the command
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel; // set dialog result
+            DialogResult = DialogResult.Cancel;
             Close(); // close the form
         }
 
-        /// <summary>
-        ///     invoked while the form was been loaded
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void DuplicateForm_Load(object sender, EventArgs e)
         {
             newNameTextBox.Focus();

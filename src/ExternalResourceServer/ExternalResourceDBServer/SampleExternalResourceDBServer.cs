@@ -12,50 +12,16 @@ using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServer.CS
 {
     /// <summary>
-    ///     <para>
-    ///         Derive from the IExternalResourceServer interface to create a server class
-    ///         for providing external resources (files or data) to Revit.  This example server
-    ///         provides both keynote data and Revit links.
-    ///     </para>
-    ///     <para>
-    ///         The external resource framework has been designed so that the end user
-    ///         loads external resources by browsing with an "open file" dialog.  When the user
-    ///         chooses an external resource server, the file dialog will display the contents
-    ///         of the server's "root folder."  From there, the user can navigate through a system
-    ///         of folders and files specified by the IExternalResourceServer implementation.  The
-    ///         files and folders might be the actual contents of a directory tree only accessible
-    ///         by the server, or might be some other logical structure relevant to the resource
-    ///         that is being loaded.
-    ///     </para>
-    ///     <para>
-    ///         To demonstrate the flexibility of the framework, this example server retrieves
-    ///         keynote data from a fictitious database for users in France and Germany, and from
-    ///         files for all other users.  Revit link models are also obtained from files.  To keep
-    ///         the demonstration simple, the "root" folder for file-based resources is assumed to be
-    ///         \SampleResourceServerRoot, located immediately under the directory where the DLL for
-    ///         this project is placed.  See the separate *.rtf file for additional documentation.
-    ///     </para>
+    /// Sample external resource server providing keynote data and Revit links via a browsable folder tree.
+    /// French/German keynotes come from a fictitious database; other locales and links use files under
+    /// SampleResourceServerRoot next to this assembly.
     /// </summary>
     public class SampleExternalResourceDbServer : IExternalResourceServer
     {
-        /// <summary>
-        ///     Default constructor
-        /// </summary>
         public SampleExternalResourceDbServer()
         {
         }
 
-        /// <summary>
-        ///     <para>
-        ///         Returns the path of the server's root folder.  The contents of this folder will be displayed
-        ///         when the user first selects this server while browsing to load keynote data or a Revit link
-        ///         (unless the user loading keynote data is in France or Germany).
-        ///     </para>
-        ///     <para>
-        ///         For this example server, the root folder is simply a directory immediately under the folder
-        ///         where the DLL for this assembly is located.
-        ///     </para>
-        /// </summary>
         private static string RootFolder
         {
             get
@@ -70,27 +36,11 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             }
         }
 
-        /// <summary>
-        ///     Returns the string used to access the French and German keynotes database key that is
-        ///     stored in an ExternalResourceReference's reference information string-string Dictionary.
-        ///     See the SetupKeynoteDatabaseBrowserData method.
-        /// </summary>
+        // Keys in ExternalResourceReference.GetReferenceInformation().
         private static string RefMapDbKeyEntry => "DBKey";
 
-        /// <summary>
-        ///     Returns the string used to access the server-based relative path to the Revit link file
-        ///     that is stored in an ExternalResourceReference's reference information string-string Dictionary.
-        /// </summary>
         private static string RefMapLinkPathEntry => "Path";
 
-        /// <summary>
-        ///     <para>
-        ///         Returns the path of the root folder of the cache where the server will make
-        ///         local copies of Revit links.  For this example server, the cache root folder is
-        ///         simply a directory immediately under the folder where the DLL for this assembly is
-        ///         located.
-        ///     </para>
-        /// </summary>
         private static string LocalLinkCacheFolder
         {
             get
@@ -105,73 +55,47 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             }
         }
 
-        // Methods that must be implemented by a server for any of Revit's external services
-
-        /// Indicate which of Revit's external services this server supports.
-        /// Servers derived from IExternalResourceServer *must* return
-        /// ExternalServices.BuiltInExternalServices.ExternalResourceService.
+        // IExternalResourceServer must return ExternalResourceService.
         public ExternalServiceId GetServiceId()
         {
             return ExternalServices.BuiltInExternalServices.ExternalResourceService;
         }
 
-        /// Uniquely identifies this server to Revit's ExternalService registry
         public Guid GetServerId()
         {
             return new Guid("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");
         }
 
-        /// <summary>
-        ///     Implement this method to return the name of the server.
-        /// </summary>
         public string GetName()
         {
             return "SDK Sample ExtRes Server";
         }
 
-        /// <summary>
-        ///     # Implement this method to return the id of the vendor of the server.
-        /// </summary>
         public string GetVendorId()
         {
             return "ADSK";
         }
 
-        /// <summary>
-        ///     Provide a short description of the server for display to the end user.
-        /// </summary>
         public string GetDescription()
         {
             return "A Revit SDK sample external resource server which provides keynote data and Revit links.";
         }
 
-        /// Methods implemented specifically by servers for the ExternalResource service
         public string GetShortName()
         {
             return GetName();
         }
 
-        /// <summary>
-        ///     Returns a URL address of the provider of this Revit add-in.
-        /// </summary>
         public virtual string GetInformationLink()
         {
             return "http://www.autodesk.com";
         }
 
-        /// <summary>
-        ///     Specify an image to be displayed in browser dialogs when the end user is selecting a resource to load into Revit.
-        /// </summary>
-        /// <returns>A string containing the full path to an icon file containing 48x48, 32x32 and 16x16 pixel images.</returns>
         public string GetIconPath()
         {
             return string.Empty;
         }
 
-        /// <summary>
-        ///     IExternalResourceServer classes can support more than one type of external resource.
-        ///     This one supports keynotes and Revit links.
-        /// </summary>
         public bool SupportsExternalResourceType(ExternalResourceType resourceType)
         {
             return resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable
@@ -179,18 +103,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                    resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.RevitLink;
         }
 
-        /// <summary>
-        ///     Return a list of resources and sub folders under a folder.
-        ///     The Revit user always loads external resources by browsing with a file navigation
-        ///     dialog, much like they would when selecting files on a locally-accessible drive.
-        ///     The SetupBrowserData method allows the server implementer to simulate an organized
-        ///     system of files and folders to support browsing for external resources.
-        ///     Purely for demonstration purposes, this sample server obtains its keynote data from
-        ///     a "database," and creates a "fake" directory structure for either German or French users
-        ///     to browse keynote data.  However, for all other users - and for Revit Links, file browsing
-        ///     data is generated using actual files on in a folder location under the directory containing
-        ///     this DLL.
-        /// </summary>
         public void SetupBrowserData(ExternalResourceBrowserData browserData)
         {
             var matchOptions = browserData.GetMatchOptions();
@@ -200,22 +112,15 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             var currentCulture = CultureInfo.CurrentCulture;
             var currentCultureName = currentCulture.ToString();
 
-            // Revit will call SupportsExternalResourceType() before calling this method, so we
-            // can assume that resourceType will be KeynoteTable or RevitLink.
+            // de-DE/fr-FR keynotes use a fictitious database tree; others use files under RootFolder.
             if (resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable
                 &&
                 (currentCultureName == "de-DE" || currentCultureName == "fr-FR"))
-                // French and German Keynote Data Are Obtained From a "Database"
                 SetupKeynoteDatabaseBrowserData(browserData, currentCultureName);
             else
-                // Keynote Data in Other Languages, and Revit Links, are Obtained From File
                 SetupFileBasedBrowserData(browserData);
         }
 
-        /// <summary>
-        ///     Checks whether the given ExternalResourceReference is formatted correctly for this server.
-        ///     The format should match one of the formats created in the SetupBrowserData method.
-        /// </summary>
         public bool IsResourceWellFormed(ExternalResourceReference extRef)
         {
             if (extRef.ServerId != GetServerId())
@@ -223,29 +128,16 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             if (!extRef.HasValidDisplayPath())
                 return false;
 
-            // Either the ExternalResourceReference has a valid database key (German/French keynote case) ...
+            // Database key (de-DE/fr-FR keynotes), link path, or keynote file path.
             var refMap = extRef.GetReferenceInformation();
             if (refMap.ContainsKey(RefMapDbKeyEntry))
                 return ExternalResourceHelper.IsValidDbKey(refMap[RefMapDbKeyEntry]);
-            if (refMap.ContainsKey(RefMapLinkPathEntry)) // ... OR it is a Revit link file
+            if (refMap.ContainsKey(RefMapLinkPathEntry))
                 return File.Exists(GetFullServerLinkFilePath(extRef));
 
-            // ... OR it is a keynote file (non- French/German cases).
             return File.Exists(GetFullServerKeynoteFilePath(extRef));
         }
 
-        /// <summary>
-        ///     Implement this method to compare two ExternalResourceReferences.
-        /// </summary>
-        /// <param name="referenceInformation_1">
-        ///     The string-string IDictionary of reference information stored in one
-        ///     ExternalResourceReference
-        /// </param>
-        /// <param name="referenceInformation_2">
-        ///     The string-string IDictionary of reference information stored in a second
-        ///     ExternalResourceReference
-        /// </param>
-        /// <returns></returns>
         public virtual bool AreSameResources(IDictionary<string, string> referenceInformation1,
             IDictionary<string, string> referenceInformation2)
         {
@@ -266,37 +158,17 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             return same;
         }
 
-        /// <summary>
-        ///     Servers can override the name for UI purposes, but here we just return the names that we
-        ///     used when we first created the Resources in SetupBrowserData().
-        /// </summary>
         public string GetInSessionPath(ExternalResourceReference err, string savedPath)
         {
             return savedPath;
         }
 
-        /// <summary>
-        ///     Loads the resources.
-        /// </summary>
-        /// <param name="loadRequestId">A GUID that uniquely identifies this resource load request from Revit.</param>
-        /// <param name="resourceType">The type of external resource that Revit is asking the server to load.</param>
-        /// <param name="resourceReference">An ExternalResourceReference identifying which particular resource to load.</param>
-        /// <param name="loadContext">
-        ///     Context information, including the name of Revit document that is calling the server,
-        /// </param>
-        /// the resource that is currently loaded and the type of load operation (automatic or user-driven).
-        /// <param name="loadContent">
-        ///     An ExternalResourceLoadContent object that will be populated with load data by the
-        ///     server.  There are different subclasses of ExternalResourceLoadContent for different ExternalResourceTypes.
-        /// </param>
         public void LoadResource(Guid loadRequestId, ExternalResourceType resourceType,
             ExternalResourceReference resourceReference, ExternalResourceLoadContext loadContext,
             ExternalResourceLoadContent loadContent)
         {
             loadContent.LoadStatus = ExternalResourceLoadStatus.Failure;
 
-            // The following checks can help with testing.  However, they should not be necessary, since Revit checks all input paramters
-            // before calling this method.
             if (loadRequestId == null)
                 throw new ArgumentNullException(nameof(loadRequestId));
             ;
@@ -316,22 +188,14 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                 throw new ArgumentOutOfRangeException(nameof(resourceType),
                     "The specified resource type is not supported by this server.");
 
-            // The server indicates what version of the resource is being loaded.
             loadContent.Version = GetCurrentlyAvailableResourceVersion(resourceReference);
 
-            // resourceReference is for Keynote Data
             if (resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable)
                 LoadKeynoteDataResource(resourceReference, loadContent);
-            else // resourceReference is a Revit Link
+            else
                 LoadRevitLink(resourceReference, loadContent);
         }
 
-        /// <summary>
-        ///     Indicates whether the given version of a resource is the most current
-        ///     version of the data.
-        /// </summary>
-        /// <param name="extRef">The ExternalResourceReference to check.</param>
-        /// <returns>An enum indicating whether the resource is current, out of date, or of unknown status</returns>
         public ResourceVersionStatus GetResourceVersionStatus(ExternalResourceReference extRef)
         {
             // Determine whether currently loaded version is out of date, and return appropriate status.
@@ -345,15 +209,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                 : ResourceVersionStatus.OutOfDate;
         }
 
-        /// <summary>
-        ///     Implement this to extend the base IExternalResourceServer interface with additional methods
-        ///     that are specific to particular types of external resource (for example, Revit Links).
-        ///     NOTE: There are no extension methods required for keynote resources.
-        /// </summary>
-        /// <param name="extensions">
-        ///     An ExternalResourceServerExtensions object that can be populated with
-        ///     sub-interface objects which can perform operations related to specific types of External Resource.
-        /// </param>
+        /// <summary>Registers Revit link extension callbacks; no extensions required for keynotes.</summary>
         public virtual void GetTypeSpecificServerOperations(ExternalResourceServerExtensions extensions)
         {
             var revitLinkOps = extensions.GetRevitLinkOperations();
@@ -361,11 +217,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             revitLinkOps.SetOnLocalLinkSharedCoordinatesSavedCallback(new LocalLinkSharedCoordinatesSaved());
         }
 
-        /// <summary>
-        ///     Returns a string specifying the version of an external resource available from the server.
-        /// </summary>
-        /// <param name="extResRef">The ExternalResourceReference of the resource whose version is requested.</param>
-        /// <returns>A string containing the version of the specified resource.</returns>
         private string GetCurrentlyAvailableResourceVersion(ExternalResourceReference extResRef)
         {
             var refMap = extResRef.GetReferenceInformation();
@@ -385,22 +236,13 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             return GetFileVersion(serverKeynoteFilePath);
         }
 
-        /// <summary>
-        ///     Provides Revit's file browser dialog with information for navigating the
-        ///     fictitious database containing French and German keynotes data.
-        /// </summary>
         private void SetupKeynoteDatabaseBrowserData(ExternalResourceBrowserData browserData, string currentCultureName)
         {
             var folderPath = browserData.FolderPath;
 
             switch (currentCultureName)
             {
-                // To make this demonstration simple and clear, this code creates two sub-folders with names hard-coded
-                // in French and German, and one keynote data source (must have the extension *.txt) under each of
-                // these sub-folders.
-                // To make subsequent recognition of these resources easier (in the server's LoadResource method and
-                // elsewhere), a database "key" is stored in each resource's string-string Dictionary.
-                // Top-level
+                // Hard-coded de-DE/fr-FR folder tree; DBKey stored in each resource's reference map.
                 case "de-DE" when folderPath == "/":
                     browserData.AddSubFolder("Unterordner1");
                     browserData.AddSubFolder("Unterordner2");
@@ -457,12 +299,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             }
         }
 
-        /// <summary>
-        ///     A convenience utility method.  For resources obtained from files on the server, we consider
-        ///     the resource version to be the last-modified date of the file.
-        /// </summary>
-        /// <param name="filePath">The full path of a file on disk.</param>
-        /// <returns>The version (last-modified data) of the specified file.</returns>
+        // File-based resources use last-modified UTC as the version string.
         private string GetFileVersion(string filePath)
         {
             var fileInfo = new FileInfo(filePath);
@@ -471,46 +308,23 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             return lastModifiedTime.ToString(enUs);
         }
 
-        /// <summary>
-        ///     Computes the full path of a ExternalResourceReference's keynote data file location on the server.
-        /// </summary>
-        /// <param name="extRef">An ExternalResourceReference for a keynote data file stored on this server.</param>
-        /// <returns>A string representing the full path to the Revit link resource on the server drive.</returns>
         private string GetFullServerKeynoteFilePath(ExternalResourceReference extRef)
         {
             var inSessionPath = extRef.InSessionPath;
             var serverName = GetName();
-            // As an alternative to using the inSessionPath to determine the actual file path, the
-            // preferred method is to store the relative server path of the file in the
-            // ExternalResourceReference's referenceInformation (as is done for links).
-            // This would be particularly true if you were overriding the default in-session path in
-            // the GetInSessionPath() method.
+            // Prefer storing the relative path in referenceInformation (as done for links).
             var serverKeynoteFilePath = inSessionPath.Replace($"{serverName}://", $"{RootFolder}\\");
             return serverKeynoteFilePath;
         }
 
-        /// <summary>
-        ///     <para>
-        ///         Provides Revit's file browser dialog with information for navigating a
-        ///         directory stucture of files available from the server.
-        ///     </para>
-        ///     <para>
-        ///         In this example implementation, the server simply echoes the directories
-        ///         and files that it locates under its RootFolder (subject to the appropriate file
-        ///         type filter pattern).
-        ///     </para>
-        /// </summary>
         private void SetupFileBasedBrowserData(ExternalResourceBrowserData browserData)
         {
             var matchOptions = browserData.GetMatchOptions();
-            // filter some resources out by specified filter pattern
             var resourceType = matchOptions.ResourceType;
             var filterPattern = resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable
                 ? "*.txt"
                 : "*.rvt";
 
-            // Expose a "real" directory structure for the user to browse.
-            // The server's root folder is specified in the RootFolder property.
             var folderPath = browserData.FolderPath;
             var path = RootFolder + folderPath.Replace('/', '\\');
             if (Directory.Exists(path))
@@ -533,8 +347,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                     {
                         var refMap = new Dictionary<string, string>
                         {
-                            // Relative Path of Link File is Stored in the ExternalResourceReference that
-                            // Will Be Addded to the BrowserData.
                             [RefMapLinkPathEntry] = $"{folderPath.TrimEnd('/')}/{file.Name}"
                         };
                         browserData.AddResource(file.Name, GetFileVersion(file.FullName), refMap);
@@ -547,14 +359,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             }
         }
 
-        /// <summary>
-        ///     Loads the keynote data resources, either from the fictitious French/German database, or from a file.
-        /// </summary>
-        /// <param name="resourceReference">An ExternalResourceReference identifying which particular resource to load.</param>
-        /// <param name="loadContent">
-        ///     An ExternalResourceLoadContent object that will be populated with load data by the
-        ///     server.  There are different subclasses of ExternalResourceLoadContent for different ExternalResourceTypes.
-        /// </param>
         private void LoadKeynoteDataResource(ExternalResourceReference resourceReference,
             ExternalResourceLoadContent loadContent)
         {
@@ -566,7 +370,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
 
             kdrlc.Reset();
 
-            // Either the ExternalResourceReference has a valid database key (German/French case) ...
+            // Database key (de-DE/fr-FR) or file on disk.
             var refMap = resourceReference.GetReferenceInformation();
             if (refMap.ContainsKey(RefMapDbKeyEntry))
             {
@@ -585,7 +389,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             }
             else
             {
-                // ... OR it is a real file (all other cases).
                 var serverKeynoteFilePath = GetFullServerKeynoteFilePath(resourceReference);
                 var doesReadingSucceed = KeynoteEntries.LoadKeynoteEntriesFromFile(serverKeynoteFilePath, kdrlc);
                 if (doesReadingSucceed)
@@ -596,14 +399,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             }
         }
 
-        /// <summary>
-        ///     Loads a specified Revit link external resource.
-        /// </summary>
-        /// <param name="resourceReference">An ExternalResourceReference identifying which particular resource to load.</param>
-        /// <param name="loadContent">
-        ///     An ExternalResourceLoadContent object that will be populated with load data by the
-        ///     server.  There are different subclasses of ExternalResourceLoadContent for different ExternalResourceTypes.
-        /// </param>
         private void LoadRevitLink(ExternalResourceReference resourceReference, ExternalResourceLoadContent loadContent)
         {
             var linkLoadContent = (LinkLoadContent)loadContent;
@@ -614,12 +409,12 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
 
             try
             {
-                // Copy the file from the path under the server "root" folder to a secret "cache" folder on the users machine
+                // Copy server link to local cache; Revit opens the cached copy.
                 var fullCachedPath = GetFullLinkCachedFilePath(resourceReference);
                 var cacheFolder = Path.GetDirectoryName(fullCachedPath);
                 if (!Directory.Exists(cacheFolder)) Directory.CreateDirectory(cacheFolder);
                 var serverLinkPath = GetFullServerLinkFilePath(resourceReference);
-                File.Copy(serverLinkPath, fullCachedPath, true); // Overwrite
+                File.Copy(serverLinkPath, fullCachedPath, true);
 
                 var linksPath = ModelPathUtils.ConvertUserVisiblePathToModelPath(fullCachedPath);
                 linkLoadContent.SetLinkDataPath(linksPath);
@@ -630,11 +425,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             }
         }
 
-        /// <summary>
-        ///     Computes the full path of a Revit link ExternalResourceReference's location on the server.
-        /// </summary>
-        /// <param name="resource">An ExternalResourceReference for a Revit link stored on this server.</param>
-        /// <returns>A string representing the full path to the Revit link resource on the server drive.</returns>
         public static string GetFullServerLinkFilePath(ExternalResourceReference resource)
         {
             if (resource == null)
@@ -648,19 +438,8 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
         }
 
         /// <summary>
-        ///     <para>
-        ///         Computes the full path on the end user's local drive where an
-        ///         ExternalResourceReference's link model will be copied when the user loads the
-        ///         link from the server.
-        ///     </para>
-        ///     <para>
-        ///         The paths of the local copies relative to this cache root folder will be the
-        ///         same as the paths of the original server copies relative to the Revit links
-        ///         to the root folder on the (compare this method with the GetFullServerLinkFilePath method).
-        ///     </para>
+        /// Local cache path mirrors the server-relative link path (see GetFullServerLinkFilePath).
         /// </summary>
-        /// <param name="resource">An ExternalResourceReference for a Revit link stored on this server.</param>
-        /// <returns>A string representing the full path to the link model on the end user's local drive.</returns>
         public static string GetFullLinkCachedFilePath(ExternalResourceReference resource)
         {
             if (resource == null)

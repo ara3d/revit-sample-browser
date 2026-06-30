@@ -9,9 +9,7 @@ using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
 {
     /// <summary>
-    ///     Deletes all extensible storage created by any application all active documents.
-    ///     This command will also report if there is no storage in the active document to delete.
-    ///     The document must be saved after the storage is deleted to commit the deletion.
+    /// Deletes all extensible storage in the active document. Save the document to persist the deletion.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -31,8 +29,8 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
                 tErase.Start();
                 var schemas = Schema.ListSchemas();
                 foreach (var schema in schemas)
-                    //Note-this will delete storage of this schema in *all* open documents.
                 {
+                    // EraseSchemaAndAllEntities removes this schema from every open document, not just the active one.
                     document.EraseSchemaAndAllEntities(schema);
                 }
 

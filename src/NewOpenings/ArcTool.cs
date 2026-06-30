@@ -14,18 +14,11 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
     {
         private bool m_isFinished;
 
-        /// <summary>
-        ///     Default constructor
-        /// </summary>
         public ArcTool()
         {
             Type = ToolType.Arc;
         }
 
-        /// <summary>
-        ///     Draw Arcs
-        /// </summary>
-        /// <param name="graphic">Graphics object</param>
         public override void Draw(Graphics graphic)
         {
             foreach (var line in Lines)
@@ -44,11 +37,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse down event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseDown(Graphics graphic, MouseEventArgs e)
         {
             if (MouseButtons.Left == e.Button)
@@ -71,11 +59,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse move event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
             if (2 == Points.Count)
@@ -100,11 +83,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse right key click
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnRightMouseClick(Graphics graphic, MouseEventArgs e)
         {
             if (!m_isFinished && e.Button == MouseButtons.Right && Points.Count > 0)
@@ -115,24 +93,12 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse middle key down event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMidMouseDown(Graphics graphic, MouseEventArgs e)
         {
             base.OnMidMouseDown(graphic, e);
             if (m_isFinished) m_isFinished = false;
         }
 
-        /// <summary>
-        ///     Calculate the arc center
-        /// </summary>
-        /// <param name="p1">Point on arc</param>
-        /// <param name="p2">Point on arc</param>
-        /// <param name="p3">Point on arc</param>
-        /// <returns></returns>
         private PointF ComputeCenter(PointF p1, PointF p2, PointF p3)
         {
             var deta = 4 * (p2.X - p1.X) * (p3.Y - p1.Y) - 4 * (p2.Y - p1.Y) * (p3.X - p1.X);
@@ -147,14 +113,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             return new PointF(centerX, centerY);
         }
 
-        /// <summary>
-        ///     Draw arc
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="pen">Used to set drawing color</param>
-        /// <param name="p1">Point on arc</param>
-        /// <param name="p2">Point on arc</param>
-        /// <param name="p3">Point on arc</param>
         private void DrawArc(Graphics graphic, Pen pen, PointF p1, PointF p2, PointF p3)
         {
             try
@@ -201,12 +159,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Get angle between [0,360]
-        /// </summary>
-        /// <param name="sin">Sin(Angle) value</param>
-        /// <param name="cos">Cos(Angle) value</param>
-        /// <returns></returns>
         private double GetAngle(double sin, double cos)
         {
             double result = 0;

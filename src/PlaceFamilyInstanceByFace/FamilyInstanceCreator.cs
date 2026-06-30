@@ -13,9 +13,6 @@ using Ara3D.RevitSampleBrowser.Common.Documents;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
-    /// <summary>
-    ///     This is main data class for creating family Instance by face
-    /// </summary>
     public class FamilyInstanceCreator
     {
         // Revit document
@@ -58,9 +55,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
         /// </summary>
         public List<FamilySymbol> FamilySymbolList { get; } = new List<FamilySymbol>();
 
-        /// <summary>
-        ///     Store all family symbol names
-        /// </summary>
         public List<string> FamilySymbolNameList { get; } = new List<string>();
 
         /// <summary>
@@ -146,14 +140,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             }
         }
 
-        /// <summary>
-        ///     Create a based-point family instance by face
-        /// </summary>
-        /// <param name="locationP">the location point</param>
-        /// <param name="directionP">the direction</param>
-        /// <param name="faceIndex">the index of the selected face</param>
-        /// <param name="familySymbolIndex">the index of the selected family symbol</param>
-        /// <returns></returns>
         public bool CreatePointFamilyInstance(XYZ locationP, XYZ directionP, int faceIndex
             , int familySymbolIndex)
         {
@@ -170,14 +156,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             return true;
         }
 
-        /// <summary>
-        ///     Create a based-line family instance by face
-        /// </summary>
-        /// <param name="startP">the start point</param>
-        /// <param name="endP">the end point</param>
-        /// <param name="faceIndex">the index of the selected face</param>
-        /// <param name="familySymbolIndex">the index of the selected family symbol</param>
-        /// <returns></returns>
         public bool CreateLineFamilyInstance(XYZ startP, XYZ endP, int faceIndex
             , int familySymbolIndex)
         {
@@ -198,10 +176,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             return true;
         }
 
-        /// <summary>
-        ///     Judge whether the selected elementSet has face geometry
-        /// </summary>
-        /// <returns>true is having face geometry, false is having no face geometry</returns>
         public bool CheckSelectedElementSet()
         {
             // judge whether an or more element is selected

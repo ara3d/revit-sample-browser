@@ -20,15 +20,10 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-// 2012
-
 #endregion // Namespaces
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Determine part of wall face area that bounds a room.
-    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     internal class CmdRoomWallAdjacency : IExternalCommand
     {

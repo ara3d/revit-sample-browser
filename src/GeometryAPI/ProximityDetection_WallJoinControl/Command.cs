@@ -19,17 +19,12 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 var application = commandData.Application.Application;
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-                // Create an object that is responsible for proximity detection
                 var proximityDetection = ProximityDetection.GetInstance(application, document);
-
-                // Create an object that is responsible for controlling the joint of walls
                 var walljoinControl = WallJoinControl.GetInstance(application, document);
 
-                // Create the UI for users select operation and view the results.
                 using (var form =
                        new ProximityDetectionAndWallJoinControlForm(document, proximityDetection, walljoinControl))
                 {
-                    // show dialog to browser operations and results
                     if (DialogResult.OK != form.ShowDialog()) return Result.Cancelled;
                 }
 

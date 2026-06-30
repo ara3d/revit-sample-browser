@@ -26,10 +26,6 @@ namespace BuildingCoder
 {
     public static class JtPlaneExtensionMethods
         {
-            /// <summary>
-            ///     Return the signed distance from
-            ///     a plane to a given point.
-            /// </summary>
             public static double SignedDistanceTo(
                 this Plane plane,
                 XYZ p)
@@ -43,9 +39,6 @@ namespace BuildingCoder
                 return plane.Normal.DotProduct(v);
             }
     
-            /// <summary>
-            ///     Project given 3D XYZ point onto plane.
-            /// </summary>
             public static XYZ ProjectOnto(
                 this Plane plane,
                 XYZ p)
@@ -62,11 +55,6 @@ namespace BuildingCoder
                 return q;
             }
     
-            /// <summary>
-            ///     Project given 3D XYZ point into plane,
-            ///     returning the UV coordinates of the result
-            ///     in the local 2D plane coordinate system.
-            /// </summary>
             public static UV ProjectInto(
                 this Plane plane,
                 XYZ p)

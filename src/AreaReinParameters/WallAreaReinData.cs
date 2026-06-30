@@ -7,33 +7,25 @@ using Autodesk.Revit.DB.Structure;
 using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 {
-    /// <summary>
-    ///     can be the datasource of propertygrid
-    /// </summary>
     public class WallAreaReinData : IAreaReinData
     {
-        //exterior major layer
         private Parameter m_exteriorMajorBarType;
         private Parameter m_exteriorMajorHookOrientation;
         private Parameter m_exteriorMajorHookType;
 
-        //exterior minor layer
         private Parameter m_exteriorMinorBarType;
         private Parameter m_exteriorMinorHookOrientation;
         private Parameter m_exteriorMinorHookType;
 
-        //interior major layer
         private Parameter m_interiorMajorBarType;
         private Parameter m_interiorMajorHookOrientation;
         private Parameter m_interiorMajorHookType;
 
-        //interior minor layer
         private Parameter m_interiorMinorBarType;
         private Parameter m_interiorMinorHookOrientation;
 
         private Parameter m_interiorMinorHookType;
 
-        //member
         private Parameter m_layoutRule;
 
         [Category("Construction")]
@@ -177,14 +169,12 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 
         public bool FillInData(AreaReinforcement areaRein)
         {
-            //member
             m_layoutRule = areaRein.get_Parameter(
                 BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE);
             var flag = m_layoutRule != null;
 
             var paras = areaRein.Parameters;
 
-            //exterior major layer
             m_exteriorMajorBarType = ParameterAccess.FindParaByName(paras,
                 "Exterior Major Bar Type");
             m_exteriorMajorHookType = ParameterAccess.FindParaByName(paras,
@@ -194,7 +184,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             flag &= m_exteriorMajorBarType != null && m_exteriorMajorHookOrientation != null
                                                    && m_exteriorMajorHookType != null;
 
-            //exterior minor layer
             m_exteriorMinorBarType = ParameterAccess.FindParaByName(paras,
                 "Exterior Minor Bar Type");
             m_exteriorMinorHookType = ParameterAccess.FindParaByName(paras,
@@ -204,7 +193,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             flag &= m_exteriorMinorBarType != null && m_exteriorMinorHookOrientation != null
                                                    && m_exteriorMinorHookType != null;
 
-            //interior major layer
             m_interiorMajorBarType = ParameterAccess.FindParaByName(paras,
                 "Interior Major Bar Type");
             m_interiorMajorHookType = ParameterAccess.FindParaByName(paras,
@@ -214,7 +202,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             flag &= m_interiorMajorBarType != null && m_interiorMajorHookOrientation != null
                                                    && m_interiorMajorHookType != null;
 
-            //interior minor layer
             m_interiorMinorBarType = ParameterAccess.FindParaByName(paras,
                 "Interior Minor Bar Type");
             m_interiorMinorHookType = ParameterAccess.FindParaByName(paras,

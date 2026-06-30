@@ -17,18 +17,13 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class CreateWallsUnderBeams : IExternalCommand
     {
-        private const double Precision = 0.0000000001; // Define a precision of double data
+        private const double Precision = 0.0000000001;
 
-        // Private Members
-        private readonly ArrayList m_beamCollection; // Store the selection of beams in Revit
-        private string m_errorInformation; // Store the error information
-        private Level m_level; // Store the level which wall create on
-        private WallType m_selectedWallType; // Store the selected wall type
+        private readonly ArrayList m_beamCollection;
+        private string m_errorInformation;
+        private Level m_level;
+        private WallType m_selectedWallType;
 
-        // Methods
-        /// <summary>
-        ///     Default constructor of CreateWallsUnderBeams
-        /// </summary>
         public CreateWallsUnderBeams()
         {
             WallTypes = new List<WallType>();
@@ -36,23 +31,13 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
             IsSturctual = true;
         }
 
-        // Properties
-        /// <summary>
-        ///     Inform all the wall types can be created in current document
-        /// </summary>
         public IList<WallType> WallTypes { get; private set; }
 
-        /// <summary>
-        ///     Inform the wall type selected by the user
-        /// </summary>
         public object SelectedWallType
         {
             set => m_selectedWallType = value as WallType;
         }
 
-        /// <summary>
-        ///     Inform whether the user want to create structural or architecture walls
-        /// </summary>
         public bool IsSturctual { get; set; }
 
         public Result Execute(ExternalCommandData commandData,
@@ -100,22 +85,15 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
                 if (DialogResult.OK != displayForm.ShowDialog()) return Result.Failed;
             }
 
-            // Create the walls which along and under the path of the beams.
             if (!BeginCreate(project.Document))
             {
                 message = m_errorInformation;
                 return Result.Failed;
             }
 
-            // If everything goes right, return succeeded.
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Create the walls which along and under the path of the selected beams
-        /// </summary>
-        /// <param name="project"> A reference of current document</param>
-        /// <returns>true if there is no error in process; otherwise, false.</returns>
         private bool BeginCreate(Document project)
         {
             // Begin to create walls along and under each beam
@@ -137,7 +115,6 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
 
                 var beamCurve = curve.Curve;
 
-                // Get the level using the beam's reference level
                 var levelId = m.get_Parameter(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM).AsElementId();
                 m_level = project.GetElement(levelId) as Level;
                 if (null == m_level)
@@ -156,7 +133,6 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
                     return false;
                 }
 
-                // Modify some parameters of the created wall to make it look better.
                 var offset = beamCurve.GetEndPoint(0).Z - m_level.Elevation;
                 createdWall.get_Parameter(BuiltInParameter.WALL_BASE_CONSTRAINT).Set(levelId);
                 createdWall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET).Set(offset - 3000 / 304.8);
@@ -167,15 +143,10 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
             return true;
         }
 
-        /// <summary>
-        ///     Check whether all the beams have horizontal analytical line
-        /// </summary>
-        /// <returns>true if each beam has horizontal analytical line; otherwise, false.</returns>
         private bool CheckBeamHorizontal()
         {
             foreach (var beam in m_beamCollection)
             {
-                // Get the analytical curve of each selected beam.
                 // And check if Z coordinate of start point and end point of the curve are same.
                 var m = beam as FamilyInstance;
                 var beamCurve = m.Location is LocationCurve curve ? curve.Curve : null;

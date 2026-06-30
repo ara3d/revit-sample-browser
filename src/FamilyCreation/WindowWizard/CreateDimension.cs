@@ -5,40 +5,17 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
-    /// <summary>
-    ///     The class allows users to create dimension using Document.FamilyCreate.NewDimension() function
-    /// </summary>
     public class CreateDimension
     {
-        /// <summary>
-        ///     store the application
-        /// </summary>
         private Application m_application;
-
-        /// <summary>
-        ///     store the document
-        /// </summary>
         private readonly Document m_document;
 
-        /// <summary>
-        ///     constructor of CreateDimension class
-        /// </summary>
-        /// <param name="app">the application</param>
-        /// <param name="doc">the document</param>
         public CreateDimension(Application app, Document doc)
         {
             m_application = app;
             m_document = doc;
         }
 
-        /// <summary>
-        ///     This method is used to create dimension among three reference planes
-        /// </summary>
-        /// <param name="view">the view</param>
-        /// <param name="refPlane1">the first reference plane</param>
-        /// <param name="refPlane2">the second reference plane</param>
-        /// <param name="refPlane">the middle reference plane</param>
-        /// <returns>the new dimension</returns>
         public Dimension AddDimension(View view, Autodesk.Revit.DB.ReferencePlane refPlane1,
             Autodesk.Revit.DB.ReferencePlane refPlane2, Autodesk.Revit.DB.ReferencePlane refPlane)
         {
@@ -65,13 +42,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             return dim;
         }
 
-        /// <summary>
-        ///     The method is used to create dimension between referenceplane and face
-        /// </summary>
-        /// <param name="view">the view in which the dimension is created</param>
-        /// <param name="refPlane">the reference plane</param>
-        /// <param name="face">the face</param>
-        /// <returns>the new dimension</returns>
         public Dimension AddDimension(View view, Autodesk.Revit.DB.ReferencePlane refPlane, Face face)
         {
             var startPoint = new XYZ();
@@ -96,13 +66,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             return dim;
         }
 
-        /// <summary>
-        ///     The method is used to create dimension between two faces
-        /// </summary>
-        /// <param name="view">the view</param>
-        /// <param name="face1">the first face</param>
-        /// <param name="face2">the second face</param>
-        /// <returns>the new dimension</returns>
         public Dimension AddDimension(View view, Face face1, Face face2)
         {
             var startPoint = new XYZ();

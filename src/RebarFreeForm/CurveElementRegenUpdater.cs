@@ -6,9 +6,7 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 {
-    /// <summary>
-    ///     This updater is used to regen rebar elements whenever a curveElement that was "Selected" is changed
-    /// </summary>
+    /// <summary>Flips the Updated shared param when a linked model curve changes to force free-form rebar regen.</summary>
     public class CurveElementRegenUpdater : IUpdater
     {
         private static AddInId _appId;
@@ -25,20 +23,19 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             try
             {
                 var modifiedIds = data.GetModifiedElementIds();
-                if (modifiedIds.Count > 0) // if any curveElement was modified
+                if (modifiedIds.Count > 0)
                 {
-                    //get all rebar elements anf filter them, to see which need to be notified of the change
                     var collector = new FilteredElementCollector(data.GetDocument());
                     var elemBars = collector.OfClass(typeof(Rebar)).ToElements();
                     foreach (var elem in elemBars)
                     {
                         if (!(elem is Rebar bar))
                             continue;
-                        if (!bar.IsRebarFreeForm()) // only need free form bars
+                        if (!bar.IsRebarFreeForm())
                             continue;
                         var barAccess = bar.GetFreeFormAccessor();
                         if (!barAccess.GetServerGUID()
-                                .Equals(RebarUpdateServer.SampleGuid)) // only use our custom FreeForm
+                                .Equals(RebarUpdateServer.SampleGuid))
                             continue;
                         var paramCurveId = bar.LookupParameter(AddSharedParams.CurveIdName);
                         if (paramCurveId == null)
@@ -46,12 +43,11 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         var id = ElementId.Parse(paramCurveId.AsString());
                         if (id == ElementId.InvalidElementId)
                             continue;
-                        if (modifiedIds.Contains(id)) // if id of line is in the rebar, then trigger regen
+                        if (modifiedIds.Contains(id))
                         {
                             var param = bar.LookupParameter(AddSharedParams.ParamName);
-                            param.Set(param.AsInteger() == 0
-                                ? 1
-                                : 0); // just flip the value to register a change that will trigger the regeneration of that rebar on commit.
+                            // Toggle boolean so Revit sees a change on commit.
+                            param.Set(param.AsInteger() == 0 ? 1 : 0);
                         }
                     }
                 }

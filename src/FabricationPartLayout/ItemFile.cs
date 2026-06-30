@@ -61,13 +61,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                             {
                                 trans.Start();
 
-                                // reload the configuration
                                 config.ReloadConfiguration();
 
-                                // get the item folders
                                 var itemFolders = config.GetItemFolders();
 
-                                // get the next unloaded item file from the item folders structure
                                 var nextFile = GetNextUnloadedItemFile(itemFolders);
                                 if (nextFile == null)
                                 {
@@ -77,7 +74,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                                 var itemFilesToLoad = new List<FabricationItemFile> { nextFile };
 
-                                // load the item file into the config
                                 var failedItems = config.LoadItemFiles(itemFilesToLoad);
                                 if (failedItems != null && failedItems.Count > 0)
                                 {
@@ -85,7 +81,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                                     return Result.Failed;
                                 }
 
-                                // create a part from the item file
                                 using (var part = FabricationPart.Create(doc, nextFile, levelOne.Id))
                                 {
                                     doc.Regenerate();

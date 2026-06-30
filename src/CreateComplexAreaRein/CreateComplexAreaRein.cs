@@ -19,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
         private UIDocument m_currentDoc;
         private AreaReinData m_data;
 
-        /// <summary>
-        ///     ExternalCommandData
-        /// </summary>
         public static ExternalCommandData CommandData { get; private set; }
 
         public Result Execute(ExternalCommandData revit,
@@ -48,7 +45,6 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
                     CreateComplexAreaReinForm(dataOnFloor);
                 if (createForm.ShowDialog() == DialogResult.OK)
                 {
-                    //define the Major Direction of AreaReinforcement,
                     //we get direction of first Line on the Floor as the Major Direction
                     var firstLine = (Line)curves[0];
                     var majorDirection = new XYZ(
@@ -90,9 +86,6 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             return Result.Cancelled;
         }
 
-        /// <summary>
-        ///     initialize member data, judge simple precondition
-        /// </summary>
         private Floor InitFloor(ref Reference refer, ref IList<Curve> curves)
         {
             var elems = new ElementSet();

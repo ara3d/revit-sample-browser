@@ -9,17 +9,8 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
-    /// <summary>
-    ///     Performs basic operations on generic structural connections.
-    /// </summary>
     public class GenericStructuralConnectionOps
     {
-        /// <summary>
-        ///     Create generic structural connection.
-        /// </summary>
-        /// <param name="activeDoc">The active document.</param>
-        /// <param name="message">Set message on failure.</param>
-        /// <returns>Returns the status of the operation.</returns>
         public static Result CreateGenericStructuralConnection(UIDocument activeDoc, ref string message)
         {
             var ret = Result.Succeeded;
@@ -27,7 +18,6 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ids = SelectionHelper.SelectConnectionElements(activeDoc);
             if (ids.Count() > 0)
             {
-                // Start a new transaction.
                 using (var tran = new Transaction(activeDoc.Document, "Create generic structural connection"))
                 {
                     tran.Start();
@@ -51,27 +41,18 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             return ret;
         }
 
-        /// <summary>
-        ///     Delete generic structural connection.
-        /// </summary>
-        /// <param name="activeDoc">The active document.</param>
-        /// <param name="message">Set message on failure.</param>
-        /// <returns>Returns the status of the operation.</returns>
         public static Result DeleteGenericStructuralConnection(UIDocument activeDoc, ref string message)
         {
             var ret = Result.Succeeded;
 
-            // Select a structural connection.
             var conn = SelectionHelper.SelectConnection(activeDoc);
 
             if (conn != null)
             {
-                // Start a new transaction.
                 using (var tran = new Transaction(activeDoc.Document, "Delete generic structural connection"))
                 {
                     tran.Start();
 
-                    // Delete selected structural connection.
                     activeDoc.Document.Delete(conn.Id);
 
                     var ts = tran.Commit();
@@ -91,21 +72,13 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             return ret;
         }
 
-        /// <summary>
-        ///     Read information from generic structural connection.
-        /// </summary>
-        /// <param name="activeDoc">The active document.</param>
-        /// <param name="message">Set message on failure.</param>
-        /// <returns>Returns the status of the operation.</returns>
         public static Result ReadGenericStructuralConnection(UIDocument activeDoc, ref string message)
         {
             var ret = Result.Succeeded;
 
-            // Select structural connection.
             var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
-                // Get information from structural connection.
                 var msgBuilder = new StringBuilder();
                 msgBuilder.AppendLine($"Connection id : {conn.Id}");
 
@@ -132,24 +105,15 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             return ret;
         }
 
-        /// <summary>
-        ///     Update generic structural connection.
-        /// </summary>
-        /// <param name="activeDoc">The active document.</param>
-        /// <param name="message">Set message on failure.</param>
-        /// <returns>Returns the status of the operation.</returns>
         public static Result UpdateGenericStructuralConnection(UIDocument activeDoc, ref string message)
         {
             var ret = Result.Succeeded;
 
-            // Prompt to select a structural connection.
             var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
-                // Select elements to add to connection.
                 var ids = SelectionHelper.SelectConnectionElements(activeDoc);
                 if (ids.Count() > 0)
-                    // Start a new transaction.
                     using (var transaction =
                            new Transaction(activeDoc.Document, "Update generic structural connection"))
                     {

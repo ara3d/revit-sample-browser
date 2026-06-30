@@ -6,9 +6,6 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 {
-    /// <summary>
-    ///     Calculate and store the centroid and volume from a set of triangular facets.
-    /// </summary>
     internal class CentroidVolume
     {
         XYZ _centroid;
@@ -36,9 +33,6 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
             _volume += vol;
         }
 
-        /// <summary>
-        ///     Set centroid coordinates and volume to their final values when completed.
-        /// </summary>
         public void Complete()
         {
             _centroid /= 4 * _volume;

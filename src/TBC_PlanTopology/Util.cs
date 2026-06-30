@@ -11,18 +11,11 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_PlanTopology sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return element bounding box centre point
-        /// </summary>
         public static XYZ GetElementBbCenter(Element e)
         {
             var bb = e.get_BoundingBox(null);
             return Midpoint(bb.Min, bb.Max);
         }
-
-        /// <summary>
-        ///     Return room centre point for placing room tag
-        /// </summary>
         public static XYZ GetRoomCenter(Room room)
         {
             var locPt = (LocationPoint) room.Location;
@@ -31,10 +24,6 @@ namespace BuildingCoder
             var pbb = GetElementBbCenter(room);
             return new XYZ(pbb.X, pbb.Y, pr.Z);
         }
-
-        /// <summary>
-        ///     Create a room on a given level.
-        /// </summary>
         public static void CreateRoom(
             Document doc,
             Level level)

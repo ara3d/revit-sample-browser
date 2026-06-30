@@ -33,16 +33,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             m_creationApp = m_commandData.Application.Application.Create;
         }
 
-        /// <summary>
-        ///     Create a extrusion roof.
-        /// </summary>
-        /// <param name="profile">The profile combined of straight lines and arcs.</param>
-        /// <param name="refPlane">The reference plane for the extrusion roof.</param>
-        /// <param name="level">The reference level of the roof to be created.</param>
-        /// <param name="roofType">The type of the newly created roof.</param>
-        /// <param name="extrusionStart">The extrusion start point.</param>
-        /// <param name="extrusionEnd">The extrusion end point.</param>
-        /// <returns>Return a new created extrusion roof.</returns>
         public ExtrusionRoof CreateExtrusionRoof(CurveArray profile, Autodesk.Revit.DB.ReferencePlane refPlane,
             Level level, RoofType roofType,
             double extrusionStart, double extrusionEnd)

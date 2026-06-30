@@ -34,22 +34,19 @@ using Autodesk.Revit.UI;
 
 namespace AdnRme
 {
-  /// <summary>
-  /// Command to change the size of diffusers based on their flow.
-  /// </summary>
   //
   // Air Terminal Schedule 2 in the CFM per SF Color Fill 2.rvt 
   // has a value in the Comments field that indicates the 
-  // size that the air terminal should be changed to… this is just a 
+  // size that the air terminal should be changed toâ€¦ this is just a 
   // sample suggestion and dataset.
   //
   // The UI for this can be pretty simple for #6. Perhaps a table that 
   // lists min/max values, and the associated size that the diffuser 
   // neck should be sized to, i.e:
   //
-  // 100-150 cfm – 6 inch
-  // 151-275 cfm – 8 inch
-  // 275-400 cfm – 10 inch
+  // 100-150 cfm â€“ 6 inch
+  // 151-275 cfm â€“ 8 inch
+  // 275-400 cfm â€“ 10 inch
   //
   // 2007-08-02:
   //
@@ -201,9 +198,6 @@ namespace AdnRme
     }
 
     #region Execute Command
-    /// <summary>
-    /// Execute the command to change the size of diffusers based on their flow.
-    /// </summary>
     public Result Execute(
       ExternalCommandData commandData,
       ref string message,

@@ -5,20 +5,10 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 {
-    /// <summary>
-    ///     The class of our modeless dialog.
-    /// </summary>
     public partial class AppearanceAssetEditingForm : Form
     {
-        /// <summary>
-        ///     In this sample, the dialog owns the value of the request but it is not necessary. It may as
-        ///     well be a static property of the application.
-        /// </summary>
         private Request m_request;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public AppearanceAssetEditingForm()
         {
             InitializeComponent();
@@ -26,9 +16,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             m_request = new Request();
         }
 
-        /// <summary>
-        ///     Request property
-        /// </summary>
         public Request Request
         {
             get => m_request;
@@ -50,9 +37,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             MakeRequest(RequestId.Darker);
         }
 
-        /// <summary>
-        ///     Enable buttons or not.
-        /// </summary>
         public void EnableButtons(bool bLighterStatus, bool bDarkerStatus)
         {
             buttonLighter.Enabled = bLighterStatus;
@@ -60,15 +44,11 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             buttonSelect.Enabled = true;
         }
 
-        /// <summary>
-        ///     A private helper method to make a request
-        ///     and put the dialog to sleep at the same time.
-        /// </summary>
-        /// <remarks>
-        ///     It is expected that the process which executes the request
-        ///     (the Idling helper in this particular case) will also
-        ///     wake the dialog up after finishing the execution.
-        /// </remarks>
+        // A private helper method to make a request
+        // and put the dialog to sleep at the same time.
+        // It is expected that the process which executes the request
+        // (the Idling helper in this particular case) will also
+        // wake the dialog up after finishing the execution.
         private void MakeRequest(RequestId request)
         {
             Request.Make(request);

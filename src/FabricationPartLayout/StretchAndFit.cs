@@ -21,7 +21,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
 
-                // check user selection
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var collection = uidoc.Selection.GetElementIds();
                 if (collection.Count > 0)
@@ -68,7 +67,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Succeeded;
                 }
 
-                // inform user they need to select at least one element
                 message = "Select a fabrication part to stretch and fit from and an element to connect to.";
 
                 return Result.Failed;
@@ -82,15 +80,14 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
         private Connector GetValidConnectorToStretchAndFitFrom(Document doc, ElementId elementId)
         {
-            // must be a fabrication part
             if (!(doc.GetElement(elementId) is FabricationPart part))
                 return null;
 
-            // must not be a straight, hanger or tap
+            // Straights, taps, and hangers cannot be stretched from.
             if (part.IsAStraight() || part.IsATap() || part.IsAHanger())
                 return null;
 
-            // part must be connected at one end and have one unoccupied connector
+            // Exactly one connected end and one free connector.
             var numUnused = part.ConnectorManager.UnusedConnectors.Size;
             var numConns = part.ConnectorManager.Connectors.Size;
 
@@ -98,7 +95,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 return null;
 
             foreach (Connector conn in part.ConnectorManager.UnusedConnectors)
-                // return the first unoccupied connector
             {
                 return conn;
             }
@@ -108,16 +104,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
         private Connector GetValidConnectorToStretchAndFitTo(Document doc, ElementId elementId)
         {
-            // connect to another fabrication part - will work also with families.
             if (!(doc.GetElement(elementId) is FabricationPart part))
                 return null;
 
-            // must not be a fabrication part hanger
             if (part.IsAHanger())
                 return null;
 
             foreach (Connector conn in part.ConnectorManager.UnusedConnectors)
-                // return the first unoccupied connector
             {
                 return conn;
             }

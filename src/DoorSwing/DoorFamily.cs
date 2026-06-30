@@ -7,9 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
-    /// <summary>
-    ///     Left/Right feature based on family's actual geometry and country's standard.
-    /// </summary>
     public class DoorFamily
     {
         // Revit application
@@ -27,11 +24,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         // one door instance of this family.
         private readonly FamilyInstance m_oneInstance;
 
-        /// <summary>
-        ///     construct function.
-        /// </summary>
-        /// <param name="doorFamily"> one door family</param>
-        /// <param name="app">Revit application</param>
         public DoorFamily(Family doorFamily, UIApplication app)
         {
             m_app = app;
@@ -40,14 +32,8 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             m_oneInstance = CreateOneInstanceWithThisFamily();
         }
 
-        /// <summary>
-        ///     Retrieval the name of this family.
-        /// </summary>
         public string FamilyName => m_family.Name;
 
-        /// <summary>
-        ///     Retrieve opening value of one of this family's door which neither flipped nor mirrored.
-        /// </summary>
         public string BasalOpeningValue
         {
             get
@@ -77,18 +63,11 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             set => m_basalOpeningValue = value;
         }
 
-        /// <summary>
-        ///     Retrieve the geometry of one door which belongs to this family and
-        ///     neither flipped nor mirrored.
-        /// </summary>
         public DoorGeometry Geometry =>
             m_geometry ?? (m_geometry =
                 // create one instance of DoorFamilyGeometry class.
                 new DoorGeometry(m_oneInstance));
 
-        /// <summary>
-        ///     Update Left/Right feature based on family's actual geometry and country's standard.
-        /// </summary>
         public void UpdateOpeningFeature()
         {
             // get current Left/Right feature's value of this door family.
@@ -99,7 +78,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
 
             foreach (var doorSymbol in ffs)
-                // update the the related family shared parameter's value if user already added it.
             {
                 if (doorSymbol.ParametersMap.Contains("BasalOpening"))
                 {
@@ -109,21 +87,14 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
         }
 
-        /// <summary>
-        ///     Delete the temporarily created door instance and its host.
-        /// </summary>
         public void DeleteTempDoorInstance()
         {
             var doc = m_app.ActiveUIDocument.Document;
             var tempWall = m_oneInstance.Host;
             doc.Delete(m_oneInstance.Id); // delete temporarily created door instance with this family.
-            doc.Delete(tempWall.Id); // delete the door's host.
+            doc.Delete(tempWall.Id);
         }
 
-        /// <summary>
-        ///     Create one temporary door instance with this family.
-        /// </summary>
-        /// <returns>the created door.</returns>
         private FamilyInstance CreateOneInstanceWithThisFamily()
         {
             var doc = m_app.ActiveUIDocument.Document;
@@ -146,7 +117,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 
             var doorSymbol = ffs[0];
 
-            // create the door
             var createdFamilyInstance = creDoc.NewFamilyInstance(new XYZ(0, 0, 0), doorSymbol, host, level,
                 StructuralType.NonStructural);
             doc.Regenerate();

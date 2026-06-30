@@ -33,12 +33,6 @@ namespace AdnRme
   {
     string _format;
 
-    /// <summary>
-    /// Set up progress bar form and immediately display it modelessly.
-    /// </summary>
-    /// <param name="caption">Form caption</param>
-    /// <param name="format">Progress message string</param>
-    /// <param name="max">Number of elements to process</param>
     public ProgressForm( string caption, string format, int max )
     {
       _format = format;

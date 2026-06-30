@@ -35,94 +35,38 @@ namespace BuildingCoder
 
         private void MiroReloadLinks(IList<RevitLinkType> fecLinkTypes)
         {
-            // Loop all RVT Links
-
             foreach (var typeLink in fecLinkTypes)
             {
-                // ...
-
-                // Skip1 - not IsFromRevitServer
-
                 if (!typeLink.IsFromRevitServer())
-                    //…
                     continue;
-
-                // Skip2 - not ExternalFileReference
-                // 99% it would already skip above as 
-                // RevitServer MUST be ExternalFileReference, 
-                // but leave just in case...
 
                 var er = typeLink.GetExternalFileReference();
 
                 if (er == null)
-                    // ...
-
                     continue;
-
-                // If here, we can cache ModelPath related 
-                // info and show to user regardless if we skip 
-                // on next checks or not....
 
                 var mp = er.GetPath();
 
                 var userVisiblePath = ModelPathUtils
                     .ConvertModelPathToUserVisiblePath(mp);
 
-                // Skip3 - if ModelPath is NOT Server Path 
-                // 99% redundant as we already checked raw 
-                // RevitLinkType for this, but keep 
-                // just in case...
-
                 if (!mp.ServerPath)
-                    // ...
-
                     continue;
-
-                // Skip4 - if NOT "NOT Found" problematic one 
-                // there is nothing to fix
 
                 if (er.GetLinkedFileStatus()
                     != LinkedFileStatus.NotFound)
-                    // ...
-
                     continue;
 
-                // Skip5 - if Nested Link (can’t (re)load these!)
-
+                // Nested links cannot be reloaded.
                 if (typeLink.IsNestedLink)
-                    // ...
-
                     continue;
-
-                // If here, we MUST offer user to "Reload from..."
-
-                // ...
 
                 //RevitLinkLoadResult res = null; // 2017
                 LinkLoadResult res = null; // 2018
 
                 try
                 {
-                    // This fails for problematic Server files 
-                    // since it also fails on "Reload" button in 
-                    // UI (due to the GUID issue in the answer)
-
-                    //res = typeLink.Reload();
-
-                    // This fails same as above :-(!
-
-                    //res = typeLink.Load();
-
-                    // This WORKS!
-                    // Basically, this is the equivalent of UI 
-                    // "Reload from..." + browsing to the *same* 
-                    // Saved path showing in the manage Links 
-                    // dialogue.
-                    // ToDo: Check if we need to do anything 
-                    // special with WorksetConfiguration? 
-                    // In tests, it works fine with the 
-                    // default c-tor.
-
+                    // Reload/Load fail for problematic Revit Server links; LoadFrom with the same path works.
                     var mpForReload = ModelPathUtils
                         .ConvertUserVisiblePathToModelPath(
                             userVisiblePath);

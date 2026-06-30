@@ -24,11 +24,6 @@ using System.Linq;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Performance timer for profiling purposes.
-    ///     For a full description, please refer to
-    ///     http://thebuildingcoder.typepad.com/blog/2010/03/performance-profiling.html
-    /// </summary>
     public class JtTimer : IDisposable
     {
         private double _duration;
@@ -36,22 +31,11 @@ namespace BuildingCoder
         private string _key;
         private Stopwatch _timer;
 
-        /// <summary>
-        ///     Performance timer
-        /// </summary>
-        /// <param name="what_are_we_testing_here">
-        ///     Key describing code to be timed
-        /// </param>
         public JtTimer(string what_are_we_testing_here)
         {
             Restart(what_are_we_testing_here);
         }
 
-        /// <summary>
-        ///     Automatic disposal when the the using statement
-        ///     block finishes: the timer is stopped and the
-        ///     time is registered.
-        /// </summary>
         void IDisposable.Dispose()
         {
             _timer.Stop();
@@ -59,18 +43,11 @@ namespace BuildingCoder
             TimeRegistry.AddTime(_key, _duration);
         }
 
-        /// <summary>
-        ///     Write and display a report of the timing
-        ///     results in a text file.
-        /// </summary>
         public void Report(string description)
         {
             TimeRegistry.WriteResults(description, _duration);
         }
 
-        /// <summary>
-        ///     Restart the measurement from scratch.
-        /// </summary>
         public void Restart(string what_are_we_testing_here)
         {
             _key = what_are_we_testing_here;
@@ -81,9 +58,6 @@ namespace BuildingCoder
 
         private class TimeRegistry
         {
-            /// <summary>
-            ///     Add new duration for specified key.
-            /// </summary>
             public static void AddTime(string key, double duration)
             {
                 Entry e;
@@ -101,14 +75,10 @@ namespace BuildingCoder
                 ++e.Calls;
             }
 
-            /// <summary>
-            ///     Write the report of the results to a text file.
-            /// </summary>
             public static void WriteResults(
                 string description,
                 double totalTime)
             {
-                // Set up text file path:
 
                 var strReportPath = Path.Combine(Path.GetTempPath(), "PerformanceReport.txt");
                 var fs = new FileStream(strReportPath, FileMode.OpenOrCreate, FileAccess.Write);
@@ -158,12 +128,6 @@ namespace BuildingCoder
 
             private static readonly Dictionary<string, Entry> _collection = new();
 
-            /// <summary>
-            ///     Return the percentage based on total time.
-            /// </summary>
-            /// <param name="value">value</param>
-            /// <param name="totalTime">total time</param>
-            /// <returns></returns>
             private static double GetPercent(double value, double totalTime)
             {
                 return 0 == totalTime

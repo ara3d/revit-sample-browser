@@ -31,11 +31,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             To2DMatrix = GetTo2DMatrix();
         }
 
-        /// <summary>
-        ///     Get points of the first face
-        /// </summary>
-        /// <param name="faces">edges in all faces</param>
-        /// <returns>points of first face</returns>
         public override List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
             var needPoints = new List<List<XYZ>>();
@@ -48,10 +43,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             return needPoints;
         }
 
-        /// <summary>
-        ///     Get a matrix which can transform points to 2D
-        /// </summary>
-        /// <returns>matrix which can transform points to 2D</returns>
         public override Matrix4 GetTo2DMatrix()
         {
             // select the view which is named "Level 2"
@@ -74,12 +65,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             return result;
         }
 
-        /// <summary>
-        ///     Create PathReinforcement on floor
-        /// </summary>
-        /// <param name="points">points used to create PathReinforcement</param>
-        /// <param name="flip">used to specify whether new PathReinforcement is Filp</param>
-        /// <returns>new created PathReinforcement</returns>
         public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points,
             bool flip)
         {

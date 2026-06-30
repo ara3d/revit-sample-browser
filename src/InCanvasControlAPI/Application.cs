@@ -21,9 +21,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     public class Application : IExternalApplication
     {
         private const string TabLabel = "Issues";
@@ -40,9 +37,6 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 
         private readonly EventHandler<DocumentChangedEventArgs> m_updateHandler;
 
-        /// <summary>
-        ///     Creates external application object and initializes event handlers.
-        /// </summary>
         public Application()
         {
             var issueMarkerTrackingManager = IssueMarkerTrackingManager.GetInstance();
@@ -73,11 +67,6 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
             };
         }
 
-        /// <summary>
-        ///     Implements the OnShutdown event. It cleans up events and IssueMarkerTrackingManager
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             application.ControlledApplication.DocumentChanged -= m_updateHandler;
@@ -91,13 +80,6 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Implements the OnStartup event. It adds a server to listen for clicks on issue markers, events that manage issue
-        ///     marker data based on changes in document,
-        ///     and a button that lets user create an issue marker.
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
             var click = new IssueSelectHandler();

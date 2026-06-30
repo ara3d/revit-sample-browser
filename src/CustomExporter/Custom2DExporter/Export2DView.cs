@@ -5,14 +5,8 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 {
-    /// <summary>
-    ///     UI Form presented to the user used to collection options related to the export.
-    /// </summary>
     public partial class Export2DView : Form
     {
-        /// <summary>
-        ///     Construct a new form.
-        /// </summary>
         public Export2DView()
         {
             InitializeComponent();
@@ -23,9 +17,6 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             };
         }
 
-        /// <summary>
-        ///     Property containing the options chosen for export.
-        /// </summary>
         public ExportOptions ViewExportOptions { get; }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -38,19 +29,10 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             ViewExportOptions.ExportPatternLines = checkBox3.Checked;
         }
 
-        /// <summary>
-        ///     The option for creating Path of Travel.
-        /// </summary>
         public class ExportOptions
         {
-            /// <summary>
-            ///     True if AnnotationObjects are to be included in the export, false otherwise.
-            /// </summary>
             public bool ExportAnnotationObjects { get; set; }
 
-            /// <summary>
-            ///     True if Pattern Lines are to be included in the export, false otherwise.
-            /// </summary>
             public bool ExportPatternLines { get; set; }
         }
     }

@@ -6,32 +6,10 @@ using Autodesk.Revit.DB;
 using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 {
-    /// <summary>
-    ///     This is an implementation of IExportContext2D, to be passed to an instance of CustomExporter object. It exports:
-    ///     - (if CustomExporter has IncludeGeometricObjects == true) exports all model geometry, tessellated into lines and
-    ///     represented by a list of points  contained in m_points.
-    ///     - (if CustomExporter has Export2DIncludingAnnotationObjects == true) exports all annotation geometry, tessellated
-    ///     into lines represented by a list of points contained in m_points.
-    ///     - (if CustomExporter has Export2DIncludingAnnotationObjects == true) export all text strings in text notes, divided
-    ///     by a newline and collected in m_texts.
-    ///     - (if CustomExporter has Export2DGeometricObjectsIncludingPatternLines == true) exports all patterns, tessellated
-    ///     into lines and represented by a list of points  contained in m_points.
-    ///     - the exporter also keeps a tally of all exported elements in m_numElements.
-    ///     The methods OnCurve, OnPolyline, OnFaceBegin, OnFaceEdge2D and OnFaceSilhouette2D return RenderNodeAction.Proceed,
-    ///     will makes sure that all geometry comes in tessellated in OnLineSegment and OnPolylineSegments.
-    ///     Note1: Some annotation geometry is exported in OnCurve and OnPolyline, where it is tessellated and stored in
-    ///     m_points.
-    ///     Note2: If you wish to process geometry without tessellating it, then you need to implement curve export in
-    ///     OnCurve, OnPolyline, OnFaceBegin, OnFaceEdge2D and OnFaceSilhouette2D and return RenderNodeAction.Skip.
-    ///     Note3: Special instance transforms may not always be taken into account.
-    /// </summary>
     public class TessellatedGeomAndText2DExportContext : IExportContext2D
     {
         private Element m_currentElem;
 
-        /// <summary>
-        ///     The list of (start, end) points for all tessellated lines
-        /// </summary>
         private readonly IList<XYZ> m_points = new List<XYZ>();
 
         public TessellatedGeomAndText2DExportContext(out IList<XYZ> points)
@@ -39,16 +17,10 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             points = m_points;
         }
 
-        /// <summary>
-        ///     The number of all processed elements, as well as breakdown by some element kinds
-        /// </summary>
         public int NumElements { get; private set; }
 
         public int NumTexts { get; private set; }
 
-        /// <summary>
-        ///     All text collected in the view, with a newline between each TextNode.
-        /// </summary>
         public string Texts { get; private set; }
 
         public bool Start()

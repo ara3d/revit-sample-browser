@@ -54,7 +54,6 @@ namespace BuildingCoder
             var app = commandData.Application;
             var doc = app.ActiveUIDocument.Document;
 
-            // Check whether the family we are interested in is loaded:
 
 #if _2010
       List<Element> symbols = new List<Element>();
@@ -83,7 +82,7 @@ namespace BuildingCoder
 
             using var t = new Transaction(doc);
             t.Start("Create Beam Type and Instance");
-            // If the family was not already loaded, then do so:
+
 
             if (null == f)
                 if (!doc.LoadFamily(_path, out f))
@@ -93,7 +92,6 @@ namespace BuildingCoder
             {
                 Debug.Print("Family name={0}", f.Name);
 
-                // Pick a symbol for duplication, any one will do,
                 // we select the first:
 
                 FamilySymbol s = null;
@@ -108,39 +106,30 @@ namespace BuildingCoder
 
                 Debug.Assert(null != s, "expected at least one symbol to be defined in family");
 
-                // Duplicate the existing symbol:
 
                 var s1 = s.Duplicate("Nuovo simbolo");
                 s = s1 as FamilySymbol;
 
-                // Analyse the symbol parameters:
 
                 foreach (Parameter param in s.Parameters) Debug.Print("Parameter name={0}, value={1}", param.Definition.Name, param.AsValueString());
 
-                // Define new dimensions for our new type;
                 // the specified parameter name is case sensitive:
 
-                //s.get_Parameter( "b" ).Set( Util.MmToFoot( 500 ) ); // 2014
-                //s.get_Parameter( "h" ).Set( Util.MmToFoot( 1000 ) ); // 2014
 
                 s.LookupParameter("b").Set(Util.MmToFoot(500)); // 2015
                 s.LookupParameter("h").Set(Util.MmToFoot(1000)); // 2015
 
-                // we can change the symbol name at any time:
 
                 s.Name = "Nuovo simbolo due";
 
-                // insert an instance of our new symbol:
 
                 var creApp = app.Application.Create;
                 var creDoc = doc.Create;
 
-                // It is possible to insert a beam,
                 // which normally uses a location line,
                 // by specifying only a location point:
 
                 //XYZ p = XYZ.Zero;
-                //doc.Create.NewFamilyInstance( p, s, nonStructural );
 
                 var p = XYZ.Zero;
                 var q = creApp.NewXYZ(30, 20, 20); // feet
@@ -152,17 +141,13 @@ namespace BuildingCoder
                 var fi = creDoc.NewFamilyInstance(
                     line, s, null, stBeam);
 
-                // This creates a visible family instance,
                 // but the resulting beam has no location line
                 // and behaves strangely, e.g. cannot be selected:
                 //FamilyInstance fi = doc.Create.NewFamilyInstance(
                 //  p, s, q, null, nonStructural );
 
                 //List<Element> levels = new List<Element>();
-                //doc.get_Elements( typeof( Level ), levels );
-                //Debug.Assert( 0 < levels.Count,
                 //  "expected at least one level in model" );
-                //Level level = levels[0] as Level;
                 //fi = doc.Create.NewFamilyInstance(
                 //  line, s, level, nonStructural );
 

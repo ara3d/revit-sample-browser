@@ -1,5 +1,4 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-//
 // Adapted from CropViewToRoom by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CropViewToRoom
 
@@ -11,16 +10,10 @@ using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
 {
-    /// <summary>
-    ///     Room boundary offset and view crop geometry helpers.
-    /// </summary>
     internal static class RoomCropGeometry
     {
         const double WallPaddingFeet = 0.1;
 
-        /// <summary>
-        ///     Build an outward-offset crop loop from the first room boundary loop.
-        /// </summary>
         public static bool TryCreateOffsetCropLoop(
             Document doc,
             IList<IList<BoundarySegment>> boundaryLoops,
@@ -57,9 +50,6 @@ namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
             return false;
         }
 
-        /// <summary>
-        ///     Apply a crop region shape to a view when Revit accepts the loop.
-        /// </summary>
         public static bool TryApplyCropShape(View view, CurveLoop loop)
         {
             if (view == null || loop == null)

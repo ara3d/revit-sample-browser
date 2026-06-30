@@ -5,12 +5,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_UnrotateNorth sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Get sun direction adjusted for project true north.
-        /// </summary>
         internal static XYZ GetSunDirection(View view)
         {
             var doc = view.Document;
@@ -45,7 +41,7 @@ namespace BuildingCoder
 
             var trueNorthAngle = patn.AsDouble();
 
-            var actualAzimuth = 2 * Math.PI - azimuth + trueNorthAngle;
+            var actualAzimuth = 2 * Math.PI - azimuth + trueNorthAngle; // adjust for project true north
 
             var azimuthRotation = Transform
                 .CreateRotation(XYZ.BasisZ, actualAzimuth);

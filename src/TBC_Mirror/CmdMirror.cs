@@ -39,30 +39,18 @@ namespace BuildingCoder
             var app = uiapp.Application;
             var doc = uidoc.Document;
 
-            // 'Document.Mirror(ElementSet, Line)' is obsolete:
-            // Use one of the replace methods in ElementTransformUtils.
-            //
-            //Line line = app.Create.NewLine(
-            //  XYZ.Zero, XYZ.BasisX, true ); // 2011
-            //
-            //ElementSet els = uidoc.Selection.Elements; // 2011
-            //
-            //doc.Mirror( els, line ); // 2011
+            // Document.Mirror is obsolete; use ElementTransformUtils.MirrorElements.
 
-            //Plane plane = new Plane( XYZ.BasisY, XYZ.Zero ); // added in 2012, used until 2016
-            var plane = Plane.CreateByNormalAndOrigin(XYZ.BasisY, XYZ.Zero); // 2017
+            var plane = Plane.CreateByNormalAndOrigin(XYZ.BasisY, XYZ.Zero);
 
             var elementIds
-                = uidoc.Selection.GetElementIds(); // 2012
-
-            //ElementTransformUtils.MirrorElements(
-            //  doc, elementIds, plane ); // 2012-2015
+                = uidoc.Selection.GetElementIds();
 
             using var t = new Transaction(doc);
             t.Start("Mirror Elements");
 
             ElementTransformUtils.MirrorElements(
-                doc, elementIds, plane, true); // 2016
+                doc, elementIds, plane, true);
 
             t.Commit();
 

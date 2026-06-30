@@ -17,7 +17,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
@@ -58,7 +57,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
@@ -108,7 +106,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
@@ -158,7 +155,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
@@ -208,7 +204,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");

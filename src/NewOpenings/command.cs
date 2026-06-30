@@ -8,10 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
-    /// <summary>
-    ///     The entrance of this example, implement the Execute method of IExternalCommand
-    ///     Show how to create Opening in Revit by RevitAPI
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

@@ -61,10 +61,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             DataInitialize();
         }
 
-        /// <summary>
-        ///     Get 1 truss or 2 columns from selection
-        /// </summary>
-        /// <returns>return false if selection incorrect</returns>
         private bool GetSelectTrussOrColumns()
         {
             if (m_activeDocument.Selection.GetElementIds().Count > 2 ||
@@ -104,9 +100,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return null != m_truss || (null != m_column1 && null != m_column2);
         }
 
-        /// <summary>
-        ///     get all the beam types, truss types and all the view plans from the active document
-        /// </summary>
         public void DataInitialize()
         {
             // get all the beam types
@@ -149,9 +142,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             }
         }
 
-        /// <summary>
-        ///     get all the beam types
-        /// </summary>
         private void GetBeamTypes()
         {
             m_beamTypes = from elem in
@@ -177,11 +167,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             }
         }
 
-        /// <summary>
-        ///     initialize the UI ComboBox's appearance
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void TrussForm_Load(object sender, EventArgs e)
         {
             TrussTypeComboBox.SelectedIndex = 0;
@@ -213,21 +198,11 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             }
         }
 
-        /// <summary>
-        ///     get selected truss type, this data will be used in truss creation
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void TrussTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_selectedTrussType = (TrussType)m_trussTypes[TrussTypeComboBox.SelectedIndex];
         }
 
-        /// <summary>
-        ///     create new truss
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void CreateButton_Click(object sender, EventArgs e)
         {
             try
@@ -289,11 +264,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return Autodesk.Revit.DB.Structure.Truss.Create(document, m_selectedTrussType.Id, sketchPlane.Id, baseLine);
         }
 
-        /// <summary>
-        ///     draw profile, top chord and bottom of truss
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ProfileEditPictureBox_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -305,11 +275,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             e.Graphics.DrawString(indicator, font, Brushes.Blue, new PointF(20, 10));
         }
 
-        /// <summary>
-        ///     add point to top chord and bottom chord
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ProfileEditPictureBox_MouseClick(object sender, MouseEventArgs e)
         {
             // draw top chord line
@@ -321,11 +286,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             ProfileEditPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     change move point of top chord lineTool and bottom chord lineTool
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ProfileEditPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             if (m_topChord)
@@ -335,11 +295,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             ProfileEditPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     begin to draw top chord
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void TopChordButton_Click(object sender, EventArgs e)
         {
             m_topChord = true;
@@ -348,11 +303,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             ProfileEditPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     begin to draw bottom chord
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void BottomChordButton_Click(object sender, EventArgs e)
         {
             m_topChord = false;
@@ -361,11 +311,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             ProfileEditPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     update the truss according to the top chord line and the bottom chord line
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void UpdateButton_Click(object sender, EventArgs e)
         {
             var transaction = new Transaction(m_activeDocument.Document, "SetProfile");
@@ -376,11 +321,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             ProfileEditPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     restore profile of truss
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void RestoreButton_Click(object sender, EventArgs e)
         {
             var transaction = new Transaction(m_activeDocument.Document, "RemoveProfile");
@@ -391,11 +331,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             ProfileEditPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     clear points of top and bottom chord line
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void CleanChordbutton_Click(object sender, EventArgs e)
         {
             m_trussGeometry.ClearChords();
@@ -405,11 +340,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             ProfileEditPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     draw geometry of truss, and draw selected line red
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void TrussGeometryPictureBox_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -421,11 +351,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             e.Graphics.DrawString(indicator, font, Brushes.Blue, new PointF(20, 10));
         }
 
-        /// <summary>
-        ///     get selected truss member (Beam)
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void TrussGeometryPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             // indicates whether the mouse moves over or hovers on one beam
@@ -434,11 +359,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             TrussMembersPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     select truss member (beam)
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void TrussGeometryPictureBox_MouseClick(object sender, MouseEventArgs e)
         {
             // clicks in the canvas but doesn't select anything
@@ -466,22 +386,12 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             }
         }
 
-        /// <summary>
-        ///     change selected beam type
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void BeamTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // choose a new beam type for the selected beam
             m_selectedBeamType = m_beamTypes.ElementAt(BeamTypeComboBox.SelectedIndex);
         }
 
-        /// <summary>
-        ///     change type of selected beam
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ChangeBeamTypeButton_Click(object sender, EventArgs e)
         {
             // apply the beam type change
@@ -491,11 +401,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             transaction.Commit();
         }
 
-        /// <summary>
-        ///     change selected ViewPlan
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ViewComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // choose another view for the truss creation
@@ -503,12 +408,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
                 m_selectedView = m_views.ElementAt(ViewComboBox.SelectedIndex);
         }
 
-        /// <summary>
-        ///     quit the "top chord" or "bottom chord" drawing operation
-        ///     by pressing the "ESC" key
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void TrussGraphicsTabControl_KeyPress(object sender, KeyPressEventArgs e)
         {
             // the "Profile Edit" tab page is active 
@@ -525,11 +424,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             }
         }
 
-        /// <summary>
-        ///     won't let open truss member tab until truss create successfully
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void TrussGraphicsTabControl_Selecting(object sender, TabControlCancelEventArgs e)
         {
             // if no truss is created, locks the tab pages to the 1st tab page
@@ -544,11 +438,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             }
         }
 
-        /// <summary>
-        ///     Close dialogue box
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void CloseButton_Click(object sender, EventArgs e)
         {
             Close();

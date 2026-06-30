@@ -10,10 +10,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         // Private members
         private readonly Loads m_dataBuffer; // A reference of Loads.
 
-        /// <summary>
-        ///     Constructor of LoadsForm
-        /// </summary>
-        /// <param name="dataBuffer"> A reference of Loads class </param>
         public LoadsForm(Loads dataBuffer)
         {
             // Required for Windows Form Designer support
@@ -23,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             m_dataBuffer = dataBuffer;
         }
 
-        /// <summary>
-        ///     Initialize the data on the form
-        /// </summary>
         private void LoadsForm_Load(object sender, EventArgs e)
         {
             // Initialize the data of loadCaseTabPage 
@@ -35,22 +28,12 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             InitializeLoadCombinationPage();
         }
 
-        /// <summary>
-        ///     Respond the ok button click event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
             Close();
         }
 
-        /// <summary>
-        ///     Respond the cancel button click event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

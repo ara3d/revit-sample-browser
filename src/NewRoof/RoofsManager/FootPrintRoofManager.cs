@@ -33,13 +33,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             m_creationApp = m_commandData.Application.Application.Create;
         }
 
-        /// <summary>
-        ///     Create a footprint roof.
-        /// </summary>
-        /// <param name="footPrint">The footprint is a curve loop, or a wall loop, or loops combined of walls and curves</param>
-        /// <param name="level">The base level of the roof to be created.</param>
-        /// <param name="roofType">The type of the newly created roof.</param>
-        /// <returns>Return a new created footprint roof.</returns>
         public FootPrintRoof CreateFootPrintRoof(CurveArray footPrint, Level level, RoofType roofType)
         {
             FootPrintRoof footprintRoof = null;

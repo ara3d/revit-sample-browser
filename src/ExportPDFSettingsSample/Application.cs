@@ -23,14 +23,7 @@ using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 {
     /// <summary>
-    ///     ExternalApplication for ExportPDFSettings manipulation through Revit API. ExportPDFSettings is the element to store
-    ///     PDFExportOptions in document.
-    ///     This sample contains:
-    ///     - Create ExportPDFSettings
-    ///     - Modify ExportPDFSettings
-    ///     - Add naming rule for ExportPDFSettings
-    ///     - Modify naming rule for ExportPDFSettings
-    ///     - Delete naming rule for ExportPDFSettings
+    /// Ribbon UI for creating and editing document <see cref="ExportPDFSettings"/> (stored <see cref="PDFExportOptions"/>).
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -45,7 +38,6 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         {
             try
             {
-                // Create user interface for ExportPDFSettings manipulation
                 var panel = application.CreateRibbonPanel("ExportPDFSettings testing");
 
                 var assembly = Assembly.GetExecutingAssembly();
@@ -92,19 +84,9 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         }
     }
 
-    /// <summary>
-    ///     ExternalCommand to create an ExportPDFSettings instance.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class CreateExportPdfSettingsCommand : IExternalCommand
     {
-        /// <summary>
-        ///     The implementation for IExternalCommand.Execute()
-        /// </summary>
-        /// <param name="commandData">The Revit command data.</param>
-        /// <param name="message">The error message (ignored).</param>
-        /// <param name="elements">The elements to display in the failure dialog (ignored).</param>
-        /// <returns>Result.Succeeded</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
@@ -129,19 +111,9 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         }
     }
 
-    /// <summary>
-    ///     ExternalCommand to modify an ExportPDFSettings instance.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class ModifyExportPdfSettingsCommand : IExternalCommand
     {
-        /// <summary>
-        ///     The implementation for IExternalCommand.Execute()
-        /// </summary>
-        /// <param name="commandData">The Revit command data.</param>
-        /// <param name="message">The error message (ignored).</param>
-        /// <param name="elements">The elements to display in the failure dialog (ignored).</param>
-        /// <returns>Result.Succeeded</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
@@ -159,10 +131,10 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
                 }
 
                 var options = settings.GetOptions();
-                options.PaperFormat = ExportPaperFormat.ISO_A4; // Change paper format
-                options.HideCropBoundaries = false; // Change hide crop boundaries
-                options.Combine = false; // Change name into the pattern of naming rule
-                settings.SetOptions(options); // Activate changes
+                options.PaperFormat = ExportPaperFormat.ISO_A4;
+                options.HideCropBoundaries = false;
+                options.Combine = false;
+                settings.SetOptions(options);
             }
             catch (Exception ex)
             {
@@ -176,19 +148,9 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         }
     }
 
-    /// <summary>
-    ///     ExternalCommand to add a naming rule to ExportPDFSettings instance.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class AddNamingRuleCommand : IExternalCommand
     {
-        /// <summary>
-        ///     The implementation for IExternalCommand.Execute()
-        /// </summary>
-        /// <param name="commandData">The Revit command data.</param>
-        /// <param name="message">The error message (ignored).</param>
-        /// <param name="elements">The elements to display in the failure dialog (ignored).</param>
-        /// <returns>Result.Succeeded</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
@@ -207,7 +169,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
                 var options = settings.GetOptions();
 
-                // Naming rule remains the same in silence if exporting is combined
+                // PDFExportOptions ignores naming-rule changes while Combine is true.
                 if (options.Combine)
                 {
                     message = "Exporting is combined. To change naming rule you need to set exporting not combined.";
@@ -215,24 +177,19 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
                     return Result.Failed;
                 }
 
-                // Get naming rule
                 var namingRule = options.GetNamingRule();
 
-                // Add naming parameter Sheets-Approved-By to naming rule
                 var param = BuiltInParameter.SHEET_APPROVED_BY;
                 var categoryId = Category.GetCategory(doc, BuiltInCategory.OST_Sheets).Id;
                 var paramId = new ElementId(param);
                 var itemSheetApprovedBy = TableCellCombinedParameterData.Create();
                 itemSheetApprovedBy.CategoryId = categoryId;
                 itemSheetApprovedBy.ParamId = paramId;
-                itemSheetApprovedBy.Prefix = "-"; // You can also add prefix/suffix
+                itemSheetApprovedBy.Prefix = "-";
                 itemSheetApprovedBy.Separator = "-";
                 itemSheetApprovedBy.SampleValue = param.ToString();
                 namingRule.Add(itemSheetApprovedBy);
-                // Don't forget to set naming rule for options
                 options.SetNamingRule(namingRule);
-                // And save the options for settings
-                // Note that naming rule won't be changed if exporting is combined, see the comments of PDFExportOptions.SetOptions
                 settings.SetOptions(options);
             }
             catch (Exception ex)
@@ -247,19 +204,9 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         }
     }
 
-    /// <summary>
-    ///     ExternalCommand to modify a naming rule from ExportPDFSettings instance.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class MofidyNamingRuleCommand : IExternalCommand
     {
-        /// <summary>
-        ///     The implementation for IExternalCommand.Execute()
-        /// </summary>
-        /// <param name="commandData">The Revit command data.</param>
-        /// <param name="message">The error message (ignored).</param>
-        /// <param name="elements">The elements to display in the failure dialog (ignored).</param>
-        /// <returns>Result.Succeeded</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
@@ -278,7 +225,6 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
                 var options = settings.GetOptions();
 
-                // Naming rule remains the same in silence if exporting is combined
                 if (options.Combine)
                 {
                     message = "Exporting is combined. To change naming rule you need to set exporting not combined.";
@@ -286,10 +232,8 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
                     return Result.Failed;
                 }
 
-                // Get naming rule
                 var namingRule = options.GetNamingRule();
 
-                // Find SHEET_APPROVED_BY rule
                 var param = BuiltInParameter.SHEET_APPROVED_BY;
                 var categoryId = Category.GetCategory(doc, BuiltInCategory.OST_Sheets).Id;
                 var paramId = new ElementId(param);
@@ -301,13 +245,11 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
                     return Result.Failed;
                 }
 
-                // Mofidy rule
                 rule.SampleValue = "Modify my sample value";
                 namingRule =
                     namingRule.OrderBy(data => data.SampleValue)
-                        .ToList(); // The order of rules is defined by the naming rule list
+                        .ToList();
                 options.SetNamingRule(namingRule);
-                // Note that naming rule won't be changed if exporting is combined, see the comments of PDFExportOptions.SetOptions
                 settings.SetOptions(options);
             }
             catch (Exception ex)
@@ -322,19 +264,9 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
         }
     }
 
-    /// <summary>
-    ///     ExternalCommand to delete a naming rule from ExportPDFSettings instance.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class DeleteNamingRuleCommand : IExternalCommand
     {
-        /// <summary>
-        ///     The implementation for IExternalCommand.Execute()
-        /// </summary>
-        /// <param name="commandData">The Revit command data.</param>
-        /// <param name="message">The error message (ignored).</param>
-        /// <param name="elements">The elements to display in the failure dialog (ignored).</param>
-        /// <returns>Result.Succeeded</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
@@ -353,7 +285,6 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
                 var options = settings.GetOptions();
 
-                // Naming rule remains the same in silence if exporting is combined
                 if (options.Combine)
                 {
                     message = "Exporting is combined. To change naming rule you need to set exporting not combined.";
@@ -361,19 +292,15 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
                     return Result.Failed;
                 }
 
-                // Get naming rule
                 var namingRule = options.GetNamingRule();
 
-                // Find SHEET_APPROVED_BY rule
                 var param = BuiltInParameter.SHEET_APPROVED_BY;
                 var categoryId = Category.GetCategory(doc, BuiltInCategory.OST_Sheets).Id;
                 var paramId = new ElementId(param);
                 var rule = namingRule.SingleOrDefault(r => r.CategoryId == categoryId && r.ParamId == paramId);
 
-                // Delete rule
                 namingRule.Remove(rule);
                 options.SetNamingRule(namingRule);
-                // Note that naming rule won't be changed if exporting is combined, see the comments of PDFExportOptions.SetOptions
                 settings.SetOptions(options);
             }
             catch (Exception ex)

@@ -11,10 +11,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 {
-    /// <summary>
-    ///     Display how to add a parameter to an element and set value to the parameter.
-    ///     the class  supports the IExternalCommand interface
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -27,14 +23,12 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             ref string message,
             ElementSet elements)
         {
-            // Set currently executable application to private variable m_revit
             m_revit = revit.Application;
             m_elements = elements;
 
             var tran = new Transaction(m_revit.ActiveUIDocument.Document, "BeamAndSlabNewParameter");
             tran.Start();
 
-            // Show UI
             using (var displayForm = new BeamAndSlabParametersForm(this))
             {
                 displayForm.ShowDialog();
@@ -44,28 +38,13 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Add a new parameter, "Unique ID", to the beams and slabs
-        ///     The following process should be followed:
-        ///     Open the shared parameters file, via the Document.OpenSharedParameterFile method.
-        ///     Access an existing group or create a new group, via the DefinitionFile.Groups property.
-        ///     Access an existing or create a new external parameter definition,
-        ///     via the DefinitionGroup.Definitions property.
-        ///     Create a new Binding with the categories to which the parameter will be bound
-        ///     using an InstanceBinding or a TypeBinding.
-        ///     Finally add the binding and definition to the document
-        ///     using the Document.ParameterBindings object.
-        /// </summary>
-        /// <returns>bool type, a value that signifies  if  add parameter was successful</returns>
         public bool SetNewParameterToBeamsAndSlabs()
         {
-            //Open the shared parameters file 
             // via the private method AccessOrCreateExternalSharedParameterFile
             var informationFile = AccessOrCreateExternalSharedParameterFile();
 
             if (null == informationFile) return false;
 
-            // Access an existing or create a new group in the shared parameters file
             var informationCollections = informationFile.Groups;
 
             var informationCollection = informationCollections.get_Item("MyParameters");
@@ -76,7 +55,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
                 informationCollection = informationCollections.get_Item("MyParameters");
             }
 
-            // Access an existing or create a new external parameter definition 
             // belongs to a specific group
             var information = informationCollection.Definitions.get_Item("Unique ID");
 
@@ -88,7 +66,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
                 information = informationCollection.Definitions.get_Item("Unique ID");
             }
 
-            // Create a new Binding object with the categories to which the parameter will be bound
             var categories = m_revit.Application.Create.NewCategorySet();
 
             // use category in instead of the string name to get category 
@@ -101,15 +78,11 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 
             var caseTying = m_revit.Application.Create.NewInstanceBinding(categories);
 
-            // Add the binding and definition to the document
             var boundResult = m_revit.ActiveUIDocument.Document.ParameterBindings.Insert(information, caseTying);
 
             return boundResult;
         }
 
-        /// <summary>
-        ///     Set value(uuid) to Unique ID parameter
-        /// </summary>
         public void SetValueToUniqueIdParameter()
         {
             var beamClassFilter = new ElementClassFilter(typeof(FamilyInstance));
@@ -128,7 +101,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 
             foreach (var elem in elems)
             {
-                // Find the parameter which is named "Unique ID" 
                 // belongs to a specifically beam or slab
                 var attributes = elem.Parameters;
                 var iter = attributes.GetEnumerator();
@@ -141,7 +113,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 
                     if (null != information && "Unique ID" == information.Name && null == attribute.AsString())
                     {
-                        // The shared parameter "Unique ID" then be set to a UUID
                         var uuid = Guid.NewGuid();
                         attribute.Set(uuid.ToString());
                     }
@@ -149,10 +120,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             }
         }
 
-        /// <summary>
-        ///     Display the value of Unique ID parameter in a list box
-        /// </summary>
-        /// <returns></returns>
         public ArrayList SendValueToListBox()
         {
             var elements = new ElementSet();
@@ -161,18 +128,15 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
                 elements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
             }
 
-            // all the elements of current document
             var i = elements.GetEnumerator();
 
             var parameterValueArrangeBox = new ArrayList();
 
-            // if the selections include beams and slabs, find out their Unique ID's value for display
             i.Reset();
             var moreElements = i.MoveNext();
 
             while (moreElements)
             {
-                // Get beams and slabs from selections
 
                 if (!(i.Current is Element component))
                 {
@@ -215,11 +179,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             return parameterValueArrangeBox;
         }
 
-        /// <summary>
-        ///     found the element which using the GUID
-        ///     that was assigned to the shared parameter in the shared parameters file.
-        /// </summary>
-        /// <param name="uniqueIdValue"></param>
         public void FindElement(string uniqueIdValue)
         {
             var seleElements = new ElementSet();
@@ -228,17 +187,14 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
                 seleElements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
             }
 
-            // all the elements of current document
             var i = seleElements.GetEnumerator();
 
-            // if the selections include beams and slabs, 
             // find out the element using the select value for display
             i.Reset();
             var moreElements = i.MoveNext();
 
             while (moreElements)
             {
-                // Get beams and slabs from selections
 
                 if (!(i.Current is Element component))
                 {
@@ -270,8 +226,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
                     {
                         if (null == attribute.AsString()) break;
 
-                        // compare if the parameter's value is the same as the selected value.
-                        // Clear the SelElementSet and add the found element into it. 
                         // So this element will highlight in Revit UI
                         if (uniqueIdValue == attribute.AsString())
                         {
@@ -288,34 +242,24 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             }
         }
 
-        /// <summary>
-        ///     Access an existing or create a new shared parameters file
-        /// </summary>
-        /// <returns>a shared parameters file </returns>
         private DefinitionFile AccessOrCreateExternalSharedParameterFile()
         {
-            // The Path of Revit.exe
             var currentExecutablePath = Application.ExecutablePath;
 
-            // The path of ourselves shared parameters file
             var sharedParameterFile = Path.GetDirectoryName(currentExecutablePath);
 
             sharedParameterFile += "\\MySharedParameters.txt";
 
-            //Method's return
 
-            // Check if the file is exit
             var documentMessage = new FileInfo(sharedParameterFile);
             var fileExist = documentMessage.Exists;
 
-            // Create file for external shared parameter since it does not exist
             if (!fileExist)
             {
                 var fileFlow = File.Create(sharedParameterFile);
                 fileFlow.Close();
             }
 
-            // Set  ourselves file to  the externalSharedParameterFile 
             m_revit.Application.SharedParametersFilename = sharedParameterFile;
             var informationFile = m_revit.Application.OpenSharedParameterFile();
 

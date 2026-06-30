@@ -17,19 +17,11 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
 
         private OpeningInfo m_selectedOpeningInfo; //current displayed (in preview) OpeningInfo
 
-        //constructor
-        /// <summary>
-        ///     The default constructor
-        /// </summary>
         public OpeningForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     constructor of OpeningForm
-        /// </summary>
-        /// <param name="openingInfos">a list of OpeningInFo</param>
         public OpeningForm(List<OpeningInfo> openingInfos)
         {
             InitializeComponent();

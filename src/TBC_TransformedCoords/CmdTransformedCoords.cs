@@ -28,10 +28,6 @@ namespace BuildingCoder
     [Transaction(TransactionMode.ReadOnly)]
     internal class CmdTransformedCoords : IExternalCommand
     {
-        /// <summary>
-        ///     Sample file is at
-        ///     C:\a\j\adn\case\bsd\1242980\attach\mullion.rvt
-        /// </summary>
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,
@@ -48,8 +44,7 @@ namespace BuildingCoder
             foreach (var id in sel.GetElementIds())
                 if (doc.GetElement(id) is Mullion mullion)
                 {
-                    //Location location = mullion.AsFamilyInstance.Location; // seems to be uninitialised // 2011
-
+                    // AsFamilyInstance.Location was uninitialised in Revit 2011.
                     var location = mullion.Location; // 2012
 
                     var lp

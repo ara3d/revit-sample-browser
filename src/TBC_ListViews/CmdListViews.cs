@@ -128,5 +128,3 @@ namespace BuildingCoder
         }
     }
 }
-
-// C:\a\j\adn\case\bsd\1266302\attach\rst_basic_sample_project_reinf.rvt

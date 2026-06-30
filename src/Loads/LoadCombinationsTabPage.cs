@@ -30,9 +30,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         private DataGridViewCheckBoxColumn m_usageSetColumn;
 
         // Methods
-        /// <summary>
-        ///     Initialize the data on this page.
-        /// </summary>
         private void InitializeLoadCombinationPage()
         {
             // Add the Items in combinationType and combinationState comboBox
@@ -57,9 +54,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             CombinationsTabPageButtonEnable();
         }
 
-        /// <summary>
-        ///     Initialize the loadCombination DataGridView control
-        /// </summary>
         private void InitializeCombinationGrid()
         {
             // Initialize the column data members.
@@ -105,9 +99,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             m_combinationUsageColumn.Width = combinationDataGridView.Width / 3;
         }
 
-        /// <summary>
-        ///     Initialize the load combination usage DataGridView control
-        /// </summary>
         private void InitializeUsageGrid()
         {
             // Initialize the column data members.
@@ -135,9 +126,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             m_usageNameColumn.Width = usageDataGridView.Width / 2;
         }
 
-        /// <summary>
-        ///     Initialize the load combination formula DataGridView control
-        /// </summary>
         private void InitializeFormulaGrid()
         {
             // Initialize the column data members.
@@ -169,9 +157,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         }
 
         // The Button Event method.
-        /// <summary>
-        ///     Check All Button
-        /// </summary>
         private void usageCheckAllButton_Click(object sender, EventArgs e)
         {
             foreach (var map in m_dataBuffer.UsageMap)
@@ -185,9 +170,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             usageDataGridView.Refresh();
         }
 
-        /// <summary>
-        ///     Check None Button
-        /// </summary>
         private void usageCheckNoneButton_Click(object sender, EventArgs e)
         {
             foreach (var map in m_dataBuffer.UsageMap)
@@ -201,9 +183,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             usageDataGridView.Refresh();
         }
 
-        /// <summary>
-        ///     Usage Add Button
-        /// </summary>
         private void usageAddButton_Click(object sender, EventArgs e)
         {
             var usageString = new StringBuilder("Usage");
@@ -253,9 +232,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             usageDataGridView.Refresh();
         }
 
-        /// <summary>
-        ///     Usage Delete Button
-        /// </summary>
         private void usageDeleteButton_Click(object sender, EventArgs e)
         {
             // // Get selected index in usage DataGridView
@@ -303,9 +279,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             }
         }
 
-        /// <summary>
-        ///     New Combination Button
-        /// </summary>
         private void newCombinationButton_Click(object sender, EventArgs e)
         {
             // First get the combination name
@@ -349,9 +322,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             Refresh();
         }
 
-        /// <summary>
-        ///     Delete Combination Button
-        /// </summary>
         private void deleteCombinationButton_Click(object sender, EventArgs e)
         {
             // Get selected index in Combination DataGridView
@@ -378,9 +348,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             Refresh();
         }
 
-        /// <summary>
-        ///     Add Formula Button
-        /// </summary>
         private void formulaAddButton_Click(object sender, EventArgs e)
         {
             // Add formula.
@@ -399,9 +366,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             Refresh();
         }
 
-        /// <summary>
-        ///     Delete Formula Button
-        /// </summary>
         private void formulaDeleteButton_Click(object sender, EventArgs e)
         {
             // Get selected index in formula DataGridView

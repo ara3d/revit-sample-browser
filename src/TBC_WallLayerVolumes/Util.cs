@@ -4,7 +4,6 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_WallLayerVolumes sample.</summary>
     internal static partial class Util
     {
         private const BuiltInParameter _bipArea
@@ -13,10 +12,6 @@ namespace BuildingCoder
         private const BuiltInParameter _bipVolume
             = BuiltInParameter.HOST_VOLUME_COMPUTED;
 
-        /// <summary>
-        ///     Return the specified double parameter
-        ///     value for the given wall.
-        /// </summary>
         internal static double GetWallParameter(
             Wall wall,
             BuiltInParameter bip)
@@ -31,9 +26,6 @@ namespace BuildingCoder
             return p.AsDouble();
         }
 
-        /// <summary>
-        ///     Cumulate the compound wall layer volumes for the given wall.
-        /// </summary>
         internal static void GetWallLayerVolumes(
             Wall wall,
             ref MapLayerToVolume totalVolumes)
@@ -101,18 +93,9 @@ namespace BuildingCoder
             }
         }
 
-        /// <summary>
-        ///     Enhance the standard Dictionary
-        ///     class to have a Cumulate method.
-        /// </summary>
         internal class MapLayerToVolume
             : Dictionary<string, double>
         {
-            /// <summary>
-            ///     Add cumulated value.
-            ///     If seen for the first time for
-            ///     this key, initialise with zero.
-            /// </summary>
             public void Cumulate(
                 string key,
                 double value)

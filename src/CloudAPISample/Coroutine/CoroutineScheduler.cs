@@ -104,10 +104,6 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Coroutine
             }
         }
 
-        /// <summary>
-        ///     Attach a scheduler to render loop.
-        ///     Must be called before using coroutine.
-        /// </summary>
         public static void Run()
         {
             if (_instance != null)
@@ -116,19 +112,12 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Coroutine
             _instance.Attach();
         }
 
-        /// <summary>
-        ///     Stop a scheduler. All coroutines will be released.
-        /// </summary>
         public static void Stop()
         {
             _instance?.Detach();
             _instance = null;
         }
 
-        /// <summary>
-        ///     Start a new coroutine with an enumerator
-        /// </summary>
-        /// <returns></returns>
         public static Coroutine StartCoroutine(IEnumerator enumerator)
         {
             if (enumerator == null || _instance == null) return null;

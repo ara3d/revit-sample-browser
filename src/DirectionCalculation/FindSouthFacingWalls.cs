@@ -10,9 +10,6 @@ using Ara3D.RevitSampleBrowser.Common.Documents;
 using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
 {
-    /// <summary>
-    ///     Implementation class for utilities to find south facing exterior walls in a project.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

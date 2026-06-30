@@ -11,9 +11,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS
 {
-    /// <summary>
-    ///     the entry point of the sample (to launch the sample dialog and allows further operations)
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -26,7 +23,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS
 
             var mydocument = new MyDocument(commandData);
 
-            // check whether the mass is kind of parallelepiped
             var checker = new MassChecker(mydocument);
             var validMass = checker.CheckSelectedMass();
 

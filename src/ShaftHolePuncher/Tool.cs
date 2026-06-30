@@ -19,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         protected Point PreDownPoint; // store the mouse position when right mouse button clicked in pictureBox
         protected Point PreMovePoint; // store the mouse position when mouse move in pictureBox
 
-        /// <summary>
-        ///     default constructor
-        /// </summary>
         protected Tool()
         {
             BackGroundPen = new Pen(Color.White);
@@ -40,17 +37,8 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             set => m_finished = value;
         }
 
-        /// <summary>
-        ///     get all lines drawn in pictureBox
-        /// </summary>
         public List<Point> Points => m_points;
 
-        /// <summary>
-        ///     calculate the distance between two points
-        /// </summary>
-        /// <param name="p1">first point</param>
-        /// <param name="p2">second point</param>
-        /// <returns>distance between two points</returns>
         protected double GetDistance(Point p1, Point p2)
         {
             var distance = Math.Sqrt(

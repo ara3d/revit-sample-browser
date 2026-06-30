@@ -11,10 +11,7 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
 {
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    //
     // Command to setup the updater, register the triggers (on execute), and unregister it (on close the document)
-    //
 
     [Transaction(TransactionMode.Manual)]
     public class AssociativeSectionUpdater : IExternalCommand
@@ -128,11 +125,6 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
             }
         }
 
-        /// <summary>
-        ///     Unregister the updater on Revit document close.
-        /// </summary>
-        /// <param name="source">The source object.</param>
-        /// <param name="args">The DocumentClosing event args.</param>
         private void UnregisterSectionUpdaterOnClose(object source, DocumentClosingEventArgs args)
         {
             IdsToWatch.Clear();

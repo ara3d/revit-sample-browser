@@ -23,11 +23,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Create sloped slab using the NewSlab method.
-    ///     Also demonstrate checking whether a specific
-    ///     level exists and creating it is not.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class CmdCreateSlopedSlab : IExternalCommand
     {
@@ -134,12 +129,6 @@ namespace BuildingCoder
     }
 
     #region Unsuccessful attempt to modify existing floor slope
-
-    /// <summary>
-    ///     Unsuccessful attempt to change the
-    ///     slope of an existing floor element.
-    /// </summary>
-
 
     #endregion // Unsuccessful attempt to modify existing floor slope
 }

@@ -8,13 +8,7 @@ using System.Reflection;
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 {
-  /// <summary>
-  /// The code below is by Tim Van Wassenhove, 2008.
-  /// http://www.timvw.be/2008/08/02/presenting-the-sortablebindinglistt-take-two/
-  /// If the above link fails for you, please search for 
-  /// "Presenting the SortableBindingList (take two)". 
   
-  /// </summary>
   public class PropertyComparer<T> : IComparer<T>
   {
     private readonly IComparer comparer;

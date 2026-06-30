@@ -6,35 +6,20 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
 {
-    /// <summary>
-    ///     The form is used to show the result
-    /// </summary>
     public partial class MessageForm : Form
     {
-        /// <summary>
-        ///     store the log file name
-        /// </summary>
         private readonly string m_logFileName;
 
-        /// <summary>
-        ///     construction of form
-        /// </summary>
         public MessageForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     construction method with parameter
-        /// </summary>
-        /// <param name="messages">messages</param>
         public MessageForm(string[] messages)
             : this()
         {
             var msgText = "";
-            //If the size of error messages is 0, means the validate parameters is successful
             Text = "Validate Parameters Message Form";
-            //create regeneration log file
             var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             m_logFileName = $"{assemblyPath}\\ValidateParametersLog.txt";
             var writer = File.CreateText(m_logFileName);
@@ -67,10 +52,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
             CheckForIllegalCrossThreadCalls = false;
         }
 
-        /// <summary>
-        ///     The method is used to write line to log file
-        /// </summary>
-        /// <param name="logStr">the log string</param>
         private void WriteLog(string logStr)
         {
             var writer = File.AppendText(m_logFileName);

@@ -27,15 +27,9 @@ namespace BuildingCoder
     [Transaction(TransactionMode.Manual)]
     internal class CmdCopyWallType : IExternalCommand
     {
-        /// <summary>
-        ///     Source project to copy system type from.
-        /// </summary>
         private const string _source_project_path
             = "Z:/a/case/sfdc/06676034/test/NewWallType.rvt";
 
-        /// <summary>
-        ///     Source wall type name to copy.
-        /// </summary>
         private const string _wall_type_name = "NewWallType";
 
         public Result Execute(

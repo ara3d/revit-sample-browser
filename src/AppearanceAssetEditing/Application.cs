@@ -12,9 +12,6 @@ using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     public class Application : IExternalApplication
     {
         // class instance
@@ -49,12 +46,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     This method creates and shows a modeless dialog, unless it already exists.
-        /// </summary>
-        /// <remarks>
-        ///     The external command invokes this on the end-user's request
-        /// </remarks>
         public void ShowForm(UIApplication uiapp)
         {
             m_revit = uiapp;
@@ -83,9 +74,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             }
         }
 
-        /// <summary>
-        ///     Get the painted material from selection.
-        /// </summary>
         public void GetPaintedMaterial()
         {
             Reference refer;
@@ -119,10 +107,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             }
         }
 
-        /// <summary>
-        ///     Check if the selected material supports "tint".
-        /// </summary>
-        /// <returns>True if the selected material supports "tint" or not.</returns>
         private bool SupportTintColor()
         {
             if (m_currentAppearanceAssetElementId == ElementId.InvalidElementId)
@@ -141,9 +125,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             return true;
         }
 
-        /// <summary>
-        ///     Enable tint color.
-        /// </summary>
         private void EnableTintColor()
         {
             using (var transaction = new Transaction(m_document, "Enable tint color"))
@@ -168,10 +149,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             }
         }
 
-        /// <summary>
-        ///     Check if the button Lighter is enabled.
-        /// </summary>
-        /// <returns>True if the material can be made lighter or not.</returns>
         public bool IsLighterEnabled()
         {
             if (!SupportTintColor())
@@ -187,10 +164,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             return !BitmapHelper.ColorsEqual(tintColor, white);
         }
 
-        /// <summary>
-        ///     Check if the button Darker is enabled.
-        /// </summary>
-        /// <returns>True if the material can be made darker or not.</returns>
         public bool IsDarkerEnabled()
         {
             if (!SupportTintColor())
@@ -206,16 +179,12 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             return !BitmapHelper.ColorsEqual(tintColor, black);
         }
 
-        /// <summary>
-        ///     A handler for the Idling event.
-        /// </summary>
-        /// <remarks>
-        ///     We keep the handler very simple. First we check
-        ///     if we still have the dialog. If not, we unsubscribe from Idling,
-        ///     for we no longer need it and it makes Revit speedier.
-        ///     If we do have the dialog around, we check if it has a request ready
-        ///     and process it accordingly.
-        /// </remarks>
+        // A handler for the Idling event.
+        // We keep the handler very simple. First we check
+        // if we still have the dialog. If not, we unsubscribe from Idling,
+        // for we no longer need it and it makes Revit speedier.
+        // If we do have the dialog around, we check if it has a request ready
+        // and process it accordingly.
         public void IdlingHandler(object sender, IdlingEventArgs args)
         {
             var uiapp = sender as UIApplication;
@@ -226,28 +195,20 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
                 return;
             }
 
-            // dialog still exists
-            // fetch the request from the dialog           
             var requestId = m_myForm.Request.Take();
             if (requestId != RequestId.None)
                 try
                 {
-                    // we take the request, if any was made,
                     // and pass it on to the request executor     
                     RequestHandler.Execute(this, requestId);
                 }
                 finally
                 {
-                    // The dialog may be in its waiting state;
                     // make sure we wake it up even if we get an exception.    
                     m_myForm.EnableButtons(IsLighterEnabled(), IsDarkerEnabled());
                 }
         }
 
-        /// <summary>
-        ///     Edit tint color property.
-        /// </summary>
-        /// <param name="lighter">Increase the tint color property or not.</param>
         public void EditMaterialTintColorProperty(bool lighter)
         {
             using (var editScope = new AppearanceAssetEditScope(m_document))

@@ -6,38 +6,27 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 {
-    /// <summary>
-    ///     can be the datasource of propertygrid
-    /// </summary>
     public class FloorAreaReinData : IAreaReinData
     {
-        //bottom major layer
         private Parameter m_bottomMajorBarType;
         private Parameter m_bottomMajorHookOrientation;
         private Parameter m_bottomMajorHookType;
 
-        //bottom minor layer
         private Parameter m_bottomMinorBarType;
         private Parameter m_bottomMinorHookOrientation;
 
         private Parameter m_bottomMinorHookType;
 
-        //member
         private Parameter m_layoutRule;
 
-        //top major layer
         private Parameter m_topMajorBarType;
         private Parameter m_topMajorHookOrientation;
         private Parameter m_topMajorHookType;
 
-        //top minor layer
         private Parameter m_topMinorBarType;
         private Parameter m_topMinorHookOrientation;
         private Parameter m_topMinorHookType;
 
-        /// <summary>
-        ///     layout rule
-        /// </summary>
         [Category("Construction")]
         public LayoutRules LayoutRule
         {
@@ -177,19 +166,12 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             }
         }
 
-        /// <summary>
-        ///     fill in data with given AreaReinforcement
-        /// </summary>
-        /// <param name="areaRein"></param>
-        /// <returns></returns>
         public bool FillInData(AreaReinforcement areaRein)
         {
-            //member
             m_layoutRule = areaRein.get_Parameter(
                 BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE);
             var flag = m_layoutRule != null;
 
-            //top major layer
             m_topMajorBarType = areaRein.get_Parameter(
                 BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_TOP_DIR_1);
             m_topMajorHookType = areaRein.get_Parameter(
@@ -199,7 +181,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             flag &= m_topMajorBarType != null && m_topMajorHookOrientation != null
                                               && m_topMajorHookType != null;
 
-            //top minor layer
             m_topMinorBarType = areaRein.get_Parameter(
                 BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_TOP_DIR_2);
             m_topMinorHookType = areaRein.get_Parameter(
@@ -209,7 +190,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             flag &= m_topMinorBarType != null && m_topMinorHookOrientation != null
                                               && m_topMinorHookType != null;
 
-            //bottom major layer
             m_bottomMajorBarType = areaRein.get_Parameter(
                 BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_BOTTOM_DIR_1);
             m_bottomMajorHookType = areaRein.get_Parameter(
@@ -219,7 +199,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             flag &= m_bottomMajorBarType != null && m_bottomMajorHookOrientation != null
                                                  && m_bottomMajorHookType != null;
 
-            //bottom minor layer
             m_bottomMinorBarType = areaRein.get_Parameter(
                 BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_BOTTOM_DIR_2);
             m_bottomMinorHookType = areaRein.get_Parameter(

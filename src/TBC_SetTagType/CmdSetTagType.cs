@@ -22,10 +22,6 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Create a wall, door, door tag, then
-    ///     create and set a new door tag type.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     class CmdSetTagType : IExternalCommand
     {

@@ -3,13 +3,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_ColumnRound sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Determine the height of a vertical column from
-        ///     its top and bottom level.
-        /// </summary>
         internal static double GetColumHeightFromLevels(
             Element e)
         {
@@ -42,10 +37,6 @@ namespace BuildingCoder
             return height;
         }
 
-        /// <summary>
-        ///     Determine the height of any given element
-        ///     from its bounding box.
-        /// </summary>
         internal static double GetElementHeightFromBoundingBox(
             Element e)
         {
@@ -58,10 +49,6 @@ namespace BuildingCoder
             return bb.Max.Z - bb.Min.Z;
         }
 
-        /// <summary>
-        ///     Return true if the given Revit element looks
-        ///     like it might be a column family instance.
-        /// </summary>
         internal static bool IsColumn(Element e)
         {
             return e is FamilyInstance

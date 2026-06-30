@@ -57,10 +57,6 @@ namespace BuildingCoder
 
             t.Commit();
         }
-
-        /// <summary>
-        ///     Tag all walls in all linked documents
-        /// </summary>
         public static void TagAllLinkedWalls(Document doc)
         {
             var xyz = new XYZ(-20, 20, 0);

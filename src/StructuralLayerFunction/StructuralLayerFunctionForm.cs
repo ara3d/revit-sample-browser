@@ -6,9 +6,6 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
 {
-    /// <summary>
-    ///     display the function of each of a select floor's structural layers
-    /// </summary>
     public class StructuralLayerFunctionForm : Form
     {
         private readonly Container m_components = null;
@@ -16,10 +13,6 @@ namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
         private ListBox m_functionListBox;
         private Button m_okButton;
 
-        /// <summary>
-        ///     Constructor of StructuralLayerFunctionForm
-        /// </summary>
-        /// <param name="dataBuffer">A reference of StructuralLayerFunction class</param>
         public StructuralLayerFunctionForm(Command dataBuffer)
         {
             // Required for Windows Form Designer support
@@ -29,9 +22,6 @@ namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
             m_functionListBox.DataSource = dataBuffer.Functions;
         }
 
-        /// <summary>
-        ///     Clean up any resources being used.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -42,10 +32,6 @@ namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        ///     Required method for Designer support - do not modify
-        ///     the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             m_functionListBox = new ListBox();

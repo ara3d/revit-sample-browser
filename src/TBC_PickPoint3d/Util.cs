@@ -48,14 +48,6 @@ namespace BuildingCoder
 
             TaskDialog.Show("Area", area.ToString());
         }
-
-        /// <summary>
-        ///     Prompt the user to select a face on an element
-        ///     and then pick a point on that face. The first
-        ///     picking of the face on the element temporarily
-        ///     redefines the active work plane, on which the
-        ///     second point can be picked.
-        /// </summary>
         public static bool PickFaceSetWorkPlaneAndPickPoint(
             UIDocument uidoc,
             out XYZ point_in_3d)
@@ -106,12 +98,6 @@ namespace BuildingCoder
 
             return null != point_in_3d;
         }
-
-        /// <summary>
-        ///     Transform pick point global XYZ coordinates to screen
-        ///     By Richard @RPThomas108 Thomas in VB.NET in
-        ///     https://forums.autodesk.com/t5/revit-api-forum/finding-distance-between-points-in-multiple-views/m-p/10217818
-        /// </summary>
         public static bool TransformPickPointToScreen(UIDocument uidoc)
         {
             var view = uidoc.ActiveGraphicalView;

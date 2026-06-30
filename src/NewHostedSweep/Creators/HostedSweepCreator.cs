@@ -25,14 +25,8 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// </summary>
         protected readonly Dictionary<Element, ElementGeometry> ElemGeom;
 
-        /// <summary>
-        ///     Revit active document.
-        /// </summary>
         protected readonly Document RvtDoc;
 
-        /// <summary>
-        ///     Revit UI document.
-        /// </summary>
         protected readonly UIDocument RvtUiDoc;
 
         /// <summary>
@@ -57,9 +51,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// </summary>
         public abstract Dictionary<Element, List<Edge>> SupportEdges { get; }
 
-        /// <summary>
-        ///     All type of hosted-sweep.
-        /// </summary>
         public abstract IEnumerable AllTypes { get; }
 
         /// <summary>
@@ -72,21 +63,10 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// </summary>
         public List<ModificationData> CreatedHostedSweeps => m_createdHostedSweeps;
 
-        /// <summary>
-        ///     Revit active document.
-        /// </summary>
         public Document RvtDocument => RvtDoc;
 
-        /// <summary>
-        ///     Revit UI document.
-        /// </summary>
         public UIDocument RvtUiDocument => RvtUiDoc;
 
-        /// <summary>
-        ///     Create a hosted-sweep according to the CreationData parameter.
-        /// </summary>
-        /// <param name="creationData">CreationData parameter</param>
-        /// <returns>ModificationData which contains the created hosted-sweep</returns>
         public ModificationData Create(CreationData creationData)
         {
             var refArr = new ReferenceArray();

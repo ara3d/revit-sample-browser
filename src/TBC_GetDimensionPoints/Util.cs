@@ -6,7 +6,6 @@ using Autodesk.Revit.Exceptions;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_GetDimensionPoints sample.</summary>
     internal static partial class Util
     {
         /// <summary>
@@ -36,9 +35,6 @@ namespace BuildingCoder
             return p;
         }
 
-        /// <summary>
-        ///     Retrieve start and end points of each dimension segment.
-        /// </summary>
         internal static List<XYZ> GetDimensionPoints(
             Dimension dim,
             XYZ pStart)
@@ -72,9 +68,6 @@ namespace BuildingCoder
             return pts;
         }
 
-        /// <summary>
-        ///     Draw an X marker at the given position using model lines.
-        /// </summary>
         internal static void DrawDimensionMarker(
             XYZ p,
             double size,

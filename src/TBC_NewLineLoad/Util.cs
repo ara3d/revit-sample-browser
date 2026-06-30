@@ -11,10 +11,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_NewLineLoad sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Create a point load on all
-        ///     analytical column end points.
-        /// </summary>
         internal static void CreatePointLoadOnColumnEnd(Document doc)
         {
             var columns

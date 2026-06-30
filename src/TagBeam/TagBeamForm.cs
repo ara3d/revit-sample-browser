@@ -8,9 +8,6 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.TagBeam.CS
 {
-    /// <summary>
-    ///     Form to get input from user to create beam tags.
-    /// </summary>
     public partial class TagBeamForm : Form
     {
         //Required designer variable.
@@ -27,9 +24,6 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
             InitializeComboBoxes();
         }
 
-        /// <summary>
-        ///     Initialize the combo boxes.
-        /// </summary>
         private void InitializeComboBoxes()
         {
             //Initialize the tag mode comboBox.
@@ -43,11 +37,6 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
                     tagOrientationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
-        /// <summary>
-        ///     Create tags on beam's start and end.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             try
@@ -68,21 +57,11 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
             }
         }
 
-        /// <summary>
-        ///     Close the form.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     Update tag types in tagComboBox according to the selected tag mode.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void tagComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             tagSymbolComboBox.DataSource = m_dataBuffer[(TagMode)tagComboBox.SelectedItem];

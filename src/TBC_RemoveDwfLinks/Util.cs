@@ -9,12 +9,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_RemoveDwfLinks sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Unpin all of the pinned elements in the list.
-        /// </summary>
         public static int Unpin(List<ElementId> ids, Document doc)
         {
             var count = 0;
@@ -32,10 +28,6 @@ namespace BuildingCoder
             return count;
         }
 
-        /// <summary>
-        ///     Return true if the given element category
-        ///     name contains the substring ".dwf".
-        /// </summary>
         public static bool ElementCategoryContainsDwf(Element e)
         {
             return null != e.Category
@@ -43,13 +35,7 @@ namespace BuildingCoder
                        .Contains(".dwf");
         }
 
-        /// <summary>
-        ///     Useless non-functional attempt to remove all
-        ///     DWF links from the model and return
-        ///     the total number of deleted elements.
-        ///     This does not work! Instead, use
-        ///     RemoveDwfLinkUsingExternalFileUtils.
-        /// </summary>
+        // Non-functional; use RemoveDwfLinkUsingExternalFileUtils instead.
         public static int RemoveDwfLinkUsingDelete(Document doc)
         {
             var nDeleted = 0;
@@ -160,10 +146,6 @@ namespace BuildingCoder
             return nDeleted;
         }
 
-        /// <summary>
-        ///     Remove DWF links from model and return
-        ///     the total number of deleted elements.
-        /// </summary>
         public static int RemoveDwfLinkUsingExternalFileUtils(
             Document doc)
         {

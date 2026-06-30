@@ -36,16 +36,8 @@ namespace BuildingCoder
     {
 #if CREATE_MODEL_CURVES_FOR_TOP_FACE_EDGES
 
-        /// <summary>
-        ///     Offset at which to create a model curve copy
-        ///     of all top face edges for debugging purposes.
-        /// </summary>
         private static readonly XYZ _offset = XYZ.BasisZ / 12;
 
-        /// <summary>
-        ///     Translation transformation to apply to create
-        ///     model curve copies of top face edges.
-        /// </summary>
         private static readonly Transform _t =
             // Transform.get_Translation( _offset ); // 2013
             Transform.CreateTranslation(_offset); // 2014
@@ -96,13 +88,9 @@ namespace BuildingCoder
                     continue;
                 }
 
-                // Get the side faces
-
                 var sideFaces
                     = HostObjectUtils.GetSideFaces(wall,
                         ShellLayerType.Exterior);
-
-                // Access the first side face
 
                 var e2 = doc.GetElement(sideFaces[0]);
 
@@ -118,16 +106,7 @@ namespace BuildingCoder
                     continue;
                 }
 
-                // When there are opening such as doors or
-                // windows in the wall, we need to find the
-                // outer loop.
-                // For one possible approach to extract the
-                // outermost loop, please refer to
-                // http://thebuildingcoder.typepad.com/blog/2008/12/2d-polygon-areas-and-outer-loop.html
-
-                // Determine the outer loop of the side face
-                // by finding the polygon with the largest area
-
+                // Outer loop: largest-area polygon; see http://thebuildingcoder.typepad.com/blog/2008/12/2d-polygon-areas-and-outer-loop.html
                 XYZ normal;
                 double area, dist, maxArea = 0;
                 EdgeArray outerLoop = null;
@@ -182,12 +161,6 @@ namespace BuildingCoder
 
                 var sideVertices = outerLoop.GetPolygon();
 
-                // Go over all the faces of the wall and
-                // determine which ones fulfill the following
-                // two criteria: (i) planar face pointing
-                // upwards, and (ii) neighbour of the side
-                // face outer loop.
-
                 var solid = wall.get_Geometry(opt)
                     .OfType<Solid>()
                     .First(sol => null != sol);
@@ -213,8 +186,6 @@ namespace BuildingCoder
                                 ++n;
 
 #if CREATE_MODEL_CURVES_FOR_TOP_FACE_EDGES
-
-                                // Display face for debugging purposes
 
                                 foreach (EdgeArray ea in f.EdgeLoops)
                                 {
@@ -256,7 +227,3 @@ namespace BuildingCoder
         }
     }
 }
-
-// C:\tmp\rac_basic_sample_project_walls.rvt
-// C:\Program Files\Autodesk\Revit Architecture 2012\Program\Samples\rac_basic_sample_project.rvt
-// C:\a\doc\revit\blog\rvt\two_walls_top_face.rvt

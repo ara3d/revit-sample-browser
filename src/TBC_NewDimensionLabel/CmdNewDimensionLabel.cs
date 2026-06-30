@@ -65,7 +65,6 @@ namespace BuildingCoder
             var start = XYZ.Zero;
             var end = creApp.NewXYZ(0, length, 0);
 
-            //Line line = creApp.NewLine( start, end, true ); // 2013
 
             var line = Line.CreateBound(start, end); // 2014
 

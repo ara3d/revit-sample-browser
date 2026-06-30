@@ -8,9 +8,6 @@ using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
-    /// <summary>
-    ///     A stairs run consisting of a linear straight run.
-    /// </summary>
     public class StraightStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
     {
         private double m_desiredTreadDepth;
@@ -21,13 +18,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
         private double m_width;
         private XYZ m_widthOffset;
 
-        /// <summary>
-        ///     Creates a new straight stairs run in the default location and orientation.
-        /// </summary>
-        /// <param name="riserNumber">The number of risers.</param>
-        /// <param name="bottomElevation">The bottom elevation of the run.</param>
-        /// <param name="desiredTreadDepth">The desired tread depth.</param>
-        /// <param name="width">The width of the run.</param>
         public StraightStairsRunComponent(int riserNumber, double bottomElevation, double desiredTreadDepth,
             double width)
         {
@@ -39,14 +29,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             m_widthOffset = new XYZ(m_width, 0, 0);
         }
 
-        /// <summary>
-        ///     Creates a new straight stairs run in the specified location and orientation.
-        /// </summary>
-        /// <param name="riserNumber">The number of risers.</param>
-        /// <param name="bottomElevation">The bottom elevation of the run.</param>
-        /// <param name="desiredTreadDepth">The desired tread depth.</param>
-        /// <param name="width">The width of the run.</param>
-        /// <param name="transform">The transform (orientation and location) for the run.</param>
         public StraightStairsRunComponent(int riserNumber, double bottomElevation, double desiredTreadDepth,
             double width,
             Transform transform) :
@@ -60,14 +42,8 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             m_widthOffset = new XYZ(m_width, 0, 0);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public double RunElevation { get; }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public double TopElevation
         {
             get
@@ -77,9 +53,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             }
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public IList<Curve> GetStairsPath()
         {
             if (m_stairsRun == null) throw new NotSupportedException("Stairs run hasn't been constructed yet.");
@@ -87,33 +60,21 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return curveLoop.ToList();
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public Curve GetFirstCurve()
         {
             return GetEndCurve(false);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public Curve GetLastCurve()
         {
             return GetEndCurve(true);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public XYZ GetRunEndpoint()
         {
             return GetLastCurve().GetEndPoint(0);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public StairsRun CreateStairsRun(Document document, ElementId stairsId)
         {
             m_stairsRun = StairsRun.CreateStraightRun(document, stairsId,
@@ -123,9 +84,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return m_stairsRun;
         }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double Width
         {
             get => m_width;
@@ -136,17 +94,11 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             }
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public double GetRunElevation()
         {
             return RunElevation;
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public Line GetRunStairsPath()
         {
             var start = new XYZ(m_width / 2.0, 0, RunElevation);
@@ -156,11 +108,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return curve1;
         }
 
-        /// <summary>
-        ///     Gets the first or last riser curve of the run.
-        /// </summary>
-        /// <param name="last">True to get the last curve, false to get the first.</param>
-        /// <returns>The curve.</returns>
         private Curve GetEndCurve(bool last)
         {
             if (m_stairsRun == null) throw new NotSupportedException("Stairs run hasn't been constructed yet.");

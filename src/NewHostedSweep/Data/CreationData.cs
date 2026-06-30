@@ -25,14 +25,8 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
         /// <param name="sym">Symbol</param>
         public delegate void SymbolChangedEventHandler(ElementType sym);
 
-        /// <summary>
-        ///     Back up of Edges.
-        /// </summary>
         private readonly List<Edge> m_backUpEdges = new List<Edge>();
 
-        /// <summary>
-        ///     Back up of Symbol.
-        /// </summary>
         private ElementType m_backUpSymbol;
 
         /// <summary>
@@ -45,15 +39,8 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
         /// </summary>
         private readonly List<Edge> m_edgesForHostedSweep = new List<Edge>();
 
-        /// <summary>
-        ///     Symbol for HostedSweep creation.
-        /// </summary>
         private ElementType m_symbol;
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="creator">HostedSweepCreator</param>
         public CreationData(HostedSweepCreator creator)
         {
             m_creator = creator;
@@ -64,9 +51,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
         /// </summary>
         public HostedSweepCreator Creator => m_creator;
 
-        /// <summary>
-        ///     Symbol for HostedSweep creation.
-        /// </summary>
         public ElementType Symbol
         {
             get => m_symbol;
@@ -78,24 +62,12 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
         /// </summary>
         public List<Edge> EdgesForHostedSweep => m_edgesForHostedSweep;
 
-        /// <summary>
-        ///     Edge is added to HostedSweep.
-        /// </summary>
         public event EdgeEventHandler EdgeAdded;
 
-        /// <summary>
-        ///     Edge is removed from HostedSweep.
-        /// </summary>
         public event EdgeEventHandler EdgeRemoved;
 
-        /// <summary>
-        ///     HostedSweep symbol is changed.
-        /// </summary>
         public event SymbolChangedEventHandler SymbolChanged;
 
-        /// <summary>
-        ///     Back up the Symbol and Edges.
-        /// </summary>
         public void BackUp()
         {
             m_backUpSymbol = m_symbol;
@@ -103,9 +75,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             m_backUpEdges.AddRange(m_edgesForHostedSweep);
         }
 
-        /// <summary>
-        ///     Restore the Symbol and Edges.
-        /// </summary>
         public void Restore()
         {
             m_symbol = m_backUpSymbol;
@@ -113,9 +82,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             m_edgesForHostedSweep.AddRange(m_backUpEdges);
         }
 
-        /// <summary>
-        ///     If CreationData changed, notify its observers.
-        /// </summary>
         public void Update()
         {
             if (SymbolChanged != null && m_backUpSymbol != null &&

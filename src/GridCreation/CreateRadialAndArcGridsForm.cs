@@ -13,10 +13,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         // data class object
         private readonly CreateRadialAndArcGridsData m_data;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="data">Data class object</param>
         public CreateRadialAndArcGridsForm(CreateRadialAndArcGridsData data)
         {
             m_data = data;
@@ -26,9 +22,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             InitializeControls();
         }
 
-        /// <summary>
-        ///     Set state of controls
-        /// </summary>
         private void InitializeControls()
         {
             // Set length unit related labels
@@ -78,9 +71,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                 DialogResult = DialogResult.None;
         }
 
-        /// <summary>
-        ///     Transfer data back into data class
-        /// </summary>
         private void SetData()
         {
             m_data.XOrigin = UnitConversion.CovertToApi(Convert.ToDouble(textBoxXCoord.Text), m_data.Unit);
@@ -117,10 +107,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Check if input are validated
-        /// </summary>
-        /// <returns>Whether input is validated</returns>
         private bool ValidateValues()
         {
             if (!SampleBrowserUtils.ValidateNumbers(textBoxArcNumber, textBoxLineNumber)) return false;

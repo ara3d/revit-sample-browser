@@ -6,28 +6,15 @@ using Autodesk.Revit.ApplicationServices;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {
-    /// <summary>
-    ///     Wrapper class for ProjectInfo
-    /// </summary>
     public class ProjectInfoWrapper : IWrapper
     {
-        /// <summary>
-        ///     ProjectInfo
-        /// </summary>
         private readonly Autodesk.Revit.DB.ProjectInfo m_projectInfo;
 
-        /// <summary>
-        ///     Initializes private variables.
-        /// </summary>
-        /// <param name="projectInfo">ProjectInfo</param>
         public ProjectInfoWrapper(Autodesk.Revit.DB.ProjectInfo projectInfo)
         {
             m_projectInfo = projectInfo;
         }
 
-        /// <summary>
-        ///     Gets gbXMLSettings
-        /// </summary>
         [Category("Energy Analysis")]
         [DisplayName("Energy Settings")]
         [TypeConverter(typeof(WrapperConverter))]
@@ -35,9 +22,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
         public ICustomTypeDescriptor EnergyDataSettings =>
             new WrapperCustomDescriptor(new EnergyDataSettingsWrapper(m_projectInfo.Document));
 
-        /// <summary>
-        ///     Gets or sets Project Issue Data
-        /// </summary>
         [Category("Other")]
         [DisplayName("Project Issue Data")]
         public string IssueDate
@@ -46,9 +30,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_projectInfo.IssueDate = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Project Status
-        /// </summary>
         [Category("Other")]
         [DisplayName("Project Status")]
         public string Status
@@ -57,9 +38,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_projectInfo.Status = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Client Name
-        /// </summary>
         [Category("Other")]
         [DisplayName("Client Name")]
         public string ClientName
@@ -68,9 +46,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_projectInfo.ClientName = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Project Address
-        /// </summary>
         [Category("Other")]
         [DisplayName("Project Address")]
         public string Address
@@ -79,9 +54,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_projectInfo.Address = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Project Number
-        /// </summary>
         [Category("Other")]
         [DisplayName("Project Number")]
         public string Number
@@ -90,15 +62,9 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_projectInfo.Number = value;
         }
 
-        /// <summary>
-        ///     Gets the handle object.
-        /// </summary>
         [Browsable(false)]
         public object Handle => m_projectInfo;
 
-        /// <summary>
-        ///     Gets the name of the handle.
-        /// </summary>
         [Category("Other")]
         [DisplayName("Project Name")]
         public string Name

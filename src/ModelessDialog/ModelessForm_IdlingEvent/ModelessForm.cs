@@ -22,27 +22,18 @@ namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
         /// </summary>
         private Request m_request;
 
-        /// <summary>
-        ///     Dialog instantiation
-        /// </summary>
         public ModelessForm()
         {
             InitializeComponent();
             Request = new Request();
         }
 
-        /// <summary>
-        ///     Request property
-        /// </summary>
         public Request Request
         {
             get => m_request;
             private set => m_request = value;
         }
 
-        /// <summary>
-        ///     Control enabler / disabler
-        /// </summary>
         private void EnableCommands(bool status)
         {
             foreach (Control ctrl in Controls)
@@ -76,33 +67,21 @@ namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
             EnableCommands(false);
         }
 
-        /// <summary>
-        ///     WakeUp -> enable all controls
-        /// </summary>
         public void WakeUp()
         {
             EnableCommands(true);
         }
 
-        /// <summary>
-        ///     Exit - closing the dialog
-        /// </summary>
         private void btnExit_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     Making a door Left
-        /// </summary>
         private void btnFlipLeft_Click(object sender, EventArgs e)
         {
             MakeRequest(RequestId.MakeLeft);
         }
 
-        /// <summary>
-        ///     Making a door Right
-        /// </summary>
         private void btnFlipRight_Click(object sender, EventArgs e)
         {
             MakeRequest(RequestId.MakeRight);
@@ -124,17 +103,11 @@ namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
             MakeRequest(RequestId.FlipInOut);
         }
 
-        /// <summary>
-        ///     Turning a door to face Out
-        /// </summary>
         private void btnFlipOut_Click(object sender, EventArgs e)
         {
             MakeRequest(RequestId.TurnOut);
         }
 
-        /// <summary>
-        ///     Turning a door to face In
-        /// </summary>
         private void btnFlipIn_Click(object sender, EventArgs e)
         {
             MakeRequest(RequestId.TurnIn);
@@ -148,9 +121,6 @@ namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
             MakeRequest(RequestId.Rotate);
         }
 
-        /// <summary>
-        ///     Deleting a door
-        /// </summary>
         private void btnDelete_Click(object sender, EventArgs e)
         {
             MakeRequest(RequestId.Delete);

@@ -9,125 +9,66 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Data class which stores the main information for exporting dgn format
-    /// </summary>
     public class ExportDgnData : ExportDataWithViews
     {
-        /// <summary>
-        ///     String list of layer settings values defined in Revit
-        /// </summary>
         private List<string> m_enumLayerMapping;
 
-        /// <summary>
-        ///     Exported format version
-        /// </summary>
         private string m_exportFileVersion;
 
-        /// <summary>
-        ///     String list of exported format version defined in Revit
-        /// </summary>
         private List<string> m_exportFileVersions;
 
-        /// <summary>
-        ///     Layer setting option to export
-        /// </summary>
         private string m_exportLayerMapping;
 
-        /// <summary>
-        ///     Whether to hide reference plane
-        /// </summary>
         private bool m_hideReferencePlane;
 
-        /// <summary>
-        ///     Whether to hide scope box
-        /// </summary>
         private bool m_hideScopeBox;
 
-        /// <summary>
-        ///     Whether to hide unreference view tags
-        /// </summary>
         private bool m_hideUnreferenceViewTags;
 
-        /// <summary>
-        ///     String list of Layer Settings used in UI
-        /// </summary>
         private List<string> m_layerMapping;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
-        /// <param name="exportFormat">Format to export</param>
         public ExportDgnData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
             Initialize();
         }
 
-        /// <summary>
-        ///     Layer setting option to export
-        /// </summary>
         public string ExportLayerMapping
         {
             get => m_exportLayerMapping;
             set => m_exportLayerMapping = value;
         }
 
-        /// <summary>
-        ///     Whether to hide scope box
-        /// </summary>
         public bool HideScopeBox
         {
             get => m_hideScopeBox;
             set => m_hideScopeBox = value;
         }
 
-        /// <summary>
-        ///     Whether to hide unreference view tags
-        /// </summary>
         public bool HideUnreferenceViewTags
         {
             get => m_hideUnreferenceViewTags;
             set => m_hideUnreferenceViewTags = value;
         }
 
-        /// <summary>
-        ///     Whether to hide reference plane
-        /// </summary>
         public bool HideReferencePlane
         {
             get => m_hideReferencePlane;
             set => m_hideReferencePlane = value;
         }
 
-        /// <summary>
-        ///     Exported format version
-        /// </summary>
         public string ExportFileVersion
         {
             get => m_exportFileVersion;
             set => m_exportFileVersion = value;
         }
 
-        /// <summary>
-        ///     String collection of Layer Settings used in UI
-        /// </summary>
         public ReadOnlyCollection<string> LayerMapping => new ReadOnlyCollection<string>(m_layerMapping);
 
-        /// <summary>
-        ///     String list of exported format version defined in Revit
-        /// </summary>
         public List<string> ExportFileVersions => m_exportFileVersions;
 
-        /// <summary>
-        ///     String collection of layer settings values defined in Revit
-        /// </summary>
         public ReadOnlyCollection<string> EnumLayerMapping => new ReadOnlyCollection<string>(m_enumLayerMapping);
 
-        /// <summary>
-        ///     Initialize the variables
-        /// </summary>
         private void Initialize()
         {
             //Layer Settings:
@@ -153,10 +94,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Title = "Export DGN";
         }
 
-        /// <summary>
-        ///     Collect the parameters and export
-        /// </summary>
-        /// <returns></returns>
         public override bool Export()
         {
             base.Export();

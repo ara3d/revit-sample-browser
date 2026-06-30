@@ -30,7 +30,6 @@ namespace Ara3D.RevitSampleBrowser.SpanDirection.CS
                     return Result.Cancelled;
                 }
 
-                // get the selected slab and show its span direction
                 var elementSet = new ElementSet();
                 foreach (var elementId in application.ActiveUIDocument.Selection.GetElementIds())
                 {
@@ -53,20 +52,14 @@ namespace Ara3D.RevitSampleBrowser.SpanDirection.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Get SpanDirection and SpanDirectionSymobols of Floor
-        /// </summary>
-        /// <param name="floor"></param>
         private void GetSpanDirectionAndSymobls(Floor floor)
         {
             if (null != floor)
             {
-                // get SpanDirection angle of Floor(Slab)
                 // The angle returned is in radians. An exception will be thrown if the floor
                 // is non structural.
                 var spanDirAngle = $"Span direction angle: {floor.SpanDirectionAngle}\r\n";
 
-                // get span direction symbols of Floor(Slab)
                 var symbols = "Span direction symbols: \r\n\t";
                 var symbolArray = floor.GetSpanDirectionSymbolIds();
                 //ElementArrayIterator symbolIter = symbolArray.ForwardIterator();

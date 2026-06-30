@@ -18,17 +18,14 @@ namespace Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
-            // Get the handle of current document.
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
 
             using (var transaction = new Transaction(doc))
             {
-                // Get the element selection of current document.
                 var selectedIds = uidoc.Selection.GetElementIds();
 
                 if (0 == selectedIds.Count)
-                    // If no elements selected.
                     TaskDialog.Show("Revit", "You haven't selected any elements.");
                 else
                     foreach (var id in selectedIds)
@@ -79,17 +76,14 @@ namespace Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
-            // Get the handle of current document.
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
             using (var transaction = new Transaction(doc))
             {
-                // Get the element selection of current document.
                 var selection = uidoc.Selection;
                 var selectedIds = uidoc.Selection.GetElementIds();
 
                 if (0 == selectedIds.Count)
-                    // If no elements selected.
                     TaskDialog.Show("Revit", "You haven't selected any elements.");
                 else
                     foreach (var id in selectedIds)

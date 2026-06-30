@@ -11,9 +11,6 @@ namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
     [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        ///     The current document of the application
-        /// </summary>
         private static Document _document;
 
         /// <summary>
@@ -22,14 +19,8 @@ namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
         /// </summary>
         private double m_distanceToHostEnd;
 
-        /// <summary>
-        ///     The ductwork to host stiffeners
-        /// </summary>
         private FabricationPart m_ductwork;
 
-        /// <summary>
-        ///     The type of the stiffeners
-        /// </summary>
         private FamilySymbol m_stiffenerType;
 
         public Result Execute(ExternalCommandData commandData, ref string message,
@@ -42,7 +33,6 @@ namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
                 return Result.Failed;
             }
 
-            //Get the ductwork in current project
             var ductCollector = new FilteredElementCollector(_document);
             ductCollector.OfCategory(BuiltInCategory.OST_FabricationDuctwork).OfClass(typeof(FabricationPart));
             if (ductCollector.GetElementCount() == 0)
@@ -53,7 +43,6 @@ namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
 
             m_ductwork = ductCollector.FirstElement() as FabricationPart;
 
-            //Get the ductwork stiffener type
             var stiffenerTypeCollector = new FilteredElementCollector(_document);
             stiffenerTypeCollector.OfCategory(BuiltInCategory.OST_FabricationDuctworkStiffeners)
                 .OfClass(typeof(FamilySymbol));
@@ -82,7 +71,6 @@ namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
                 return Result.Failed;
             }
 
-            //Place the stiffener at ductwork middle point
             m_distanceToHostEnd = 0.5 * m_ductwork.CenterlineLength;
 
             try

@@ -16,10 +16,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         private string m_loadCasesNumber; //Store the load cases number
         private ElementId m_loadCasesSubcategoryId; //Store the Id of the load case's category
 
-        /// <summary>
-        ///     Overload the constructor
-        /// </summary>
-        /// <param name="loadCase">Load Case</param>
         public LoadCasesMap(LoadCase loadCase)
         {
             m_loadCase = loadCase;
@@ -29,9 +25,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             m_loadCasesSubcategoryId = m_loadCase.SubcategoryId;
         }
 
-        /// <summary>
-        ///     LoadCasesName
-        /// </summary>
         public string LoadCasesName
         {
             get => m_loadCasesName;
@@ -42,14 +35,8 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             }
         }
 
-        /// <summary>
-        ///     LoadCasesNumber property.
-        /// </summary>
         public string LoadCasesNumber => m_loadCase.Number.ToString();
 
-        /// <summary>
-        ///     LoadCasesNatureId property.
-        /// </summary>
         public ElementId LoadCasesNatureId
         {
             get => m_loadCasesNatureId;
@@ -60,9 +47,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             }
         }
 
-        /// <summary>
-        ///     LoadCasesCategoryId property.
-        /// </summary>
         public ElementId LoadCasesSubCategoryId
         {
             get => m_loadCasesSubcategoryId;
@@ -82,19 +66,12 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         private readonly LoadNature m_loadNature;
         private string m_loadNaturesName;
 
-        /// <summary>
-        ///     constructor of LoadNaturesMap class
-        /// </summary>
-        /// <param name="loadNature"></param>
         public LoadNaturesMap(LoadNature loadNature)
         {
             m_loadNature = loadNature;
             m_loadNaturesName = loadNature.Name;
         }
 
-        /// <summary>
-        ///     Get or set a load nature name.
-        /// </summary>
         public string LoadNaturesName
         {
             get => m_loadNaturesName;

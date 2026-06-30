@@ -5,7 +5,6 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_CopyWallType sample.</summary>
     internal static partial class Util
     {
         private class ColumnType : EqualityComparer<ColumnType>

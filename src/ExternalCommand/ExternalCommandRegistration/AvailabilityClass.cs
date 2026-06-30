@@ -5,12 +5,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistration
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommandAvailability,
-    ///     determine when to enable\disable the corresponding external command by
-    ///     return value from IsCommandAvailable function.
-    ///     Corresponding command will be disabled when a wall selected by user in this case.
-    /// </summary>
+    /// <summary>Disables the command when a wall is selected.</summary>
     public class WallSelection : IExternalCommandAvailability
     {
         public bool IsCommandAvailable(UIApplication applicationData,
@@ -28,12 +23,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistratio
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommandAvailability,
-    ///     determine when to enable\disable the corresponding external command by
-    ///     return value from IsCommandAvailable function.
-    ///     Corresponding command will be disabled if active document is not a 3D view.
-    /// </summary>
+    /// <summary>Disables the command when the active view is not 3D.</summary>
     public class View3D : IExternalCommandAvailability
     {
         public bool IsCommandAvailable(UIApplication applicationData,

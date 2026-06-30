@@ -11,29 +11,15 @@ using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Ara3D.RevitSampleBrowser.Common.Structural;
 namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 {
-    /// <summary>
-    ///     provide utility method to get geometry data for
-    ///     creating AreaReinforcement on wall or floor
-    /// </summary>
     public class GeomHelper
     {
         private Document m_currentDoc; //active document
 
-        /// <summary>
-        ///     constructor, initialize m_currentDoc
-        /// </summary>
         public GeomHelper()
         {
             m_currentDoc = Command.CommandData.Application.ActiveUIDocument.Document;
         }
 
-        /// <summary>
-        ///     get necessary data when create AreaReinforcement on a horizontal floor
-        /// </summary>
-        /// <param name="floor">floor on which to create AreaReinforcemen</param>
-        /// <param name="refer">reference of the horizontal face on the floor</param>
-        /// <param name="curves">curves compose the horizontal face of the floor</param>
-        /// <returns>is successful</returns>
         public bool GetFloorGeom(Floor floor, ref Reference refer, ref IList<Curve> curves)
         {
             //get horizontal face's reference
@@ -73,12 +59,6 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             return true;
         }
 
-        /// <summary>
-        ///     create CurveArray which contain 8 curves, 4 is exterior lines and 4 is interior lines
-        /// </summary>
-        /// <param name="curves"></param>
-        /// <param name="scale"></param>
-        /// <returns></returns>
         private IList<Curve> AddInlaidCurves(IList<Curve> curves, double scale)
         {
             //because curves is readonly, can't use method Curve.Append(Curve)

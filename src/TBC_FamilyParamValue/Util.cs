@@ -3,7 +3,6 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_FamilyParamValue sample.</summary>
     internal static partial class Util
     {
         internal static string FamilyParamValueString(

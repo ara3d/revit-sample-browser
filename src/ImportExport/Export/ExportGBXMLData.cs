@@ -5,16 +5,8 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Data class which stores the information for exporting gbxml format
-    /// </summary>
     public class ExportGbxmlData : ExportData
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
-        /// <param name="exportFormat">Format to export</param>
         public ExportGbxmlData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
@@ -22,10 +14,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Title = "Export GBXML";
         }
 
-        /// <summary>
-        ///     Export GBXML format
-        /// </summary>
-        /// <returns></returns>
         public override bool Export()
         {
             var transaction = new Transaction(ActiveDocument, "Export_To_GBXML");

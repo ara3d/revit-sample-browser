@@ -58,8 +58,6 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            // set up log file:
-
             var log = $"{Assembly.GetExecutingAssembly().Location}.{DateTime.Now:yyyyMMdd}.log";
 
             if (File.Exists(log)) File.Delete(log);
@@ -73,8 +71,6 @@ namespace BuildingCoder
             {
                 Trace.WriteLine("Begin");
 
-                // loop over all selected ducts:
-
                 //foreach( Duct duct in sel ) // 2014
 
                 foreach (var id in ids) // 2015
@@ -84,8 +80,6 @@ namespace BuildingCoder
                     }
                     else
                     {
-                        // process each duct:
-
                         Trace.WriteLine("========================");
                         Trace.WriteLine($"Duct: Id = {duct.Id.Value}");
 

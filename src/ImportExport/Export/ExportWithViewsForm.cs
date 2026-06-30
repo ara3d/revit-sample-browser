@@ -7,18 +7,11 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     It contains a dialog which provides the options of common information for export
-    /// </summary>
     public partial class ExportWithViewsForm : Form
     {
         // Data class object of ExportDataWithViews
         private readonly ExportDataWithViews m_exportData;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="data"></param>
         public ExportWithViewsForm(ExportDataWithViews data)
         {
             m_exportData = data;
@@ -26,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             InitializeControls();
         }
 
-        /// <summary>
-        ///     Initialize values and status of controls
-        /// </summary>
         private void InitializeControls()
         {
             textBoxSaveAs.Text = $"{m_exportData.ExportFolder}\\{m_exportData.ExportFileName}";
@@ -55,11 +45,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             }
         }
 
-        /// <summary>
-        ///     Provide the export option dialog
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonOptions_Click(object sender, EventArgs e)
         {
             switch (m_exportData.ExportFormat)
@@ -147,11 +132,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             }
         }
 
-        /// <summary>
-        ///     Provide the views selecting dialog
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonSelectViews_Click(object sender, EventArgs e)
         {
             using (var selectViewsForm = new SelectViewsForm(m_exportData.SelectViewsData))
@@ -165,11 +145,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             }
         }
 
-        /// <summary>
-        ///     Specify a file to export into
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonBrowser_Click(object sender, EventArgs e)
         {
             var fileName = string.Empty;
@@ -197,21 +172,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             }
         }
 
-        /// <summary>
-        ///     Change the status of buttonSelectViews according to the selection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void radioButtonSelectView_CheckedChanged(object sender, EventArgs e)
         {
             buttonSelectViews.Enabled = radioButtonSelectView.Checked;
         }
 
-        /// <summary>
-        ///     Transfer information back to ExportData class and execute EXPORT operation
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonSave_Click(object sender, EventArgs e)
         {
             if (ValidateExportFolder())
@@ -235,10 +200,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             }
         }
 
-        /// <summary>
-        ///     Check whether the folder specified is valid
-        /// </summary>
-        /// <returns></returns>
         private bool ValidateExportFolder()
         {
             var fileNameFull = textBoxSaveAs.Text;

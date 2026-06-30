@@ -13,9 +13,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedCalculation.CS
 {
-    /// <summary>
-    ///     Command to set the target element and begin the multithreaded calculation.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class MultithreadedCalculation : IExternalCommand
@@ -47,7 +44,6 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
                 return Result.Cancelled;
             }
 
-            // Set up SpatialFieldManager to hold results
             _sActiveViewId = doc.ActiveView.Id;
             SpatialFieldManager oldSfm = null;
             View oldView = null;
@@ -59,7 +55,6 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
             // Setup container object for executing the calculation
             var container = CreateContainer(element);
 
-            // Register updater to watch for geometry changes
             var updater = new SpatialFieldUpdater(container, uiApp.ActiveAddInId);
             if (!UpdaterRegistry.IsUpdaterRegistered(updater.GetUpdaterId()))
                 UpdaterRegistry.RegisterUpdater(updater, doc);
@@ -70,63 +65,42 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
             UpdaterRegistry.RemoveAllTriggers(_sUpdaterId);
             UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), doc, idCollection, Element.GetChangeTypeGeometry());
 
-            // Register idling event
             uiApp.Idling += container.UpdateWhileIdling;
 
-            // Start new thread
             var thread = new Thread(container.Run);
             thread.Start();
 
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Prepares a container object that carries out the calculations without invoking Revit API calls.
-        /// </summary>
-        /// <param name="element">The element for the calculations.</param>
-        /// <returns>The container.</returns>
         public static MultithreadedCalculationContainer CreateContainer(Element element)
         {
             var doc = element.Document;
             var activeView = doc.GetElement(_sActiveViewId) as View;
 
-            // Figure out which is the largest face facing the user
             var viewDirection = activeView.ViewDirection.Normalize();
             var biggestFace = GetBiggestFaceFacingUser(element, viewDirection);
 
             // Get or create SpatialFieldManager for AVF results
             var sfm = SpatialFieldManager.GetSpatialFieldManager(activeView) ?? SpatialFieldManager.CreateSpatialFieldManager(activeView, 1);
 
-            // Reference the target face
             _sSpatialFieldId = sfm.AddSpatialFieldPrimitive(biggestFace.Reference);
 
-            // Compute the range of U and V for the calculation
             var bbox = biggestFace.GetBoundingBox();
 
             return new MultithreadedCalculationContainer(doc.PathName, bbox.Min, bbox.Max);
         }
 
-        /// <summary>
-        ///     Gets the biggest face which faces the user.  Assumes that the element is a wall, or floor, or other "2-sided"
-        ///     element, and that
-        ///     one of the two biggest faces will be facing roughly towards the viewer.
-        /// </summary>
-        /// <param name="element">The element.</param>
-        /// <param name="viewDirection">The view direction.</param>
-        /// <returns>The face.  Face.Reference will also be populated.</returns>
         private static Face GetBiggestFaceFacingUser(Element element, XYZ viewDirection)
         {
-            // Holds the faces sorted by area
             var faceAreas = new SortedDictionary<double, List<Face>>();
 
-            // Get the element geometry
             var options = new Options
             {
                 ComputeReferences = true
             };
             var geomElem = element.get_Geometry(options);
 
-            // Look at the faces in each solid
             foreach (var geomObj in geomElem)
             {
                 var solid = geomObj as Solid;
@@ -134,7 +108,6 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
                     foreach (Face face in solid.Faces)
                     {
                         var area = face.Area;
-                        // Save the face to the collection
                         if (faceAreas.ContainsKey(area))
                         {
                             faceAreas[area].Add(face);
@@ -147,32 +120,27 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
                     }
             }
 
-            // Get biggest two faces.  There might be two faces in the last item, or one face in the last item.
             var count = faceAreas.Count;
             var faceCollection1 = faceAreas.ElementAt(count - 1);
             var faceCollection2 = faceAreas.ElementAt(count - 2);
 
             Face face1 = null;
             Face face2 = null;
-            // Two or more equal faces.  Use the first two.
             if (faceCollection1.Value.Count > 1)
             {
                 face1 = faceCollection1.Value[0];
                 face2 = faceCollection1.Value[1];
             }
-            // One largest face.  Use the first face from the next item for comparison.
             else
             {
                 face1 = faceCollection1.Value[0];
                 face2 = faceCollection2.Value[0];
             }
 
-            // Compute face normal
             var box = face1.GetBoundingBox();
             var faceCenter = (box.Max + box.Min) / 2;
             var faceNormal = face1.ComputeNormal(faceCenter).Normalize();
 
-            // Compute angle to the view direction.  If less than 90 degrees, keep this face.
             var angle = viewDirection.AngleTo(faceNormal);
 
             Face biggestFace = null;
@@ -184,12 +152,8 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
             return biggestFace;
         }
 
-        /// <summary>
-        ///     Updater called when wall geometry changes, so analysis results can update.
-        /// </summary>
         public class SpatialFieldUpdater : IUpdater
         {
-            // The old container object.
             private MultithreadedCalculationContainer m_containerOld;
 
             public SpatialFieldUpdater(MultithreadedCalculationContainer container, AddInId addinId)
@@ -198,29 +162,23 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
                 _sUpdaterId = new UpdaterId(addinId, new Guid("FBF2F6B2-4C06-42d4-97C1-D1B4EB593EFF"));
             }
 
-            // Execution method for the updater
             public void Execute(UpdaterData data)
             {
-                // Remove old idling event callback
                 var uiApp = new UIApplication(data.GetDocument().Application);
                 uiApp.Idling -= m_containerOld.UpdateWhileIdling;
                 m_containerOld.Stop();
 
-                // Clear the current AVF results
                 var doc = data.GetDocument();
                 var activeView = doc.GetElement(_sActiveViewId) as View;
                 var sfm = SpatialFieldManager.GetSpatialFieldManager(activeView);
                 sfm.Clear();
 
-                // Restart the multithread calculation with a new container
                 var modifiedElem = doc.GetElement(data.GetModifiedElementIds().First());
                 var container = CreateContainer(modifiedElem);
                 m_containerOld = container;
 
-                // Setup the new idling callback
                 uiApp.Idling += container.UpdateWhileIdling;
 
-                // Start the thread
                 var threadNew = new Thread(container.Run);
                 threadNew.Start();
             }
@@ -246,9 +204,7 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
             }
         }
 
-        /// <summary>
-        ///     Container class that manages the multithreaded calculation and idling activity.
-        /// </summary>
+        // Container class that manages the multithreaded calculation and idling activity.
         public class MultithreadedCalculationContainer
         {
             private const int NumberOfUPnts = 10;
@@ -278,19 +234,13 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
                 Calculate();
             }
 
-            /// <summary>
-            ///     Stops the thread/calculation and application via idling.
-            /// </summary>
+            // Stops the thread/calculation and application via idling.
             public void Stop()
             {
                 m_stop = true;
             }
 
-            /// <summary>
-            ///     The idling callback which adds data to the AVF results.
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
+            // The idling callback which adds data to the AVF results.
             public void UpdateWhileIdling(object sender, IdlingEventArgs e)
             {
                 var uiApp = sender as UIApplication;

@@ -10,10 +10,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
     public class ModelCurveCounter
     {
         // Methods
-        /// <summary>
-        ///     The constructor of ModelCurveCounter
-        /// </summary>
-        /// <param name="typeName">The type name</param>
         public ModelCurveCounter(string typeName)
         {
             TypeName = typeName;
@@ -38,11 +34,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
     public class IdInfo
     {
         // Methods
-        /// <summary>
-        ///     The constructor of CreateInfo
-        /// </summary>
-        /// <param name="typeName">indicate model curve type</param>
-        /// <param name="id">the element id</param>
         public IdInfo(string typeName, ElementId id)
         {
             Id = id; // Store the element id

@@ -6,24 +6,13 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
-    /// <summary>
-    ///     Tool used to draw line
-    /// </summary>
     public class LineTool : Tool
     {
-        /// <summary>
-        ///     Default constructor
-        /// </summary>
         public LineTool()
         {
             Type = ToolType.Line;
         }
 
-        /// <summary>
-        ///     Mouse move event handle
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
             if (Points.Count != 0)
@@ -34,11 +23,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse down event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseDown(Graphics graphic, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -52,11 +36,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Right mouse click handler
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to drawing geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnRightMouseClick(Graphics graphic, MouseEventArgs e)
         {
             if (MouseButtons.Right == e.Button && Points.Count > 2)
@@ -70,10 +49,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Draw lines
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
         public override void Draw(Graphics graphic)
         {
             foreach (var line in Lines)

@@ -6,109 +6,46 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Data class which stores lower priority information for exporting dwg or dxf format
-    /// </summary>
     public class ExportBaseOptionsData
     {
-        /// <summary>
-        ///     String list of Coordinate system basis
-        /// </summary>
         private List<string> m_coorSystem;
 
-        /// <summary>
-        ///     List of values whether to use shared coordinate system
-        /// </summary>
         private List<bool> m_enumCoorSystem;
 
-        /// <summary>
-        ///     String list of layer settings values defined in Revit
-        /// </summary>
         private List<string> m_enumLayerMapping;
 
-        /// <summary>
-        ///     List of Autodesk.Revit.DB.PropOverrideMode
-        /// </summary>
         private List<PropOverrideMode> m_enumLayersAndProperties;
 
-        /// <summary>
-        ///     List of Autodesk.Revit.DB.LineScaling defined in Revit
-        /// </summary>
         private List<LineScaling> m_enumLineScaling;
 
-        /// <summary>
-        ///     List of Autodesk.Revit.DB.SolidGeometry defined in Revit
-        /// </summary>
         private List<SolidGeometry> m_enumSolids;
 
-        /// <summary>
-        ///     List of Autodesk.Revit.DB.ExportUnit values defined in Revit
-        /// </summary>
         private List<ExportUnit> m_enumUnits;
 
-        /// <summary>
-        ///     Coordinate system basis option to export
-        /// </summary>
         private bool m_exportCoorSystem;
 
-        /// <summary>
-        ///     Layer setting option to export
-        /// </summary>
         private string m_exportLayerMapping;
 
-        /// <summary>
-        ///     PropOverrideMode Option to export
-        /// </summary>
         private PropOverrideMode m_exportLayersAndProperties;
 
-        /// <summary>
-        ///     Line scaling option to export
-        /// </summary>
         private LineScaling m_exportLineScaling;
 
-        /// <summary>
-        ///     Whether to create separate files for each view/sheet
-        /// </summary>
         private bool m_exportMergeFiles;
 
-        /// <summary>
-        ///     Solid geometry option to export
-        /// </summary>
         private SolidGeometry m_exportSolid;
 
-        /// <summary>
-        ///     Export unit option to export
-        /// </summary>
         private ExportUnit m_exportUnit;
 
-        /// <summary>
-        ///     String list of Layer Settings used in UI
-        /// </summary>
         private List<string> m_layerMapping;
 
-        /// <summary>
-        ///     String list of Layers and properties used in UI
-        /// </summary>
         private List<string> m_layersAndProperties;
 
-        /// <summary>
-        ///     String list of Linetype scaling used in UI
-        /// </summary>
         private List<string> m_lineScaling;
 
-        /// <summary>
-        ///     String list of solid used in UI
-        /// </summary>
         private List<string> m_solids;
 
-        /// <summary>
-        ///     String list of DWG or DXF unit
-        /// </summary>
         private List<string> m_units;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public ExportBaseOptionsData()
         {
             Initialize();
@@ -116,139 +53,76 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 
         //Export rooms and areas as polylines
 
-        /// <summary>
-        ///     String collection of Layers and properties used in UI
-        /// </summary>
         public ReadOnlyCollection<string> LayersAndProperties => new ReadOnlyCollection<string>(m_layersAndProperties);
 
-        /// <summary>
-        ///     Collection of Autodesk.Revit.DB.PropOverrideMode
-        /// </summary>
         public ReadOnlyCollection<PropOverrideMode> EnumLayersAndProperties =>
             new ReadOnlyCollection<PropOverrideMode>(m_enumLayersAndProperties);
 
-        /// <summary>
-        ///     PropOverrideMode Option to export
-        /// </summary>
         public PropOverrideMode ExportLayersAndProperties
         {
             get => m_exportLayersAndProperties;
             set => m_exportLayersAndProperties = value;
         }
 
-        /// <summary>
-        ///     String collection of Layer Settings used in UI
-        /// </summary>
         public ReadOnlyCollection<string> LayerMapping => new ReadOnlyCollection<string>(m_layerMapping);
 
-        /// <summary>
-        ///     String collection of layer settings values defined in Revit
-        /// </summary>
         public ReadOnlyCollection<string> EnumLayerMapping => new ReadOnlyCollection<string>(m_enumLayerMapping);
 
-        /// <summary>
-        ///     Layer setting option to export
-        /// </summary>
         public string ExportLayerMapping
         {
             get => m_exportLayerMapping;
             set => m_exportLayerMapping = value;
         }
 
-        /// <summary>
-        ///     String collection of Linetype scaling used in UI
-        /// </summary>
         public ReadOnlyCollection<string> LineScaling => new ReadOnlyCollection<string>(m_lineScaling);
 
-        /// <summary>
-        ///     Collection of Autodesk.Revit.DB.LineScaling defined in Revit
-        /// </summary>
         public ReadOnlyCollection<LineScaling> EnumLineScaling =>
             new ReadOnlyCollection<LineScaling>(m_enumLineScaling);
 
-        /// <summary>
-        ///     Line scaling option to export
-        /// </summary>
         public LineScaling ExportLineScaling
         {
             get => m_exportLineScaling;
             set => m_exportLineScaling = value;
         }
 
-        /// <summary>
-        ///     String collection of Coordinate system basis
-        /// </summary>
         public ReadOnlyCollection<string> CoorSystem => new ReadOnlyCollection<string>(m_coorSystem);
 
-        /// <summary>
-        ///     Collection of values whether to use shared coordinate system
-        /// </summary>
         public ReadOnlyCollection<bool> EnumCoorSystem => new ReadOnlyCollection<bool>(m_enumCoorSystem);
 
-        /// <summary>
-        ///     Coordinate system basis option to export
-        /// </summary>
         public bool ExportCoorSystem
         {
             get => m_exportCoorSystem;
             set => m_exportCoorSystem = value;
         }
 
-        /// <summary>
-        ///     String collection of DWG unit
-        /// </summary>
         public ReadOnlyCollection<string> Units => new ReadOnlyCollection<string>(m_units);
 
-        /// <summary>
-        ///     Collection of Autodesk.Revit.DB.ExportUnit values defined in Revit
-        /// </summary>
         public ReadOnlyCollection<ExportUnit> EnumUnits => new ReadOnlyCollection<ExportUnit>(m_enumUnits);
 
-        /// <summary>
-        ///     Export unit option to export
-        /// </summary>
         public ExportUnit ExportUnit
         {
             get => m_exportUnit;
             set => m_exportUnit = value;
         }
 
-        /// <summary>
-        ///     String collection of solid used in UI
-        /// </summary>
         public ReadOnlyCollection<string> Solids => new ReadOnlyCollection<string>(m_solids);
 
-        /// <summary>
-        ///     Collection of Autodesk.Revit.DB.SolidGeometry defined in Revit
-        /// </summary>
         public ReadOnlyCollection<SolidGeometry> EnumSolids => new ReadOnlyCollection<SolidGeometry>(m_enumSolids);
 
-        /// <summary>
-        ///     Property of solid geometry option to export
-        /// </summary>
         public SolidGeometry ExportSolid
         {
             get => m_exportSolid;
             set => m_exportSolid = value;
         }
 
-        /// <summary>
-        ///     Export rooms and areas as polylines
-        /// </summary>
         public bool ExportAreas { get; set; }
 
-        /// <summary>
-        ///     Whether to create separate files for each view/sheet
-        /// </summary>
         public bool ExportMergeFiles
         {
             get => m_exportMergeFiles;
             set => m_exportMergeFiles = value;
         }
 
-        /// <summary>
-        ///     Initialize values
-        /// </summary>
         private void Initialize()
         {
             //Layers and properties:

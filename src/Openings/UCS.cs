@@ -4,9 +4,6 @@ using System;
 
 namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
-    /// <summary>
-    ///     This class stand for user coordinate system
-    /// </summary>
     public class Ucs
     {
         private Vector m_origin = new Vector(0.0, 0.0, 0.0);
@@ -14,22 +11,11 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         private Vector m_yAxis = new Vector(0.0, 1.0, 0.0);
         private Vector m_zAxis = new Vector(0.0, 0.0, 1.0);
 
-        /// <summary>
-        ///     The default constructor,
-        /// </summary>
         public Ucs(Vector origin, Vector xAxis, Vector yAxis)
             : this(origin, xAxis, yAxis, true)
         {
         }
 
-        /// <summary>
-        ///     constructor,
-        ///     get a user coordinate system
-        /// </summary>
-        /// <param name="origin">origin of user coordinate system</param>
-        /// <param name="xAxis">xAxis of user coordinate system</param>
-        /// <param name="yAxis">yAxis of user coordinate system</param>
-        /// <param name="flag">select left handness or right handness</param>
         public Ucs(Vector origin, Vector xAxis, Vector yAxis, bool flag)
         {
             var x2 = xAxis / ~xAxis;
@@ -45,30 +31,14 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             m_zAxis = z2;
         }
 
-        /// <summary>
-        ///     Property to get origin of user coordinate system
-        /// </summary>
         public Vector Origin => m_origin;
 
-        /// <summary>
-        ///     Property to get X Axis of user coordinate system
-        /// </summary>
         public Vector XAxis => m_xAxis;
 
-        /// <summary>
-        ///     Property to get Y Axis of user coordinate system
-        /// </summary>
         public Vector YAxis => m_yAxis;
 
-        /// <summary>
-        ///     Property to get Z Axis of user coordinate system
-        /// </summary>
         public Vector ZAxis => m_zAxis;
 
-        /// <summary>
-        ///     Transform local coordinate to global coordinate
-        /// </summary>
-        /// <param name="arg">a vector which need to transform</param>
         public Vector Lc2Gc(Vector arg)
         {
             var result = new Vector
@@ -80,10 +50,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return result;
         }
 
-        /// <summary>
-        ///     Transform global coordinate to local coordinate
-        /// </summary>
-        /// <param name="line">a line which need to transform</param>
         public Line3D Gc2Lc(Line3D line)
         {
             var startPnt = Gc2Lc(line.StartPoint);
@@ -91,10 +57,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return new Line3D(startPnt, endPnt);
         }
 
-        /// <summary>
-        ///     Transform global coordinate to local coordinate
-        /// </summary>
-        /// <param name="arg">a vector which need to transform</param>
         public Vector Gc2Lc(Vector arg)
         {
             var result = new Vector();

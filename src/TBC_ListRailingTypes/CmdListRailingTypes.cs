@@ -20,8 +20,6 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-//using Autodesk.Revit.Enums;
-//using Autodesk.Revit.Symbols;
 
 #endregion // Namespaces
 

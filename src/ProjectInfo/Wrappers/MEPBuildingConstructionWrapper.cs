@@ -8,28 +8,15 @@ using Autodesk.Revit.DB.Mechanical;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {
-    /// <summary>
-    ///     Wrapper class for MEPBuildingConstruction
-    /// </summary>
     public class MepBuildingConstructionWrapper : IWrapper
     {
-        /// <summary>
-        ///     MEPBuildingConstruction
-        /// </summary>
         private readonly MEPBuildingConstruction m_mEpBuildingConstruction;
 
-        /// <summary>
-        ///     Initializes private variables.
-        /// </summary>
-        /// <param name="mEpBuildingConstruction">MEPBuildingConstruction</param>
         public MepBuildingConstructionWrapper(MEPBuildingConstruction mEpBuildingConstruction)
         {
             m_mEpBuildingConstruction = mEpBuildingConstruction;
         }
 
-        /// <summary>
-        ///     Gets or sets Roofs
-        /// </summary>
         [DisplayName("Roofs")]
         public ConstructionWrapper Roof
         {
@@ -38,9 +25,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets or sets Exterior Walls
-        /// </summary>
         [DisplayName("Exterior Walls")]
         public ConstructionWrapper ExteriorWall
         {
@@ -50,9 +34,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets or sets Interior Walls
-        /// </summary>
         [DisplayName("Interior Walls")]
         public ConstructionWrapper InteriorWall
         {
@@ -62,9 +43,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets or sets Ceilings
-        /// </summary>
         [DisplayName("Ceilings")]
         public ConstructionWrapper Ceiling
         {
@@ -73,9 +51,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets or sets Doors
-        /// </summary>
         [DisplayName("Doors")]
         public ConstructionWrapper Door
         {
@@ -84,9 +59,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets or sets Slabs
-        /// </summary>
         [DisplayName("Slabs")]
         public ConstructionWrapper Slab
         {
@@ -95,9 +67,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets or sets Floors
-        /// </summary>
         [DisplayName("Floors")]
         public ConstructionWrapper Floor
         {
@@ -106,9 +75,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets or sets Exterior Windows
-        /// </summary>
         [DisplayName("Exterior Windows")]
         public ConstructionWrapper ExteriorWindow
         {
@@ -118,9 +84,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets or sets Interior Windows
-        /// </summary>
         [DisplayName("Interior Windows")]
         public ConstructionWrapper InteriorWindow
         {
@@ -130,9 +93,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets or sets Skylights
-        /// </summary>
         [DisplayName("Skylights")]
         public ConstructionWrapper Skylight
         {
@@ -142,15 +102,9 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
                 value.Handle as Construction);
         }
 
-        /// <summary>
-        ///     Gets the handle object.
-        /// </summary>
         [Browsable(false)]
         public object Handle => m_mEpBuildingConstruction;
 
-        /// <summary>
-        ///     Gets the name of the handle.
-        /// </summary>
         [Browsable(false)]
         public string Name
         {
@@ -158,11 +112,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_mEpBuildingConstruction.Name = value;
         }
 
-        /// <summary>
-        ///     Get constructions
-        /// </summary>
-        /// <param name="constructionType">ConstructionType</param>
-        /// <returns>Related Constructions specified by constructionTypes</returns>
         public ICollection<Construction> GetConstructions(ConstructionType constructionType)
         {
             return m_mEpBuildingConstruction.GetConstructions(constructionType);

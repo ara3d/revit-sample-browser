@@ -8,15 +8,8 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
 {
-    /// <summary>
-    ///     the class to maintain the data and operations of the curtain system
-    /// </summary>
     public class SystemData
     {
-        /// <summary>
-        ///     occurs only when new curtain system added/removed
-        ///     the delegate method to handle the curtain system added/removed events
-        /// </summary>
         public delegate void CurtainSystemChangedHandler();
 
         // the count of the created curtain systems
@@ -25,12 +18,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         // the data of the sample
         private readonly MyDocument m_mydocument;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="mydoc">
-        ///     the document of the sample
-        /// </param>
         public SystemData(MyDocument mydoc)
         {
             m_mydocument = mydoc;
@@ -38,25 +25,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         }
 
         // all the created curtain systems and their data
-        /// <summary>
-        ///     all the created curtain systems and their data
-        /// </summary>
         public List<SystemInfo> CurtainSystemInfos { get; private set; }
 
-        /// <summary>
-        ///     the event triggered when curtain system added/removed
-        /// </summary>
         public event CurtainSystemChangedHandler CurtainSystemChanged;
 
-        /// <summary>
-        ///     create a new curtain system
-        /// </summary>
-        /// <param name="faceIndices">
-        ///     the faces to be covered with new curtain system
-        /// </param>
-        /// <param name="byFaceArray">
-        ///     indicates whether the curtain system will be created by face array
-        /// </param>
         public void CreateCurtainSystem(List<int> faceIndices, bool byFaceArray)
         {
             // just refresh the main UI
@@ -74,10 +46,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
                 Index = ++_csIndex
             };
 
-            //
             // step 1: create the curtain system
-            //
-            // create the curtain system by face array
             if (byFaceArray)
             {
                 var faceArray = new FaceArray();
@@ -105,7 +74,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
 
                 resultInfo.CurtainForm = curtainSystem;
             }
-            // create the curtain system by reference array
             else
             {
                 var refArray = new ReferenceArray();
@@ -139,7 +107,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
                     return;
                 }
 
-                // store the curtain system
                 foreach (var cs in curtainSystems)
                 {
                     resultInfo.CurtainForm = m_mydocument.Document.GetElement(cs) as Autodesk.Revit.DB.CurtainSystem;
@@ -147,19 +114,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
                 }
             }
 
-            //
             // step 2: update the curtain system list in the main UI
-            //
             CurtainSystemInfos.Add(resultInfo);
             CurtainSystemChanged?.Invoke();
         }
 
-        /// <summary>
-        ///     delete the curtain systems
-        /// </summary>
-        /// <param name="checkedIndices">
-        ///     the curtain systems to be deleted
-        /// </param>
         public void DeleteCurtainSystem(List<int> checkedIndices)
         {
             var t = new Transaction(m_mydocument.Document, Guid.NewGuid().GetHashCode().ToString());
@@ -176,7 +135,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
 
             t.Commit();
 
-            // update the list of created curtain systems
             // remove the "deleted" curtain systems out
             var infos = CurtainSystemInfos;
             CurtainSystemInfos = new List<SystemInfo>();
@@ -191,12 +149,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         }
     } // end of class
 
-    /// <summary>
-    ///     the information of a curtain system
-    /// </summary>
     public class SystemInfo
     {
-        // indicates which faces the curtain system covers
         private List<int> m_gridFacesIndices;
 
         // the index of the curtain systems
@@ -205,12 +159,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         // the data of the sample
         private readonly MyDocument m_mydocument;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="mydoc">
-        ///     the document of the sample
-        /// </param>
         public SystemInfo(MyDocument mydoc)
         {
             m_mydocument = mydoc;
@@ -221,14 +169,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         }
 
         // the curtain system
-        /// <summary>
-        ///     the curtain system
-        /// </summary>
         public Autodesk.Revit.DB.CurtainSystem CurtainForm { get; set; }
 
-        /// <summary>
-        ///     indicates which faces the curtain system covers
-        /// </summary>
         public List<int> GridFacesIndices
         {
             get => m_gridFacesIndices;
@@ -244,26 +186,13 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         }
 
         // the uncovered faces
-        /// <summary>
-        ///     the uncovered faces
-        /// </summary>
         public List<int> UncoverFacesIndices { get; }
 
-        // indicates whether the curtain system is created by face array
-        /// <summary>
-        ///     indicates whether the curtain system is created by face array
-        /// </summary>
         public bool ByFaceArray { get; set; }
 
         // the name of the curtain system, identified by its index
-        /// <summary>
-        ///     the name of the curtain system, identified by its index
-        /// </summary>
         public string Name { get; private set; }
 
-        /// <summary>
-        ///     the index of the curtain systems
-        /// </summary>
         public int Index
         {
             get => m_index;
@@ -274,12 +203,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             }
         }
 
-        /// <summary>
-        ///     add some curtain grids to the curtain system
-        /// </summary>
-        /// <param name="faceIndices">
-        ///     the faces to be covered
-        /// </param>
         public void AddCurtainGrids(List<int> faceIndices)
         {
             // step 1: find out the faces to be covered
@@ -316,12 +239,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             }
         }
 
-        /// <summary>
-        ///     remove the selected curtain grids
-        /// </summary>
-        /// <param name="faceIndices">
-        ///     the curtain grids to be removed
-        /// </param>
         public void RemoveCurtainGrids(List<int> faceIndices)
         {
             // step 1: find out the faces to be covered
@@ -370,68 +287,31 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         }
     }
 
-    /// <summary>
-    ///     the information for the curtain grid (which face does it lay on)
-    /// </summary>
     public class GridFaceInfo
     {
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="index">
-        ///     the index of the host face
-        /// </param>
         public GridFaceInfo(int index)
         {
             FaceIndex = index;
         }
 
         // the host face of the curtain grid
-        /// <summary>
-        ///     the host face of the curtain grid
-        /// </summary>
         public int FaceIndex { get; set; }
 
-        /// <summary>
-        ///     the string value for the class
-        /// </summary>
-        /// <returns>
-        ///     the string value for the class
-        /// </returns>
         public override string ToString()
         {
             return $"Grid on Face {FaceIndex}";
         }
     }
 
-    /// <summary>
-    ///     the information for the faces of the mass
-    /// </summary>
     public class UncoverFaceInfo
     {
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="index">
-        ///     the index of the face
-        /// </param>
         public UncoverFaceInfo(int index)
         {
             Index = index;
         }
 
-        // indicates the index for the face
-        /// <summary>
-        ///     indicates the index for the face
-        /// </summary>
         public int Index { get; set; }
 
-        /// <summary>
-        ///     the string value for the class
-        /// </summary>
-        /// <returns>
-        ///     the string value for the class
-        /// </returns>
         public override string ToString()
         {
             return $"Face {Index}";

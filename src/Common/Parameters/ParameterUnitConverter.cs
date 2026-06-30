@@ -9,26 +9,11 @@ namespace BuildingCoder
     #region Using Obsolete pre-Forge Unit API Functionality Deprecated in Revit 2021
 
 #if USE_PRE_FORGE_UNIT_FUNCTIONALITY
-  /// <summary>
-  /// Implement extension methods for 
-  /// the Revit Parameter class:
-  /// - AsProjectUnitTypeDouble 
-  /// - AsMetersValue
-  /// Implement static method
-  /// - ConvertParameterTypeToUnitType
-  /// Written by Victor Chekalin and posted to 
-  /// http://pastebin.com/ULHxU95E
-  /// with a test command posted to
-  /// http://pastebin.com/Pu26SPAN
-  /// </summary>
   public static class ParameterUnitConverter
   {
     private const double METERS_IN_FEET = 0.3048;
 
   #region AsProjectUnitTypeDouble
-    /// <summary>
-    /// Get double value parameter in ProjectUnits
-    /// </summary>
     public static double AsProjectUnitTypeDouble(
       this Parameter param)
     {
@@ -129,12 +114,6 @@ namespace BuildingCoder
   #endregion // AsProjectUnitTypeDouble
 
   #region AsMetersValue
-    /// <summary>
-    /// Get double value of parameter in meters unit. 
-    /// E.g. Length in meters, Area in square meters 
-    /// and Volume in Cubic_meters.
-    /// Other units not supported yet.
-    /// </summary>
     public static double AsMetersValue(
       this Parameter param)
     {
@@ -165,15 +144,6 @@ namespace BuildingCoder
   #endregion // AsMetersValue
 
   #region ConvertParameterTypeToUnitType
-    /// <summary>
-    /// Returns the UnitType for the given 
-    /// ParameterType (where possible).
-    /// </summary>
-    /// <param name="parameterType">The ParameterType 
-    /// for which we need to know the UnitType</param>
-    /// <exception cref="ArgumentException">Thrown if 
-    /// it is not possible to convert the ParameterType 
-    /// to a UnitType.</exception>
     public static UnitType
       ConvertParameterTypeToUnitType(
         ParameterType parameterType)
@@ -217,10 +187,6 @@ namespace BuildingCoder
           LabelUtils.GetLabelFor(dut)));
     }
 
-    /// <summary>
-    /// Map ParameterType enum to corresponding
-    /// UnitType enum value.
-    /// </summary>
     static Dictionary<ParameterType, UnitType>
       _map_parameter_type_to_unit_type
         = new Dictionary<ParameterType, UnitType>()
@@ -288,7 +254,6 @@ namespace BuildingCoder
       {ParameterType.LinearMoment, UnitType.UT_LinearMoment},
       // map.Add(UnitType.UT_LinearMomentScale, ParameterType.???);
       {ParameterType.Moment, UnitType.UT_Moment},
-      ///map.Add(UnitType.UT_MomentScale, ParameterType.???);
       {ParameterType.Number, UnitType.UT_Number},
       {ParameterType.PipeSize, UnitType.UT_PipeSize},
       {ParameterType.PipingDensity, UnitType.UT_Piping_Density},
@@ -312,14 +277,6 @@ namespace BuildingCoder
     };
 
 #if NEED_BuildUnitTypeToParameterTypeMapping_METHOD
-    /// <summary>
-    /// This method builds up the dictionary object 
-    /// which relates the UnitType enum values to 
-    /// their ParameterType enum counterpart values.
-    /// </summary>
-    /// <example>
-    /// UnitType.UT_Angle = ParameterType.Angle
-    /// </example>
     private static Dictionary<UnitType, ParameterType>
       BuildUnitTypeToParameterTypeMapping()
     {
@@ -391,7 +348,6 @@ namespace BuildingCoder
       result.Add( UnitType.UT_LinearMoment, ParameterType.LinearMoment );
       // map.Add(UnitType.UT_LinearMomentScale, ParameterType.???);
       result.Add( UnitType.UT_Moment, ParameterType.Moment );
-      ///map.Add(UnitType.UT_MomentScale, ParameterType.???);
       result.Add( UnitType.UT_Number, ParameterType.Number );
       result.Add( UnitType.UT_PipeSize, ParameterType.PipeSize );
       result.Add( UnitType.UT_Piping_Density, ParameterType.PipingDensity );

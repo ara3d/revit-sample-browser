@@ -24,9 +24,6 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Arbitrary sheet data container.
-    /// </summary>
     internal class SheetData
     {
         public SheetData(ViewSheet v)
@@ -41,10 +38,6 @@ namespace BuildingCoder
         public string SheetNumber { get; set; }
     }
 
-    /// <summary>
-    ///     Gather sheet data from document
-    ///     and export to XML file.
-    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     internal class CmdSheetData : IExternalCommand
     {
@@ -56,27 +49,19 @@ namespace BuildingCoder
             var app = commandData.Application;
             var doc = app.ActiveUIDocument.Document;
 
-            // retrieve all sheets
-
             var a
                 = new FilteredElementCollector(doc);
 
             a.OfCategory(BuiltInCategory.OST_Sheets);
             a.OfClass(typeof(ViewSheet));
 
-            // create a collection of all relevant data
-
             var data = new List<SheetData>();
 
             foreach (ViewSheet v in a)
             {
-                // create some data for each sheet and add
-                // to some serializable collection called Data
                 var item = new SheetData(v);
                 data.Add(item);
             }
-
-            // write out data collection to xml
 
             var w = new XmlTextWriter(
                 "C:/SheetData.xml", null);

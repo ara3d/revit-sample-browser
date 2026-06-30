@@ -18,13 +18,11 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
     /// </summary>
     public abstract class Profile
     {
-        // used to create new instances of utility objects. 
         protected readonly Application AppCreator;
 
         // object which contains reference to Revit Application
         protected readonly ExternalCommandData CommandData;
 
-        // used to create new instances of elements
         protected readonly Document DocCreator;
 
         // store the Matrix used to move points to center
@@ -48,10 +46,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         // store the Matrix used to transform Revit coordinate to window UI
         protected Matrix4 TransformMatrix;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="commandData">object which contains reference to Revit Application</param>
         protected Profile(ExternalCommandData commandData)
         {
             CommandData = commandData;
@@ -66,19 +60,11 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         /// <param name="points">points used to create Opening</param>
         public abstract Opening CreateOpening(List<Vector4> points);
 
-        /// <summary>
-        ///     Get points in first face
-        /// </summary>
-        /// <param name="faces">edges in all faces</param>
-        /// <returns>points in first face</returns>
         public virtual List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
             return null;
         }
 
-        /// <summary>
-        ///     Get a matrix which can transform points to 2D
-        /// </summary>
         public virtual Matrix4 GetTo2DMatrix()
         {
             return null;
@@ -118,11 +104,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             }
         }
 
-        /// <summary>
-        ///     Get edges of element's profile
-        /// </summary>
-        /// <param name="elem">selected element</param>
-        /// <returns>all the faces in the selected Element</returns>
         public virtual List<List<Edge>> GetFaces(Element elem)
         {
             var faceEdges = new List<List<Edge>>();
@@ -133,8 +114,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             var geoElem = elem.get_Geometry(options);
             //GeometryObjectArray gObjects = geoElem.Objects;
             var objects = geoElem.GetEnumerator();
-            //get all the edges in the Geometry object
-            //foreach (GeometryObject geo in gObjects)
             while (objects.MoveNext())
             {
                 var geo = objects.Current;
@@ -163,17 +142,11 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return faceEdges;
         }
 
-        /// <summary>
-        ///     Get normal of face
-        /// </summary>
-        /// <param name="face">edges in a face</param>
-        /// <returns>vector stands for normal of the face</returns>
         public Vector4 GetFaceNormal(List<Edge> face)
         {
             var eg0 = face[0];
             var eg1 = face[1];
 
-            //get two lines from the face
             var points = eg0.Tessellate() as List<XYZ>;
             var start = points[0];
             var end = points[1];
@@ -190,16 +163,11 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             vEnd = new Vector4((float)end.X, (float)end.Y, (float)end.Z);
             var vSub2 = vEnd - vStart;
 
-            //get the normal with two lines got from face
             var result = vSub.CrossProduct(vSub2);
             result.Normalize();
             return result;
         }
 
-        /// <summary>
-        ///     Get a matrix which can move points to center
-        /// </summary>
-        /// <returns>matrix used to move point to center of graphics</returns>
         public Matrix4 ToCenterMatrix()
         {
             //translate the origin to bound center
@@ -210,10 +178,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return new Matrix4(new Vector4(center.X, center.Y, 0));
         }
 
-        /// <summary>
-        ///     Get the bound of a face
-        /// </summary>
-        /// <returns>points array stores the bound of the face</returns>
         public virtual PointF[] GetFaceBounds()
         {
             var matrix = To2DMatrix;
@@ -221,7 +185,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             float minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
 
-            //get the max and min point on the face
             foreach (var points in Points)
             {
                 foreach (var point in points)
@@ -307,10 +270,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return result;
         }
 
-        /// <summary>
-        ///     use matrix to transform point
-        /// </summary>
-        /// <param name="pts">contain the points to be transformed</param>
         private void TransformPoints(Point[] pts)
         {
             var matrix = new Matrix(

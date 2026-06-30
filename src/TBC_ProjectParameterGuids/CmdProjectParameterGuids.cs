@@ -44,19 +44,10 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            // Get the (singleton) element that is the 
-            // ProjectInformation object.  It can only have 
-            // instance parameters bound to it, and it is 
-            // always guaranteed to exist.
-
             var projectInfoElement
                 = new FilteredElementCollector(doc)
                     .OfCategory(BuiltInCategory.OST_ProjectInformation)
                     .FirstElement();
-
-            // Get the first wall type element.  It can only 
-            // have type parameters bound to it, and there is 
-            // always guaranteed to be at least one of these.
 
             var firstWallTypeElement
                 = new FilteredElementCollector(doc)
@@ -67,25 +58,10 @@ namespace BuildingCoder
             CategorySet categories = null;
             Parameter foundParameter = null;
 
-            // Get the list of information about all project 
-            // parameters, calling our helper method, below.  
-
             var projectParametersData
                 = Util.GetProjectParameterData(doc);
 
-            // In order to be able to query whether or not a 
-            // project parameter is shared or not, and if it 
-            // is shared then what it's GUID is, we must ensure 
-            // it exists in the Parameters collection of an 
-            // element.
-            // This is because we cannot query this information 
-            // directly from the project parameter bindings 
-            // object.
-            // So each project parameter will attempt to be 
-            // temporarily bound to a known object so a 
-            // Parameter object created from it will exist 
-            // and can be queried for this additional 
-            // information.
+            // Shared status/GUID are not available from ParameterBindings; bind temporarily to read them.
 
             foreach (var projectParameterData
                 in projectParametersData)
@@ -94,61 +70,35 @@ namespace BuildingCoder
                     categories = projectParameterData.Binding.Categories;
                     if (!categories.Contains(projectInfoElement.Category))
                     {
-                        // This project parameter is not already 
-                        // bound to the ProjectInformation category,
-                        // so we must temporarily bind it so we can 
-                        // query that object for it.
-
                         using var tempTransaction
                             = new Transaction(doc);
                         tempTransaction.Start("Temporary");
-
-                        // Try to bind the project parameter do 
-                        // the project information category, 
-                        // calling our helper method, below.
 
                         if (Util.AddProjectParameterBinding(
                             doc, projectParameterData,
                             projectInfoElement.Category))
                         {
-                            // successfully bound
+
                             foundParameter
                                 = projectInfoElement.get_Parameter(
                                     projectParameterData.Definition);
 
                             if (foundParameter == null)
                             {
-                                // Must be a shared type parameter, 
-                                // which the API reports that it binds
-                                // to the project information category 
-                                // via the API, but doesn't ACTUALLY 
-                                // bind to the project information 
-                                // category.  (Sheesh!)
-
-                                // So we must use a different, type 
-                                // based object known to exist, and 
-                                // try again.
+                                // Shared type parameters may report ProjectInformation binding but not appear on that element.
 
                                 if (!categories.Contains(
                                     firstWallTypeElement.Category))
                                 {
-                                    // Add it to walls category as we 
-                                    // did with project info for the 
-                                    // others, calling our helper 
-                                    // method, below.
-
                                     if (Util.AddProjectParameterBinding(
                                             doc, projectParameterData,
                                             firstWallTypeElement.Category))
-                                        // Successfully bound
                                         foundParameter
                                             = firstWallTypeElement.get_Parameter(
                                                 projectParameterData.Definition);
                                 }
                                 else
                                 {
-                                    // The project parameter was already 
-                                    // bound to the Walls category.
                                     foundParameter
                                         = firstWallTypeElement.get_Parameter(
                                             projectParameterData.Definition);
@@ -159,20 +109,11 @@ namespace BuildingCoder
                                         foundParameter,
                                         projectParameterData);
                                 else
-                                    // Wouldn't bind to the walls 
-                                    // category or wasn't found when 
-                                    // already bound.
-                                    // This should probably never happen?
-
                                     projectParameterData.IsSharedStatusKnown
-                                        = false; // Throw exception?
+                                        = false;
                             }
                             else
                             {
-                                // Found the correct parameter 
-                                // instance on the Project 
-                                // Information object, so use it.
-
                                 Util.PopulateProjectParameterData(
                                     foundParameter,
                                     projectParameterData);
@@ -180,12 +121,7 @@ namespace BuildingCoder
                         }
                         else
                         {
-                            // The API reports it couldn't bind 
-                            // the parameter to the ProjectInformation 
-                            // category.
-                            // This only happens with non-shared 
-                            // Project parameters, which have no 
-                            // GUID anyway.
+                            // Non-shared parameters cannot bind to ProjectInformation and have no GUID.
 
                             projectParameterData.IsShared = false;
                             projectParameterData.IsSharedStatusKnown = true;
@@ -195,9 +131,6 @@ namespace BuildingCoder
                     }
                     else
                     {
-                        // The project parameter was already bound 
-                        // to the Project Information category.
-
                         foundParameter
                             = projectInfoElement.get_Parameter(
                                 projectParameterData.Definition);
@@ -206,20 +139,14 @@ namespace BuildingCoder
                             Util.PopulateProjectParameterData(
                                 foundParameter, projectParameterData);
                         else
-                            // This will probably never happen.
-
                             projectParameterData.IsSharedStatusKnown
-                                = false; // Throw exception?
+                                = false;
                     }
-                } // Whether or not the Definition object could be found
+                }
 
             var sb = new StringBuilder();
 
-            // Build column headers
-
             sb.AppendLine("PARAMETER NAME\tIS SHARED?\tGUID");
-
-            // Add each row.
 
             foreach (var projectParameterData
                 in projectParametersData)

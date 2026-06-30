@@ -29,9 +29,6 @@ using System.Text;
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 {
-  /// <summary>
-  /// Manage the various string search options.
-  /// </summary>
   public class SearchOptions
   {
     public SearchOptions(

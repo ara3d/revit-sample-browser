@@ -27,10 +27,6 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Determine all views displaying
-    ///     a given set of elements.
-    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     internal class CmdViewsShowingElements : IExternalCommand
     {

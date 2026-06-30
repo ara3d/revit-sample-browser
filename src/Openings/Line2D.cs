@@ -5,9 +5,6 @@ using System.Drawing;
 
 namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
-    /// <summary>
-    ///     represent a geometry segment line
-    /// </summary>
     public class Line2D
     {
         private PointF m_endPnt; // end point
@@ -18,10 +15,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         private PointF m_normal;
         private PointF m_startPnt; // start point
 
-        /// <summary>
-        ///     constructor
-        ///     default StartPoint = (0.0, 0.0), EndPoint = (1.0, 0.0)
-        /// </summary>
         public Line2D()
         {
             m_startPnt.X = 0.0f;
@@ -32,11 +25,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             CalculateBoundingBox();
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="startPnt">StartPoint</param>
-        /// <param name="endPnt">EndPoint</param>
         public Line2D(PointF startPnt, PointF endPnt)
         {
             m_startPnt = startPnt;
@@ -45,9 +33,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             CalculateBoundingBox();
         }
 
-        /// <summary>
-        ///     rectangle box contains the line
-        /// </summary>
         public RectangleF BoundingBox { get; private set; }
 
         /// <summary>
@@ -114,9 +99,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             }
         }
 
-        /// <summary>
-        ///     calculate BoundingBox according to StartPoint and EndPoint
-        /// </summary>
         private void CalculateBoundingBox()
         {
             var x1 = m_endPnt.X;
@@ -132,9 +114,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             BoundingBox = new RectangleF(x1, y1, width, height);
         }
 
-        /// <summary>
-        ///     calculate length by StartPoint and EndPoint
-        /// </summary>
         private void CalculateLength()
         {
             m_length =
@@ -142,9 +121,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
                                  Math.Pow(m_startPnt.Y - m_endPnt.Y, 2));
         }
 
-        /// <summary>
-        ///     calculate Direction by StartPoint and EndPoint
-        /// </summary>
         private void CalculateDirection()
         {
             CalculateLength();
@@ -152,9 +128,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             m_normal.Y = (m_endPnt.Y - m_startPnt.Y) / m_length;
         }
 
-        /// <summary>
-        ///     calculate EndPoint by StartPoint, Length and Direction
-        /// </summary>
         private void CalculateEndPoint()
         {
             m_endPnt.X = m_startPnt.X + m_length * m_normal.X;

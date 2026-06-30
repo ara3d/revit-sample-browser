@@ -10,10 +10,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
 {
-    /// <summary>
-    ///     This class inherits from IExternalCommand interface, and implements the Execute method to create Arc, BSpline
-    ///     beams.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.UsingCommandData)]
@@ -21,14 +17,8 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
     {
         private UIApplication m_revit;
 
-        /// <summary>
-        ///     list of all type of beams
-        /// </summary>
         public ArrayList BeamMaps { get; } = new ArrayList();
 
-        /// <summary>
-        ///     list of all levels
-        /// </summary>
         public ArrayList LevelMaps { get; } = new ArrayList();
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -49,10 +39,6 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     iterate all the symbols of levels and beams
-        /// </summary>
-        /// <returns>A value that signifies if the initialization was successful for true or failed for false</returns>
         private bool Initialize()
         {
             try
@@ -75,7 +61,6 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
                         goto nextLoop;
                     }
 
-                    // get
                     if (!(o is Family f)) goto nextLoop;
 
                     foreach (var elementId in f.GetFamilySymbolIds())
@@ -101,9 +86,6 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             return true;
         }
 
-        /// <summary>
-        ///     create an horizontal arc instance with specified z coordinate value
-        /// </summary>
         public Arc CreateArc(double z)
         {
             var center = new XYZ(0, 0, z);
@@ -115,9 +97,6 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             return Arc.Create(center, radius, startAngle, endAngle, xAxis, yAxis);
         }
 
-        /// <summary>
-        ///     create a horizontal partial ellipse instance with specified z coordinate value
-        /// </summary>
         public Curve CreateEllipse(double z)
         {
             var center = new XYZ(0, 0, z);
@@ -132,9 +111,6 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             return ellpise;
         }
 
-        /// <summary>
-        ///     create a horizontal nurbspline instance with specified z coordinate value
-        /// </summary>
         public Curve CreateNurbSpline(double z)
         {
             // create control points with same z value
@@ -174,13 +150,6 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             return detailNurbSpline;
         }
 
-        /// <summary>
-        ///     create a curved beam
-        /// </summary>
-        /// <param name="fsBeam">beam type</param>
-        /// <param name="curve">Curve of this beam.</param>
-        /// <param name="level">beam's reference level</param>
-        /// <returns></returns>
         public bool CreateCurvedBeam(FamilySymbol fsBeam, Curve curve, Level level)
         {
             try
@@ -205,23 +174,13 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
         }
     }
 
-    /// <summary>
-    ///     assistant class contains symbol and it's name
-    /// </summary>
     public class SymbolMap
     {
-        /// <summary>
-        ///     constructor without parameter is forbidden
-        /// </summary>
         private SymbolMap()
         {
             // no operation 
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="symbol">family symbol</param>
         public SymbolMap(FamilySymbol symbol)
         {
             ElementType = symbol;
@@ -230,48 +189,26 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             SymbolName = $"{familyName} : {symbol.Name}";
         }
 
-        /// <summary>
-        ///     SymbolName property
-        /// </summary>
         public string SymbolName { get; } = "";
 
-        /// <summary>
-        ///     ElementType property
-        /// </summary>
         public FamilySymbol ElementType { get; }
     }
 
-    /// <summary>
-    ///     assistant class contains level and it's name
-    /// </summary>
     public class LevelMap
     {
-        /// <summary>
-        ///     constructor without parameter is forbidden
-        /// </summary>
         private LevelMap()
         {
             // no operation
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="level">level</param>
         public LevelMap(Level level)
         {
             Level = level;
             LevelName = level.Name;
         }
 
-        /// <summary>
-        ///     LevelName property
-        /// </summary>
         public string LevelName { get; } = "";
 
-        /// <summary>
-        ///     Level property
-        /// </summary>
         public Level Level { get; }
     }
 }

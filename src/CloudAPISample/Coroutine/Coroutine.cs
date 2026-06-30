@@ -16,41 +16,21 @@ using System.Collections;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Coroutine
 {
-    /// <summary>
-    ///     Represent a coroutine instance.
-    /// </summary>
     public class Coroutine
     {
         private readonly IEnumerator m_innerEnumerator;
 
-        /// <summary>
-        ///     Create a coroutine with a enumerator
-        /// </summary>
-        /// <param name="coroutine"></param>
         public Coroutine(IEnumerator coroutine)
         {
             m_innerEnumerator = coroutine;
         }
 
-        /// <summary>
-        ///     Indicates if this coroutine is finished.
-        /// </summary>
         public bool IsFinished { get; set; }
 
-        /// <summary>
-        ///     The previous coroutine in this double linked list
-        /// </summary>
         public Coroutine Previous { get; set; }
 
-        /// <summary>
-        ///     The next coroutine in this double linked list
-        /// </summary>
         public Coroutine Next { get; set; }
 
-        /// <summary>
-        ///     Execute one step of the enumerator
-        /// </summary>
-        /// <returns></returns>
         public bool ExecuteOnStep()
         {
             return m_innerEnumerator.MoveNext();

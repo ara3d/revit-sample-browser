@@ -6,9 +6,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
 {
-    /// <summary>
-    ///     Interaction logic for UserControl2.xaml
-    /// </summary>
     public partial class UserControl2 : UserControl
     {
         private readonly string m_name;

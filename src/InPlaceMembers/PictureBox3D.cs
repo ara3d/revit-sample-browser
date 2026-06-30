@@ -33,10 +33,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             }
         }
 
-        /// <summary>
-        ///     paint outline
-        /// </summary>
-        /// <param name="pe"></param>
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
@@ -60,10 +56,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             }
         }
 
-        /// <summary>
-        ///     scale the view by default value
-        /// </summary>
-        /// <param name="zoomIn">zomme in or zoom out</param>
         public void Scale(bool zoomIn)
         {
             var ratio = 1.0f;
@@ -75,10 +67,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             Invalidate();
         }
 
-        /// <summary>
-        ///     move view in horizontal direction
-        /// </summary>
-        /// <param name="left">left or right</param>
         public void MoveX(bool left)
         {
             var len = 0.0f;
@@ -90,10 +78,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             Invalidate();
         }
 
-        /// <summary>
-        ///     move view in vertical direction
-        /// </summary>
-        /// <param name="up">up or down</param>
         public void MoveY(bool up)
         {
             var len = 0.0f;
@@ -105,10 +89,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             Invalidate();
         }
 
-        /// <summary>
-        ///     get the display region, adjust the proportion and location
-        /// </summary>
-        /// <returns></returns>
         private PointF[] GetDisplayRegion()
         {
             var rec = m_sourceData.Region;

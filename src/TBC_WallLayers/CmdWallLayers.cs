@@ -36,9 +36,6 @@ namespace BuildingCoder
             var uidoc = app.ActiveUIDocument;
             var doc = app.ActiveUIDocument.Document;
 
-            // Retrieve selected walls, or all walls,
-            // if nothing is selected:
-
             var walls = new List<Element>();
 
             if (!Util.GetSelectedElementsOrAll(
@@ -70,8 +67,6 @@ namespace BuildingCoder
                     return Result.Failed;
                 }
 
-                // Wall centre line and thickness:
-
                 lcstart = curve.Curve.GetEndPoint(0);
                 lcend = curve.Curve.GetEndPoint(1);
                 halfThickness = 0.5 * wall.WallType.Width;
@@ -86,8 +81,6 @@ namespace BuildingCoder
 
                 q = p + halfThickness * w;
                 Creator.CreateModelLine(doc, p, q);
-
-                // Exterior edge
 
                 p = lcstart - v + halfThickness * w;
                 q = lcend + v + halfThickness * w;
@@ -120,8 +113,6 @@ namespace BuildingCoder
 
                 if (0 == n)
                 {
-                    // Interior edge
-
                     p = lcstart - v - halfThickness * w;
                     q = lcend + v - halfThickness * w;
                     Creator.CreateModelLine(doc, p, q);

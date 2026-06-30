@@ -22,9 +22,6 @@ using Autodesk.Revit.UI.Events;
 
 namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     public class Application : IExternalApplication
     {
         // instance of class Application
@@ -134,9 +131,6 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
             }
         }
 
-        /// <summary>
-        ///     Unsubscribing from DocumentChanged event
-        /// </summary>
         private void UnsubscribeFromChanges(UIApplication uiapp)
         {
             if (m_hDocChanged != null)

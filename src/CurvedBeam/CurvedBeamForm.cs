@@ -7,34 +7,19 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
 {
-    /// <summary>
-    ///     new beam form
-    /// </summary>
     public partial class CurvedBeamForm : Form
     {
-        /// <summary>
-        ///     default construction is forbidden
-        /// </summary>
         private CurvedBeamForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     get relevant data from Revit
-        /// </summary>
-        /// <param name="dataBuffer">relevant review data</param>
         public CurvedBeamForm(Command dataBuffer)
         {
             m_dataBuffer = dataBuffer;
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     create Arc beam
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void newArcButton_Click(object sender, EventArgs e)
         {
             var locLev = LevelCB.SelectedValue as Level;
@@ -44,11 +29,6 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             if (succeed) TaskDialog.Show("Revit", "Succeeded to create Arc beam.");
         }
 
-        /// <summary>
-        ///     create Nurbspline beam
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void newNurbSplineButton_Click(object sender, EventArgs e)
         {
             var locLev = LevelCB.SelectedValue as Level;
@@ -58,11 +38,6 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             if (succeed) TaskDialog.Show("Revit", "Succeeded to create NurbSpline beam.");
         }
 
-        /// <summary>
-        ///     create nurb spline beam
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void newEllipseButton_Click(object sender, EventArgs e)
         {
             var locLev = LevelCB.SelectedValue as Level;

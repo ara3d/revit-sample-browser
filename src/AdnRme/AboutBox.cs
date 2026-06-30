@@ -53,9 +53,6 @@ namespace AdnRme
 
     #region Assembly Attribute Accessors
 
-    /// <summary>
-    /// Short cut to get executing assembly
-    /// </summary>
     Assembly ExecutingAssembly
     {
       get

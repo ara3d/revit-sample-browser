@@ -7,7 +7,6 @@ using Autodesk.Revit.DB.Plumbing;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_RollingOffset sample.</summary>
     internal static partial class Util
     {
         private const BuiltInParameter bipDiameterInner

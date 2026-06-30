@@ -122,15 +122,6 @@ namespace BuildingCoder
                 : null;
         }
 
-        /// <summary>
-        ///     Retrieve all pre-selected elements of the specified type,
-        ///     if any elements at all have been pre-selected. If not,
-        ///     retrieve all elements of specified type in the database.
-        /// </summary>
-        /// <param name="a">Return value container</param>
-        /// <param name="uidoc">Active document</param>
-        /// <param name="t">Specific type</param>
-        /// <returns>True if some elements were retrieved</returns>
         public static bool GetSelectedElementsOrAll(
             List<Element> a,
             UIDocument uidoc,

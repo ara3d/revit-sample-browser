@@ -8,16 +8,8 @@ using Autodesk.Revit.UI.Events;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
-    /// <summary>
-    ///     This class is used to extend SelectionChangedEventArgs with GetInfo method
-    /// </summary>
     public static class SelectionChangedEventArgsExtension
     {
-        /// <summary>
-        ///     Get SelectionChangedEvent information
-        /// </summary>
-        /// <param name="args">Event arguments that contains the event data.</param>
-        /// <param name="doc">document in which the event occurs.</param>
         public static string GetInfo(this SelectionChangedEventArgs args, bool showId = false)
         {
             var sb = new StringBuilder();
@@ -31,11 +23,6 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 
             foreach (var aRef in refs)
             {
-                //foreach (PropertyInfo pi in aRef.GetType().GetProperties())
-                //{
-                //   Trace.WriteLine(pi.Name + ":" + pi.GetValue(aRef, null)?.ToString());
-                //}
-
                 switch (aRef.ElementReferenceType)
                 {
                     case ElementReferenceType.REFERENCE_TYPE_NONE:
@@ -70,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
                     }
                     case ElementReferenceType.REFERENCE_TYPE_INSTANCE:
                     {
-                        sb.Append("The reference is an instance of a symbol.");
+                        sb.Append("The reference is to an instance of a symbol.");
                         if (showId) sb.AppendFormat(" ElementId:{0}.", aRef.ElementId);
                         break;
                     }

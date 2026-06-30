@@ -12,10 +12,6 @@ namespace BuildingCoder
                 .ToString("0.##")
                 .PadLeft(8);
         }
-
-        /// <summary>
-        ///     List all the pipe segment sizes in the given document.
-        /// </summary>
         public static void GetPipeSegmentSizes(
             Document doc,
             string filename)

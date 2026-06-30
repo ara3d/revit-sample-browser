@@ -5,12 +5,8 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SwitchDoc sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Zoom to the given elements, switching view if needed.
-        /// </summary>
         internal static Result ZoomToElements(
             UIDocument uidoc,
             ICollection<ElementId> ids,
@@ -47,9 +43,6 @@ namespace BuildingCoder
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Toggle back and forth between two different documents.
-        /// </summary>
         internal static void ToggleViews(
             View view1,
             string filepath2)
@@ -99,9 +92,6 @@ namespace BuildingCoder
             }
         }
 
-        /// <summary>
-        ///     Zoom active view to element in linked document.
-        /// </summary>
         internal static void ZoomToLinkedElement(
             UIDocument uidoc,
             RevitLinkInstance link,

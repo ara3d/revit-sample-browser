@@ -21,13 +21,12 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
 
-                // get the user selection
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var collection = uidoc.Selection.GetElementIds();
 
                 if (collection.Count > 0)
                 {
-                    // FabricationNetworkChangeService needs an ISet<ElementId>
+                    // FabricationNetworkChangeService requires ISet<ElementId>.
                     ISet<ElementId> selIds = new HashSet<ElementId>();
                     foreach (var id in collection)
                     {
@@ -40,12 +39,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                         var config = FabricationConfiguration.GetFabricationConfiguration(doc);
 
-                        // Get all loaded fabrication services
                         var allLoadedServices = config.GetAllLoadedServices();
 
                         var changeservice = new FabricationNetworkChangeService(doc);
 
-                        // Change the fabrication parts to the first loaded service and palette
                         var result = changeservice.ChangeService(selIds, allLoadedServices[0].ServiceId, 0);
 
                         if (result != FabricationNetworkChangeServiceResult.Success)
@@ -62,7 +59,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Succeeded;
                 }
 
-                // inform user they need to select at least one element
                 message = "Please select at least one element.";
 
                 return Result.Failed;
@@ -86,14 +82,12 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
 
-                // get the user selection
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var collection = uidoc.Selection.GetElementIds();
 
                 if (collection.Count > 0)
                 {
-                    // FabricationNetworkChangeService needs an ISet<ElementId>
-                    var selIds = new HashSet<ElementId>();
+                    ISet<ElementId> selIds = new HashSet<ElementId>();
                     foreach (var id in collection)
                     {
                         selIds.Add(id);
@@ -105,10 +99,8 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                         var config = FabricationConfiguration.GetFabricationConfiguration(doc);
 
-                        // Get all loaded fabrication services
                         var allLoadedServices = config.GetAllLoadedServices();
 
-                        // Create a map of sizes to swap the current sizes to a new size
                         var sizeMappings = new HashSet<FabricationPartSizeMap>();
                         var mapping = new FabricationPartSizeMap("12x12", 1.0, 1.0, false,
                             ConnectorProfileType.Rectangular, allLoadedServices[0].ServiceId, 0)
@@ -127,12 +119,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                         var changesize = new FabricationNetworkChangeService(doc);
 
-                        // Change the size of the fabrication parts in the selection to the new sizes
                         var result = changesize.ChangeSize(selIds, sizeMappings);
 
                         if (result != FabricationNetworkChangeServiceResult.Success)
                         {
-                            // Get the collection of element identifiers for parts that had errors posted against them
                             ICollection<ElementId> errorIds = changesize.GetElementsThatFailed();
                             if (errorIds.Count > 0)
                             {
@@ -149,7 +139,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Succeeded;
                 }
 
-                // inform user they need to select at least one element
                 message = "Please select at least one element.";
 
                 return Result.Failed;
@@ -173,13 +162,11 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
 
-                // get the user selection
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var collection = uidoc.Selection.GetElementIds();
 
                 if (collection.Count > 0)
                 {
-                    // FabricationNetworkChangeService needs an ISet<ElementId>
                     ISet<ElementId> selIds = new HashSet<ElementId>();
                     foreach (var id in collection)
                     {
@@ -192,25 +179,21 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                         var config = FabricationConfiguration.GetFabricationConfiguration(doc);
 
-                        // Get all loaded fabrication services
                         var allLoadedServices = config.GetAllLoadedServices();
 
                         var applychange = new FabricationNetworkChangeService(doc);
 
-                        // Set the selection of element identifiers to be changed
                         applychange.SetSelection(selIds);
-                        // Set the service to the second service in the list (ductwork exhaust service)
+                        // Sample targets the second loaded service (ductwork exhaust) and round palette.
                         applychange.SetServiceId(allLoadedServices[1].ServiceId);
-                        // Set the palette to the second in the list (round)
                         applychange.SetPaletteId(1);
 
-                        // Get the sizes of all the straights that was in the selection of elements that was added to FabricationNetworkChangeService
                         var sizeMappings = applychange.GetMapOfAllSizesForStraights();
                         foreach (var sizemapping in sizeMappings)
                         {
                             if (sizemapping != null)
                             {
-                                // Testing round so ignoring the depth and adding 6" to the current size so all straights will be updated to a new size
+                                // Round profile: add 6" to each straight width/diameter.
                                 var widthDia = sizemapping.WidthDiameter + 0.5;
                                 sizemapping.MappedWidthDiameter = widthDia;
                             }
@@ -218,7 +201,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                         applychange.SetMapOfSizesForStraights(sizeMappings);
 
-                        // Get the in-line element type identiers
                         var inlineRevIds = new HashSet<ElementId>();
                         var inlineIds = applychange.GetInLinePartTypes();
                         for (var ii = inlineIds.Count() - 1; ii > -1; ii--)
@@ -228,7 +210,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                                 inlineRevIds.Add(elemId);
                         }
 
-                        // Set the in-line element type identiers by swapping them out by reversing the order to keep it simple but still exercise the code
+                        // Reverse inline type order to exercise swap mapping.
                         IDictionary<ElementId, ElementId> swapinlineIds = new Dictionary<ElementId, ElementId>();
                         for (var ii = inlineIds.Count() - 1; ii > -1; ii--)
                         {
@@ -240,7 +222,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                         applychange.SetMapOfInLinePartTypes(swapinlineIds);
 
-                        // Apply the changes
                         var result = applychange.ApplyChange();
 
                         if (result != FabricationNetworkChangeServiceResult.Success)
@@ -257,7 +238,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Succeeded;
                 }
 
-                // inform user they need to select at least one element
                 message = "Please select at least one element.";
 
                 return Result.Failed;

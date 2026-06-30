@@ -6,54 +6,24 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
-    /// <summary>
-    ///     It represents an L-shape winder and consists of two straight runs and one winder corner.
-    /// </summary>
     public class LWinder : Winder
     {
-        /// <summary>
-        ///     Winder Corner, connecting the first and the second straight runs.
-        /// </summary>
         private WinderSinglePoint m_corner;
 
-        /// <summary>
-        ///     The second straight run at end.
-        /// </summary>
         private WinderStraight m_straightAtEnd;
 
-        /// <summary>
-        ///     The first straight run at start.
-        /// </summary>
         private WinderStraight m_straightAtStart;
 
-        /// <summary>
-        ///     Number of straight steps at start.
-        /// </summary>
         public uint NumStepsAtStart { get; set; }
 
-        /// <summary>
-        ///     Number of straight steps at end.
-        /// </summary>
         public uint NumStepsAtEnd { get; set; }
 
-        /// <summary>
-        ///     Number of winder steps in corner.
-        /// </summary>
         public uint NumStepsInCorner { get; set; }
 
-        /// <summary>
-        ///     CenterPoint Offset distance from the first inner boundary line of the corner.
-        /// </summary>
         public double CenterOffsetE { get; set; }
 
-        /// <summary>
-        ///     CenterPoint Offset distance from the second inner boundary line of the corner.
-        /// </summary>
         public double CenterOffsetF { get; set; }
 
-        /// <summary>
-        ///     Three points to determine the L-shape of the stairs.
-        /// </summary>
         public override IList<XYZ> ControlPoints
         {
             get => base.ControlPoints;
@@ -98,9 +68,6 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
                 m_corner.EndPoint, endPnt, perpendicularDir2, NumStepsAtEnd);
         }
 
-        /// <summary>
-        ///     This method generates the sketch for L-shape winder stairs.
-        /// </summary>
         protected override void GenerateSketch()
         {
             // Instantiate the corner and the two straight runs.

@@ -15,22 +15,12 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
     {
         private readonly Floor m_data;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="floor">Selected floor</param>
-        /// <param name="commandData">ExternalCommandData</param>
         public ProfileFloor(Floor floor, ExternalCommandData commandData)
             : base(floor, commandData)
         {
             m_data = floor;
         }
 
-        /// <summary>
-        ///     Create Opening on floor
-        /// </summary>
-        /// <param name="points">Points use to create Opening</param>
-        /// <param name="type">Tool type</param>
         public override void DrawOpening(List<Vector4> points, ToolType type)
         {
             switch (type)
@@ -50,10 +40,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Create Opening which make up of line on floor
-        /// </summary>
-        /// <param name="points">Points use to create Opening</param>
         private void DrawPlineOpening(List<Vector4> points)
         {
             XYZ p1, p2;
@@ -76,10 +62,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             DocCreator.NewOpening(m_data, curves, true);
         }
 
-        /// <summary>
-        ///     Create Opening which make up of Circle on floor
-        /// </summary>
-        /// <param name="points">Points use to create Opening</param>
         private void DrawCircleOpening(List<Vector4> points)
         {
             var curves = AppCreator.NewCurveArray();
@@ -94,10 +76,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             DocCreator.NewOpening(m_data, curves, true);
         }
 
-        /// <summary>
-        ///     Create Opening which make up of Arc on floor
-        /// </summary>
-        /// <param name="points">Points use to create Opening</param>
         private void DrawArcOpening(List<Vector4> points)
         {
             var curves = AppCreator.NewCurveArray();

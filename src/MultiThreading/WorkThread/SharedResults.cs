@@ -18,38 +18,16 @@ using Autodesk.Revit.DB.Analysis;
 
 namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
-    /// <summary>
-    ///     This class is for exchange of results between the
-    ///     analyzer which displays the results and the work-thread
-    ///     that calculates them. All operations are thread-safe;
-    /// </summary>
+    // Thread-safe exchange between the UI analyzer and the calculation work thread.
     public class SharedResults
     {
-        // If completed
         private bool m_completed;
-
-        // Last read number
         private int m_numberWhenLastRead;
-
-        // List of UV points
         private readonly IList<UV> m_points = new List<UV>();
-
-        // List of ValueAtPoints
         private readonly IList<ValueAtPoint> m_values = new List<ValueAtPoint>();
-
-        // lock object
         private readonly object m_mylock = new object();
 
-        /// <summary>
-        ///     Signaling no more results are needed
-        /// </summary>
-        /// <remarks>
-        ///     This is set by the analyzer if it needs no more data.
-        ///     We will let this know to the work-thread when it attempts
-        ///     to add more results. When the work-tread results are not
-        ///     needed anymore, it will stop even when not finished yet
-        ///     and returns (which basically means it will die).
-        /// </remarks>
+        // Called by the analyzer when it no longer needs results; AddResult then returns false.
         public void SetCompleted()
         {
             lock (m_mylock)
@@ -58,20 +36,13 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
             }
         }
 
-        /// <summary>
-        ///     Returns a list of points and values acquired so far.
-        /// </summary>
-        /// <returns>
-        ///     False if there have been no new results acquired from
-        ///     the work-thread since the last time this method was called.
-        /// </returns>
         public bool GetResults(out IList<UV> points, out IList<ValueAtPoint> values)
         {
             var hasMoreResults = false;
             points = null;
             values = null;
 
-            lock (m_mylock) // lock the access
+            lock (m_mylock)
             {
                 hasMoreResults = m_values.Count != m_numberWhenLastRead;
 
@@ -86,30 +57,15 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
             return hasMoreResults;
         }
 
-        /// <summary>
-        ///     Adding one pair of point/value to the collected
-        ///     results for the current analysis.
-        /// </summary>
-        /// The work-thread calls this every time it has another result to add.
-        /// <returns>
-        ///     Returns False if no more values can be accepted, which signals
-        ///     to the work-thread that the analysis was interrupted and
-        ///     that the thread is supposed to stop and return immediately.
-        /// </returns>
+        // Returns false once the analyzer has signaled completion.
         public bool AddResult(UV point, double value)
         {
             var accepted = false;
 
-            lock (m_mylock) // lock the access
+            lock (m_mylock)
             {
-                // do nothing if reading has been completed
                 if (!m_completed)
                 {
-                    // First, the double is converted to a one-item
-                    // list of ValueAtPoint. Than the list is added
-                    // to the list of values, while the UV is added
-                    // to the list of points.
-
                     var doubleList = new List<double> { value };
                     m_values.Add(new ValueAtPoint(doubleList));
                     m_points.Add(point);
@@ -119,5 +75,5 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 
             return accepted;
         }
-    } // class
+    }
 }

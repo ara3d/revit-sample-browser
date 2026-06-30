@@ -7,18 +7,11 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 {
-    /// <summary>
-    ///     The form is used for collecting information of column reinforcement creation
-    /// </summary>
     public partial class ColumnFramReinMakerForm : Form
     {
         // Private members
         private readonly ColumnFramReinMaker m_dataBuffer;
 
-        /// <summary>
-        ///     constructor for ColumnFramReinMakerForm
-        /// </summary>
-        /// <param name="dataBuffer">the ColumnFramReinMaker reference</param>
         public ColumnFramReinMakerForm(ColumnFramReinMaker dataBuffer)
         {
             // Required for Windows Form Designer support
@@ -30,14 +23,10 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             // Bing the data source for all combo boxes
             BingingDataSource();
 
-            // set the initializtion data of the spacing
             centerSpacingTextBox.Text = 0.1.ToString("0.0");
             endSpacingTextBox.Text = 0.1.ToString("0.0");
         }
 
-        /// <summary>
-        ///     Bing the data source for all combo boxes
-        /// </summary>
         private void BingingDataSource()
         {
             // bind the verticalRebarTypeComboBox
@@ -57,16 +46,11 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             transverseRebarHookComboBox.DisplayMember = "Name";
         }
 
-        /// <summary>
-        ///     When the user click ok, refresh the data of BeamFramReinMaker and close form
-        /// </summary>
         private void okButton_Click(object sender, EventArgs e)
         {
-            // set TransverseCenterType data
             var type = centerTransverseRebarTypeComboBox.SelectedItem as RebarBarType;
             m_dataBuffer.TransverseCenterType = type;
 
-            // set TransverseEndType data
             type = endTransverseRebarTypeComboBox.SelectedItem as RebarBarType;
             m_dataBuffer.TransverseEndType = type;
 
@@ -84,11 +68,9 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 
             try
             {
-                // set TransverseCenterSpacing data
                 var spacing = Convert.ToDouble(centerSpacingTextBox.Text);
                 m_dataBuffer.TransverseCenterSpacing = spacing;
 
-                // set TransverseEndSpacing data
                 spacing = Convert.ToDouble(endSpacingTextBox.Text);
                 m_dataBuffer.TransverseEndSpacing = spacing;
             }
@@ -104,16 +86,13 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
                 TaskDialog.Show("Revit", ex.Message);
             }
 
-            DialogResult = DialogResult.OK; // set dialog result
+            DialogResult = DialogResult.OK;
             Close(); // close the form
         }
 
-        /// <summary>
-        ///     When the user click the cancel, just close the form
-        /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel; // set dialog result
+            DialogResult = DialogResult.Cancel;
             Close(); // close the form
         }
     }

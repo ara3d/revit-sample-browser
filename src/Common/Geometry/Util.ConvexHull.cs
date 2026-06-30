@@ -28,12 +28,6 @@ namespace BuildingCoder
     {
         #region Convex Hull
 
-        /// <summary>
-        ///     Return the convex hull of a list of points
-        ///     using the Jarvis march or Gift wrapping:
-        ///     https://en.wikipedia.org/wiki/Gift_wrapping_algorithm
-        ///     Written by Maxence.
-        /// </summary>
         public static List<XYZ> ConvexHull(List<XYZ> points)
         {
             if (points == null)

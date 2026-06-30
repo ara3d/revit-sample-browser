@@ -10,9 +10,6 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
 {
-    /// <summary>
-    ///     The window designed for interactive operations
-    /// </summary>
     public partial class FrmPanelArea : Form
     {
         /// <summary>
@@ -64,14 +61,8 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
         /// </summary>
         private int m_okCounter;
 
-        /// <summary>
-        ///     The revit application instance
-        /// </summary>
         private readonly UIApplication m_uiApp;
 
-        /// <summary>
-        ///     The active Revit document
-        /// </summary>
         private readonly UIDocument m_uiDoc;
 
         /// <summary>
@@ -130,9 +121,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
             Close();
         }
 
-        /// <summary>
-        ///     Get names of Panel families and populate drop-down lists in the UI
-        /// </summary>
         private void BuildPanelTypeList(ExternalCommandData commandData)
         {
             var list = GetElements<FamilyInstance>();

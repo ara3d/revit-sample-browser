@@ -17,18 +17,8 @@ namespace BuildingCoder
             NotEnclosed,
             Redundant
         }
-
-        /// <summary>
-        ///     Room boundary tolerance for considering
-        ///     slightly differing boundary points equal
-        /// </summary>
         private static readonly double _listAllRoomsTolerance
             = MmToFoot(1.2);
-
-        /// <summary>
-        ///     Distinguish 'Not Placed',  'Redundant'
-        ///     and 'Not Enclosed' rooms.
-        /// </summary>
         public static ListAllRoomsRoomState DistinguishRoom(Room room)
         {
             var res = ListAllRoomsRoomState.Unknown;
@@ -56,13 +46,6 @@ namespace BuildingCoder
 
             return res;
         }
-
-        /// <summary>
-        ///     Add new points to the list.
-        ///     Skip the first new point if it equals the last
-        ///     old existing one. Actually, we can test all points
-        ///     and always ignore very close consecutive ones.
-        /// </summary>
         public static void AddNewRoomBoundaryPoints(
             IList<XYZ> pts,
             IList<XYZ> newpts)
@@ -73,11 +56,6 @@ namespace BuildingCoder
                         _listAllRoomsTolerance))
                     pts.Add(p);
         }
-
-        /// <summary>
-        ///     Return room boundary points retrieved
-        ///     from the room boundary segments.
-        /// </summary>
         public static List<XYZ> GetRoomBoundaryPoints(
             IList<IList<BoundarySegment>> boundary)
         {
@@ -118,11 +96,6 @@ namespace BuildingCoder
 
             return pts;
         }
-
-        /// <summary>
-        ///     Return bounding box calculated from the room
-        ///     boundary segments.
-        /// </summary>
         public static BoundingBoxXYZ GetRoomBoundaryBoundingBox(
             IList<IList<BoundarySegment>> boundary)
         {
@@ -139,11 +112,6 @@ namespace BuildingCoder
 
             return bb;
         }
-
-        /// <summary>
-        ///     Return convex hull calculated from the room
-        ///     boundary segments.
-        /// </summary>
         public static List<XYZ> GetConvexHullOfRoomBoundary(
             IList<IList<BoundarySegment>> boundary)
         {

@@ -10,9 +10,6 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
     /// </summary>
     public partial class OptionsForm : Form
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public OptionsForm()
         {
             InitializeComponent();

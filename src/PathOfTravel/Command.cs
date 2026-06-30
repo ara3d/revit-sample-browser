@@ -15,24 +15,12 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
 {
-    /// <summary>
-    ///     The options for creating the PathOfTravel.
-    /// </summary>
     public enum PathCreateOptions
     {
-        /// <summary>
-        ///     Create from a single room's corners to single door
-        /// </summary>
         SingleRoomCornersToSingleDoor,
 
-        /// <summary>
-        ///     Create from all room's centerpoints to all doors
-        /// </summary>
         AllRoomCenterToSingleDoor,
 
-        /// <summary>
-        ///     Create from all room's corners to all doors
-        /// </summary>
         AllRoomCornersToAllDoors
     }
 
@@ -87,19 +75,14 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             }
         }
 
-        /// <summary>
-        ///     Generates paths of travel for near-corner points in one room to a single selected door.
-        /// </summary>
         private void CreatePathsOfTravelInOneRoomMultiplePointsToOneDoor(UIDocument uiDoc)
         {
             var doc = uiDoc.Document;
             var viewPlan = uiDoc.ActiveView as ViewPlan;
 
-            // select room
             var reference = uiDoc.Selection.PickObject(ObjectType.Element, new RoomSelectionFilter(), "Select a room");
             var room = doc.GetElement(reference) as Room;
 
-            // select exit door
             var roomReference =
                 uiDoc.Selection.PickObject(ObjectType.Element, new DoorSelectionFilter(), "Select a target door");
             var doorElement = doc.GetElement(roomReference) as Instance;
@@ -121,24 +104,18 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             ShowResults(resultsSummary);
         }
 
-        /// <summary>
-        ///     Generates paths of travel from the center points of the room to a single door using the many to many approach.
-        ///     Does not collect and display results.
-        /// </summary>
         private void CreatePathsOfTravelRoomCenterpointsToSingleDoor(UIDocument uiDoc)
         {
             var doc = uiDoc.Document;
             var viewPlan = uiDoc.ActiveView as ViewPlan;
             var levelId = viewPlan.GenLevel.Id;
 
-            // select exit door
             var reference =
                 uiDoc.Selection.PickObject(ObjectType.Element, new DoorSelectionFilter(), "Select a target door");
             var doorElement = doc.GetElement(reference) as Instance;
             var trf = doorElement.GetTransform();
             var endPoint = trf.Origin;
 
-            // find all rooms
             var fec = new FilteredElementCollector(doc);
             fec.WherePasses(new RoomFilter());
 
@@ -152,7 +129,6 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
                 startPoints.Add(roomPoint);
             }
 
-            // generate paths           
             using (var t = new Transaction(doc, "Generate paths of travel"))
             {
                 t.Start();
@@ -161,11 +137,6 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             }
         }
 
-        /// <summary>
-        ///     Creates paths of travel using all rooms on the given floor plan, starting from the near-corner points of those
-        ///     rooms, to all doors in the same floor plan.
-        ///     This version uses Revit's many-to-many API with automatic mapping between start and endpoints.
-        /// </summary>
         private void CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(UIDocument uiDoc)
         {
             var doc = uiDoc.Document;
@@ -174,19 +145,10 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(doc, viewPlan, false);
         }
 
-        /// <summary>
-        ///     Appends a list of the room's near-corner points to a pre-existing list.
-        /// </summary>
         /// <remarks>
-        ///     A near-corner point is offset from the room boundaries by 1.5 ft (18 inches). The points are calculated
-        ///     geometrically and some situations may not return
-        ///     all logical near-corner points, or may return points which are inside furniture, casework or other design elements.
-        ///     Only the first boundary region of the room is
-        ///     currently processed.
+        ///     Near-corner points are offset 1.5 ft (18 in) from room boundaries. Only the first boundary region is processed;
+        ///     geometry may miss logical corners or land inside furniture.
         /// </remarks>
-        /// <param name="room"></param>
-        /// <param name="nearCornerPoints"></param>
-        /// <returns></returns>
         private static void AppendRoomNearCornerPoints(Room room, List<XYZ> nearCornerPoints)
         {
             var segments = room.GetBoundarySegments(new SpatialElementBoundaryOptions());
@@ -217,18 +179,6 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             }
         }
 
-        /// <summary>
-        ///     Returns a list of the room's near-corner points.
-        /// </summary>
-        /// <remarks>
-        ///     A near-corner point is offset from the room boundaries by 1.5 ft (18 inches). The points are calculated
-        ///     geometrically and some situations may not return
-        ///     all logical near-corner points, or may return points which are inside furniture, casework or other design elements.
-        ///     Only the first boundary region of the room is
-        ///     currently processed.
-        /// </remarks>
-        /// <param name="room"></param>
-        /// <returns></returns>
         private static List<XYZ> GetRoomNearCornerPoints(Room room)
         {
             var nearCornerPoints = new List<XYZ>();
@@ -238,33 +188,21 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             return nearCornerPoints;
         }
 
-        /// <summary>
-        ///     Shared implementation for use of Path of Travel bulk creation routine from all near-corner room points to all
-        ///     doors.
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="viewPlan"></param>
-        /// <param name="mapAllStartsToAllEnds"></param>
         private static void CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(Document doc,
             ViewPlan viewPlan, bool mapAllStartsToAllEnds)
         {
-            // find rooms on level
             var fec = new FilteredElementCollector(doc, viewPlan.Id);
             fec.WherePasses(new RoomFilter());
 
-            // find doors on level
             var fec2 = new FilteredElementCollector(doc, viewPlan.Id);
             fec2.OfCategory(BuiltInCategory.OST_Doors);
 
-            // setup results
             var resultsSummary = new ResultsSummary();
 
             var endPoints = new List<XYZ>();
 
-            // Collect rooms
             var rooms = fec.Cast<Room>().ToList();
 
-            // Loop on doors and collect target points (the door's origin)
             foreach (var element in fec2)
             {
                 var doorElement = (Instance)element;
@@ -287,15 +225,6 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             ShowResults(resultsSummary);
         }
 
-        /// <summary>
-        ///     Generates path of travels from room corner points to the corresponding list of end points.
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="viewPlan"></param>
-        /// <param name="rooms"></param>
-        /// <param name="endPoints"></param>
-        /// <param name="resultsSummary"></param>
-        /// <param name="mapAllStartsToAllEnds"></param>
         private static void GeneratePathsOfTravelForRoomsToEndpointsManyToMany(Document doc, ViewPlan viewPlan,
             List<Room> rooms, List<XYZ> endPoints, ResultsSummary resultsSummary,
             bool mapAllStartsToAllEnds)
@@ -319,8 +248,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             List<XYZ> inputStartPoints = null;
             List<XYZ> inputEndPoints = null;
 
-            // generate full lists of start and end points mapped to one another.  
-            // This is for testing purposes, the API option to do this mapping is likely more efficient for this case.
+            // mapAllStartsToAllEnds: manual cross-product for testing; CreateMapped is preferred in production.
             if (mapAllStartsToAllEnds)
             {
                 var allSourcePointsMappedToEnds = new List<XYZ>();
@@ -347,19 +275,9 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
                 !mapAllStartsToAllEnds);
         }
 
-        /// <summary>
-        ///     Wraps all calls to PathOfTravel.Create() with multiple start/ends.
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="viewPlan"></param>
-        /// <param name="startPoints"></param>
-        /// <param name="endPoints"></param>
-        /// <param name="resultsSummary"></param>
-        /// <param name="mapAllStartsToAllEnds"></param>
         private static void GeneratePathsOfTravel(Document doc, ViewPlan viewPlan, List<XYZ> startPoints,
             List<XYZ> endPoints, ResultsSummary resultsSummary, bool mapAllStartsToAllEnds)
         {
-            // Performance monitoring
             var stopwatch = Stopwatch.StartNew();
 
             using (var t = new Transaction(doc, "Generate paths of travel"))
@@ -397,21 +315,12 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             resultsSummary.ElapsedMilliseconds = stopwatch.ElapsedMilliseconds;
         }
 
-        /// <summary>
-        ///     Generates paths of travel from points in one room to many target locations using the slower (one-at-a-time) method.
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="viewPlan"></param>
-        /// <param name="room"></param>
-        /// <param name="endPoints"></param>
-        /// <param name="resultsSummary"></param>
         private static void GeneratePathsOfTravelForOneRoomManyDoors(Document doc, ViewPlan viewPlan, Room room,
             List<XYZ> endPoints, ResultsSummary resultsSummary)
         {
             var sourcePoints = GetRoomNearCornerPoints(room);
             resultsSummary.NumSourcePoints += sourcePoints.Count;
 
-            // generate paths
 
             using (var t = new Transaction(doc, "Generate paths of travel"))
             {
@@ -428,25 +337,12 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             }
         }
 
-        /// <summary>
-        ///     Generates paths of travel from points in one room to a single target location using the slower (one-at-a-time)
-        ///     method.
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="viewPlan"></param>
-        /// <param name="room"></param>
-        /// <param name="endPoint"></param>
-        /// <param name="resultsSummary"></param>
         private static void GeneratePathsOfTravelForOneRoomOneDoor(Document doc, ViewPlan viewPlan, Room room,
             XYZ endPoint, ResultsSummary resultsSummary)
         {
             GeneratePathsOfTravelForOneRoomManyDoors(doc, viewPlan, room, new List<XYZ> { endPoint }, resultsSummary);
         }
 
-        /// <summary>
-        ///     Displays the results from a run of path of travel creation using a TaskDialog.
-        /// </summary>
-        /// <param name="resultsSummary"></param>
         private static void ShowResults(ResultsSummary resultsSummary)
         {
             var ci = new CultureInfo("en-us");
@@ -473,9 +369,6 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             td.Show();
         }
 
-        /// <summary>
-        ///     A selection filter that accepts selection of door elements only.
-        /// </summary>
         private class DoorSelectionFilter : ISelectionFilter
         {
             public bool AllowElement(Element element)
@@ -489,9 +382,6 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             }
         }
 
-        /// <summary>
-        ///     A selection filter that accepts selection of room elements only.
-        /// </summary>
         private class RoomSelectionFilter : ISelectionFilter
         {
             public bool AllowElement(Element element)
@@ -505,9 +395,6 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             }
         }
 
-        /// <summary>
-        ///     Class that aggregates the results of the path of travel creation for later display and/or logging.
-        /// </summary>
         private class ResultsSummary
         {
             private readonly List<PathOfTravelCalculationStatus> m_failuresFound =

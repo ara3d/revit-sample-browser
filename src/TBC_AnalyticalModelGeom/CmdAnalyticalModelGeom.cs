@@ -29,24 +29,11 @@ namespace BuildingCoder
     internal class CmdAnalyticalModelGeom : IExternalCommand
     {
 #if USING_ANALYTICAL_MODEL_BEFORE_REVIT_2023
-        /// <summary>
-        ///     A list of all analytical curve types.
-        /// </summary>
         private static readonly IEnumerable<AnalyticalCurveType>
             CurveTypes = Enum.GetValues(typeof(AnalyticalCurveType))
                 .Cast<AnalyticalCurveType>();
 #endif // USING_ANALYTICAL_MODEL_BEFORE_REVIT_2023
-
-        /// <summary>
-        ///     Offset at which to create a model curve copy
-        ///     of all analytical model curves.
-        /// </summary>
         private static readonly XYZ Offset = new(100, 0, 0);
-
-        /// <summary>
-        ///     Translation transformation to apply to create
-        ///     model curve copy of analytical model curves.
-        /// </summary>
         //static Transform _t = Transform.get_Translation( _offset ); // 2013
         private static readonly Transform T = Transform.CreateTranslation(Offset); // 2014
 

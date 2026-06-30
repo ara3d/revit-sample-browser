@@ -26,10 +26,6 @@ namespace BuildingCoder
 {
     public static class JtBoundingBoxXyzExtensionMethods
         {
-            /// <summary>
-            ///     Make this bounding box empty by setting the
-            ///     Min value to plus infinity and Max to minus.
-            /// </summary>
             public static void Clear(
                 this BoundingBoxXYZ bb)
             {
@@ -38,10 +34,6 @@ namespace BuildingCoder
                 bb.Max = -bb.Min;
             }
     
-            /// <summary>
-            ///     Expand the given bounding box to include
-            ///     and contain the given point.
-            /// </summary>
             public static void ExpandToContain(
                 this BoundingBoxXYZ bb,
                 XYZ p)
@@ -55,10 +47,6 @@ namespace BuildingCoder
                     Math.Max(bb.Max.Z, p.Z));
             }
     
-            /// <summary>
-            ///     Expand the given bounding box to include
-            ///     and contain the given points.
-            /// </summary>
             public static void ExpandToContain(
                 this BoundingBoxXYZ bb,
                 IEnumerable<XYZ> pts)
@@ -74,10 +62,6 @@ namespace BuildingCoder
                     pts.Max<XYZ, double>(p => p.Z)));
             }
     
-            /// <summary>
-            ///     Expand the given bounding box to include
-            ///     and contain the given other one.
-            /// </summary>
             public static void ExpandToContain(
                 this BoundingBoxXYZ bb,
                 BoundingBoxXYZ other)

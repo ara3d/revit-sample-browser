@@ -30,9 +30,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        /// <summary>
-        ///     The path to this add-in assembly.
-        /// </summary>
         private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
@@ -47,9 +44,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Sets up the add-in panel for this sample.
-        /// </summary>
         private void CreateScheduleToHtmlPanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("Schedule To HTML");
@@ -65,22 +59,12 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             SetIconsForPushButton(duplicateAllPb, Resources.ScheduleExport);
         }
 
-        /// <summary>
-        ///     Utility for adding icons to the button.
-        /// </summary>
-        /// <param name="button">The push button.</param>
-        /// <param name="icon">The icon.</param>
         private static void SetIconsForPushButton(PushButton button, Icon icon)
         {
             button.LargeImage = GetStdIcon(icon);
             button.Image = GetSmallIcon(icon);
         }
 
-        /// <summary>
-        ///     Gets the standard sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetStdIcon(Icon icon)
         {
             return Imaging.CreateBitmapSourceFromHIcon(
@@ -89,11 +73,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
                 BitmapSizeOptions.FromEmptyOptions());
         }
 
-        /// <summary>
-        ///     Gets the small sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetSmallIcon(Icon icon)
         {
             var smallIcon = new Icon(icon, new Size(16, 16));

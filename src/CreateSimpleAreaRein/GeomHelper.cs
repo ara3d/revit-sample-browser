@@ -10,29 +10,15 @@ using Ara3D.RevitSampleBrowser.Common.Parameters;
 using Ara3D.RevitSampleBrowser.Common.Structural;
 namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 {
-    /// <summary>
-    ///     provide utility method to get geometry data for
-    ///     creating AreaReinforcement on wall or floor
-    /// </summary>
     public class GeomHelper
     {
         private Document m_currentDoc; //active document
 
-        /// <summary>
-        ///     constructor, initialize m_currentDoc
-        /// </summary>
         public GeomHelper()
         {
             m_currentDoc = Command.CommandData.Application.ActiveUIDocument.Document;
         }
 
-        /// <summary>
-        ///     get necessary data when create AreaReinforcement on a straight wall
-        /// </summary>
-        /// <param name="wall">wall on which to create AreaReinforcemen</param>
-        /// <param name="refer">reference of the vertical straight face on the wall</param>
-        /// <param name="curves">curves compose the vertical face of the wall</param>
-        /// <returns>is successful</returns>
         public bool GetWallGeom(Wall wall, ref Reference refer, ref IList<Curve> curves)
         {
             var faces = SampleBrowserUtils.GetFaces(wall);
@@ -42,7 +28,6 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             var locLine = locCurve.Curve as Line;
             if (null == locLine) return false;
 
-            //get the face reference
             foreach (Face face in faces)
             {
                 if (ParameterAccess.IsParallel(face, locLine))
@@ -77,13 +62,6 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             return AreaReinforcementHelper.IsRectangular(curves);
         }
 
-        /// <summary>
-        ///     get necessary data when create AreaReinforcement on a horizontal floor
-        /// </summary>
-        /// <param name="floor">floor on which to create AreaReinforcemen</param>
-        /// <param name="refer">reference of the horizontal face on the floor</param>
-        /// <param name="curves">curves compose the horizontal face of the floor</param>
-        /// <returns>is successful</returns>
         public bool GetFloorGeom(Floor floor, ref Reference refer, ref IList<Curve> curves)
         {
             //get horizontal face reference

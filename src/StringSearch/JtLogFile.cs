@@ -29,9 +29,6 @@ using System.IO;
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 {
-  /// <summary>
-  /// Helper class to manage a log file.
-  /// </summary>
   class JtLogFile : IDisposable
   {
     string _path;
@@ -58,9 +55,6 @@ namespace Ara3D.RevitSampleBrowser.StringSearch.CS
       _sw.Dispose();
     }
 
-    /// <summary>
-    /// Log a new entry to the file.
-    /// </summary>
     public void Log( string s )
     {
       _sw.WriteLine( s );

@@ -78,6 +78,3 @@ namespace BuildingCoder
         }
     }
 }
-
-// Z:\a\doc\revit\blog\zip\tmp\example_revit.rvt
-// Z:\j\tmp\rvt\rac_2014_empty.rvt

@@ -33,11 +33,6 @@ namespace BuildingCoder
 
         [DllImport("user32.dll")]
         private static extern int ReleaseDC(IntPtr hwnd);
-
-        /// <summary>
-        ///     Determine the current display
-        ///     horizontal dots per inch.
-        /// </summary>
         internal static float DpiX
         {
             get

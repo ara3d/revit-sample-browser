@@ -17,34 +17,31 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
         {
             try
             {
-                // Check commandData parameter.
                 if (null == commandData) return Result.Failed;
 
                 SlabData revitDatas = null;
                 try
                 {
-                    // The Datas for UI.
                     revitDatas = new SlabData(commandData.Application);
                 }
                 catch (NullReferenceException e)
                 {
                     message = e.Message;
-                    return Result.Cancelled; // Data error.
+                    return Result.Cancelled;
                 }
 
-                // Display form.
                 using (var displayForm = new FoundationSlabForm(revitDatas))
                 {
                     if (displayForm.ShowDialog() == DialogResult.OK)
-                        return Result.Succeeded; // Create foundation slabs successfully.
+                        return Result.Succeeded;
                 }
 
-                return Result.Cancelled; // Cancel creation.
+                return Result.Cancelled;
             }
             catch (Exception e)
             {
                 message = e.Message;
-                return Result.Failed; // Unknow error.
+                return Result.Failed;
             }
         }
     }

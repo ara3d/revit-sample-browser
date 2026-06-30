@@ -23,14 +23,7 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     List dimensions for a quadrilateral wall with
-    ///     openings. In this algorithm, we collect all
-    ///     the faces with parallel normal vectors and
-    ///     calculate the maximal distance between any
-    ///     two pairs of them. This is the wall dimension
-    ///     in that direction.
-    /// </summary>
+    // Max distance between parallel face pairs in each normal direction.
     [Transaction(TransactionMode.ReadOnly)]
     internal class CmdWallDimensions : IExternalCommand
     {

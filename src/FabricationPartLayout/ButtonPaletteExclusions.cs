@@ -32,9 +32,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         return Result.Failed;
                     }
 
-                    // get all loaded fabrication services
                     var allLoadedServices = config.GetAllLoadedServices();
-                    // get the "ADSK - HVAC:Supply Air" service
                     var serviceName = "ADSK - HVAC: Supply Air";
                     var selectedService = allLoadedServices.FirstOrDefault(x => x.Name == serviceName);
 
@@ -51,7 +49,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     var rectangularPaletteIndex = -1;
                     var roundPaletteIndex = -1;
 
-                    // find Rectangular and Round palettes in service
                     for (var i = 0; i < selectedService.PaletteCount; i++)
                     {
                         if (selectedService.GetPaletteName(i) == rectangularPaletteName) rectangularPaletteIndex = i;
@@ -63,7 +60,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                     if (rectangularPaletteIndex > -1)
                     {
-                        // exclude square bend in Rectangular palette
                         for (var i = 0; i < selectedService.GetButtonCount(rectangularPaletteIndex); i++)
                             if (selectedService.GetButton(rectangularPaletteIndex, i).Name == excludeButtonName)
                             {
@@ -77,7 +73,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         return Result.Failed;
                     }
 
-                    // exclude entire Round Bought Out service palette
                     if (roundPaletteIndex > -1)
                     {
                         selectedService.SetServicePaletteExclusions(new List<int> { roundPaletteIndex });

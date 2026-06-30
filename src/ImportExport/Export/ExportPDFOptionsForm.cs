@@ -5,19 +5,10 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Data class which stores information of lower priority for exporting PDF format.
-    /// </summary>
     public partial class ExportPdfOptionsForm : Form
     {
-        /// <summary>
-        ///     ExportPDFData object
-        /// </summary>
         private readonly ExportPdfData m_data;
 
-        /// <summary>
-        ///     ExportPDFOptionsForm constructor
-        /// </summary>
         public ExportPdfOptionsForm(ExportPdfData data)
         {
             m_data = data;
@@ -25,9 +16,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Initialize();
         }
 
-        /// <summary>
-        ///     Initialize controls
-        /// </summary>
         private void Initialize()
         {
             checkBoxCombineViews.Checked = m_data.Combine;

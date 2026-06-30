@@ -7,9 +7,6 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 {
-    /// <summary>
-    ///     trigger when view data updated
-    /// </summary>
     public delegate void UpdateViewDelegate();
 
     /// <summary>
@@ -17,26 +14,13 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
     /// </summary>
     public interface IGraphicsData
     {
-        /// <summary>
-        ///     region of 3D view data
-        /// </summary>
         RectangleF Region { get; }
 
-        /// <summary>
-        ///     2D lines
-        /// </summary>
-        /// <returns></returns>
         List<PointF[]> PointCurves();
 
-        /// <summary>
-        ///     view data update
-        /// </summary>
         event UpdateViewDelegate UpdateViewEvent;
     }
 
-    /// <summary>
-    ///     abstract class include general members
-    /// </summary>
     public abstract class GraphicsDataBase : IGraphicsData
     {
         /// <summary>
@@ -49,53 +33,25 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
         /// </summary>
         public const double Rotateangle = Math.PI / 90;
 
-        /// <summary>
-        ///     origin define
-        /// </summary>
         protected double[,] Origin = { { 1.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
-        /// <summary>
-        ///     origin max define
-        /// </summary>
         protected XYZ OriginMax = new XYZ(double.MinValue, double.MinValue, double.MinValue);
 
-        /// <summary>
-        ///     origin min define
-        /// </summary>
         protected XYZ OriginMin = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
 
-        /// <summary>
-        ///     3D max point after transfered
-        /// </summary>
         protected XYZ TransferedMax;
 
-        /// <summary>
-        ///     3D min point after transfered
-        /// </summary>
         protected XYZ TransferedMin;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
         public GraphicsDataBase()
         {
             Initialize();
         }
 
-        /// <summary>
-        ///     update view event
-        /// </summary>
         public virtual event UpdateViewDelegate UpdateViewEvent;
 
-        /// <summary>
-        ///     point curves function
-        /// </summary>
-        /// <returns>the points list of curves</returns>
         public abstract List<PointF[]> PointCurves();
 
-        /// <summary>
-        ///     rectangular region of 3D view data
-        /// </summary>
         public RectangleF Region
         {
             get
@@ -114,9 +70,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             }
         }
 
-        /// <summary>
-        ///     initialize some member data
-        /// </summary>
         protected void Initialize()
         {
             var initangle = Math.PI / 4;
@@ -127,9 +80,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             TransferedMin = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
         }
 
-        /// <summary>
-        ///     trigger updata view event
-        /// </summary>
         public virtual void UpdataData()
         {
             UpdateViewEvent();
@@ -148,11 +98,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             UpdataData();
         }
 
-        /// <summary>
-        ///     rotate 3*3 matrix around Z axis
-        /// </summary>
-        /// <param name="origin">matrix to rotate</param>
-        /// <param name="angle"></param>
         private void RotateZ(ref double[,] origin, double angle)
         {
             var sin = Math.Sin(angle);
@@ -175,11 +120,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             UpdataData();
         }
 
-        /// <summary>
-        ///     rotate 3*3 matrix around Y axis
-        /// </summary>
-        /// <param name="origin">matrix to rotate</param>
-        /// <param name="angle"></param>
         private void RotateY(ref double[,] origin, double angle)
         {
             var sin = Math.Sin(angle);
@@ -202,11 +142,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             UpdataData();
         }
 
-        /// <summary>
-        ///     rotate 3*3 matrix around X axis
-        /// </summary>
-        /// <param name="origin">matrix to rotate</param>
-        /// <param name="angle"></param>
         private void RotateX(ref double[,] origin, double angle)
         {
             var sin = Math.Sin(angle);
@@ -217,18 +152,12 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
         }
     }
 
-    /// <summary>
-    ///     datasource that can bind to PictureBox3D
-    /// </summary>
     public class GraphicsData : GraphicsDataBase
     {
         private readonly List<PointF[]> m_curves2D;
         private readonly List<List<XYZ>> m_originCurves;
         private readonly List<List<XYZ>> m_transferedCurves;
 
-        /// <summary>
-        ///     constructor to initialize member data
-        /// </summary>
         public GraphicsData()
         {
             m_originCurves = new List<List<XYZ>>();
@@ -236,24 +165,13 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             m_curves2D = new List<PointF[]>();
         }
 
-        /// <summary>
-        ///     update view event
-        /// </summary>
         public override event UpdateViewDelegate UpdateViewEvent;
 
-        /// <summary>
-        ///     curves array
-        /// </summary>
-        /// <returns></returns>
         public override List<PointF[]> PointCurves()
         {
             return m_curves2D;
         }
 
-        /// <summary>
-        ///     insert curves array into datasource
-        /// </summary>
-        /// <param name="points">points compose the curve</param>
         public void InsertCurve(List<XYZ> points)
         {
             m_originCurves.Add(points);
@@ -264,9 +182,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             }
         }
 
-        /// <summary>
-        ///     update 3D view data
-        /// </summary>
         public override void UpdataData()
         {
             TransferedMin = TransferRotate(OriginMin);
@@ -320,11 +235,6 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
                 pnt.Z < OriginMin.Z ? pnt.Z : OriginMin.Z);
         }
 
-        /// <summary>
-        ///     rotate points with origion matrix
-        /// </summary>
-        /// <param name="point"></param>
-        /// <returns></returns>
         private XYZ TransferRotate(XYZ point)
         {
             var x = point.X;
@@ -353,17 +263,8 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
         }
     }
 
-    /// <summary>
-    ///     utility class provide arithmetic of matrix
-    /// </summary>
     public class MatrixArith
     {
-        /// <summary>
-        ///     multiply cross two matrix
-        /// </summary>
-        /// <param name="m1">left matrix</param>
-        /// <param name="m2">right matrix</param>
-        /// <returns>result matrix</returns>
         public static double[,] MultiCross(double[,] m1, double[,] m2)
         {
             var result = new double[3, 3];

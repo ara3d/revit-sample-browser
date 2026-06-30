@@ -8,9 +8,6 @@ using Ara3D.RevitSampleBrowser.Common.Documents;
 using Ara3D.RevitSampleBrowser.CreateBeamSystem.CS;
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
-    /// <summary>
-    ///     represent a geometry segment line
-    /// </summary>
     public class Line2D
     {
         private PointF m_endPnt; // end point
@@ -18,10 +15,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
         private PointF m_normal; // normal of the line; start point to end point
         private PointF m_startPnt; // start point
 
-        /// <summary>
-        ///     constructor
-        ///     default StartPoint = (0.0, 0.0), EndPoint = (1.0, 0.0)
-        /// </summary>
         public Line2D()
         {
             m_startPnt.X = 0.0f;
@@ -32,11 +25,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             CalculateBoundingBox();
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="startPnt">StartPoint</param>
-        /// <param name="endPnt">EndPoint</param>
         public Line2D(PointF startPnt, PointF endPnt)
         {
             m_startPnt = startPnt;
@@ -45,15 +33,8 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             CalculateBoundingBox();
         }
 
-        /// <summary>
-        ///     rectangle box contains the line
-        /// </summary>
         public RectangleF BoundingBox { get; private set; }
 
-        /// <summary>
-        ///     start point of the line; if it is set to new value,
-        ///     EndPoint is changeless; Length, Normal and BoundingBox will updated
-        /// </summary>
         public PointF StartPnt
         {
             get => m_startPnt;
@@ -67,10 +48,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             }
         }
 
-        /// <summary>
-        ///     end point of the line; if it is set to new value,
-        ///     StartPoint is changeless; Length, Normal and BoundingBox will updated
-        /// </summary>
         public PointF EndPnt
         {
             get => m_endPnt;
@@ -84,10 +61,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             }
         }
 
-        /// <summary>
-        ///     Length of the line; if it is set to new value,
-        ///     StartPoint and Normal is changeless; EndPoint and BoundingBox will updated
-        /// </summary>
         public float Length
         {
             get => m_length;
@@ -101,10 +74,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             }
         }
 
-        /// <summary>
-        ///     Normal of the line; if it is set to new value,
-        ///     StartPoint is changeless; EndPoint and BoundingBox will updated
-        /// </summary>
         public PointF Normal
         {
             get => m_normal;
@@ -118,14 +87,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             }
         }
 
-        /// <summary>
-        ///     get an interval point on the line of the segment
-        /// </summary>
-        /// <param name="rate">
-        ///     rate of length from interval to StartPoint
-        ///     to length from EndPoint to interval
-        /// </param>
-        /// <returns>interval point</returns>
         public PointF GetIntervalPoint(float rate)
         {
             var result = new PointF
@@ -136,10 +97,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             return result;
         }
 
-        /// <summary>
-        ///     scale the segment according to the center of the segment
-        /// </summary>
-        /// <param name="rate">rate to scale</param>
         public void Scale(float rate)
         {
             var startPnt = GetIntervalPoint((1.0f - rate) / 2.0f);
@@ -149,10 +106,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             CalculateLength();
         }
 
-        /// <summary>
-        ///     parallelly shift the line
-        /// </summary>
-        /// <param name="distance">distance</param>
         public void Shift(float distance)
         {
             var moveSize = new SizeF(-distance * m_normal.Y, distance * m_normal.X);
@@ -160,35 +113,18 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             m_endPnt += moveSize;
         }
 
-        /// <summary>
-        ///     creates an instance of the GeometryLine class that is identical to the current GeometryLine
-        /// </summary>
-        /// <returns>created GeometryLine</returns>
         public Line2D Clone()
         {
             var cloned = new Line2D(m_startPnt, m_endPnt);
             return cloned;
         }
 
-        /// <summary>
-        ///     find the number of intersection points for two segments
-        /// </summary>
-        /// <param name="line0">first line</param>
-        /// <param name="line1">second line</param>
-        /// <returns>number of intersection points; 0, 1, or 2</returns>
         public static int FindIntersection(Line2D line0, Line2D line1)
         {
             var intersectPnt = new PointF[2];
             return FindIntersection(line0, line1, ref intersectPnt);
         }
 
-        /// <summary>
-        ///     find the intersection points of two segments
-        /// </summary>
-        /// <param name="line0">first line</param>
-        /// <param name="line1">second line</param>
-        /// <param name="intersectPnt">0, 1 or 2 intersection points</param>
-        /// <returns>number of intersection points; 0, 1, or 2</returns>
         public static int FindIntersection(Line2D line0, Line2D line1, ref PointF[] intersectPnt)
         {
             // segments p0 + s * d0 for s in [0, 0], p1 + t * d1 for t in [0, 1]
@@ -241,9 +177,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             return imax;
         }
 
-        /// <summary>
-        ///     calculate BoundingBox according to StartPoint and EndPoint
-        /// </summary>
         private void CalculateBoundingBox()
         {
             var x1 = m_endPnt.X;
@@ -260,18 +193,12 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             BoundingBox = new RectangleF(x1, y1, width, height);
         }
 
-        /// <summary>
-        ///     calculate length by StartPoint and EndPoint
-        /// </summary>
         private void CalculateLength()
         {
             m_length =
                 (float)Math.Sqrt(Math.Pow(m_startPnt.X - m_endPnt.X, 2) + Math.Pow(m_startPnt.Y - m_endPnt.Y, 2));
         }
 
-        /// <summary>
-        ///     calculate Direction by StartPoint and EndPoint
-        /// </summary>
         private void CalculateDirection()
         {
             CalculateLength();
@@ -279,18 +206,12 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             m_normal.Y = (m_endPnt.Y - m_startPnt.Y) / m_length;
         }
 
-        /// <summary>
-        ///     calculate EndPoint by StartPoint, Length and Direction
-        /// </summary>
         private void CalculateEndPoint()
         {
             m_endPnt.X = m_startPnt.X + m_length * m_normal.X;
             m_endPnt.Y = m_startPnt.Y + m_length * m_normal.Y;
         }
 
-        /// <summary>
-        ///     calculate StartPoint by EndPoint, Length and Direction
-        /// </summary>
         private void CalculateStartPoint()
         {
             m_startPnt.X = m_endPnt.X - m_length * m_normal.X;

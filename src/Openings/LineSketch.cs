@@ -5,17 +5,10 @@ using System.Drawing.Drawing2D;
 
 namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
-    /// <summary>
-    ///     sketch line and any tag on it
-    /// </summary>
     public class LineSketch : ObjectSketch
     {
         private readonly Line2D m_line = new Line2D(); // geometry line to draw
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="line"></param>
         public LineSketch(Line2D line)
         {
             m_line = line;
@@ -24,11 +17,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             Pen.Width = 1f;
         }
 
-        /// <summary>
-        ///     draw the line
-        /// </summary>
-        /// <param name="g">drawing object</param>
-        /// <param name="translate">translation between drawn sketch and geometry object</param>
         public override void Draw(Graphics g, Matrix translate)
         {
             Transform = translate;

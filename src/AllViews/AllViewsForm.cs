@@ -7,12 +7,6 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.AllViews.CS
 {
-    /// <summary>
-    ///     This is a dialog should appear that contains the following:
-    ///     A tree view represents all the views' names.
-    ///     A list of all title blocks.
-    ///     An edit box for the sheet's name.
-    /// </summary>
     public partial class AllViewsForm : Form
     {
         public bool InvalidViewport = true;
@@ -31,10 +25,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
 
         public ViewportRotation SetRotation = ViewportRotation.None;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="data"></param>
         public AllViewsForm(ViewsMgr data)
         {
             m_data = data;
@@ -55,21 +45,16 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
                 setLabelOffsetYTextBox.Enabled = false;
                 setLabelLineLengthTextBox.Enabled = false;
 
-                //BoxOutline
                 getMinBoxOutlineTextBox.Text = "";
                 getMaxBoxOutlineTextBox.Text = "";
 
-                //LabelOutline
                 getMinLabelOutlineTextBox.Text = "";
                 getMaxLabelOutlineTextBox.Text = "";
 
-                //LabelLineOffset
                 getLabelLineOffsetTextBox.Text = "";
 
-                //LabelLineLength
                 getLabelLineLengthTextBox.Text = "";
 
-                //Others
                 getBoxCenterTextBox.Text = "";
                 getOrientationTtextBox.Text = "";
             }
@@ -85,21 +70,16 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
                 setLabelOffsetYTextBox.Enabled = true;
                 setLabelLineLengthTextBox.Enabled = true;
 
-                //BoxOutline
                 getMinBoxOutlineTextBox.Text = $"({GetMinBoxOutline.X}, {GetMinBoxOutline.Y})";
                 getMaxBoxOutlineTextBox.Text = $"({GetMaxBoxOutline.X}, {GetMaxBoxOutline.Y})";
 
-                //LabelOutline
                 getMinLabelOutlineTextBox.Text = $"({GetMinLabelOutline.X}, {GetMinLabelOutline.Y})";
                 getMaxLabelOutlineTextBox.Text = $"({GetMaxLabelOutline.X}, {GetMaxLabelOutline.Y})";
 
-                //LabelLineOffset
                 getLabelLineOffsetTextBox.Text = $"({GetLabelLineOffset.X}, {GetLabelLineOffset.Y})";
 
-                //LabelLineLength
                 getLabelLineLengthTextBox.Text = GetLabelLineLength.ToString();
 
-                //Others
                 getBoxCenterTextBox.Text = $"({GetBoxCenter.X}, {GetBoxCenter.Y})";
                 getOrientationTtextBox.Text = GetOrientation.ToString();
             }
@@ -150,11 +130,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             CheckNode(e.Node, e.Node.Checked);
         }
 
-        /// <summary>
-        ///     Select title block to generate sheet.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void titleBlocksListBox_MouseClick(object sender, MouseEventArgs e)
         {
             var idx = titleBlocksListBox.SelectedIndex;

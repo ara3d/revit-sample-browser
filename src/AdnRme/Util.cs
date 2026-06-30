@@ -89,17 +89,11 @@ namespace AdnRme
       return s;
     }
 
-    /// <summary>
-    /// Format a real number and return its string representation.
-    /// </summary>
     public static string RealString( double a )
     {
       return a.ToString( "0.##" );
     }
 
-    /// <summary>
-    /// Return a description string for a given element.
-    /// </summary>
     public static string ElementDescription( Element e )
     {
       string description = ( null == e.Category )
@@ -112,9 +106,6 @@ namespace AdnRme
       return description;
     }
 
-    /// <summary>
-    /// Return a description string including element id for a given element.
-    /// </summary>
     public static string ElementDescriptionAndId( Element e )
     {
       string description = e.GetType().Name;
@@ -130,9 +121,6 @@ namespace AdnRme
       return string.Format( "{0} <{1}>", description, identity );
     }
 
-    /// <summary>
-    /// Return an element description string for an electrical system browser leaf node.
-    /// </summary>
     public static string BrowserDescription( Element e )
     {
       FamilyInstance inst = e as FamilyInstance;
@@ -143,27 +131,16 @@ namespace AdnRme
     #region Message
     const string _caption = "Revit MEP API Sample";
 
-    /// <summary>
-    /// MessageBox wrapper for informational message.
-    /// </summary>
-    /// <param name="msg"></param>
     public static void InfoMsg( string msg )
     {
       WinForms.MessageBox.Show( msg, _caption, WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Information );
     }
 
-    /// <summary>
-    /// MessageBox wrapper for error message.
-    /// </summary>
-    /// <param name="msg"></param>
     public static void ErrorMsg( string msg )
     {
       WinForms.MessageBox.Show( msg, _caption, WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Error );
     }
 
-    /// <summary>
-    /// MessageBox wrapper for question message.
-    /// </summary>
     public static bool QuestionMsg( string msg )
     {
       return WinForms.DialogResult.Yes
@@ -172,9 +149,6 @@ namespace AdnRme
     #endregion // Message
 
     #region Parameter Access
-    /// <summary>
-    /// Helper to get a specific parameter by name.
-    /// </summary>
     static Parameter GetParameterFromName( Element elem, string name )
     {
       foreach( Parameter p in elem.Parameters )
@@ -289,11 +263,6 @@ namespace AdnRme
     #endregion // Parameter Access
 
     #region HVAC Element Access
-    /// <summary>
-    /// Retrieve all supply air terminals from given document.
-    /// Select all family instance elements of BuiltInCategory 
-    /// OST_DuctTerminal with system type equal to suppy air.
-    /// </summary>
     public static FilteredElementCollector GetSupplyAirTerminals( Document doc )
     {
       FilteredElementCollector collector = new FilteredElementCollector( doc );
@@ -325,9 +294,6 @@ namespace AdnRme
       return collector;
     }
 
-    /// <summary>
-    /// Retrieve all spaces in given document.
-    /// </summary>
     public static List<Space> GetSpaces( Document doc )
     {
       FilteredElementCollector collector 
@@ -356,10 +322,6 @@ namespace AdnRme
     #endregion // HVAC Element Access
 
     #region Electrical Element Access
-    /// <summary>
-    /// Return all elements of the requested class i.e. System.Type
-    /// matching the given built-in category in the active document.
-    /// </summary>
     public static FilteredElementCollector GetElementsOfType(
       Document doc,
       Type type,
@@ -374,10 +336,6 @@ namespace AdnRme
       return collector;
     }
 
-    /// <summary>
-    /// Retrieve all electrical equipment elements in the given document,
-    /// identified by the built-in category OST_ElectricalEquipment.
-    /// </summary>
     public static List<Element> GetElectricalEquipment( 
       Document doc )
     {
@@ -390,9 +348,6 @@ namespace AdnRme
       return new List<Element>( collector.ToElements() );
     }
 
-    /// <summary>
-    /// Retrieve all electrical system elements in the given document.
-    /// </summary>
     public static IList<Element> GetElectricalSystems( Document doc )
     {
       FilteredElementCollector collector = new FilteredElementCollector( doc );
@@ -401,10 +356,8 @@ namespace AdnRme
     }
 
     /// <summary>
-    /// Retrieve all circuit elements in current active document, 
-    /// which we identify as all family instance or electrical system
-    /// elements with a non-empty RBS_ELEC_CIRCUIT_NUMBER or "Circuit Number" 
-    /// parameter.
+    /// Circuit elements: family instances or electrical systems with a non-empty circuit number.
+    /// Prepends class filters because parameter access is slow.
     /// </summary>
     public static IList<Element> GetCircuitElements( Document doc )
     {
@@ -461,10 +414,6 @@ namespace AdnRme
       return c;
     }
 
-    /// <summary>
-    /// Return the one and only project information element using Revit 2009 filtering
-    /// by searching for the "Project Information" category. Only one such element exists.
-    /// </summary>
     public static Element GetProjectInfoElem( Document doc )
     {
       //Filter filterCategory = app.Create.Filter.NewCategoryFilter( BuiltInCategory.OST_ProjectInformation );

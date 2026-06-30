@@ -37,10 +37,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
     {
         private readonly PointCloudEngineType m_type;
 
-        /// <summary>
-        ///     Constructs a new instance of the engine.
-        /// </summary>
-        /// <param name="type">The type of point cloud served by this engine instance.</param>
         public BasicPointCloudEngine(PointCloudEngineType type)
         {
             m_type = type;

@@ -28,10 +28,6 @@ namespace BuildingCoder
     {
         #region Create Various Solids
 
-        /// <summary>
-        ///     Create and return a solid sphere
-        ///     with a given radius and centre point.
-        /// </summary>
         public static Solid CreateSphereAt(
             XYZ centre,
             double radius)
@@ -42,7 +38,6 @@ namespace BuildingCoder
             var frame = new Frame(centre, XYZ.BasisX,
                 XYZ.BasisY, XYZ.BasisZ);
 
-            // Create a vertical half-circle loop 
             // that must be in the frame location.
 
             var arc = Arc.Create(
@@ -66,11 +61,6 @@ namespace BuildingCoder
                     0, 2 * Math.PI);
         }
 
-        /// <summary>
-        ///     Create and return a cylinder
-        ///     with a given origin, radius and axis.
-        ///     Very similar to CreateCone!
-        /// </summary>
         public static Solid CreateCylinder(
             XYZ origin,
             XYZ axis_vector,
@@ -107,11 +97,6 @@ namespace BuildingCoder
             return cone;
         }
 
-        /// <summary>
-        ///     Create a cone-shaped solid at the given base
-        ///     location pointing along the given axis.
-        ///     Very similar to CreateCylinder!
-        /// </summary>
         public static Solid CreateCone(
             XYZ center,
             XYZ axis_vector,
@@ -158,10 +143,6 @@ namespace BuildingCoder
             //}
         }
 
-        /// <summary>
-        ///     Create a rotated arc shape for
-        ///     https://forums.autodesk.com/t5/revit-api-forum/create-simple-solid-with-createrevolvedgeometry/m-p/10052114
-        /// </summary>
         public static Solid CreateArcSolid(Arc arc)
         {
             var p = arc.GetEndPoint(0);
@@ -187,20 +168,12 @@ namespace BuildingCoder
                     loops, 0, 2 * Math.PI);
         }
 
-        /// <summary>
-        ///     Create and return a cube of
-        ///     side length d at the origin.
-        /// </summary>
         private static Solid CreateCube(double d)
         {
             return CreateRectangularPrism(
                 XYZ.Zero, d, d, d);
         }
 
-        /// <summary>
-        ///     Create and return a rectangular prism of the
-        ///     given side lengths centered at the given point.
-        /// </summary>
         private static Solid CreateRectangularPrism(
             XYZ center,
             double d1,
@@ -230,13 +203,6 @@ namespace BuildingCoder
                     XYZ.BasisZ, d3, options);
         }
 
-        /// <summary>
-        ///     Create and return a solid representing
-        ///     the bounding box of the input solid.
-        ///     Assumption: aligned with Z axis.
-        ///     Written, described and tested by Owen Merrick for
-        ///     http://forums.autodesk.com/t5/revit-api-forum/create-solid-from-boundingbox/m-p/6592486
-        /// </summary>
         public static Solid CreateSolidFromBoundingBox(
             Solid inputSolid)
         {

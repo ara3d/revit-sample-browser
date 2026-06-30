@@ -24,36 +24,20 @@ using UserControl = System.Windows.Controls.UserControl;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 {
-    /// <summary>
-    ///     Interaction logic for ViewMigrationToBim360.xaml
-    /// </summary>
     public partial class ViewMigrationToBim360 : UserControl
     {
-        /// <summary>
-        ///     The view for <see cref="MigrationToBim360" />
-        /// </summary>
         public ViewMigrationToBim360(MigrationToBim360 sampleContext)
         {
             DataContext = sampleContext;
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Update progress for uploading process.
-        /// </summary>
-        /// <param name="status">Text prompt to indicate the process</param>
-        /// <param name="progress">The percentage progress, from 0 to 100</param>
         public void UpdateUploadingProgress(string status, int progress)
         {
             lbUploadStatus.Content = status;
             pbUploading.Value = progress;
         }
 
-        /// <summary>
-        ///     Update progress for reloading process
-        /// </summary>
-        /// <param name="status">Text prompt to indicate the process</param>
-        /// <param name="progress">The percentage progress, from 0 to 100</param>
         public void UpdateReloadingProgress(string status, int progress)
         {
             lbReloadStatus.Content = status;

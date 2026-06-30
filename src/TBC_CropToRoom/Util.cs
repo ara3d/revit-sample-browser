@@ -5,14 +5,10 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_CropToRoom sample.</summary>
     internal static partial class Util
     {
         private static int _cropToRoomIndex = -1;
 
-        /// <summary>
-        ///     Increment and return the current room index.
-        /// </summary>
         internal static int BumpRoomIndex(int room_count)
         {
             ++_cropToRoomIndex;
@@ -21,9 +17,6 @@ namespace BuildingCoder
             return _cropToRoomIndex;
         }
 
-        /// <summary>
-        ///     Set 3D view section box to selected element extents.
-        /// </summary>
         internal static void CropToRoomSectionBox(UIDocument uidoc)
         {
             var doc = uidoc.Document;
@@ -63,9 +56,6 @@ namespace BuildingCoder
             (view as View3D).SetSectionBox(myBox);
         }
 
-        /// <summary>
-        ///     Return true if element is outside of view crop box.
-        /// </summary>
         internal static bool IsElementOutsideCropBox(Element e, View v)
         {
             var rc = v.CropBoxActive;

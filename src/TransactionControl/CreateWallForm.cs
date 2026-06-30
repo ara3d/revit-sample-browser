@@ -8,25 +8,12 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
 {
-    /// <summary>
-    ///     A Form used to create a wall
-    /// </summary>
     public partial class CreateWallForm : Form
     {
-        /// <summary>
-        ///     A reference to the external command data.
-        /// </summary>
         private readonly ExternalCommandData m_commandData;
 
-        /// <summary>
-        ///     The created wall
-        /// </summary>
         private Wall m_createdWall;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">the external command data</param>
         public CreateWallForm(ExternalCommandData commandData)
         {
             InitializeComponent();
@@ -34,15 +21,8 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             Initialize();
         }
 
-        /// <summary>
-        ///     The created wall
-        /// </summary>
         public Wall CreatedWall => m_createdWall;
 
-        /// <summary>
-        ///     do some initialization work: get all levels and wall types in active document
-        ///     and add them to combo box
-        /// </summary>
         private void Initialize()
         {
             //add levels to combo box levelsComboBox
@@ -79,12 +59,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             }
         }
 
-        /// <summary>
-        ///     try to create a wall. if failed, keep this dialog,
-        ///     otherwise, close it.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             try

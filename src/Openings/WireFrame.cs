@@ -11,29 +11,14 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
     /// </summary>
     public class WireFrame : ObjectSketch
     {
-        /// <summary>
-        ///     ratio of margin to canvas width
-        /// </summary>
         private const float Marginratio = 0.1f;
 
         //construct function
-        /// <summary>
-        ///     The default constructor
-        /// </summary>
-        /// <param name="line3Ds">a list contain all the line in WireFrame</param>
         public WireFrame(ReadOnlyCollection<Line3D> line3Ds)
         {
             Frame3DTo2D(line3Ds);
         }
 
-        /// <summary>
-        ///     draw the line contain in m_lines in 2d Preview
-        /// </summary>
-        /// <param name="previewWidth">Width of Preview</param>
-        /// <param name="previewHeigh">Heigh of Preview</param>
-        /// ///
-        /// <param name="graphics">Graphics to draw</param>
-        /// <returns></returns>
         public void Draw2D(float previewWidth, float previewHeigh, Graphics graphics)
         {
             graphics.Clear(Color.Black);
@@ -44,28 +29,16 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             }
         }
 
-        /// <summary>
-        ///     draw override method
-        /// </summary>
-        /// <param name="g">graphics object</param>
-        /// <param name="translate">matrix use to transform points or vectors</param>
         public override void Draw(Graphics g, Matrix translate)
         {
         }
 
-        /// <summary>
-        ///     calculate the transform between canvas and geometry objects
-        /// </summary>
         private void CalculateTransform(float previewWidth, float previewHeigh)
         {
             var plgpts = CalculateCanvasRegion(previewWidth, previewHeigh);
             Transform = new Matrix(BoundingBox, plgpts);
         }
 
-        /// <summary>
-        ///     get the display region, adjust the proportion and location
-        /// </summary>
-        /// <returns>upper-left, upper-right, and lower-left corners of the rectangle </returns>
         private PointF[] CalculateCanvasRegion(float previewWidth, float previewHeigh)
         {
             // get the area without margin
@@ -100,9 +73,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return plgpts;
         }
 
-        /// <summary>
-        ///     transform 3d point to 2d (if all points in the same plane)
-        /// </summary>
         private void Frame3DTo2D(ReadOnlyCollection<Line3D> line3Ds)
         {
             const double lengthEpsilon = 0.01;

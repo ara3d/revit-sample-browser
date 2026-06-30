@@ -20,22 +20,16 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-                // Create a new transaction
                 var tran = new Transaction(document, "GeometryCreation_BooleanOperation");
                 tran.Start();
 
-                // Create an object that is responsible for creating the solids
                 var geometryCreation = GeometryCreation.GetInstance(commandData.Application.Application);
-
-                // Create an object that is responsible for displaying the solids
                 var avf = AnalysisVisualizationFramework.GetInstance(document);
 
-                // Create a CSG tree solid
                 CsgTree(geometryCreation, avf);
 
                 tran.Commit();
 
-                // Set the view which display the solid active
                 commandData.Application.ActiveUIDocument.ActiveView =
                     document.GetElements<View>().First(e => e.Name == "CSGTree");
 
@@ -48,11 +42,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
             }
         }
 
-        /// <summary>
-        ///     Prepare 5 solids materials for CSG tree
-        /// </summary>
-        /// <param name="geometrycreation">The object that is responsible for creating the solids</param>
-        /// <returns>The solids materials list</returns>
         private static List<Solid> PrepareSolids(GeometryCreation geometrycreation) => new()
         {
             geometrycreation.CreateCenterbasedBox(XYZ.Zero, 25),
@@ -62,27 +51,14 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
             geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, GeometryCreation.CylinderDirection.BasisZ)
         };
 
-        /// <summary>
-        ///     Create a constructive solid geometry - CSG tree
-        ///     http://en.wikipedia.org/wiki/Constructive_solid_geometry
-        ///     http://en.wikipedia.org/wiki/File:Csg_tree.png
-        /// </summary>
-        /// <param name="geometrycreation">The object that is responsible for creating the solids</param>
-        /// <param name="avf">The object that is responsible for displaying the solids</param>
+        // CSG tree: https://en.wikipedia.org/wiki/Constructive_solid_geometry
         private static void CsgTree(GeometryCreation geometrycreation, AnalysisVisualizationFramework avf)
         {
             var materialSolids = PrepareSolids(geometrycreation);
 
-            // Operation 1 : Intersect
             var csgTreeSolid1 = materialSolids[0].Intersect(materialSolids[1]);
-
-            // Operation 2 : Union
             var csgTreeSolid2 = materialSolids[2].Union(materialSolids[3]);
-            
-            // Operation 3 : Union
             csgTreeSolid2.Union(materialSolids[4]);
-
-            // Operation 4 : Difference
             csgTreeSolid1.Difference(csgTreeSolid2);
 
             avf.PaintSolid(csgTreeSolid1, "CSGTree");

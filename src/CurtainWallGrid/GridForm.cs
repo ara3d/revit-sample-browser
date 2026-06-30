@@ -18,25 +18,16 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
     /// </summary>
     public partial class GridForm : Form
     {
-        // stores the Ctrl key status: if Ctrl is down, the value of the variable true; otherwise false
         private bool m_ctrlKeyDown;
 
-        // store the mouse location of last execution operation (happened when the mouse clicks down)
         private Point m_lastPoint = Point.Empty;
 
         // store whether the line to be moved has been selected
         // if the line to be moved has been selected, it's true; otherwise false
         private bool m_lineToMoveSelected;
 
-        // store the document of this sample
         private readonly MyDocument m_myDocument;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="myDoc">
-        ///     store the document of this sample
-        /// </param>
         public GridForm(MyDocument myDoc)
         {
             m_myDocument = myDoc;
@@ -46,9 +37,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             InitializeCustomComponent();
         }
 
-        /// <summary>
-        ///     initialize the special UI controls which needed to be initialized manually
-        /// </summary>
         private void InitializeCustomComponent()
         {
             // moniter the sample message change status
@@ -95,7 +83,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 gridDrawing.MouseInGridEvent += Drawing_MouseInGridEvent;
                 gridDrawing.MouseOutGridEvent += Drawing_MouseOutGridEvent;
                 gridDrawing.Boundary = curtainGridPictureBox.ClientRectangle;
-                // get the midpoint of the canvas region
                 var rectLocation = gridDrawing.Boundary.Location;
                 var rectWidth = gridDrawing.Boundary.Width;
                 var rectHeight = gridDrawing.Boundary.Height;
@@ -106,9 +93,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             }
         }
 
-        /// <summary>
-        ///     update the status hints in the status strip
-        /// </summary>
         private void m_myDocument_MessageChanged()
         {
             //if it's an error / warning message, set the color of the text to red
@@ -122,15 +106,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             statusStrip.Refresh();
         }
 
-        /// <summary>
-        ///     initialize the Windows Form's appearance
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void GridForm_Load(object sender, EventArgs e)
         {
             viewComboBox.SelectedIndex = 0;
@@ -240,15 +215,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             m_myDocument.WallGeometry.Drawing.Draw(e.Graphics, Pens.Blue);
         }
 
-        /// <summary>
-        ///     clear the baseline in the canvas area
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void clearButton_Click(object sender, EventArgs e)
         {
             // clear the baseline of the curtain wall
@@ -276,7 +242,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             // if the wall has been created, return directly
             if (m_myDocument.WallCreated) return;
 
-            // create the wall
             var wall = m_myDocument.WallGeometry.CreateCurtainWall();
             if (null == wall) return;
             m_myDocument.CurtainWall = wall;
@@ -294,9 +259,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             operationStatusLabel.Text = "Switch to \"Curtain Grid\" tab page to manipulate the curtain grid.";
         }
 
-        /// <summary>
-        ///     the mouse is out of the curtain grid area, change the cursor to default
-        /// </summary>
         private void Drawing_MouseOutGridEvent()
         {
             if (false == m_myDocument.WallCreated) return;
@@ -305,9 +267,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             Cursor = Cursors.Default;
         }
 
-        /// <summary>
-        ///     the mouse moves into the curtain grid area, change the cursor to cross
-        /// </summary>
         private void Drawing_MouseInGridEvent()
         {
             if (false == m_myDocument.WallCreated) return;
@@ -331,15 +290,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             if (false == m_myDocument.WallCreated) mainTabControl.SelectedIndex = 0;
         }
 
-        /// <summary>
-        ///     the user changes the tab page, update the data in the active tab page
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             // if the curtain wall hasn't been created, doesn't allow to change the tab page
@@ -360,41 +310,21 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
                 ResetLineOpApprearances();
 
-                // update the status hint
                 operationStatusLabel.ForeColor = Color.Black;
                 operationStatusLabel.Text = "Switch to \"Curtain Grid\" tab page to manipulate the curtain grid.";
             }
         }
 
-        /// <summary>
-        ///     redraw the curtain grid canvas
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void curtainGridPictureBox_Paint(object sender, PaintEventArgs e)
         {
             m_myDocument.GridGeometry.Drawing.DrawCurtainGrid(e.Graphics);
         }
 
-        /// <summary>
-        ///     the user specifies a grid operation / grid line operation
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void lineOperationsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_myDocument.ActiveOperation = (LineOperation)lineOperationsComboBox.SelectedItem;
             switch (m_myDocument.ActiveOperation.OpType)
             {
-                // update the status hints for the different grid/grid line operations
                 case LineOperationType.AddULine:
                     operationStatusLabel.ForeColor = Color.Black;
                     operationStatusLabel.Text = "Specify a point within the curtain grid to locate new grid line";
@@ -440,9 +370,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             }
         }
 
-        /// <summary>
-        ///     reset the curtain grid operation to "Waiting"
-        /// </summary>
         private void ResetLineOpApprearances()
         {
             // the user doesn't hold Ctrl key down
@@ -460,20 +387,12 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             curtainGridPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     reload the properties of the curtain grid
-        /// </summary>
         private void UpdatePropertyGrid()
         {
             m_myDocument.GridGeometry.ReloadGridProperties();
             curtainGridPropertyGrid.SelectedObject = m_myDocument.GridGeometry.GridProperties;
         }
 
-        /// <summary>
-        ///     the user clicks on the curtain grid canvas, executes the grid operation / grid line operation
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void curtainGridPictureBox_MouseClick(object sender, MouseEventArgs e)
         {
             switch (m_myDocument.ActiveOperation.OpType)
@@ -509,7 +428,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                     // the 1st time, select a grid line to move
                     if (false == m_lineToMoveSelected)
                     {
-                        // get the line which will be moved
                         var lineObtained = m_myDocument.GridGeometry.GetLineToBeMoved();
                         if (lineObtained)
                         {
@@ -559,15 +477,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             }
         }
 
-        /// <summary>
-        ///     move the mouse in the curtain grid canvas, select the grid line / segment
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void curtainGridPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             if (LineOperationType.Waiting == m_myDocument.ActiveOperation.OpType) return;
@@ -604,7 +513,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 // the 1st time is to select a grid line to move
                 // the 2nd time is to determine the destination place for the selected grid line
                 case LineOperationType.MoveLine when false == m_lineToMoveSelected:
-                    // get the line which will be moved
                     m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
                     m_myDocument.GridGeometry.Drawing.SelectLine(e.Location, true, false);
                     curtainGridPictureBox.Refresh();
@@ -633,51 +541,20 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             }
         }
 
-        /// <summary>
-        ///     when Ctrl key keeps down, don't set the operation to "default" after an operation finished
-        ///     for example, if the selected operation is "Add U grid line" and the Ctrl key keeps down
-        ///     after the user draws a U line, he can continue to draw another line, as long as the Ctrl is down
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void GridForm_KeyDown(object sender, KeyEventArgs e)
         {
             // "e.KeyValue == 17" return true only when "Ctrl" presses down
             if (e.KeyValue == 17) m_ctrlKeyDown = true;
         }
 
-        /// <summary>
-        ///     reset the CtrlKeyDown flag to false, indicating that the Ctrl key is no longer down
-        ///     so the "continuous" operations will be stopped
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void GridForm_KeyUp(object sender, KeyEventArgs e)
         {
             // "e.KeyValue == 17" return true only when "Ctrl" presses down
             if (e.KeyValue == 17) m_ctrlKeyDown = false;
         }
 
-        /// <summary>
-        ///     the user presses the "ESC" key, quit the current operation
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void mainTabControl_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // check whether the key is"ESC" key (for "ESC" key: e.KeyChar == 27)
             if (e.KeyChar != (char)27) return;
             if (mainTabControl.SelectedTab == curtainWallTabPage)
             {
@@ -697,38 +574,17 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             }
         }
 
-        /// <summary>
-        ///     the user clicks the "Exit" button, quit the dialog
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void exitButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     the user clicks the "Exit" button, quit the dialog
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void gridExitButton_Click(object sender, EventArgs e)
         {
             Close();
         }
     } // end of class
 
-    /// <summary>
-    ///     lists all the supported line operations in this sample
-    /// </summary>
     public enum LineOperationType
     {
         Waiting,
@@ -743,35 +599,17 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         DeleteAllMullions
     }
 
-    /// <summary>
-    ///     stores the specified line operation
-    /// </summary>
     public struct LineOperation
     {
         // the current line operation type
 
-        /// <summary>
-        ///     the current line operation type
-        /// </summary>
         public LineOperationType OpType { get; }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="type">
-        ///     the current line operation type
-        /// </param>
         public LineOperation(LineOperationType type)
         {
             OpType = type;
         }
 
-        /// <summary>
-        ///     convert to string
-        /// </summary>
-        /// <returns>
-        ///     the result string
-        /// </returns>
         public override string ToString()
         {
             var resultString = string.Empty;

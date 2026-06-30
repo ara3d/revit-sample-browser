@@ -9,23 +9,13 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class shows how to compute the length and angle data of curtain panels
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class SetLengthAngleParams : IExternalCommand
     {
-        /// <summary>
-        ///     The Revit application instance
-        /// </summary>
         private Application m_app;
 
-        /// <summary>
-        ///     The active Revit document
-        /// </summary>
         private Document m_doc;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -52,11 +42,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Get all the panel instances from a divided surface
-        /// </summary>
-        /// <param name="ds">The divided surface with some panels</param>
-        /// <returns>A list containing all the panel instances</returns>
         private List<FamilyInstance> GetFamilyInstances(DividedSurface ds)
         {
             var fiList = new List<FamilyInstance>();
@@ -72,11 +57,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
             return fiList;
         }
 
-        /// <summary>
-        ///     Get all the edges from the given family instance
-        /// </summary>
-        /// <param name="familyInstance">The family instance with some edges</param>
-        /// <returns>Edges of the family instance</returns>
         private EdgeArray GetEdges(FamilyInstance familyInstance)
         {
             var opt = m_app.Create.NewGeometryOptions();
@@ -130,11 +110,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
             return null;
         }
 
-        /// <summary>
-        ///     Compute the length and angle data of the edges, then update the parameters with these values
-        /// </summary>
-        /// <param name="edge_ar">The edges of the curtain panel</param>
-        /// <param name="instParams">The parameters which records the length and angle data</param>
         private void SetParams(EdgeArray edgeAr, InstParameters instParams)
         {
             var length4 = 0d;
@@ -171,12 +146,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
             instParams["Angle4"].Set(angle4);
         }
 
-        /// <summary>
-        ///     Compute the angle between two edges
-        /// </summary>
-        /// <param name="edgeA">The 1st edge</param>
-        /// <param name="edgeB">The 2nd edge</param>
-        /// <returns>The angle of the 2 edges</returns>
         private double AngleBetweenEdges(Edge edgeA, Edge edgeB)
         {
             XYZ vectorA = null;
@@ -215,11 +184,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
             return angle;
         }
 
-        /// <summary>
-        ///     Get all the parameters and store them into a list
-        /// </summary>
-        /// <param name="familyInstance">The instance of a curtain panel</param>
-        /// <returns>A list containing all the required parameters</returns>
         private InstParameters GetParams(FamilyInstance familyInstance)
         {
             var iParams = new InstParameters();
@@ -267,18 +231,10 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
         }
     }
 
-    /// <summary>
-    ///     This class contains a dictionary which stores the parameter and parameter name pairs
-    /// </summary>
     public class InstParameters
     {
         private readonly Dictionary<string, Parameter> m_parameters = new Dictionary<string, Parameter>(8);
 
-        /// <summary>
-        ///     Get/Set the parameter by its name
-        /// </summary>
-        /// <param name="index">the name of the parameter</param>
-        /// <returns>The parameter which matches the name</returns>
         public Parameter this[string index]
         {
             get => m_parameters[index];

@@ -39,9 +39,6 @@ namespace AdnRme
   public class CmdAssignFlowToTerminals : IExternalCommand
   {
     #region Get Terminals Per Space
-    /// <summary>
-    /// Helper class for sorting the spaces by space number before listing them
-    /// </summary>
     class NumericalComparer : IComparer<string>
     {
       public int Compare( string x, string y )

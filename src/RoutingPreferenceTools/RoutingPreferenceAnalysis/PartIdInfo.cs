@@ -12,11 +12,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
     /// </summary>
     public class PartIdInfo
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="groupType"></param>
-        /// <param name="ids"></param>
         public PartIdInfo(RoutingPreferenceRuleGroupType groupType, IList<ElementId> ids)
         {
             Id = new List<ElementId>();
@@ -70,11 +65,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             return fittingName;
         }
 
-        /// <summary>
-        ///     Fitting name
-        /// </summary>
-        /// <param name="document"></param>
-        /// <returns></returns>
         private string GetFittingNames(Document document)
         {
             var fittingNames = "";

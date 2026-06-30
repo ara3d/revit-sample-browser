@@ -17,15 +17,8 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
     /// </summary>
     public class LevelConverter : TypeConverter
     {
-        /// <summary>
-        ///     To store the levels element
-        /// </summary>
         private static readonly Dictionary<string, Level> Levels = new Dictionary<string, Level>();
 
-        /// <summary>
-        ///     Initialize the levels data.
-        /// </summary>
-        /// <param name="levels"></param>
         public static void SetStandardValues(ReadOnlyCollection<Level> levels)
         {
             Levels.Clear();
@@ -35,11 +28,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             }
         }
 
-        /// <summary>
-        ///     Get a level by a level id.
-        /// </summary>
-        /// <param name="id">The id of the level</param>
-        /// <returns>Returns a level which id equals the specified id.</returns>
         public static Level GetLevelById(ElementId id)
         {
             return Levels[id.ToString()];
@@ -140,10 +128,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         private static readonly Dictionary<string, FootPrintRoofLine> FootPrintLines =
             new Dictionary<string, FootPrintRoofLine>();
 
-        /// <summary>
-        ///     Initialize the FootPrintRoofLines data.
-        /// </summary>
-        /// <param name="footPrintRoofLines"></param>
         public static void SetStandardValues(List<FootPrintRoofLine> footPrintRoofLines)
         {
             FootPrintLines.Clear();

@@ -6,20 +6,10 @@ using Autodesk.Revit.ApplicationServices;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS
 {
-    /// <summary>
-    ///     Provide a dialog which lets user choose the operation(export or import)
-    /// </summary>
     public partial class MainForm : Form
     {
-        /// <summary>
-        ///     Data class
-        /// </summary>
         private readonly MainData m_mainData;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="mainData"></param>
         public MainForm(MainData mainData)
         {
             m_mainData = mainData;
@@ -27,16 +17,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             radioButtonExport.Checked = true;
             comboBoxExport.Enabled = true;
             comboBoxImport.Enabled = false;
-            //Append formats to be exported or imported
             InitializeFormats();
         }
 
-        /// <summary>
-        ///     Append formats to be exported or imported
-        /// </summary>
         private void InitializeFormats()
         {
-            // Append formats to be exported
             comboBoxExport.Items.Add("DWG");
             comboBoxExport.Items.Add("DXF");
             comboBoxExport.Items.Add("SAT");
@@ -48,8 +33,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             if (m_mainData.Is3DView) comboBoxExport.Items.Add("FBX");
             comboBoxExport.Items.Add("IMAGE");
             comboBoxExport.SelectedIndex = 0;
-
-            // Append formats to be imported
             comboBoxImport.Items.Add("DWG");
             if (!m_mainData.Is3DView) comboBoxImport.Items.Add("IMAGE");
 
@@ -60,11 +43,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             comboBoxImport.SelectedIndex = 0;
         }
 
-        /// <summary>
-        ///     Show the export/import dialog
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
             var selectedFormat = string.Empty;

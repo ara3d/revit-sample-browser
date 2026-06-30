@@ -6,27 +6,16 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
-    /// <summary>
-    ///     A class inherit from Form is used to list all the door family exist in current project and
-    ///     initialize each door type's Left/Right feature.
-    /// </summary>
     public partial class InitializeForm : Form
     {
         private DoorGeometry m_currentGraphic;
         private readonly DoorSwingData m_dataBuffer;
 
-        /// <summary>
-        ///     constructor without any argument.
-        /// </summary>
         private InitializeForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     constructor overload.
-        /// </summary>
-        /// <param name="dataBuffer"> one reference of DoorSwingData.</param>
         public InitializeForm(DoorSwingData dataBuffer) : this()
         {
             m_dataBuffer = dataBuffer;
@@ -43,25 +32,14 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                 customizeDoorOpeningDataGridView.Rows[0].Selected = true;
         }
 
-        /// <summary>
-        ///     Preview door's geometry when user select one door family in customizeDoorOpeningDataGridView.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void customizeDoorOpeningDataGridView_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             var selectedDoorFamily = customizeDoorOpeningDataGridView.Rows[e.RowIndex].DataBoundItem as DoorFamily;
             m_currentGraphic = selectedDoorFamily.Geometry;
 
-            // update the dialog box's display.
             previewPictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     PreviewBox redraw.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void previewPictureBox_Paint(object sender, PaintEventArgs e)
         {
             // do nothing.
@@ -69,9 +47,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 
             // The object of Graphics to draw sketch.
             var graphics = e.Graphics;
-            // Get the element bounding box's rectangle area.
             var doorGeoRectangleF = m_currentGraphic.Bbox2D;
-            // Get the display rectangle area of PreviewBox.
             RectangleF displayRectangleF = previewPictureBox.DisplayRectangle;
 
             // Calculate the draw area according to the size of the sketch: Adjust the shrink to change borders
@@ -94,7 +70,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             plgpts[2].X = displayRectangleF.Left;
             plgpts[2].Y = displayRectangleF.Top;
 
-            // Get the transform matrix.
             var matrix = new Matrix(doorGeoRectangleF, plgpts);
 
             // Clear the object of graphics.

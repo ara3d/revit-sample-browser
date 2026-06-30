@@ -8,20 +8,10 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Provide a dialog which provides the options for exporting dgn format
-    /// </summary>
     public partial class ExportDgnOptionsForm : Form
     {
-        /// <summary>
-        ///     data class
-        /// </summary>
         private readonly ExportDgnData m_data;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="data">Data class object</param>
         public ExportDgnOptionsForm(ExportDgnData data)
         {
             m_data = data;
@@ -29,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             InitializeControl();
         }
 
-        /// <summary>
-        ///     Initialize values and status of controls
-        /// </summary>
         private void InitializeControl()
         {
             comboBoxLayerSettings.DataSource = m_data.LayerMapping;
@@ -43,11 +30,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             checkBoxHideUnrefereceViewTag.Checked = false;
         }
 
-        /// <summary>
-        ///     OK button click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBox2DSeedFile.Text))
@@ -87,11 +69,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Close();
         }
 
-        /// <summary>
-        ///     button2DSeedFile click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void button2DSeedFile_Click(object sender, EventArgs e)
         {
             var fileName = string.Empty;
@@ -99,11 +76,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             if (result != DialogResult.Cancel) textBox2DSeedFile.Text = fileName;
         }
 
-        /// <summary>
-        ///     Show open file dialog
-        /// </summary>
-        /// <param name="returnFileName"></param>
-        /// <returns></returns>
         public static DialogResult ShowOpenDialog(ref string returnFileName)
         {
             var mainModule = Process.GetCurrentProcess().MainModule;

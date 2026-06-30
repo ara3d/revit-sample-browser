@@ -7,15 +7,8 @@ using SelectionChangedEventArgs = Autodesk.Revit.UI.Events.SelectionChangedEvent
 
 namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
-    /// <summary>
-    ///     Interaction logic for InfoWindow.xaml
-    /// </summary>
     public partial class InfoWindow : Window
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="application"></param>
         public InfoWindow()
         {
             InitializeComponent();

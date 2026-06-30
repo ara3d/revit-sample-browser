@@ -14,64 +14,28 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        ///     Used for double compare
-        /// </summary>
         private const double Epsilon = 0.000001;
 
-        /// <summary>
-        ///     Height of bottom profile
-        /// </summary>
         private readonly double m_bottomHeight = 0;
 
-        /// <summary>
-        ///     Rectangle length of bottom profile
-        /// </summary>
         private readonly double m_bottomLength = 200;
 
-        /// <summary>
-        ///     Rectangle width of bottom profile
-        /// </summary>
         private readonly double m_bottomWidth = 120;
 
-        /// <summary>
-        ///     offset of profile
-        /// </summary>
         private readonly double m_profileOffset = 10;
 
-        /// <summary>
-        ///     Revit application
-        /// </summary>
         private Application m_revitApp;
 
-        /// <summary>
-        ///     Revit document
-        /// </summary>
         private Document m_revitDoc;
 
-        /// <summary>
-        ///     Height of top profile
-        /// </summary>
         private readonly double m_topHeight = 40;
 
-        /// <summary>
-        ///     Rectangle length of top profile
-        /// </summary>
         private readonly double m_topLength = 140;
 
-        /// <summary>
-        ///     Rectangle width of top profile
-        /// </summary>
         private readonly double m_topWidth = 60;
 
-        /// <summary>
-        ///     offset of vertex on bottom profile
-        /// </summary>
         private readonly double m_vertexOffsetOnBottomProfile = 20;
 
-        /// <summary>
-        ///     offset of vertex on middle profile
-        /// </summary>
         private readonly double m_vertexOffsetOnMiddleProfile = 10;
 
         public virtual Result Execute(ExternalCommandData commandData
@@ -123,10 +87,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Create a loft form
-        /// </summary>
-        /// <returns>Created loft form</returns>
         private Form CreateLoft()
         {
             // Prepare profiles for loft creation
@@ -142,13 +102,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
             return m_revitDoc.FamilyCreate.NewLoftForm(true, profiles);
         }
 
-        /// <summary>
-        ///     Create a rectangle profile with provided length, width and height
-        /// </summary>
-        /// <param name="length">Length of the rectangle</param>
-        /// <param name="width">Width of the rectangle</param>
-        /// <param name="height">Height of the profile</param>
-        /// <returns>The created profile</returns>
         private ReferenceArray CreateProfile(double length, double width, double height)
         {
             var profile = new ReferenceArray();
@@ -180,11 +133,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
             return profile;
         }
 
-        /// <summary>
-        ///     Add profile to the loft form
-        /// </summary>
-        /// <param name="form">The loft form to be added edge</param>
-        /// <returns>Index of the added profile</returns>
         private int AddProfile(Form form)
         {
             // Get a connecting edge from the form
@@ -197,22 +145,12 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
             return form.AddProfile(connectingEdge.Reference, param);
         }
 
-        /// <summary>
-        ///     Move the profile
-        /// </summary>
-        /// <param name="form">The form contains the edge</param>
-        /// <param name="profileIndex">Index of the profile to be moved</param>
         private void MoveProfile(Form form, int profileIndex)
         {
             var offset = new XYZ(0, 0, 5);
             if (form.CanManipulateProfile(profileIndex)) form.MoveProfile(profileIndex, offset);
         }
 
-        /// <summary>
-        ///     Move the edges on profile
-        /// </summary>
-        /// <param name="form">The form contains the edge</param>
-        /// <param name="profileIndex">Index of the profile to be moved</param>
         private void MoveEdgesOnProfile(Form form, int profileIndex)
         {
             var startOfTop = new XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
@@ -241,10 +179,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
             MoveSubElement(form, r2, offset2);
         }
 
-        /// <summary>
-        ///     Move the form vertexes
-        /// </summary>
-        /// <param name="form">The form contains the vertexes</param>
         private void MoveVertexesOnBottomProfile(Form form)
         {
             var offset1 = new XYZ(-m_vertexOffsetOnBottomProfile, -m_vertexOffsetOnBottomProfile, 0);
@@ -269,11 +203,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
             MoveSubElement(form, r2, offset2);
         }
 
-        /// <summary>
-        ///     Move the form vertexes on added profile
-        /// </summary>
-        /// <param name="form">The form contains the vertexes</param>
-        /// <param name="profileIndex">Index of added profile</param>
         private void MoveVertexesOnAddedProfile(Form form, int profileIndex)
         {
             var offset = new XYZ(0, m_vertexOffsetOnMiddleProfile, 0);
@@ -294,11 +223,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
             }
         }
 
-        /// <summary>
-        ///     Add edge to the loft form
-        /// </summary>
-        /// <param name="form">The loft form to be added edge</param>
-        /// <returns>Reference of the added edge</returns>
         private Reference AddEdge(Form form)
         {
             // Get two specific edges from the form
@@ -323,13 +247,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
             return GetEdgeByEndPoints(form, startOfAddedEdge, endOfAddedEdge).Reference;
         }
 
-        /// <summary>
-        ///     Get an edge from the form by its endpoints
-        /// </summary>
-        /// <param name="form">The form contains the edge</param>
-        /// <param name="startPoint">Start point of the edge</param>
-        /// <param name="endPoint">End point of the edge</param>
-        /// <returns>The edge found</returns>
         private Edge GetEdgeByEndPoints(Form form, XYZ startPoint, XYZ endPoint)
         {
             Edge edge = null;
@@ -367,12 +284,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.ManipulateForm.CS
             return edge;
         }
 
-        /// <summary>
-        ///     Move the sub element
-        /// </summary>
-        /// <param name="form">The form contains the sub element</param>
-        /// <param name="subElemReference">Reference of the sub element to be moved</param>
-        /// <param name="offset">offset to be moved</param>
         private void MoveSubElement(Form form, Reference subElemReference, XYZ offset)
         {
             if (form.CanManipulateSubElement(subElemReference)) form.MoveSubElement(subElemReference, offset);

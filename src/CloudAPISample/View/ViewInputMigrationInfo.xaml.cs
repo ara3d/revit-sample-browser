@@ -22,15 +22,8 @@ using Microsoft.Win32;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 {
-    /// <summary>
-    ///     Interaction logic for ViewInputMigrationInfo.xaml
-    /// </summary>
     public partial class ViewInputMigrationInfo : Window
     {
-        /// <summary>
-        ///     Constructor for ViewSamplePortal
-        ///     ViewSamplePortal is a child window aggregating all sample case with tabs
-        /// </summary>
         public ViewInputMigrationInfo(MigrationToBim360 sampleContext)
         {
             DataContext = sampleContext;

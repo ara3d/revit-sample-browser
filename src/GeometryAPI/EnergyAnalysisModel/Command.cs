@@ -7,11 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     this class controls the class which subscribes handle events and the events' information UI.
-    ///     like a bridge between them.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -23,15 +18,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
                 "Ara3D.RevitSampleBrowser.EnergyAnalysisModel");
             trans.Start();
-            // Create an object that is responsible for collecting users inputs and getting analysis data of current model.
             var analysisModel = new EnergyAnalysisModel(commandData.Application.ActiveUIDocument.Document);
 
-            // Create the UI for users inputs options and view analysis models.
             using (var form = new OptionsAndAnalysisForm(analysisModel))
             {
-                // make analysis data ready
                 analysisModel.Initialize();
-                // show dialog to browser analysis model
                 if (DialogResult.OK != form.ShowDialog())
                 {
                     trans.RollBack();

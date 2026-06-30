@@ -9,9 +9,6 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
 {
-    /// <summary>
-    ///     This class stores the geometry information of path reinforcement.
-    /// </summary>
     public class Profile
     {
         /// <summary>
@@ -52,11 +49,6 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         /// </summary>
         private readonly List<List<UV>> m_point2d = new List<List<UV>>();
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="pathRein">selected path reinforcement element.</param>
-        /// <param name="commandData">External command data</param>
         public Profile(Autodesk.Revit.DB.Structure.PathReinforcement pathRein, ExternalCommandData commandData)
         {
             m_pathRein = pathRein;
@@ -229,10 +221,6 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             }
         }
 
-        /// <summary>
-        ///     Get view matrix from active view.
-        /// </summary>
-        /// <returns>view matrix</returns>
         private Matrix4 GetActiveViewMatrix()
         {
             var activeView = m_commandData.Application.ActiveUIDocument.Document.ActiveView;

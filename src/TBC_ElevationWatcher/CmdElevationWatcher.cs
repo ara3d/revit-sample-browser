@@ -26,17 +26,9 @@ namespace BuildingCoder
 {
     #region ElevationWatcher using DocumentChanged event
 
-    /// <summary>
-    ///     React to elevation view creation subscribing to DocumentChanged event
-    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     internal class CmdElevationWatcher : IExternalCommand
     {
-        /// <summary>
-        ///     Keep a reference to the handler, so we know
-        ///     whether we have already registered and need
-        ///     to unregister or vice versa.
-        /// </summary>
         private static EventHandler<DocumentChangedEventArgs>
             _handler;
 
@@ -66,9 +58,6 @@ namespace BuildingCoder
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     DocumentChanged event handler
-        /// </summary>
         private static void OnDocumentChanged(
             object sender,
             DocumentChangedEventArgs e)
@@ -107,11 +96,6 @@ namespace BuildingCoder
     #endregion // ElevationWatcher using DocumentChanged event
 
     #region ElevationWatcher using DMU updater
-
-    /// <summary>
-    ///     React to elevation view creation using DMU updater
-    /// </summary>
-
 
     #endregion // ElevationWatcher using DMU updater
 

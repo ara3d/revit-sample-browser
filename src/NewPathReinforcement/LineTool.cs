@@ -6,9 +6,6 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 {
-    /// <summary>
-    ///     tool used to draw line
-    /// </summary>
     public class LineTool
     {
         private readonly Pen m_backGroundPen; // background pen used to Erase the preview line
@@ -16,9 +13,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         private readonly List<Point> m_points = new List<Point>(); // Field used to store points of a line
         private Point m_preMovePoint; // store the mouse position when mouse move in pictureBox
 
-        /// <summary>
-        ///     default constructor
-        /// </summary>
         public LineTool()
         {
             m_backGroundPen = new Pen(Color.White);
@@ -28,27 +22,15 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             Finished = false;
         }
 
-        /// <summary>
-        ///     Finished property to define whether curve was finished
-        /// </summary>
         public bool Finished { get; set; }
 
-        /// <summary>
-        ///     PointsNumber property to get the number of points stored
-        /// </summary>
         public int PointsNumber => m_points.Count;
 
-        /// <summary>
-        ///     get all lines drawn in pictureBox
-        /// </summary>
         public List<Point> GetPoints()
         {
             return m_points;
         }
 
-        /// <summary>
-        ///     clear all the points in the tool
-        /// </summary>
         public void Clear()
         {
             m_points.Clear();
@@ -69,10 +51,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             }
         }
 
-        /// <summary>
-        ///     restore the location point where mouse click
-        /// </summary>
-        /// <param name="e">mouse event args</param>
         public void OnMouseDown(MouseEventArgs e)
         {
             switch (e.Button)
@@ -88,10 +66,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             }
         }
 
-        /// <summary>
-        ///     draw lines stored in the tool
-        /// </summary>
-        /// <param name="graphic">Graphics object, use to draw geometry</param>
         public void Draw(Graphics graphic)
         {
             for (var i = 0; i < m_points.Count - 1; i++)

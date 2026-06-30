@@ -23,11 +23,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 
         private double m_transverseEndSpacing; //the spacing value of end transverse reinforcement
 
-        /// <summary>
-        ///     Constructor of the BeamFramReinMaker
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
-        /// <param name="hostObject">the host beam</param>
         public BeamFramReinMaker(ExternalCommandData commandData, FamilyInstance hostObject)
             : base(commandData, hostObject)
         {
@@ -39,29 +34,14 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             m_geometry = new BeamGeometrySupport(hostObject, geoOptions);
         }
 
-        /// <summary>
-        ///     get and set the type of the end reinforcement in the top of beam
-        /// </summary>
         public RebarBarType TopEndRebarType { get; set; }
 
-        /// <summary>
-        ///     get and set the type of the center reinforcement in the top of beam
-        /// </summary>
         public RebarBarType TopCenterRebarType { get; set; }
 
-        /// <summary>
-        ///     get and set the type of the reinforcement in the bottom of beam
-        /// </summary>
         public RebarBarType BottomRebarType { get; set; }
 
-        /// <summary>
-        ///     get and set the type of the transverse reinforcement
-        /// </summary>
         public RebarBarType TransverseRebarType { get; set; }
 
-        /// <summary>
-        ///     get and set the spacing value of end transverse reinforcement
-        /// </summary>
         public double TransverseEndSpacing
         {
             get => m_transverseEndSpacing;
@@ -72,9 +52,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             }
         }
 
-        /// <summary>
-        ///     get and set the spacing value of center transverse reinforcement
-        /// </summary>
         public double TransverseCenterSpacing
         {
             get => m_transverseCenterSpacing;
@@ -85,29 +62,15 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             }
         }
 
-        /// <summary>
-        ///     get and set the hook type of top end reinforcement
-        /// </summary>
         public RebarHookType TopHookType { get; set; }
 
-        /// <summary>
-        ///     get and set the hook type of transverse reinforcement
-        /// </summary>
         public RebarHookType TransverseHookType { get; set; }
 
-        /// <summary>
-        ///     Override method to do some further checks
-        /// </summary>
-        /// <returns>true if the the data is right and enough, otherwise false.</returns>
         protected override bool AssertData()
         {
             return base.AssertData();
         }
 
-        /// <summary>
-        ///     Display a form to collect the information for beam reinforcement creation
-        /// </summary>
-        /// <returns>true if the information collection is successful, otherwise false</returns>
         protected override bool DisplayForm()
         {
             // Display BeamFramReinMakerForm for the user to input information 
@@ -119,10 +82,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return base.DisplayForm();
         }
 
-        /// <summary>
-        ///     Override method to create rebar on the selected beam
-        /// </summary>
-        /// <returns>true if the creation is successful, otherwise false</returns>
         protected override bool FillWithBars()
         {
             //create Rebar Container
@@ -141,10 +100,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return base.FillWithBars();
         }
 
-        /// <summary>
-        ///     Create the reinforcement at the bottom of beam
-        /// </summary>
-        /// <returns>true if the creation is successful, otherwise false</returns>
         public bool FillBottomItems(RebarContainer cont)
         {
             // get the geometry information of the bottom reinforcement
@@ -156,10 +111,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return null != item;
         }
 
-        /// <summary>
-        ///     Create the transverse reinforcement
-        /// </summary>
-        /// <returns>true if the creation is successful, otherwise false</returns>
         public bool FillTransverseItems(RebarContainer cont)
         {
             // create all kinds of transverse reinforcement according to the TransverseRebarLocation
@@ -174,11 +125,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return true;
         }
 
-        /// <summary>
-        ///     Create the transverse reinforcement, according to the location of transverse bars
-        /// </summary>
-        /// <param name="location">location of rebar which need to be created</param>
-        /// <returns>the created container item, return null if the creation is unsuccessful</returns>
         public RebarContainerItem FillTransverseItem(RebarContainer cont, TransverseRebarLocation location)
         {
             // Get the geometry information which support reinforcement creation
@@ -207,12 +153,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
                 startHook, endHook);
         }
 
-        /// <summary>
-        ///     Get the hook orient of the top reinforcement
-        /// </summary>
-        /// <param name="geomInfo">the rebar geometry support information</param>
-        /// <param name="location">the location of top rebar</param>
-        /// <returns>the hook orient of the top hook</returns>
         private RebarHookOrientation GetTopHookOrient(RebarGeometry geomInfo, TopRebarLocation location)
         {
             // Top center rebar doesn't need hook.
@@ -237,10 +177,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             }
         }
 
-        /// <summary>
-        ///     Create the reinforcement at the top of beam
-        /// </summary>
-        /// <returns>true if the creation is successful, otherwise false</returns>
         private bool FillTopItems(RebarContainer cont)
         {
             // create all kinds of top reinforcement according to the TopRebarLocation
@@ -254,11 +190,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return true;
         }
 
-        /// <summary>
-        ///     Create the reinforcement at the top of beam, according to the top reinforcement location
-        /// </summary>
-        /// <param name="location">location of rebar which need to be created</param>
-        /// <returns>the created reinforcement, return null if the creation is unsuccessful</returns>
         private RebarContainerItem FillTopItem(RebarContainer cont, TopRebarLocation location)
         {
             //get the geometry information of the reinforcement

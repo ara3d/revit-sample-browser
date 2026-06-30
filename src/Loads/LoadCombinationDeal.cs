@@ -21,9 +21,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         private readonly Application m_revit; // Store the reference of revit
 
         // Methods
-        /// <summary>
-        ///     Default constructor of LoadCombinationDeal
-        /// </summary>
         public LoadCombinationDeal(Loads dataBuffer)
         {
             m_dataBuffer = dataBuffer;
@@ -81,13 +78,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             }
         }
 
-        /// <summary>
-        ///     Create new Load Combination
-        /// </summary>
-        /// <param name="name">The new Load Combination name</param>
-        /// <param name="typeIndex">The index of new Load Combination Type</param>
-        /// <param name="stateIndex">The index of new Load Combination State</param>
-        /// <returns>true if the creation was successful; otherwise, false</returns>
         public bool NewLoadCombination(string name, int typeIndex, int stateIndex)
         {
             // Define some data for creation.
@@ -163,11 +153,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             return true;
         }
 
-        /// <summary>
-        ///     Delete the selected Load Combination
-        /// </summary>
-        /// <param name="index">The selected index in the DataGridView</param>
-        /// <returns>true if the delete operation was successful; otherwise, false</returns>
         public bool DeleteCombination(int index)
         {
             // Get the name of the delete combination
@@ -203,11 +188,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             return true;
         }
 
-        /// <summary>
-        ///     Create a new load combination usage
-        /// </summary>
-        /// <param name="usageName">The new Load Usage name</param>
-        /// <returns>true if the process is successful; otherwise, false</returns>
         public bool NewLoadUsage(string usageName)
         {
             // First check whether the name has been used
@@ -247,11 +227,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             return true;
         }
 
-        /// <summary>
-        ///     Delete the selected Load Usage
-        /// </summary>
-        /// <param name="index">The selected index in the DataGridView</param>
-        /// <returns>true if the delete operation was successful; otherwise, false</returns>
         public bool DeleteUsage(int index)
         {
             // Get the delete usage

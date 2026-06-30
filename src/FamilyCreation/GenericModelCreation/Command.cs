@@ -10,28 +10,15 @@ using Document = Autodesk.Revit.DB.Document;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class show how to create Generic Model Family by Revit API.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        // FamilyItemFactory used to create family
         private FamilyItemFactory m_creationFamily;
-
-        // Count error numbers
         private int m_errCount;
-
-        // Error information
         private string m_errorInfo = "";
-
-        // the document to create generic model family
         private Document m_familyDocument;
-
-        // Application of Revit
         private Application m_revit;
 
         public Result Execute(ExternalCommandData commandData,
@@ -42,7 +29,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             {
                 m_revit = commandData.Application.Application;
                 m_familyDocument = commandData.Application.ActiveUIDocument.Document;
-                // create new family document if active document is not a family document
                 if (!m_familyDocument.IsFamilyDocument)
                 {
                     m_familyDocument = m_revit.NewFamilyDocument("Generic Model.rft");
@@ -54,7 +40,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 }
 
                 m_creationFamily = m_familyDocument.FamilyCreate;
-                // create generic model family in the document
                 CreateGenericModel();
                 if (0 == m_errCount)
                 {
@@ -71,13 +56,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Examples for form creation in generic model families.
-        ///     Create extrusion, blend, revolution, sweep, swept blend
-        /// </summary>
         public void CreateGenericModel()
         {
-            // use transaction if the family document is not active document
             var transaction = new Transaction(m_familyDocument, "CreateGenericModel");
             transaction.Start();
             CreateExtrusion();
@@ -88,9 +68,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             transaction.Commit();
         }
 
-        /// <summary>
-        ///     Create one rectangular extrusion
-        /// </summary>
         private void CreateExtrusion()
         {
             try
@@ -101,7 +78,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 var normal = XYZ.BasisZ;
                 var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
 
-                // create one rectangular extrusion
                 var p0 = XYZ.Zero;
                 var p1 = new XYZ(10, 0, 0);
                 var p2 = new XYZ(10, 10, 0);
@@ -116,9 +92,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 curveArray1.Append(line4);
 
                 curveArrArray.Append(curveArray1);
-                // here create rectangular extrusion
                 var rectExtrusion = m_creationFamily.NewExtrusion(true, curveArrArray, sketchPlane, 10);
-                // move to proper place
                 var transPoint1 = new XYZ(-16, 0, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, rectExtrusion.Id, transPoint1);
             }
@@ -129,9 +103,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Create one blend
-        /// </summary>
         private void CreateBlend()
         {
             try
@@ -142,7 +113,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 var normal = XYZ.BasisZ;
                 var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
 
-                // create one blend
                 var p00 = XYZ.Zero;
                 var p01 = new XYZ(10, 0, 0);
                 var p02 = new XYZ(10, 10, 0);
@@ -170,9 +140,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 topProfile.Append(line12);
                 topProfile.Append(line13);
                 topProfile.Append(line14);
-                // here create one blend
                 var blend = m_creationFamily.NewBlend(true, topProfile, baseProfile, sketchPlane);
-                // move to proper place
                 var transPoint1 = new XYZ(0, 11, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, blend.Id, transPoint1);
             }
@@ -183,9 +151,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Create one rectangular profile revolution
-        /// </summary>
         private void CreateRevolution()
         {
             try
@@ -196,7 +161,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 var normal = XYZ.BasisZ;
                 var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
 
-                // create one rectangular profile revolution
                 var p0 = XYZ.Zero;
                 var p1 = new XYZ(10, 0, 0);
                 var p2 = new XYZ(10, 10, 0);
@@ -214,9 +178,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
                 curveArray.Append(line4);
 
                 curveArrArray.Append(curveArray);
-                // here create rectangular profile revolution
                 var revolution1 = m_creationFamily.NewRevolution(true, curveArrArray, sketchPlane, axis1, -Math.PI, 0);
-                // move to proper place
                 var transPoint1 = new XYZ(0, 32, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, revolution1.Id, transPoint1);
             }
@@ -227,9 +189,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Create one sweep
-        /// </summary>
         private void CreateSweep()
         {
             try
@@ -254,10 +213,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
 
                 var curves = new CurveArray();
                 curves.Append(curve);
-                // here create one sweep with two arcs formed the profile
                 var sweep1 =
                     m_creationFamily.NewSweep(true, curves, sketchPlane, profile, 0, ProfilePlaneLocation.Start);
-                // move to proper place
                 var transPoint1 = new XYZ(11, 0, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, sweep1.Id, transPoint1);
             }
@@ -268,9 +225,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Create one SweptBlend
-        /// </summary>
         private void CreateSweptBlend()
         {
             try
@@ -310,10 +264,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
 
                 var normal = XYZ.BasisZ;
                 var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
-                // here create one swept blend
                 var newSweptBlend1 =
                     m_creationFamily.NewSweptBlend(true, curve, sketchPlane, bottomProfile, topProfile);
-                // move to proper place
                 var transPoint1 = new XYZ(11, 32, 0);
                 ElementTransformUtils.MoveElement(m_familyDocument, newSweptBlend1.Id, transPoint1);
             }
@@ -324,30 +276,19 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Get element by its id
-        /// </summary>
         private T GetElement<T>(long eid) where T : Element
         {
             var elementId = new ElementId(eid);
             return m_familyDocument.GetElement(elementId) as T;
         }
 
-        /// <summary>
-        ///     Create sketch plane for generic model profile
-        /// </summary>
-        /// <param name="normal">plane normal</param>
-        /// <param name="origin">origin point</param>
-        /// <returns></returns>
         public SketchPlane CreateSketchPlane(XYZ normal, XYZ origin)
         {
-            // First create a Geometry.Plane which need in NewSketchPlane() method
+            // SketchPlane.Create requires a Geometry.Plane, not just normal/origin vectors.
             var geometryPlane = Plane.CreateByNormalAndOrigin(normal, origin);
-            if (null == geometryPlane) // assert the creation is successful
+            if (null == geometryPlane)
                 throw new Exception("Create the geometry plane failed.");
-            // Then create a sketch plane using the Geometry.Plane
             var plane = SketchPlane.Create(m_familyDocument, geometryPlane);
-            // throw exception if creation failed
             if (null == plane) throw new Exception("Create the sketch plane failed.");
             return plane;
         }

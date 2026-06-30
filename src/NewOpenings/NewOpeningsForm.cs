@@ -21,18 +21,11 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         private Tool m_tool; //current using tool
         private readonly Queue<Tool> m_tools = new Queue<Tool>(); //all tool can use in pictureBox       
 
-        /// <summary>
-        ///     default constructor
-        /// </summary>
         public NewOpeningsForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="profile">ProfileWall or ProfileFloor</param>
         public NewOpeningsForm(Profile profile)
             : this()
         {
@@ -42,9 +35,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             InitTools();
         }
 
-        /// <summary>
-        ///     add tools, then use can draw by these tools in picture box
-        /// </summary>
         private void InitTools()
         {
             //wall
@@ -66,10 +56,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     use matrix to transform point
-        /// </summary>
-        /// <param name="pts">contain the points to be transform</param>
         private void TransFormPoints(Point[] pts)
         {
             var matrix = new Matrix(
@@ -78,10 +64,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             matrix.TransformPoints(pts);
         }
 
-        /// <summary>
-        ///     get four points on circle by center and one point on circle
-        /// </summary>
-        /// <param name="points">contain the center and one point on circle</param>
         private List<Vector4> GenerateCircle4Point(List<Point> points)
         {
             var rotation = new Matrix();
@@ -124,10 +106,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             return result;
         }
 
-        /// <summary>
-        ///     calculate the matrix use to scale
-        /// </summary>
-        /// <param name="size">pictureBox size</param>
         private Matrix4 ComputerScaleMatrix(Size size)
         {
             var boundPoints = m_profile.GetFaceBounds();
@@ -137,9 +115,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             return new Matrix4(factor);
         }
 
-        /// <summary>
-        ///     Calculate the matrix use to transform 3D to 2D
-        /// </summary>
         private Matrix4 Comuter3DTo2DMatrix()
         {
             var result = Matrix4.Multiply(
@@ -213,11 +188,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             m_profile.Draw2D(e.Graphics, Pens.Blue, trans);
         }
 
-        /// <summary>
-        ///     mouse event handle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void openingPictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -246,22 +216,12 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse event handle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void openingPictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             var g = openingPictureBox.CreateGraphics();
             m_tool.OnMouseUp(g, e);
         }
 
-        /// <summary>
-        ///     Mouse event handle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void openingPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             var graphics = openingPictureBox.CreateGraphics();

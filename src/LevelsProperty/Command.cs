@@ -17,9 +17,6 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
         private ExternalCommandData m_revit;
         public ForgeTypeId UnitTypeId;
 
-        /// <summary>
-        ///     Store all levels' datum in system
-        /// </summary>
         public List<LevelsDataSource> SystemLevelsDatum { get; set; }
 
         public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
@@ -70,13 +67,6 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Set Level
-        /// </summary>
-        /// <param name="levelId">Pass a Level's ID value</param>
-        /// <param name="levelName">Pass a Level's Name</param>
-        /// <param name="levelElevation">Pass a Level's Elevation</param>
-        /// <returns>True if succeed, else return false</returns>
         public bool SetLevel(ElementId levelId, string levelName, double levelElevation)
         {
             try
@@ -95,11 +85,6 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
             }
         }
 
-        /// <summary>
-        ///     Create a level
-        /// </summary>
-        /// <param name="levelName">Pass a Level's Name</param>
-        /// <param name="levelElevation">Pass a Level's Elevation</param>
         public void CreateLevel(string levelName, double levelElevation)
         {
             var newLevel = Level.Create(m_revit.Application.ActiveUIDocument.Document, levelElevation);
@@ -109,10 +94,6 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
             newLevel.Name = levelName;
         }
 
-        /// <summary>
-        ///     Delete a Level.
-        /// </summary>
-        /// <param name="idOfLevel">A Level's ID value</param>
         public void DeleteLevel(ElementId idOfLevel)
         {
             m_revit.Application.ActiveUIDocument.Document.Delete(idOfLevel);

@@ -14,14 +14,8 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
     /// </summary>
     public class BoundingBox : BoundingBoxXYZ
     {
-        /// <summary>
-        ///     store all the corner points in BoundingBox
-        /// </summary>
         private readonly List<XYZ> m_points = new List<XYZ>();
 
-        /// <summary>
-        ///     define whether we have created Model Line on this BoundingBox
-        /// </summary>
         private bool m_isCreated;
 
         /// <summary>
@@ -36,14 +30,8 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             GetCorners();
         }
 
-        /// <summary>
-        ///     property to get all the points
-        /// </summary>
         public List<XYZ> Points => m_points;
 
-        /// <summary>
-        ///     property to get width of BoundingBox (short side)
-        /// </summary>
         public double Width
         {
             get
@@ -54,9 +42,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             }
         }
 
-        /// <summary>
-        ///     property to get Length of BoundingBox (long side)
-        /// </summary>
         public double Length
         {
             get
@@ -87,9 +72,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             m_isCreated = true;
         }
 
-        /// <summary>
-        ///     get all the Corner points of Cube Box via Min and Max
-        /// </summary>
         private void GetCorners()
         {
             m_points.Add(Min);
@@ -141,7 +123,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         /// <param name="aline">a line which sketch plane pass</param>
         private SketchPlane NewSketchPlanePassLine(Line aline, UIApplication app)
         {
-            //in a cube only
             XYZ norm;
             if (aline.GetEndPoint(0).X == aline.GetEndPoint(1).X)
                 norm = new XYZ(1, 0, 0);

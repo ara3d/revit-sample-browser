@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+﻿// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Diagnostics;
@@ -10,126 +10,52 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
-    /// <summary>
-    ///     Inherited from WindowCreation class
-    /// </summary>
     public class DoubleHungWinCreation : WindowCreation
     {
-        /// <summary>
-        ///     store the Application
-        /// </summary>
         private readonly UIApplication m_application;
 
-        /// <summary>
-        ///     store the center referenceplane
-        /// </summary>
         private Autodesk.Revit.DB.ReferencePlane m_centerPlane;
 
-        /// <summary>
-        ///     store the CreateDimension instance
-        /// </summary>
         private CreateDimension m_dimensionCreator;
 
-        /// <summary>
-        ///     store the document
-        /// </summary>
         private readonly Document m_document;
 
-        /// <summary>
-        ///     store the exterior referenceplane
-        /// </summary>
         private Autodesk.Revit.DB.ReferencePlane m_exteriorPlane;
 
-        /// <summary>
-        ///     store the CreateExtrusion instance
-        /// </summary>
         private CreateExtrusion m_extrusionCreator;
 
-        /// <summary>
-        ///     store the FamilyManager
-        /// </summary>
         private readonly FamilyManager m_familyManager;
 
-        /// <summary>
-        ///     store the frame category
-        /// </summary>
         private Category m_frameCat;
 
-        /// <summary>
-        ///     store the glass category
-        /// </summary>
         private Category m_glassCat;
 
-        /// <summary>
-        ///     store the glass material ID
-        /// </summary>
         private ElementId m_glassMatId;
 
-        /// <summary>
-        ///     store the height parameter of wall
-        /// </summary>
         private double m_height;
 
-        /// <summary>
-        ///     store the right view of the document
-        /// </summary>
         private View m_rightView;
 
-        /// <summary>
-        ///     store the sash material ID
-        /// </summary>
         private ElementId m_sashMatId;
 
-        /// <summary>
-        ///     store the sash referenceplane
-        /// </summary>
         private Autodesk.Revit.DB.ReferencePlane m_sashPlane;
 
-        /// <summary>
-        ///     store the sillheight parameter of wall
-        /// </summary>
         private double m_sillHeight;
 
-        /// <summary>
-        ///     store the sill referenceplane
-        /// </summary>
         private Autodesk.Revit.DB.ReferencePlane m_sillPlane;
 
-        /// <summary>
-        ///     store the top referenceplane
-        /// </summary>
         private Autodesk.Revit.DB.ReferencePlane m_topPlane;
 
-        /// <summary>
-        ///     Store the height value of wall
-        /// </summary>
         private double m_wallHeight;
 
-        /// <summary>
-        ///     store the thickness parameter of wall
-        /// </summary>
         private double m_wallThickness;
 
-        /// <summary>
-        ///     Store the width value of wall
-        /// </summary>
         private double m_wallWidth;
 
-        /// <summary>
-        ///     store the width parameter of wall
-        /// </summary>
         private double m_width;
 
-        /// <summary>
-        ///     store the windowInset parameter of wall
-        /// </summary>
         private double m_windowInset;
 
-        /// <summary>
-        ///     constructor of DoubleHungWinCreation
-        /// </summary>
-        /// <param name="para">WizardParameter</param>
-        /// <param name="commandData">ExternalCommandData</param>
         public DoubleHungWinCreation(WizardParameter para, ExternalCommandData commandData)
             : base(para)
         {
@@ -161,15 +87,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             }
         }
 
-        /// <summary>
-        ///     The implementation of CreateFrame()
-        /// </summary>
         public override void CreateFrame()
         {
             var subTransaction = new SubTransaction(m_document);
             subTransaction.Start();
 
-            //create sash referenceplane and exterior referenceplane
             var refPlaneCreator = new CreateRefPlane();
             if (m_sashPlane == null)
                 m_sashPlane = refPlaneCreator.Create(m_document, m_centerPlane, m_rightView,
@@ -179,20 +101,18 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                     new XYZ(0, m_wallThickness / 2, 0), new XYZ(0, 0, 1), "MyExterior");
             m_document.Regenerate();
 
-            //get the wall in the document and retrieve the exterior face
             var walls = m_document.GetElements<Wall>().ToList();
             var exteriorWallFace = SampleBrowserUtils.GetWallFace(walls[0], m_rightView, true);
             if (exteriorWallFace == null)
                 return;
 
-            //add dimension between sash reference plane and wall face,and add parameter "Window Inset",label the dimension with window-inset parameter
+            // Label the sash-to-wall dimension with the Window Inset family parameter.
             var windowInsetDimension = m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, exteriorWallFace);
             var windowInsetPara =
                 m_familyManager.AddParameter("Window Inset", new ForgeTypeId(), SpecTypeId.Length, false);
             m_familyManager.Set(windowInsetPara, m_windowInset);
             windowInsetDimension.FamilyLabel = windowInsetPara;
 
-            //create the exterior frame            
             var frameCurveOffset1 = 0.075;
             var curveArr1 =
                 m_extrusionCreator.CreateRectangle(m_width / 2, -m_width / 2, m_sillHeight + m_height, m_sillHeight, 0);
@@ -205,7 +125,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             extFrame.SetVisibility(CreateVisibility());
             m_document.Regenerate();
 
-            //add alignment between wall face and exterior frame face
             exteriorWallFace =
                 SampleBrowserUtils.GetWallFace(walls[0], m_rightView,
                     true); // Get the face again as the document is regenerated.
@@ -214,13 +133,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var alignmentCreator = new CreateAlignment(m_document);
             alignmentCreator.AddAlignment(m_rightView, exteriorWallFace, exteriorExtrusionFace1);
 
-            //add dimension between sash referenceplane and exterior frame face and lock the dimension
             var extFrameWithSashPlane =
                 m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, interiorExtrusionFace1);
             extFrameWithSashPlane.IsLocked = true;
             m_document.Regenerate();
 
-            //create the interior frame                
             var frameCurveOffset2 = 0.125;
             var curveArr3 =
                 m_extrusionCreator.CreateRectangle(m_width / 2, -m_width / 2, m_sillHeight + m_height, m_sillHeight, 0);
@@ -235,18 +152,15 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             intFrame.SetVisibility(CreateVisibility());
             m_document.Regenerate();
 
-            //add alignment between interior face of wall and interior frame face
             var interiorWallFace = SampleBrowserUtils.GetWallFace(walls[0], m_rightView, false);
             var interiorExtrusionFace2 = SampleBrowserUtils.GetExtrusionFace(intFrame, m_rightView, false);
             var exteriorExtrusionFace2 = SampleBrowserUtils.GetExtrusionFace(intFrame, m_rightView, true);
             alignmentCreator.AddAlignment(m_rightView, interiorWallFace, interiorExtrusionFace2);
 
-            //add dimension between sash referenceplane and interior frame face and lock the dimension
             var intFrameWithSashPlane =
                 m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, exteriorExtrusionFace2);
             intFrameWithSashPlane.IsLocked = true;
 
-            //create the sill frame
             var sillCurs = m_extrusionCreator.CreateRectangle(m_width / 2, -m_width / 2,
                 m_sillHeight + frameCurveOffset1, m_sillHeight, 0);
             var sillCurveArray = new CurveArrArray();
@@ -255,7 +169,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 m_extrusionCreator.NewExtrusion(sillCurveArray, m_sashPlane, -m_windowInset, -m_windowInset - 0.1);
             m_document.Regenerate();
 
-            //add alignment between wall face and sill frame face
             exteriorWallFace =
                 SampleBrowserUtils.GetWallFace(walls[0], m_rightView,
                     true); // Get the face again as the document is regenerated.
@@ -263,7 +176,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             alignmentCreator.AddAlignment(m_rightView, sillExtFace, exteriorWallFace);
             m_document.Regenerate();
 
-            //set subcategories of the frames
             if (m_frameCat != null)
             {
                 extFrame.Subcategory = m_frameCat;
@@ -274,9 +186,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             subTransaction.Commit();
         }
 
-        /// <summary>
-        ///     The implementation of CreateSash(),and creating the Window Sash Solid Geometry
-        /// </summary>
         public override void CreateSash()
         {
             var frameCurveOffset1 = 0.075;
@@ -284,22 +193,18 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var sashCurveOffset = 0.075;
             var sashDepth = (frameDepth - m_windowInset) / 2;
 
-            //get the exterior view and sash referenceplane which are used in this process
             var exteriorView = m_document.GetNamedView("Exterior");
             var subTransaction = new SubTransaction(m_document);
             subTransaction.Start();
 
-            //add a middle reference plane between the top referenceplane and sill referenceplane
             var refPlaneCreator = new CreateRefPlane();
             var middlePlane = refPlaneCreator.Create(m_document, m_topPlane, exteriorView, new XYZ(0, 0, -m_height / 2),
                 new XYZ(0, -1, 0), "tempmiddle");
             m_document.Regenerate();
 
-            //add dimension between top, sill, and middle reference plane, make the dimension segment equal
             var dim = m_dimensionCreator.AddDimension(exteriorView, m_topPlane, m_sillPlane, middlePlane);
             dim.AreSegmentsEqual = true;
 
-            //create first sash           
             var curveArr5 = m_extrusionCreator.CreateRectangle(m_width / 2 - frameCurveOffset1,
                 -m_width / 2 + frameCurveOffset1, m_sillHeight + m_height / 2 + sashCurveOffset / 2,
                 m_sillHeight + frameCurveOffset1, 0);
@@ -320,7 +225,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             sashWithPlane1.IsLocked = true;
             sash1.SetVisibility(CreateVisibility());
 
-            //create second sash
             var curveArr7 = m_extrusionCreator.CreateRectangle(m_width / 2 - frameCurveOffset1,
                 -m_width / 2 + frameCurveOffset1, m_sillHeight + m_height - frameCurveOffset1,
                 m_sillHeight + m_height / 2 - sashCurveOffset / 2, 0);
@@ -342,7 +246,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_document.Regenerate();
             sashWithPlane2.IsLocked = true;
 
-            //set category of the sash extrusions
             if (m_frameCat != null)
             {
                 sash1.Subcategory = m_frameCat;
@@ -355,9 +258,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             subTransaction.Commit();
         }
 
-        /// <summary>
-        ///     The implementation of CreateGlass(), creating the Window Glass Solid Geometry
-        /// </summary>
         public override void CreateGlass()
         {
             var frameCurveOffset1 = 0.075;
@@ -365,9 +265,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var sashCurveOffset = 0.075;
             var sashDepth = (frameDepth - m_windowInset) / 2;
             var glassDepth = 0.05;
-            var glassOffsetSash = 0.05; //from the exterior of the sash
+            var glassOffsetSash = 0.05; // Offset from the exterior face of the sash.
 
-            //create first glass            
             var subTransaction = new SubTransaction(m_document);
             subTransaction.Start();
             var curveArr9 = m_extrusionCreator.CreateRectangle(m_width / 2 - frameCurveOffset1 - sashCurveOffset,
@@ -389,7 +288,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var glass1WithSashPlane = m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, eglassFace1);
             glass1WithSashPlane.IsLocked = true;
 
-            //create the second glass
             var curveArr10 = m_extrusionCreator.CreateRectangle(m_width / 2 - frameCurveOffset1 - sashCurveOffset,
                 -m_width / 2 + frameCurveOffset1 + sashCurveOffset,
                 m_sillHeight + m_height - frameCurveOffset1 - sashCurveOffset,
@@ -408,7 +306,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var glass2WithSashPlane = m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, eglassFace2);
             glass2WithSashPlane.IsLocked = true;
 
-            //set category
             if (null != m_glassCat)
             {
                 glass1.Subcategory = m_glassCat;
@@ -422,9 +319,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             subTransaction.Commit();
         }
 
-        /// <summary>
-        ///     The implementation of CreateMaterial()
-        /// </summary>
         public override void CreateMaterial()
         {
             var subTransaction = new SubTransaction(m_document);
@@ -445,9 +339,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             subTransaction.Commit();
         }
 
-        /// <summary>
-        ///     The implementation of CombineAndBuild() ,defining New Window Types
-        /// </summary>
         public override void CombineAndBuild()
         {
             var subTransaction = new SubTransaction(m_document);
@@ -462,9 +353,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             subTransaction.Commit();
         }
 
-        /// <summary>
-        ///     The implementation of Creation(), defining the way to do the whole creation.
-        /// </summary>
         public override bool Creation()
         {
             using (var trans = new Transaction(m_document, "FinishWindowWizard"))
@@ -507,16 +395,12 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             return true;
         }
 
-        /// <summary>
-        ///     The method is used to collect template information, specifying the New Window Parameters
-        /// </summary>
         private void CollectTemplateInfo()
         {
             var walls = m_document.GetElements<Wall>().ToList();
             m_wallThickness = walls[0].Width;
             var wallheightPara =
-                walls[0].get_Parameter(BuiltInParameter
-                    .WALL_USER_HEIGHT_PARAM); //paraMap.get_Item("Unconnected Height");
+                walls[0].get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM);
             if (wallheightPara != null) m_wallHeight = wallheightPara.AsDouble();
 
             var location = walls[0].Location as LocationCurve;
@@ -560,14 +444,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                         break;
                 }
 
-            //set the height,width and sillheight parameter of the opening
             m_familyManager.Set(m_familyManager.get_Parameter(BuiltInParameter.WINDOW_HEIGHT),
                 m_height);
             m_familyManager.Set(m_familyManager.get_Parameter(BuiltInParameter.WINDOW_WIDTH),
                 m_width);
             m_familyManager.Set(m_familyManager.get_Parameter("Default Sill Height"), m_sillHeight);
-
-            //get materials
 
             var elementCollector = new FilteredElementCollector(m_document);
             elementCollector.WherePasses(new ElementClassFilter(typeof(Material)));
@@ -580,14 +461,12 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 Para.FrameMaterials.Add(material.Name);
             }
 
-            //get categories
             var categories = m_document.Settings.Categories;
             var category = categories.get_Item(BuiltInCategory.OST_Windows);
 
             m_frameCat = categories.get_Item(BuiltInCategory.OST_WindowsFrameMullionProjection);
             m_glassCat = categories.get_Item(BuiltInCategory.OST_WindowsGlassProjection);
 
-            //get referenceplanes
             var planes = m_document.GetElements<Autodesk.Revit.DB.ReferencePlane>();
             foreach (var p in planes)
             {
@@ -614,11 +493,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             }
         }
 
-        /// <summary>
-        ///     the method is used to create new family type
-        /// </summary>
-        /// <param name="para">WindowParameter</param>
-        /// <returns>indicate whether the NewType is successful</returns>
         private bool NewFamilyType(WindowParameter para) 
         {
             var dbhungPara = para as DoubleHungWinPara;
@@ -654,10 +528,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             }
         }
 
-        /// <summary>
-        ///     The method is used to create a FamilyElementVisibility instance
-        /// </summary>
-        /// <returns>FamilyElementVisibility instance</returns>
         private FamilyElementVisibility CreateVisibility()
         {
             var familyElemVisibility = new FamilyElementVisibility(FamilyElementVisibilityType.Model)
@@ -672,12 +542,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             return familyElemVisibility;
         }
 
-        /// <summary>
-        ///     The method is used to create common class variables in this class
-        /// </summary>
         private void CreateCommon()
         {
-            //create common 
             m_dimensionCreator = new CreateDimension(m_application.Application, m_document);
             m_extrusionCreator = new CreateExtrusion(m_application.Application, m_document);
             m_rightView = m_document.GetNamedView("Right");

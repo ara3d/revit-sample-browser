@@ -9,16 +9,8 @@ using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
-    /// <summary>
-    ///     This class is intent to provide a model dialog in property grid control.
-    /// </summary>
     public class EdgeFormUiTypeEditor : UITypeEditor
     {
-        /// <summary>
-        ///     Return the Modal style.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
         public override UITypeEditorEditStyle GetEditStyle(
             ITypeDescriptorContext context)
         {

@@ -18,14 +18,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
     /// </summary>
     public class SheetInfo
     {
-        /// <summary>
-        ///     Excel file name, it's full path
-        /// </summary>
         private string m_fileName;
 
-        /// <summary>
-        ///     Sheet table within excel file, it's opened by sample
-        /// </summary>
         private string m_sheetName;
 
         /// <summary>
@@ -39,18 +33,12 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             m_sheetName = sheetName;
         }
 
-        /// <summary>
-        ///     Get or set the full name of spreadsheet file
-        /// </summary>
         public string FileName
         {
             get => m_fileName;
             set => m_fileName = value;
         }
 
-        /// <summary>
-        ///     Get or set the sheet name within the spreadsheet, the sheet name was mapped by Revit rooms.
-        /// </summary>
         public string SheetName
         {
             get => m_sheetName;
@@ -67,23 +55,10 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
     /// </summary>
     public sealed class EventsReactor : IDisposable
     {
-        /// <summary>
-        ///     Array of documents' hash code and mapped Excel file and opened table.
-        ///     The mapped excel and its table will be updated when events DocumentSave/SaveAs are raised.
-        ///     The update occurs only when new room was created according to excel spreadsheet.
-        /// </summary>
         private readonly Dictionary<int, SheetInfo> m_docMapDict = new Dictionary<int, SheetInfo>();
 
-        /// <summary>
-        ///     Specified log file name
-        /// </summary>
         private readonly string m_logFile;
 
-        /// <summary>
-        ///     Logging writer used to write logging to log specified log file.
-        ///     It's not recommended to access m_logWriter and call it's method, because maybe it's not initialized yet.
-        ///     Please call DumpLog to dump related logging
-        /// </summary>
         private StreamWriter m_logWriter;
 
         /// <summary>
@@ -119,22 +94,12 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             Dispose();
         }
 
-        /// <summary>
-        ///     Delegate for document save as event, it will update spreadsheet if document was mapped to spreadsheet.
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">EventArgs of this event.</param>
         public void DocumentSavingAs(object sender, DocumentSavingAsEventArgs e)
         {
             DumpLog($"Raised DocumentSavingAs -> Document: {Path.GetFileNameWithoutExtension(e.Document.Title)}");
             UpdateMappedSpreadsheet(e.Document);
         }
 
-        /// <summary>
-        ///     Delegate for document save event, it will update spreadsheet if document was mapped to spreadsheet.
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">EventArgs of this event.</param>
         public void DocumentSaving(object sender, DocumentSavingEventArgs e)
         {
             DumpLog($"Raised DocumentSaving -> Document: {Path.GetFileNameWithoutExtension(e.Document.Title)}");
@@ -163,15 +128,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             return m_docMapDict.ContainsKey(docHashcode);
         }
 
-        /// <summary>
-        ///     Get the sheet information of document.
-        /// </summary>
-        /// <param name="hashCode">The hash code of document.</param>
-        /// <param name="sheetInfo">The mapped spread file and sheet information.</param>
-        /// <returns>
-        ///     Indicates whether find the spread sheet mapped by this document.
-        ///     True if mapped spreadsheet information found, else false.
-        /// </returns>
         public bool DocMappedSheetInfo(int hashCode, ref SheetInfo sheetInfo)
         {
             return DocMonitored(hashCode) && m_docMapDict.TryGetValue(hashCode, out sheetInfo);
@@ -195,12 +151,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
         }
 
-        /// <summary>
-        ///     Update mapped spread sheet when document is about to be saved or saved as
-        ///     This method will update spread sheet room data([Area] column) with actual area value of mapped Revit Room.
-        ///     or add Revit room to spreadsheet if it is not mapped to room of spreadsheet.        ///
-        /// </summary>
-        /// <param name="activeDocument">Current active document.</param>
         private void UpdateMappedSpreadsheet(Document activeDocument)
         {
             // Programming Routines:
@@ -222,7 +172,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             // 
 
             //
-            // check which table to be updated.
             SheetInfo mappedXlsAndTable;
             var hasValue = m_docMapDict.TryGetValue(activeDocument.GetHashCode(), out mappedXlsAndTable);
             if (!hasValue || null == mappedXlsAndTable ||
@@ -240,18 +189,14 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 return;
             }
 
-            // create a connection and update values of spread sheet
             var updatedRows = 0; // number of rows which were updated
             var newRows = 0; // number of rows which were added into spread sheet
             var dbConnector = new XlsDbConnector(mappedXlsAndTable.FileName);
 
-            // check whether there is room table. 
-            // get all available rooms in current document once more
             var stepNo = -1;
             DumpLog($"{Environment.NewLine}Start to update spreadsheet room......");
             foreach (var room in roomData.Rooms)
             {
-                // check Whether We Update This Room
                 stepNo++;
                 double roomArea = 0.0f;
                 var externalId = string.Empty;
@@ -269,7 +214,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                     // if room comment is empty, use <null> for mapped room, use <Added from Revit> for not mapped room in spread sheet.
                     var bCommnetIsNull = false;
 
-                    // get comments of room
                     var param = room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
                     var comments = null != param ? param.AsString() : "";
                     if (string.IsNullOrEmpty(comments))
@@ -280,7 +224,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                         comments = "<null>";
                     }
 
-                    // create update SQL clause, 
                     // when filtering row to be updated, use Room.Id if "External Room ID" is null.
                     var updateStr =
                         $"Update [{mappedXlsAndTable.SheetName}$] SET [{RoomsData.RoomName}] = '{room.Name}', [{RoomsData.RoomNumber}] = '{room.Number}', [{RoomsData.RoomComments}] = '{comments}', [{RoomsData.RoomArea}] = '{roomArea:N3}' Where [{RoomsData.RoomId}] = {(string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId)}";
@@ -303,7 +246,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                         if (string.IsNullOrEmpty(externalId)) SetExternalRoomIdToRoomId(room);
                     }
 
-                    // Add this new room to spread sheet if fail to update spreadsheet 
                     if (bUpdateFailed)
                     {
                         // try to insert this new room to spread sheet, some rules:
@@ -326,7 +268,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                             newRows += afftectedRows;
 
                             // if the Revit room doesn't have external id value(may be a room created manually)
-                            // set its "External Room ID" value to Room.Id, because the room was added/mapped to spreadsheet, 
                             // and the value of ID column in sheet is just the Room.Id, we should keep this consistence.
                             if (string.IsNullOrEmpty(externalId)) SetExternalRoomIdToRoomId(room);
                         }
@@ -356,18 +297,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             DumpLog($"Finish updating spreadsheet room.{Environment.NewLine}");
         }
 
-        /// <summary>
-        ///     Check to see if we need to update spreadsheet data according to this Revit room.
-        ///     We don't need to update spreadsheet rooms if Revit room:
-        ///     . Which is one unplaced room.
-        ///     . The room has area which is zero.
-        ///     . Special room which doesn't have custom shared parameter at all.
-        /// </summary>
-        /// <param name="activeDocument">Current active document.</param>
-        /// <param name="roomObj">Room object to be checked.</param>
-        /// <param name="roomArea">Room area of this Revit room.</param>
-        /// <param name="externalId">The value of custom shared parameter of this room.</param>
-        /// <returns>Indicates whether it succeeded to get room area and shared parameter value.</returns>
         private static bool ValidateRevitRoom(Document activeDocument, Room room, ref double roomArea,
             ref string externalId)
         {
@@ -375,11 +304,9 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             externalId = string.Empty;
             if (null == room.Location || null == activeDocument.GetElement(room.LevelId)) return false;
 
-            // get Area of room, if converting to double value fails, skip this. 
             // if the area is zero to less than zero, skip the update too
             try
             {
-                // get area without unit, then converting it to double will be ok.
                 var areaStr = SampleBrowserUtils.GetProperty(activeDocument, room, BuiltInParameter.ROOM_AREA, false);
                 roomArea = double.Parse(areaStr);
                 if (roomArea <= double.Epsilon) return false;
@@ -399,10 +326,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             return true;
         }
 
-        /// <summary>
-        ///     Set shared parameter (whose name is "External Room ID") value to Room.Id
-        /// </summary>
-        /// <param name="room">The room used to get the room which to be updated</param>
         private static bool SetExternalRoomIdToRoomId(Room room)
         {
             try
@@ -418,9 +341,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             return false;
         }
 
-        /// <summary>
-        ///     Dump log file now
-        /// </summary>
         private void DumpLog(string strLog)
         {
             // Create writer only when there is dump

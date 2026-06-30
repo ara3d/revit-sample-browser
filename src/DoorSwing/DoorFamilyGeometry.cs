@@ -7,10 +7,6 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
-    /// <summary>
-    ///     The DoorGeometry object is used to transform Revit geometry data
-    ///     to appropriate format for GDI.
-    /// </summary>
     public class DoorGeometry
     {
         // boundingBox of the geometry. 
@@ -22,10 +18,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         // User preferences for parsing of geometry.
         private readonly Options m_options;
 
-        /// <summary>
-        ///     construct function.
-        /// </summary>
-        /// <param name="door">of which geometry data is wanted.</param>
         public DoorGeometry(Element door)
         {
             m_options = new Options
@@ -39,18 +31,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             m_bbox = door.get_BoundingBox(m_options.View);
         }
 
-        /// <summary>
-        ///     BoundingBox of the 2D geometry.
-        /// </summary>
         public RectangleF Bbox2D =>
             new RectangleF((float)m_bbox.Min.X, (float)m_bbox.Min.Y,
                 (float)(m_bbox.Max.X - m_bbox.Min.X), (float)(m_bbox.Max.Y - m_bbox.Min.Y));
 
-        /// <summary>
-        ///     Draw the line contains in m_curve3Ds in 2d Preview.Drawn as top view.
-        /// </summary>
-        /// <param name="graphics">Graphics to draw</param>
-        /// <param name="drawPen">The pen to draw curves.</param>
         public void DrawGraphics(Graphics graphics, Pen drawPen)
         {
             foreach (var points in m_curve3Ds)
@@ -65,13 +49,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
         }
 
-        /// <summary>
-        ///     Retrieve the ViewPlan corresponding to the door's level.
-        /// </summary>
-        /// <param name="door">
-        ///     one door whose level is corresponding to the retrieved ViewPlan.
-        /// </param>
-        /// <returns>One ViewPlan</returns>
         private static ViewPlan GetPlanform2DView(Element door)
         {
             var viewPlans = from elem in
@@ -82,10 +59,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             return viewPlans.Count() > 0 ? viewPlans.First() : null;
         }
 
-        /// <summary>
-        ///     iterate GeometryObject in GeometryObjectArray and generate data accordingly.
-        /// </summary>
-        /// <param name="geoEle">a geometry object of element</param>
         private void AddGeometryElement(GeometryElement geoEle)
         {
             // get all geometric primitives contained in the Geometry Element
@@ -128,10 +101,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
         }
 
-        /// <summary>
-        ///     generate data of a Curve.
-        /// </summary>
-        /// <param name="obj">a geometry object of element.</param>
         private void AddCurve(GeometryObject obj)
         {
             var curve = obj as Curve;
@@ -144,10 +113,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             m_curve3Ds.Add(points);
         }
 
-        /// <summary>
-        ///     generate data of an Edge.
-        /// </summary>
-        /// <param name="obj">a geometry object of element.</param>
         private void AddEdge(GeometryObject obj)
         {
             var edge = obj as Edge;
@@ -158,20 +123,12 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             m_curve3Ds.Add(points);
         }
 
-        /// <summary>
-        ///     generate data of a Geometry Element.
-        /// </summary>
-        /// <param name="obj">a geometry object of element.</param>
         private void AddElement(GeometryObject obj)
         {
             var geoEle = obj as GeometryElement;
             AddGeometryElement(geoEle);
         }
 
-        /// <summary>
-        ///     generate data of a Face.
-        /// </summary>
-        /// <param name="obj">a geometry object of element.</param>
         private void AddFace(GeometryObject obj)
         {
             var face = obj as Face;
@@ -181,10 +138,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             if (null != mesh) AddMesh(mesh);
         }
 
-        /// <summary>
-        ///     generate data of a Geometry Instance.
-        /// </summary>
-        /// <param name="obj">a geometry object of element.</param>
         private void AddInstance(GeometryObject obj)
         {
             var instance = obj as GeometryInstance;
@@ -193,10 +146,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             AddGeometryElement(geoElement);
         }
 
-        /// <summary>
-        ///     generate data of a Mesh.
-        /// </summary>
-        /// <param name="obj">a geometry object of element.</param>
         private void AddMesh(GeometryObject obj)
         {
             var mesh = obj as Mesh;
@@ -222,15 +171,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
         }
 
-        /// <summary>
-        ///     generate data of a Profile.
-        /// </summary>
-        /// <param name="obj">a geometry object of element.</param>
         private void AddProfile(GeometryObject obj)
         {
             var profile = obj as Profile;
 
-            // get the curves that make up the boundary of the profile.
             var curves = profile.Curves;
 
             foreach (Curve curve in curves)
@@ -239,15 +183,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
         }
 
-        /// <summary>
-        ///     generate data of a Solid.
-        /// </summary>
-        /// <param name="obj">a geometry object of element.</param>
         private void AddSolid(GeometryObject obj)
         {
             var solid = obj as Solid;
 
-            // get the faces that belong to the solid.
             var faces = solid.Faces;
 
             foreach (Face face in faces)

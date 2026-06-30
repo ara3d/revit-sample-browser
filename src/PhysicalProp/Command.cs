@@ -8,10 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
 {
-    /// <summary>
-    ///     Define a command to dump physical material properties of
-    ///     a structural element such as column, beam or brace.
-    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -49,7 +45,6 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
                 IEnumerator iter = es.ForwardIterator();
                 iter.MoveNext();
 
-                // we need verify the selected element is a family instance
                 if (!(iter.Current is FamilyInstance famIns))
                 {
                     TaskDialog.Show("Revit", "Not a type of FamilyInsance!");
@@ -57,7 +52,6 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
                     return res;
                 }
 
-                // we need select a column instance
                 foreach (Parameter p in famIns.Parameters)
                 {
                     var parName = p.Definition.Name;
@@ -79,20 +73,14 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
                     return res;
                 }
 
-                // the PHY_MATERIAL_PARAM_TYPE built in parameter contains a number 
-                // that represents the type of material
                 var materialType =
                     materialElement.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_TYPE);
 
                 var str =
                     $"Material type: {(materialType.AsInteger() == 0 ? "Generic" : materialType.AsInteger() == 1 ? "Concrete" : "Steel")}\r\n";
 
-                // A material type of more than 0 : 0 = Generic, 1 = Concrete, 2 = Steel
                 if (materialType.AsInteger() > 0)
                 {
-                    // Common to all types
-
-                    // Young's Modulus
                     var youngsModulus = new double[3];
 
                     youngsModulus[0] = materialElement.get_Parameter(
@@ -103,7 +91,6 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
                         BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD3).AsDouble();
                     str = $"{str}Young's modulus: {youngsModulus[0]},{youngsModulus[1]},{youngsModulus[2]}\r\n";
 
-                    // Poisson Modulus
                     var poissonRatio = new double[3];
 
                     poissonRatio[0] = materialElement.get_Parameter(
@@ -114,7 +101,6 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
                         BuiltInParameter.PHY_MATERIAL_PARAM_POISSON_MOD3).AsDouble();
                     str = $"{str}Poisson modulus: {poissonRatio[0]},{poissonRatio[1]},{poissonRatio[2]}\r\n";
 
-                    // Shear Modulus
                     var shearModulus = new double[3];
 
                     shearModulus[0] = materialElement.get_Parameter(
@@ -125,7 +111,6 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
                         BuiltInParameter.PHY_MATERIAL_PARAM_SHEAR_MOD3).AsDouble();
                     str = $"{str}Shear modulus: {shearModulus[0]},{shearModulus[1]},{shearModulus[2]}\r\n";
 
-                    // Thermal Expansion Coefficient
                     var thermalExpCoeff = new double[3];
 
                     thermalExpCoeff[0] = materialElement.get_Parameter(
@@ -137,53 +122,43 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
                     str =
                         $"{str}Thermal expansion coefficient: {thermalExpCoeff[0]},{thermalExpCoeff[1]},{thermalExpCoeff[2]}\r\n";
 
-                    // Unit Weight
                     var unitWeight = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_UNIT_WEIGHT).AsDouble();
                     str = $"{str}Unit weight: {unitWeight}\r\n";
 
-                    // Behavior 0 = Isotropic, 1 = Orthotropic
                     var behaviour = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_BEHAVIOR).AsInteger();
                     str = $"{str}Behavior: {behaviour}\r\n";
 
-                    // Concrete Only
                     if (materialType.AsInteger() == 1)
                     {
-                        // Concrete Compression
                         var concreteCompression = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_CONCRETE_COMPRESSION).AsDouble();
                         str = $"{str}Concrete compression: {concreteCompression}\r\n";
 
-                        // Lightweight
                         var lightWeight = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_LIGHT_WEIGHT).AsDouble();
                         str = $"{str}Lightweight: {lightWeight}\r\n";
 
-                        // Shear Strength Reduction
                         var shearStrengthReduction = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_SHEAR_STRENGTH_REDUCTION).AsDouble();
                         str = $"{str}Shear strength reduction: {shearStrengthReduction}\r\n";
                     }
-                    // Steel only
                     else if (materialType.AsInteger() == 2)
                     {
-                        // Minimum Yield Stress
                         var minimumYieldStress = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_MINIMUM_YIELD_STRESS).AsDouble();
                         str = $"{str}Minimum yield stress: {minimumYieldStress}\r\n";
 
-                        // Minimum Tensile Strength
                         var minimumTensileStrength = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_MINIMUM_TENSILE_STRENGTH).AsDouble();
                         str = $"{str}Minimum tensile strength: {minimumTensileStrength}\r\n";
 
-                        // Reduction Factor
                         var reductionFactor = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_REDUCTION_FACTOR).AsDouble();
                         str = $"{str}Reduction factor: {reductionFactor}\r\n";
-                    } // end of if/else materialType.Integer == 1
-                } // end if materialType.Integer > 0
+                    }
+                }
 
                 TaskDialog.Show("Physical materials", str);
             }
@@ -194,6 +169,6 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
             }
 
             return res;
-        } // end command
-    } // end class
+        }
+    }
 }

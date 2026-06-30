@@ -5,20 +5,10 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 {
-    /// <summary>
-    ///     The dialog which provides the options of selecting and showing circuit
-    /// </summary>
     public partial class SelectCircuitForm : Form
     {
-        /// <summary>
-        ///     Data class object
-        /// </summary>
         private readonly CircuitOperationData m_optionData;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="optionData">Data class object</param>
         public SelectCircuitForm(CircuitOperationData optionData)
         {
             m_optionData = optionData;
@@ -27,9 +17,6 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             InitializeElectricalSystems();
         }
 
-        /// <summary>
-        ///     Initialize the list of circuits to display
-        /// </summary>
         private void InitializeElectricalSystems()
         {
             listBoxElectricalSystem.DataSource = m_optionData.ElectricalSystemItems;

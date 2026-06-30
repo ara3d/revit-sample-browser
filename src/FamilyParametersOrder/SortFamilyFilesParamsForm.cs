@@ -12,33 +12,11 @@ using Form = System.Windows.Forms.Form;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
 {
-    /// <summary>
-    ///     Sort parameters' order in family files which are located in a folder:
-    ///     <list type="bullet">
-    ///         <item>
-    ///             "Browse" button make users could choose a folder contains some families, and the selected folder will be
-    ///             shown in the text box.
-    ///         </item>
-    ///         <item>
-    ///             "A–>Z" button will update parameters in each family files located in the specific folder to alphabet
-    ///             order.
-    ///         </item>
-    ///         <item>
-    ///             "Z–>A" button will update parameters in each family files located in the specific folder to reverse
-    ///             alphabet order.
-    ///         </item>
-    ///         <item>"Close" button will close the whole dialog.</item>
-    ///     </list>
-    ///     Note: we don't update the family files in sub-folders in this example.
-    /// </summary>
+    // Sorted output is written to an "ordered" subfolder; *.rfa files in subfolders are not processed.
     public partial class SortFamilyFilesParamsForm : Form
     {
         private readonly UIApplication m_uiApp;
 
-        /// <summary>
-        ///     Construct with a UIApplication.
-        /// </summary>
-        /// <param name="uiApp"></param>
         public SortFamilyFilesParamsForm(UIApplication uiApp)
         {
             m_uiApp = uiApp;
@@ -51,14 +29,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
             if (dialog.ShowDialog() == DialogResult.OK) directoryTxt.Text = dialog.SelectedPath;
         }
 
-        /// <summary>
-        ///     Sort parameters' order in family files which is located in a folder, the new files are saved in subfolder named
-        ///     "ordered".
-        /// </summary>
-        /// <param name="order">Ascending or Descending.</param>
         private void SortParameters(ParametersOrder order)
         {
-            // Convert relative path to absolute path.
             var absPath = AssemblyPathHelper.ResolveDirectoryPath(directoryTxt.Text);
 
             var dirInfo = new DirectoryInfo(absPath);
@@ -72,7 +44,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
             if (!Directory.Exists(orderedDir))
                 Directory.CreateDirectory(orderedDir);
 
-            // Sort parameters in each family file.
             var fileInfo = dirInfo.GetFiles("*.rfa");
             foreach (var fInfo in fileInfo)
             {

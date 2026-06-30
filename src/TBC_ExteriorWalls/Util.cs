@@ -7,12 +7,8 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_ExteriorWalls sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return a bounding box around all walls in the document.
-        /// </summary>
         internal static BoundingBoxXYZ GetBoundingBoxAroundAllWalls(
             Document doc,
             View view = null)
@@ -29,9 +25,6 @@ namespace BuildingCoder
             return bb;
         }
 
-        /// <summary>
-        ///     Return walls generating boundary segments for the given room.
-        /// </summary>
         internal static List<ElementId>
             RetrieveWallsGeneratingRoomBoundaries(
                 Document doc,
@@ -55,9 +48,6 @@ namespace BuildingCoder
             return ids;
         }
 
-        /// <summary>
-        ///     Get all outermost walls in the specified view.
-        /// </summary>
         public static List<ElementId> GetOutermostWalls(
             Document doc,
             View view = null)
@@ -123,9 +113,6 @@ namespace BuildingCoder
             return ids;
         }
 
-        /// <summary>
-        ///     Convert newline-separated integer strings to ElementId list.
-        /// </summary>
         internal static List<ElementId> GetElementIdsFromString(string x)
         {
             return new List<ElementId>(x.Split('\n')

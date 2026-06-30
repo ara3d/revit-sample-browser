@@ -11,35 +11,20 @@ using Form = System.Windows.Forms.Form;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
-    /// <summary>
-    ///     main form to create framing
-    /// </summary>
     public partial class CreateFrameForm : Form
     {
-        private readonly FrameData m_frameData; // necessary data to create framing
+        private readonly FrameData m_frameData;
 
-        /// <summary>
-        ///     constructor without parameter is forbidden
-        /// </summary>
         private CreateFrameForm()
         {
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="data">necessary data to create</param>
         public CreateFrameForm(FrameData data)
         {
             InitializeComponent();
             m_frameData = data;
         }
 
-        /// <summary>
-        ///     initialize controls
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void CreateFramingForm_Load(object sender, EventArgs e)
         {
             distanceTextBox.Text = m_frameData.Distance.ToString();
@@ -56,22 +41,12 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             SampleBrowserUtils.RefreshListControl(braceTypeComboBox, m_frameData.BraceSymbolsMgr);
         }
 
-        /// <summary>
-        ///     duplicate column type
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void columnDuplicateButton_Click(object sender, EventArgs e)
         {
             if (SampleBrowserUtils.DuplicateSymbol(m_frameData.ColumnSymbolsMgr, columnTypeComboBox.SelectedValue))
                 SampleBrowserUtils.RefreshListControl(columnTypeComboBox, m_frameData.ColumnSymbolsMgr);
         }
 
-        /// <summary>
-        ///     duplicate beam type
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void beamDuplicateButton_Click(object sender, EventArgs e)
         {
             if (SampleBrowserUtils.DuplicateSymbol(m_frameData.BeamSymbolsMgr, beamTypeComboBox.SelectedValue))
@@ -81,11 +56,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     duplicate brace type
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void braceDuplicateButton_Click(object sender, EventArgs e)
         {
             if (SampleBrowserUtils.DuplicateSymbol(m_frameData.BraceSymbolsMgr, braceTypeComboBox.SelectedValue))
@@ -95,12 +65,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     validate the input value
-        ///     set back to its old value if input is invalid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void distanceTextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -122,12 +86,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     validate the input value
-        ///     set back to its old value if input is invalid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void xNumberTextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -155,12 +113,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     validate the input value
-        ///     set back to its old value if input is invalid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void yNumberTextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -188,12 +140,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     validate the input value
-        ///     set back to its old value if input is invalid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void floorNumberTextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -220,19 +166,9 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
                 e.Cancel = true;
             }
 
-            // change readonly property of levelHeightTextBox
-            if (m_frameData.FloorNumber + 1 > m_frameData.Levels.Count)
-                levelHeightTextBox.Enabled = true;
-            else
-                levelHeightTextBox.Enabled = false;
+            levelHeightTextBox.Enabled = m_frameData.FloorNumber + 1 > m_frameData.Levels.Count;
         }
 
-        /// <summary>
-        ///     validate the input value
-        ///     set back to its old value if input is invalid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void levelHeightTextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -254,12 +190,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     validate the input value
-        ///     set back to its old value if input is invalid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void originXtextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -282,12 +212,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     validate the input value
-        ///     set back to its old value if input is invalid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void originYtextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -310,22 +234,8 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     validate the input value
-        ///     set back to its old value if input is invalid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void originAngletextBox_Validating(object sender, CancelEventArgs e)
         {
-            try
-            {
-            }
-            catch
-            {
-                Debug.Assert(true, "Reflection binding failed because interface of FrameData changed");
-            }
-
             try
             {
                 m_frameData.FrameOriginAngle = double.Parse(originAngletextBox.Text);
@@ -344,53 +254,28 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     create the Frame
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void OKButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
             Close();
         }
 
-        /// <summary>
-        ///     cancel all command
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
         }
 
-        /// <summary>
-        ///     set type of column
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void columnTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_frameData.SetColumnSymbol(columnTypeComboBox.SelectedItem);
         }
 
-        /// <summary>
-        ///     set type of beam
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void beamTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_frameData.SetBeamSymbol(beamTypeComboBox.SelectedItem);
         }
 
-        /// <summary>
-        ///     set type of brace
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void braceTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_frameData.SetBraceSymbol(braceTypeComboBox.SelectedItem);

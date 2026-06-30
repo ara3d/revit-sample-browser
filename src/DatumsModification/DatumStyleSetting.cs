@@ -4,12 +4,8 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
 {
-    /// <summary>
-    /// </summary>
     public partial class DatumStyleSetting : Form
     {
-        /// <summary>
-        /// </summary>
         public DatumStyleSetting()
         {
             InitializeComponent();

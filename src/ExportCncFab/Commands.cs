@@ -63,6 +63,7 @@ namespace Ara3D.RevitSampleBrowser.ExportCncFab.CS
 
         static void OnDialogBoxShowing(object sender, DialogBoxShowingEventArgs e)
         {
+            // Auto-confirm "export/print with temporary view modes" so batch export is not blocked.
             TaskDialogShowingEventArgs e2 = e as TaskDialogShowingEventArgs;
 
             if (null != e2 && e2.DialogId.Equals(

@@ -40,9 +40,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             SubItems.Add(roof.RoofType.Name);
         }
 
-        /// <summary>
-        ///     Get the roof which the RoofItem stands for.
-        /// </summary>
         public RoofBase Roof { get; }
 
         /// <summary>

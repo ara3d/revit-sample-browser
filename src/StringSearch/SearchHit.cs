@@ -98,9 +98,6 @@ namespace Ara3D.RevitSampleBrowser.StringSearch.CS
     }
   }
 
-  /// <summary>
-  /// Manage data for a string search hit.
-  /// </summary>
   public class SearchHit : ElementData
   {
     /// <summary>
@@ -108,24 +105,12 @@ namespace Ara3D.RevitSampleBrowser.StringSearch.CS
     /// </summary>
     string BipName { get; set; }
 
-    /// <summary>
-    /// Parameter name.
-    /// </summary>
     public string ParameterName { get; set; }
 
-    /// <summary>
-    /// Raw parameter value.
-    /// </summary>
     public string ParameterValue { get; set; }
 
-    /// <summary>
-    /// Parameter value as a string according to current user interface settings and units.
-    /// </summary>
     //public string ParameterString { get; set; }
 
-    /// <summary>
-    /// Index of target string within parameter value string.
-    /// </summary>
     public int Index { get; set; }
 
     public SearchHit( 

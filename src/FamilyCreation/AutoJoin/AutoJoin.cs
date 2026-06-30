@@ -5,32 +5,20 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 {
-    /// <summary>
-    ///     Join all the overlapping generic forms in this document.
-    /// </summary>
     public class AutoJoin
     {
-        private readonly List<CombinableElement> m_elements; // this element list to combine geometry.
+        private readonly List<CombinableElement> m_elements;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public AutoJoin()
         {
             m_elements = new List<CombinableElement>();
         }
 
-        /// <summary>
-        ///     Join geometry between overlapping solids.
-        /// </summary>
-        /// <param name="document">The active document</param>
-        /// <returns>The number of geometry combination be joined in this document.</returns>
         public int Join(Document document)
         {
             var combinated = 0;
 
-            // CombinableElement is of an element type that exists in the API, but not in Revit's native object model. 
-            // We use a combination of GenericForm and GeomCombination elements instead to find all CombinableElement.
+            // CombinableElement exists in the API but not in Revit's native object model; collect GenericForm and GeomCombination instead.
             var filter = new LogicalOrFilter(
                 new ElementClassFilter(typeof(GenericForm)),
                 new ElementClassFilter(typeof(GeomCombination)));
@@ -46,12 +34,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                     continue;
                 m_elements.Add(ce);
             }
-            // Added all solid forms in this document.
 
             while (1 < m_elements.Count)
             {
                 var geomCombination = JoinOverlapping(m_elements, document);
-                if (null == geomCombination) return combinated; //No overlapping.
+                if (null == geomCombination) return combinated;
 
                 combinated++;
             }
@@ -59,17 +46,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
             return combinated;
         }
 
-        /// <summary>
-        ///     Join the overlapped elements in the list.
-        /// </summary>
-        /// <param name="elements">the element list may includes overlapping.</param>
-        /// <param name="document">the active document</param>
-        /// <returns>the joined geometry combination, the joined elements is removed from the list.</returns>
         public GeomCombination JoinOverlapping(List<CombinableElement> elements, Document document)
         {
             var joinedElements = new CombinableElementArray();
 
-            // try to find the first overlapping.
             foreach (var aElement in elements)
             {
                 foreach (var xElement in elements)
@@ -85,9 +65,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                     break;
             }
 
-            if (0 == joinedElements.Size) return null; //Can not find any overlapping.
+            if (0 == joinedElements.Size) return null;
 
-            // try to find all elements overlapped the first element.
             foreach (var aElement in elements)
             {
                 if (IsOverlapped(aElement, joinedElements.get_Item(0)))
@@ -101,7 +80,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                 allCanJoin.Clear();
                 isNew = false;
 
-                // try to find all elements overlapped joinedElements
                 foreach (CombinableElement aElement in joinedElements)
                 {
                     foreach (var xElement in elements)
@@ -128,9 +106,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                         joinedElements.Append(aElement);
                     }
                 }
-            } while (isNew); // find all elements which overlapped with joined geometry combination.
+            } while (isNew);
 
-            // removed the joined elements from the input list.
             foreach (CombinableElement aElement in joinedElements)
             {
                 elements.Remove(aElement);
@@ -139,12 +116,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
             return document.CombineElements(joinedElements);
         }
 
-        /// <summary>
-        ///     Tell if the element A and B are overlapped.
-        /// </summary>
-        /// <param name="elementA">element A</param>
-        /// <param name="elementB">element B</param>
-        /// <returns>return true if A and B are overlapped, or else return false.</returns>
         public bool IsOverlapped(CombinableElement elementA, CombinableElement elementB)
         {
             if (elementA.Id == elementB.Id) return false;

@@ -25,10 +25,8 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
             {
                 var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Rooms");
                 tran.Start();
-                // create a new instance of class data
                 var data = new RoomsData(commandData);
 
-                // create a form to display the information of rooms
                 using (var infoForm = new RoomsInformationForm(data))
                 {
                     infoForm.ShowDialog();

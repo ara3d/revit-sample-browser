@@ -1,5 +1,4 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-//
 // Adapted from CropViewToRoom by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CropViewToRoom
 
@@ -13,10 +12,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CropViewToRoom.CS
 {
-    /// <summary>
-    ///     For each level, duplicate the associated plan view per room and crop
-    ///     the duplicate to the room boundary offset by wall thickness.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

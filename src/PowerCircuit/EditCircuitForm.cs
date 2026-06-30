@@ -6,20 +6,10 @@ using Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties;
 
 namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 {
-    /// <summary>
-    ///     The dialog which provides the options of editing circuit
-    /// </summary>
     public partial class EditCircuitForm : Form
     {
-        /// <summary>
-        ///     data class object
-        /// </summary>
         private readonly CircuitOperationData m_data;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="data">Data class object</param>
         public EditCircuitForm(CircuitOperationData data)
         {
             m_data = data;
@@ -29,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             AddToolTips();
         }
 
-        /// <summary>
-        ///     Add tool tips
-        /// </summary>
         private void AddToolTips()
         {
             var rsm = Resources.ResourceManager;

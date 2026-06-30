@@ -32,9 +32,6 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
         {
         }
 
-        /// <summary>
-        ///     Return the index of the given normal vector, adding a new entry if required.
-        /// </summary>
         public int AddNormal(XYZ v)
         {
             return ContainsKey(v)

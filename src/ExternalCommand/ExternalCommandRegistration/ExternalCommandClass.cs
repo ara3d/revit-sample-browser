@@ -9,9 +9,6 @@ using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistration
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand, create a wall
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -25,7 +22,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistratio
             trans.Start();
             var uiDoc = commandData.Application.ActiveUIDocument;
             var curves = XyzMath.CreateRectangularWallCurves();
-            //create wall
             Wall.Create(uiDoc.Document, curves, false);
 
             trans.Commit();
@@ -33,9 +29,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistratio
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand, show a message box
-    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     [Regeneration(RegenerationOption.Manual)]
     public class ExternalCommand3DView : IExternalCommand
@@ -49,10 +42,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistratio
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication,
-    ///     show message box when Revit start up and shut down
-    /// </summary>
     [Regeneration(RegenerationOption.Manual)]
     public class ExternalApplicationClass : IExternalApplication
     {

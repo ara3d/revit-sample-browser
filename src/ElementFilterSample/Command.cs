@@ -7,11 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
-    /// <summary>
-    ///     To add an external command to Autodesk Revit,
-    ///     the developer must define an class which implement the IExternalCommand interface.
-    ///     This class is used as the connection of revit and external program
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -22,7 +17,6 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         {
             try
             {
-                // create a form to display the information of view filters
                 using (var infoForm = new ViewFiltersForm(commandData))
                 {
                     infoForm.ShowDialog();
@@ -32,7 +26,6 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             }
             catch (Exception ex)
             {
-                // If there is something wrong, give error information and return failed
                 message = ex.Message;
                 return Result.Failed;
             }

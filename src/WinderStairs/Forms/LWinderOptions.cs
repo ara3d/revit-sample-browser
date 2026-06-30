@@ -12,82 +12,51 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
     /// </summary>
     public partial class LWinderOptions : Form
     {
-        /// <summary>
-        ///     Default constructor.
-        /// </summary>
         public LWinderOptions()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Number of straight steps at start.
-        /// </summary>
         public uint NumStepsAtStart
         {
             get => uint.Parse(numAtStartTextBox.Text);
             set => numAtStartTextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Number of straight steps in winder corner.
-        /// </summary>
         public uint NumStepsInCorner
         {
             get => uint.Parse(numInCornerTextBox.Text);
             set => numInCornerTextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Number of straight steps at end.
-        /// </summary>
         public uint NumStepsAtEnd
         {
             get => uint.Parse(numAtEndTextBox.Text);
             set => numAtEndTextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Winder stairs run width.
-        /// </summary>
         public double RunWidth
         {
             get => double.Parse(runWidthTextBox.Text);
             set => runWidthTextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Center point offset distance from public boundary.
-        /// </summary>
         public double CenterOffsetE
         {
             get => double.Parse(centerOffsetETextBox.Text);
             set => centerOffsetETextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     Center point offset distance from public boundary.
-        /// </summary>
         public double CenterOffsetF
         {
             get => double.Parse(centerOffsetFTextBox.Text);
             set => centerOffsetFTextBox.Text = value.ToString();
         }
 
-        /// <summary>
-        ///     A switch indicates whether to support DMU(dynamic model update).
-        /// </summary>
         public bool Dmu => dmuCheckBox.Checked;
 
-        /// <summary>
-        ///     A switch to control the sketch drawing of winder stairs.
-        /// </summary>
         public bool Sketch => sketchCheckBox.Checked;
 
-        /// <summary>
-        ///     Validate the UI input and it will warn if there are invalid user inputs.
-        /// </summary>
-        /// <returns>true if all input is fine.</returns>
         private bool ValidateInput()
         {
             double runWidth;
@@ -149,9 +118,6 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
             return true;
         }
 
-        /// <summary>
-        ///     Submit the UI input.
-        /// </summary>
         private void okButton_Click(object sender, EventArgs e)
         {
             if (ValidateInput())
@@ -161,9 +127,6 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
             }
         }
 
-        /// <summary>
-        ///     Cancel the UI input.
-        /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             Close();

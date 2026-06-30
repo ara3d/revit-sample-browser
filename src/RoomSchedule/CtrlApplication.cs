@@ -16,9 +16,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class CrtlApplication : IExternalApplication
     {
-        /// <summary>
-        ///     The events reactor for this application.
-        /// </summary>
         private static EventsReactor _eventReactor;
 
         /// <summary>

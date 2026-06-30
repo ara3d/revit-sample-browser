@@ -18,25 +18,13 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 {
-    /// <summary>
-    ///     Interaction logic for ViewSamplePortal.xaml
-    /// </summary>
     public partial class ViewSamplePortal : Window
     {
-        /// <summary>
-        ///     Constructor for ViewSamplePortal
-        ///     ViewSamplePortal is a child window aggregating all sample case with tabs
-        /// </summary>
         public ViewSamplePortal(UIApplication app)
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Add a sample tab
-        /// </summary>
-        /// <param name="title">The sample title</param>
-        /// <param name="control">The root control for this sample</param>
         public void AddTab(string title, UserControl control)
         {
             var item = new TabItem { Header = title };

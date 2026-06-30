@@ -23,7 +23,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             try
             {
                 transaction.Start();
-                // create a factory to create the corresponding FrameReinMaker
                 var factory = new FrameReinMakerFactory(commandData);
 
                 // Do some data checks, such whether the user select concrete beam or column

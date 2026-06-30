@@ -23,9 +23,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         private readonly Application m_revit; // Store the reference of revit application
 
         // Methods
-        /// <summary>
-        ///     Default constructor of LoadCaseDeal
-        /// </summary>
         public LoadCaseDeal(Loads dataBuffer)
         {
             m_dataBuffer = dataBuffer;
@@ -42,9 +39,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             };
         }
 
-        /// <summary>
-        ///     prepare data for the dialog
-        /// </summary>
         public void PrepareData()
         {
             //Create seven Load Natures first
@@ -92,10 +86,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             }
         }
 
-        /// <summary>
-        ///     create some load case natures named EQ1, EQ2, W1, W2, W3, W4, Other
-        /// </summary>
-        /// <returns></returns>
         private bool CreateLoadNatures()
         {
             //try to add some new load natures
@@ -116,11 +106,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             return true;
         }
 
-        /// <summary>
-        ///     add a new load nature
-        /// </summary>
-        /// <param name="index">the selected nature's index in the nature map</param>
-        /// <returns></returns>
         public bool AddLoadNature(int index)
         {
             var isUnique = false; // check if the name is unique    
@@ -177,11 +162,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             return true;
         }
 
-        /// <summary>
-        ///     Duplicate a new load case
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
         public bool DuplicateLoadCase(int index)
         {
             LoadCasesMap myLoadCase = null;
@@ -244,11 +224,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             return true;
         }
 
-        /// <summary>
-        ///     check if the case's name is unique
-        /// </summary>
-        /// <param name="name">the name to be checked</param>
-        /// <returns>true will be returned if the name is unique</returns>
         public bool IsCaseNameUnique(string name)
         {
             //compare the name with the name of each case in the map
@@ -257,11 +232,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                 .All(nameTemp => name != nameTemp);
         }
 
-        /// <summary>
-        ///     check if the nature's name is unique
-        /// </summary>
-        /// <param name="name">the name to be checked</param>
-        /// <returns>true will be returned if the name is unique</returns>
         public bool IsNatureNameUnique(string name)
         {
             //compare the name with the name of each nature in the map

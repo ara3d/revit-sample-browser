@@ -32,36 +32,22 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
     /// </summary>
     public class MigrationToBim360 : SampleContext
     {
-        /// <summary>
-        ///     File name to store models' guid info.
-        /// </summary>
         public const string FModelsGuid = "modelsguid.json";
 
-        /// <summary>
-        ///     File name to store linked models' info
-        /// </summary>
         public const string FLinksInfo = "linkinfo.json";
 
-        /// <summary>
-        ///     Default constructor
-        /// </summary>
         public MigrationToBim360()
         {
             Model = new UiMigrationViewModel();
             View = new ViewMigrationToBim360(this);
         }
 
-        /// <summary>
-        ///     Model for migration case
-        /// </summary>
         public IMigrationModel Model { get; }
 
-        /// <inheritdoc />
         public override void Terminate()
         {
             View = null;
         }
-
 
         public IEnumerator Upload(string directory, Guid accountId, Guid projectId,
             ObservableCollection<MigrationRule> modelRules)
@@ -162,13 +148,6 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
             view.UpdateUploadingProgress("Uploading finished", 100);
         }
 
-        /// <summary>
-        ///     Try to open each cloud model and reload if they have links,
-        ///     making that point to cloud path.
-        /// </summary>
-        /// <param name="directory">Transit directory where cloud models exist</param>
-        /// <param name="projectId">not used</param>
-        /// <returns></returns>
         public IEnumerator ReloadLinks(string directory, Guid projectId)
         {
             var view = (ViewMigrationToBim360)View;

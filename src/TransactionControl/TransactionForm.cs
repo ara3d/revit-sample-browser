@@ -16,9 +16,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
     /// </summary>
     public partial class TransactionForm : Form
     {
-        /// <summary>
-        ///     A reference to the external command data.
-        /// </summary>
         private readonly ExternalCommandData m_commandData;
 
         /// <summary>
@@ -26,14 +23,8 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// </summary>
         private readonly SystemColor m_committedColor = SystemColor.Black;
 
-        /// <summary>
-        ///     fore color of a tree node of a deleted element
-        /// </summary>
         private readonly SystemColor m_deletedColor = SystemColor.Red;
 
-        /// <summary>
-        ///     The active document
-        /// </summary>
         private readonly Document m_document;
 
         /// <summary>
@@ -45,9 +36,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// </summary>
         private readonly TransactionGroup m_mainTtransactionGroup;
 
-        /// <summary>
-        ///     fore color of a tree node of a created or modified element
-        /// </summary>
         private readonly SystemColor m_normalColor = SystemColor.Blue;
 
         /// <summary>
@@ -55,9 +43,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// </summary>
         private readonly SystemColor m_rolledbackColor = SystemColor.Gray;
 
-        /// <summary>
-        ///     The root node of the operation tree
-        /// </summary>
         private readonly TreeNode m_rootNode;
 
         /// <summary>
@@ -95,10 +80,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// </summary>
         private TreeNode m_transNode;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">the external command data</param>
         public TransactionForm(ExternalCommandData commandData)
         {
             m_commandData = commandData;
@@ -122,8 +103,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// <summary>
         ///     Begin a transaction, append transaction node to tree view
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void startTransButton_Click(object sender, EventArgs e)
         {
             var transNo = m_transCount + 1;
@@ -145,8 +124,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// <summary>
         ///     Commit a transaction
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void commitTransButton_Click(object sender, EventArgs e)
         {
             if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
@@ -175,8 +152,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// <summary>
         ///     Rollback a transaction
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void rollbackTransButton_Click(object sender, EventArgs e)
         {
             if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
@@ -195,11 +170,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             }
         }
 
-        /// <summary>
-        ///     Create a wall, append a node to tree view
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void createWallbutton_Click(object sender, EventArgs e)
         {
             // a sub-transaction is not necessary in this case
@@ -241,11 +211,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             TaskDialog.Show("Revit", "Creating wall failed");
         }
 
-        /// <summary>
-        ///     Move a wall, append a node to tree view
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void moveWallButton_Click(object sender, EventArgs e)
         {
             if (m_lastCreatedWall == null)
@@ -280,11 +245,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             TaskDialog.Show("Revit", "Moving wall failed.");
         }
 
-        /// <summary>
-        ///     Delete a wall, append a node to tree view
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void deleteWallButton_Click(object sender, EventArgs e)
         {
             if (m_lastCreatedWall == null)
@@ -330,8 +290,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// <summary>
         ///     Start transaction group button click event
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnStartTransGroup_Click(object sender, EventArgs e)
         {
             m_transGroupCount++;
@@ -346,8 +304,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// <summary>
         ///     Commit transaction group button click event
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnCommitTransGroup_Click(object sender, EventArgs e)
         {
             if (m_transactionGroup != null)
@@ -363,8 +319,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         /// <summary>
         ///     Rollback transaction group button click event
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnRollbackTransGroup_Click(object sender, EventArgs e)
         {
             if (m_transactionGroup != null)
@@ -384,8 +338,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         ///     If any transaction group or the active transaction is still open
         ///     give the user the option to either commit them or roll them back first.
         /// </remarks>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             //if any transaction or transaction group is not finished, notify user to deal with it
@@ -428,11 +380,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             Close();
         }
 
-        /// <summary>
-        ///     Rollback all changes and close this form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             if (m_transCount > 0)
@@ -524,20 +471,11 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             btnMoveWall.Enabled = btnDeleteWall.Enabled;
         }
 
-        /// <summary>
-        ///     add node to tree view control
-        /// </summary>
-        /// <param name="type">indicate operation type</param>
         private void AddNode(OperationType type)
         {
             AddNode(type, null);
         }
 
-        /// <summary>
-        ///     add node to tree view control
-        /// </summary>
-        /// <param name="type">indicate operation type</param>
-        /// <param name="info">tree node text</param>
         private void AddNode(OperationType type, string info)
         {
             switch (type)
@@ -657,11 +595,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             }
         }
 
-        /// <summary>
-        ///     Update the color of a tree node
-        /// </summary>
-        /// <param name="parentNode">indicate child nodes of which will be updated</param>
-        /// <param name="type">operation type</param>
         private void UpdateTreeNode(TreeNode parentNode, OperationType type)
         {
             switch (type)
@@ -687,11 +620,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             }
         }
 
-        /// <summary>
-        ///     Update the color of tree node including all its sub-nodes
-        /// </summary>
-        /// <param name="parentNode">the node of which color will be updated</param>
-        /// <param name="color">Color to change</param>
         private void UpdateTreeNode(TreeNode parentNode, SystemColor color)
         {
             parentNode.ForeColor = color;
@@ -702,10 +630,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             }
         }
 
-        /// <summary>
-        ///     Updates the model and refreshes the active view
-        /// </summary>
-        /// <param name="autoJoin">Whether to also perform auto-join or not</param>
         private void UpdateModel(bool autoJoin)
         {
             // in order to be able to see changes to the model before 
@@ -720,9 +644,6 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
             m_commandData.Application.ActiveUIDocument.RefreshActiveView();
         }
 
-        /// <summary>
-        ///     An enum used to indicate which operation is executed
-        /// </summary>
         private enum OperationType
         {
             StartTransactionGroup,

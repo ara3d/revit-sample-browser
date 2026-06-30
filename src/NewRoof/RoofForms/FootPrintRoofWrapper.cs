@@ -34,27 +34,15 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             m_boundingbox = m_roof.get_BoundingBox(Command.ActiveView);
         }
 
-        /// <summary>
-        ///     Get the model curve data which the foot print data stand for.
-        /// </summary>
         [Browsable(false)]
         public ModelCurve ModelCurve { get; }
 
-        /// <summary>
-        ///     Get the id value of the model curve.
-        /// </summary>
         [Browsable(false)]
         public ElementId Id => ModelCurve.Id;
 
-        /// <summary>
-        ///     Get the name of the model curve.
-        /// </summary>
         [Browsable(false)]
         public string Name => ModelCurve.Name;
 
-        /// <summary>
-        ///     Get/Set the slope definition of a model curve of the roof.
-        /// </summary>
         [Description("The slope definition of the FootPrintRoof line.")]
         public bool DefinesSlope
         {
@@ -62,9 +50,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             set => m_roof.set_DefinesSlope(ModelCurve, value);
         }
 
-        /// <summary>
-        ///     Get/Set the slope angle of the FootPrintRoof line..
-        /// </summary>
         [Description("The slope angle of the FootPrintRoof line.")]
         public double SlopeAngle
         {
@@ -82,9 +67,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             set => m_roof.set_Offset(ModelCurve, value);
         }
 
-        /// <summary>
-        ///     Get/Set the overhang value of the FootPrintRoof line if the roof is created by picked wall.
-        /// </summary>
         [Description("The overhang value of the FootPrintRoof line if the roof is created by picked wall.")]
         public double Overhang
         {
@@ -92,9 +74,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             set => m_roof.set_Overhang(ModelCurve, value);
         }
 
-        /// <summary>
-        ///     Get/Set ExtendIntoWall value whether you want the overhang to be measured from the core of the wall or not.
-        /// </summary>
         [Description("whether you want the overhang to be measured from the core of the wall or not.")]
         public bool ExtendIntoWall
         {
@@ -170,15 +149,9 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             Boundingbox = m_roof.get_BoundingBox(Command.ActiveView);
         }
 
-        /// <summary>
-        ///     Get the bounding box of the roof.
-        /// </summary>
         [Browsable(false)]
         public BoundingBoxXYZ Boundingbox { get; }
 
-        /// <summary>
-        ///     Get/Set the current footprint roof line which will be edited in the PropertyGrid.
-        /// </summary>
         [TypeConverter(typeof(FootPrintRoofLineConverter))]
         [Category("Footprint Roof Line Information")]
         public FootPrintRoofLine FootPrintLine
@@ -224,9 +197,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             set => m_roof.EaveCuts = value;
         }
 
-        /// <summary>
-        ///     Get the footprint roof lines data.
-        /// </summary>
         [Browsable(false)]
         public ReadOnlyCollection<FootPrintRoofLine> FootPrintRoofLines =>
             new ReadOnlyCollection<FootPrintRoofLine>(m_roofLines);

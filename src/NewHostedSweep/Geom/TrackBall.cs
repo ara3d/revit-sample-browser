@@ -8,54 +8,26 @@ using Point = System.Drawing.Point;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 {
-    /// <summary>
-    ///     This class is intent to convenience the geometry transformations.
-    ///     It can produce rotation and scale transformations.
-    /// </summary>
     public class TrackBall
     {
-        /// <summary>
-        ///     Canvas height.
-        /// </summary>
         private float m_canvasHeight;
 
-        /// <summary>
-        ///     Canvas width.
-        /// </summary>
         private float m_canvasWidth;
 
-        /// <summary>
-        ///     Previous position in 2D.
-        /// </summary>
         private Point m_previousPosition2D;
 
-        /// <summary>
-        ///     Previous position in 3D.
-        /// </summary>
         private XYZ m_previousPosition3D;
 
-        /// <summary>
-        ///     Current rotation transform.
-        /// </summary>
         private Transform m_rotation = Transform.Identity;
 
-        /// <summary>
-        ///     Current scale transform.
-        /// </summary>
         private double m_scale;
 
-        /// <summary>
-        ///     Current rotation transform.
-        /// </summary>
         public Transform Rotation
         {
             get => m_rotation;
             set => m_rotation = value;
         }
 
-        /// <summary>
-        ///     Current scale transform.
-        /// </summary>
         public double Scale
         {
             get => m_scale;
@@ -105,10 +77,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
             m_previousPosition2D = currentPosition;
         }
 
-        /// <summary>
-        ///     Arrows key down will also yield the rotation transform.
-        /// </summary>
-        /// <param name="e"></param>
         public void OnKeyDown(KeyEventArgs e)
         {
             var axis = new XYZ(1.0, 0, 0);

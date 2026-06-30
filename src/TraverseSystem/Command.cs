@@ -82,11 +82,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             }
         }
 
-        /// <summary>
-        ///     Get the mechanical or piping system from selected element
-        /// </summary>
-        /// <param name="selectedElement">Selected element</param>
-        /// <returns>The extracted mechanical or piping system. Null if no expected system is found.</returns>
         private MEPSystem ExtractMechanicalOrPipingSystem(Element selectedElement)
         {
             MEPSystem system = null;

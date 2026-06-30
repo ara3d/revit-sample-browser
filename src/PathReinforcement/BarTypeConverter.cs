@@ -13,33 +13,19 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
     /// </summary>
     public class BartypeConverter : TypeConverter
     {
-        /// <summary>
-        ///     hash table
-        /// </summary>
         protected Hashtable Hash;
 
-        /// <summary>
-        ///     initialize m_hash
-        /// </summary>
         public BartypeConverter()
         {
             Hash = new Hashtable();
             GetConvertHash();
         }
 
-        /// <summary>
-        ///     fill hash table
-        /// </summary>
         public void GetConvertHash()
         {
             Hash = Command.BarTypes;
         }
 
-        /// <summary>
-        ///     Get supported standard value
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns>always return true</returns>
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
         {
             return true;
@@ -65,24 +51,11 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             return standardValues;
         }
 
-        /// <summary>
-        ///     whether conversion is allowed
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="sourceType"></param>
-        /// <returns></returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
-        /// <summary>
-        ///     convert from Name to ElementId
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="v">Name</param>
-        /// <returns>ElementId</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object v)
         {
             if (v is string)
@@ -122,11 +95,6 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             return base.ConvertTo(context, culture, v, destinationType);
         }
 
-        /// <summary>
-        ///     always return true so that user can't input unexpected text
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
         public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
         {
             return true;

@@ -2,14 +2,8 @@
 
 namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 {
-    /// <summary>
-    ///     A class with methods to execute requests made by the dialog user.
-    /// </summary>
     public static class RequestHandler
     {
-        /// <summary>
-        ///     The top function that distributes requests to individual methods.
-        /// </summary>
         public static void Execute(Application app, RequestId request)
         {
             switch (request)

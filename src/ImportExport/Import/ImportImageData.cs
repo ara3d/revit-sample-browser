@@ -5,16 +5,8 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 {
-    /// <summary>
-    ///     Data class which stores the information for importing image format
-    /// </summary>
     public class ImportImageData : ImportData
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
-        /// <param name="importFormat">Format to import</param>
         public ImportImageData(ExternalCommandData commandData, ImportFormat importFormat)
             : base(commandData, importFormat)
         {
@@ -23,10 +15,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             Title = "Import Image";
         }
 
-        /// <summary>
-        ///     Collect the parameters and export
-        /// </summary>
-        /// <returns></returns>
         public override bool Import()
         {
             using (var t = new Transaction(ActiveDoc))

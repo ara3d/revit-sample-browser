@@ -9,14 +9,8 @@ using Autodesk.Revit.DB.Plumbing;
 using Ara3D.RevitSampleBrowser.Common.Mep;
 namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
 {
-    /// <summary>
-    ///     A TreeNode object represents an element in the system
-    /// </summary>
     public class TreeNode
     {
-        /// <summary>
-        ///     The first-level child nodes of the current node
-        /// </summary>
         private List<TreeNode> m_childNodes;
 
         /// <summary>
@@ -32,9 +26,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
         /// </summary>
         private readonly Document m_document;
 
-        /// <summary>
-        ///     Id of the element
-        /// </summary>
         private readonly ElementId m_id;
 
         /// <summary>
@@ -42,9 +33,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
         /// </summary>
         private Connector m_inputConnector;
 
-        /// <summary>
-        ///     The parent node of the current node.
-        /// </summary>
         private TreeNode m_parent;
 
         /// <summary>
@@ -59,32 +47,20 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             m_childNodes = new List<TreeNode>();
         }
 
-        /// <summary>
-        ///     Id of the element
-        /// </summary>
         public ElementId Id => m_id;
 
-        /// <summary>
-        ///     Flow direction of the node
-        /// </summary>
         public FlowDirectionType Direction
         {
             get => m_direction;
             set => m_direction = value;
         }
 
-        /// <summary>
-        ///     Gets and sets the parent node of the current node.
-        /// </summary>
         public TreeNode Parent
         {
             get => m_parent;
             set => m_parent = value;
         }
 
-        /// <summary>
-        ///     Gets and sets the first-level child nodes of the current node
-        /// </summary>
         public List<TreeNode> ChildNodes
         {
             get => m_childNodes;
@@ -100,20 +76,11 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             set => m_inputConnector = value;
         }
 
-        /// <summary>
-        ///     Get Element by its Id
-        /// </summary>
-        /// <param name="eid">Element's Id</param>
-        /// <returns>Element</returns>
         private Element GetElementById(ElementId eid)
         {
             return m_document.GetElement(eid);
         }
 
-        /// <summary>
-        ///     Dump the node into XML file
-        /// </summary>
-        /// <param name="writer">XmlWriter object</param>
         public void DumpIntoXml(XmlWriter writer)
         {
             // Write node information
@@ -168,9 +135,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
         }
     }
 
-    /// <summary>
-    ///     Data structure of the traversal
-    /// </summary>
     public class TraversalTree
     {
         // Active document of Revit
@@ -197,9 +161,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             m_isMechanicalSystem = system is MechanicalSystem;
         }
 
-        /// <summary>
-        ///     Traverse the system
-        /// </summary>
         public void Traverse()
         {
             // Get the starting element node
@@ -317,10 +278,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             return openConnector;
         }
 
-        /// <summary>
-        ///     Traverse the system recursively by analyzing each element
-        /// </summary>
-        /// <param name="elementNode">The element to be analyzed</param>
         private void Traverse(TreeNode elementNode)
         {
             //
@@ -332,10 +289,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             }
         }
 
-        /// <summary>
-        ///     Find all child nodes of the specified element node
-        /// </summary>
-        /// <param name="elementNode">The specified element node to be analyzed</param>
         private void AppendChildren(TreeNode elementNode)
         {
             var nodes = elementNode.ChildNodes;
@@ -394,18 +347,11 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             );
         }
 
-        /// <summary>
-        ///     Get element by its id
-        /// </summary>
         private Element GetElementById(ElementId eid)
         {
             return m_document.GetElement(eid);
         }
 
-        /// <summary>
-        ///     Dump the traversal into an XML file
-        /// </summary>
-        /// <param name="fileName">Name of the XML file</param>
         public void DumpIntoXml(string fileName)
         {
             var settings = new XmlWriterSettings
@@ -432,10 +378,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             writer.Close();
         }
 
-        /// <summary>
-        ///     Write basic information of the MEP system into the XML file
-        /// </summary>
-        /// <param name="writer">XMLWriter object</param>
         private void WriteBasicInfo(XmlWriter writer)
         {
             MechanicalSystem ms = null;
@@ -508,10 +450,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             writer.WriteEndElement();
         }
 
-        /// <summary>
-        ///     Write paths of the traversal into the XML file
-        /// </summary>
-        /// <param name="writer">XMLWriter object</param>
         private void WritePaths(XmlWriter writer)
         {
             writer.WriteStartElement("Path");

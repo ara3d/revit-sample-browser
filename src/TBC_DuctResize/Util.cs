@@ -8,7 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_DuctResize sample.</summary>
     internal static partial class Util
     {
         private const BuiltInParameter DuctResizeBipDiameter
@@ -19,10 +18,6 @@ namespace BuildingCoder
 
         private const double DuctResizeTwoInches = 1.0 / 6.0;
 
-        /// <summary>
-        ///     Return shape of this duct, retrieved
-        ///     from its first or first two connectors.
-        /// </summary>
         internal static ConnectorProfileType GetDuctShape(Duct d)
         {
             Debug.Assert(null != d.ConnectorManager,
@@ -63,10 +58,6 @@ namespace BuildingCoder
             return shape;
         }
 
-        /// <summary>
-        ///     Return dimension for this duct:
-        ///     diameter if round, else height.
-        /// </summary>
         internal static double GetDuctDim(
             Duct d,
             ConnectorProfileType shape)
@@ -76,10 +67,6 @@ namespace BuildingCoder
                 : d.Height;
         }
 
-        /// <summary>
-        ///     Return dimension for this connector:
-        ///     diameter if round, else height.
-        /// </summary>
         internal static double GetConnectorDim(Connector c)
         {
             var shape = c.Shape;

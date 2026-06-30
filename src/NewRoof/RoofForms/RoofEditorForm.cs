@@ -9,39 +9,23 @@ using Point = System.Drawing.Point;
 
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
-    /// <summary>
-    ///     The RoofEditorForm is the main edit form to edit a roof data.
-    /// </summary>
     public partial class RoofEditorForm : Form
     {
-        // To store the ExtrusionRoofWrapper data of the roof.
         private readonly ExtrusionRoofWrapper m_extrusionRoofWrapper;
 
-        // To store the FootPrintRoofWrapper data of the roof.
         private readonly FootPrintRoofWrapper m_footPrintRoofWrapper;
 
-        // A GraphicsControl to display the roof lines of footprint roof.
         private GraphicsControl m_graphicsControl;
 
-        // To store the roof which will be edited.
         private readonly RoofBase m_roof;
 
-        // A reference to the roofs manager
         private readonly RoofsManager.RoofsManager m_roofsManager;
 
-        /// <summary>
-        ///     The private construct.
-        /// </summary>
         private RoofEditorForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     The construct of the RoofEditorForm class.
-        /// </summary>
-        /// <param name="roofsManager">A reference to the roofs manager</param>
-        /// <param name="roof">The roof which will be edited.</param>
         public RoofEditorForm(RoofsManager.RoofsManager roofsManager, RoofBase roof)
         {
             m_roofsManager = roofsManager;
@@ -57,11 +41,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
                 m_extrusionRoofWrapper = new ExtrusionRoofWrapper(m_roof as ExtrusionRoof);
         }
 
-        /// <summary>
-        ///     When the RoofEditorForm was loaded, then initialize data of the controls in the form.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void RoofEditorForm_Load(object sender, EventArgs e)
         {
             roofTypesComboBox.DataSource = m_roofsManager.RoofTypes;
@@ -99,11 +78,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             roofEditorPropertyGrid.ExpandAllGridItems();
         }
 
-        /// <summary>
-        ///     When the OK button was clicked, update the roof type of the editing roof.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             m_roof.RoofType = roofTypesComboBox.SelectedItem as RoofType;

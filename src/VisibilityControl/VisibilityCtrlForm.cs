@@ -6,18 +6,11 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
 {
-    /// <summary>
-    ///     the user interface form
-    /// </summary>
     public partial class VisibilityCtrlForm : Form
     {
         // an object control visibility by category
         private readonly VisibilityCtrl m_visibilityCtrl;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="visibilityCtrl">an object control visibility by category</param>
         public VisibilityCtrlForm(VisibilityCtrl visibilityCtrl)
         {
             if (null == visibilityCtrl)
@@ -27,11 +20,6 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     initializes allCategoriesListView
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void VisibilityCtrlForm_Load(object sender, EventArgs e)
         {
             // initialize the  checked list box
@@ -52,11 +40,6 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
             allCategoriesListView.ItemCheck += allCategoriesListView_ItemCheck;
         }
 
-        /// <summary>
-        ///     change the visibility of the category
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void allCategoriesListView_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             var visible = e.NewValue == CheckState.Checked ? true : false;
@@ -67,11 +50,6 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
                 TaskDialog.Show("Revit", "This category can not change visible in the active view.");
         }
 
-        /// <summary>
-        ///     isolate the selected elements
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void isolateButton_Click(object sender, EventArgs e)
         {
             // set the IsolateMode

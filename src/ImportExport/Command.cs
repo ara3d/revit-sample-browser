@@ -8,11 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS
 {
-    /// <summary>
-    ///     To add an external command to Autodesk Revit
-    ///     the developer should implement an object that
-    ///     supports the IExternalCommand interface.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

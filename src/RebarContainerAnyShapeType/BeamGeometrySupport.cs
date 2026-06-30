@@ -20,11 +20,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         private readonly double m_beamLength; //the length of the beam
         private readonly double m_beamWidth; //the width of the beam
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="element">the beam which the rebars are placed on</param>
-        /// <param name="geoOptions">the geometry option</param>
         public BeamGeometrySupport(FamilyInstance element, Options geoOptions)
             : base(element, geoOptions)
         {
@@ -38,11 +33,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             m_beamHeight = GetBeamHeight();
         }
 
-        /// <summary>
-        ///     Get the geometry information for top rebar
-        /// </summary>
-        /// <param name="location">indicate where top rebar is placed</param>
-        /// <returns>the gotten geometry information</returns>
         public RebarGeometry GetTopRebar(TopRebarLocation location)
         {
             // sort the points of the swept profile
@@ -98,10 +88,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
 
-        /// <summary>
-        ///     Get the geometry information of bottom reinforcement
-        /// </summary>
-        /// <returns>the gotten geometry information</returns>
         public RebarGeometry GetBottomRebar()
         {
             // sort the points of the swept profile
@@ -133,12 +119,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
 
-        /// <summary>
-        ///     Get the geometry information of transverse reinforcement
-        /// </summary>
-        /// <param name="location">indicate which part of transverse rebar</param>
-        /// <param name="spacing">the spacing of the rebar</param>
-        /// <returns>the gotten geometry information</returns>
         public RebarGeometry GetTransverseRebar(TransverseRebarLocation location, double spacing)
         {
             // sort the points of the swept profile
@@ -202,10 +182,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
 
-        /// <summary>
-        ///     Get the down direction, which stand for the top hook direction
-        /// </summary>
-        /// <returns>the down direction</returns>
         public XYZ GetDownDirection()
         {
             var comparer = new XyzHeightComparer();
@@ -218,10 +194,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return directions[0];
         }
 
-        /// <summary>
-        ///     Get the width of the beam
-        /// </summary>
-        /// <returns>the width data</returns>
         private double GetBeamWidth()
         {
             var comparer = new XyzHeightComparer();
@@ -234,10 +206,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return XyzMath.GetLength(directions[0]);
         }
 
-        /// <summary>
-        ///     Get the height of the beam
-        /// </summary>
-        /// <returns>the height data</returns>
         private double GetBeamHeight()
         {
             var comparer = new XyzHeightComparer();

@@ -8,9 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
-    /// <summary>
-    ///     Demonstrate how to create a generic structural connection.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -21,7 +18,6 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ret = Result.Succeeded;
             try
             {
-                // Get the document from external command data.
                 var activeDoc = commandData.Application.ActiveUIDocument;
 
                 using (var frm = new StructuralConnectionForm())

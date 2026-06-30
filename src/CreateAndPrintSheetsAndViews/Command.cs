@@ -1,5 +1,4 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-//
 // Adapted from CreateAndPrintSheetsAndViews by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CreateAndPrintSheetsAndViews
 
@@ -14,12 +13,6 @@ using Autodesk.Revit.UI.Events;
 
 namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
 {
-    /// <summary>
-    /// Process all selected fabrication ductwork elements using
-    /// <see cref="CmdCreateAndPrintSheetAndViews.CreateSheetAndViewsFor"/>.
-    /// Each part is processed in a transaction that is rolled back so
-    /// sheets and views are not committed to the document.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -50,10 +43,6 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             return rc;
         }
 
-        /// <summary>
-        /// Handle the dialogue and select the option
-        /// 'Leave the Temporary Hide/Isolate mode on and export'.
-        /// </summary>
         public static void OnDialogBoxShowing(
             object sender,
             DialogBoxShowingEventArgs e)

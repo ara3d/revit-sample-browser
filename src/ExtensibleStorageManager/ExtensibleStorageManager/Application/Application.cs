@@ -7,23 +7,14 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
 {
     public class Application : IExternalApplication
     {
-        /// <summary>
-        ///     The Last Schema Guid value used in the UICommand dialog is stored here for future retrieval
-        ///     after the dialog is closed.
-        /// </summary>
+        /// <summary>Last schema Guid entered in the UI dialog; persisted across dialog sessions.</summary>
         public static string LastGuid { get; set; }
 
-        /// <summary>
-        ///     There is no cleanup needed in this application  -- default implementation
-        /// </summary>
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Add a button to the Ribbon and attach it to the IExternalCommand defined in Command.cs
-        /// </summary>
         public Result OnStartup(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("Extensible Storage Manager");

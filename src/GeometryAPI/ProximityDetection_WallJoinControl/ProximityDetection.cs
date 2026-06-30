@@ -9,31 +9,12 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinControl.CS
 {
-    /// <summary>
-    ///     The class that is responsible for proximity detection
-    /// </summary>
     public class ProximityDetection
     {
-        /// <summary>
-        ///     The singleton instance of ProximityDetection
-        /// </summary>
         private static ProximityDetection _instance;
-
-        /// <summary>
-        ///     revit application
-        /// </summary>
         private Application m_app;
-
-        /// <summary>
-        ///     revit document
-        /// </summary>
         private readonly Document m_doc;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="app">Revit application</param>
-        /// <param name="doc">Revit document</param>
         private ProximityDetection(
             Application app,
             Document doc)
@@ -42,12 +23,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
             m_doc = doc;
         }
 
-        /// <summary>
-        ///     Get the singleton instance of ProximityDetection
-        /// </summary>
-        /// <param name="app">Revit application</param>
-        /// <param name="doc">Revit document</param>
-        /// <returns>The singleton instance of ProximityDetection</returns>
         public static ProximityDetection GetInstance(
             Application app,
             Document doc)
@@ -55,14 +30,8 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
             return _instance ?? (_instance = new ProximityDetection(app, doc));
         }
 
-        /// <summary>
-        ///     Find columns in wall
-        /// </summary>
-        /// <param name="walls">The walls to be detected</param>
-        /// <returns>The detection result</returns>
         public XElement FindColumnsInWall(IEnumerable<Wall> walls)
         {
-            // create a node that place all walls.
             var wallsNode = new XElement("Walls", new XAttribute("Name", "Walls"));
 
             try
@@ -71,7 +40,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 {
                     var wallNode = new XElement("Wall", new XAttribute("Name", wall.Name));
 
-                    // Iterate to find columns and structural columns
                     var collector = new FilteredElementCollector(m_doc);
                     var columnCategories = new List<BuiltInCategory>
                     {
@@ -80,11 +48,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                     };
                     collector.WherePasses(new ElementMulticategoryFilter(columnCategories));
 
-                    // Apply element intersection filter
-                    var testElementIntersectsElementFilter =
-                        new ElementIntersectsElementFilter(wall);
-
-                    collector.WherePasses(testElementIntersectsElementFilter);
+                    collector.WherePasses(new ElementIntersectsElementFilter(wall));
 
                     var columnsNode = new XElement("columns",
                         new XAttribute("Count", collector.Count().ToString()));
@@ -103,36 +67,27 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 wallsNode.Add(new XElement("Error", new XAttribute("Exception", ex.ToString())));
             }
 
-            // return the whole walls Node
             return wallsNode;
         }
 
-        /// <summary>
-        ///     Find elements blocking egress
-        /// </summary>
-        /// <param name="egresses">The egresses to be detected</param>
-        /// <returns>The detection result</returns>
         public XElement FindBlockingElements(ICollection<Element> egresses)
         {
-            // create a node that place all egresses.
             var egressesNode = new XElement("Egresses", new XAttribute("Name", "Egresses"));
 
             try
             {
-                // find the elements blocking egress
                 foreach (var egressElement in egresses)
                 {
                     var egressNode = new XElement("Egress",
                         new XAttribute("Name", egressElement.Name));
 
                     var count = 1;
+                    // Assumes door geometry is a single GeometryInstance with solids in instance geometry.
                     var objects = egressElement.get_Geometry(new Options()).GetEnumerator();
                     objects.MoveNext();
                     var gi = objects.Current as GeometryInstance;
                     var objects1 = gi.GetInstanceGeometry().GetEnumerator();
 
-                    //foreach (GeometryObject egressGObj in 
-                    //   (egressElement.get_Geometry(new Autodesk.Revit.DB.Options()).Objects.get_Item(0) as GeometryInstance).GetInstanceGeometry().Objects)
                     while (objects1.MoveNext())
                     {
                         var egressGObj = objects1.Current;
@@ -140,18 +95,13 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                         if (egressGObj is Solid egressVolume)
                         {
                             var solidNode = new XElement($"ElementSolid{count}");
-                            // Iterate to find all instance types
                             var blockingcollector = new FilteredElementCollector(m_doc);
                             blockingcollector.WhereElementIsNotElementType();
 
-                            // Apply geometric filter
-                            var testElementIntersectsSolidFilter =
-                                new ElementIntersectsSolidFilter(egressVolume);
-                            blockingcollector.WherePasses(testElementIntersectsSolidFilter);
+                            blockingcollector.WherePasses(new ElementIntersectsSolidFilter(egressVolume));
 
                             IEnumerable<Element> blockingElement = blockingcollector;
 
-                            // Exclude the door itself  
                             var exclusions = new List<ElementId> { egressElement.Id };
                             blockingcollector.Excluding(exclusions);
 
@@ -179,18 +129,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 egressesNode.Add(new XElement("Error", new XAttribute("Exception", ex.ToString())));
             }
 
-            // return the whole Egresses Node
             return egressesNode;
         }
 
-        /// <summary>
-        ///     Find walls (nearly joined to) end of walls
-        /// </summary>
-        /// <param name="walls">The walls to be detected</param>
-        /// <returns>The detection result</returns>
         public XElement FindNearbyWalls(IEnumerable<Wall> walls)
         {
-            // create a node that place all walls.
             var wallsNode = new XElement("Walls", new XAttribute("Name", "Walls"));
 
             try
@@ -199,7 +142,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 {
                     var wallNode = new XElement("Wall", new XAttribute("Name", wall.Name));
 
-                    // Start
                     var endNode = new XElement("Start", new XAttribute("Name", "Start"));
 
                     var wallEndPoint = (wall.Location as LocationCurve).Curve.GetEndPoint(0);
@@ -207,7 +149,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
                     var collector = NearbyWallsFilter(wallEndPoint, wallHeight, 10.0); // 10 ft
 
-                    // Exclude the wall itself
                     var exclusions = new List<ElementId> { wall.Id };
                     collector.Excluding(exclusions);
 
@@ -225,14 +166,12 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                     endNode.Add(nearbyWallsNode);
                     wallNode.Add(endNode);
 
-                    // End
                     endNode = new XElement("End", new XAttribute("Name", "End"));
 
                     wallEndPoint = (wall.Location as LocationCurve).Curve.GetEndPoint(1);
 
                     collector = NearbyWallsFilter(wallEndPoint, wallHeight, 10.0);
 
-                    // Exclude the wall itself
                     exclusions = new List<ElementId> { wall.Id };
                     collector.Excluding(exclusions);
 
@@ -258,20 +197,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 wallsNode.Add(new XElement("Error", new XAttribute("Exception", ex.ToString())));
             }
 
-            // return the whole walls Node
             return wallsNode;
         }
 
-        /// <summary>
-        ///     Find the nearby walls on specific point and in specific height
-        /// </summary>
-        /// <param name="point">The given point</param>
-        /// <param name="height">The given height</param>
-        /// <param name="radius">The radius in which walls can be detected</param>
-        /// <returns>The detection result</returns>
         private FilteredElementCollector NearbyWallsFilter(XYZ point, double height, double radius)
         {
-            // build cylindrical shape around wall endpoint
             var curveloops = new List<CurveLoop>();
             var circle = new CurveLoop();
             circle.Append(Arc.Create(point, radius
@@ -285,14 +215,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
             var wallEndCylinder =
                 GeometryCreationUtilities.CreateExtrusionGeometry(curveloops, XYZ.BasisZ, height);
 
-            // Iterate document to find walls
             var collector = new FilteredElementCollector(m_doc);
             collector.OfCategory(BuiltInCategory.OST_Walls);
 
-            // Apply geometric filter
-            var testElementIntersectsSolidFilter =
-                new ElementIntersectsSolidFilter(wallEndCylinder);
-            collector.WherePasses(testElementIntersectsSolidFilter);
+            collector.WherePasses(new ElementIntersectsSolidFilter(wallEndCylinder));
 
             return collector;
         }

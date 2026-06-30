@@ -57,9 +57,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
         }
     }
 
-    /// <summary>
-    ///     Preserves global information
-    /// </summary>
     public static class RevitStartInfo
     {
         /// <summary>
@@ -77,9 +74,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
         /// </summary>
         public static ProductType RevitProduct;
 
-        /// <summary>
-        ///     Time Zone Array
-        /// </summary>
         public static readonly string[] TimeZones;
 
         /// <summary>
@@ -107,9 +101,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
         /// </summary>
         public static readonly Dictionary<object, string> HvacLoadConstructionClassMap;
 
-        /// <summary>
-        ///     Initialize some static members
-        /// </summary>
         static RevitStartInfo()
         {
             TimeZones = new[]

@@ -7,17 +7,8 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
-    /// <summary>
-    ///     Data class which stores information for creating orthogonal grids
-    /// </summary>
     public class CreateOrthogonalGridsData : CreateGridsData
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="application">Application object</param>
-        /// <param name="unit">Current length display unit type</param>
-        /// <param name="labels">All existing labels in Revit's document</param>
         public CreateOrthogonalGridsData(UIApplication application, ForgeTypeId unit, ArrayList labels)
             : base(application, labels, unit)
         {
@@ -33,59 +24,26 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         // Label of first horizontal grid
         // Label of first vertical grid
 
-        /// <summary>
-        ///     X coordinate of origin
-        /// </summary>
         public double XOrigin { get; set; }
 
-        /// <summary>
-        ///     Y coordinate of origin
-        /// </summary>
         public double YOrigin { get; set; }
 
-        /// <summary>
-        ///     Spacing between horizontal grids
-        /// </summary>
         public double XSpacing { get; set; }
 
-        /// <summary>
-        ///     Spacing between vertical grids
-        /// </summary>
         public double YSpacing { get; set; }
 
-        /// <summary>
-        ///     Number of horizontal grids
-        /// </summary>
         public uint XNumber { get; set; }
 
-        /// <summary>
-        ///     Number of vertical grids
-        /// </summary>
         public uint YNumber { get; set; }
 
-        /// <summary>
-        ///     Bubble location of horizontal grids
-        /// </summary>
         public BubbleLocation XBubbleLoc { get; set; }
 
-        /// <summary>
-        ///     Bubble location of vertical grids
-        /// </summary>
         public BubbleLocation YBubbleLoc { get; set; }
 
-        /// <summary>
-        ///     Label of first horizontal grid
-        /// </summary>
         public string XFirstLabel { get; set; }
 
-        /// <summary>
-        ///     Label of first vertical grid
-        /// </summary>
         public string YFirstLabel { get; set; }
 
-        /// <summary>
-        ///     Create grids
-        /// </summary>
         public void CreateGrids()
         {
             var failureReasons = new ArrayList();
@@ -108,11 +66,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Create horizontal grids
-        /// </summary>
-        /// <param name="failureReasons">ArrayList contains failure reasons</param>
-        /// <returns>Number of grids failed to create</returns>
         private int CreateXGrids(ref ArrayList failureReasons)
         {
             var errorCount = 0;
@@ -192,11 +145,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             return errorCount;
         }
 
-        /// <summary>
-        ///     Create vertical grids
-        /// </summary>
-        /// <param name="failureReasons">ArrayList contains failure reasons</param>
-        /// <returns>Number of grids failed to create</returns>
         private int CreateYGrids(ref ArrayList failureReasons)
         {
             var errorCount = 0;

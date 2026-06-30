@@ -27,9 +27,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         /// </summary>
         protected readonly Document Document;
 
-        /// <summary>
-        ///     store all the points on the needed face
-        /// </summary>
         protected List<List<XYZ>> Points;
 
         /// <summary>
@@ -48,30 +45,13 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         /// </summary>
         public ExternalCommandData CommandData { get; }
 
-        /// <summary>
-        ///     To2DMatrix property to get Matrix used to transform 3D points to 2D
-        /// </summary>
         public Matrix4 To2DMatrix { get; protected set; }
 
-        /// <summary>
-        ///     abstract method to create PathReinforcement
-        /// </summary>
-        /// <returns>new created PathReinforcement</returns>
-        /// <param name="points">points used to create PathReinforcement</param>
-        /// <param name="flip">used to specify whether new PathReinforcement is Filp</param>
         public abstract Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points,
             bool flip);
 
-        /// <summary>
-        ///     Get points in first face
-        /// </summary>
-        /// <param name="faces">edges in all faces</param>
-        /// <returns>points in first face</returns>
         public abstract List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces);
 
-        /// <summary>
-        ///     Get a matrix which can transform points to 2D
-        /// </summary>
         public abstract Matrix4 GetTo2DMatrix();
 
         /// <summary>
@@ -103,11 +83,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             }
         }
 
-        /// <summary>
-        ///     Get edges of element's profile
-        /// </summary>
-        /// <param name="elem">selected element</param>
-        /// <returns>all the faces in the selected Element</returns>
         public List<List<Edge>> GetFaces(Element elem)
         {
             var faceEdges = new List<List<Edge>>();
@@ -147,11 +122,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             return faceEdges;
         }
 
-        /// <summary>
-        ///     Get normal of face
-        /// </summary>
-        /// <param name="face">edges in a face</param>
-        /// <returns>vector stands for normal of the face</returns>
         public Vector4 GetFaceNormal(List<Edge> face)
         {
             var eg0 = face[0];
@@ -180,10 +150,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             return result;
         }
 
-        /// <summary>
-        ///     Get a matrix which can move points to center
-        /// </summary>
-        /// <returns>matrix used to move point to center of graphics</returns>
         public Matrix4 ToCenterMatrix()
         {
             //translate the origin to bound center
@@ -194,10 +160,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             return new Matrix4(new Vector4(center.X, center.Y, 0));
         }
 
-        /// <summary>
-        ///     Get the bound of a face
-        /// </summary>
-        /// <returns>points array store the bound of the face</returns>
         public PointF[] GetFaceBounds()
         {
             var matrix = To2DMatrix;

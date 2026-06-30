@@ -17,28 +17,16 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
     [Regeneration(RegenerationOption.Manual)]
     public class DatumStyleModification : IExternalCommand
     {
-        /// <summary>
-        /// </summary>
         public static bool ShowLeftBubble = false;
 
-        /// <summary>
-        /// </summary>
         public static bool ShowRightBubble = false;
 
-        /// <summary>
-        /// </summary>
         public static bool AddLeftElbow = false;
 
-        /// <summary>
-        /// </summary>
         public static bool AddRightElbow = false;
 
-        /// <summary>
-        /// </summary>
         public static bool ChangeLeftEnd2D = false;
 
-        /// <summary>
-        /// </summary>
         public static bool ChangeRightEnd2D = false;
 
         public virtual Result Execute(ExternalCommandData commandData
@@ -51,7 +39,6 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                 var view = commandData.Application.ActiveUIDocument.ActiveView;
                 if (datums == null || datums.Count == 0)
                     return Result.Cancelled;
-                //// Show UI                
                 using (var settingForm = new DatumStyleSetting())
                 {
                     if (settingForm.ShowDialog() == DialogResult.OK)
@@ -118,8 +105,6 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
     [Regeneration(RegenerationOption.Manual)]
     public class DatumAlignment : IExternalCommand
     {
-        /// <summary>
-        /// </summary>
         public static readonly Dictionary<string, DatumPlane> DatumDic = new Dictionary<string, DatumPlane>();
 
         public virtual Result Execute(ExternalCommandData commandData
@@ -140,7 +125,6 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                     if (!DatumDic.Keys.Contains(datum.Name)) DatumDic.Add(datum.Name, datum);
                 }
 
-                //// Show UI                
                 using (var settingForm = new AlignmentSetting())
                 {
                     if (settingForm.ShowDialog() == DialogResult.OK)
@@ -183,34 +167,8 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
     [Regeneration(RegenerationOption.Manual)]
     public class DatumPropagation : IExternalCommand
     {
-        /// <summary>
-        /// </summary>
         public static readonly Dictionary<string, ElementId> ViewDic = new Dictionary<string, ElementId>();
 
-        /// <summary>
-        ///     Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">
-        ///     An object that is passed to the external application
-        ///     which contains data related to the command,
-        ///     such as the application object and active view.
-        /// </param>
-        /// <param name="message">
-        ///     A message that can be set by the external application
-        ///     which will be displayed if a failure or cancellation is returned by
-        ///     the external command.
-        /// </param>
-        /// <param name="elements">
-        ///     A set of elements to which the external application
-        ///     can add elements that are to be highlighted in case of failure or cancellation.
-        /// </param>
-        /// <returns>
-        ///     Return the status of the external command.
-        ///     A result of Succeeded means that the API external method functioned as expected.
-        ///     Cancelled can be used to signify that the user cancelled the external operation
-        ///     at some point. Failure should be returned if the application is unable to proceed with
-        ///     the operation.
-        /// </returns>
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
@@ -232,7 +190,6 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                         ViewDic.Add($"{pView.ViewType} : {pView.Name}", id);
                 }
 
-                //// Show UI                
                 using (var settingForm = new PropogateSetting())
                 {
                     if (settingForm.ShowDialog() == DialogResult.OK)

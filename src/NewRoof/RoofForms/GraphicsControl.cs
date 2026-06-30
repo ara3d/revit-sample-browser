@@ -27,9 +27,6 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         // To store a value to decide the scale of the drawing.
         private float m_scale;
 
-        /// <summary>
-        ///     The private construct
-        /// </summary>
         private GraphicsControl()
         {
             InitializeComponent();

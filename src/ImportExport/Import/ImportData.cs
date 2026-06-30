@@ -8,21 +8,10 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 {
-    /// <summary>
-    ///     Base data class which stores the basic information for import
-    /// </summary>
     public class ImportData
     {
-        /// <summary>
-        ///     Active document
-        /// </summary>
         protected readonly Document ActiveDoc;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
-        /// <param name="importFormat">Format to import</param>
         public ImportData(ExternalCommandData commandData, ImportFormat importFormat)
         {
             CommandData = commandData;
@@ -31,34 +20,16 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             Initialize();
         }
 
-        /// <summary>
-        ///     Revit command data
-        /// </summary>
         public ExternalCommandData CommandData { get; }
 
-        /// <summary>
-        ///     File Name or Prefix to be used
-        /// </summary>
         public string ImportFileFullName { get; set; }
 
-        /// <summary>
-        ///     The filter which will be used in file saving dialog
-        /// </summary>
         public string Filter { get; protected set; }
 
-        /// <summary>
-        ///     Directory where to import the file
-        /// </summary>
         public string ImportFolder { get; private set; }
 
-        /// <summary>
-        ///     The title of importing dialog
-        /// </summary>
         public string Title { get; protected set; }
 
-        /// <summary>
-        ///     Initialize the variables
-        /// </summary>
         private void Initialize()
         {
             //The directory into which the file will be imported
@@ -67,10 +38,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             ImportFileFullName = string.Empty;
         }
 
-        /// <summary>
-        ///     Collect the parameters and import
-        /// </summary>
-        /// <returns></returns>
         public virtual bool Import()
         {
             if (ImportFileFullName == null) throw new NullReferenceException();

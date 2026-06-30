@@ -35,7 +35,6 @@ namespace AdnRme
       return Element.Name;
     }
 
-
     public static int CompareByName( PanelTreeNodeHelper x, PanelTreeNodeHelper y )
     {
       return string.Compare( x.ToString(), y.ToString() );

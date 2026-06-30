@@ -15,10 +15,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
     {
         private readonly string m_identifier;
 
-        /// <summary>
-        ///     Constructs a new predefined point cloud access instance.
-        /// </summary>
-        /// <param name="identifier">The identifier of the point cloud.</param>
         public PredefinedPointCloud(string identifier)
         {
             m_identifier = identifier;
@@ -26,11 +22,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
             Setup(false);
         }
 
-        /// <summary>
-        ///     Constructs a new predefined point cloud access instance.
-        /// </summary>
-        /// <param name="identifier">The identifier of the point cloud.</param>
-        /// <param name="randomizedPoints">True to use randomization for the point location and number, false otherwise.</param>
         public PredefinedPointCloud(string identifier, bool randomizedPoints)
         {
             m_identifier = identifier;
@@ -129,10 +120,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         {
         }
 
-        /// <summary>
-        ///     Sets up the predefined point cloud.
-        /// </summary>
-        /// <param name="randomizedPoints">True to use randomization for the point location and number, false otherwise.</param>
         private void Setup(bool randomizedPoints)
         {
             AddCell(new XYZ(0, 0, 0), new XYZ(0.5, 100, 10), 0x00CCCC, randomizedPoints);

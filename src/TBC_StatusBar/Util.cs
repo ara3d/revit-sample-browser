@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_StatusBar sample.</summary>
     internal static partial class Util
     {
         [DllImport("user32.dll",

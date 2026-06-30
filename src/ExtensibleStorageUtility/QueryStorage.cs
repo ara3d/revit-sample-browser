@@ -8,8 +8,7 @@ using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
 {
     /// <summary>
-    ///     Checks to see if any extensible storage in the document exists and displays elements
-    ///     containing storage to the user.
+    /// Lists elements in the active document that carry extensible storage.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

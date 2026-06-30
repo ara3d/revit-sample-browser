@@ -17,9 +17,6 @@ using System.Reflection;
 
 namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 {
-    /// <summary>
-    ///     Provider for string resources
-    /// </summary>
     public class ResourceProvider
     {
         private static ResourceProvider _provider;
@@ -41,10 +38,6 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
         /// </summary>
         public string SelectedIssueImage { get; }
 
-        /// <summary>
-        ///     Gets the string resource provider
-        /// </summary>
-        /// <returns>Instance of the provider</returns>
         public static ResourceProvider GetInstance()
         {
             return _provider ?? (_provider = new ResourceProvider());

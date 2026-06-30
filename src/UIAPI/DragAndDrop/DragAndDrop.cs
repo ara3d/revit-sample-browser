@@ -18,10 +18,6 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.DragAndDrop
 
         private readonly Document m_document;
 
-        /// <summary>
-        ///     Construct and populate the form.
-        /// </summary>
-        /// <param name="document"></param>
         private FurnitureFamilyDragAndDropForm(Document document)
         {
             InitializeComponent();
@@ -131,9 +127,6 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.DragAndDrop
             _sForm = null;
         }
 
-        /// <summary>
-        ///     Display class for the external family file listbox.
-        /// </summary>
         private class FamilyListBoxMember
         {
             public readonly string FullPath;
@@ -152,9 +145,6 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.DragAndDrop
         }
     }
 
-    /// <summary>
-    ///     Custom handler for placement of loaded family types
-    /// </summary>
     public class LoadedFamilyDropHandler : IDropHandler
     {
         public void Execute(UIDocument document, object data)

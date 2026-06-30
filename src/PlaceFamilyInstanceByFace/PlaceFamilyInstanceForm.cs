@@ -10,9 +10,6 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
-    /// <summary>
-    ///     The main UI for creating family instance by face
-    /// </summary>
     public partial class PlaceFamilyInstanceForm : Form
     {
         // the base type
@@ -21,11 +18,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
         // the creator
         private readonly FamilyInstanceCreator m_creator;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="creator">the family instance creator</param>
-        /// <param name="type">based-type</param>
         public PlaceFamilyInstanceForm(FamilyInstanceCreator creator, BasedType type)
         {
             m_creator = creator;
@@ -74,10 +66,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             AdjustComboBoxDropDownListWidth(comboBoxFamily);
         }
 
-        /// <summary>
-        ///     Get face information when the selected face is changed
-        /// </summary>
-        /// <param name="index">the index of the new selected face</param>
         private void SetFaceIndex(int index)
         {
             comboBoxFace.SelectedItem = m_creator.FaceNameList[index];
@@ -97,11 +85,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             }
         }
 
-        /// <summary>
-        ///     Create a family instance according the selected options by user
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonCreate_Click(object sender, EventArgs e)
         {
             var retBool = false;
@@ -151,20 +134,11 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             }
         }
 
-        /// <summary>
-        ///     Process the SelectedIndexChanged event of comboBoxFace
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void comboBoxFace_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetFaceIndex(comboBoxFace.SelectedIndex);
         }
 
-        /// <summary>
-        ///     Adjust the comboBox dropDownList width
-        /// </summary>
-        /// <param name="senderComboBox">the comboBox</param>
         private void AdjustComboBoxDropDownListWidth(ComboBox senderComboBox)
         {
             Graphics g = null;

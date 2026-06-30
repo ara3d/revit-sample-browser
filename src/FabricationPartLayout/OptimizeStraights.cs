@@ -19,7 +19,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
 
-                // check user selection
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var collection = uidoc.Selection.GetElementIds();
                 if (collection.Count > 0)
@@ -34,8 +33,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     {
                         tr.Start();
 
-                        // optimize lengths method will take a set of elements and any fabrication straight parts
-                        // within this set that have been optimized will be returned.
                         var affectedPartIds = FabricationPart.OptimizeLengths(doc, selIds);
                         if (affectedPartIds.Count == 0)
                         {
@@ -51,7 +48,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Succeeded;
                 }
 
-                // inform user they need to select at least one element
                 message = "Please select at least one element.";
 
                 return Result.Failed;

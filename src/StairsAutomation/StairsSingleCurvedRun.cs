@@ -12,12 +12,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
     /// <remarks>Because this run is based on Spiral runs, runs exceeding 360 degrees are possible.</remarks>
     public class StairsSingleCurvedRun : StairsConfiguration
     {
-        /// <summary>
-        ///     Creates a new instance of StairsSingleCurvedRun at the default location and orientation.
-        /// </summary>
-        /// <param name="stairs">The stairs element.</param>
-        /// <param name="bottomLevel">The bottom level of the configuration.</param>
-        /// <param name="innerRadius">The inner radius of the run curvature.</param>
         public StairsSingleCurvedRun(Stairs stairs, Level bottomLevel, double innerRadius)
         {
             var stairsType = stairs.Document.GetElement(stairs.GetTypeId()) as StairsType;
@@ -26,13 +20,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
                 innerRadius, stairs.Document.Application.Create));
         }
 
-        /// <summary>
-        ///     Creates a new instance of StairsSingleCurvedRun at a specified location and orientation.
-        /// </summary>
-        /// <param name="stairs">The stairs element.</param>
-        /// <param name="bottomLevel">The bottom level of the configuration.</param>
-        /// <param name="innerRadius">The inner radius of the run curvature.</param>
-        /// <param name="transform">The transform (containing location and orientation).</param>
         public StairsSingleCurvedRun(Stairs stairs, Level bottomLevel, double innerRadius, Transform transform)
         {
             var stairsType = stairs.Document.GetElement(stairs.GetTypeId()) as StairsType;

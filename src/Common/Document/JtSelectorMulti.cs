@@ -15,32 +15,12 @@ using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledEx
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Select multiple elements of the same type using
-    ///     either pre-selection, before launching the
-    ///     command, or post-selection, afterwards.
-    ///     The element type is determined by the template
-    ///     parameter. A filtering method must be provided
-    ///     and is reused for both testing the pre-selection
-    ///     and defining allowable elements for the post-
-    ///     selection.
-    /// </summary>
     internal class JtSelectorMulti<T> where T : Element
     {
 #pragma warning disable IDE1006
 
-        /// <summary>
-        ///     Determine whether the given element is a valid
-        ///     selectable object. The method passed in is
-        ///     reused for both the interactive selection
-        ///     filter and the pre-selection validation.
-        ///     See below for a sample method.
-        /// </summary>
         public delegate bool IsSelectable(Element e);
 
-        /// <summary>
-        ///     Error message in case of invalid pre-selection.
-        /// </summary>
         private const string _usage_error = "Please pre-select "
                                             + "only {0}s before launching this command.";
 
@@ -49,13 +29,6 @@ namespace BuildingCoder
 
         private readonly List<T> _selected;
 
-        /// <summary>
-        ///     Instantiate and run element selector.
-        /// </summary>
-        /// <param name="uidoc">UIDocument.</param>
-        /// <param name="bic">Built-in category or null.</param>
-        /// <param name="description">Description of the elements to select.</param>
-        /// <param name="f">Validation method.</param>
         public JtSelectorMulti(
             UIDocument uidoc,
             BuiltInCategory? bic,
@@ -140,26 +113,14 @@ namespace BuildingCoder
                 : Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Return true if nothing was selected.
-        /// </summary>
         public bool IsEmpty =>
             null == _selected
             || 0 == _selected.Count;
 
-        /// <summary>
-        ///     Return selected elements or null.
-        /// </summary>
         public IList<T> Selected => _selected;
 
         #region Sample common filtering helper method
 
-        /// <summary>
-        ///     Determine whether the given element is valid.
-        ///     This specific implementation requires a family
-        ///     instance element of the furniture category
-        ///     belonging to the named family.
-        /// </summary>
         public static bool IsTable(Element e)
         {
             var rc = false;
@@ -181,11 +142,6 @@ namespace BuildingCoder
 
         #endregion // Common filtering helper method
 
-        /// <summary>
-        ///     Return the cancellation or failure code
-        ///     to Revit and display a message if there
-        ///     is anything to say.
-        /// </summary>
         public Result ShowResult()
         {
             if (Result.Failed == _result)
@@ -244,24 +200,15 @@ namespace BuildingCoder
         // the error message or result code, since that 
         // can all be encapsulated in the call to ShowResult.
 
-        /// <summary>
-        /// Return error message in case
-        /// of failure or cancellation
-        /// </summary>
         //public string ErrorMessage
         //{
-        //  get
         //  {
         //    return _msg;
         //  }
         //}
 
-        /// <summary>
-        /// Return selection result
-        /// </summary>
         //public Result Result
         //{
-        //  get
         //  {
         //    return _result;
         //  }

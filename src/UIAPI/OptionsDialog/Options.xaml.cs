@@ -3,9 +3,6 @@ using System.Windows.Controls;
 
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
 {
-    /// <summary>
-    ///     Interaction logic for Options.xaml
-    /// </summary>
     public partial class Options
     {
         public Options()

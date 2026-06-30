@@ -34,9 +34,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         {
         }
 
-        /// <summary>
-        ///     Get RebarShapeDefinitionBySegments object.
-        /// </summary>
         protected RebarShapeDefinitionBySegments GetRebarShapeDefinitionBySegments =>
             ShapeDef.RebarshapeDefinition as RebarShapeDefinitionBySegments;
 
@@ -67,10 +64,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// </summary>
         private RebarShapeVertexTurn m_turn;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="def"></param>
         public ConstraintBendDefaultRadius(RebarShapeDefBySegment def)
             : base(def)
         {
@@ -251,10 +244,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// </summary>
         private int m_segment;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="def"></param>
         public ConstraintParallelToSegment(RebarShapeDefBySegment def)
             : base(def)
         {
@@ -955,9 +944,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
             set => m_measureToOutsideOfBend = value;
         }
 
-        /// <summary>
-        ///     Add a dimension of 180 degree bend for a segment.
-        /// </summary>
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.SetSegmentAs180DegreeBend(
@@ -1065,9 +1051,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
             set => m_segment = value;
         }
 
-        /// <summary>
-        ///     Remove the direction dimension of segment.
-        /// </summary>
         public override void Commit()
         {
             GetRebarShapeDefinitionBySegments.SetSegmentVariableDirection(m_segment);

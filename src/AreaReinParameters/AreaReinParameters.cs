@@ -11,9 +11,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 {
-    /// <summary>
-    ///     Entry point and main command class
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -21,21 +18,10 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
     {
         private AreaReinforcement m_areaRein;
 
-        /// <summary>
-        ///     it is convenient for other class to get
-        /// </summary>
         public static ExternalCommandData CommandData { get; private set; }
 
-        /// <summary>
-        ///     all hook types in current project
-        ///     it is static because of IConverter limitation
-        /// </summary>
         public static Hashtable HookTypes { get; private set; }
 
-        /// <summary>
-        ///     all hook types in current project
-        ///     it is static because of IConverter limitation
-        /// </summary>
         public static Hashtable BarTypes { get; private set; }
 
         public Result Execute(
@@ -78,11 +64,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     check whether the selected is expected, find all hooktypes in current project
-        /// </summary>
-        /// <param name="selected">selected elements</param>
-        /// <returns>whether the selected AreaReinforcement is expected</returns>
         private bool PreData()
         {
             var selectedIds = CommandData.Application.ActiveUIDocument.Selection.GetElementIds();
@@ -112,7 +93,6 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
         {
             try
             {
-                // Get the active document and view
                 var revitDoc = revit.Application.ActiveUIDocument;
                 foreach (var elemId in revitDoc.Selection.GetElementIds())
                 {

@@ -71,9 +71,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             GetTrussGeometryInfo();
         }
 
-        /// <summary>
-        ///     Calculate geometry info for truss
-        /// </summary>
         private void GetTrussGeometryInfo()
         {
             // get the start and end point of the basic line of the truss
@@ -96,10 +93,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             CreateGraphicsPath();
         }
 
-        /// <summary>
-        ///     Get points of the truss
-        /// </summary>
-        /// <returns>points array stores all the points on truss</returns>
         public List<XYZ> GetTrussPoints()
         {
             var xyzArray = new List<XYZ>();
@@ -132,10 +125,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return xyzArray;
         }
 
-        /// <summary>
-        ///     Get a matrix which can transform points to 2D
-        /// </summary>
-        /// <returns>matrix which can transform points to 2D</returns>
         public Matrix4 GetTo2DMatrix()
         {
             var trussLocation = (m_truss.Location as LocationCurve).Curve as Line;
@@ -157,10 +146,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return new Matrix4(xAxis, yAxis, zAxis, m_origin);
         }
 
-        /// <summary>
-        ///     calculate the matrix use to scale
-        /// </summary>
-        /// <returns>maxtrix is use to scale the profile</returns>
         public Matrix4 GetScaleMatrix()
         {
             var xScale = 384 / (m_boundPoints[1].X - m_boundPoints[0].X);
@@ -169,10 +154,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return new Matrix4((float)(factor * 0.85));
         }
 
-        /// <summary>
-        ///     Get a matrix which can move points to center
-        /// </summary>
-        /// <returns>matrix used to move point to center of graphics</returns>
         public Matrix4 GetMoveToCenterMatrix()
         {
             //translate the origin to bound center
@@ -183,10 +164,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return new Matrix4(new Vector4((float)center.X, (float)center.Y, 0));
         }
 
-        /// <summary>
-        ///     calculate the matrix used to transform 3D to 2D
-        /// </summary>
-        /// <returns>maxtrix is use to transform 3d points to 2d</returns>
         public Matrix4 Get3DTo2DMatrix()
         {
             var result = Matrix4.Multiply(
@@ -195,10 +172,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return Matrix4.Multiply(result, new Matrix4(new Vector4(192, 137, 0)));
         }
 
-        /// <summary>
-        ///     calculate the matrix used to transform 2D to 3D
-        /// </summary>
-        /// <returns>maxtrix is use to transform 2d points to 3d</returns>
         public Matrix4 Get2DTo3DMatrix()
         {
             var matrix = Matrix4.Multiply(
@@ -207,26 +180,16 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return Matrix4.Multiply(matrix, m_to2DMatrix);
         }
 
-        /// <summary>
-        ///     calculate the matrix used to transform 2d points (on pictureBox) to the plane of truss
-        ///     which use to set profile
-        /// </summary>
-        /// <returns>maxtrix is use to transform 2d points to the plane of truss</returns>
         public Matrix4 Get2DToTrussProfileMatrix()
         {
             var matrix = Matrix4.Multiply(
                 new Matrix4(new Vector4(-192, -137, 0)), m_scaleMatrix.Inverse());
             return Matrix4.Multiply(matrix, m_moveToCenterMatrix);
-            ////downward in picture box, so rotate upward here, y = -y
             //Matrix4 upward =  new Matrix4(new Vector4(new Autodesk.Revit.DB.XYZ (1, 0, 0)),
             //    new Vector4(new Autodesk.Revit.DB.XYZ (0, -1, 0)), new Vector4(new Autodesk.Revit.DB.XYZ (0, 0, 1)));
             //return Matrix4.Multiply(matrix, upward);
         }
 
-        /// <summary>
-        ///     Get max and min coordinates of all points
-        /// </summary>
-        /// <returns>points array stores the bound of all points</returns>
         public XYZ[] GetBoundsPoints()
         {
             var matrix = m_to2DMatrix;
@@ -266,11 +229,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return resultPoints;
         }
 
-        /// <summary>
-        ///     draw profile of truss in pictureBox
-        /// </summary>
-        /// <param name="graphics">form graphic</param>
-        /// <param name="pen">pen used to draw line in pictureBox</param>
         public void Draw2D(Graphics graphics, Pen pen)
         {
             //draw truss curves
@@ -367,9 +325,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             }
         }
 
-        /// <summary>
-        ///     restores truss profile to original
-        /// </summary>
         public void RemoveProfile()
         {
             m_truss.RemoveProfile();
@@ -377,11 +332,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             ClearChords();
         }
 
-        /// <summary>
-        ///     add new point to line tool which used to draw top chord
-        /// </summary>
-        /// <param name="x">X coordinate</param>
-        /// <param name="y">Y coordinate</param>
         public void AddTopChordPoint(int x, int y)
         {
             // doesn't allow to add 2 points near-by
@@ -396,11 +346,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             m_topChord.Points.Add(new Point(x, y));
         }
 
-        /// <summary>
-        ///     add new point to line tool which used to draw bottom chord
-        /// </summary>
-        /// <param name="x">X coordinate</param>
-        /// <param name="y">Y coordinate</param>
         public void AddBottomChordPoint(int x, int y)
         {
             // doesn't allow to add 2 points near-by
@@ -415,22 +360,12 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             m_bottomChord.Points.Add(new Point(x, y));
         }
 
-        /// <summary>
-        ///     add move point to line tool of top chord
-        /// </summary>
-        /// <param name="x">X coordinate</param>
-        /// <param name="y">Y coordinate</param>
         public void AddTopChordMovePoint(int x, int y)
         {
             m_topChord.MovePoint = new Point(x, y);
             m_bottomChord.MovePoint = Point.Empty;
         }
 
-        /// <summary>
-        ///     add move point to line tool of bottom chord
-        /// </summary>
-        /// <param name="x">X coordinate</param>
-        /// <param name="y">Y coordinate</param>
         public void AddBottomChordMovePoint(int x, int y)
         {
             m_bottomChord.MovePoint = new Point(x, y);
@@ -443,18 +378,12 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             m_bottomChord.MovePoint = Point.Empty;
         }
 
-        /// <summary>
-        ///     clear points of top chord and bottom chord
-        /// </summary>
         public void ClearChords()
         {
             m_topChord.Points.Clear();
             m_bottomChord.Points.Clear();
         }
 
-        /// <summary>
-        ///     Create GraphicsPath object for each curves of truss
-        /// </summary>
         public void CreateGraphicsPath()
         {
             m_graphicsPaths.Clear();
@@ -476,12 +405,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             }
         }
 
-        /// <summary>
-        ///     Judge which truss member has been selected via location of mouse
-        /// </summary>
-        /// <param name="x">X coordinate of mouse location</param>
-        /// <param name="y">Y coordinate of mouse location</param>
-        /// <returns>index of selected member</returns>
         public int SelectTrussMember(int x, int y)
         {
             var point = new Point(x, y);
@@ -499,10 +422,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return m_selectMemberIndex;
         }
 
-        /// <summary>
-        ///     Draw selected line (beam) by red pen
-        /// </summary>
-        /// <param name="graphics">graphics of picture box</param>
         public void DrawSelectedLineRed(Graphics graphics)
         {
             var redPen = new Pen(Color.Red, (float)2.0);
@@ -552,9 +471,6 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             return (FamilyInstance)commandData.Application.ActiveUIDocument.Document.GetElement(id);
         }
 
-        /// <summary>
-        ///     Reset index and clear line tool
-        /// </summary>
         public void Reset()
         {
             m_clickMemberIndex = -1;

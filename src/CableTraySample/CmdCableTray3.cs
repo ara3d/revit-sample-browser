@@ -11,9 +11,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CableTraySample.CS
 {
-    /// <summary>
-    ///     Creates two cable tray segments, rotates the second, and inserts an elbow fitting.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

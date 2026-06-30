@@ -18,10 +18,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         private readonly ExternalCommandData m_commandData; // the ExternalCommandData reference
         private FamilyInstance m_hostObject; // the host object
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
         public FrameReinMakerFactory(ExternalCommandData commandData)
         {
             m_commandData = commandData;
@@ -68,10 +64,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return true;
         }
 
-        /// <summary>
-        ///     Get the selected element as the host object, also check if the selected element is expected host object
-        /// </summary>
-        /// <returns>true if get the selected element, otherwise false.</returns>
         private bool GetHostObject()
         {
             var selectedIds = new List<ElementId>();
@@ -83,12 +75,10 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 
             if (selectedIds.Count != 1)
                 return false;
-            //
             // Construct filters to find expected host object: 
             // . Host should be Beam/Column structural type.
             // . and it's material type should be Concrete
             // . and it should be FamilyInstance
-            //
             // Structural type filters firstly
             var stFilter = new LogicalOrFilter(
                 new ElementStructuralTypeFilter(StructuralType.Beam),
@@ -96,7 +86,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             // StructuralMaterialType should be Concrete
             var hostFilter = new LogicalAndFilter(stFilter,
                 new StructuralMaterialTypeFilter(StructuralMaterialType.Concrete));
-            //
             // Expected host object
             var collector =
                 new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document, selectedIds);

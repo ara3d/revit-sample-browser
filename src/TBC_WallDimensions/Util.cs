@@ -4,16 +4,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_WallDimensions sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Retrieve the planar face normal and origin
-        ///     from all of the solid's planar faces and
-        ///     insert them into the map mapping face normals
-        ///     to a list of all origins of different faces
-        ///     sharing this normal.
-        /// </summary>
         internal static void GetFaceNaos(
             Dictionary<XYZ, List<XYZ>> naos,
             Solid solid)
@@ -53,11 +45,6 @@ namespace BuildingCoder
             }
         }
 
-        /// <summary>
-        ///     Calculate the maximum distance between
-        ///     the given set of points in the given
-        ///     normal direction.
-        /// </summary>
         internal static double GetMaxDistanceAlongNormal(
             List<XYZ> pts,
             XYZ normal)
@@ -77,12 +64,6 @@ namespace BuildingCoder
             return dmax;
         }
 
-        /// <summary>
-        ///     Create a string listing the
-        ///     dimensions from a dictionary
-        ///     of normal vectors with associated
-        ///     face origins.
-        /// </summary>
         internal static string GetWallDimensions(
             Dictionary<XYZ, List<XYZ>> naos)
         {

@@ -5,13 +5,8 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_DimensionInstanceOrigin sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Retrieve origin and direction of the left
-        ///     reference plane within the given family instance.
-        /// </summary>
         internal static bool GetFamilyInstanceReferencePlaneLocation(
             FamilyInstance fi,
             out XYZ origin,
@@ -46,10 +41,7 @@ namespace BuildingCoder
             return found;
         }
 
-        /// <summary>
-        ///     Retrieve the given family instance's
-        ///     non-visible geometry point reference.
-        /// </summary>
+        // Requires IncludeNonVisibleObjects to obtain the origin point reference.
         internal static Reference GetFamilyInstancePointReference(
             FamilyInstance fi)
         {
@@ -65,9 +57,6 @@ namespace BuildingCoder
                 .FirstOrDefault();
         }
 
-        /// <summary>
-        ///     Create vertical dimensioning.
-        /// </summary>
         internal static void CreateVerticalDimensioning(ViewSection viewSection)
         {
             var doc = viewSection.Document;

@@ -51,20 +51,13 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            // get symbol to use:
-
             BuiltInCategory bic;
             Type t;
 
-            // this retrieves the railing baluster symbols
-            // but they cannot be used to create a railing:
+            // Baluster FamilySymbols cannot create railings; OST_StairsRailing yields ElementType, not FamilySymbol.
 
             bic = BuiltInCategory.OST_StairsRailingBaluster;
             t = typeof(FamilySymbol);
-
-            // this retrieves all railing symbols,
-            // but they are just Symbol instances,
-            // not FamilySymbol ones:
 
             bic = BuiltInCategory.OST_StairsRailing;
             t = typeof(ElementType);
@@ -86,7 +79,6 @@ namespace BuildingCoder
                     s.Category.Name);
 
                 if (null == sym && s is ElementType)
-                    // this does not work, of course:
                     sym = s as FamilySymbol;
             }
 
@@ -103,7 +95,6 @@ namespace BuildingCoder
             var p2 = new XYZ(33, 0, 0);
             var line = Line.CreateBound(p1, p2);
 
-            // we need a FamilySymbol instance here, but only have a Symbol:
 
             var Railing1
                 = doc.Create.NewFamilyInstance(

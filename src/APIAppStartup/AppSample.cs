@@ -33,7 +33,6 @@ namespace Ara3D.RevitSampleBrowser.APIAppStartup.CS
         {
             var version = application.ControlledApplication.VersionName;
 
-            //display splash window for 10 seconds
             SplashWindow.StartSplash();
             SplashWindow.ShowVersion(version);
             Thread.Sleep(10000);

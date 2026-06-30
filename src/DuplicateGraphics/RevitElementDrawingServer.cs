@@ -1,9 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-/*
- * This sample demonstrates how to use DirectContext3D to draw graphics. 
- * This file defines a DirectContext3D server.
- */
+// DirectContext3D server that duplicates element graphics.
 
 using System;
 using System.Collections.Generic;
@@ -66,25 +63,21 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             return "Duplicates graphics from a Revit element.";
         }
 
-        // Corresponds to functionality that is not used in this sample.
         public string GetApplicationId()
         {
             return "";
         }
 
-        // Corresponds to functionality that is not used in this sample.
         public string GetSourceId()
         {
             return "";
         }
 
-        // Corresponds to functionality that is not used in this sample.
         public bool UsesHandles()
         {
             return false;
         }
 
-        // Tests whether this server should be invoked for the given view.
         // The server only wants to be invoked for 3D views that are part of the document that contains the element in m_element.
         public bool CanExecute(View view)
         {
@@ -98,7 +91,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             return doc.Equals(otherDoc);
         }
 
-        // Reports a bounding box of the geometry that this server submits for drawing.
         public Outline GetBoundingBox(View view)
         {
             try
@@ -116,18 +108,15 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             }
         }
 
-        // Indicates that this server will submit geometry during the rendering pass for transparent geometry.
         public bool UseInTransparentPass(View view)
         {
             return true;
         }
 
-        // Submits the geometry for rendering.
         public void RenderScene(View view, DisplayStyle displayStyle)
         {
             try
             {
-                // Populate geometry buffers if they are not initialized or need updating.
                 if (m_nonTransparentFaceBufferStorage == null ||
                     m_nonTransparentFaceBufferStorage.NeedsUpdate(displayStyle) ||
                     m_transparentFaceBufferStorage == null ||
@@ -149,7 +138,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                     ? m_transparentFaceBufferStorage
                     : m_nonTransparentFaceBufferStorage;
 
-                // Conditionally submit triangle primitives (for non-wireframe views).
                 if (displayStyle != DisplayStyle.Wireframe &&
                     faceBufferStorage.PrimitiveCount > 0)
                     DrawContext.FlushBuffer(faceBufferStorage.VertexBuffer,
@@ -160,7 +148,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                         faceBufferStorage.EffectInstance, PrimitiveType.TriangleList, 0,
                         faceBufferStorage.PrimitiveCount);
 
-                // Conditionally submit line segment primitives.
                 if (displayStyle != DisplayStyle.Shading &&
                     m_edgeBufferStorage.PrimitiveCount > 0)
                     DrawContext.FlushBuffer(m_edgeBufferStorage.VertexBuffer,
@@ -177,7 +164,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             }
         }
 
-        // Initialize and populate buffers that hold graphics primitives, set up related parameters that are needed for drawing.
         private void CreateBufferStorageForElement(GeometryElement geomElem, DisplayStyle displayStyle)
         {
             var allSolids = new List<Solid>();
@@ -195,7 +181,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             m_transparentFaceBufferStorage = new RenderingPassBufferStorage(displayStyle);
             m_edgeBufferStorage = new RenderingPassBufferStorage(displayStyle);
 
-            // Collect primitives (and associated rendering parameters, such as colors) from faces and edges.
             foreach (var solid in allSolids)
             {
                 foreach (Face face in solid.Faces)
@@ -251,13 +236,11 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                 }
             }
 
-            // Fill out buffers with primitives based on the intermediate information about faces and edges.
             ProcessFaces(m_nonTransparentFaceBufferStorage);
             ProcessFaces(m_transparentFaceBufferStorage);
             ProcessEdges(m_edgeBufferStorage);
         }
 
-        // Create and populate a pair of vertex and index buffers. Also update parameters associated with the format of the vertices.
         private void ProcessFaces(RenderingPassBufferStorage bufferStorage)
         {
             var meshes = bufferStorage.Meshes;
@@ -340,7 +323,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                     for (var i = 0; i < mesh.NumTriangles; i++)
                     {
                         var mt = mesh.get_Triangle(i);
-                        // Add three indices that define a triangle.
                         indexStream.AddTriangle(new IndexTriangle((int)(startIndex + mt.get_Index(0)),
                             (int)(startIndex + mt.get_Index(1)),
                             (int)(startIndex + mt.get_Index(2))));
@@ -357,7 +339,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             bufferStorage.EffectInstance = new EffectInstance(bufferStorage.FormatBits);
         }
 
-        // A helper function, analogous to ProcessFaces.
         private void ProcessEdges(RenderingPassBufferStorage bufferStorage)
         {
             var edges = bufferStorage.EdgeXyZs;
@@ -397,7 +378,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                 {
                     var startIndex = numVerticesInEdgesBefore[edgeNumber];
                     for (var i = 1; i < xyzs.Count; i++)
-                        // Add two indices that define a line segment.
                         indexStream.AddLine(new IndexLine(startIndex + i - 1,
                             startIndex + i));
                     edgeNumber++;
@@ -409,7 +389,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             bufferStorage.EffectInstance = new EffectInstance(bufferStorage.FormatBits);
         }
 
-        // A container to hold information associated with a triangulated face.
         private class MeshInfo
         {
             public readonly ColorWithTransparency ColorWithTransparency;
@@ -425,7 +404,6 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             }
         }
 
-        // A class that brings together all the data and rendering parameters that are needed to draw one sequence of primitives (e.g., triangles)
         // with the same format and appearance.
         private class RenderingPassBufferStorage
         {

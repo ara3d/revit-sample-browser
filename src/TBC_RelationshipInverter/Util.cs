@@ -8,14 +8,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_RelationshipInverter sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     From a list of openings, determine
-        ///     the wall hosting each and return a mapping
-        ///     of element ids from host to all hosted.
-        /// </summary>
         public static Dictionary<ElementId, List<ElementId>>
             GetHostedElementIds(
                 Document doc,

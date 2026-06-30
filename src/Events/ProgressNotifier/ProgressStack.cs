@@ -8,29 +8,15 @@ using Autodesk.Revit.DB.Events;
 
 namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 {
-    /// <summary>
-    ///     A collection of ProgressItem objects arranged in a stack
-    /// </summary>
     public class ProgressStack
     {
-        /// <summary>
-        ///     ProgressItem stack
-        /// </summary>
         public readonly Stack<ProgressItem> ItemStack;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public ProgressStack()
         {
             ItemStack = new Stack<ProgressItem>();
         }
 
-        /// <summary>
-        ///     Add event data
-        /// </summary>
-        /// <param name="progressEvent"></param>
-        /// <returns></returns>
         public ProgressItem AddEventData(ProgressChangedEventArgs progressEvent)
         {
             ProgressItem currentProgressItem = null;
@@ -103,10 +89,6 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
             return currentProgressItem;
         }
 
-        /// <summary>
-        ///     ToString
-        /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -119,11 +101,6 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
             return sb.ToString();
         }
 
-        /// <summary>
-        ///     ToStringList
-        /// </summary>
-        /// <param name="padDepth"></param>
-        /// <returns></returns>
         public List<string> ToStringList(int padDepth = 0)
         {
             var itemList = new List<string>();

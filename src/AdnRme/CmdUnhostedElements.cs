@@ -45,9 +45,6 @@ namespace AdnRme
       return rc;
     }
 
-    /// <summary>
-    /// Determine unhosted elements.
-    /// </summary>
     static bool DetermineUnhostedElements( Document doc )
     {
       int nHosted = 0;

@@ -88,14 +88,8 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
     /// </summary>
     public enum PlacementOptionsEnum
     {
-        /// <summary>
-        ///     Face based
-        /// </summary>
         FaceBased,
 
-        /// <summary>
-        ///     Sketch based
-        /// </summary>
         SketchBased
     }
 }

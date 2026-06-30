@@ -5,17 +5,8 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 {
-    /// <summary>
-    ///     Tell if two geometry objects are overlapping or not.
-    /// </summary>
     public class Intersection
     {
-        /// <summary>
-        ///     Tell if the geometry object A and B are overlapped.
-        /// </summary>
-        /// <param name="geometryA">geometry object A</param>
-        /// <param name="geometryB">geometry object B</param>
-        /// <returns>return true if A and B are overlapped, or else return false.</returns>
         public static bool IsOverlapped(GeometryObject geometryA, GeometryObject geometryB)
         {
             var facesOfA = new List<Face>();
@@ -36,11 +27,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
             return false;
         }
 
-        /// <summary>
-        ///     Get all faces of the geometry object and insert them to the list
-        /// </summary>
-        /// <param name="geometry">the geometry object</param>
-        /// <param name="faces">the face list</param>
         private static void GetAllFaces(GeometryObject geometry, List<Face> faces)
         {
             switch (geometry)
@@ -56,7 +42,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 
         private static void GetAllFaces(GeometryElement geoElement, List<Face> faces)
         {
-            //foreach (GeometryObject geObject in geoElement.Objects)
             var objects = geoElement.GetEnumerator();
             while (objects.MoveNext())
             {
@@ -89,7 +74,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 
         private static void GetAllCurves(GeometryElement geoElement, List<Curve> curves)
         {
-            //foreach (GeometryObject geObject in geoElement.Objects)
             var objects = geoElement.GetEnumerator();
             while (objects.MoveNext())
             {

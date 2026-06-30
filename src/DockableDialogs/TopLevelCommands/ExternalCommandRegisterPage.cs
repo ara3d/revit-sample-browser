@@ -39,10 +39,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.TopLevelCommands
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Onlys show the dialog when a document is open, as Dockable dialogs are only available
-        ///     when a document is open.
-        /// </summary>
         public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
         {
             return applicationData.ActiveUIDocument == null;

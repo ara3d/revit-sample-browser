@@ -42,10 +42,6 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         // Revit document.
         private readonly Document m_doc;
 
-        /// <summary>
-        ///     Constructor the filter and initialize the document.
-        /// </summary>
-        /// <param name="doc">The document.</param>
         public WallFaceFilter(Document doc)
         {
             m_doc = doc;
@@ -83,10 +79,6 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         // Revit document.
         private readonly Document m_doc;
 
-        /// <summary>
-        ///     Constructor the filter and initialize the document.
-        /// </summary>
-        /// <param name="doc">The document.</param>
         public PlanarFaceFilter(Document doc)
         {
             m_doc = doc;

@@ -9,20 +9,10 @@ using View = Autodesk.Revit.DB.View;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 {
-    /// <summary>
-    ///     It contains a dialog which provides the options of importing dwg format
-    /// </summary>
     public partial class ImportDwgForm : Form
     {
-        /// <summary>
-        ///     Data class
-        /// </summary>
         private readonly ImportDwgData m_importData;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="importData"></param>
         public ImportDwgForm(ImportDwgData importData)
         {
             InitializeComponent();
@@ -30,11 +20,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             InitializeControls();
         }
 
-        /// <summary>
-        ///     Change the status of checkBoxOrient2View and comboBoxLevel according to the selection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void checkBoxCurrentViewOnly_CheckedChanged(object sender, EventArgs e)
         {
             var currentViewOnly = checkBoxCurrentViewOnly.Checked;
@@ -42,9 +27,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             comboBoxLevel.Enabled = !currentViewOnly;
         }
 
-        /// <summary>
-        ///     Initialize values and status of controls
-        /// </summary>
         private void InitializeControls()
         {
             //Layers
@@ -81,11 +63,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             Text = m_importData.Title;
         }
 
-        /// <summary>
-        ///     Specify a file to export from
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonBrowser_Click(object sender, EventArgs e)
         {
             var returnFileFullName = string.Empty;
@@ -93,22 +70,12 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
                 textBoxFileSource.Text = returnFileFullName;
         }
 
-        /// <summary>
-        ///     Change the status of textBoxScale according to the selection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void comboBoxUnits_SelectedIndexChanged(object sender, EventArgs e)
         {
             var custom = comboBoxUnits.SelectedIndex == 7;
             textBoxScale.Enabled = custom;
         }
 
-        /// <summary>
-        ///     Transfer information back to ImportData class and execute IMPORT operation
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonOpen_Click(object sender, EventArgs e)
         {
             if (ValidateFileName())
@@ -141,10 +108,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             }
         }
 
-        /// <summary>
-        ///     Validate the file to import
-        /// </summary>
-        /// <returns></returns>
         private bool ValidateFileName()
         {
             var fileNameFull = textBoxFileSource.Text;
@@ -168,9 +131,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             return true;
         }
 
-        /// <summary>
-        ///     Set the value of color mode
-        /// </summary>
         private void SetImportColorMode()
         {
             string colorMode;
@@ -192,9 +152,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             m_importData.ImportColorMode = m_importData.EnumColorMode[indexColor];
         }
 
-        /// <summary>
-        ///     Set the value of placement
-        /// </summary>
         private void SetImportPlacement()
         {
             string placement;
@@ -214,9 +171,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             m_importData.ImportPlacement = m_importData.EnumPlacement[indexPlacement];
         }
 
-        /// <summary>
-        ///     Set the value of ImportThisViewOnly, ImportOrientToView, ImportView
-        /// </summary>
         private void SetImportViewsRelated()
         {
             if (checkBoxCurrentViewOnly.Checked)
@@ -239,18 +193,12 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             }
         }
 
-        /// <summary>
-        ///     Set the value of ImportVisibleLayersOnly
-        /// </summary>
         private void SetImportLayers()
         {
             //comboBoxLayers
             m_importData.ImportVisibleLayersOnly = m_importData.EnumVisibleLayersOnly[comboBoxLayers.SelectedIndex];
         }
 
-        /// <summary>
-        ///     Set the value of unit, scaling
-        /// </summary>
         private void SetImportUnitsAndScaling()
         {
             var custom = comboBoxUnits.SelectedIndex == 7;
@@ -265,11 +213,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
                 m_importData.ImportUnit = m_importData.EnumUnit[comboBoxUnits.SelectedIndex];
         }
 
-        /// <summary>
-        ///     Only numbers and '.' permitted
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // KeyPress: digits and '.' only.
         private void textBoxScale_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar < (char)46 || e.KeyChar > (char)57) && (e.KeyChar != (char)8 || e.KeyChar == (char)47))
@@ -278,11 +222,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
                 e.Handled = false;
         }
 
-        /// <summary>
-        ///     Only one '.' permitted
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // TextChanged: at most one '.'.
         private void textBoxScale_TextChanged(object sender, EventArgs e)
         {
             var newPoint = false;

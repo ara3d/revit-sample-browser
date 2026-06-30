@@ -38,9 +38,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
             }
         }
 
-        /// <summary>
-        ///     Get RebarShapeDefinitionByArc object.
-        /// </summary>
         protected RebarShapeDefinitionByArc GetRebarShapeDefinitionByArc =>
             ShapeDef.RebarshapeDefinition as RebarShapeDefinitionByArc;
     }

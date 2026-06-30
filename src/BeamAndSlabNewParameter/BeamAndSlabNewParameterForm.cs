@@ -8,40 +8,26 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 {
-    /// <summary>
-    ///     User Interface.
-    /// </summary>
     public class BeamAndSlabParametersForm : Form
     {
         private Button m_addParameterButton;
         private Label m_attributeValueLabel;
         private ListBox m_attributeValueListBox;
 
-        /// <summary>
-        ///     Required designer variable.
-        /// </summary>
         private readonly Container m_components = null;
 
         private Button m_displayValueButton;
         private Button m_exitButton;
         private Button m_findButton;
 
-        // an instance of Command class
         private readonly Command m_dataBuffer;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="dataBuffer"></param>
         public BeamAndSlabParametersForm(Command dataBuffer)
         {
             InitializeComponent();
             m_dataBuffer = dataBuffer;
         }
 
-        /// <summary>
-        ///     Clean up any resources being used.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -52,10 +38,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        ///     Required method for Designer support - do not modify
-        ///     the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             m_addParameterButton = new Button();
@@ -66,7 +48,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             m_findButton = new Button();
             SuspendLayout();
             // 
-            // addParameterButton
             // 
             m_addParameterButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             m_addParameterButton.Location = new Point(311, 65);
@@ -77,7 +58,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             m_addParameterButton.TextAlign = ContentAlignment.TopCenter;
             m_addParameterButton.Click += addParameterButton_Click;
             // 
-            // displayValueButton
             // 
             m_displayValueButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             m_displayValueButton.Location = new Point(311, 111);
@@ -87,7 +67,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             m_displayValueButton.Text = "&Display Value";
             m_displayValueButton.Click += displayValueButton_Click;
             // 
-            // exitButton
             // 
             m_exitButton.DialogResult = DialogResult.Cancel;
             m_exitButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -98,7 +77,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             m_exitButton.Text = "&Exit";
             m_exitButton.Click += exitButton_Click;
             // 
-            // attributeValueListBox
             // 
             m_attributeValueListBox.ItemHeight = 16;
             m_attributeValueListBox.Location = new Point(19, 46);
@@ -107,7 +85,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             m_attributeValueListBox.TabIndex = 18;
             m_attributeValueListBox.TabStop = false;
             // 
-            // attributeValueLabel
             // 
             m_attributeValueLabel.Location = new Point(19, 9);
             m_attributeValueLabel.Name = "m_attributeValueLabel";
@@ -115,7 +92,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             m_attributeValueLabel.TabIndex = 19;
             m_attributeValueLabel.Text = "Display the value of the Unique ID if present for all the selected elements";
             // 
-            // findButton
             // 
             m_findButton.DialogResult = DialogResult.OK;
             m_findButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -126,7 +102,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             m_findButton.Text = "&Find";
             m_findButton.Click += findButton_Click;
             // 
-            // BeamAndSlabParametersForm
             // 
             CancelButton = m_exitButton;
             ClientSize = new Size(438, 292);
@@ -145,12 +120,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             ResumeLayout(false);
         }
 
-        /// <summary>
-        ///     Call SetNewParameterToBeamsAndSlabs function
-        ///     which is belongs to BeamAndSlabParameters class
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void addParameterButton_Click(object sender, EventArgs e)
         {
             var successAddParameter = m_dataBuffer.SetNewParameterToBeamsAndSlabs();
@@ -169,23 +138,12 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             }
         }
 
-        /// <summary>
-        ///     Call SetValueToUniqueIDParameter function
-        ///     which is belongs to BeamAndSlabNewParameters class
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void findButton_Click(object sender, EventArgs e)
         {
             if (null != m_attributeValueListBox.SelectedItem)
                 m_dataBuffer.FindElement(m_attributeValueListBox.SelectedItem.ToString());
         }
 
-        /// <summary>
-        ///     Call SendValueToListBox function which is belongs to BeamAndSlabNewParameters class
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void displayValueButton_Click(object sender, EventArgs e)
         {
             m_attributeValueListBox.DataSource = m_dataBuffer.SendValueToListBox();
@@ -202,11 +160,6 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             }
         }
 
-        /// <summary>
-        ///     Close this form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void exitButton_Click(object sender, EventArgs e)
         {
             Close();

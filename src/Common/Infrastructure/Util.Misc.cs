@@ -55,10 +55,6 @@ namespace BuildingCoder
                     BitmapSizeOptions.FromEmptyOptions());
         }
 
-        /// <summary>
-        ///     Create a new group of the specified elements
-        ///     in the current active view at the given offset.
-        /// </summary>
         internal static void CreateGroup(
             Document doc,
             ICollection<ElementId> ids,
@@ -117,10 +113,6 @@ namespace BuildingCoder
             }
         }
 
-        /// <summary>
-        ///     Return the first wall found that
-        ///     uses the given wall type.
-        /// </summary>
         public static Wall GetFirstWallUsingType(
             Document doc,
             WallType wallType)

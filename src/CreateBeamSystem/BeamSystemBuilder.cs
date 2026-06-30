@@ -5,28 +5,15 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
-    /// <summary>
-    ///     is used to create new instances of beam system
-    /// </summary>
     public class BeamSystemBuilder
     {
-        /// <summary>
-        ///     the data used to create beam system
-        /// </summary>
         private readonly BeamSystemData m_data;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="data">the data used to create beam system</param>
         public BeamSystemBuilder(BeamSystemData data)
         {
             m_data = data;
         }
 
-        /// <summary>
-        ///     create beam system according to given profile and property
-        /// </summary>
         public void CreateBeamSystem()
         {
             var document = m_data.CommandData.Application.ActiveUIDocument.Document;

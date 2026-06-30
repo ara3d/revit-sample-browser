@@ -40,10 +40,6 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Normalizes all points in the selected subregion to the average elevation of the host surface.
-        /// </summary>
-        /// <param name="uiDoc">The document.</param>
         private void NormalizeSubregionAndPoints(UIDocument uiDoc)
         {
             var doc = uiDoc.Document;
@@ -53,7 +49,6 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var toposurface = SiteTopographyHelper.GetTopographySurfaceHost(subregion);
             var points = SiteTopographyHelper.GetPointsFromSubregionExact(subregion);
 
-            // Get elevation of all points on the toposurface
             var allPoints = toposurface.GetPoints();
             var elevation = SiteTopographyHelper.GetAverageElevation(allPoints);
 

@@ -9,7 +9,6 @@ using Autodesk.Revit.DB.Mechanical;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SpaceAdjacency sample.</summary>
     internal static partial class Util
     {
         private const double SpaceAdjacency_D2mm = 2.0 / 25.4 / 12;

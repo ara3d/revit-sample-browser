@@ -12,9 +12,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
     /// </summary>
     public class Vector4
     {
-        /// <summary>
-        ///     constructor
-        /// </summary>
         public Vector4(double x, double y, double z)
         {
             X = x;
@@ -22,10 +19,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             Z = z;
         }
 
-        /// <summary>
-        ///     constructor, transfer Autodesk.Revit.DB.XYZ to vector
-        /// </summary>
-        /// <param name="v">Autodesk.Revit.DB.XYZ structure which needs to be transferred</param>
         public Vector4(XYZ v)
         {
             X = v.X;
@@ -105,11 +98,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return X * v.X + Y * v.Y + Z * v.Z;
         }
 
-        /// <summary>
-        ///     get normal vector of plane contains two vectors
-        /// </summary>
-        /// <param name="v">second vector</param>
-        /// <returns> normal vector of two vectors</returns>
         public Vector4 CrossProduct(Vector4 v)
         {
             return new Vector4(Y * v.Z - Z * v.Y, Z * v.X
@@ -126,21 +114,12 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return va.X * vb.X + va.Y * vb.Y + va.Z * vb.Z;
         }
 
-        /// <summary>
-        ///     get normal vector of two vectors
-        /// </summary>
-        /// <param name="va">first vector</param>
-        /// <param name="vb">second vector</param>
-        /// <returns> normal vector of two vectors </returns>
         public static Vector4 CrossProduct(Vector4 va, Vector4 vb)
         {
             return new Vector4(va.Y * vb.Z - va.Z * vb.Y, va.Z * vb.X
                                                           - va.X * vb.Z, va.X * vb.Y - va.Y * vb.X);
         }
 
-        /// <summary>
-        ///     get unit vector
-        /// </summary>
         public void Normalize()
         {
             var length = Length();
@@ -176,9 +155,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             Normal // normal matrix
         }
 
-        /// <summary>
-        ///     default constructor
-        /// </summary>
         public Matrix4()
         {
             Type = MatrixType.Normal;
@@ -219,13 +195,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             Matrix[3, 2] = origin.Z;
         }
 
-        /// <summary>
-        ///     rotation and translation matrix constructor
-        /// </summary>
-        /// <param name="xAxis">x Axis</param>
-        /// <param name="yAxis">y Axis</param>
-        /// <param name="zAxis">z Axis</param>
-        /// <param name="origin">origin</param>
         public Matrix4(Vector4 xAxis, Vector4 yAxis, Vector4 zAxis, Vector4 origin)
         {
             Type = MatrixType.RotationAndTranslation;
@@ -244,10 +213,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             Matrix[3, 2] = origin.Z;
         }
 
-        /// <summary>
-        ///     scale matrix constructor
-        /// </summary>
-        /// <param name="scale">scale factor</param>
         public Matrix4(double scale)
         {
             Type = MatrixType.Scale;
@@ -279,11 +244,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             set => Matrix[row, column] = value;
         }
 
-        /// <summary>
-        ///     get a matrix used to rotate object specific angle on X direction
-        /// </summary>
-        /// <param name="angle">rotate angle</param>
-        /// <returns>matrix which rotate object specific angle on X direction</returns>
         public static Matrix4 RotateX(double angle)
         {
             var rotateX = new Matrix4
@@ -301,11 +261,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return rotateX;
         }
 
-        /// <summary>
-        ///     get a matrix used to rotate object specific angle on Y direction
-        /// </summary>
-        /// <param name="angle">rotate angle</param>
-        /// <returns>matrix which rotate object specific angle on Y direction</returns>
         public static Matrix4 RotateY(double angle)
         {
             var rotateX = new Matrix4
@@ -323,11 +278,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return rotateX;
         }
 
-        /// <summary>
-        ///     get a matrix used to rotate object specific angle on Z direction
-        /// </summary>
-        /// <param name="angle">rotate angle</param>
-        /// <returns>matrix which rotate object specific angle on Z direction</returns>
         public static Matrix4 RotateZ(double angle)
         {
             var rotateX = new Matrix4
@@ -411,10 +361,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return new Matrix4(new Vector4(-this[3, 0], -this[3, 1], -this[3, 2]));
         }
 
-        /// <summary>
-        ///     get inverse matrix
-        /// </summary>
-        /// <returns>inverse matrix</returns>
         public Matrix4 Inverse()
         {
             switch (Type)

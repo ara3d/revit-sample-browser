@@ -8,13 +8,8 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_DimensionWallsFindRefs sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return reference to ceiling face to place
-        ///     lighting fixture above a given point.
-        /// </summary>
         internal static Reference GetCeilingReferenceAbove(
             View3D view,
             XYZ p)

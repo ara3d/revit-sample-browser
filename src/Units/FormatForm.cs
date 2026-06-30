@@ -8,8 +8,6 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.Units.CS
 {
-    /// <summary>
-    /// </summary>
     public partial class FormatForm : Form
     {
         //Required designer variable.
@@ -35,9 +33,6 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
             };
         }
 
-        /// <summary>
-        ///     format options.
-        /// </summary>
         public FormatOptions FormatOptions { get; }
 
         private void FormatForm_Load(object sender, EventArgs e)

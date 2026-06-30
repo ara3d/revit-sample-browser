@@ -21,10 +21,8 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-                // Get all selected lines and arcs 
                 var selectedCurves = GetSelectedCurves(commandData.Application.ActiveUIDocument.Document);
 
-                // Show UI
                 var gridCreationOption = new GridCreationOptionData(!selectedCurves.IsEmpty);
                 using (var gridCreationOptForm = new GridCreationOptionForm(gridCreationOption))
                 {
@@ -35,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                     var unit = GetLengthUnitType(document);
                     switch (gridCreationOption.CreateGridsMode)
                     {
-                        case CreateMode.Select: // Create grids with selected lines/arcs
+                        case CreateMode.Select:
                             var data = new CreateWithSelectedCurvesData(commandData.Application, selectedCurves,
                                 labels);
                             using (var createWithSelected = new CreateWithSelectedCurvesForm(data))
@@ -43,7 +41,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                                 result = createWithSelected.ShowDialog();
                                 if (result == DialogResult.OK)
                                 {
-                                    // Create grids
                                     var transaction = new Transaction(document, "CreateGridsWithSelectedCurves");
                                     transaction.Start();
                                     data.CreateGrids();
@@ -53,14 +50,13 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
                             break;
 
-                        case CreateMode.Orthogonal: // Create orthogonal grids
+                        case CreateMode.Orthogonal:
                             var orthogonalData = new CreateOrthogonalGridsData(commandData.Application, unit, labels);
                             using (var orthogonalGridForm = new CreateOrthogonalGridsForm(orthogonalData))
                             {
                                 result = orthogonalGridForm.ShowDialog();
                                 if (result == DialogResult.OK)
                                 {
-                                    // Create grids
                                     var transaction = new Transaction(document, "CreateOrthogonalGrids");
                                     transaction.Start();
                                     orthogonalData.CreateGrids();
@@ -70,14 +66,13 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
                             break;
 
-                        case CreateMode.RadialAndArc: // Create radial and arc grids
+                        case CreateMode.RadialAndArc:
                             var radArcData = new CreateRadialAndArcGridsData(commandData.Application, unit, labels);
                             using (var radArcForm = new CreateRadialAndArcGridsForm(radArcData))
                             {
                                 result = radArcForm.ShowDialog();
                                 if (result == DialogResult.OK)
                                 {
-                                    // Create grids
                                     var transaction = new Transaction(document, "CreateRadialAndArcGrids");
                                     transaction.Start();
                                     radArcData.CreateGrids();
@@ -99,11 +94,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Get all selected lines and arcs
-        /// </summary>
-        /// <param name="document">Revit's document</param>
-        /// <returns>CurveArray contains all selected lines and arcs</returns>
         private static CurveArray GetSelectedCurves(Document document)
         {
             var selectedCurves = new CurveArray();
@@ -140,11 +130,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             return selectedCurves;
         }
 
-        /// <summary>
-        ///     Get all model and detail lines/arcs within selected elements
-        /// </summary>
-        /// <param name="document">Revit's document</param>
-        /// <returns>ElementSet contains all model and detail lines/arcs within selected elements </returns>
         public static ElementSet GetSelectedModelLinesAndArcs(Document document)
         {
             var newUIdocument = new UIDocument(document);
@@ -164,11 +149,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             return tmpSet;
         }
 
-        /// <summary>
-        ///     Get current length display unit type
-        /// </summary>
-        /// <param name="document">Revit's document</param>
-        /// <returns>Current length display unit type</returns>
         private static ForgeTypeId GetLengthUnitType(Document document)
         {
             var specTypeId = SpecTypeId.Length;
@@ -184,11 +164,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Get all grid labels in current document
-        /// </summary>
-        /// <param name="document">Revit's document</param>
-        /// <returns>ArrayList contains all grid labels in current document</returns>
         private static ArrayList GetAllLabelsOfGrids(Document document)
         {
             var labels = new ArrayList();

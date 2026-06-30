@@ -7,7 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_EditFloor sample.</summary>
     internal static partial class Util
     {
         internal static Floor CreateFloorAtElevation(
@@ -44,10 +43,6 @@ namespace BuildingCoder
             return floor;
         }
 
-        /// <summary>
-        ///     Return the uppermost horizontal face
-        ///     of a given solid object such as a floor slab.
-        /// </summary>
         internal static PlanarFace GetTopFace(Solid solid)
         {
             PlanarFace topFace = null;

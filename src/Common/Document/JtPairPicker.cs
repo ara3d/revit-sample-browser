@@ -26,14 +26,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Pick a pair of elements of a specific type.
-    ///     If exactly two exist in the entire model,
-    ///     take them. If there are less than two, give
-    ///     up. If elements have been preselected, use
-    ///     those. Otherwise, prompt for interactive
-    ///     picking.
-    /// </summary>
     internal class JtPairPicker<T> where T : Element
     {
         private readonly Document _doc;
@@ -46,15 +38,8 @@ namespace BuildingCoder
             _doc = _uidoc.Document;
         }
 
-        /// <summary>
-        ///     Return selection result.
-        /// </summary>
         public IList<T> Selected => _a;
 
-        /// <summary>
-        ///     Run the automatic or interactive
-        ///     selection process.
-        /// </summary>
         public Result Pick()
         {
             // Retrieve all T elements in the entire model.

@@ -6,15 +6,8 @@ using System.Globalization;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
-    /// <summary>
-    ///     Type converter for wrapper classes
-    /// </summary>
     public class WrapperConverter : ExpandableObjectConverter
     {
-        /// <summary>
-        ///     Can be converted to string
-        /// </summary>
-        /// <returns>true if destinationType is string, otherwise false</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return destinationType.Equals(typeof(string)) || base.CanConvertTo(context, destinationType);

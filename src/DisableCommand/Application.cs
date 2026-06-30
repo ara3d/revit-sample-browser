@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-//
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
 // AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
 // MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE. AUTODESK, INC.
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
-//
 // Use, duplication, or disclosure by the U.S. Government is subject to
 // restrictions set forth in FAR 52.227-19 (Commercial Computer
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
@@ -19,9 +17,6 @@ using Autodesk.Revit.UI.Events;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     public class Application : IExternalApplication
     {
         /// <summary>
@@ -39,10 +34,8 @@ namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
 
         public Result OnStartup(UIControlledApplication application)
         {
-            // Lookup the desired command by name
             _sCommandId = RevitCommandId.LookupCommandId(SCommandToDisable);
 
-            // Confirm that the command can be overridden
             if (!_sCommandId.CanHaveBinding)
             {
                 EventLoggingHelper.ShowDialog("Error",
@@ -50,7 +43,6 @@ namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
                 return Result.Failed;
             }
 
-            // Create a binding to override the command.
             // Note that you could also implement .CanExecute to override the accessibiliy of the command.
             // Doing so would allow the command to be grayed out permanently or selectively, however, 
             // no feedback would be available to the user about why the command is grayed out.
@@ -71,17 +63,11 @@ namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
 
         public Result OnShutdown(UIControlledApplication application)
         {
-            // Remove the command binding on shutdown
             if (_sCommandId.HasBinding)
                 application.RemoveAddInCommandBinding(_sCommandId);
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     A command execution method which disables any command it is applied to (with a user-visible message).
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="args">Arguments.</param>
         private void DisableEvent(object sender, ExecutedEventArgs args)
         {
             EventLoggingHelper.ShowDialog("Disabled", "Use of this command has been disabled.");

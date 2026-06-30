@@ -42,10 +42,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
         }
     }
 
-    /// <summary>
-    ///     Generating a new sheet that has all the selected views placed in.
-    ///     Updating and retrieving properties of a selected viewport.
-    /// </summary>
     public class ViewsMgr
     {
         private readonly double m_goldensection = 0.618;
@@ -61,10 +57,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
 
         private readonly double m_titlebar = 0.2;
 
-        /// <summary>
-        ///     Constructor of views object.
-        /// </summary>
-        /// <param name="doc">the active document</param>
         public ViewsMgr(Document doc)
         {
             m_doc = doc;
@@ -72,25 +64,12 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             GetTitleBlocks(doc);
         }
 
-        /// <summary>
-        ///     Tree node store all views' names.
-        /// </summary>
         public TreeNode AllViewsNames { get; } = new TreeNode("Views (all)");
 
-        /// <summary>
-        ///     List of all title blocks' names.
-        /// </summary>
         public ArrayList AllTitleBlocksNames { get; } = new ArrayList();
 
-        /// <summary>
-        ///     The selected sheet's name.
-        /// </summary>
         public string SheetName { get; set; }
 
-        /// <summary>
-        ///     Update Form data members bonded to UI controls.
-        /// </summary>
-        /// <param name="form">The Form to be updated.</param>
         public void UpdateViewportProperties(AllViewsForm form)
         {
             form.GetMinBoxOutline = m_vp.GetBoxOutline().MinimumPoint;
@@ -106,12 +85,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             form.GetOrientation = m_vp.Rotation;
         }
 
-        /// <summary>
-        ///     Select a viewport by its associated view name and sheet name.
-        /// </summary>
-        /// <param name="form">The Form to be updated.</param>
-        /// <param name="selectSheetName"> Sheet name.</param>
-        /// <param name="selectAssociatedViewName">Associated view name.</param>
         public bool SelectViewport(AllViewsForm form, string selectSheetName, string selectAssociatedViewName)
         {
             m_vp = null;
@@ -139,12 +112,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             return true;
         }
 
-        /// <summary>
-        ///     Change viewport label offset.
-        /// </summary>
-        /// <param name="form">The Form to be updated.</param>
-        /// <param name="labelOffsetX">Label offset X component.</param>
-        /// <param name="labelOffsetY">Label offset Y component.</param>
         public void SetLabelOffset(AllViewsForm form,
             double labelOffsetX, double labelOffsetY)
         {
@@ -160,11 +127,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             }
         }
 
-        /// <summary>
-        ///     Change viewport label length.
-        /// </summary>
-        /// <param name="form">The Form to be updated.</param>
-        /// <param name="labelLineLength">Label line length.</param>
         public void SetLabelLength(AllViewsForm form, double labelLineLength)
         {
             using (var t = new Transaction(m_doc, "Change label length"))
@@ -179,11 +141,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             }
         }
 
-        /// <summary>
-        ///     Change viewport orientation.
-        /// </summary>
-        /// <param name="form">The Form to be updated.</param>
-        /// <param name="rotation">Label line rotation.</param>
         public void SetRotation(AllViewsForm form, ViewportRotation rotation)
         {
             using (var t = new Transaction(m_doc, "Change label orientation"))
@@ -198,10 +155,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             }
         }
 
-        /// <summary>
-        ///     Finds all the views in the active document.
-        /// </summary>
-        /// <param name="doc">the active document</param>
         private void GetAllViews(Document doc)
         {
             foreach (var view in doc.GetElements<View>())
@@ -217,11 +170,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             }
         }
 
-        /// <summary>
-        ///     Assort all views for tree view displaying.
-        /// </summary>
-        /// <param name="view">The view assorting</param>
-        /// <param name="type">The type of view</param>
         private void AssortViews(string view, string type)
         {
             foreach (TreeNode t in AllViewsNames.Nodes)
@@ -245,9 +193,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             AllViewsNames.Nodes.Add(categoryNode);
         }
 
-        /// <summary>
-        ///     Retrieve the checked view from tree view.
-        /// </summary>
         public void SelectViews()
         {
             var names = new ArrayList();
@@ -273,10 +218,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             }
         }
 
-        /// <summary>
-        ///     Generate sheet in active document.
-        /// </summary>
-        /// <param name="doc">the currently active document</param>
         public Result GenerateSheet(Document doc)
         {
             if (null == doc) throw new ArgumentNullException(nameof(doc));
@@ -315,10 +256,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             return result;
         }
 
-        /// <summary>
-        ///     Retrieve the title block to be generate by its name.
-        /// </summary>
-        /// <param name="name">The title block's name</param>
         public void ChooseTitleBlock(string name)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
@@ -333,10 +270,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             }
         }
 
-        /// <summary>
-        ///     Retrieve all available title blocks in the currently active document.
-        /// </summary>
-        /// <param name="doc">the currently active document</param>
         private void GetTitleBlocks(Document doc)
         {
             var filteredElementCollector = new FilteredElementCollector(doc);
@@ -354,11 +287,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             }
         }
 
-        /// <summary>
-        ///     Place all selected views on this sheet's appropriate location.
-        /// </summary>
-        /// <param name="views">all selected views</param>
-        /// <param name="sheet">all views located sheet</param>
         private void PlaceViews(ViewSet views, View sheet)
         {
             double xDistance = 0;
@@ -397,25 +325,11 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             }
         }
 
-        /// <summary>
-        ///     Retrieve the appropriate origin.
-        /// </summary>
-        /// <param name="bBox"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
         private UV GetOffSet(BoundingBoxUV bBox, double x, double y)
         {
             return new UV(bBox.Min.U + x * m_goldensection, bBox.Min.V + y * m_goldensection);
         }
 
-        /// <summary>
-        ///     Calculate the appropriate distance between the views lay on the sheet.
-        /// </summary>
-        /// <param name="bBox">The outline of sheet.</param>
-        /// <param name="amount">Amount of views.</param>
-        /// <param name="x">Distance in x axis between each view</param>
-        /// <param name="y">Distance in y axis between each view</param>
         private void CalculateDistance(BoundingBoxUV bBox, int amount, ref double x, ref double y)
         {
             var xLength = (bBox.Max.U - bBox.Min.U) * (1 - m_titlebar);

@@ -28,11 +28,6 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             printSetupNameLabel.Text = m_printMgr.PrintSetupName;
         }
 
-        /// <summary>
-        ///     Initialize the UI data.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void PrintMgrForm_Load(object sender, EventArgs e)
         {
             printerNameComboBox.DataSource = m_printMgr.InstalledPrinterNames;

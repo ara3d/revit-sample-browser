@@ -8,9 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
-    /// <summary>
-    ///     Provides functions to create SlabEdge.
-    /// </summary>
     public class SlabEdgeCreator : HostedSweepCreator
     {
         /// <summary>
@@ -18,10 +15,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// </summary>
         private Dictionary<Element, List<Edge>> m_floorSlabEdges;
 
-        /// <summary>
-        ///     Constructor takes Revit.Document as parameter.
-        /// </summary>
-        /// <param name="rvtDoc">Revit document</param>
         public SlabEdgeCreator(UIDocument rvtDoc)
             : base(rvtDoc)
         {
@@ -114,12 +107,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
             transaction.RollBack();
         }
 
-        /// <summary>
-        ///     Create a SlabEdge.
-        /// </summary>
-        /// <param name="symbol">SlabEdge type</param>
-        /// <param name="refArr">SlabEdge reference array</param>
-        /// <returns>Created SlabEdge</returns>
         protected override HostedSweep CreateHostedSweep(ElementType symbol, ReferenceArray refArr)
         {
             var slabEdge = RvtDoc.Create.NewSlabEdge(symbol as SlabEdgeType, refArr);

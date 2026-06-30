@@ -10,30 +10,19 @@ using Point = System.Drawing.Point;
 using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
-    /// <summary>
-    ///     manages the behaviors & operations of CurtainGrid
-    /// </summary>
     public class GridGeometry
     {
         // the active document of Revit
         private readonly Document m_activeDocument;
 
-        // stores the curtain grid information of the created curtain wall
 
         // the referred drawing class for the curtain grid
 
         //object which contains reference of Revit Application
         private ExternalCommandData m_commandData;
 
-        // the document of this sample
         private readonly MyDocument m_myDocument;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="myDoc">
-        ///     the document of the sample
-        /// </param>
         public GridGeometry(MyDocument myDoc)
         {
             m_myDocument = myDoc;
@@ -47,65 +36,28 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             GridVertexesXyz = new List<XYZ>();
         }
 
-        // store the mullion type used in this sample
-
-        // all the grid lines of U direction (in CurtainGridLine format)
-
-        // all the grid lines of V direction (in CurtainGridLine format)
-
-        // stores all the vertexes of the curtain grid (in Autodesk.Revit.DB.XYZ format)
-
-        // stores all the properties of the curtain grid
-
-        // store the grid line to be removed
-
-        // store the offset to be moved for the specified grid line
 
         /// <summary>
         ///     stores the curtain grid information of the created curtain wall
         /// </summary>
         public CurtainGrid ActiveGrid { get; private set; }
 
-        /// <summary>
-        ///     the referred drawing class for the curtain grid
-        /// </summary>
         public GridDrawing Drawing { get; }
 
-        /// <summary>
-        ///     store the mullion type used in this sample
-        /// </summary>
         public MullionType MullionType { get; set; }
 
-        /// <summary>
-        ///     all the grid lines of U direction (in CurtainGridLine format)
-        /// </summary>
         public List<CurtainGridLine> UGridLines { get; }
 
-        /// <summary>
-        ///     all the grid lines of V direction (in CurtainGridLine format)
-        /// </summary>
         public List<CurtainGridLine> VGridLines { get; }
 
-        /// <summary>
-        ///     stores all the vertexes of the curtain grid (in Autodesk.Revit.DB.XYZ format)
-        /// </summary>
         public List<XYZ> GridVertexesXyz { get; }
 
-        /// <summary>
-        ///     stores all the properties of the curtain grid
-        /// </summary>
         public GridProperties GridProperties { get; }
 
         public CurtainGridLine LineToBeMoved { get; private set; }
 
-        /// <summary>
-        ///     store the offset to be moved for the specified grid line
-        /// </summary>
         public int MoveOffset { get; set; }
 
-        /// <summary>
-        ///     obtain all the properties of the curtain grid
-        /// </summary>
         public void ReloadGridProperties()
         {
             if (null == ActiveGrid)
@@ -165,9 +117,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             act.Commit();
         }
 
-        /// <summary>
-        ///     reload all the geometry data of the curtain grid (grid lines, vertexes, and convert them to 2D format)
-        /// </summary>
         public void ReloadGeometryData()
         {
             if (null == ActiveGrid)
@@ -201,9 +150,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             Drawing.GetLines2D();
         }
 
-        /// <summary>
-        ///     remove the selected segment from the curtain grid
-        /// </summary>
         public void RemoveSegment()
         {
             // verify that the mouse is inside the curtain grid area
@@ -211,7 +157,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             if (lines2D.Count < 1) return;
 
             var toBeRemovedList = new List<SegmentLine2D>();
-            // check whether the deletion is valid
             var canRemove = true;
             MimicRemoveSegments(ref canRemove, toBeRemovedList);
             // in the "MimicRemove" process, we didn't find that we need to "Remove the last segment of the grid line"
@@ -275,9 +220,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             Drawing.DrawObject.Clear();
         }
 
-        /// <summary>
-        ///     add a new segment to the specified location
-        /// </summary>
         public void AddSegment()
         {
             // verify that the mouse is inside the curtain grid area
@@ -340,9 +282,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             Drawing.DrawObject.Clear();
         }
 
-        /// <summary>
-        ///     add all the deleted segments back for a grid line
-        /// </summary>
         public void AddAllSegments()
         {
             // verify that the mouse is inside the curtain grid area
@@ -402,9 +341,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             Drawing.DrawObject.Clear();
         }
 
-        /// <summary>
-        ///     add a new U grid line to the specified location
-        /// </summary>
         public void AddUGridLine()
         {
             // verify that the mouse location is valid: it's inside the curtain grid area 
@@ -422,7 +358,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 Point.Empty == line2D.EndPoint)
                 return;
 
-            // get the point to be added
             var midX = (line2D.StartPoint.X + line2D.EndPoint.X) / 2;
             var midY = (line2D.StartPoint.Y + line2D.EndPoint.Y) / 2;
             // transform the 2D point to Autodesk.Revit.DB.XYZ format
@@ -449,9 +384,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             ReloadGeometryData();
         }
 
-        /// <summary>
-        ///     add a new V grid line to the specified location
-        /// </summary>
         public void AddVGridLine()
         {
             // verify that the mouse location is valid: it's inside the curtain grid area 
@@ -469,7 +401,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 Point.Empty == line2D.EndPoint)
                 return;
 
-            // get the point to be added
             var midX = (line2D.StartPoint.X + line2D.EndPoint.X) / 2;
             var midY = (line2D.StartPoint.Y + line2D.EndPoint.Y) / 2;
             // transform the 2D point to Autodesk.Revit.DB.XYZ format
@@ -496,15 +427,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             ReloadGeometryData();
         }
 
-        /// <summary>
-        ///     toggle the selected grid line's Lock status:  if it's locked, unlock it, vice versa
-        /// </summary>
         public void LockOrUnlockSelectedGridLine()
         {
             CurtainGridLine line = null;
             var line2D = new GridLine2D();
 
-            // get the selected grid line
             if (-1 != Drawing.SelectedUIndex)
             {
                 line = UGridLines[Drawing.SelectedUIndex];
@@ -529,19 +456,12 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 act.Commit();
             }
 
-            // update the mapped line2D's data
             line2D.Locked = line.Lock;
 
             // clear the intermediate variables and instances
             Drawing.DrawObject.Clear();
         }
 
-        /// <summary>
-        ///     get the grid line to be removed
-        /// </summary>
-        /// <returns>
-        ///     if the line obtained, return true; otherwise false
-        /// </returns>
         public bool GetLineToBeMoved()
         {
             if (-1 != Drawing.SelectedUIndex)
@@ -560,15 +480,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             return false;
         }
 
-        /// <summary>
-        ///     move the selected grid line to the location of the mouse cursor
-        /// </summary>
-        /// <param name="mousePosition">
-        ///     indicates the destination position of the grid line
-        /// </param>
-        /// <returns>
-        ///     return whether the grid line be moved successfully
-        /// </returns>
         public bool MoveGridLine(Point mousePosition)
         {
             // verify that the mouse location is valid: it's inside the curtain grid area 
@@ -600,27 +511,22 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
                 act.Commit();
 
-                // update the grid line 2d
                 var line = Drawing.UGridLines2D[Drawing.SelectedUIndex];
                 line.StartPoint = new Point(line.StartPoint.X, line.StartPoint.Y + MoveOffset);
                 line.EndPoint = new Point(line.EndPoint.X, line.EndPoint.Y + MoveOffset);
 
-                // update the mapped grid line graphics path
                 var path = new GraphicsPath();
                 path.AddLine(line.StartPoint, line.EndPoint);
                 Drawing.ULinePathList[Drawing.SelectedUIndex] = path;
 
-                // update the mapped segment line and its graphics path
                 var pathList = Drawing.USegLinePathListList[Drawing.SelectedUIndex];
                 var segLineList = line.Segments;
                 for (var i = 0; i < segLineList.Count; i++)
                 {
-                    // update the segment
                     var segLine2D = segLineList[i];
                     segLine2D.StartPoint = new Point(segLine2D.StartPoint.X, segLine2D.StartPoint.Y + MoveOffset);
                     segLine2D.EndPoint = new Point(segLine2D.EndPoint.X, segLine2D.EndPoint.Y + MoveOffset);
 
-                    // update the segment's graphics path
                     var gpath = new GraphicsPath();
                     path.AddLine(segLine2D.StartPoint, segLine2D.EndPoint);
                     pathList[i] = gpath;
@@ -650,27 +556,22 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
                 act.Commit();
 
-                // update the grid line 2d
                 var line = Drawing.VGridLines2D[Drawing.SelectedVIndex];
                 line.StartPoint = new Point(line.StartPoint.X + MoveOffset, line.StartPoint.Y);
                 line.EndPoint = new Point(line.EndPoint.X + MoveOffset, line.EndPoint.Y);
 
-                // update the mapped grid line graphics path
                 var path = new GraphicsPath();
                 path.AddLine(line.StartPoint, line.EndPoint);
                 Drawing.VLinePathList[Drawing.SelectedVIndex] = path;
 
-                // update the mapped segment line and its graphics path
                 var pathList = Drawing.VSegLinePathListList[Drawing.SelectedVIndex];
                 var segLineList = line.Segments;
                 for (var i = 0; i < segLineList.Count; i++)
                 {
-                    // update the segment
                     var segLine2D = segLineList[i];
                     segLine2D.StartPoint = new Point(segLine2D.StartPoint.X + MoveOffset, segLine2D.StartPoint.Y);
                     segLine2D.EndPoint = new Point(segLine2D.EndPoint.X + MoveOffset, segLine2D.EndPoint.Y);
 
-                    // update the segment's graphics path
                     var gpath = new GraphicsPath();
                     path.AddLine(segLine2D.StartPoint, segLine2D.EndPoint);
                     pathList[i] = gpath;
@@ -684,11 +585,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             return true;
         }
 
-        /// <summary>
-        ///     add mullions to all the segments of the curtain grid
-        ///     due to the limitations of Mullions, it's not available yet to add mullions to the
-        ///     edges of the curtain grid as Revit UI does
-        /// </summary>
         public void AddAllMullions()
         {
             var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
@@ -716,9 +612,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             act.Commit();
         }
 
-        /// <summary>
-        ///     delete all the mullions of the curtain grid
-        /// </summary>
         public void DeleteAllMullions()
         {
             var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
@@ -746,9 +639,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             act.Commit();
         }
 
-        /// <summary>
-        ///     get all the U grid lines' data of the curtain grid
-        /// </summary>
         private void GetULines()
         {
             UGridLines.Clear();
@@ -767,9 +657,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             }
         }
 
-        /// <summary>
-        ///     get all the V grid lines' data of the curtain grid
-        /// </summary>
         private void GetVLines()
         {
             VGridLines.Clear();
@@ -788,10 +675,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             }
         }
 
-        /// <summary>
-        ///     get all of the 4 vertexes of the curtain grid
-        /// </summary>
-        /// <returns></returns>
         private bool GetCurtainGridVertexes()
         {
             // even in "ReloadGeometryData()" method, no need to reload the boundary information
@@ -850,15 +733,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             return true;
         }
 
-        /// <summary>
-        ///     get all the vertexes of the curtain cells
-        /// </summary>
-        /// <param name="cells">
-        ///     the curtain cells which need to be got the vertexes
-        /// </param>
-        /// <returns>
-        ///     the vertexes of the curtain cells
-        /// </returns>
         private List<XYZ> GetPoints(ICollection<CurtainCell> cells)
         {
             var points = new List<XYZ>();
@@ -881,18 +755,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             return points;
         }
 
-        /// <summary>
-        ///     get a bounding box which covers all the input points
-        /// </summary>
-        /// <param name="points">
-        ///     the source points
-        /// </param>
-        /// <param name="minXyz">
-        ///     one of the bounding box points
-        /// </param>
-        /// <param name="maxXyz">
-        ///     one of the bounding box points
-        /// </param>
         private void GetVertexesByPoints(List<XYZ> points, ref XYZ minXyz, ref XYZ maxXyz)
         {
             if (null == points || 0 == points.Count) return;
@@ -927,18 +789,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             maxXyz = new XYZ(maxX, maxY, maxZ);
         }
 
-        /// <summary>
-        ///     get the vertexes of the bounding box which covers all the curtain cells
-        /// </summary>
-        /// <param name="cells">
-        ///     the source curtain cells
-        /// </param>
-        /// <param name="minXyz">
-        ///     the result bounding point
-        /// </param>
-        /// <param name="maxXyz">
-        ///     the result bounding point
-        /// </param>
         private void GetVertexesByCells(ICollection<CurtainCell> cells, ref XYZ minXyz, ref XYZ maxXyz)
         {
             if (null == cells || cells.Count == 0) return;
@@ -947,19 +797,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             GetVertexesByPoints(points, ref minXyz, ref maxXyz);
         }
 
-        /// <summary>
-        ///     a simulative "Delete Segment" operation before real deletion
-        ///     as we may occur some situations that prevent us to delete the specific segment
-        ///     for example, delete the specific segment will make some other segments to be deleted automatically (the "conjoint"
-        ///     ones)
-        ///     and the "automatically deleted" segment is the last segment of its parent grid line
-        ///     in this situation, we should prevent deleting that specific segment and rollback all the simulative deletion
-        /// </summary>
-        /// <param name="removeList">
-        ///     the refferred to-be-removed list, in the simulative deletion operation, all the suitable (not the last segment)
-        ///     segments will
-        ///     be added to that list
-        /// </param>
         private void MimicRemoveSegments(ref bool canRemove, List<SegmentLine2D> removeList)
         {
             // the currently operated is a U segment
@@ -1010,19 +847,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             }
         }
 
-        /// <summary>
-        ///     the "regeneration" step: if there're only 2 segments existing in one joint and they're in the same line,
-        ///     delete one seg will cause the other been deleted automatically
-        /// </summary>
-        /// <param name="segLine2D">
-        ///     the to-be-automatically-deleted segment
-        /// </param>
-        /// <param name="removeList">
-        ///     the referred to-be-deleted list of the segments
-        /// </param>
-        /// <returns>
-        ///     returns the operation result: if there's no "last" segment in the deletion operation, return true; otherwise false
-        /// </returns>
         private void MimicRecursiveDelete(ref bool canRemove, SegmentLine2D segLine2D, List<SegmentLine2D> removeList)
         {
             // the "regeneration" step: if there're only 2 segments existing in one joint 
@@ -1038,7 +862,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 return;
 
             // there're conjoint segments need to be removed automatically
-            // add the segments to removeList first, and compute whether other segments need to be 
             // removed automatically because of the deletion of this newly removed segment
             if (segLine2D.Removed)
                 foreach (var seg in removeSegments)
@@ -1051,18 +874,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 }
         }
 
-        /// <summary>
-        ///     remove the segment from the grid line
-        /// </summary>
-        /// <param name="canRemove">
-        ///     the returned result value, indicates whether the segment can be removed (is NOT the last segment)
-        /// </param>
-        /// <param name="seg">
-        ///     the to-be-removed segment
-        /// </param>
-        /// <param name="removeList">
-        ///     the referred to-be-deleted list of the segments
-        /// </param>
         private void MimicRemoveSegment(ref bool canRemove, SegmentLine2D seg, List<SegmentLine2D> removeList)
         {
             var gridLineIndex = seg.GridLineIndex;
@@ -1070,7 +881,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
             if (-1 != gridLineIndex && -1 != segIndex)
             {
-                // update the gridline2d and segmentline2d data
                 GridLine2D grid;
                 if (seg.IsUSegment)
                     grid = Drawing.UGridLines2D[gridLineIndex];

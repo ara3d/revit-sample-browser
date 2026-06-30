@@ -6,16 +6,8 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Data class which stores the main information for exporting pdf format
-    /// </summary>
     public class ExportPdfData : ExportDataWithViews
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
-        /// <param name="exportFormat">Format to export</param>
         public ExportPdfData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
@@ -25,15 +17,8 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Combine = true;
         }
 
-        /// <summary>
-        ///     Combine
-        /// </summary>
         public bool Combine { get; set; }
 
-        /// <summary>
-        ///     Export PDF format
-        /// </summary>
-        /// <returns></returns>
         public override bool Export()
         {
             base.Export();

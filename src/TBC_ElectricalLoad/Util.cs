@@ -9,7 +9,6 @@ using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledEx
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_ElectricalLoad sample.</summary>
     internal static partial class Util
     {
         internal static FamilyInstance

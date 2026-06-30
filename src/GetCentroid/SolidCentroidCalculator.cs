@@ -8,9 +8,6 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.GetCentroid.CS
 {
-    /// <summary>
-    ///     Tessellation-based solid centroid and volume calculation.
-    /// </summary>
     public static class SolidCentroidCalculator
     {
         public readonly struct SolidCentroidComparison

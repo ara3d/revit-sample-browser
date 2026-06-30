@@ -1,5 +1,4 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-//
 // Adapted from PipeSystemExporter by Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/PipeSystemExporter
 
@@ -11,9 +10,6 @@ namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
 {
     internal static class Util
     {
-        /// <summary>
-        ///     Get the connector set of a given element.
-        /// </summary>
         public static ConnectorSet GetConnectors(Element e)
         {
             if (e == null) return null;
@@ -30,9 +26,6 @@ namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
             return null;
         }
 
-        /// <summary>
-        ///     Get a list of connector origin points for a given element.
-        /// </summary>
         public static List<XYZ> GetConnectorPoints(Element e)
         {
             var cons = GetConnectors(e);
@@ -43,33 +36,21 @@ namespace Ara3D.RevitSampleBrowser.PipeSystemExporter.CS
             return pts;
         }
 
-        /// <summary>
-        ///     Return an English plural suffix for the given number of items.
-        /// </summary>
         public static string PluralSuffix(int n)
         {
             return 1 == n ? "" : "s";
         }
 
-        /// <summary>
-        ///     Return a dot for zero or a colon for more than zero.
-        /// </summary>
         public static string DotOrColon(int n)
         {
             return 0 < n ? ":" : ".";
         }
 
-        /// <summary>
-        ///     Return a string for a real number formatted to four decimal places max.
-        /// </summary>
         public static string RealString(double a)
         {
             return a.ToString("0.####");
         }
 
-        /// <summary>
-        ///     Return a string for an XYZ point with coordinates formatted for display.
-        /// </summary>
         public static string PointString(XYZ p, bool onlySpaceSeparator = false)
         {
             var formatString = onlySpaceSeparator

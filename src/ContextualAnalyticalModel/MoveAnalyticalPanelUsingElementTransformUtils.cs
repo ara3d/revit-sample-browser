@@ -13,10 +13,8 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            //Expected results: The Analytical Panel has been moved and the connection with the Analytical Member was kept
             try
             {
-                // Get the Document
                 var document = commandData.Application.ActiveUIDocument.Document;
 
                 // Create Analytical Panel

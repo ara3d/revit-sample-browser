@@ -24,7 +24,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 
                     var arc = Arc.Create(new XYZ(10, 10, 0), new XYZ(0, 0, 0), new XYZ(15, 10, 0));
 
-                    //create a curved AnalyticalPanel
                     var analyticalCrvPanel = AnalyticalPanel.Create(revitDoc, arc, new XYZ(0, 0, 1));
 
                     analyticalCrvPanel.StructuralRole = AnalyticalStructuralRole.StructuralRoleFloor;

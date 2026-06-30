@@ -10,9 +10,6 @@ using Form = System.Windows.Forms.Form;
 using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
 {
-    /// <summary>
-    ///     form for new levels
-    /// </summary>
     public partial class LevelsForm : Form
     {
         //Record changed item
@@ -28,9 +25,6 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
         //Record system levels' total
         private int m_systemLevelsTotal;
 
-        /// <summary>
-        ///     form for new levels
-        /// </summary>
         public LevelsForm()
         {
             InitializeComponent();
@@ -120,11 +114,6 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
             bindingSource1.Add(newLevel);
         }
 
-        /// <summary>
-        ///     Used to delete a item.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void deleteButton_Click(object sender, EventArgs e)
         {
             if (1 == levelsDataGridView.RowCount)
@@ -215,11 +204,6 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
             TaskDialog.Show("Revit", e.Exception.Message);
         }
 
-        /// <summary>
-        ///     Record the changed Item.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void levelsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (bindingSource1.Position < m_systemLevelsTotal)

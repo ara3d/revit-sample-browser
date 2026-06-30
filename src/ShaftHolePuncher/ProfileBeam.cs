@@ -28,11 +28,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         private Matrix4 m_matrixYaxis; //transform points to plane whose normal is Yaxis of beam
         private Matrix4 m_matrixZaxis; //transform points to plane whose normal is Zaxis of beam
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="beam">beam to create opening on</param>
-        /// <param name="commandData">object which contains reference to Revit Application</param>
         public ProfileBeam(FamilyInstance beam, ExternalCommandData commandData)
             : base(commandData)
         {
@@ -43,11 +38,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             MoveToCenterMatrix = ToCenterMatrix();
         }
 
-        /// <summary>
-        ///     Get points of the first face
-        /// </summary>
-        /// <param name="faces">edges in all faces</param>
-        /// <returns>points of first face</returns>
         public override List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
             var needPoints = new List<List<XYZ>>();
@@ -76,10 +66,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return needPoints;
         }
 
-        /// <summary>
-        ///     Get the bound of a face
-        /// </summary>
-        /// <returns>points array stores the bound of the face</returns>
         public override PointF[] GetFaceBounds()
         {
             var matrix = To2DMatrix;
@@ -87,7 +73,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             float minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
 
-            //get the max and min point on the face
             foreach (var points in Points)
             {
                 foreach (var point in points)
@@ -122,13 +107,8 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return resultPoints;
         }
 
-        /// <summary>
-        ///     Get a matrix which can transform points to 2D
-        /// </summary>
-        /// <returns>matrix which can transform points to 2D</returns>
         public override Matrix4 GetTo2DMatrix()
         {
-            //get transform used to transform points to plane whose normal is Zaxis of beam
             var xAxis = new Vector4(m_data.HandOrientation);
             xAxis.Normalize();
             //Because Y axis in windows UI is downward, so we should Multiply(-1) here
@@ -141,7 +121,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             var result = new Matrix4(xAxis, yAxis, zAxis, vOrigin);
             m_matrixZaxis = result;
 
-            //get transform used to transform points to plane whose normal is Yaxis of beam
             xAxis = new Vector4(m_data.HandOrientation);
             xAxis.Normalize();
             zAxis = new Vector4(m_data.FacingOrientation);
@@ -153,11 +132,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return m_matrixZaxis;
         }
 
-        /// <summary>
-        ///     Get edges of element's profile
-        /// </summary>
-        /// <param name="elem">selected element</param>
-        /// <returns>all the faces in the selected Element</returns>
         public override List<List<Edge>> GetFaces(Element elem)
         {
             var faceEdges = new List<List<Edge>>();
@@ -168,8 +142,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             var geoElem = elem.get_Geometry(options);
             //GeometryObjectArray gObjects = geoElem.Objects;
             var objects = geoElem.GetEnumerator();
-            //get all the edges in the Geometry object
-            //foreach (GeometryObject geo in gObjects)
             while (objects.MoveNext())
             {
                 var geo = objects.Current;
@@ -184,7 +156,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                         var elemGeo = instance.SymbolGeometry;
                         //GeometryObjectArray objectsGeo = elemGeo.Objects;
                         var objects1 = elemGeo.GetEnumerator();
-                        //foreach (GeometryObject objGeo in objectsGeo)
                         while (objects1.MoveNext())
                         {
                             var objGeo = objects1.Current;
@@ -241,11 +212,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return faceEdges;
         }
 
-        /// <summary>
-        ///     Create Opening on beam
-        /// </summary>
-        /// <param name="points">points used to create Opening</param>
-        /// <returns>newly created Opening</returns>
         public override Opening CreateOpening(List<Vector4> points)
         {
             XYZ p1, p2;

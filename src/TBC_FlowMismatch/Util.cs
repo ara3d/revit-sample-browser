@@ -7,7 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_FlowMismatch sample.</summary>
     internal static partial class Util
     {
         internal static bool IsDesirableSystemPredicate(MEPSystem s)
@@ -32,9 +31,6 @@ namespace BuildingCoder
                 p.AsString(), cnctrSys, cnntdSys));
         }
 
-        /// <summary>
-        ///     Report MEP system mismatches.
-        /// </summary>
         internal static void FindMismatch(Document doc)
         {
             var cnntdSys = "";

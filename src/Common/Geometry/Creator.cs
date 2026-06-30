@@ -45,22 +45,6 @@ namespace BuildingCoder
             _creapp = doc.Application.Create;
         }
 
-        /// <summary>
-        ///     Determine the plane that a given curve resides in and return its normal vector.
-        ///     Ask the curve for its start and end points and some point in the middle.
-        ///     The latter can be obtained by asking the curve for its parameter range and
-        ///     evaluating it in the middle, or by tessellation. In case of tessellation,
-        ///     you could iterate through the tessellation points and use each one together
-        ///     with the start and end points to try and determine a valid plane.
-        ///     Once one is found, you can add debug assertions to ensure that the other
-        ///     tessellation points (if there are any more) are in the same plane.
-        ///     In the case of the line, the tessellation only returns two points.
-        ///     I once heard that that is the only element that can do that, all
-        ///     non-linear curves return at least three. So you could use this property
-        ///     to determine that a line is a line (and add an assertion as well, if you like).
-        ///     Update, later: please note that the Revit API provides an overload of the
-        ///     NewPlane method taking a CurveArray argument.
-        /// </summary>
         private XYZ GetCurveNormal(Curve curve)
         {
             var pts = curve.Tessellate();
@@ -125,11 +109,6 @@ namespace BuildingCoder
             return normal;
         }
 
-        /// <summary>
-        ///     Create a model line between the two given points.
-        ///     Internally, it creates an arbitrary sketch
-        ///     plane given the model line end points.
-        /// </summary>
         public static ModelLine CreateModelLine(
             Autodesk.Revit.DB.Document doc,
             XYZ p,
@@ -221,12 +200,6 @@ namespace BuildingCoder
         //    NewSketchPlanePassLine( line ) );
         //}
 
-        /// <summary>
-        ///     Return a new sketch plane containing the given curve.
-        ///     Update, later: please note that the Revit API provides
-        ///     an overload of the NewPlane method taking a CurveArray
-        ///     argument, which could presumably be used instead.
-        /// </summary>
         private SketchPlane NewSketchPlaneContainCurve(
             Curve curve)
         {
@@ -401,11 +374,6 @@ namespace BuildingCoder
             }
         }
 
-        /// <summary>
-        ///     Create a TextNote on the specified XYZ.
-        ///     This function is useful during debugging to attach
-        ///     a label to points in space
-        /// </summary>
         public static TextNote CreateTextNote(string text, XYZ origin, Autodesk.Revit.DB.Document doc)
         {
             var options = new TextNoteOptions

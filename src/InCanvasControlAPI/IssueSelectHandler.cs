@@ -24,28 +24,16 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
     /// </summary>
     public class IssueSelectHandler : ITemporaryGraphicsHandler
     {
-        /// <summary>
-        ///     Gets the handler's description
-        /// </summary>
-        /// <returns></returns>
         public string GetDescription()
         {
             return "Changes Issue marker visual upon marker click";
         }
 
-        /// <summary>
-        ///     Gets the hander's name
-        /// </summary>
-        /// <returns></returns>
         public string GetName()
         {
             return "Issue marker click event handler";
         }
 
-        /// <summary>
-        ///     Gets server's GUID
-        /// </summary>
-        /// <returns>External server GUID</returns>
         public Guid GetServerId()
         {
             return new Guid("81F91FC9-B6D5-4FD4-AB5B-04F307369A79");
@@ -60,10 +48,6 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
             return ExternalServices.BuiltInExternalServices.TemporaryGraphicsHandlerService;
         }
 
-        /// <summary>
-        ///     Gets vendor's name
-        /// </summary>
-        /// <returns></returns>
         public string GetVendorId()
         {
             return "ADSK";

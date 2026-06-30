@@ -100,15 +100,6 @@ namespace BuildingCoder
                 RunStepThroughElements();
         }
 
-        /// <summary>
-        ///     Return true if we want to look at the
-        ///     next Connector, and false if the current
-        ///     Connector is desired
-        /// </summary>
-        /// <param name="pConn">The Current Connector</param>
-        /// <param name="pPrevElement">The previous Element the Connector came from</param>
-        /// <param name="lVisited">A List of visited Elements (by their Id's)</param>
-        /// <returns></returns>
         public bool NextConnector(
             Connector pConn,
             Element pPrevElement,
@@ -120,16 +111,6 @@ namespace BuildingCoder
                    || lVisited.Contains(pConn.Owner.Id);
         }
 
-        /// <summary>
-        ///     Gets the Element the Connector is connected
-        ///     to if it has not been visited before. Currently
-        ///     set to work with Pipe and FamilyInstance types
-        ///     - change types to accomodate
-        /// </summary>
-        /// <param name="pConn">The Connector from which we want to grab the connected Element</param>
-        /// <param name="pPrevElem">The Element from which we are coming from</param>
-        /// <param name="lVistied">List of visited Elements (by their Id's)</param>
-        /// <returns></returns>
         public Element GetNextConnectedElement(
             Connector pConn,
             Element pPrevElem,
@@ -144,9 +125,6 @@ namespace BuildingCoder
             return null;
         }
 
-        /// <summary>
-        ///     Return the given element's connector set.
-        /// </summary>
         public static ConnectorSet GetConnectors(Element e)
         {
             if (e is MEPCurve curve)

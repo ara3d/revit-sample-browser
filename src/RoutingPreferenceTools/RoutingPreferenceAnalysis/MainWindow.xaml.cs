@@ -20,10 +20,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
     {
         private readonly UIApplication m_application;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="application"></param>
         public MainWindow(UIApplication application)
         {
             InitializeComponent();
@@ -38,17 +34,11 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             PopulateSizeList();
         }
 
-        /// <summary>
-        ///     Get the selected pipe size (in inches) from the dialog
-        /// </summary>
         private double GetSelectedSize()
         {
             return double.Parse(comboBox_Sizes.SelectedItem.ToString());
         }
 
-        /// <summary>
-        ///     Display all sizes available in given pipe type in the dialog.
-        /// </summary>
         private void PopulateSizeList()
         {
             comboBox_Sizes.Items.Clear();
@@ -63,9 +53,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             comboBox_Sizes.SelectedIndex = 0;
         }
 
-        /// <summary>
-        ///     Get all the PipeTypes in the document and display them in the window's combo box.
-        /// </summary>
         private void PopulatePipeTypeList()
         {
             var collector = new FilteredElementCollector(m_application.ActiveUIDocument.Document);
@@ -78,10 +65,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             comboBox_PipeTypes.SelectedIndex = 0;
         }
 
-        /// <summary>
-        ///     Look up a pipe type by ElementId string and return it.
-        /// </summary>
-        /// <returns></returns>
         private PipeType GetSelectedPipeType()
         {
             var selectedString = comboBox_PipeTypes.SelectedItem.ToString();
@@ -93,11 +76,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             return m_application.ActiveUIDocument.Document.GetElement(id) as PipeType;
         }
 
-        /// <summary>
-        ///     Get the selected PipeType from the combo box in the window, get its RoutingPreferenceManager, and analyze it for
-        ///     problems.
-        ///     Write all potential problems to the window's text field as formatted XML.
-        /// </summary>
         private void button_CheckWarnings_Click(object sender, RoutedEventArgs e)
         {
             var routingPrefernceAnalyzer = new Analyzer(GetSelectedPipeType().RoutingPreferenceManager,
@@ -117,11 +95,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             textBox_output.Text = output.ToString();
         }
 
-        /// <summary>
-        ///     Button CheckSpecificSize click event handler
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void button_CheckSpecificSize_Click(object sender, RoutedEventArgs e)
         {
             var routingPrefernceAnalyzer = new Analyzer(GetSelectedPipeType().RoutingPreferenceManager,
@@ -141,11 +114,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             textBox_output.Text = output.ToString();
         }
 
-        /// <summary>
-        ///     ComboBox PipeTypes selection changed event handler
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void comboBox_PipeTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PopulateSizeList();

@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-//
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
 // AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
 // MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE. AUTODESK, INC.
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
-//
 // Use, duplication, or disclosure by the U.S. Government is subject to
 // restrictions set forth in FAR 52.227-19 (Commercial Computer
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
@@ -46,10 +44,6 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Creates the ribbon panel for this add-in.
-        /// </summary>
-        /// <param name="application">The application.</param>
         private void CreateUiPanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("UI");
@@ -75,11 +69,6 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
             button.Image = GetSmallIcon(icon);
         }
 
-        /// <summary>
-        ///     Gets the standard sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetStdIcon(Icon icon)
         {
             return Imaging.CreateBitmapSourceFromHIcon(
@@ -88,11 +77,6 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
                 BitmapSizeOptions.FromEmptyOptions());
         }
 
-        /// <summary>
-        ///     Gets the small sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetSmallIcon(Icon icon)
         {
             var smallIcon = new Icon(icon, new Size(16, 16));

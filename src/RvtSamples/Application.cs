@@ -106,52 +106,25 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
         /// </summary>
         public const string FileNameStem = "RvtSamples.txt";
 
-        /// <summary>
-        ///     Separator of category for samples have more than one category
-        /// </summary>
         private static readonly char[] SCharSeparatorOfCategory = { ',' };
 
-        /// <summary>
-        ///     chars which will be trimmed in the file to include extra sample list files
-        /// </summary>
         private static readonly char[] STrimChars = { ' ', '"', '\'', '<', '>' };
 
-        /// <summary>
-        ///     The start symbol of lines to include extra sample list files
-        /// </summary>
         private static readonly string SIncludeSymbol = "#include";
 
-        /// <summary>
-        ///     Assembly directory
-        /// </summary>
         private static readonly string SAssemblyDirectory =
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        /// <summary>
-        ///     The controlled application of Revit
-        /// </summary>
         private UIControlledApplication m_application;
 
-        /// <summary>
-        ///     List contains information of samples not belong to default pulldown menus
-        /// </summary>
         private readonly SortedList<string, List<SampleItem>> m_customizedMenus =
             new SortedList<string, List<SampleItem>>();
 
-        /// <summary>
-        ///     List contains information of samples belong to default pulldown menus
-        /// </summary>
         private readonly SortedList<string, List<SampleItem>> m_defaultMenus =
             new SortedList<string, List<SampleItem>>();
 
-        /// <summary>
-        ///     Panel for RvtSamples
-        /// </summary>
         private RibbonPanel m_panelRvtSamples;
 
-        /// <summary>
-        ///     List contains all pulldown button items contain sample items
-        /// </summary>
         private readonly SortedList<string, PulldownButton>
             m_pulldownButtons = new SortedList<string, PulldownButton>();
 
@@ -181,7 +154,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
 
             try
             {
-                // Check whether the file contains samples' list exists
                 // If not, return failure
                 var filename = FileNameStem;
                 if (!GetFilepath(ref filename))
@@ -215,7 +187,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
                     pdData.Add(data);
 
                     //
-                    // Add stacked buttons to RvtSamples panel and set their display names and images
                     //
                     if ((i + 1) % 3 == 0)
                     {
@@ -237,7 +208,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
                 }
 
                 //
-                // Add sample items to the pulldown buttons
                 //
                 n = lines.GetLength(0);
                 k = 0;
@@ -263,11 +233,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Get a button's enum name by its display name
-        /// </summary>
-        /// <param name="name">display name</param>
-        /// <returns>enum name</returns>
         private string GetEnumNameByDisplayName(string name)
         {
             string enumName = null;
@@ -287,11 +252,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             return enumName;
         }
 
-        /// <summary>
-        ///     Get a button's display name by its enum name
-        /// </summary>
-        /// <param name="enumName">The button's enum name</param>
-        /// <returns>The button's display name</returns>
         private string GetDisplayNameByEnumName(string enumName)
         {
             string displayName = null;
@@ -315,11 +275,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             TaskDialog.Show("RvtSamples", msg, TaskDialogCommonButtons.Ok);
         }
 
-        /// <summary>
-        ///     Read file contents, including contents of files included in the current file
-        /// </summary>
-        /// <param name="filename">Current file to be read</param>
-        /// <returns>All lines of file contents</returns>
         private string[] ReadAllLinesWithInclude(string filename)
         {
             if (!File.Exists(filename))
@@ -350,27 +305,15 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             return allLines.ToArray(typeof(string)) as string[];
         }
 
-        /// <summary>
-        ///     Get the input file path.
-        ///     Search and return the full path for the given file
-        ///     in the current exe directory or one or two directory levels higher.
-        /// </summary>
-        /// <param name="filename">Input filename stem, output full file path</param>
-        /// <returns>True if found, false otherwise.</returns>
         private bool GetFilepath(ref string filename)
         {
             var path = Path.Combine(SAssemblyDirectory, filename);
             var rc = File.Exists(path);
 
-            // Get full path of the file
             if (rc) filename = Path.GetFullPath(path);
             return rc;
         }
 
-        /// <summary>
-        ///     Remove all comments and empty lines from a given array of lines.
-        ///     Comments are delimited by '#' to the end of the line.
-        /// </summary>
         private string[] RemoveComments(string[] lines)
         {
             var n = lines.GetLength(0);
@@ -391,15 +334,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             return b;
         }
 
-        /// <summary>
-        ///     Add a new command to the corresponding pulldown button.
-        /// </summary>
-        /// <param name="lines">
-        ///     Array of lines defining sample's category, display name, description, large image, image, assembly
-        ///     and classname
-        /// </param>
-        /// <param name="n">Total number of lines in array</param>
-        /// <param name="i">Current index in array</param>
         private void AddSample(string[] lines, int n, ref int i)
         {
             if (n < i + 6)
@@ -441,7 +375,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
                     }
                     else
                     {
-                        // get the type to use:
                         var t = a.GetType(className);
                         if (null == t)
                         {
@@ -450,7 +383,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
                         }
                         else
                         {
-                            // get the method to call:
                             var m = t.GetMethod("Execute");
                             if (null == m)
                                 ErrorMsg(
@@ -491,11 +423,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             }
         }
 
-        /// <summary>
-        ///     Add sample item to pulldown menu
-        /// </summary>
-        /// <param name="pullDownButton">Pulldown menu</param>
-        /// <param name="item">Sample item to be added</param>
         private void AddSampleToPulldownMenu(PulldownButton pullDownButton, SampleItem item)
         {
             var pushButtonData = new PushButtonData(item.DisplayName, item.DisplayName, item.Assembly, item.ClassName);
@@ -515,21 +442,11 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             pushButton.ToolTip = item.Description;
         }
 
-        /// <summary>
-        ///     Comparer to sort sample items by their display name
-        /// </summary>
-        /// <param name="s1">sample item 1</param>
-        /// <param name="s2">sample item 2</param>
-        /// <returns>compare result</returns>
         private static int SortByDisplayName(SampleItem item1, SampleItem item2)
         {
             return string.Compare(item1.DisplayName, item2.DisplayName);
         }
 
-        /// <summary>
-        ///     Sort samples in one category by the sample items' display name
-        /// </summary>
-        /// <param name="menus">samples to be sorted</param>
         private void SortSampleItemsInOneCategory(SortedList<string, List<SampleItem>> menus)
         {
             var iCount = menus.Count;
@@ -541,9 +458,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             }
         }
 
-        /// <summary>
-        ///     Add samples of categories in default categories
-        /// </summary>
         private void AddSamplesToDefaultPulldownMenus()
         {
             var iCount = m_defaultMenus.Count;
@@ -564,9 +478,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             }
         }
 
-        /// <summary>
-        ///     Add samples of categories not in default categories
-        /// </summary>
         private void AddCustomizedPulldownMenus()
         {
             var iCount = m_customizedMenus.Count;
@@ -618,10 +529,6 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             }
         }
 
-        /// <summary>
-        ///     Add samples to corresponding pulldown button
-        /// </summary>
-        /// <param name="buttons">pulldown buttons</param>
         private void AddSamplesToStackedButtons(IList<RibbonItem> buttons)
         {
             foreach (var rItem in buttons)

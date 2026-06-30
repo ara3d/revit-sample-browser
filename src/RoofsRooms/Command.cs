@@ -76,15 +76,8 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
             }
         }
 
-        /// <summary>
-        ///     Test whether each room has a roof to bound it.
-        /// </summary>
-        /// <param name="message">Error message to be dumped.</param>
-        /// <param name="elements">Some elements to return.</param>
-        /// <returns></returns>
         private bool FindRoomBoundingRoofs(ref string message, ElementSet elements)
         {
-            // Get all rooms
             var rooms = ElementQuery.GetRoomAndSpaceElements(m_document);
             if (rooms.Count == 0)
             {
@@ -104,19 +97,15 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
 
             foreach (var room in rooms)
             {
-                // Get room geometry & boundaries          
                 var results = calculator.CalculateSpatialElementGeometry((SpatialElement)room);
 
-                // Get solid geometry so we can examine each face
                 var geometry = results.GetGeometry();
 
                 foreach (Face face in geometry.Faces)
                 {
-                    // Get list of roof boundary subfaces for a given face
                     var boundaryFaces = results.GetBoundaryFaceInfo(face);
                     foreach (var boundaryFace in boundaryFaces)
                     {
-                        // Get boundary element
                         var boundaryElementId = boundaryFace.SpatialBoundaryElement;
 
                         // Only considering local file room bounding elements

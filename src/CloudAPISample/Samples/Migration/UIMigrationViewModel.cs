@@ -27,13 +27,10 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 
         private string m_projectGuid;
 
-        /// <inheritdoc />
         public ObservableCollection<FolderLocation> AvailableFolders { get; set; } = new ObservableCollection<FolderLocation>();
 
-        /// <inheritdoc />
         public ObservableCollection<MigrationRule> Rules { get; set; } = new ObservableCollection<MigrationRule>();
 
-        /// <inheritdoc />
         public string AccountGuid
         {
             get => m_accountGuid;
@@ -47,7 +44,6 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
             }
         }
 
-        /// <inheritdoc />
         public string ProjectGuid
         {
             get => m_projectGuid;
@@ -61,9 +57,6 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
             }
         }
 
-        /// <summary>
-        ///     Indicates target folder has been changed in this case.
-        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName)

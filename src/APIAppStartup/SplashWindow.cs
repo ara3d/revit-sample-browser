@@ -20,7 +20,6 @@ namespace Ara3D.RevitSampleBrowser.APIAppStartup.CS
             m_delegateClose = InternalCloseSplash;
         }
 
-        //start a new thread to display splash window
         public static void StartSplash()
         {
             _instance = new SplashWindow
@@ -31,13 +30,11 @@ namespace Ara3D.RevitSampleBrowser.APIAppStartup.CS
             _instanceCaller.Start();
         }
 
-        //kill the thread
         public static void StopSplash()
         {
             _instance?.Invoke(_instance.m_delegateClose);
         }
 
-        //show Revit version info
         public static void ShowVersion(string version)
         {
             _instance.Version.Text = version;
@@ -49,7 +46,6 @@ namespace Ara3D.RevitSampleBrowser.APIAppStartup.CS
             Dispose();
         }
 
-        // this is called by the new thread to show the splash screen
         private static void MySplashThreadFunc()
         {
             if (_instance != null)

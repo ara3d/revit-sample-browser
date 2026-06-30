@@ -33,11 +33,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
             }
         }
 
-        /// <summary>
-        ///     Creates an Analytiocal Panel
-        /// </summary>
-        /// <param name="revitDoc">Revit documenr</param>
-        /// <returns></returns>
         public static AnalyticalPanel CreateAmPanel(Document revitDoc)
         {
             AnalyticalPanel analyticalPanel = null;
@@ -56,7 +51,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 profileloop.Append(Line.CreateBound(
                     new XYZ(0, 5, 0), new XYZ(0, 0, 0)));
 
-                //create the AnalyticalPanel
                 analyticalPanel = AnalyticalPanel.Create(revitDoc, profileloop);
 
                 analyticalPanel.StructuralRole = AnalyticalStructuralRole.StructuralRoleFloor;
@@ -68,10 +62,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
             return analyticalPanel;
         }
 
-        /// <summary>
-        ///     creates an AnalyticalOpening element which will be placed on the AnalyticalPanel
-        ///     with id = panelId
-        /// </summary>
         public static AnalyticalOpening CreateAmOpening(Document revitDoc, ElementId panelId)
         {
             if (panelId == ElementId.InvalidElementId)
@@ -83,7 +73,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
             {
                 transaction.Start();
 
-                //create the curveLoop for the AnalyticalOpening element
                 var profileloop = new CurveLoop();
                 profileloop.Append(Line.CreateBound(
                     new XYZ(1, 1, 0), new XYZ(2, 1, 0)));
@@ -95,7 +84,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                     new XYZ(-1, 2, 0), new XYZ(1, 1, 0)));
 
                 if (AnalyticalOpening.IsCurveLoopValidForAnalyticalOpening(profileloop, revitDoc, panelId))
-                    //create the AnalyticalOpening
                     opening = AnalyticalOpening.Create(revitDoc, profileloop, panelId);
 
                 transaction.Commit();

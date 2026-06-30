@@ -7,21 +7,11 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {
-    /// <summary>
-    ///     Wrapper class for Construction
-    /// </summary>
     [TypeConverter(typeof(ConstructionWrapperConverter))]
     public class ConstructionWrapper : IComparable, IWrapper
     {
-        /// <summary>
-        ///     Construction
-        /// </summary>
         private readonly Construction m_construction;
 
-        /// <summary>
-        ///     Initializes private variables.
-        /// </summary>
-        /// <param name="construction">Construction</param>
         public ConstructionWrapper(Construction construction)
         {
             m_construction = construction;
@@ -43,15 +33,9 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             return obj is ConstructionWrapper wrapper ? Name.CompareTo(wrapper.Name) : 1;
         }
 
-        /// <summary>
-        ///     Gets the handle object.
-        /// </summary>
         [Browsable(false)]
         public object Handle => m_construction;
 
-        /// <summary>
-        ///     Gets the name of the handle.
-        /// </summary>
         [Browsable(false)]
         public string Name => m_construction.Name;
     }

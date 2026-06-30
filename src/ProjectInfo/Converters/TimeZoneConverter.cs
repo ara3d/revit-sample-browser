@@ -4,27 +4,13 @@ using System.ComponentModel;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
-    /// <summary>
-    ///     Converter used to convert TimeZone
-    /// </summary>
     public class TimeZoneConverter : TypeConverter
     {
-        /// <summary>
-        ///     Returns whether this object supports a standard set of values that can be
-        ///     picked from a list, using the specified context.
-        /// </summary>
-        /// <returns>true</returns>
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
         {
             return true;
         }
 
-        /// <summary>
-        ///     Returns whether the collection of standard values returned from
-        ///     System.ComponentModel.TypeConverter.GetStandardValues()
-        ///     is an exclusive list.
-        /// </summary>
-        /// <returns>true</returns>
         public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
         {
             return true;

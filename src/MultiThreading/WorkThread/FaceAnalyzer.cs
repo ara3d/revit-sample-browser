@@ -53,9 +53,6 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
         // ActiveView
         private readonly View m_view;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public FaceAnalyzer(View view, string sref)
         {
             m_sreference = sref;

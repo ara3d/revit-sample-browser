@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-//
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
 // AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
 // MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE. AUTODESK, INC.
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
-//
 // Use, duplication, or disclosure by the U.S. Government is subject to
 // restrictions set forth in FAR 52.227-19 (Commercial Computer
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
@@ -23,9 +21,6 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ThisApplication : IExternalApplication
@@ -42,9 +37,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Add UI for registering, showing, and hiding dockable panes.
-        /// </summary>
         public Result OnStartup(UIControlledApplication application)
         {
             ThisApp = this;
@@ -82,9 +74,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Register a dockable Window
-        /// </summary>
         public void RegisterDockableWindow(UIApplication application, Guid mainPageGuid)
         {
             SampleBrowserUtils.SmUserDockablePaneId = new DockablePaneId(mainPageGuid);
@@ -92,9 +81,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
                 ThisApp.GetMainWindow());
         }
 
-        /// <summary>
-        ///     Register a dockable Window
-        /// </summary>
         public void RegisterDockableWindow(UIControlledApplication application, Guid mainPageGuid)
         {
             SampleBrowserUtils.SmUserDockablePaneId = new DockablePaneId(mainPageGuid);
@@ -102,17 +88,11 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
                 ThisApp.GetMainWindow());
         }
 
-        /// <summary>
-        ///     Create the new WPF Page that Revit will dock.
-        /// </summary>
         public void CreateWindow()
         {
             m_mainPage = new MainPage.MainPage();
         }
 
-        /// <summary>
-        ///     Show or hide a dockable pane.
-        /// </summary>
         public void SetWindowVisibility(UIApplication application, bool state)
         {
             var pane = application.GetDockablePane(SampleBrowserUtils.SmUserDockablePaneId);

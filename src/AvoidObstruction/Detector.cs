@@ -8,37 +8,18 @@ using Autodesk.Revit.DB;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
-    /// <summary>
-    ///     This class is used to detect the obstructions of a Line or a ray.
-    /// </summary>
     public class Detector
     {
-        /// <summary>
-        ///     Revit Document.
-        /// </summary>
         private readonly Document m_rvtDoc;
 
-        /// <summary>
-        ///     Revit 3D view.
-        /// </summary>
         private readonly View3D m_view3d;
 
-        /// <summary>
-        ///     Constructor, initialize all the fields.
-        /// </summary>
-        /// <param name="rvtDoc">Revit Document</param>
         public Detector(Document rvtDoc)
         {
             m_rvtDoc = rvtDoc;
             m_view3d = m_rvtDoc.GetElements<View3D>().FirstOrDefault(v => !v.IsTemplate);
         }
 
-        /// <summary>
-        ///     Return all the obstructions which intersect with a ray given by an origin and a direction.
-        /// </summary>
-        /// <param name="origin">Ray's origin</param>
-        /// <param name="dir">Ray's direction</param>
-        /// <returns>Obstructions intersected with the given ray</returns>
         public List<ReferenceWithContext> Obstructions(XYZ origin, XYZ dir)
         {
             var result = new List<ReferenceWithContext>();
@@ -57,11 +38,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             return result;
         }
 
-        /// <summary>
-        ///     Return all the obstructions which intersect with a bound line.
-        /// </summary>
-        /// <param name="boundLine">Bound line</param>
-        /// <returns>Obstructions intersected with the bound line</returns>
         public List<ReferenceWithContext> Obstructions(Line boundLine)
         {
             var result = new List<ReferenceWithContext>();

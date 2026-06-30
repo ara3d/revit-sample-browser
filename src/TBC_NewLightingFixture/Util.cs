@@ -12,10 +12,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_NewLightingFixture sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Place an instance of the given family symbol
-        ///     on a selected face of an existing 3D element.
-        /// </summary>
         internal static FamilyInstance PlaceFamilyInstanceOnFace(
             UIDocument uidoc,
             FamilySymbol symbol)

@@ -11,7 +11,7 @@ using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
 {
     /// <summary>
-    ///     A command to create a new family block representing a negative of a selected element.
+    /// Creates a family block representing the negative of a selected element.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class CreateNegativeBlockCommand : IExternalCommand
@@ -21,16 +21,13 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
             var uiDoc = commandData.Application.ActiveUIDocument;
             var doc = uiDoc.Document;
 
-            // Select target element
             var target = uiDoc.Selection.PickObject(ObjectType.Element,
                 new TargetElementSelectionFilter(),
                 "Select target");
             var targetElement = doc.GetElement(target);
 
-            // Get height for block based on target element.
             var bbox = targetElement.get_BoundingBox(null);
 
-            // Select boundaries
             var boundaries = uiDoc.Selection.PickObjects(ObjectType.Element,
                 new BoundarySelectionFilter(),
                 "Select boundary");
@@ -45,7 +42,6 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
             var condition = SampleBrowserUtils.CreateNegativeBlock(targetElement, boundaries,
                 UIDocument.GetRevitUIFamilyLoadOptions(), familyPath);
 
-            // Show error message for failure condition
             if (condition != SampleBrowserUtils.FailureCondition.Success)
             {
                 switch (condition)
@@ -69,14 +65,10 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
         }
     }
 
-    /// <summary>
-    ///     Selection filter for selection of a target object to use as a template for the negative block.
-    /// </summary>
     public class TargetElementSelectionFilter : ISelectionFilter
     {
         public bool AllowElement(Element element)
         {
-            // Element must have at least one usable solid
             var solids = SampleBrowserUtils.GetTargetSolids(element);
 
             return solids.Count > 0;
@@ -88,22 +80,16 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
         }
     }
 
-    /// <summary>
-    ///     Selection filter for selection of the boundary curves for the block extents.
-    /// </summary>
     public class BoundarySelectionFilter : ISelectionFilter
     {
         public bool AllowElement(Element element)
         {
-            // Allow only curve elements
             if (!(element is CurveElement curveElement))
                 return false;
 
             var curve = curveElement.GeometryCurve;
 
-            // Curves must support the utilities used by the tool (e.g. ReverseCurve)
             return SampleBrowserUtils.SupportsLoopUtilities(curve) &&
-                   // Curves must be in XY plane
                    XyzMath.IsCurveInXyPlane(curve);
         }
 

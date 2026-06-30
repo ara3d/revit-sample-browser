@@ -20,11 +20,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         private readonly double m_columnLength; //the length of the column
         private readonly double m_columnWidth; //the width of the column
 
-        /// <summary>
-        ///     constructor for the ColumnGeometrySupport
-        /// </summary>
-        /// <param name="element">the column which the rebars are placed on</param>
-        /// <param name="geoOptions">the geometry option</param>
         public ColumnGeometrySupport(FamilyInstance element, Options geoOptions)
             : base(element, geoOptions)
         {
@@ -32,7 +27,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             if (!element.StructuralType.Equals(StructuralType.Column))
                 throw new Exception("ColumnGeometrySupport can only work for column instance.");
 
-            // Get the length, width and height of the column.
             m_columnHeight = GetDrivingLineLength();
             m_columnLength = GetColumnLength();
             m_columnWidth = GetColumnWidth();
@@ -163,10 +157,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
 
-        /// <summary>
-        ///     Get the length of the column
-        /// </summary>
-        /// <returns>the length data</returns>
         private double GetColumnLength()
         {
             var comparer = new XyzHeightComparer();
@@ -179,10 +169,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             return XyzMath.GetLength(directions[0]);
         }
 
-        /// <summary>
-        ///     Get the width of the column
-        /// </summary>
-        /// <returns>the width data</returns>
         private double GetColumnWidth()
         {
             var comparer = new XyzHeightComparer();

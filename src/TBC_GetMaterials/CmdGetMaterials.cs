@@ -163,18 +163,8 @@ namespace BuildingCoder
     internal class CmdGetMaterials : IExternalCommand
     {
         #region List Material Asset Sub-Texture
-
-        /// <summary>
-        ///     A description of a property consists of a name, its attributes and value
-        ///     here AssetPropertyPropertyDescriptor is used to wrap AssetProperty
-        ///     to display its name and value in PropertyGrid
-        /// </summary>
         internal class AssetPropertyPropertyDescriptor : PropertyDescriptor
         {
-            /// <summary>
-            ///     Public class constructor
-            /// </summary>
-            /// <param name="assetProperty">the AssetProperty which a AssetPropertyPropertyDescriptor instance describes</param>
             public AssetPropertyPropertyDescriptor(AssetProperty assetProperty)
                 : base(assetProperty.Name, Array.Empty<Attribute>())
             {
@@ -182,20 +172,9 @@ namespace BuildingCoder
             }
 
             #region Properties
-
-            /// <summary>
-            ///     Property to get internal AssetProperty
-            /// </summary>
             public AssetProperty AssetProperty => _assetProperty;
 
             #endregion
-
-            /// <summary>
-            ///     Convert Autodesk.Revit.DB.DoubleArray to Double [].
-            ///     For Double [] is supported by PropertyGrid.
-            /// </summary>
-            /// <param name="doubleArray">the original Autodesk.Revit.DB.DoubleArray </param>
-            /// <returns>The converted Double []</returns>
             private static double[] GetSystemArray(DoubleArray doubleArray)
             {
                 var values = new double[doubleArray.Size];
@@ -223,100 +202,40 @@ namespace BuildingCoder
             }
 
             #region Fields
-
-            /// <summary>
-            ///     A reference to an AssetProperty
-            /// </summary>
             private readonly AssetProperty _assetProperty;
-
-            /// <summary>
-            ///     The type of AssetProperty's property "Value"
-            /// </summary>
             /// m
             private Type _valueType;
-
-            /// <summary>
-            ///     The value of AssetProperty's property "Value"
-            /// </summary>
             private object _value;
 
             #endregion
 
             #region override Properties
-
-            /// <summary>
-            ///     Gets a value indicating whether this property is read-only
-            /// </summary>
             public override bool IsReadOnly => true;
-
-            /// <summary>
-            ///     Gets the type of the component this property is bound to.
-            /// </summary>
             public override Type ComponentType => _assetProperty.GetType();
-
-            /// <summary>
-            ///     Gets the type of the property.
-            /// </summary>
             public override Type PropertyType => _valueType;
 
             #endregion
 
             #region override methods
-
-            /// <summary>
-            ///     Compares this to another object to see if they are equivalent
-            /// </summary>
-            /// <param name="obj">The object to compare to this AssetPropertyPropertyDescriptor. </param>
-            /// <returns></returns>
             public override bool Equals(object obj)
             {
                 return obj is AssetPropertyPropertyDescriptor other && other.AssetProperty.Equals(_assetProperty);
             }
-
-            /// <summary>
-            ///     Returns the hash code for this object.
-            ///     Here override the method "Equals", so it is necessary to override GetHashCode too.
-            /// </summary>
-            /// <returns></returns>
             public override int GetHashCode()
             {
                 return _assetProperty.GetHashCode();
             }
-
-            /// <summary>
-            ///     Resets the value for this property of the component to the default value.
-            /// </summary>
-            /// <param name="component">The component with the property value that is to be reset to the default value.</param>
             public override void ResetValue(object component)
             {
             }
-
-            /// <summary>
-            ///     Returns whether resetting an object changes its value.
-            /// </summary>
-            /// <param name="component">The component to test for reset capability.</param>
-            /// <returns>true if resetting the component changes its value; otherwise, false.</returns>
             public override bool CanResetValue(object component)
             {
                 return false;
             }
-
-            /// <summary>
-            ///     G
-            ///     Determines a value indicating whether the value of this property needs to be persisted.
-            /// </summary>
-            /// <param name="component">The component with the property to be examined for persistence.</param>
-            /// <returns>true if the property should be persisted; otherwise, false.</returns>
             public override bool ShouldSerializeValue(object component)
             {
                 return false;
             }
-
-            /// <summary>
-            ///     Gets the current value of the property on a component.
-            /// </summary>
-            /// <param name="component">The component with the property for which to retrieve the value.</param>
-            /// <returns>The value of a property for a given component.</returns>
             public override object GetValue(object component)
             {
                 var typeAndValue = GetTypeAndValue(_assetProperty, 0);
@@ -445,31 +364,15 @@ namespace BuildingCoder
 
                 return new Tuple<Type, object>(valueType, theValue);
             }
-
-            /// <summary>
-            ///     Sets the value of the component to a different value.
-            ///     For AssetProperty, it is not allowed to set its value, so here just return.
-            /// </summary>
-            /// <param name="component">The component with the property value that is to be set. </param>
-            /// <param name="value">The new value.</param>
             public override void SetValue(object component, object value)
             {
             }
 
             #endregion
         }
-
-        /// <summary>
-        ///     supplies dynamic custom type information for an Asset while it is displayed in PropertyGrid.
-        /// </summary>
         public class RenderAppearanceDescriptor : ICustomTypeDescriptor
         {
             #region Constructors
-
-            /// <summary>
-            ///     Initializes Asset object
-            /// </summary>
-            /// <param name="asset">an Asset object</param>
             public RenderAppearanceDescriptor(Asset asset)
             {
                 _asset = asset;
@@ -479,15 +382,7 @@ namespace BuildingCoder
             #endregion
 
             #region Fields
-
-            /// <summary>
-            ///     Reference to Asset
-            /// </summary>
             private readonly Asset _asset;
-
-            /// <summary>
-            ///     Asset's property descriptors
-            /// </summary>
             private PropertyDescriptorCollection _propertyDescriptors;
 
             #endregion
@@ -495,139 +390,56 @@ namespace BuildingCoder
             #region Methods
 
             #region ICustomTypeDescriptor Members
-
-            /// <summary>
-            ///     Returns a collection of custom attributes for this instance of Asset.
-            /// </summary>
-            /// <returns>Asset's attributes</returns>
             public AttributeCollection GetAttributes()
             {
                 return TypeDescriptor.GetAttributes(_asset, false);
             }
-
-            /// <summary>
-            ///     Returns the class name of this instance of Asset.
-            /// </summary>
-            /// <returns>Asset's class name</returns>
             public string GetClassName()
             {
                 return TypeDescriptor.GetClassName(_asset, false);
             }
-
-            /// <summary>
-            ///     Returns the name of this instance of Asset.
-            /// </summary>
-            /// <returns>The name of Asset</returns>
             public string GetComponentName()
             {
                 return TypeDescriptor.GetComponentName(_asset, false);
             }
-
-            /// <summary>
-            ///     Returns a type converter for this instance of Asset.
-            /// </summary>
-            /// <returns>The converter of the Asset</returns>
             public TypeConverter GetConverter()
             {
                 return TypeDescriptor.GetConverter(_asset, false);
             }
-
-            /// <summary>
-            ///     Returns the default event for this instance of Asset.
-            /// </summary>
-            /// <returns>
-            ///     An EventDescriptor that represents the default event for this object,
-            ///     or null if this object does not have events.
-            /// </returns>
             public EventDescriptor GetDefaultEvent()
             {
                 return TypeDescriptor.GetDefaultEvent(_asset, false);
             }
-
-            /// <summary>
-            ///     Returns the default property for this instance of Asset.
-            /// </summary>
-            /// <returns>
-            ///     A PropertyDescriptor that represents the default property for this object,
-            ///     or null if this object does not have properties.
-            /// </returns>
             public PropertyDescriptor GetDefaultProperty()
             {
                 return TypeDescriptor.GetDefaultProperty(_asset, false);
             }
-
-            /// <summary>
-            ///     Returns an editor of the specified type for this instance of Asset.
-            /// </summary>
-            /// <param name="editorBaseType">A Type that represents the editor for this object. </param>
-            /// <returns>
-            ///     An Object of the specified type that is the editor for this object,
-            ///     or null if the editor cannot be found.
-            /// </returns>
             public object GetEditor(Type editorBaseType)
             {
                 return TypeDescriptor.GetEditor(_asset, editorBaseType, false);
             }
-
-            /// <summary>
-            ///     Returns the events for this instance of Asset using the specified attribute array as a filter.
-            /// </summary>
-            /// <param name="attributes">An array of type Attribute that is used as a filter. </param>
-            /// <returns>An EventDescriptorCollection that represents the filtered events for this Asset instance.</returns>
             public EventDescriptorCollection GetEvents(Attribute[] attributes)
             {
                 return TypeDescriptor.GetEvents(_asset, attributes, false);
             }
-
-            /// <summary>
-            ///     Returns the events for this instance of Asset.
-            /// </summary>
-            /// <returns>An EventDescriptorCollection that represents the events for this Asset instance.</returns>
             public EventDescriptorCollection GetEvents()
             {
                 return TypeDescriptor.GetEvents(_asset, false);
             }
-
-            /// <summary>
-            ///     Returns the properties for this instance of Asset using the attribute array as a filter.
-            /// </summary>
-            /// <param name="attributes">An array of type Attribute that is used as a filter.</param>
-            /// <returns>
-            ///     A PropertyDescriptorCollection that
-            ///     represents the filtered properties for this Asset instance.
-            /// </returns>
             public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
             {
                 return _propertyDescriptors;
             }
-
-            /// <summary>
-            ///     Returns the properties for this instance of Asset.
-            /// </summary>
-            /// <returns>
-            ///     A PropertyDescriptorCollection that represents the properties
-            ///     for this Asset instance.
-            /// </returns>
             public PropertyDescriptorCollection GetProperties()
             {
                 return _propertyDescriptors;
             }
-
-            /// <summary>
-            ///     Returns an object that contains the property described by the specified property descriptor.
-            /// </summary>
-            /// <param name="pd">A PropertyDescriptor that represents the property whose owner is to be found. </param>
-            /// <returns>Asset object</returns>
             public object GetPropertyOwner(PropertyDescriptor pd)
             {
                 return _asset;
             }
 
             #endregion
-
-            /// <summary>
-            ///     Get Asset's property descriptors
-            /// </summary>
             private void GetAssetProperties()
             {
                 if (null == _propertyDescriptors)
@@ -768,10 +580,6 @@ namespace BuildingCoder
         #endregion // Victor sample code
 
 #if BEFORE_REVIT_2013
-    /// <summary>
-    /// Return a list of the document's 
-    /// non-null materials sorted by name.
-    /// </summary>
     List<Material> GetSortedMaterials( Document doc )
     {
       Materials doc_materials
@@ -966,9 +774,6 @@ namespace BuildingCoder
         //I expect the "keyword" property on the appearance tab to accept a string value.
         //In addition, I can see some error message in the journal file.
         //Is it possible to set the "keyword" property of the appearance asset?
-        /// <summary>
-        ///     Set material appearance asset keyword property
-        /// </summary>
         private void SetMaterialAppearanceAssetKeywordProperty(
             AppearanceAssetElement assetElem,
             string new_keyword)

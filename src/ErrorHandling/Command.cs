@@ -9,42 +9,17 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand and IExternalApplication
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand, IExternalApplication
     {
-        /// <summary>
-        ///     The failure definition id for warning
-        /// </summary>
         public static FailureDefinitionId IdWarning;
-
-        /// <summary>
-        ///     The failure definition id for error
-        /// </summary>
         public static FailureDefinitionId IdError;
 
-        /// <summary>
-        ///     The active document
-        /// </summary>
         private Document m_doc;
-
-        /// <summary>
-        ///     The failure definition for error
-        /// </summary>
         private FailureDefinition m_fdError;
-
-        /// <summary>
-        ///     The failure definition for warning
-        /// </summary>
         private FailureDefinition m_fdWarning;
-
-        /// <summary>
-        ///     The Revit application
-        /// </summary>
         private Application m_revitApp;
 
         public Result OnShutdown(UIControlledApplication application)
@@ -56,14 +31,12 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
         {
             try
             {
-                // Create failure definition Ids
                 var guid1 = new Guid("0C3F66B5-3E26-4d24-A228-7A8358C76D39");
                 var guid2 = new Guid("93382A45-89A9-4cfe-8B94-E0B0D9542D34");
                 new Guid("A16D08E2-7D06-4bca-96B0-C4E4CC0512F8");
                 IdWarning = new FailureDefinitionId(guid1);
                 IdError = new FailureDefinitionId(guid2);
 
-                // Create failure definitions and add resolutions
                 m_fdWarning =
                     FailureDefinition.CreateFailureDefinition(IdWarning, FailureSeverity.Warning,
                         "I am the warning.");
@@ -101,8 +74,7 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
 
             try
             {
-                //
-                // Post a warning and resolve it in FailurePreproccessor
+                // Demo 1: post a custom warning; resolved in IFailuresPreprocessor.
                 try
                 {
                     var transaction = new Transaction(m_doc, "Warning_FailurePreproccessor");
@@ -121,8 +93,7 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
                     return Result.Failed;
                 }
 
-                //
-                // Dismiss the overlapped wall warning in FailurePreproccessor
+                // Demo 2: dismiss overlapped-wall warning in IFailuresPreprocessor.
                 try
                 {
                     var transaction = new Transaction(m_doc, "Warning_FailurePreproccessor_OverlappedWall");
@@ -145,8 +116,7 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
                     return Result.Failed;
                 }
 
-                //
-                // Post an error and resolve it in FailuresProcessingEvent
+                // Demo 3: post a custom error; resolved in FailuresProcessing event.
                 try
                 {
                     m_revitApp.FailuresProcessing += FailuresProcessing;
@@ -169,8 +139,7 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
                     return Result.Failed;
                 }
 
-                //
-                // Post an error and resolve it in FailuresProcessor
+                // Demo 4: post a custom error; resolved in IFailuresProcessor.
                 try
                 {
                     var processor = new FailuresProcessor();
@@ -206,7 +175,6 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
         private void FailuresProcessing(object sender, FailuresProcessingEventArgs e)
         {
             var failuresAccessor = e.GetFailuresAccessor();
-            //failuresAccessor
             var transactionName = failuresAccessor.GetTransactionName();
 
             var fmas = failuresAccessor.GetFailureMessages();
@@ -231,10 +199,6 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
             e.SetProcessingResult(FailureProcessingResult.Continue);
         }
 
-        /// <summary>
-        ///     Gets the level named "Level 1"
-        /// </summary>
-        /// <returns></returns>
         private Level GetLevel()
         {
             Level level1 = null;
@@ -258,12 +222,6 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
 
     public class FailurePreproccessor : IFailuresPreprocessor
     {
-        /// <summary>
-        ///     This method is called when there have been failures found at the end of a transaction and Revit is about to start
-        ///     processing them.
-        /// </summary>
-        /// <param name="failuresAccessor">The Interface class that provides access to the failure information. </param>
-        /// <returns></returns>
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
         {
             var fmas = failuresAccessor.GetFailureMessages();
@@ -298,25 +256,12 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
         }
     }
 
-    /// <summary>
-    ///     Implements the interface IFailuresProcessor
-    /// </summary>
     public class FailuresProcessor : IFailuresProcessor
     {
-        /// <summary>
-        ///     This method is being called in case of exception or document destruction to dismiss any possible pending failure UI
-        ///     that may have left on the screen
-        /// </summary>
-        /// <param name="document">Document for which pending failures processing UI should be dismissed </param>
         public void Dismiss(Document document)
         {
         }
 
-        /// <summary>
-        ///     Method that Revit will invoke to process failures at the end of transaction.
-        /// </summary>
-        /// <param name="failuresAccessor">Provides all necessary data to perform the resolution of failures.</param>
-        /// <returns></returns>
         public FailureProcessingResult ProcessFailures(FailuresAccessor failuresAccessor)
         {
             var fmas = failuresAccessor.GetFailureMessages();

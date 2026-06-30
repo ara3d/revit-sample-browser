@@ -5,7 +5,6 @@ using System.Text;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_DemoCheck sample.</summary>
     internal static partial class Util
     {
         [DllImport("user32.dll", SetLastError = true,

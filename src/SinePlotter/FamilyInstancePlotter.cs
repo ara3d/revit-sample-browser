@@ -26,21 +26,12 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
         private readonly Document m_document;
         private readonly FamilySymbol m_familySymbol;
 
-        /// <summary>
-        ///     The constructor for the FamilyInstancePlotter Class.
-        /// </summary>
-        /// <param name="fs">A Revit family symbol.</param>
-        /// <param name="doc">The active Revit document.</param>
         public FamilyInstancePlotter(FamilySymbol fs, Document doc)
         {
             m_familySymbol = fs;
             m_document = doc;
         }
 
-        /// <summary>
-        ///     Places a family instance at the given location.
-        /// </summary>
-        /// <param name="location">A point XYZ signifying the location for a family instance to be placed.</param>
         private void PlaceAtLocation(XYZ location)
         {
             var t = new Transaction(m_document, "Place family instance");

@@ -14,24 +14,12 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
     /// </summary>
     public class ModificationData
     {
-        /// <summary>
-        ///     Creation data can be modified.
-        /// </summary>
         private readonly CreationData m_creationData;
 
-        /// <summary>
-        ///     Element to modify.
-        /// </summary>
         private readonly HostedSweep m_elemToModify;
 
-        /// <summary>
-        ///     Revit active document.
-        /// </summary>
         private readonly Document m_rvtDoc;
 
-        /// <summary>
-        ///     Revit UI document.
-        /// </summary>
         private readonly UIDocument m_rvtUiDoc;
 
         /// <summary>
@@ -61,9 +49,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
                 m_creationData_SymbolChanged;
         }
 
-        /// <summary>
-        ///     Name of the Creator.
-        /// </summary>
         public string CreatorName => m_creationData.Creator.Name;
 
         /// <summary>
@@ -79,9 +64,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     HostedSweep Angle property.
-        /// </summary>
         [Category("Profile")]
         public string Angle
         {
@@ -121,9 +103,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
         [DisplayName("Profile Edges")]
         public CreationData AddOrRemoveSegments => m_creationData;
 
-        /// <summary>
-        ///     HostedSweep Length property.
-        /// </summary>
         [Category("Dimensions")]
         public string Length
         {
@@ -134,9 +113,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     HostedSweep HorizontalFlipped property.
-        /// </summary>
         [Category("Constraints")]
         [DisplayName("Horizontal Profile Flipped")]
         public bool HorizontalFlipped
@@ -158,9 +134,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     HostedSweep HorizontalOffset property.
-        /// </summary>
         [Category("Constraints")]
         [DisplayName("Horizontal Profile Offset")]
         public string HorizontalOffset
@@ -189,9 +162,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     HostedSweep VerticalFlipped property.
-        /// </summary>
         [Category("Constraints")]
         [DisplayName("Vertical Profile Flipped")]
         public bool VerticalFlipped
@@ -213,9 +183,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     HostedSweep VerticalOffset property.
-        /// </summary>
         [Category("Constraints")]
         [DisplayName("Vertical Profile Offset")]
         public string VerticalOffset
@@ -244,10 +211,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     Change the symbol of the HostedSweep.
-        /// </summary>
-        /// <param name="sym"></param>
         private void m_creationData_SymbolChanged(ElementType sym)
         {
             try
@@ -262,10 +225,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     Remove the edge from the HostedSweep.
-        /// </summary>
-        /// <param name="edge"></param>
         private void m_creationData_EdgeRemoved(Edge edge)
         {
             try
@@ -280,10 +239,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     Add the edge to the HostedSweep.
-        /// </summary>
-        /// <param name="edge"></param>
         private void m_creationData_EdgeAdded(Edge edge)
         {
             try
@@ -309,9 +264,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     Show the element in a good view.
-        /// </summary>
         public void ShowElement()
         {
             try
@@ -326,11 +278,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
             }
         }
 
-        /// <summary>
-        ///     Get parameter by given name.
-        /// </summary>
-        /// <param name="name">name of parameter</param>
-        /// <returns>parameter whose definition name is the given name.</returns>
         protected Parameter GetParameter(string name)
         {
             return m_elemToModify.LookupParameter(name);

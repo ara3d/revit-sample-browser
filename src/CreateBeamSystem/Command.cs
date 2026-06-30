@@ -9,9 +9,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
-    /// <summary>
-    ///     external applications' only entry point class that supports the IExternalCommand interface
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

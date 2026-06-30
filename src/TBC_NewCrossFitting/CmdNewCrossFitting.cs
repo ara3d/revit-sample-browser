@@ -29,10 +29,6 @@ namespace BuildingCoder
     [Transaction(TransactionMode.Manual)]
     internal class CmdNewCrossFitting : IExternalCommand
     {
-        /// <summary>
-        ///     External command mainline. Run in the
-        ///     sample model TestCrossFitting.rvt, e.g.
-        /// </summary>
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,
@@ -44,8 +40,6 @@ namespace BuildingCoder
 
             IList<Element> pipes = null;
             var n = 0;
-
-            // Ensure that 2, 3 or 4 pipes are selected.
 
             while (n is < 2 or > 4)
             {
@@ -164,8 +158,6 @@ namespace BuildingCoder
                     var c4 = Util.GetConnectorClosestTo(
                         pipe4, pt);
 
-                    //以从哪c1为入口.
-
                     // The required connection order for a cross 
                     // fitting is main – main – side - side.
 
@@ -208,11 +200,6 @@ namespace BuildingCoder
         {
             var mainDuctId = ElementId.InvalidElementId;
 
-            // Get DuctType - we need this for its
-            // RoutingPreferenceManager. This is how we assign
-            // our tap object to be used. This is the settings
-            // for the duct object we attach our tap to.
-
             var duct = doc.GetElement(mainDuctId) as Duct;
 
             var ductType = duct.DuctType;
@@ -220,14 +207,8 @@ namespace BuildingCoder
             var routePrefManager
                 = ductType.RoutingPreferenceManager;
 
-            // Set Junction Prefernce to Tap.
-
             routePrefManager.PreferredJunctionType
                 = PreferredJunctionType.Tap;
-
-            // For simplicity sake, I remove all previous rules
-            // for taps so I can just add what I want here.
-            // This will probably vary.
 
             var initRuleCount = routePrefManager.GetNumberOfRules(
                 RoutingPreferenceRuleGroupType.Junctions);
@@ -236,13 +217,9 @@ namespace BuildingCoder
                 routePrefManager.RemoveRule(
                     RoutingPreferenceRuleGroupType.Junctions, 0);
 
-            // Get FamilySymbol for Tap I want to use.
-
             FamilySymbol tapSym = null;
             doc.LoadFamilySymbol("C:/FamilyLocation/MyTap.rfa",
                 "MyTap", out tapSym);
-
-            // Symbol needs to be activated before use.
 
             if (!tapSym.IsActive && tapSym != null)
             {
@@ -250,24 +227,13 @@ namespace BuildingCoder
                 doc.Regenerate();
             }
 
-            // Create Rule that utilizes the Tap. Use the argument
-            // MEPPartId = ElementId for the desired FamilySymbol.
-
             var newRule
                 = new RoutingPreferenceRule(tapSym.Id, "MyTap");
 
             routePrefManager.AddRule(
                 RoutingPreferenceRuleGroupType.Junctions, newRule);
 
-            // To create a solid tap, we need to use the Revit
-            // doc.Create.NewTakeoffFitting routine. For this,
-            // we need a connector. If we don't have one, we
-            // just create a temporary object with a connector
-            // where we want it.
-
             var tmpConn = CreateTemporaryConnectorForTap();
-
-            // Create our tap.
 
             var tapInst
                 = doc.Create.NewTakeoffFitting(tmpConn, duct);

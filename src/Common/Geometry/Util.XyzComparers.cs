@@ -28,10 +28,6 @@ namespace BuildingCoder
     {
         #region Consolidated XYZ comparers
 
-        /// <summary>
-        ///     Define equality between XYZ objects, ensuring
-        ///     that almost equal points compare equal.
-        /// </summary>
         public class XyzEqualityComparer : IEqualityComparer<XYZ>
         {
             private readonly double _eps;

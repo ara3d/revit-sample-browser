@@ -12,11 +12,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_PurgeTextNoteTypes sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return all unused text note types by collecting all
-        ///     existing types in the document and removing the
-        ///     ones that are used afterwards.
-        /// </summary>
         public static ICollection<ElementId> GetUnusedTextNoteTypes(
             Document doc)
         {
@@ -40,13 +35,6 @@ namespace BuildingCoder
 
             return textNoteTypes;
         }
-
-        /// <summary>
-        ///     Return all unused text note types by first
-        ///     determining all text note types in use and
-        ///     then collecting all the others using an
-        ///     exclusion filter.
-        /// </summary>
         public static ICollection<ElementId>
             GetUnusedTextNoteTypesExcluding(
                 Document doc)

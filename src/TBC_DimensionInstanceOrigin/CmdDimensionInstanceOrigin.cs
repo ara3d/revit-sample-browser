@@ -32,21 +32,11 @@ namespace BuildingCoder
     // in family instance and retrieve dimensioning 
     // reference to it]
 
-    /// <summary>
-    ///     Get element's id and type information
-    ///     and its supported information.
-    /// </summary>
-
-
     #endregion // Scott's sample code from SPR #201483
 
     [Transaction(TransactionMode.Manual)]
     internal class CmdDimensionInstanceOrigin : IExternalCommand
     {
-        /// <summary>
-        ///     External command mainline. Run in the sample
-        ///     model Z:\a\rvt\dimension_case_2015.rvt, e.g.
-        /// </summary>
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,

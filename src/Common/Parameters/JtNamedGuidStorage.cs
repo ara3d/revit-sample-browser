@@ -26,12 +26,6 @@ namespace BuildingCoder
 {
     internal class JtNamedGuidStorage
     {
-        /// <summary>
-        ///     Retrieve an existing named Guid
-        ///     in the specified Revit document or
-        ///     optionally create and return a new
-        ///     one if it does not yet exist.
-        /// </summary>
         public static bool Get(
             Document doc,
             string name,
@@ -105,25 +99,11 @@ namespace BuildingCoder
             return rc;
         }
 
-        /// <summary>
-        ///     The extensible storage schema,
-        ///     containing one single Guid field.
-        /// </summary>
         public static class JtNamedGuidStorageSchema
         {
-            /// <summary>
-            ///     Always create your own, new, unique GUID
-            ///     before making use of this class!
-            ///     E.g., Visual Studio > Tools > Create GUID.
-            /// </summary>
             public static readonly Guid SchemaGuid = new(
                 "{5F374308-9C59-42AE-ACC3-A77EF45EC146}");
 
-            /// <summary>
-            ///     Retrieve our extensible storage schema
-            ///     or optionally create a new one if it does
-            ///     not yet exist.
-            /// </summary>
             public static Schema GetSchema(
                 bool create = true)
             {

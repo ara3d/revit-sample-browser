@@ -17,14 +17,8 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS
 {
-    /// <summary>
-    ///     Base class for each sample context in samples portal.
-    /// </summary>
     public abstract class SampleContext
     {
-        /// <summary>
-        ///     The root node for this sample
-        /// </summary>
         public UserControl View { get; set; }
 
         /// <summary>
@@ -32,9 +26,6 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS
         /// </summary>
         public UIApplication Application { get; set; }
 
-        /// <summary>
-        ///     Terminate this sample context, resource allocated should be released here
-        /// </summary>
         public abstract void Terminate();
     }
 }

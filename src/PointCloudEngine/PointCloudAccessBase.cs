@@ -19,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         private double m_scale = 1.0;
         private List<PointCloudCellStorage> m_storedCells;
 
-        /// <summary>
-        ///     Constructs a new instance of the base class.
-        /// </summary>
         protected PointCloudAccessBase()
         {
             m_storedCells = new List<PointCloudCellStorage>();
@@ -83,19 +80,11 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
             }
         }
 
-        /// <summary>
-        ///     Gets the outline calculated from all cells in the point cloud.
-        /// </summary>
-        /// <returns></returns>
         protected Outline GetOutline()
         {
             return m_outline;
         }
 
-        /// <summary>
-        ///     Gets the scale stored for this point cloud.
-        /// </summary>
-        /// <returns></returns>
         protected double GetScale()
         {
             return m_scale;
@@ -212,10 +201,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
             return pointIndex;
         }
 
-        /// <summary>
-        ///     Sets up a point cloud from an XML root element.
-        /// </summary>
-        /// <param name="rootElement">The root element.</param>
         protected void SetupFrom(XElement rootElement)
         {
             // Read scale, if it exists.
@@ -249,11 +234,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
             private bool m_done;
             private readonly PointCloudFilter m_filter;
 
-            /// <summary>
-            ///     Constructs a new instance of the point cloud iterator.
-            /// </summary>
-            /// <param name="access">The access.</param>
-            /// <param name="filter">The filter used for this iteration.</param>
             public PointCloudAccessBaseIterator(PointCloudAccessBase access, PointCloudFilter filter)
             {
                 m_access = access;

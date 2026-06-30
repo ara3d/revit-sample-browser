@@ -5,21 +5,13 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
-    /// <summary>
-    /// </summary>
     public partial class StructuralConnectionForm : Form
     {
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
         public StructuralConnectionForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Property set with the user's choice.
-        /// </summary>
         public CommandOption UserOption { get; set; }
 
         private void buttonOK_Click(object sender, EventArgs e)

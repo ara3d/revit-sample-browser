@@ -20,10 +20,6 @@ namespace BuildingCoder
             return string.Format(RegPathForFlavourTemplate,
                 flavour, version);
         }
-
-        /// <summary>
-        ///     Return a string value from a registry subkey.
-        /// </summary>
         internal static string GetSubkeyValue(
             string reg_path_key,
             string subkey_name,

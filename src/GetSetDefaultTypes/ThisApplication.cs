@@ -10,9 +10,6 @@ using Autodesk.Revit.UI.Events;
 
 namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     public class ThisApplication : IExternalApplication
     {
         public static DefaultFamilyTypes DefaultFamilyTypesPane;
@@ -35,7 +32,6 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
                 var button = panel.AddItem(data) as PushButton;
                 button.LargeImage = new BitmapImage(new Uri($"{directoryName}\\Resources\\type.png"));
 
-                // register dockable Windows on startup.
                 DefaultFamilyTypesPane = new DefaultFamilyTypes();
                 DefaultElementTypesPane = new DefaultElementTypes();
                 application.RegisterDockablePane(DefaultFamilyTypes.PaneId, "Default Family Types",
@@ -43,7 +39,6 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
                 application.RegisterDockablePane(DefaultElementTypes.PaneId, "Default Element Types",
                     DefaultElementTypesPane);
 
-                // register view active event
                 application.ViewActivated += application_ViewActivated;
 
                 return Result.Succeeded;
@@ -55,9 +50,6 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
             }
         }
 
-        /// <summary>
-        ///     Show dockable panes when view active.
-        /// </summary>
         private void application_ViewActivated(object sender, ViewActivatedEventArgs e)
         {
             if (!DockablePane.PaneExists(DefaultFamilyTypes.PaneId) ||

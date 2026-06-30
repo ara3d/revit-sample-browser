@@ -104,14 +104,11 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
         /// <param name="layerNumber">The layerNumber for the number of the layers</param>
         public void SetLayer(int layerNumber)
         {
-            // Get each layer.
             // An individual layer can be accessed by Layers property and its thickness and material can then be reported.
             m_slabLayer = m_slabLayerCollection[layerNumber];
 
-            // Get the Thickness property and change to the metric millimeter
             LayerThickness = $"{m_slabLayer.Width * ToMetricThickness * ToMillimeter} mm";
 
-            // Get the Material name property
             if (ElementId.InvalidElementId != m_slabLayer.MaterialId)
             {
                 var material = m_document.GetElement(m_slabLayer.MaterialId) as Material;
@@ -148,11 +145,6 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
             }
         }
 
-        /// <summary>
-        ///     Initialization and find out a slab's Level, Type name, and set the Span Direction properties.
-        /// </summary>
-        /// <param name="revit">The revit object for the active instance of Autodesk Revit.</param>
-        /// <returns>A value that signifies if your initialization was successful for true or failed for false.</returns>
         private bool Initialize(UIApplication revit)
         {
             m_slabComponent = new ElementSet();
@@ -191,33 +183,24 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
                 // Change the element type to floor type
                 m_slabFloor = e as Floor;
 
-                // Get the layer information from the type object by using the CompoundStructure property
                 // The Layers property is then used to retrieve all the layers
                 m_slabLayerCollection = m_slabFloor.FloorType.GetCompoundStructure().GetLayers();
                 NumberOfLayers = m_slabLayerCollection.Count;
 
-                // Get the Level property by the floor's Level property
                 Level = (m_document.GetElement(m_slabFloor.LevelId) as Level).Name;
 
-                // Get the Type name property by the floor's FloorType property
                 TypeName = m_slabFloor.FloorType.Name;
 
                 // The span direction can be found using generic parameter access 
                 // using the built in parameter FLOOR_PARAM_SPAN_DIRECTION
                 var spanDirectionAttribute = m_slabFloor.get_Parameter(BuiltInParameter.FLOOR_PARAM_SPAN_DIRECTION);
                 if (null != spanDirectionAttribute)
-                    // Set the Span Direction property
                     SetSpanDirection(spanDirectionAttribute.AsDouble());
             }
 
             return true;
         }
 
-        /// <summary>
-        ///     Set SpanDirection property to the class private member
-        ///     Because of the property retrieved from the parameter uses radian for unit, we should change it to degree.
-        /// </summary>
-        /// <param name="spanDirection">The value of span direction property</param>
         private void SetSpanDirection(double spanDirection)
         {
             var spanDirectionDegree =

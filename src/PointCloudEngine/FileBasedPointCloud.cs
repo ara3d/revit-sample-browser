@@ -39,10 +39,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
     {
         private readonly string m_fileName;
 
-        /// <summary>
-        ///     Constructs a new XML-based point cloud access.
-        /// </summary>
-        /// <param name="fileName">The full path to the file.</param>
         public FileBasedPointCloud(string fileName)
         {
             m_fileName = fileName;
@@ -141,9 +137,6 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         {
         }
 
-        /// <summary>
-        ///     Sets up the file-based point cloud.
-        /// </summary>
         private void Setup()
         {
             if (File.Exists(m_fileName))

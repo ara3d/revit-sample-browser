@@ -10,40 +10,19 @@ using Control = System.Windows.Forms.Control;
 
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
-    /// <summary>
-    ///     Sketch the profile of beam system on canvas
-    ///     Code here have nothing with Revit API
-    /// </summary>
     public class BeamSystemSketch : ObjectSketch
     {
-        /// <summary>
-        ///     ratio of margin to canvas width
-        /// </summary>
         private const float MarginRatio = 0.1f;
 
-        /// <summary>
-        ///     the control to draw beam system
-        /// </summary>
         private readonly Control m_canvas;
 
-        /// <summary>
-        ///     defines a local geometric inverse transform
-        /// </summary>
         private Matrix m_inverse;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="canvas">the control to draw beam system</param>
         public BeamSystemSketch(Control canvas)
         {
             m_canvas = canvas;
         }
 
-        /// <summary>
-        ///     draw the profile in the canvas
-        /// </summary>
-        /// <param name="profile">the profile of the beam system</param>
         public void DrawProfile(IList<Line> profile)
         {
             Initialize(profile);
@@ -52,11 +31,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             m_canvas.Refresh();
         }
 
-        /// <summary>
-        ///     draw beam system
-        /// </summary>
-        /// <param name="g">encapsulates a GDI+ drawing surface</param>
-        /// <param name="translate">translation matrix to canvas coordinates</param>
         public override void Draw(Graphics g, Matrix translate)
         {
             foreach (LineSketch sketch in Objects)
@@ -65,11 +39,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             }
         }
 
-        /// <summary>
-        ///     draw beam system on canvas control
-        /// </summary>
-        /// <param name="sender">canvas control</param>
-        /// <param name="e">data for the Paint event</param>
         protected void Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -77,11 +46,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             Draw(g, Transform);
         }
 
-        /// <summary>
-        ///     generate a Line2D instance using a Line's data
-        /// </summary>
-        /// <param name="line">where new Line2D get data</param>
-        /// <returns>new Line2D</returns>
         private static Line2D GetLine2D(Line line)
         {
             var result = new Line2D
@@ -92,9 +56,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             return result;
         }
 
-        /// <summary>
-        ///     calculate the transform between canvas and geometry objects
-        /// </summary>
         private void CalculateTransform()
         {
             var plgpts = CalculateCanvasRegion();
@@ -104,10 +65,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             if (m_inverse.IsInvertible) m_inverse.Invert();
         }
 
-        /// <summary>
-        ///     initialize geometry objects and bounding box
-        /// </summary>
-        /// <param name="profile">the profile of the beam system</param>
         private void Initialize(IList<Line> profile)
         {
             // deal with first line in profile
@@ -126,13 +83,8 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             }
         }
 
-        /// <summary>
-        ///     get the display region, adjust the proportion and location
-        /// </summary>
-        /// <returns>upper-left, upper-right, and lower-left corners of the rectangle </returns>
         private PointF[] CalculateCanvasRegion()
         {
-            // get the area without margin
             var realWidth = m_canvas.Width * (1 - 2 * MarginRatio);
             var realHeight = m_canvas.Height * (1 - 2 * MarginRatio);
             var minX = m_canvas.Width * MarginRatio;

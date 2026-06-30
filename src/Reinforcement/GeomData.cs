@@ -13,24 +13,12 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
     {
         // Private members
 
-        /// <summary>
-        ///     get and set the value of the normal
-        /// </summary>
         public XYZ Normal { get; set; }
 
-        /// <summary>
-        ///     get and set the value of curve array
-        /// </summary>
         public IList<Curve> Curves { get; set; }
 
-        /// <summary>
-        ///     get and set the number of the rebar
-        /// </summary>
         public int RebarNumber { get; set; }
 
-        /// <summary>
-        ///     get and set the value of the rebar spacing
-        /// </summary>
         public double RebarSpacing { get; set; }
 
         /// <summary>

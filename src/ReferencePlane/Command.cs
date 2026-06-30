@@ -8,9 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
 {
-    /// <summary>
-    ///     The entry of this sample, that supports the IExternalCommand interface.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

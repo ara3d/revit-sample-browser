@@ -6,9 +6,6 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
 {
     public partial class PropertiesForm : Form
     {
-        /// <summary>
-        ///     Default constructor, initialize all controls
-        /// </summary>
         private PropertiesForm()
         {
             InitializeComponent();
@@ -38,7 +35,6 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
                 propertyListView.Items.Add(lvi);
             }
 
-            // The following code is used to sort and resize the columns within the list view 
             // so that the data can be viewed better.
 
             // sort the items in the list view ordered by ascending.

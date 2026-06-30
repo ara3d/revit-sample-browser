@@ -14,49 +14,30 @@ using Microsoft.Win32;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.User
 {
-    /// <summary>
-    ///     The main user dialog class for issuing sample commands to the a SchemaWrapper
-    /// </summary>
     public partial class UiCommand : Window
     {
-        /// <summary>
-        ///     The object that provides high level serialization access to an Autodesk.Revit.DB.ExtensibleStorage.Schema
-        /// </summary>
         private SchemaWrapper m_schemaWrapper;
 
-        /// <summary>
-        ///     Create a new dialog object and store a reference to the active document and applicationID of this addin.
-        /// </summary>
         public UiCommand(Document doc, string applicationId)
         {
             InitializeComponent();
             Closing += UICommand_Closing;
             Document = doc;
 
-            //Create a new empty schemaWrapper.
             m_schemaWrapper = SchemaWrapper.NewSchema(Guid.Empty, AccessLevel.Public, AccessLevel.Public, "adsk",
                 applicationId, "schemaName", "Schema documentation");
             m_label_applicationAppId.Content = applicationId;
             UpdateUi();
         }
 
-        /// <summary>
-        ///     The active document in Revit that the dialog queries for Schema and Entity data.
-        /// </summary>
         public Document Document { get; set; }
 
-        /// <summary>
-        ///     Return a convenient recommended path to save schema files in.
-        /// </summary>
         private string GetStartingXmlPath()
         {
             var currentAssemby = Assembly.GetAssembly(GetType()).Location;
             return Path.Combine(Path.GetDirectoryName(currentAssemby), "schemas");
         }
 
-        /// <summary>
-        ///     Synchronize all UI controls in the dialog with the data in m_SchemaWrapper.
-        /// </summary>
         private void UpdateUi()
         {
             m_textBox_SchemaApplicationId.Text = m_schemaWrapper.Data.ApplicationId;
@@ -107,9 +88,6 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             }
         }
 
-        /// <summary>
-        ///     Retrieve AccessLevel enums for read and write permissions from the UI
-        /// </summary>
         private void GetUiAccessLevels(out AccessLevel read, out AccessLevel write)
         {
             read = AccessLevel.Public;
@@ -130,10 +108,6 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 write = AccessLevel.Vendor;
         }
 
-        /// <summary>
-        ///     Ensure that the values in the two text fields in the dialogs meant for Guids evaluate
-        ///     to valid Guids.
-        /// </summary>
         private bool ValidateGuids()
         {
             var retval = true;
@@ -150,42 +124,29 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             return retval;
         }
 
-        //Store the Guid of the last-used schema in the Application object for convenient access
-        //later if the user re-creates and displays this dialog again.
+        // Persist last-used schema Guid for the next dialog session.
         private void UICommand_Closing(object sender, CancelEventArgs e)
         {
             Application.Application.LastGuid = m_textBox_SchemaId.Text;
         }
 
-        //Put a new, arbitrary Guid in the schema text box.
         private void m_button_NewSchemaId_Click(object sender, RoutedEventArgs e)
         {
             m_textBox_SchemaId.Text = ExtensibleStorageHelper.NewGuid().ToString();
         }
 
-        /// <summary>
-        ///     Handler for the "Create a simple schema" button.
-        /// </summary>
         private void m_button_CreateSetSaveSimple_Click(object sender, RoutedEventArgs e)
         {
             CreateSetSave(SampleSchemaComplexity.SimpleExample);
         }
 
-        /// <summary>
-        ///     Handler for the "Create a complex schema" button.
-        /// </summary>
         private void m_button_CreateSetSaveComplex_Click(object sender, RoutedEventArgs e)
         {
             CreateSetSave(SampleSchemaComplexity.ComplexExample);
         }
 
-        /// <summary>
-        ///     Creates a sample schema, populates it with sample data, and saves it to an XML file
-        /// </summary>
-        /// <param name="schemaComplexity">The example schema to create</param>
         private void CreateSetSave(SampleSchemaComplexity schemaComplexity)
         {
-            //Get read-write access levels and schema and application Ids from the active dialog
             AccessLevel read;
             AccessLevel write;
             GetUiAccessLevels(out read, out write);
@@ -195,7 +156,6 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 return;
             }
 
-            //Get a pathname for an XML file from the user.
             var sfd = new SaveFileDialog
             {
                 DefaultExt = ".xml",
@@ -211,7 +171,6 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             {
                 try
                 {
-                    //Create a new sample SchemaWrapper, schema, and Entity and store it in the current document's ProjectInformation element.
                     m_schemaWrapper = StorageCommand.CreateSetAndExport(Document.ProjectInformation, sfd.FileName,
                         new Guid(m_textBox_SchemaId.Text), read, write, m_textBox_SchemaVendorId.Text,
                         m_textBox_SchemaApplicationId.Text, m_textBox_SchemaName.Text,
@@ -225,7 +184,6 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
 
                 UpdateUi();
 
-                //Display the schema fields and sample data we just created in a dialog.
                 var dataDialog = new UiData();
                 var schemaData = m_schemaWrapper.ToString();
                 var entityData =
@@ -238,15 +196,10 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             }
         }
 
-        /// <summary>
-        ///     Handler for the "Create Wrapper from Schema" button
-        /// </summary>
         private void m_button_CreateWrapperFromSchema_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //Given a Guid that corresponds to a schema that already exists in a document, create a SchemaWrapper
-                //from it and display its top-level data in the dialog.
                 StorageCommand.CreateWrapperFromSchema(new Guid(m_textBox_SchemaId.Text), out m_schemaWrapper);
                 UpdateUi();
             }
@@ -257,21 +210,15 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 return;
             }
 
-            //Display all of the schema's field data in a separate dialog.
             var dataDialog = new UiData();
             dataDialog.SetData(m_schemaWrapper.ToString());
             dataDialog.ShowDialog();
         }
 
-        /// <summary>
-        ///     Handler for the "Look up and extract" button
-        /// </summary>
         private void m_button_LookupExtract_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //Given a Guid that corresponds to a schema that already exists in a document, create a SchemaWrapper
-                //from it and display its top-level data in the dialog.
                 StorageCommand.LookupAndExtractData(Document.ProjectInformation, new Guid(m_textBox_SchemaId.Text),
                     out m_schemaWrapper);
             }
@@ -284,7 +231,6 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             UpdateUi();
             var dataDialog = new UiData();
 
-            //Get and display the schema field data and the actual entity data in a separate dialog.
             var schemaData = m_schemaWrapper.ToString();
             var entityData =
                 m_schemaWrapper.GetSchemaEntityData(Document.ProjectInformation.GetEntity(m_schemaWrapper.GetSchema()));
@@ -295,12 +241,8 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             dataDialog.ShowDialog();
         }
 
-        /// <summary>
-        ///     Handler for the "Create Schema from XML" button
-        /// </summary>
         private void m_button_CreateSchemaFromXml_Click(object sender, RoutedEventArgs e)
         {
-            //Prompt the user for an xml file containing a serialized schema.
             var ofd = new OpenFileDialog
             {
                 InitialDirectory = GetStartingXmlPath(),
@@ -313,7 +255,6 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             {
                 try
                 {
-                    //Given an xml file containing schema data, create a new SchemaWrapper object
                     StorageCommand.ImportSchemaFromXml(ofd.FileName, out m_schemaWrapper);
                 }
 
@@ -323,25 +264,19 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                     return;
                 }
 
-                //Display the top level schema data in the dialog.
                 UpdateUi();
 
-                //Display the field data of the schema in a separate dialog.
                 var dataDialog = new UiData();
                 dataDialog.SetData(m_schemaWrapper.ToString());
                 dataDialog.ShowDialog();
             }
         }
 
-        /// <summary>
-        ///     Handler for the "Edit Exisiting Data" button
-        /// </summary>
         private void m_button_EditExistingSimple_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                ///Given a guid corresponding to a Schema with Entity data in the current document's ProjectInformation element,
-                ///change the entity data to new data, (assuming that the schemas and schema guids are identical).
+                // Requires matching schema Guid and field layout in the current document.
                 StorageCommand.EditExistingData(Document.ProjectInformation, new Guid(m_textBox_SchemaId.Text),
                     out m_schemaWrapper);
             }
@@ -353,7 +288,6 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
 
             UpdateUi();
 
-            ///Display the schema fields and new data in a separate dialog.
             var dataDialog = new UiData();
             var schemaData = m_schemaWrapper.ToString();
             var entityData =

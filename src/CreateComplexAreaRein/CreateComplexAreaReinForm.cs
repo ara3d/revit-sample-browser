@@ -6,17 +6,10 @@ using Ara3D.RevitSampleBrowser.AreaReinParameters.CS;
 
 namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 {
-    /// <summary>
-    ///     simple business process of UI
-    /// </summary>
     public partial class CreateComplexAreaReinForm : Form
     {
         private readonly AreaReinData m_dataBuffer;
 
-        /// <summary>
-        ///     constructor; initialize member data
-        /// </summary>
-        /// <param name="dataBuffer"></param>
         public CreateComplexAreaReinForm(AreaReinData dataBuffer)
         {
             InitializeComponent();
@@ -24,21 +17,11 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             m_dataBuffer = dataBuffer;
         }
 
-        /// <summary>
-        ///     bind data to controls
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void CreateComplexAreaReinForm_Load(object sender, EventArgs e)
         {
             layoutRuleComboBox.DataSource = Enum.GetNames(typeof(LayoutRules));
         }
 
-        /// <summary>
-        ///     to create
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             m_dataBuffer.LayoutRule = (LayoutRules)Enum.Parse(typeof(LayoutRules),
@@ -46,11 +29,6 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             DialogResult = DialogResult.OK;
         }
 
-        /// <summary>
-        ///     cancel the command
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

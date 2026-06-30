@@ -8,36 +8,16 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Data class which stores the main information for exporting dxf format
-    /// </summary>
     public class ExportDxfData : ExportDataWithViews
     {
-        /// <summary>
-        ///     List of Autodesk.Revit.DB.ACADVersion defined in Revit
-        /// </summary>
         private List<ACADVersion> m_enumFileVersion;
 
-        /// <summary>
-        ///     File version option to export
-        /// </summary>
         private ACADVersion m_exportFileVersion;
 
-        /// <summary>
-        ///     Data class ExportOptionsData
-        /// </summary>
         private ExportBaseOptionsData m_exportOptionsData;
 
-        /// <summary>
-        ///     String list of AutoCAD versions
-        /// </summary>
         private List<string> m_fileVersion;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
-        /// <param name="exportFormat">Format to export</param>
         public ExportDxfData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
@@ -46,38 +26,23 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Initialize();
         }
 
-        /// <summary>
-        ///     Data class ExportOptionsData
-        /// </summary>
         public ExportBaseOptionsData ExportOptionsData
         {
             get => m_exportOptionsData;
             set => m_exportOptionsData = value;
         }
 
-        /// <summary>
-        ///     String collection of AutoCAD versions
-        /// </summary>
         public ReadOnlyCollection<string> FileVersion => new ReadOnlyCollection<string>(m_fileVersion);
 
-        /// <summary>
-        ///     Collection of Autodesk.Revit.DB.ACADVersion defined in Revit
-        /// </summary>
         public ReadOnlyCollection<ACADVersion> EnumFileVersion =>
             new ReadOnlyCollection<ACADVersion>(m_enumFileVersion);
 
-        /// <summary>
-        ///     File version option to export
-        /// </summary>
         public ACADVersion ExportFileVersion
         {
             get => m_exportFileVersion;
             set => m_exportFileVersion = value;
         }
 
-        /// <summary>
-        ///     Initialize the variables
-        /// </summary>
         private void Initialize()
         {
             //AutoCAD versions
@@ -100,10 +65,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Title = "Export DXF";
         }
 
-        /// <summary>
-        ///     Collect the parameters and export
-        /// </summary>
-        /// <returns></returns>
         public override bool Export()
         {
             base.Export();

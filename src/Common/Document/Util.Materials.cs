@@ -28,9 +28,6 @@ namespace BuildingCoder
     {
         #region Consolidated material helpers
 
-        /// <summary>
-        ///     Return a filtered element collector for materials.
-        /// </summary>
         internal static FilteredElementCollector FilterForMaterials(
             Document doc)
         {
@@ -38,9 +35,6 @@ namespace BuildingCoder
                 .OfClass(typeof(Material));
         }
 
-        /// <summary>
-        ///     Replacement for deprecated Face.MaterialElement.
-        /// </summary>
         internal static string FaceMaterialName(
             Document doc,
             Face face)
@@ -50,9 +44,6 @@ namespace BuildingCoder
             return m.Name;
         }
 
-        /// <summary>
-        ///     Return family instance element material.
-        /// </summary>
         public static Material GetFamilyInstanceMaterial(
             Document doc,
             FamilyInstance fi)
@@ -96,9 +87,6 @@ namespace BuildingCoder
             return material;
         }
 
-        /// <summary>
-        ///     Return materials by recursively traversing geometry solids.
-        /// </summary>
         public static List<string> GetMaterialsFromGeometry(
             Document doc,
             GeometryElement geo)

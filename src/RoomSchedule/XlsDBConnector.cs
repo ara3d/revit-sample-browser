@@ -25,13 +25,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         // All available tables(work sheets) in xls data source
         private readonly List<string> m_tables = new List<string>();
 
-        /// <summary>
-        ///     Class constructor, to retrieve data from .xls data source
-        /// </summary>
-        /// <param name="strXlsFile">
-        ///     The .xls file to be connected.
-        ///     This file should exist and it can be writable.
-        /// </param>
         public XlsDbConnector(string strXlsFile)
         {
             // Validate the specified
@@ -70,15 +63,11 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             Dispose();
         }
 
-        /// <summary>
-        ///     Get all available table names from .xls data source
-        /// </summary>
         public List<string> RetrieveAllTables()
         {
             // clear the old tables list firstly 
             m_tables.Clear();
 
-            // get all table names from data source
             var schemaTable = (DataTable)Invoke(m_objConn, "GetOleDbSchemaTable",
                 OleDbSchemaTables, new object[] { null, null, null, "TABLE" });
             for (var i = 0; i < schemaTable.Rows.Count; i++)
@@ -94,7 +83,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         /// <returns>The generated DataTable from work sheet</returns>
         public DataTable GenDataTable(string tableName)
         {
-            // Get all data via command and then fill data to table
             var strCom = $"Select * From [{tableName}$]";
             var myCommand = CreateOleDbDataAdapter(strCom, m_objConn);
             var myDataSet = new DataSet();
@@ -102,7 +90,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
             try
             {
-                // check to see whether the constant columns(defined in RoomsData class) exist in spread sheet.
                 // These columns are necessary when updating spread sheet
 
                 // define a flag variable to remember whether column is found
@@ -121,10 +108,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 var duplicateColumns = string.Empty;
                 for (var i = 0; i < myDataSet.Tables[0].Columns.Count; i++)
                 {
-                    // get each column and check it
                     var columnName = myDataSet.Tables[0].Columns[i].ColumnName;
 
-                    // check whether there are expected columns one by one
                     for (var col = 0; col < bHasColumn.Length; col++)
                     {
                         var bDupliate = CheckSameColName(columnName, constantNames[col]);
@@ -139,7 +124,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                     }
                 }
 
-                // check to see whether there are duplicate columns
                 if (duplicateColumns.Length > 0)
                 {
                     // duplicate columns are not allowed
@@ -147,13 +131,11 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                     throw new Exception(message);
                 }
 
-                // check whether all required columns are there.
                 var missingColumns = string.Empty; // reserve all column names which are missing.
                 for (var col = 0; col < bHasColumn.Length; col++)
                     if (bHasColumn[col] == false)
                         missingColumns += $"[{constantNames[col]}], ";
 
-                // check to see whether any required columns are missing.
                 if (missingColumns.Length != 0)
                 {
                     // some columns are missing, pop up these column names
@@ -190,13 +172,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
         }
 
-        /// <summary>
-        ///     This method will validate and update attributes the specified file.
-        ///     The file should exist and it should have writable attribute.
-        ///     If it's readonly, this method will try to set the attribute to writable.
-        /// </summary>
-        /// <param name="strFile"></param>
-        /// <returns></returns>
         private bool ValidateFile(string strFile)
         {
             // exists check
@@ -207,12 +182,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             return FileAttributes.Normal == File.GetAttributes(strFile);
         }
 
-        /// <summary>
-        ///     Check if two columns names are the same
-        /// </summary>
-        /// <param name="baseName">first name</param>
-        /// <param name="compName">second name</param>
-        /// <returns>true, the two names are same; false, they are different.</returns>
         private static bool CheckSameColName(string baseName, string compName)
         {
             return string.Compare(baseName, compName) == 0;

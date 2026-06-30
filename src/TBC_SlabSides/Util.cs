@@ -7,15 +7,9 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SlabSides sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Determine the vertical boundary faces
-        ///     of a given "horizontal" solid object
-        ///     such as a floor slab. Currently only
-        ///     supports planar and cylindrical faces.
-        /// </summary>
+        // Only planar and cylindrical faces are supported.
         public static void GetSideFaces(
             List<Face> verticalFaces,
             Solid solid)

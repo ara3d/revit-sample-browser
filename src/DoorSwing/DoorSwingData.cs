@@ -8,26 +8,17 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
-    /// <summary>
-    ///     Stores all the needed data and operates RevitAPI.
-    /// </summary>
     public class DoorSwingData
     {
-        // store door-opening types: user to decide how he wants to identify 
         // the Left, Right or others information.
         public static readonly List<string> OpeningTypes = new List<string>();
 
-        // store current project's door families.
 
         private readonly UIApplication m_app;
         private readonly List<DoorFamily> m_doorFamilies = new List<DoorFamily>();
 
-        /// <summary>
-        ///     fill OpeningTypes static member variable.
-        /// </summary>
         static DoorSwingData()
         {
-            // fill door's opening types. User can modify the DoorSwingResource according to 
             // how he wants to identify the Left, Right or others opening information.
             OpeningTypes.Clear();
 
@@ -41,37 +32,18 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             OpeningTypes.Add(DoorSwingResource.TwoLeafActiveLeafRight);
         }
 
-        /// <summary>
-        ///     constructor.
-        /// </summary>
-        /// <param name="app"> Revit application</param>
         public DoorSwingData(UIApplication app)
         {
             m_app = app;
 
-            // store door families in m_doorFamilies.
             PrepareDoorFamilies();
 
-            // add needed shared parameters
             // if the parameters already added will not add again.
             ParameterAccess.AddSharedParameters(app);
         }
 
-        // retrieves door families.
         public List<DoorFamily> DoorFamilies => m_doorFamilies;
 
-        /// <summary>
-        ///     update door instances information: Left/Right information, related rooms information.
-        /// </summary>
-        /// <param name="creFilter">One element filter utility object.</param>
-        /// <param name="doc">Revit project.</param>
-        /// <param name="onlyUpdateSelect">
-        ///     true means only update selected doors' information otherwise false.
-        /// </param>
-        /// <param name="showUpdateResultMessage">
-        ///     this parameter is used for invoking this method in Application's events (document save and document saveAs).
-        ///     update door infos in Application level events should not show unnecessary messageBox.
-        /// </param>
         public static Result UpdateDoorsInfo(Document doc, bool onlyUpdateSelect,
             bool showUpdateResultMessage, ref string message)
         {
@@ -169,14 +141,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Doors related rooms: update doors' geometry according to its To/From room information.
-        /// </summary>
-        /// <param name="creFilter">One element filter utility object.</param>
-        /// <param name="doc">Revit project.</param>
-        /// <param name="onlyUpdateSelect">
-        ///     true means only update selected doors' information else false.
-        /// </param>
         public static void UpdateDoorsGeometry(Document doc, bool onlyUpdateSelect)
         {
             IEnumerator iter;
@@ -229,10 +193,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                 TaskDialog.Show("Door Swing", $"Updated all doors of this project ({doorCount} doors).");
         }
 
-        /// <summary>
-        ///     Update doors' Left/Right information.
-        /// </summary>
-        /// <param name="door">one door instance.</param>
         private static Result UpdateOpeningFeatureOfOneDoor(FamilyInstance door)
         {
             // flag whether the opening value should switch from its corresponding family's basic opening value.
@@ -280,13 +240,8 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Update one door's internalDoor flag which indicates the door is public door or external door.
-        /// </summary>
-        /// <param name="door">one door instance.</param>
         private static void UpdateInternalDoorFlagFeatureofOneDoor(FamilyInstance door)
         {
-            // get the "public Door" shared parameter. 
             var internalDoorFlagParam = door.ParametersMap.get_Item("public Door");
 
             // "public Door" is decided based on whether door's ToRoom and FromRoom properties both have values.
@@ -297,18 +252,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                 internalDoorFlagParam.Set(0); // considered as external door.
         }
 
-        /// <summary>
-        ///     Doors related rooms: update one door's To/From room information or geometry.
-        /// </summary>
-        /// <param name="door">one door instance.</param>
-        /// <param name="updateGeo">
-        ///     true means update geometry else update To/From room information.
-        /// </param>
         private static void UpdateFromToRoomofOneDoor(FamilyInstance door, bool updateGeo)
         {
             if (null == door.ToRoom && null == door.FromRoom) return;
 
-            // update the door's geometry according to door's To/From room info.
             // standard: door.ToRoom should keep consistent with door.Room else need update.
             if (null == door.Room && null == door.FromRoom)
             {
@@ -342,11 +289,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
         }
 
-        /// <summary>
-        ///     Iterate through plan topology to determine if all plan circuits have assigned rooms.
-        /// </summary>
-        /// <param name="doc">Revit project.</param>
-        /// <returns> true means all plan circuits have assigned rooms else not.</returns>
         private static bool AssignedAllRooms(Document doc)
         {
             var planTopologies = doc.PlanTopologies;
@@ -370,9 +312,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             return true;
         }
 
-        /// <summary>
-        ///     Do Door symbols' Opening set based on family's basic geometry and country's standard.
-        /// </summary>
         public void UpdateDoorFamiliesOpeningFeature()
         {
             foreach (var doorFamily in DoorFamilies)
@@ -381,10 +320,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
         }
 
-        /// <summary>
-        ///     Delete temporarily created door instances which are used to retrieve geometry. Retrieved
-        ///     geometry will shown to users. So they can initialize door opening parameter more visually.
-        /// </summary>
         public void DeleteTempDoorInstances()
         {
             foreach (var doorFamily in DoorFamilies)
@@ -393,10 +328,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
         }
 
-        /// <summary>
-        ///     get all the door families in the project.
-        ///     And store them in two lists separately based on opening parameter.
-        /// </summary>
         private void PrepareDoorFamilies()
         {
             // prepare DoorFamilies
@@ -417,7 +348,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                 // create one instance of self class DoorFamily.
                 var tempDoorFamily = new DoorFamily(doorFamily, m_app);
 
-                // store the created DoorFamily instance
                 DoorFamilies.Add(tempDoorFamily);
             }
         }

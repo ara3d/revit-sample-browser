@@ -10,41 +10,16 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
 {
-    /// <summary>
-    ///     Sort parameters' order in families which are loaded into a project or a family:
-    ///     <list type="bullet">
-    ///         <item>
-    ///             "A–>Z" button will update parameters in each loaded family to alphabet order then reload the family to
-    ///             project.
-    ///         </item>
-    ///         <item>
-    ///             "Z–>A" button will update parameters in each loaded family to reverse alphabet order then reload the
-    ///             family to project.
-    ///         </item>
-    ///         <item>"Close" button will close the whole dialog.</item>
-    ///     </list>
-    /// </summary>
     public partial class SortLoadedFamiliesParamsForm : Form
     {
-        /// <summary>
-        ///     Document whose loaded families parameters' order want to be sort.
-        /// </summary>
         private readonly Document m_currentDoc;
 
-        /// <summary>
-        ///     Construct with a Document.
-        /// </summary>
-        /// <param name="currentDoc"></param>
         public SortLoadedFamiliesParamsForm(Document currentDoc)
         {
             m_currentDoc = currentDoc;
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Sort parameters of families which have been loaded into a project.
-        /// </summary>
-        /// <param name="order">Ascending or Descending</param>
         private void SortParameters(ParametersOrder order)
         {
             try
@@ -52,7 +27,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
                 var coll = new FilteredElementCollector(m_currentDoc);
                 var families = coll.OfClass(typeof(Family)).ToElements();
 
-                // Edit each family->sort parameters order->save to a new file->load back to the document.
                 var count = 0;
                 foreach (Family fam in families)
                 {
@@ -96,31 +70,16 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
             }
         }
 
-        /// <summary>
-        ///     Sort families parameters with ascending.
-        /// </summary>
-        /// <param name="sender">Not used.</param>
-        /// <param name="e">Not used.</param>
         private void A_ZBtn_Click(object sender, EventArgs e)
         {
             SortParameters(ParametersOrder.Ascending);
         }
 
-        /// <summary>
-        ///     Sort families parameters with descending.
-        /// </summary>
-        /// <param name="sender">Not used.</param>
-        /// <param name="e">Not used.</param>
         private void Z_ABtn_Click(object sender, EventArgs e)
         {
             SortParameters(ParametersOrder.Descending);
         }
 
-        /// <summary>
-        ///     Close this dialog.
-        /// </summary>
-        /// <param name="sender">Not used.</param>
-        /// <param name="e">Not used.</param>
         private void closeBtn_Click(object sender, EventArgs e)
         {
             Close();

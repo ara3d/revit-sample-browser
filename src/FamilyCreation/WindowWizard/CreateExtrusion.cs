@@ -8,31 +8,12 @@ using Document = Autodesk.Revit.DB.Document;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
-    /// <summary>
-    ///     The class is used to create solid extrusion
-    /// </summary>
     public class CreateExtrusion
     {
-        /// <summary>
-        ///     store the application of creation
-        /// </summary>
         private readonly Application m_appCreator;
-
-        /// <summary>
-        ///     store the document
-        /// </summary>
         private readonly Document m_document;
-
-        /// <summary>
-        ///     store the FamilyItemFactory of creation
-        /// </summary>
         private readonly FamilyItemFactory m_familyCreator;
 
-        /// <summary>
-        ///     The constructor of CreateExtrusion
-        /// </summary>
-        /// <param name="app">the application</param>
-        /// <param name="doc">the document</param>
         public CreateExtrusion(Autodesk.Revit.ApplicationServices.Application app, Document doc)
         {
             m_document = doc;
@@ -40,15 +21,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_familyCreator = doc.FamilyCreate;
         }
 
-        /// <summary>
-        ///     The method is used to create a CurveArray with four double parameters and one y coordinate value
-        /// </summary>
-        /// <param name="left">the left value</param>
-        /// <param name="right">the right value</param>
-        /// <param name="top">the top value</param>
-        /// <param name="bottom">the bottom value</param>
-        /// <param name="y_coordinate">the y_coordinate value</param>
-        /// <returns>CurveArray</returns>
         public CurveArray CreateRectangle(double left, double right, double top, double bottom, double yCoordinate)
         {
             var curveArray = m_appCreator.NewCurveArray();
@@ -75,12 +47,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             }
         }
 
-        /// <summary>
-        ///     The method is used to create a CurveArray along to an origin CurveArray and an offset value
-        /// </summary>
-        /// <param name="origin">the original CurveArray</param>
-        /// <param name="offset">the offset value</param>
-        /// <returns>CurveArray</returns>
         public CurveArray CreateCurveArrayByOffset(CurveArray origin, double offset)
         {
             var counter = 0;
@@ -89,7 +55,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var offsetz = new XYZ(0, 0, offset);
             var p0 = new XYZ();
             var p1 = new XYZ();
-            ;
             var p2 = new XYZ();
             var p3 = new XYZ();
             foreach (Curve curve in origin)
@@ -128,14 +93,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             return curveArr;
         }
 
-        /// <summary>
-        ///     The method is used to create extrusion using FamilyItemFactory.NewExtrusion()
-        /// </summary>
-        /// <param name="curveArrArray">the CurveArrArray parameter</param>
-        /// <param name="workPlane">the reference plane is used to create SketchPlane</param>
-        /// <param name="startOffset">the extrusion's StartOffset property</param>
-        /// <param name="endOffset">the extrusion's EndOffset property</param>
-        /// <returns>the new extrusion</returns>
         public Extrusion NewExtrusion(CurveArrArray curveArrArray, Autodesk.Revit.DB.ReferencePlane workPlane,
             double startOffset, double endOffset)
         {

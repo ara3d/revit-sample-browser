@@ -40,10 +40,6 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         Bottom
     }
 
-    /// <summary>
-    ///     This class used as PropertyGrid.SelectedObject.
-    ///     It stores parameters of path reinforcement.
-    /// </summary>
     [DefaultProperty("NumberOfBars")]
     public class PathReinProperties
     {
@@ -52,24 +48,12 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         /// </summary>
         public delegate void UpdateSelectObjEventHandler();
 
-        /// <summary>
-        ///     bar spacing
-        /// </summary>
         private string m_barSpacing;
 
-        /// <summary>
-        ///     face parameter
-        /// </summary>
         private Face m_face;
 
-        /// <summary>
-        ///     layout rule
-        /// </summary>
         private LayoutRule m_layoutRule;
 
-        /// <summary>
-        ///     number of bars
-        /// </summary>
         private int m_numberOfBars;
 
         /// <summary>
@@ -77,20 +61,10 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         /// </summary>
         protected readonly Autodesk.Revit.DB.Structure.PathReinforcement PathRein;
 
-        /// <summary>
-        ///     primary bar length
-        /// </summary>
         private string m_primaryBarLength;
 
-        /// <summary>
-        ///     primary bar type
-        /// </summary>
         private ElementId m_primaryBarType;
 
-        /// <summary>
-        ///     constructor of class
-        /// </summary>
-        /// <param name="pathRein"></param>
         public PathReinProperties(Autodesk.Revit.DB.Structure.PathReinforcement pathRein)
         {
             PathRein = pathRein;
@@ -135,8 +109,6 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                 switch (m_layoutRule)
                 {
                     // set BarSpacing and NumberOfBars readonly dynamically when:
-                    // When set LayoutRule to "Fixed Number", BarSpacing should be read only
-                    // When set to "Maximum Spacing", Number Of Bars should be read only
                     case LayoutRule.FixedNumber:
                         SetPropertyReadOnly("BarSpacing", true);
                         SetPropertyReadOnly("NumberOfBars", false);
@@ -206,9 +178,6 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             set => m_face = value;
         }
 
-        /// <summary>
-        ///     my event object of updating event
-        /// </summary>
         public event UpdateSelectObjEventHandler UpdateSelectObjEvent;
 
         /// <summary>
@@ -256,11 +225,6 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             }
         }
 
-        /// <summary>
-        ///     Get parameter by given name.
-        /// </summary>
-        /// <param name="name">name of parameter</param>
-        /// <returns>parameter whose definition name is the given name.</returns>
         protected Parameter GetParameter(string name)
         {
             foreach (Parameter para in PathRein.Parameters)

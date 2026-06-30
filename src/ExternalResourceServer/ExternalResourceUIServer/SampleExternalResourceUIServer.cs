@@ -15,76 +15,43 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
         private static readonly Guid MyServerId = new Guid("E9B6C194-62DE-4134-900D-BA8DF7AD33FA");
         private static readonly Guid MyDbServerId = new Guid("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");
 
-        // Methods that must be implemented by a server for any of Revit's external services
-        /// <summary>
-        ///     Return the Id of the server.
-        /// </summary>
         public Guid GetServerId()
         {
             return MyServerId;
         }
 
-        /// <summary>
-        ///     Return the Id of the service that the server belongs to.
-        /// </summary>
         public ExternalServiceId GetServiceId()
         {
             return ExternalServices.BuiltInExternalServices.ExternalResourceUIService;
         }
 
-        /// <summary>
-        ///     Return the server's name.
-        /// </summary>
         public string GetName()
         {
             return "SDK Sample ExtRes UI Server";
         }
 
-        /// <summary>
-        ///     Return the server's vendor Id.
-        /// </summary>
         public string GetVendorId()
         {
             return "ADSK";
         }
 
-        /// <summary>
-        ///     Return the description of the server.
-        /// </summary>
         public string GetDescription()
         {
             return "Simple UI server for the Revit SDK sample external resource server";
         }
 
-        /// <summary>
-        ///     Return the Id of the related DB server.
-        /// </summary>
         public Guid GetDBServerId()
         {
             return MyDbServerId;
         }
 
-        /// <summary>
-        ///     Reports the results of loads from the DB server (SampleExternalResourceServer).
-        ///     This method should be implemented to provide UI to communicate success or failure
-        ///     of a particular external resource load operation to the user.
-        /// </summary>
-        /// <param name="doc">
-        ///     The Revit model into which the External Resource was loaded.
-        /// </param>
-        /// <param name="loadDataList">
-        ///     Contains a list of ExternalResourceLoadData with results
-        ///     for all external resources loaded by the DB server.  It is possible for the DB server
-        ///     to have loaded more than one resource (for example, loading several linked files
-        ///     when a host file is opened by the user).
-        /// </param>
+        /// <summary>Reports load results from the paired DB server to the user.</summary>
         public void HandleLoadResourceResults(Document doc, IList<ExternalResourceLoadData> loadDataList)
         {
             foreach (var data in loadDataList)
             {
                 var resourceType = data.ExternalResourceType;
 
-                // This message will be posted in a dialog box at the end of this method.
                 var myMessage = string.Empty;
 
                 var loadContext = data.GetLoadContext();
@@ -154,8 +121,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
                 if (!bUnrecognizedStatus &&
                     resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.RevitLink)
                 {
-                    // For Revit links, the UI server can also obtain a RevitLinkLoadResult which contains detailed
-                    // information about the status of the attempt to load the local copy of the link into Revit.
+                    // Revit links also expose LinkLoadResult with detailed load status.
                     var ldrlc = (LinkLoadContent)data.GetLoadContent();
                     var loadResult = ldrlc.GetLinkLoadResult();
                     if (loadResult != null)
@@ -166,11 +132,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
             }
         }
 
-        /// <summary>
-        ///     Use this method to report any problems that occurred while the user was browsing for External Resources.
-        ///     Revit will call this method each time the end user browses to a new folder location, or selects an item
-        ///     and clicks Open.
-        /// </summary>
+        /// <summary>Reports browse failures; detailed errors may be read from the DB server.</summary>
         public void HandleBrowseResult(ExternalResourceUIBrowseResultType resultType, string browsingItemPath)
         {
             if (resultType == ExternalResourceUIBrowseResultType.Success)
@@ -178,9 +140,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
 
             var resultString = resultType.ToString("g");
 
-            // While executing its SetupBrowserData() method, the "DB server" - SampleExternalResourceServer - can store
-            // detailed information about browse failures that occurred (user not logged in, network down, etc.).
-            // Subsequently, when Revit calls this method, the details can be read from the DB server and reported to the user.
             var externalResourceService =
                 ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.ExternalResourceService);
             if (externalResourceService == null)
@@ -194,7 +153,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
                 MessageBox.Show("Cannot get SampleExternalResourceDBServer from ExternalResourceService.");
                 return;
             }
-            // ... Retrieve detailed failure information from SampleExternalResourceServer here.
 
             var message = $"The browse result for <{browsingItemPath}> was: <{resultString}>.";
             MessageBox.Show(message);

@@ -6,9 +6,6 @@ using Autodesk.Revit.DB.Architecture;
 using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
 {
-    /// <summary>
-    ///     A configuration for creation of a landing with a fixed cross section.
-    /// </summary>
     public class StairsRectangleLandingComponent : IStairsLandingComponent
     {
         private readonly double m_elevation;
@@ -18,14 +15,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
         private readonly Line m_stairsRunBoundary2;
         private readonly double m_width;
 
-        /// <summary>
-        ///     Creates a new StairsRectangleLandingConfiguration.
-        /// </summary>
-        /// <param name="stairsRunBoundary1">The end curve of the lower stair run.</param>
-        /// <param name="stairsRunBoundary2">The start curve of the higher stair run.</param>
-        /// <param name="runDirection">A vector representing the direction of the lower stair run.</param>
-        /// <param name="elevation">The elevation of the landing.</param>
-        /// <param name="width">The width of the landing.</param>
         public StairsRectangleLandingComponent(Line stairsRunBoundary1, Line stairsRunBoundary2, XYZ runDirection,
             double elevation, double width)
         {
@@ -38,9 +27,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
             m_elevation = elevation;
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public CurveLoop GetLandingBoundary()
         {
             // TODO : What if not collinear 
@@ -56,9 +42,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
             return curveLoop;
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public double GetLandingBaseElevation() => m_elevation;
 
         public StairsLanding CreateLanding(Document document, ElementId stairsElementId) =>

@@ -35,10 +35,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
         private readonly UIApplication m_revit; // Store the reference of the application in revit
         private readonly List<SketchPlane> m_sketchArray; // Store the SketchPlane references
 
-        /// <summary>
-        ///     The default constructor
-        /// </summary>
-        /// <param name="revit">The reference of the application in revit</param>
         public ModelLines(UIApplication revit)
         {
             // Store the reference of the application for further use.
@@ -175,11 +171,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             }
         }
 
-        /// <summary>
-        ///     Create a new sketch plane which all model lines are placed on.
-        /// </summary>
-        /// <param name="normal"></param>
-        /// <param name="origin"></param>
         public void CreateSketchPlane(XYZ normal, XYZ origin)
         {
             try
@@ -202,12 +193,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             }
         }
 
-        /// <summary>
-        ///     Create the line(ModelLine)
-        /// </summary>
-        /// <param name="sketchId">the id of the sketch plane</param>
-        /// <param name="startPoint">the start point of the line</param>
-        /// <param name="endPoint">the end point of the line</param>
         public void CreateLine(ElementId sketchId, XYZ startPoint, XYZ endPoint)
         {
             try
@@ -237,13 +222,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             }
         }
 
-        /// <summary>
-        ///     Create the arc(ModelArc)
-        /// </summary>
-        /// <param name="sketchId">the id of the sketch plane</param>
-        /// <param name="startPoint">the start point of the arc</param>
-        /// <param name="endPoint">the end point of the arc</param>
-        /// <param name="thirdPoint">the third point which is on the arc</param>
         public void CreateArc(ElementId sketchId, XYZ startPoint, XYZ endPoint, XYZ thirdPoint)
         {
             try
@@ -275,12 +253,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             }
         }
 
-        /// <summary>
-        ///     Create other lines, including Ellipse, HermiteSpline and NurbSpline
-        /// </summary>
-        /// <param name="sketchId">the id of the sketch plane</param>
-        /// <param name="elementId">the element id which copy the curve from</param>
-        /// <param name="offsetPoint">the offset direction from the copied line</param>
         public void CreateOthers(ElementId sketchId, ElementId elementId, XYZ offsetPoint)
         {
             // First get the sketch plane by the giving element id.
@@ -370,9 +342,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             }
         }
 
-        /// <summary>
-        ///     Get all sketch planes in revit
-        /// </summary>
         private void GetSketchPlane()
         {
             // Search all elements in current document and find all sketch planes

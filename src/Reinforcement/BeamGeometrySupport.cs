@@ -20,11 +20,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         private readonly double m_beamLength; //the length of the beam
         private readonly double m_beamWidth; //the width of the beam
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="element">the beam which the rebars are placed on</param>
-        /// <param name="geoOptions">the geometry option</param>
         public BeamGeometrySupport(FamilyInstance element, Options geoOptions)
             : base(element, geoOptions)
         {
@@ -32,7 +27,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             if (!element.StructuralType.Equals(StructuralType.Beam))
                 throw new Exception("BeamGeometrySupport can only work for beam instance.");
 
-            // Get the length, width and height of the beam.
             m_beamLength = GetDrivingLineLength();
             m_beamWidth = GetBeamWidth();
             m_beamHeight = GetBeamHeight();
@@ -84,7 +78,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 
             // offset the start point according startPointOffset
             startPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, startPointOffset);
-            // get the coordinate of endpoint 
             var endPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, rebarLength);
             IList<Curve> curves = new List<Curve>
             {
@@ -98,10 +91,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
 
-        /// <summary>
-        ///     Get the geometry information of bottom rebar
-        /// </summary>
-        /// <returns>the gotten geometry information</returns>
         public RebarGeometry GetBottomRebar()
         {
             // sort the points of the swept profile
@@ -120,8 +109,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 
             // Get the curve which define the shape of the bottom rebar curve
             var movedPoints = OffsetPoints(offset);
-            var startPoint = movedPoints[0]; //get the coordinate of startpoint 
-            //get the coordinate of endpoint  
+            var startPoint = movedPoints[0];
             var endPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, m_beamLength);
 
             IList<Curve> curves = new List<Curve>
@@ -202,10 +190,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
 
-        /// <summary>
-        ///     Get the down direction, which stand for the top hook direction
-        /// </summary>
-        /// <returns>the down direction</returns>
         public XYZ GetDownDirection()
         {
             var comparer = new XyzHeightComparer();
@@ -218,10 +202,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             return directions[0];
         }
 
-        /// <summary>
-        ///     Get the width of the beam
-        /// </summary>
-        /// <returns>the width data</returns>
         private double GetBeamWidth()
         {
             var comparer = new XyzHeightComparer();
@@ -234,10 +214,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             return XyzMath.GetLength(directions[0]);
         }
 
-        /// <summary>
-        ///     Get the height of the beam
-        /// </summary>
-        /// <returns>the height data</returns>
         private double GetBeamHeight()
         {
             var comparer = new XyzHeightComparer();

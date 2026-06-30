@@ -29,12 +29,6 @@ namespace BuildingCoder
         #region Default Workset Names
         // Shared by Julian Wandzilak in the Revit API discussion thread
         // https://forums.autodesk.com/t5/revit-api-forum/doc-enableworksharing-amp-language-versions/m-p/11845252#M70159
-        /// <summary>
-        /// Return default workset names 
-        /// for all languages supported by Revit
-        /// </summary>
-        /// <param name="sLanguage">`app.Language.ToString()`</param>
-        /// <returns>`false` if no valid language input argument provided, else `true`</returns>
         static bool GetDefaultWorksetNames(
             string sLanguage, 
             out string wsnLevelsAndGrids, 

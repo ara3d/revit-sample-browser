@@ -8,17 +8,11 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Massing.DividedSurfaceByIntersects.CS
 {
-    /// <summary>
-    ///     the entry point of the sample
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        ///     The active Revit document
-        /// </summary>
         private Document m_document;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -98,12 +92,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.DividedSurfaceByIntersects.CS
             yield return new ElementId(31395L);
         }
 
-        /// <summary>
-        ///     Get element by its Id
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="eid"></param>
-        /// <returns></returns>
         public T GetElement<T>(long eid) where T : Element
         {
             return m_document.GetElement(new ElementId(eid)) as T;

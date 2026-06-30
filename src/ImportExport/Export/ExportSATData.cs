@@ -8,60 +8,31 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Data class which stores the main information for exporting dxf format
-    /// </summary>
     public class ExportSatData : ExportDataWithViews
     {
-        /// <summary>
-        ///     List of Autodesk.Revit.DB.ACADVersion defined in Revit
-        /// </summary>
         private List<ACADVersion> m_enumFileVersion;
 
-        /// <summary>
-        ///     File version option to export
-        /// </summary>
         private ACADVersion m_exportFileVersion;
 
-        /// <summary>
-        ///     String list of AutoCAD versions
-        /// </summary>
         private List<string> m_fileVersion;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
-        /// <param name="exportFormat">Format to export</param>
         public ExportSatData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
             Initialize();
         }
 
-        /// <summary>
-        ///     String collection of AutoCAD versions
-        /// </summary>
         public ReadOnlyCollection<string> FileVersion => new ReadOnlyCollection<string>(m_fileVersion);
 
-        /// <summary>
-        ///     Collection of Autodesk.Revit.DB.ACADVersion defined in Revit
-        /// </summary>
         public ReadOnlyCollection<ACADVersion> EnumFileVersion =>
             new ReadOnlyCollection<ACADVersion>(m_enumFileVersion);
 
-        /// <summary>
-        ///     File version option to export
-        /// </summary>
         public ACADVersion ExportFileVersion
         {
             get => m_exportFileVersion;
             set => m_exportFileVersion = value;
         }
 
-        /// <summary>
-        ///     Initialize the variables
-        /// </summary>
         private void Initialize()
         {
             //AutoCAD versions
@@ -84,10 +55,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Title = "Export SAT";
         }
 
-        /// <summary>
-        ///     Collect the parameters and export
-        /// </summary>
-        /// <returns></returns>
         public override bool Export()
         {
             base.Export();

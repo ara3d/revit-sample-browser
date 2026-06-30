@@ -44,9 +44,6 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
         /// </summary>
         private readonly Document m_rvtDoc;
 
-        /// <summary>
-        ///     Default constructor.
-        /// </summary>
         public NewRebarShapeForm()
         {
             InitializeComponent();
@@ -70,34 +67,18 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
         /// </summary>
         public bool NeedSetHooks => useHooksCheckBox.Checked;
 
-        /// <summary>
-        ///     Return start hook angle.
-        /// </summary>
         public int StartHookAngle => int.Parse(startHookAngleComboBox.Text);
 
-        /// <summary>
-        ///     Return end hook angle.
-        /// </summary>
         public int EndHookAngle => int.Parse(endHookAngleComboBox.Text);
 
-        /// <summary>
-        ///     Return start hook orientation.
-        /// </summary>
         public RebarHookOrientation StartHookOrientation =>
             (RebarHookOrientation)Enum.Parse(
                 typeof(RebarHookOrientation), startHookOrientationComboBox.Text);
 
-        /// <summary>
-        ///     Return end hook orientation.
-        /// </summary>
         public RebarHookOrientation EndHookOrientation =>
             (RebarHookOrientation)Enum.Parse(
                 typeof(RebarHookOrientation), endHookOrientationcomboBox.Text);
 
-        /// <summary>
-        ///     Get a definition group if there exists one, otherwise, a new one will be created.
-        /// </summary>
-        /// <returns>Definition group</returns>
         private DefinitionGroup GetOrCreateDefinitionGroup()
         {
             DefinitionFile file = null;

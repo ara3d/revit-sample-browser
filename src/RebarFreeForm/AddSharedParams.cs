@@ -12,21 +12,12 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
     [Regeneration(RegenerationOption.Manual)]
     public class AddSharedParams : IExternalCommand
     {
-        /// <summary>
-        ///     Updated: is used to start the regeneration
-        /// </summary>
+        /// <summary>Shared param toggled to force free-form rebar regeneration when the linked curve changes.</summary>
         public static readonly string ParamName = "Updated";
 
-        /// <summary>
-        ///     CurveElementId: is used to store the id of a model curve
-        /// </summary>
+        /// <summary>Stores the linked model curve ElementId as a string (ElementId is 64-bit).</summary>
         public static readonly string CurveIdName = "CurveElementId";
 
-        /// <summary>
-        ///     Add two shared parameters to the rebar category instance elements:
-        ///     Updated: is used to start the regeneration
-        ///     CurveElementId: is used to store the id of a model curve
-        /// </summary>
         public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try

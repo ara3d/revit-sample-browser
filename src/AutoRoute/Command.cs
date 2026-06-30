@@ -14,78 +14,35 @@ using GXYZ = Autodesk.Revit.DB.XYZ;
 
 namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
 {
-    /// <summary>
-    ///     route a set of ducts and fittings between a base air supply equipment and 2 terminals.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        ///     Minimum length of a fitting
-        /// </summary>
         private const double Min1FittingLength = 1;
 
-        /// <summary>
-        ///     Minimum length of a duct
-        /// </summary>
         private const double MinDuctLength = 0.5;
 
-        /// <summary>
-        ///     The vertical offset of the highest connector to the trunk ducts
-        /// </summary>
         private const double VerticalTrunkOffset = 15;
 
-        /// <summary>
-        ///     Optional distance from trunk to the boundary of system bounding box
-        ///     used when failed to lay out ducts in the region of bounding box
-        /// </summary>
         private const double HorizontalOptionalTrunkOffset = 5;
 
-        /// <summary>
-        ///     Minimum length of 2 fittings
-        /// </summary>
         private const double Min2FittingsLength = Min1FittingLength * 2;
 
-        /// <summary>
-        ///     The minimum length of 1 duct with 2 fittings
-        /// </summary>
         private const double Min1Duct2FittingsLength = Min1FittingLength * 2 + MinDuctLength;
 
-        /// <summary>
-        ///     The revit application
-        /// </summary>
         private static Application _application;
 
-        /// <summary>
-        ///     The current document of the application
-        /// </summary>
         private static Document _document;
 
-        /// <summary>
-        ///     The type of the ducts in the system
-        /// </summary>
         private DuctType m_dtRectangle;
 
-        /// <summary>
-        ///     The type id of the duct
-        /// </summary>
         private readonly ElementId m_ductTypeId = new ElementId(139191L);
 
-        /// <summary>
-        ///     The level of the duct
-        /// </summary>
         private Level m_lvl;
 
-        /// <summary>
-        ///     The mechanical system that will be created
-        /// </summary>
         private MechanicalSystem m_mechanicalSystem;
 
-        /// <summary>
-        ///     The system type id of the duct
-        /// </summary>
         private ElementId m_systemTypeId = ElementId.InvalidElementId;
 
         public Result Execute(ExternalCommandData commandData, ref string message,
@@ -99,7 +56,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             Trace.Listeners.Clear();
             Trace.AutoFlush = true;
 
-            //get the system type id of the duct
             foreach (var type in _document.GetElements<MEPSystemType>())
             {
                 if (type.SystemClassification == MEPSystemClassification.SupplyAir)
@@ -129,7 +85,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 var connectors = new List<Connector>();
                 var baseConnectors = new List<Connector>();
 
-                //Get the connectors and bounding boxes
                 var ids = new List<ElementId>
                 {
                     new ElementId(378728L),
@@ -157,7 +112,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                     boxes[i] = instances[i].get_BoundingBox(_document.ActiveView);
                 }
 
-                //Find the "Out" and "SupplyAir" connector on the base equipment
                 csi = ConnectorInfo.GetConnectors(ids[0]).ForwardIterator();
                 while (csi.MoveNext())
                 {
@@ -166,7 +120,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                         conns[0] = conn;
                 }
 
-                //Create a mechanical system with a base air supply equipment and 2 terminals.
                 m_mechanicalSystem = CreateMechanicalSystem(
                     //[378728][SupplyAir][Out][RectProfile][OST_MechanicalEquipment]
                     new ConnectorInfo(new ElementId(378728L), conns[0].Origin.X, conns[0].Origin.Y, conns[0].Origin.Z),
@@ -182,7 +135,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                     DuctSystemType.SupplyAir
                 );
 
-                //Get the boundary of the system
                 var minX = conns[0].Origin.X;
                 var minY = conns[0].Origin.Y;
                 var maxX = conns[0].Origin.X;
@@ -202,16 +154,13 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                         maxZ = conns[i].Origin.Z;
                 }
 
-                //Calculate the optional values for the trunk ducts
                 var midX = (minX + maxX) / 2;
                 var midY = (minY + maxY) / 2;
                 var baseXValues = new double[3] { midX, (minX + midX) / 2, (maxX + midX) / 2 };
                 var baseYValues = new double[3] { midY, (minY + midY) / 2, (maxY + midY) / 2 };
 
-                //Get the duct type for the ducts to be created
                 m_dtRectangle = _document.GetElement(m_ductTypeId) as DuctType;
 
-                //Create the ducts and elbows that connect the base mechanical equipment
                 var connectorDirection = conns[0].CoordinateSystem.BasisZ;
 
                 if (0 == connectorDirection.DistanceTo(new GXYZ(-1, 0, 0)))
@@ -257,7 +206,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 _document.Create.NewElbowFitting(connectors[0], connectors[1]);
                 baseConnectors.Add(connectors[2]);
 
-                //Create the vertical ducts for terminals
                 points.Clear();
                 ducts.Clear();
 
@@ -270,7 +218,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 baseConnectors.Add(ConnectorInfo.GetConnector(ducts[0].Id, points[0]));
                 baseConnectors.Add(ConnectorInfo.GetConnector(ducts[1].Id, points[1]));
 
-                //Connect the system by creating the trunk line of ducts and connect them to the base connectors
                 SortConnectorsByX(baseConnectors);
                 foreach (var baseY in baseYValues)
                 {
@@ -341,28 +288,13 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             return retRes;
         }
 
-        /// <summary>
-        ///     Connect the system with a trunk line of ducts on X axis
-        /// </summary>
-        /// <param name="baseConnectors">
-        ///     the upper connectors of the vertical ducts that derived from the terminals and the base
-        ///     equipment
-        /// </param>
-        /// <param name="baseY">the y value of the trunk line</param>
-        /// <returns>
-        ///     true if the system can be connected
-        ///     false if the system cannot be connected
-        /// </returns>
         private bool ConnectSystemOnXAxis(List<Connector> baseConnectors, double baseY)
         {
-            //Check the count of the base connectors
             if (null == baseConnectors || 3 != baseConnectors.Count) return false;
             for (var i = 0; i < baseConnectors.Count; ++i)
             {
-                //Check the distance of the connector from the trunk
                 if (baseConnectors[i].Origin.Y != baseY &&
                     Math.Abs(baseConnectors[i].Origin.Y - baseY) < Min1Duct2FittingsLength) return false;
-                //Check the distance of the connectors on X axis
                 for (var j = i + 1; j < baseConnectors.Count; ++j)
                     if (baseConnectors[j].Origin.X != baseConnectors[i].Origin.X &&
                         baseConnectors[j].Origin.X - baseConnectors[i].Origin.X < Min2FittingsLength)
@@ -372,7 +304,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             try
             {
                 var baseZ = baseConnectors[0].Origin.Z + Min1FittingLength;
-                //Create the ducts and elbow fittings to connect the vertical ducts and the trunk ducts
                 var connectors = new List<Connector>();
 
                 if (baseConnectors[0].Origin.X == baseConnectors[1].Origin.X)
@@ -387,23 +318,18 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                     if (Math.Sign(baseConnectors[0].Origin.Y - baseY) * Math.Sign(baseConnectors[1].Origin.Y - baseY) ==
                         1) return false;
 
-                    //Create the trunk
                     connectors = CreateDuct(new GXYZ(baseConnectors[0].Origin.X + Min1FittingLength, baseY, baseZ),
                         new GXYZ(baseConnectors[2].Origin.X - Min1FittingLength, baseY, baseZ));
 
-                    //Create a tee fitting connecting the 1st and 2nd base connectors to the trunk
                     ConnectWithTeeFittingOnXAxis(baseConnectors[0], baseConnectors[1], connectors[0], true);
 
-                    //Create an elbow fitting connection the 3rd base connector to the trunk
                     ConnectWithElbowFittingOnXAxis(baseConnectors[2], connectors[1]);
                 }
                 else
                 {
-                    //Create the segment of duct on the trunk to be connected to the 1st base connector
                     connectors = CreateDuct(new GXYZ(baseConnectors[0].Origin.X + Min1FittingLength, baseY, baseZ),
                         new GXYZ(baseConnectors[1].Origin.X - Min1FittingLength, baseY, baseZ));
 
-                    //Create an elbow fitting connection the 1st base connector with the trunk
                     ConnectWithElbowFittingOnXAxis(baseConnectors[0], connectors[0]);
 
                     if (baseConnectors[1].Origin.X == baseConnectors[2].Origin.X)
@@ -411,7 +337,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                         //The 2nd and 3rd connectors are on the same side of the trunk
                         if (Math.Sign(baseConnectors[1].Origin.Y - baseY) *
                             Math.Sign(baseConnectors[2].Origin.Y - baseY) == 1) return false;
-                        //Create a tee fitting connecting the 2nd and 3rd base connectors to the trunk
                         ConnectWithTeeFittingOnXAxis(baseConnectors[1], baseConnectors[2], connectors[1], true);
                     }
                     else
@@ -419,9 +344,7 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                         connectors.AddRange(CreateDuct(
                             new GXYZ(baseConnectors[1].Origin.X + Min1FittingLength, baseY, baseZ),
                             new GXYZ(baseConnectors[2].Origin.X - Min1FittingLength, baseY, baseZ)));
-                        //Create a tee fitting connecting the 2nd base connector to the trunk
                         ConnectWithTeeFittingOnXAxis(baseConnectors[1], connectors[1], connectors[2], false);
-                        //Create an elbow fitting connection the 3rd base connector to the trunk
                         ConnectWithElbowFittingOnXAxis(baseConnectors[2], connectors[3]);
                     }
                 }
@@ -434,11 +357,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             }
         }
 
-        /// <summary>
-        ///     Connect a base connector to a connector on the trunk with an elbow fitting
-        /// </summary>
-        /// <param name="baseConn">the upper connector of the vertical duct that derived from a terminal or the base equipment</param>
-        /// <param name="conn">the connector of a duct on the trunk</param>
         private void ConnectWithElbowFittingOnXAxis(Connector baseConn, Connector conn)
         {
             var baseY = conn.Origin.Y;
@@ -464,13 +382,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             }
         }
 
-        /// <summary>
-        ///     Connect 3 connectors on the trunk with a tee fitting
-        /// </summary>
-        /// <param name="conn1">the first connector</param>
-        /// <param name="conn2">the second connector</param>
-        /// <param name="conn3">the third connector</param>
-        /// <param name="flag">a flag to indicate whether there are 2 base connectors or 1 base connector</param>
         private void ConnectWithTeeFittingOnXAxis(Connector conn1, Connector conn2, Connector conn3, bool flag)
         {
             var baseY = conn3.Origin.Y;
@@ -532,10 +443,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             }
         }
 
-        /// <summary>
-        ///     Sort the base connectors by their x values
-        /// </summary>
-        /// <param name="connectors">the connectors to be sorted</param>
         private void SortConnectorsByX(List<Connector> connectors)
         {
             for (var i = 0; i < connectors.Count; ++i)
@@ -555,28 +462,13 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             }
         }
 
-        /// <summary>
-        ///     Connect the system with a trunk line of ducts on Y axis
-        /// </summary>
-        /// <param name="baseConnectors">
-        ///     the upper connectors of the vertical ducts that derived from the terminals and the base
-        ///     equipment
-        /// </param>
-        /// <param name="baseX">the x value of the trunk line</param>
-        /// <returns>
-        ///     true if the system can be connected
-        ///     false if the system cannot be connected
-        /// </returns>
         private bool ConnectSystemOnYAxis(List<Connector> baseConnectors, double baseX)
         {
-            //Check the count of the base connectors
             if (null == baseConnectors || 3 != baseConnectors.Count) return false;
             for (var i = 0; i < baseConnectors.Count; ++i)
             {
-                //Check the distance of the connector from the trunk
                 if (baseConnectors[i].Origin.X != baseX &&
                     Math.Abs(baseConnectors[i].Origin.X - baseX) < Min1Duct2FittingsLength) return false;
-                //Check the distance of the connectors on Y axis
                 for (var j = i + 1; j < baseConnectors.Count; ++j)
                     if (baseConnectors[j].Origin.Y != baseConnectors[i].Origin.Y &&
                         baseConnectors[j].Origin.Y - baseConnectors[i].Origin.Y < Min2FittingsLength)
@@ -586,7 +478,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             try
             {
                 var baseZ = baseConnectors[0].Origin.Z + Min1FittingLength;
-                //Create the ducts and elbow fittings to connect the vertical ducts and the trunk ducts
                 var connectors = new List<Connector>();
 
                 if (baseConnectors[0].Origin.Y == baseConnectors[1].Origin.Y)
@@ -601,23 +492,18 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                     if (Math.Sign(baseConnectors[0].Origin.X - baseX) * Math.Sign(baseConnectors[1].Origin.X - baseX) ==
                         1) return false;
 
-                    //Create the trunk
                     connectors = CreateDuct(new GXYZ(baseX, baseConnectors[0].Origin.Y + Min1FittingLength, baseZ),
                         new GXYZ(baseX, baseConnectors[2].Origin.Y - Min1FittingLength, baseZ));
 
-                    //Create a tee fitting connecting the 1st and 2nd base connectors to the trunk
                     ConnectWithTeeFittingOnYAxis(baseConnectors[0], baseConnectors[1], connectors[0], true);
 
-                    //Create an elbow fitting connection the 3rd base connector to the trunk
                     ConnectWithElbowFittingOnYAxis(baseConnectors[2], connectors[1]);
                 }
                 else
                 {
-                    //Create the segment of duct on the trunk to be connected to the 1st base connector
                     connectors = CreateDuct(new GXYZ(baseX, baseConnectors[0].Origin.Y + Min1FittingLength, baseZ),
                         new GXYZ(baseX, baseConnectors[1].Origin.Y - Min1FittingLength, baseZ));
 
-                    //Create an elbow fitting connection the 1st base connector with the trunk
                     ConnectWithElbowFittingOnYAxis(baseConnectors[0], connectors[0]);
 
                     if (baseConnectors[1].Origin.Y == baseConnectors[2].Origin.Y)
@@ -625,7 +511,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                         //The 2nd and 3rd connectors are on the same side of the trunk
                         if (Math.Sign(baseConnectors[1].Origin.X - baseX) *
                             Math.Sign(baseConnectors[2].Origin.X - baseX) == 1) return false;
-                        //Create a tee fitting connecting the 2nd and 3rd base connectors to the trunk
                         ConnectWithTeeFittingOnYAxis(baseConnectors[1], baseConnectors[2], connectors[1], true);
                     }
                     else
@@ -633,9 +518,7 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                         connectors.AddRange(CreateDuct(
                             new GXYZ(baseX, baseConnectors[1].Origin.Y + Min1FittingLength, baseZ),
                             new GXYZ(baseX, baseConnectors[2].Origin.Y - Min1FittingLength, baseZ)));
-                        //Create a tee fitting connecting the 2nd base connector to the trunk
                         ConnectWithTeeFittingOnYAxis(baseConnectors[1], connectors[1], connectors[2], false);
-                        //Create an elbow fitting connection the 3rd base connector to the trunk
                         ConnectWithElbowFittingOnYAxis(baseConnectors[2], connectors[3]);
                     }
                 }
@@ -648,11 +531,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             }
         }
 
-        /// <summary>
-        ///     Connect a base connector to a connector on the trunk with an elbow fitting
-        /// </summary>
-        /// <param name="baseConn">the upper connector of the vertical duct that derived from a terminal or the base equipment</param>
-        /// <param name="conn">the connector of a duct on the trunk</param>
         private void ConnectWithElbowFittingOnYAxis(Connector baseConn, Connector conn)
         {
             var baseX = conn.Origin.X;
@@ -678,13 +556,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             }
         }
 
-        /// <summary>
-        ///     Connect 3 connectors on the trunk with a tee fitting
-        /// </summary>
-        /// <param name="conn1">the first connector</param>
-        /// <param name="conn2">the second connector</param>
-        /// <param name="conn3">the third connector</param>
-        /// <param name="flag">a flag to indicate whether there are 2 base connectors or 1 base connector</param>
         private void ConnectWithTeeFittingOnYAxis(Connector conn1, Connector conn2, Connector conn3, bool flag)
         {
             var baseX = conn3.Origin.X;
@@ -746,10 +617,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             }
         }
 
-        /// <summary>
-        ///     Sort the base connectors by their y values
-        /// </summary>
-        /// <param name="connectors">the connectors to be sorted</param>
         private void SortConnectorsByY(List<Connector> connectors)
         {
             for (var i = 0; i < connectors.Count; ++i)
@@ -769,12 +636,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             }
         }
 
-        /// <summary>
-        ///     Create a duct with two points
-        /// </summary>
-        /// <param name="point1">the first point</param>
-        /// <param name="point2">the second point</param>
-        /// <returns></returns>
         private List<Connector> CreateDuct(GXYZ point1, GXYZ point2)
         {
             var connectors = new List<Connector>();
@@ -787,13 +648,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             return connectors;
         }
 
-        /// <summary>
-        ///     Create a mechanical system
-        /// </summary>
-        /// <param name="baseConnector">the base connector of the mechanical system</param>
-        /// <param name="connectors">the connectors of the mechanical system</param>
-        /// <param name="systemType">the system type of the mechanical system</param>
-        /// <returns>the created mechanical system</returns>
         private MechanicalSystem CreateMechanicalSystem(ConnectorInfo baseConnector, ConnectorInfo[] connectors,
             DuctSystemType systemType)
         {
@@ -813,31 +667,14 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             return mechanicalSystem;
         }
 
-        /// <summary>
-        ///     information of a connector
-        /// </summary>
         public class ConnectorInfo
         {
-            /// <summary>
-            ///     The Connector object
-            /// </summary>
             private Connector m_connector;
 
-            /// <summary>
-            ///     The origin of the connector
-            /// </summary>
             private GXYZ m_origin;
 
-            /// <summary>
-            ///     The owner's element ID
-            /// </summary>
             private ElementId m_ownerId;
 
-            /// <summary>
-            ///     The constructor that finds the connector with the owner ID and origin
-            /// </summary>
-            /// <param name="ownerId">the ownerID of the connector</param>
-            /// <param name="origin">the origin of the connector</param>
             public ConnectorInfo(ElementId ownerId, GXYZ origin)
             {
                 m_ownerId = ownerId;
@@ -845,51 +682,29 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 m_connector = GetConnector(m_ownerId, origin);
             }
 
-            /// <summary>
-            ///     The constructor that finds the connector with the owner ID and the values of the origin
-            /// </summary>
-            /// <param name="ownerId">the ownerID of the connector</param>
-            /// <param name="x">the X value of the connector</param>
-            /// <param name="y">the Y value of the connector</param>
-            /// <param name="z">the Z value of the connector</param>
             public ConnectorInfo(ElementId ownerId, double x, double y, double z)
                 : this(ownerId, new GXYZ(x, y, z))
             {
             }
 
-            /// <summary>
-            ///     The connector this object represents
-            /// </summary>
             public Connector Connector
             {
                 get => m_connector;
                 set => m_connector = value;
             }
 
-            /// <summary>
-            ///     The owner ID of the connector
-            /// </summary>
             public ElementId OwnerId
             {
                 get => m_ownerId;
                 set => m_ownerId = value;
             }
 
-            /// <summary>
-            ///     The origin of the connector
-            /// </summary>
             public GXYZ Origin
             {
                 get => m_origin;
                 set => m_origin = value;
             }
 
-            /// <summary>
-            ///     Get the connector of the owner at the specific origin
-            /// </summary>
-            /// <param name="ownerId">the owner ID of the connector</param>
-            /// <param name="connectorOrigin">the origin of the connector</param>
-            /// <returns>if found, return the connector, or else return null</returns>
             public static Connector GetConnector(ElementId ownerId, GXYZ connectorOrigin)
             {
                 var connectors = GetConnectors(ownerId);
@@ -904,22 +719,12 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 return null;
             }
 
-            /// <summary>
-            ///     Get all the connectors of an element with a specific ID
-            /// </summary>
-            /// <param name="ownerId">the owner ID of the connector</param>
-            /// <returns>the connector set which includes all the connectors found</returns>
             public static ConnectorSet GetConnectors(ElementId ownerId)
             {
                 var element = _document.GetElement(ownerId);
                 return GetConnectors(element);
             }
 
-            /// <summary>
-            ///     Get all the connectors of a specific element
-            /// </summary>
-            /// <param name="element">the owner of the connector</param>
-            /// <returns>if found, return all the connectors found, or else return null</returns>
             public static ConnectorSet GetConnectors(Element element)
             {
                 switch (element)
@@ -938,13 +743,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 }
             }
 
-            /// <summary>
-            ///     Find the two connectors of the specific ConnectorManager at the two locations
-            /// </summary>
-            /// <param name="connMgr">The ConnectorManager of the connectors to be found</param>
-            /// <param name="ptn1">the location of the first connector</param>
-            /// <param name="ptn2">the location of the second connector</param>
-            /// <returns>The two connectors found</returns>
             public static Connector[] FindConnectors(ConnectorManager connMgr, GXYZ pnt1, GXYZ pnt2)
             {
                 var result = new Connector[2];
@@ -963,25 +761,13 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
 
     public class LogUtility
     {
-        /// <summary>
-        ///     Invalid string.
-        /// </summary>
         public const string InvalidString = "[!]";
 
-        /// <summary>
-        ///     Write the information of an element to the log file
-        /// </summary>
-        /// <param name="element">the element whose information is to be written</param>
         public static void WriteElement(Element element)
         {
             WriteElement(element, true);
         }
 
-        /// <summary>
-        ///     Write the information of an element to the log file
-        /// </summary>
-        /// <param name="element">the element whose information is to be written</param>
-        /// <param name="writeId">whether the id will be outputted</param>
         public static void WriteElement(Element element, bool writeId)
         {
             if (element == null)
@@ -1016,10 +802,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             Trace.WriteLine($"FamilyId: {familyId}");
         }
 
-        /// <summary>
-        ///     Write the information of a mechanical system to the log file
-        /// </summary>
-        /// <param name="system">the mechanical system whose information is to be written</param>
         public static void WriteMechanicalSystem(MechanicalSystem system)
         {
             var flow = InvalidString;
@@ -1046,21 +828,11 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             WriteMepSystem(system);
         }
 
-        /// <summary>
-        ///     Get element by its id and cast it to the specified type
-        /// </summary>
-        /// <param name="document">the owner document of the element</param>
-        /// <param name="eid">the id of the element</param>
-        /// <returns>the element of the specified type</returns>
         public static T GetElement<T>(Document document, ElementId eid) where T : Element
         {
             return document.GetElement(eid) as T;
         }
 
-        /// <summary>
-        ///     Write the information of a MEPSystem to the log file.
-        /// </summary>
-        /// <param name="system">the MEP system whose information is to be written</param>
         public static void WriteMepSystem(MEPSystem system)
         {
             WriteElement(system.BaseEquipment);
@@ -1084,10 +856,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             Trace.Unindent();
         }
 
-        /// <summary>
-        ///     Write the information of a connector to the log file
-        /// </summary>
-        /// <param name="connector">the connector whose information is to be written</param>
         public static void WriteConnector(Connector connector)
         {
             if (connector == null)
@@ -1149,10 +917,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             Trace.WriteLine($"IsConnected: {connIsConnected}");
         }
 
-        /// <summary>
-        ///     Write the information of a ConnectorManager to the log file
-        /// </summary>
-        /// <param name="connectorManager">the ConnectorManager whose information is to be written</param>
         public static void WriteConnectorManager(ConnectorManager connectorManager)
         {
             Trace.WriteLine("+Connectors");
@@ -1165,11 +929,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             Trace.Unindent();
         }
 
-        /// <summary>
-        ///     Get the information string of a connector
-        /// </summary>
-        /// <param name="connector">the connector to be read</param>
-        /// <returns>the information string of the connector</returns>
         public static string GetConnectorId(Connector connector)
         {
             if (connector == null) return "null";
@@ -1231,11 +990,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 $"[{ownerId}]\t[{connType}]\t[{connDirection}]\t[{connShape}]\t[{connSize}]\t[{connLocation}]\t[{connAType}]\t[{connIsConnected}]\t[{systemId}]\t";
         }
 
-        /// <summary>
-        ///     Get the shape information string of a connector
-        /// </summary>
-        /// <param name="conn">the element to be read</param>
-        /// <returns>the shape information string of the connector</returns>
         private static string GetShapeInfo(Connector conn)
         {
             switch (conn.Shape)
@@ -1253,11 +1007,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             return InvalidString;
         }
 
-        /// <summary>
-        ///     Get the location string of a connector
-        /// </summary>
-        /// <param name="conn">the connector to be read</param>
-        /// <returns>the location information string of the connector</returns>
         private static object GetLocation(Connector conn)
         {
             if (conn.ConnectorType == ConnectorType.Logical) return InvalidString;
@@ -1265,10 +1014,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             return $"{origin.X},{origin.Y},{origin.Z}";
         }
 
-        /// <summary>
-        ///     Write the information of a ConnectorSet to the log file.
-        /// </summary>
-        /// <param name="connectorSet">the ConnectorSet whose information is to be written</param>
         private static void WriteConnectorSet2(ConnectorSet connectorSet)
         {
             var connectors = new SortedDictionary<string, List<Connector>>();
@@ -1300,10 +1045,6 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             }
         }
 
-        /// <summary>
-        ///     Write the information of a ConnectorSet to the log file.
-        /// </summary>
-        /// <param name="connectorSet">the mechanical system whose information is to be written</param>
         private static void WriteConnectorSet(ConnectorSet connectorSet)
         {
             var connectors = new SortedDictionary<string, List<Connector>>();

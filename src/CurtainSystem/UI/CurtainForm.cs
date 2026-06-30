@@ -11,20 +11,11 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
 {
-    /// <summary>
-    ///     the main window form for UI operations
-    /// </summary>
     public partial class CurtainForm : Form
     {
         // the document containing all the data used in the sample
         private readonly MyDocument m_mydocument;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="mydoc">
-        ///     the data used in the sample
-        /// </param>
         public CurtainForm(MyDocument mydoc)
         {
             m_mydocument = mydoc;
@@ -36,9 +27,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             RegisterEvents();
         }
 
-        /// <summary>
-        ///     initialize some controls manually
-        /// </summary>
         private void InitializeCustomComponent()
         {
             deleteCSButton.Enabled = false;
@@ -46,9 +34,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             removeCGButton.Enabled = false;
         }
 
-        /// <summary>
-        ///     register the customized events
-        /// </summary>
         private void RegisterEvents()
         {
             m_mydocument.FatalErrorEvent += m_document_FatalErrorEvent;
@@ -57,12 +42,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             m_mydocument.MessageChanged += m_document_MessageChanged;
         }
 
-        /// <summary>
-        ///     Fatal error occurs, close the sample dialog directly
-        /// </summary>
-        /// <param name="errorMsg">
-        ///     the error hint shown to user
-        /// </param>
         private void m_document_FatalErrorEvent(string errorMsg)
         {
             // hang the sample and shown the error hint to users
@@ -72,9 +51,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             if (TaskDialogResult.Ok == result) Close();
         }
 
-        /// <summary>
-        ///     curtain system changed(added/removed), refresh the lists
-        /// </summary>
         private void m_document_SystemData_CurtainSystemChanged()
         {
             // clear the out-of-date values
@@ -117,9 +93,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             Show();
         }
 
-        /// <summary>
-        ///     update the status hints in the status strip
-        /// </summary>
         private void m_document_MessageChanged()
         {
             //if it's an error / warning message, set the color of the text to red
@@ -133,17 +106,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             statusStrip.Refresh();
         }
 
-        /// <summary>
-        ///     "Create curtain system" button clicked, hide the main form,
-        ///     pop up the create curtain system dialog to let user add a new curtain system.
-        ///     After the curtain system created, close the dialog and show the main form again
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void createCSButton_Click(object sender, EventArgs e)
         {
             Hide();
@@ -155,15 +117,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             }
         }
 
-        /// <summary>
-        ///     delete the checked curtain systems in  the curtain system list box
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void deleteCSButton_Click(object sender, EventArgs e)
         {
             // no curtain system available, ask sample user to create some curtain systems first
@@ -175,7 +128,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
                 return;
             }
 
-            // get the checked curtain sytems
             var checkedIndices = new List<int>();
             for (var i = 0; i < csListBox.Items.Count; i++)
             {
@@ -185,7 +137,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             }
 
             // no curtain system available or no curtain system selected for deletion
-            // update the status hints
             if (null == checkedIndices ||
                 0 == checkedIndices.Count)
             {
@@ -194,20 +145,9 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
                 return;
             }
 
-            // delete them
             m_mydocument.SystemData.DeleteCurtainSystem(checkedIndices);
         }
 
-        /// <summary>
-        ///     the selected curtain system changed, update the "Curtain grid" and
-        ///     "Uncovered faces" list boxes of the selected curtain system
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void csListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var csInfos = m_mydocument.SystemData.CurtainSystemInfos;
@@ -217,11 +157,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
                 0 == csInfos.Count)
                 return;
 
-            //
             // step 1: activate the selected one
-            //
             var csInfo = csInfos[csListBox.SelectedIndex];
-            // update the curtain grid list box
             cgCheckedListBox.Items.Clear();
             foreach (var index in csInfo.GridFacesIndices)
             {
@@ -229,7 +166,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
                 cgCheckedListBox.Items.Add(gridFaceInfo);
             }
 
-            // update the uncovered face list box
             facesCheckedListBox.Items.Clear();
             foreach (var index in csInfo.UncoverFacesIndices)
             {
@@ -237,9 +173,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
                 facesCheckedListBox.Items.Add(uncoverFaceInfo);
             }
 
-            //
             // step 2: enable/disable some buttons and refresh the status hints
-            //
             // the selected curtain system is created by face array
             // it's not allowed to modify its curtain grids data
             if (csInfo.ByFaceArray)
@@ -249,7 +183,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
                 removeCGButton.Enabled = false;
                 facesCheckedListBox.Enabled = false;
                 cgCheckedListBox.Enabled = false;
-                // update the status hints
                 var hint = Resources.HINT_CSIsByFaceArray;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, false);
             }
@@ -271,21 +204,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
                     removeCGButton.Enabled = true;
                 facesCheckedListBox.Enabled = true;
                 cgCheckedListBox.Enabled = true;
-                // update the status hints
                 var hint = "";
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, false);
             }
         }
 
-        /// <summary>
-        ///     add curtain grids to the checked faces
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void addCGButton_Click(object sender, EventArgs e)
         {
             // step 1: get the curtain system 
@@ -329,17 +252,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             csListBox_SelectedIndexChanged(null, null);
         }
 
-        /// <summary>
-        ///     remove  the checked curtain grids from the curtain system
-        ///     Note: curtain system must have at least one curtain grid
-        ///     so sample users can't remove all the curtain grids away
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void removeCGButton_Click(object sender, EventArgs e)
         {
             // step 1: get the curtain system 
@@ -383,16 +295,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             csListBox_SelectedIndexChanged(null, null);
         }
 
-        /// <summary>
-        ///     check the curtain grids to delete them, if user wants to check all the curtain
-        ///     grids for deletion, prohibit it (must keep at least one curtain grid)
-        /// </summary>
-        /// <param name="sender">
-        ///     object who sent this event
-        /// </param>
-        /// <param name="e">
-        ///     event args
-        /// </param>
         private void cgCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             var indices = new List<int>();
@@ -410,13 +312,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
             {
                 e.NewValue = CheckState.Unchecked;
 
-                // update the status hints
                 var hint = Resources.HINT_KeepOneCG;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, true);
             }
             else
             {
-                // update the status hints
                 var hint = "";
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, false);
             }

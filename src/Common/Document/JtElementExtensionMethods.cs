@@ -26,11 +26,6 @@ namespace BuildingCoder
 {
     public static class JtElementExtensionMethods
         {
-            /// <summary>
-            ///     Predicate to determine whether given element
-            ///     is a physical element, i.e. valid category,
-            ///     not view specific, etc.
-            /// </summary>
             public static bool IsPhysicalElement(
                 this Element e)
             {
@@ -48,10 +43,6 @@ namespace BuildingCoder
                        && e.Category.CanAddSubcategory;
             }
     
-            /// <summary>
-            ///     Return the curve from a Revit database Element
-            ///     location curve, if it has one.
-            /// </summary>
             public static Curve GetCurve(this Element e)
             {
                 Debug.Assert(null != e.Location,

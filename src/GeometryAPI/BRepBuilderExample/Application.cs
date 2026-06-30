@@ -23,9 +23,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication

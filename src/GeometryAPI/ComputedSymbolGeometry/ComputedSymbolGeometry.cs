@@ -18,15 +18,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
             m_options = new Options();
         }
 
-        /// <summary>
-        ///     Get geometry of family instances and show them in Revit views
-        /// </summary>
         public void GetInstanceGeometry()
         {
             var instanceCollector = new FilteredElementCollector(m_revitDoc);
             instanceCollector.OfClass(typeof(FamilyInstance));
 
-            // create views by different names
             var view3DId = ElementId.InvalidElementId;
             var elems = new FilteredElementCollector(m_revitDoc).OfClass(typeof(ViewFamilyType)).ToElements();
             foreach (var e in elems)
@@ -38,7 +34,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
                 }
             }
 
-            //View instanceView = RevitDoc.Create.NewView3D(new XYZ(1, 1, -1));
             var instanceView = View3D.CreateIsometric(m_revitDoc, view3DId);
             var instanceViewOrientation3D = new ViewOrientation3D(
                 new XYZ(-30.8272352809007, -2.44391067967133, 18.1013736367246),
@@ -48,7 +43,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
             instanceView.SaveOrientation();
             instanceView.Name = "InstanceGeometry";
 
-            //View originalView = RevitDoc.Create.NewView3D(new XYZ(0, 1, -1));
             var originalView = View3D.CreateIsometric(m_revitDoc, view3DId);
             var originalViewOrientation3D = new ViewOrientation3D(
                 new XYZ(-19.0249866627872, -5.09536632799455, 20.7528292850478),
@@ -57,9 +51,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
             originalView.SaveOrientation();
             originalView.Name = "OriginalGeometry";
 
-            //View transView = RevitDoc.Create.NewView3D(new XYZ(-1, 1, -1));
             var transView = View3D.CreateIsometric(m_revitDoc, view3DId);
-            //ViewOrientation3D transViewOrientation3D = new ViewOrientation3D(new XYZ(-7.22273804467383, -2.44391067967133, 18.1013736367246), new XYZ(-0.577350269189626, 0.577350269189626, -0.577350269189626), new XYZ(-0.408248290463863, 0.408248290463863, 0.816496580927726));
             var transViewOrientation3D =
                 new ViewOrientation3D(new XYZ(-19.0249866627872, -5.09536632799455, 20.7528292850478),
                     new XYZ(0, 0.707106781186547, -0.707106781186547),
@@ -74,8 +66,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
                 var computedGeo = instance.GetOriginalGeometry(m_options);
                 var transformGeo = computedGeo.GetTransformed(instance.GetTransform());
 
-                // show family instance geometry
-                //foreach (GeometryObject obj in instanceGeo.Objects)
                 var objects = instanceGeo.GetEnumerator();
                 while (objects.MoveNext())
                 {
@@ -87,8 +77,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
                     }
                 }
 
-                // show geometry that is original geometry
-                //foreach (GeometryObject obj in computedGeo.Objects)
                 var objects1 = computedGeo.GetEnumerator();
                 while (objects1.MoveNext())
                 {
@@ -100,8 +88,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
                     }
                 }
 
-                // show geometry that was transformed
-                //foreach (GeometryObject obj in transformGeo.Objects)
                 var objects2 = transformGeo.GetEnumerator();
                 while (objects2.MoveNext())
                 {
@@ -114,15 +100,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
                 }
             }
 
-            // remove original instances to view point results.
+            // Deletes source family instances so only AVF-painted geometry remains visible.
             m_revitDoc.Delete(instanceCollector.ToElementIds());
         }
 
-        /// <summary>
-        ///     Paint solid by AVF
-        /// </summary>
-        /// <param name="solid">Solid to be painted</param>
-        /// <param name="view">The view that shows solid</param>
         private void PaintSolid(Solid solid, View view)
         {
             var viewName = view.Name;
@@ -136,7 +117,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
                 if (!results.Contains(m_schemaId)) m_schemaId = -1;
             }
 
-            // set up the display style
             if (m_schemaId == -1)
             {
                 var resultSchema1 = new AnalysisResultSchema($"PaintedSolid {viewName}", "Description");
@@ -150,7 +130,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
                 m_schemaId = sfm.RegisterResult(resultSchema1);
             }
 
-            // get points of all faces in the solid
             var faces = solid.Faces;
             var trf = Transform.Identity;
             foreach (Face face in faces)
@@ -163,13 +142,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
             }
         }
 
-        /// <summary>
-        ///     Compute values at point for face
-        /// </summary>
-        /// <param name="face">Give face</param>
-        /// <param name="uvPts">UV points</param>
-        /// <param name="valList">Values at point</param>
-        /// <param name="measurementNo"></param>
         private void ComputeValueAtPointForFace(Face face, out IList<UV> uvPts,
             out IList<ValueAtPoint> valList, int measurementNo)
         {
@@ -183,7 +155,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
                 var uvPnt = new UV(u, v);
                 uvPts.Add(uvPnt);
                 var faceXyz = face.Evaluate(uvPnt);
-                // Specify three values for each point
                 for (var ii = 1; ii <= measurementNo; ii++)
                     doubleList.Add(faceXyz.DistanceTo(XYZ.Zero) * ii);
                 valList.Add(new ValueAtPoint(doubleList));

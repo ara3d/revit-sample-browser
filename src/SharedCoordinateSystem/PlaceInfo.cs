@@ -14,31 +14,14 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
     /// </summary>
     public struct CityInfo
     {
-        /// <summary>
-        ///     property used to get and set TimeZone
-        /// </summary>
         public double TimeZone { get; set; }
 
-        /// <summary>
-        ///     property used to get and set Latitude
-        /// </summary>
         public double Latitude { get; set; }
 
-        /// <summary>
-        ///     property used to get and set Longitude
-        /// </summary>
         public double Longitude { get; set; }
 
-        /// <summary>
-        ///     property used to get and set city name
-        /// </summary>
         public string CityName { get; set; }
 
-        /// <summary>
-        ///     class CityInfo's constructor
-        /// </summary>
-        /// <param name="latitude">latitude of city</param>
-        /// <param name="longitude">longitude of city</param>
         public CityInfo(double latitude, double longitude)
         {
             Latitude = latitude;
@@ -47,13 +30,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             CityName = null;
         }
 
-        /// <summary>
-        ///     class CityInfo's constructor
-        /// </summary>
-        /// <param name="latitude">latitude of city</param>
-        /// <param name="longitude">longitude of city</param>
-        /// <param name="timeZone">timezone of city</param>
-        /// <param name="cityName">city name</param>
         public CityInfo(double latitude, double longitude, double timeZone, string cityName)
         {
             TimeZone = timeZone;
@@ -69,26 +45,12 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
     /// </summary>
     public struct CityInfoString
     {
-        /// <summary>
-        ///     property used to get and set TimeZone
-        /// </summary>
         public string TimeZone { get; set; }
 
-        /// <summary>
-        ///     property used to get and set Latitude
-        /// </summary>
         public string Latitude { get; set; }
 
-        /// <summary>
-        ///     property used to get and set Longitude
-        /// </summary>
         public string Longitude { get; set; }
 
-        /// <summary>
-        ///     class CityInfo's constructor
-        /// </summary>
-        /// <param name="latitude">latitude of city</param>
-        /// <param name="longitude">longitude of city</param>
         public CityInfoString(string latitude, string longitude)
         {
             Latitude = latitude;
@@ -96,12 +58,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             TimeZone = null;
         }
 
-        /// <summary>
-        ///     class CityInfo's constructor
-        /// </summary>
-        /// <param name="latitude">latitude of city</param>
-        /// <param name="longitude">longitude of city</param>
-        /// <param name="timeZone">timezone of city</param>
         public CityInfoString(string latitude, string longitude, string timeZone)
         {
             TimeZone = timeZone;
@@ -110,45 +66,23 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         }
     }
 
-    /// <summary>
-    ///     a class used to store information of all city
-    ///     include it's name,Latitude,longitude,timezone
-    /// </summary>
     public class PlaceInfo
     {
         private const double Diff = 0.0001; //used to check whether two double values are equal
         private List<CityInfo> m_citiesInfo; //information of all cities,such Latitude,longitude
         private bool m_isTimeZonesValid; //figure out whether can get timezone information
 
-        /// <summary>
-        ///     class PlaceInfo's constructor
-        /// </summary>
-        /// <param name="cities"></param>
         public PlaceInfo(CitySet cities)
         {
             Initialize(cities);
         }
 
-        /// <summary>
-        ///     property used to get and set all cities' name
-        /// </summary>
         public List<string> CitiesName { get; set; }
 
-        /// <summary>
-        ///     property used to get and set all timezone
-        /// </summary>
         public List<string> TimeZones { get; set; }
 
-        /// <summary>
-        ///     property used to get Invalid timezone
-        /// </summary>
         public static double InvalidTimeZone { get; } = -13;
 
-        /// <summary>
-        ///     initialize function
-        /// </summary>
-        /// <param name="cities">a set store all cities</param>
-        /// <returns></returns>
         public bool Initialize(CitySet cities)
         {
             m_citiesInfo = new List<CityInfo>();
@@ -180,7 +114,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             cityName = null;
             timeZone = InvalidTimeZone;
 
-            //loop to find cityinfo matched
             foreach (var temp in m_citiesInfo)
                 //compare Latitude and longitude,and if difference < Diff 
                 // the two CityInfo are equal
@@ -286,7 +219,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         {
             bool isPlus;
             double result = 0;
-            //check timezone is plus, zero or negative
             if (timeZoneString.Contains("+"))
                 isPlus = true;
             else if (timeZoneString.Contains("-"))
@@ -294,7 +226,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             else
                 return result;
 
-            //get int and decimal part of timezone
             var intString = timeZoneString.Substring(5, 2);
             var decimalString = timeZoneString.Substring(8, 1);
             double intNumber;
@@ -316,16 +247,10 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             return result;
         }
 
-        /// <summary>
-        ///     initialize cities
-        /// </summary>
-        /// <param name="cities"></param>
-        /// <returns></returns>
         private bool InitCities(CitySet cities)
         {
             if (null == cities) return false;
 
-            //add all element of CitySet cities to List m_cities
             var iter = cities.ForwardIterator();
             iter.Reset();
             for (; iter.MoveNext();)
@@ -341,10 +266,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             return true;
         }
 
-        /// <summary>
-        ///     initialize timezone
-        /// </summary>
-        /// <returns></returns>
         private bool InitTimeZone()
         {
             StreamReader streamReader = null;
@@ -356,7 +277,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                 filepath += "timezone.txt";
                 streamReader = File.OpenText(filepath);
 
-                //add timezone to m_timeZones
                 while (!streamReader.EndOfStream)
                 {
                     var text = streamReader.ReadLine();

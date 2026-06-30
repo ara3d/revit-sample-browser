@@ -15,22 +15,12 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
     {
         private readonly Wall m_data;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="wall">Selected wall</param>
-        /// <param name="commandData">ExternalCommandData</param>
         public ProfileWall(Wall wall, ExternalCommandData commandData)
             : base(wall, commandData)
         {
             m_data = wall;
         }
 
-        /// <summary>
-        ///     Create opening on wall
-        /// </summary>
-        /// <param name="points">Points use to create Opening</param>
-        /// <param name="type">Tool type</param>
         public override void DrawOpening(List<Vector4> points, ToolType type)
         {
             //get the rectangle two points

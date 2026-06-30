@@ -22,9 +22,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
         private readonly string m_basePath;
         private readonly Dictionary<string, string> m_familyfiles;
 
-        /// <summary>
-        ///     Create an instance of the helper class
-        /// </summary>
         public FindFolderUtility(Application application)
         {
             m_application = application;
@@ -32,17 +29,12 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             var extraFamilyPaths = GetAdditionalFamilyPaths();
             m_familyfiles = new Dictionary<string, string>();
             GetAllFiles(m_basePath, m_familyfiles);
-            //Get additional .rfa files in user-defined paths specified in familypaths.xml
             foreach (var extraPath in extraFamilyPaths)
             {
                 GetAllFiles(extraPath, m_familyfiles);
             }
         }
 
-        /// <summary>
-        ///     Gets a list of paths defined in the familypaths.xml file in the RoutingPreferenceTools.dll folder.
-        /// </summary>
-        /// <returns>A list of paths containing .rfa files</returns>
         public static List<string> GetAdditionalFamilyPaths()
         {
             var pathsList = new List<string>();
@@ -77,11 +69,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             return pathsList;
         }
 
-        /// <summary>
-        ///     Returns the full path of an .rfa file in the "Data" directory of a Revit installation given an .rfa filename.
-        /// </summary>
-        /// <param name="filename">an .rfa filename without any path, e.g. "Generic elbow.rfa"</param>
-        /// <returns>The full path to the .rfa file</returns>
         public string FindFileFolder(string filename)
         {
             var retval = "";
@@ -179,9 +166,6 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
     /// </summary>
     public class SchemaValidationHelper
     {
-        /// <summary>
-        ///     Returns true if a document is a valid RoutingPreferenceBuilder xml document, false otherwise.
-        /// </summary>
         public static bool ValidateRoutingPreferenceBuilderXml(XDocument doc, out string message)
         {
             message = "";

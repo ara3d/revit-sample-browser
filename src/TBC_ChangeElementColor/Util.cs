@@ -8,7 +8,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_ChangeElementColor sample.</summary>
     internal static partial class Util
     {
         internal static void ChangeElementColor(Document doc, ElementId id)

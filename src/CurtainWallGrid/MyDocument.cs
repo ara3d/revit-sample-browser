@@ -10,39 +10,15 @@ using Ara3D.RevitSampleBrowser.Common.Documents;
 
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
-    /// <summary>
-    ///     maintains all the data used in the sample
-    /// </summary>
     public class MyDocument
     {
-        // occurs only when the message was updated
         public delegate void MessageChangedHandler();
 
-        // stores all the Curtain WallTypes in the active Revit document
-
-        // stores all the ViewPlans in the active Revit document
-
-        // stores the wall creation related data and operations
-
-        // stores the curtain wall created
-
-        // indicates whether the curtain wall has been created
-
-        // store the grid information of the created curtain wall
-
-        // store the active grid line operation
 
         // the length unit type for the active Revit document
 
-        // store the message of the sample
         private KeyValuePair<string /*msgText*/, bool /*is warningOrError*/> m_message;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="commandData">
-        ///     object which contains reference of Revit Application
-        /// </param>
         public MyDocument(ExternalCommandData commandData)
         {
             if (null != commandData.Application.ActiveUIDocument)
@@ -59,7 +35,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 // get all the wall types and all the view plans
                 InitializeData();
 
-                // get the length unit type of the active Revit document
                 GetLengthUnitType();
 
                 // initialize the curtain grid operation type
@@ -68,21 +43,12 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         }
 
         // object which contains reference of Revit Application
-        /// <summary>
-        ///     object which contains reference of Revit Application
-        /// </summary>
         public ExternalCommandData CommandData { get; }
 
         // the active document of Revit
-        /// <summary>
-        ///     the active document of Revit
-        /// </summary>
         public UIDocument UiDocument { get; }
 
         // the active document of Revit
-        /// <summary>
-        ///     the active document of Revit
-        /// </summary>
         public Document Document { get; }
 
         /// <summary>
@@ -90,14 +56,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         /// </summary>
         public List<WallType> WallTypes { get; private set; }
 
-        /// <summary>
-        ///     stores all the ViewPlans in the active Revit document
-        /// </summary>
         public List<View> Views { get; private set; }
 
-        /// <summary>
-        ///     stores the wall creation related data and operations
-        /// </summary>
         public WallGeometry WallGeometry { get; }
 
         /// <summary>
@@ -115,16 +75,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         /// </summary>
         public GridGeometry GridGeometry { get; }
 
-        /// <summary>
-        ///     store the active grid line operation
-        /// </summary>
         public LineOperation ActiveOperation { get; set; }
 
         public ForgeTypeId LengthUnit { get; private set; }
 
-        /// <summary>
-        ///     store the message of the sample
-        /// </summary>
         public KeyValuePair<string /*msgText*/, bool /*is warningOrError*/> Message
         {
             get => m_message;
@@ -137,9 +91,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         public event MessageChangedHandler MessageChanged;
 
-        /// <summary>
-        ///     Get current length display unit type
-        /// </summary>
         private void GetLengthUnitType()
         {
             var specTypeId = SpecTypeId.Length;
@@ -208,13 +159,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             return returns;
         }
 
-        /// <summary>
-        ///     View elements filtered by new iteration will include template views.
-        ///     These views are not invalid for test(because they're invisible in project browser)
-        ///     Skip template views for regression test
-        /// </summary>
-        /// <param name="views"></param>
-        /// <returns></returns>
         private List<T> SkipTemplateViews<T>(List<T> views) where T : View
         {
             var returns = new List<T>();

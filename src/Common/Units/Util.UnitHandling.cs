@@ -28,9 +28,6 @@ namespace BuildingCoder
     {
         #region Unit Handling
 
-        /// <summary>
-        ///     Base units currently used internally by Revit.
-        /// </summary>
         private enum BaseUnit
         {
             BU_Length = 0, // length, feet (ft)
@@ -51,18 +48,11 @@ namespace BuildingCoder
         private const double _sqfToSqm = _footToMeter * _footToMeter;
         private const double _cubicFootToCubicMeter = _footToMeter * _sqfToSqm;
 
-        /// <summary>
-        ///     Convert a given length in feet to millimetres.
-        /// </summary>
         public static double FootToMm(double length)
         {
             return length * _footToMm;
         }
 
-        /// <summary>
-        ///     Convert a given length in feet to millimetres,
-        ///     rounded to the closest millimetre.
-        /// </summary>
         public static int FootToMmInt(double length)
         {
             //return (int) ( _feet_to_mm * d + 0.5 );
@@ -70,42 +60,26 @@ namespace BuildingCoder
                 MidpointRounding.AwayFromZero);
         }
 
-        /// <summary>
-        ///     Convert a given length in feet to metres.
-        /// </summary>
         public static double FootToMetre(double length)
         {
             return length * _footToMeter;
         }
 
-        /// <summary>
-        ///     Convert a given length in millimetres to feet.
-        /// </summary>
         public static double MmToFoot(double length)
         {
             return length / _footToMm;
         }
 
-        /// <summary>
-        ///     Convert a given point or vector from millimetres to feet.
-        /// </summary>
         public static XYZ MmToFoot(XYZ v)
         {
             return v.Divide(_footToMm);
         }
 
-        /// <summary>
-        ///     Convert a given volume in feet to cubic meters.
-        /// </summary>
         public static double CubicFootToCubicMeter(double volume)
         {
             return volume * _cubicFootToCubicMeter;
         }
 
-        /// <summary>
-        ///     Hard coded abbreviations for the first 26
-        ///     DisplayUnitType enumeration values.
-        /// </summary>
         public static string[] DisplayUnitTypeAbbreviation
             =
             {
@@ -138,10 +112,6 @@ namespace BuildingCoder
                 "l" // DUT_LITERS = 26,
             };
 
-        /// <summary>
-        ///     List all Forge type ids
-        /// </summary>
-        /// <param name="doc"></param>
         public static void ListForgeTypeIds()
         {
             //ForgeTypeId a = SpecTypeId.Acceleration;

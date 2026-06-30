@@ -10,9 +10,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
     /// </summary>
     public partial class BasedTypeForm : Form
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public BasedTypeForm()
         {
             InitializeComponent();
@@ -24,11 +21,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
         /// </summary>
         public BasedType BaseType { get; private set; } = BasedType.Point;
 
-        /// <summary>
-        ///     Process the click event of "Next" button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonNext_Click(object sender, EventArgs e)
         {
             if (radioButtonPoint.Checked)
@@ -41,11 +33,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             DialogResult = DialogResult.OK;
         }
 
-        /// <summary>
-        ///     Process the click event of "Cancel" button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();

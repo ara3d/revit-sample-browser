@@ -9,9 +9,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
-    /// <summary>
-    ///     Provides functions to create Gutter.
-    /// </summary>
     public class GutterCreator : HostedSweepCreator
     {
         /// <summary>
@@ -19,10 +16,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// </summary>
         private Dictionary<Element, List<Edge>> m_roofGutterEdges;
 
-        /// <summary>
-        ///     Constructor with Revit.Document as parameter.
-        /// </summary>
-        /// <param name="rvtDoc">Revit document</param>
         public GutterCreator(UIDocument rvtDoc)
             : base(rvtDoc)
         {
@@ -124,12 +117,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
             transaction.RollBack();
         }
 
-        /// <summary>
-        ///     Create a Gutter.
-        /// </summary>
-        /// <param name="symbol">Gutter type</param>
-        /// <param name="refArr">Gutter Reference array</param>
-        /// <returns>Created Gutter</returns>
         protected override HostedSweep CreateHostedSweep(ElementType symbol, ReferenceArray refArr)
         {
             var gutter = RvtDoc.Create.NewGutter(symbol as GutterType, refArr);

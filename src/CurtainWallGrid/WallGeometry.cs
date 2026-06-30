@@ -12,11 +12,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
     /// </summary>
     public class WallGeometry
     {
-        //store the start point of baseline (in Autodesk.Revit.DB.XYZ format)
 
-        // store the end point of baseline (in PointD format)
         private PointD m_endPointD;
-        // the document of this sample
 
         // the refferred drawing class for the curtain wall
 
@@ -24,26 +21,15 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
         // the selected wall type
 
-        // store the start point of baseline (in PointD format)
         private PointD m_startPointD;
 
-        /// <summary>
-        ///     default constructor
-        /// </summary>
-        /// <param name="myDoc">
-        ///     the document of the sample
-        /// </param>
         public WallGeometry(MyDocument myDoc)
         {
             MyDocument = myDoc;
             Drawing = new WallDrawing(this);
         }
 
-        //store the end point of baseline (in Autodesk.Revit.DB.XYZ format)
 
-        /// <summary>
-        ///     the document of this sample
-        /// </summary>
         public MyDocument MyDocument { get; }
 
         /// <summary>
@@ -56,37 +42,22 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         /// </summary>
         public ViewPlan SelectedView { get; set; }
 
-        /// <summary>
-        ///     the selected wall type
-        /// </summary>
         public WallType SelectedWallType { get; set; }
 
-        /// <summary>
-        ///     store the start point of baseline (in PointD format)
-        /// </summary>
         public PointD StartPointD
         {
             get => m_startPointD;
             set => m_startPointD = value;
         }
 
-        /// <summary>
-        ///     Get start point of baseline
-        /// </summary>
         public XYZ StartXyz { get; set; }
 
-        /// <summary>
-        ///     store the end point of baseline (in PointD format)
-        /// </summary>
         public PointD EndPointD
         {
             get => m_endPointD;
             set => m_endPointD = value;
         }
 
-        /// <summary>
-        ///     Get end point of baseline
-        /// </summary>
         public XYZ EndXyz { get; set; }
 
         /// <summary>
@@ -99,7 +70,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         {
             if (null == SelectedWallType || null == SelectedView) return null;
 
-            //baseline
             //new baseline and transform coordinate on windows UI to Revit UI
             StartXyz = new XYZ(m_startPointD.X, m_startPointD.Y, 0);
             EndXyz = new XYZ(m_endPointD.X, m_endPointD.Y, 0);

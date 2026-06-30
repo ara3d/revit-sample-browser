@@ -24,7 +24,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                     {
                         transaction.Start();
 
-                        //create a new curve loop
                         var profileloop = new CurveLoop();
                         profileloop.Append(Line.CreateBound(
                             new XYZ(0, 0, 0), new XYZ(5, 0, 0)));
@@ -35,7 +34,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                         profileloop.Append(Line.CreateBound(
                             new XYZ(-2, 5, 0), new XYZ(0, 0, 0)));
 
-                        //Sets the new contour for analytical panel
                         analyticalPanel.SetOuterContour(profileloop);
 
                         transaction.Commit();

@@ -9,9 +9,6 @@ using Ara3D.RevitSampleBrowser.Common.Documents;
 using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
 {
-    /// <summary>
-    ///     Implementation class for utilities to find south facing windows in a project.
-    /// </summary>
     public class FindSouthFacingWindows : FindSouthFacingBase
     {
         protected void Execute(bool useProjectLocationNorth)

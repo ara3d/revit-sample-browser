@@ -12,13 +12,8 @@ using Autodesk.Revit.UI.Selection;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SetTagType sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return the first family symbol found in the given document
-        ///     matching the given built-in category, or null if none is found.
-        /// </summary>
         public static FamilySymbol GetFirstFamilySymbol(
             Document doc,
             BuiltInCategory bic)
@@ -32,12 +27,7 @@ namespace BuildingCoder
             return s;
         }
 
-        /// <summary>
-        ///     Determine bottom and top levels for creating walls.
-        ///     In a default empty Revit Architecture project,
-        ///     'Level 1' and 'Level 2' will be returned.
-        /// </summary>
-        /// <returns>True if the two levels are successfully determined.</returns>
+        // Default empty RAC project returns Level 1 and Level 2.
         public static bool GetBottomAndTopLevels(
             Document doc,
             ref Level levelBottom,
@@ -65,7 +55,7 @@ namespace BuildingCoder
             return null != levelBottom && null != levelTop;
         }
 
-        // for https://forums.autodesk.com/t5/revit-api-forum/macro-doesnt-work-properly-on-big-projects/m-p/10186076
+        // https://forums.autodesk.com/t5/revit-api-forum/macro-doesnt-work-properly-on-big-projects/m-p/10186076
         public static void SetTagColorToElementColor(UIDocument uiDoc)
         {
             var doc = uiDoc.Document;
@@ -150,11 +140,7 @@ namespace BuildingCoder
             }
         }
 
-        /// <summary>
-        /// Determine tag extents, width and height
-        /// By AmitMetz in 
-        /// https://forums.autodesk.com/t5/revit-api-forum/tag-width-height-or-accurate-boundingbox-of-independenttag/m-p/11274095
-        /// </summary>
+        // Tag extents via temporary leader move; see https://forums.autodesk.com/t5/revit-api-forum/tag-width-height-or-accurate-boundingbox-of-independenttag/m-p/11274095
         public static Tuple<double, double> GetTagExtents(
             IndependentTag tag)
         {

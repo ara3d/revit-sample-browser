@@ -59,7 +59,6 @@ namespace BuildingCoder
 
             //TopographySurface surface = doc.Create.NewTopographySurface( pts ); // 2013
 
-            //var surface = TopographySurface.Create(doc, pts); // 2014-2023
 
             ElementId idType = null;
             ElementId idLevel = null;

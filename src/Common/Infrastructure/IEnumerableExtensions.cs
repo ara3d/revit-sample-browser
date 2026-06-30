@@ -65,10 +65,6 @@ namespace BuildingCoder
                 return min;
             }
     
-            /// <summary>
-            ///     Create HashSet from IEnumerable given selector and comparer.
-            ///     http://geekswithblogs.net/BlackRabbitCoder/archive/2011/03/31/c.net-toolbox-adding-a-tohashset-extension-method.aspx
-            /// </summary>
             public static HashSet<TElement> ToHashSet<TSource, TElement>(
                 this IEnumerable<TSource> source,
                 Func<TSource, TElement> elementSelector,
@@ -84,11 +80,6 @@ namespace BuildingCoder
                     source.Select(elementSelector), comparer);
             }
     
-            /// <summary>
-            ///     Create a HashSet of TSource from an IEnumerable
-            ///     of TSource using the identity selector and
-            ///     default equality comparer.
-            /// </summary>
             public static HashSet<TSource> ToHashSet<TSource>(
                 this IEnumerable<TSource> source)
             {
@@ -97,11 +88,6 @@ namespace BuildingCoder
                     item => item, null);
             }
     
-            /// <summary>
-            ///     Create a HashSet of TSource from an IEnumerable
-            ///     of TSource using the identity selector and
-            ///     specified equality comparer.
-            /// </summary>
             public static HashSet<TSource> ToHashSet<TSource>(
                 this IEnumerable<TSource> source,
                 IEqualityComparer<TSource> comparer)
@@ -110,11 +96,6 @@ namespace BuildingCoder
                     item => item, comparer);
             }
     
-            /// <summary>
-            ///     Create a HashSet of TElement from an IEnumerable
-            ///     of TSource using the specified element selector
-            ///     and default equality comparer.
-            /// </summary>
             public static HashSet<TElement> ToHashSet<TSource, TElement>(
                 this IEnumerable<TSource> source,
                 Func<TSource, TElement> elementSelector)

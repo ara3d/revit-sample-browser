@@ -16,29 +16,14 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
     /// </summary>
     public class GeometrySupport
     {
-        /// <summary>
-        ///     the extend or sweep path of the beam or column
-        /// </summary>
         protected readonly Line DrivingLine;
 
-        /// <summary>
-        ///     the director vector of beam or column
-        /// </summary>
         protected readonly XYZ DrivingVector;
 
-        /// <summary>
-        ///     a list to store the edges
-        /// </summary>
         private List<Line> m_edges = new List<Line>();
 
-        /// <summary>
-        ///     a list to store the point
-        /// </summary>
         protected readonly List<XYZ> Points = new List<XYZ>();
 
-        /// <summary>
-        ///     the transform value of the solid
-        /// </summary>
         private readonly Transform m_transform;
 
         /// <summary>
@@ -105,32 +90,17 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             if (4 != Points.Count) throw new Exception("The sample only work for rectangular beams or columns.");
         }
 
-        /// <summary>
-        ///     transform the point to new coordinates
-        /// </summary>
-        /// <param name="point">the point need to transform</param>
-        /// <returns>the changed point</returns>
         private XYZ Transform(XYZ point)
         {
             // only invoke the TransformPoint() method.
             return XyzMath.TransformPoint(point, m_transform);
         }
 
-        /// <summary>
-        ///     Get the length of driving line
-        /// </summary>
-        /// <returns>the length of the driving line</returns>
         protected double GetDrivingLineLength()
         {
             return XyzMath.GetLength(DrivingVector);
         }
 
-        /// <summary>
-        ///     Get two vectors, which indicate some edge direction which contain given point,
-        ///     set the given point as the start point, the other end point of the edge as end
-        /// </summary>
-        /// <param name="point">a point of the swept profile</param>
-        /// <returns>two vectors indicate edge direction</returns>
         protected List<XYZ> GetRelatedVectors(XYZ point)
         {
             // Initialize the return vector list.
@@ -214,11 +184,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return null != m_edges;
         }
 
-        /// <summary>
-        ///     Get the swept profile(face) of the host object(family instance)
-        /// </summary>
-        /// <param name="solid">the solid reference</param>
-        /// <returns>the swept profile</returns>
         private Face GetSweptProfileFace(Solid solid)
         {
             // Get a point on the swept profile from all points in solid
@@ -271,11 +236,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return sweptFace;
         }
 
-        /// <summary>
-        ///     Change the swept profile edges from EdgeArray type to line list
-        /// </summary>
-        /// <param name="edges">the swept profile edges</param>
-        /// <returns>the line list which stores the swept profile edges</returns>
         private List<Line> ChangeEdgeToLine(EdgeArray edges)
         {
             // create the line list instance.

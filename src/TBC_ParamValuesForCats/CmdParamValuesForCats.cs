@@ -1,4 +1,4 @@
-﻿#region Header
+#region Header
 
 //
 // CmdParamValuesForCats.cs - retrieve all parameter values for all elements of the given categories
@@ -23,9 +23,6 @@ namespace BuildingCoder
     [Transaction(TransactionMode.ReadOnly)]
     internal class CmdParamValuesForCats : IExternalCommand
     {
-        /// <summary>
-        ///     List all built-in categories of interest
-        /// </summary>
         private static readonly BuiltInCategory[] _categories =
         {
             BuiltInCategory.OST_Doors,
@@ -48,7 +45,6 @@ namespace BuildingCoder
       // Parameter names are not guaranteed to be 
       // unique! Therefore, it may be impossible to
       // include all parameter values in a dictionary
-      // using the parameter name as a key.
 
 #if PARAMETER_NAMES_ARE_UNIQUE
       Dictionary<string,

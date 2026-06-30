@@ -8,10 +8,6 @@ using AppCreation = Autodesk.Revit.Creation.Application;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 {
-    /// <summary>
-    ///     This sample demonstrates how to automatically join geometry
-    ///     between multiple generic forms for use in family modeling and massing.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -26,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                 "Ara3D.RevitSampleBrowser.AutoJoin");
             trans.Start();
             if (null == SAppCreation)
-                // share for class Intersection.
+                // Shared with Intersection for geometry options.
                 SAppCreation = commandData.Application.Application.Create;
 
             var doc = commandData.Application.ActiveUIDocument;
@@ -65,14 +61,12 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 
                 doc.Document.CombineElements(solids);
 
-                //The selected generic forms are joined, whether or not they overlap.
                 trans.Commit();
                 return Result.Succeeded;
             }
 
             var autojoin = new AutoJoin();
             autojoin.Join(doc.Document);
-            //All overlapping generic forms are joined.
             trans.Commit();
             return Result.Succeeded;
         }

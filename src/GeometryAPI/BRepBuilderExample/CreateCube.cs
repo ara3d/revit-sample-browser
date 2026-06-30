@@ -8,9 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
-    /// <summary>
-    ///     Implement method Execute of this class as an external command for Revit.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class CreateCube : IExternalCommand
     {
@@ -51,32 +48,24 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 
         private BRepBuilder CreateCubeImpl()
         {
-            // create a BRepBuilder; add faces to build a cube
-
             var brepBuilder = new BRepBuilder(BRepType.Solid);
 
-            // a cube 100x100x100, from (0,0,0) to (100, 100, 100)
-
-            // 1. Planes.
-            // naming convention for faces and planes:
-            // We are looking at this cube in an isometric view. X is down and to the left of us, Y is horizontal and points to the right, Z is up.
-            // front and back faces are along the X axis, left and right are along the Y axis, top and bottom are along the Z axis.
+            // Cube 100x100x100 from (0,0,0) to (100,100,100).
+            // Isometric view: X down-left, Y right, Z up; front/back along X, left/right along Y, top/bottom along Z.
             var bottom =
                 Plane.CreateByOriginAndBasis(new XYZ(50, 50, 0), new XYZ(1, 0, 0),
-                    new XYZ(0, 1, 0)); // bottom. XY plane, Z = 0, normal pointing inside the cube.
+                    new XYZ(0, 1, 0));
             var top = Plane.CreateByOriginAndBasis(new XYZ(50, 50, 100), new XYZ(1, 0, 0),
-                new XYZ(0, 1, 0)); // top. XY plane, Z = 100, normal pointing outside the cube.
+                new XYZ(0, 1, 0));
             var front = Plane.CreateByOriginAndBasis(new XYZ(100, 50, 50), new XYZ(0, 0, 1),
-                new XYZ(0, 1, 0)); // front side. ZY plane, X = 0, normal pointing inside the cube.
+                new XYZ(0, 1, 0));
             var back = Plane.CreateByOriginAndBasis(new XYZ(0, 50, 50), new XYZ(0, 0, 1),
-                new XYZ(0, 1, 0)); // back side. ZY plane, X = 0, normal pointing outside the cube.
+                new XYZ(0, 1, 0));
             var left = Plane.CreateByOriginAndBasis(new XYZ(50, 0, 50), new XYZ(0, 0, 1),
-                new XYZ(1, 0, 0)); // left side. ZX plane, Y = 0, normal pointing inside the cube
+                new XYZ(1, 0, 0));
             var right = Plane.CreateByOriginAndBasis(new XYZ(50, 100, 50), new XYZ(0, 0, 1),
-                new XYZ(1, 0, 0)); // right side. ZX plane, Y = 100, normal pointing outside the cube
-            //Note that the alternating of "inside/outside" matches the alternating of "true/false" in the next block that defines faces. 
-            //There must be a correspondence to ensure that all faces are correctly oriented to point out of the solid.
-            // 2. Faces.
+                new XYZ(1, 0, 0));
+            // Alternating inside/outside normals must match alternating true/false on AddFace so faces point outward.
             var faceIdBottom = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(bottom, null), true);
             var faceIdTop = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(top, null), false);
             var faceIdFront = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(front, null), true);
@@ -84,28 +73,21 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var faceIdLeft = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(left, null), true);
             var faceIdRight = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(right, null), false);
 
-            // 3. Edges.
-
-            // 3.a (define edge geometry)
-            // walk around bottom face
             var edgeBottomFront = BRepBuilderEdgeGeometry.Create(new XYZ(100, 0, 0), new XYZ(100, 100, 0));
             var edgeBottomRight = BRepBuilderEdgeGeometry.Create(new XYZ(100, 100, 0), new XYZ(0, 100, 0));
             var edgeBottomBack = BRepBuilderEdgeGeometry.Create(new XYZ(0, 100, 0), new XYZ(0, 0, 0));
             var edgeBottomLeft = BRepBuilderEdgeGeometry.Create(new XYZ(0, 0, 0), new XYZ(100, 0, 0));
 
-            // now walk around top face
             var edgeTopFront = BRepBuilderEdgeGeometry.Create(new XYZ(100, 0, 100), new XYZ(100, 100, 100));
             var edgeTopRight = BRepBuilderEdgeGeometry.Create(new XYZ(100, 100, 100), new XYZ(0, 100, 100));
             var edgeTopBack = BRepBuilderEdgeGeometry.Create(new XYZ(0, 100, 100), new XYZ(0, 0, 100));
             var edgeTopLeft = BRepBuilderEdgeGeometry.Create(new XYZ(0, 0, 100), new XYZ(100, 0, 100));
 
-            // sides
             var edgeFrontRight = BRepBuilderEdgeGeometry.Create(new XYZ(100, 100, 0), new XYZ(100, 100, 100));
             var edgeRightBack = BRepBuilderEdgeGeometry.Create(new XYZ(0, 100, 0), new XYZ(0, 100, 100));
             var edgeBackLeft = BRepBuilderEdgeGeometry.Create(new XYZ(0, 0, 0), new XYZ(0, 0, 100));
             var edgeLeftFront = BRepBuilderEdgeGeometry.Create(new XYZ(100, 0, 0), new XYZ(100, 0, 100));
 
-            // 3.b (define the edges themselves)
             var edgeIdBottomFront = brepBuilder.AddEdge(edgeBottomFront);
             var edgeIdBottomRight = brepBuilder.AddEdge(edgeBottomRight);
             var edgeIdBottomBack = brepBuilder.AddEdge(edgeBottomBack);
@@ -119,7 +101,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var edgeIdBackLeft = brepBuilder.AddEdge(edgeBackLeft);
             var edgeIdLeftFront = brepBuilder.AddEdge(edgeLeftFront);
 
-            // 4. Loops.
             var loopIdBottom = brepBuilder.AddLoop(faceIdBottom);
             var loopIdTop = brepBuilder.AddLoop(faceIdTop);
             var loopIdFront = brepBuilder.AddLoop(faceIdFront);
@@ -127,52 +108,45 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var loopIdRight = brepBuilder.AddLoop(faceIdRight);
             var loopIdLeft = brepBuilder.AddLoop(faceIdLeft);
 
-            // 5. Co-edges. 
-            // Bottom face. All edges reversed
-            brepBuilder.AddCoEdge(loopIdBottom, edgeIdBottomFront, true); // other direction in front loop
-            brepBuilder.AddCoEdge(loopIdBottom, edgeIdBottomLeft, true); // other direction in left loop
-            brepBuilder.AddCoEdge(loopIdBottom, edgeIdBottomBack, true); // other direction in back loop
-            brepBuilder.AddCoEdge(loopIdBottom, edgeIdBottomRight, true); // other direction in right loop
+            brepBuilder.AddCoEdge(loopIdBottom, edgeIdBottomFront, true);
+            brepBuilder.AddCoEdge(loopIdBottom, edgeIdBottomLeft, true);
+            brepBuilder.AddCoEdge(loopIdBottom, edgeIdBottomBack, true);
+            brepBuilder.AddCoEdge(loopIdBottom, edgeIdBottomRight, true);
             brepBuilder.FinishLoop(loopIdBottom);
             brepBuilder.FinishFace(faceIdBottom);
 
-            // Top face. All edges NOT reversed.
-            brepBuilder.AddCoEdge(loopIdTop, edgeIdTopFront, false); // other direction in front loop.
-            brepBuilder.AddCoEdge(loopIdTop, edgeIdTopRight, false); // other direction in right loop
-            brepBuilder.AddCoEdge(loopIdTop, edgeIdTopBack, false); // other direction in back loop
-            brepBuilder.AddCoEdge(loopIdTop, edgeIdTopLeft, false); // other direction in left loop
+            brepBuilder.AddCoEdge(loopIdTop, edgeIdTopFront, false);
+            brepBuilder.AddCoEdge(loopIdTop, edgeIdTopRight, false);
+            brepBuilder.AddCoEdge(loopIdTop, edgeIdTopBack, false);
+            brepBuilder.AddCoEdge(loopIdTop, edgeIdTopLeft, false);
             brepBuilder.FinishLoop(loopIdTop);
             brepBuilder.FinishFace(faceIdTop);
 
-            // Front face.
-            brepBuilder.AddCoEdge(loopIdFront, edgeIdBottomFront, false); // other direction in bottom loop
-            brepBuilder.AddCoEdge(loopIdFront, edgeIdFrontRight, false); // other direction in right loop
-            brepBuilder.AddCoEdge(loopIdFront, edgeIdTopFront, true); // other direction in top loop.
-            brepBuilder.AddCoEdge(loopIdFront, edgeIdLeftFront, true); // other direction in left loop.
+            brepBuilder.AddCoEdge(loopIdFront, edgeIdBottomFront, false);
+            brepBuilder.AddCoEdge(loopIdFront, edgeIdFrontRight, false);
+            brepBuilder.AddCoEdge(loopIdFront, edgeIdTopFront, true);
+            brepBuilder.AddCoEdge(loopIdFront, edgeIdLeftFront, true);
             brepBuilder.FinishLoop(loopIdFront);
             brepBuilder.FinishFace(faceIdFront);
 
-            // Back face
-            brepBuilder.AddCoEdge(loopIdBack, edgeIdBottomBack, false); // other direction in bottom loop
-            brepBuilder.AddCoEdge(loopIdBack, edgeIdBackLeft, false); // other direction in left loop.
-            brepBuilder.AddCoEdge(loopIdBack, edgeIdTopBack, true); // other direction in top loop
-            brepBuilder.AddCoEdge(loopIdBack, edgeIdRightBack, true); // other direction in right loop.
+            brepBuilder.AddCoEdge(loopIdBack, edgeIdBottomBack, false);
+            brepBuilder.AddCoEdge(loopIdBack, edgeIdBackLeft, false);
+            brepBuilder.AddCoEdge(loopIdBack, edgeIdTopBack, true);
+            brepBuilder.AddCoEdge(loopIdBack, edgeIdRightBack, true);
             brepBuilder.FinishLoop(loopIdBack);
             brepBuilder.FinishFace(faceIdBack);
 
-            // Right face
-            brepBuilder.AddCoEdge(loopIdRight, edgeIdBottomRight, false); // other direction in bottom loop
-            brepBuilder.AddCoEdge(loopIdRight, edgeIdRightBack, false); // other direction in back loop
-            brepBuilder.AddCoEdge(loopIdRight, edgeIdTopRight, true); // other direction in top loop
-            brepBuilder.AddCoEdge(loopIdRight, edgeIdFrontRight, true); // other direction in front loop
+            brepBuilder.AddCoEdge(loopIdRight, edgeIdBottomRight, false);
+            brepBuilder.AddCoEdge(loopIdRight, edgeIdRightBack, false);
+            brepBuilder.AddCoEdge(loopIdRight, edgeIdTopRight, true);
+            brepBuilder.AddCoEdge(loopIdRight, edgeIdFrontRight, true);
             brepBuilder.FinishLoop(loopIdRight);
             brepBuilder.FinishFace(faceIdRight);
 
-            // Left face
-            brepBuilder.AddCoEdge(loopIdLeft, edgeIdBottomLeft, false); // other direction in bottom loop
-            brepBuilder.AddCoEdge(loopIdLeft, edgeIdLeftFront, false); // other direction in front loop
-            brepBuilder.AddCoEdge(loopIdLeft, edgeIdTopLeft, true); // other direction in top loop
-            brepBuilder.AddCoEdge(loopIdLeft, edgeIdBackLeft, true); // other direction in back loop
+            brepBuilder.AddCoEdge(loopIdLeft, edgeIdBottomLeft, false);
+            brepBuilder.AddCoEdge(loopIdLeft, edgeIdLeftFront, false);
+            brepBuilder.AddCoEdge(loopIdLeft, edgeIdTopLeft, true);
+            brepBuilder.AddCoEdge(loopIdLeft, edgeIdBackLeft, true);
             brepBuilder.FinishLoop(loopIdLeft);
             brepBuilder.FinishFace(faceIdLeft);
 

@@ -46,11 +46,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 
         private Matrix4 m_transformMatrix; // store the Matrix used to transform Revit coordinate to window UI
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="floor">Floor object in Revit</param>
-        /// <param name="commandData">contains reference of Revit Application</param>
         public SlabProfile(Floor floor, ExternalCommandData commandData)
         {
             m_floor = floor;
@@ -64,17 +59,11 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// </summary>
         public void GetSlabProfileInfo()
         {
-            // get all the edges of the Slab
             m_edges = GetFloorEdges();
-            // Get a matrix which can transform points to 2D
             m_to2DMatrix = GetTo2DMatrix();
-            // get the boundary of all the points
             m_boundPoints = GetBoundsPoints();
-            // get a matrix which can keep all the points in the center of the canvas
             m_moveToCenterMatrix = GetMoveToCenterMatrix();
-            // get a matrix for scaling all the points and lines within the canvas
             m_scaleMatrix = GetScaleMatrix();
-            // get a matrix for moving all point in the middle of PictureBox
             m_moveToPictureBoxCenter = GetMoveToCenterOfPictureBox();
             // transform 3D points to 2D
             m_transformMatrix = Get3DTo2DMatrix();
@@ -82,10 +71,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             m_restoreMatrix = Get2DTo3DMatrix();
         }
 
-        /// <summary>
-        ///     Get all points of the Slab
-        /// </summary>
-        /// <returns>points array stores all the points on slab</returns>
         public EdgeArray GetFloorEdges()
         {
             var edges = new EdgeArray();
@@ -96,8 +81,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             var geoElem = m_floor.get_Geometry(options);
             //GeometryObjectArray gObjects = geoElem.Objects;
             var objects = geoElem.GetEnumerator();
-            //get all the edges in the Geometry object
-            //foreach (GeometryObject geo in gObjects)
             while (objects.MoveNext())
             {
                 var geo = objects.Current;
@@ -123,10 +106,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return edges;
         }
 
-        /// <summary>
-        ///     Get a matrix which can transform points to 2D
-        /// </summary>
-        /// <returns>matrix which can transform points to 2D</returns>
         public Matrix4 GetTo2DMatrix()
         {
             var xAxis = new Vector4(1, 0, 0);
@@ -150,10 +129,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return new Matrix4((float)(factor * 0.85));
         }
 
-        /// <summary>
-        ///     Get a matrix which can move points to center of itself
-        /// </summary>
-        /// <returns>matrix used to move point to center of itself</returns>
         public Matrix4 GetMoveToCenterMatrix()
         {
             //translate the origin to bound center
@@ -164,10 +139,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return new Matrix4(new Vector4(center.X, center.Y, 0));
         }
 
-        /// <summary>
-        ///     Get a matrix which can move points to center of picture box
-        /// </summary>
-        /// <returns>matrix used to move point to center of picture box</returns>
         private Matrix4 GetMoveToCenterOfPictureBox()
         {
             return new Matrix4(new Vector4(SizeXPictureBox / 2, SizeYPictureBox / 2, 0));
@@ -198,10 +169,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return Matrix4.Multiply(matrix, m_to2DMatrix);
         }
 
-        /// <summary>
-        ///     Get max and min coordinates of all points
-        /// </summary>
-        /// <returns>points array stores the bound of all points</returns>
         public PointF[] GetBoundsPoints()
         {
             var matrix = m_to2DMatrix;
@@ -209,7 +176,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             double minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
 
-            //get all points on slab
             var points = new List<XYZ>();
             foreach (Edge edge in m_edges)
             {
@@ -220,7 +186,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
                 }
             }
 
-            //get the max and min point on the face
             foreach (var point in points)
             {
                 var v = new Vector4(point);
@@ -365,18 +330,15 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         /// <returns>new created Crease</returns>
         public SlabShapeCrease AddCrease(PointF point1, PointF point2)
         {
-            //create first vertex
             var transaction = new Transaction(
                 m_commandData.Application.ActiveUIDocument.Document, "AddCrease");
             transaction.Start();
             var v1 = new Vector4(new XYZ(point1.X, point1.Y, 0));
             v1 = m_restoreMatrix.Transform(v1);
             var vertex1 = m_slabShapeEditor.DrawPoint(new XYZ(v1.X, v1.Y, v1.Z));
-            //create second vertex
             var v2 = new Vector4(new XYZ(point2.X, point2.Y, 0));
             v2 = m_restoreMatrix.Transform(v2);
             var vertex2 = m_slabShapeEditor.DrawPoint(new XYZ(v2.X, v2.Y, v2.Z));
-            //create crease
             var creases = m_slabShapeEditor.DrawSplitLine(vertex1, vertex2);
 
             var crease = creases.get_Item(0);

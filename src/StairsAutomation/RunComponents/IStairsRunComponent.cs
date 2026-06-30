@@ -7,14 +7,8 @@ using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
-    /// <summary>
-    ///     The base interface for a single stairs run.
-    /// </summary>
     public interface IStairsRunComponent
     {
-        /// <summary>
-        ///     The bottom elevation of the run.
-        /// </summary>
         double RunElevation { get; }
 
         /// <summary>
@@ -26,9 +20,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
         /// </throws>
         double TopElevation { get; }
 
-        /// <summary>
-        ///     The width of the run.
-        /// </summary>
         double Width { get; set; }
 
         /// <summary>

@@ -16,27 +16,17 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
     {
         private readonly List<RebarShapeParameter> m_parameterList;
 
-        /// <summary>
-        ///     Default constructor.
-        /// </summary>
         public AddParameter()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Constructor, initialize fields.
-        /// </summary>
-        /// <param name="list"></param>
         public AddParameter(List<RebarShapeParameter> list)
             : this()
         {
             m_parameterList = list;
         }
 
-        /// <summary>
-        ///     Is it formula parameter or not?
-        /// </summary>
         public bool IsFormula => paramFormulaRadioButton.Checked;
 
         /// <summary>

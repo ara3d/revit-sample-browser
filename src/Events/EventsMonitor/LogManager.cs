@@ -8,53 +8,25 @@ using System.Reflection;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
-    /// <summary>
-    ///     This class implements all operators about writing log file and generating event
-    ///     information for showing in the information window. This class is not the main one
-    ///     just a assistant in this sample. If you just want to learn how to use Revit events,
-    ///     please pay more attention to EventManager class.
-    /// </summary>
     public class LogManager
     {
-        /// <summary>
-        ///     data table for information windows.
-        /// </summary>
         private readonly DataTable m_eventsLog;
 
-        /// <summary>
-        ///     path of temp file and log file
-        /// </summary>
         private readonly string m_filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        /// <summary>
-        ///     a temp file to record log and before revit closed the temp file will be change to log file.
-        ///     This strategy can make the log file alway can be accessable.
-        /// </summary>
+        // Temp file is copied to EventsMonitor.log on close so the log stays readable while Revit runs.
         private string m_tempFile;
 
-        /// <summary>
-        ///     add a trace listener.
-        /// </summary>
         private TraceListener m_txtListener;
 
-        /// <summary>
-        ///     Constructor without argument.
-        /// </summary>
         public LogManager()
         {
-            //m_filePath = ;
             CreateLogFile();
             m_eventsLog = CreateEventsLogTable();
         }
 
-        /// <summary>
-        ///     Property to get and set private member variables of Event log information.
-        /// </summary>
         public DataTable EventsLog => m_eventsLog;
 
-        /// <summary>
-        ///     Create a log file to track the subscribed events' work process.
-        /// </summary>
         private void CreateLogFile()
         {
             m_tempFile = Path.Combine(m_filePath, "Temp.log");
@@ -63,9 +35,6 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             Trace.Listeners.Add(m_txtListener);
         }
 
-        /// <summary>
-        ///     Close the log file and remove the corresponding listener.
-        /// </summary>
         public void CloseLogFile()
         {
             Trace.Flush();
@@ -79,51 +48,35 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             File.Delete(m_tempFile);
         }
 
-        /// <summary>
-        ///     Generate a data table with four columns for display in window
-        /// </summary>
-        /// <returns>The DataTable to be displayed in window</returns>
         private DataTable CreateEventsLogTable()
         {
-            // create a new dataTable
             var eventsInfoLogTable = new DataTable("EventsLogInfoTable");
 
-            // Create a "Time" column
             var timeColumn = new DataColumn("Time", typeof(string))
             {
                 Caption = "Time"
             };
             eventsInfoLogTable.Columns.Add(timeColumn);
 
-            // Create a "Event" column
-            var eventColum = new DataColumn("Event", typeof(string))
+            var eventColumn = new DataColumn("Event", typeof(string))
             {
                 Caption = "Event"
             };
-            eventsInfoLogTable.Columns.Add(eventColum);
+            eventsInfoLogTable.Columns.Add(eventColumn);
 
-            // Create a "Type" column
-            var typeColum = new DataColumn("Type", typeof(string))
+            var typeColumn = new DataColumn("Type", typeof(string))
             {
                 Caption = "Type"
             };
-            eventsInfoLogTable.Columns.Add(typeColum);
+            eventsInfoLogTable.Columns.Add(typeColumn);
 
-            // return this data table 
             return eventsInfoLogTable;
         }
 
-        /// <summary>
-        ///     When any event which has been subscribed is fired, log its information.
-        ///     the information includes: machine name, user, time and event
-        /// </summary>
-        /// <param name="sender"> Event sender.</param>
-        /// <param name="args">EventArgs of this event.</param>
         public void TrackEvent(object sender, EventArgs args)
         {
             var newRow = m_eventsLog.NewRow();
 
-            // set the relative information of this event into the table.
             newRow["Time"] = DateTime.Now.ToString();
             newRow["Event"] = EventLoggingHelper.GetRevitDbEventName(args.GetType());
             newRow["Type"] = sender.GetType().ToString();
@@ -131,34 +84,23 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             m_eventsLog.Rows.Add(newRow);
         }
 
-        /// <summary>
-        ///     Write log to file, event name and type will be dumped
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="args">EventArgs of this event.</param>
         public void WriteLogFile(object sender, EventArgs args)
         {
             Trace.WriteLine("*********************************************************");
             if (null == args) return;
-            // get this eventArgs's runtime type.
             var type = args.GetType();
             var eventName = EventLoggingHelper.GetRevitDbEventName(type);
             Trace.WriteLine($"Raised {sender.GetType()}.{eventName}");
             Trace.WriteLine("---------------------------------------------------------");
 
-            // 1: output sender's information
             Trace.WriteLine("  Start to dump Sender and EventAgrs of Event...\n");
             if (null != sender)
-                // output the type of sender
                 Trace.WriteLine($"    [Event Sender]: {sender.GetType().FullName}");
             else
                 Trace.WriteLine("      Sender is null, it's unexpected!!!");
 
-            // 2: Output event argument
-            // get all properties info of this argument.
             var propertyInfos = type.GetProperties();
 
-            // output some typical property's name and value. (for example, Cancelable, Cancel,etc)
             foreach (var propertyInfo in propertyInfos)
             {
                 try
@@ -175,7 +117,6 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
                         case "DocumentType":
                         case "Format":
                             var propertyValue = propertyInfo.GetValue(args, null);
-                            // Dump current property value
                             Trace.WriteLine($"    [Property]: {propertyInfo.Name}");
                             Trace.WriteLine($"    [Value]: {propertyValue}");
                             break;
@@ -183,7 +124,6 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
                 }
                 catch (Exception ex)
                 {
-                    // Unexpected exception
                     Trace.WriteLine($"    [Property Exception]: {propertyInfo.Name}, {ex.Message}");
                 }
             }

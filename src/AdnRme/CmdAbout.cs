@@ -32,16 +32,10 @@ using DialogResult = System.Windows.Forms.DialogResult;
 
 namespace AdnRme
 {
-  /// <summary>
-  /// Command to display "About..." box.
-  /// </summary>
   [Transaction( TransactionMode.ReadOnly )]
   public class CmdAbout : IExternalCommand
   {
     #region Execute Command
-    /// <summary>
-    /// Execute the command to display "About..." box.
-    /// </summary>
     public Result Execute(
       ExternalCommandData commandData,
       ref String message,

@@ -53,12 +53,6 @@ namespace BuildingCoder
                 return Result.Cancelled;
             }
 
-            //TextNoteType boldTextType = doc.GetElement(
-            //  new ElementId( 1212838 ) ) as TextNoteType; // Arial 3/32" Bold
-
-            // 1 inch = 72 points
-            // 3/32" = 72 * 3/32 points = ...
-
             var textType
                 = new FilteredElementCollector(doc)
                     .OfClass(typeof(TextNoteType))
@@ -66,16 +60,13 @@ namespace BuildingCoder
 
             Debug.Print($"TextNoteType.Name = {textType.Name}");
 
-            // 6 mm Arial happens to be the first text type found
-            // 6 mm = 6 / 25.4 inch = 72 * 6 / 25.4 points = 17 pt.
-            // Nowadays, Windows does not assume that a point is
-            // 1/72", but moved to 1/96" instead.
+            // Windows font sizing uses 96 points per inch, not 72.
 
             float text_type_height_mm = 6;
 
             var mm_per_inch = 25.4f;
 
-            float points_per_inch = 96; // not 72
+            float points_per_inch = 96;
 
             var em_size = points_per_inch
                           * (text_type_height_mm / mm_per_inch);
@@ -91,7 +82,6 @@ namespace BuildingCoder
             {
                 t.Start("Create TextNote");
 
-                //string s = "TEST BOLD";
 
                 var s = "The quick brown fox jumps over the lazy dog";
 
@@ -108,14 +98,8 @@ namespace BuildingCoder
 
                 var newWidth = w_inch / 12;
 
-                //TextNote txNote = doc.Create.NewTextNote(
-                //  doc.ActiveView, p, XYZ.BasisX, XYZ.BasisY,
-                //  newWidth, TextAlignFlags.TEF_ALIGN_LEFT
-                //  | TextAlignFlags.TEF_ALIGN_BOTTOM, s ); // 2015
-                //txNote.TextNoteType = textType; // 2015
-
                 txNote = TextNote.Create(doc,
-                    doc.ActiveView.Id, p, s, textType.Id); // 2016
+                    doc.ActiveView.Id, p, s, textType.Id);
 
                 Debug.Print(
                     "NewTextNote lineWidth {0} times view scale "
@@ -125,24 +109,12 @@ namespace BuildingCoder
                     Util.RealString(newWidth * v_scale),
                     Util.RealString(txNote.Width));
 
-                // This fails.
-
-                //Debug.Assert(
-                //  Util.IsEqual( newWidth * v_scale, txNote.Width ),
-                //  "expected the NewTextNote lineWidth "
-                //  + "argument to determine the resulting "
-                //  + "text note width" );
-
                 var wmin = txNote.GetMinimumAllowedWidth();
                 var wmax = txNote.GetMaximumAllowedWidth();
-                //double wnew = newWidth * v_scale; // this is 100 times too big
+
                 var wnew = newWidth;
 
                 txNote.Width = wnew;
-
-                //6mm Arial
-                //Text box width in pixels 668 = 6.95833349227905 inch, scale 100
-                //NewTextNote lineWidth 0.58 times view scale 100 = 57.99 generated TextNote.Width 59.32
 
                 t.Commit();
             }
@@ -160,9 +132,7 @@ namespace BuildingCoder
                 var param = textNoteType.get_Parameter(
                     BuiltInParameter.LINE_COLOR);
 
-                // Note that this modifies the existing text 
-                // note type for all instances using it. If
-                // not desired, use Duplicate() first.
+                // Modifies the text note type for all instances; Duplicate() first if needed.
 
                 param.Set(color);
 
@@ -209,7 +179,6 @@ namespace BuildingCoder
                         .Cast<TextNoteType>()
                         .ToList();
 
-                // Sort note types into ascending text size
 
                 var bipTextSize
                     = BuiltInParameter.TEXT_SIZE;
@@ -308,21 +277,14 @@ namespace BuildingCoder
                         var lineWidth = (stringWidthFt * textWidthScale
                                          + textBorder * 2.0) * viewScale;
 
-                        //TextNote textNote = dbDoc.Create.NewTextNote(
-                        //  view, pLoc, XYZ.BasisX, XYZ.BasisY, 0.001,
-                        //  TextAlignFlags.TEF_ALIGN_LEFT
-                        //  | TextAlignFlags.TEF_ALIGN_TOP, textString ); // 2015
-                        //textNote.TextNoteType = textType; // 2015
-
                         var textNote = TextNote.Create(dbDoc,
-                            view.Id, pLoc, textString, textType.Id); // 2016
+                            view.Id, pLoc, textString, textType.Id);
 
                         textNote.Width = lineWidth;
 
                         t.Commit();
                     }
 
-                    // Place next text note below this one with 5 mm gap
 
                     pLoc += view.UpDirection.Multiply(
                         (textHeight + 5.0 / 304.8)

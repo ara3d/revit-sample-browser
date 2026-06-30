@@ -2,16 +2,10 @@
 
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents
 {
-    /// <summary>
-    ///     A thread-safe class for getting and setting modeless-command data.
-    /// </summary>
     public class ModelessCommand
     {
         private ModelessCommandData m_data = new ModelessCommandData();
 
-        /// <summary>
-        ///     Set data into the command.
-        /// </summary>
         public void Make(ModelessCommandData commandData)
         {
             lock (this)
@@ -20,9 +14,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents
             }
         }
 
-        /// <summary>
-        ///     Get data from the command.
-        /// </summary>
         public ModelessCommandData Take()
         {
             lock (this)

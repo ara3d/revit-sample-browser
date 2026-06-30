@@ -8,9 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
-    /// <summary>
-    ///     Import the panel scheduel view to place on a sheet view.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -21,14 +18,12 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            // get one sheet view to place panel schedule.
             if (!(doc.ActiveView is ViewSheet sheet))
             {
                 message = "please go to a sheet view.";
                 return Result.Failed;
             }
 
-            // get all PanelScheduleView instances in the Revit document.
             var fec = new FilteredElementCollector(doc);
             var panelScheduleViewsAreWanted = new ElementClassFilter(typeof(PanelScheduleView));
             fec.WherePasses(panelScheduleViewsAreWanted);
@@ -42,7 +37,6 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
             {
                 var psView = element as PanelScheduleView;
                 if (psView.IsPanelScheduleTemplate())
-                    // ignore the PanelScheduleView instance which is a template.
                     continue;
 
                 var onSheet = PanelScheduleSheetInstance.Create(doc, psView.Id, sheet);

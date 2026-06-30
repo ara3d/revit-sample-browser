@@ -12,9 +12,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_IntersectJunctionBox sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return all faces from first solid of the given element.
-        /// </summary>
         internal static IEnumerable<Face> GetElementFaces(Element e)
         {
             var opt = new Options();
@@ -29,10 +26,6 @@ namespace BuildingCoder
                 e.GetType().Name, n, PluralSuffix(n));
             return faces;
         }
-
-        /// <summary>
-        ///     Test face-face intersection between a floor and wall.
-        /// </summary>
         internal static void TestFaceIntersect(Document doc)
         {
             var view = doc.ActiveView;
@@ -90,10 +83,6 @@ namespace BuildingCoder
                     n, PluralSuffix(n));
             }
         }
-
-        /// <summary>
-        ///     Create parallel conduit offsets from a curve element.
-        /// </summary>
         internal static void CreateConduitOffsets(
             Element conduit,
             double diameter,
@@ -161,10 +150,6 @@ namespace BuildingCoder
                 .Set(diameter);
         }
     }
-
-    /// <summary>
-    ///     Find conduits intersecting a junction box by geometry.
-    /// </summary>
     internal class JunctionBoxConduitFinder
     {
         public readonly List<Conduit> GetListOfConduits = new();

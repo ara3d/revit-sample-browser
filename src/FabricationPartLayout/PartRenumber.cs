@@ -27,7 +27,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uidoc = commandData.Application.ActiveUIDocument;
                 var doc = uidoc.Document;
                 var collection = uidoc.Selection.GetElementIds();
@@ -41,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     {
                         if (doc.GetElement(elementId) is FabricationPart part)
                         {
-                            part.ItemNumber = string.Empty; // wipe the item number
+                            part.ItemNumber = string.Empty;
                             fabParts.Add(part);
                         }
                     }
@@ -52,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         return Result.Failed;
                     }
 
-                    // ignore certain fields
+                    // Notes, order, and service differ between duplicates we still want to match.
                     var ignoreFields = new List<FabricationPartCompareType>
                     {
                         FabricationPartCompareType.Notes,
@@ -65,7 +64,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         var part1 = fabParts[i];
                         if (string.IsNullOrWhiteSpace(part1.ItemNumber))
                         {
-                            // part has not already been checked
                             if (FabricationPartHelper.IsADuct(part1))
                             {
                                 if (SampleBrowserUtils.IsACoupling(part1))
@@ -94,9 +92,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         {
                             var part2 = fabParts[j];
                             if (string.IsNullOrWhiteSpace(part2.ItemNumber))
-                                // part2 has not been checked
                                 if (part1.IsSameAs(part2, ignoreFields))
-                                    // items are the same, so give them the same item number
                                     part2.ItemNumber = part1.ItemNumber;
                         }
                     }

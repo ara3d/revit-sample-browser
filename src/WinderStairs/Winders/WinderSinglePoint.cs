@@ -6,18 +6,8 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
-    /// <summary>
-    ///     This represents a single point winder corner.
-    /// </summary>
     public class WinderSinglePoint : WinderCorner
     {
-        /// <summary>
-        ///     Constructor to initialize the basic fields of the winder region.
-        /// </summary>
-        /// <param name="cornerPnt">Corner Point</param>
-        /// <param name="dir1">Enter direction</param>
-        /// <param name="dir2">Leave direction</param>
-        /// <param name="steps">Number of steps</param>
         public WinderSinglePoint(XYZ cornerPnt, XYZ dir1, XYZ dir2, uint steps)
             : base(cornerPnt, dir1, dir2, steps)
         {
@@ -33,17 +23,8 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
         * CornerPoint
         */
 
-        /// <summary>
-        ///     Calculated point: All the riser lines are pass through this point.
-        /// </summary>
         public XYZ CenterPoint { get; private set; }
 
-        /// <summary>
-        ///     Calculate the CenterPoint base on Australia single-point layout algorithm.
-        /// </summary>
-        /// <param name="runWidth">Stairs Runwidth</param>
-        /// <param name="offset1">CenterPoint Offset from the first inner boundary</param>
-        /// <param name="offset2">CenterPoint Offset from the second inner boundary</param>
         public void Construct(double runWidth, double offset1, double offset2)
         {
             var bisectDir = (Direction2 - Direction1).Normalize();
@@ -74,10 +55,6 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
             Distance2 = proj2.Parameter;
         }
 
-        /// <summary>
-        ///     Generate the sketch base on the calculated CenterPoint:
-        ///     Divide the corner into NumSteps evenly.
-        /// </summary>
         public override void GenerateSketch(double runWidth,
             IList<Curve> outerBoundary, IList<Curve> walkPath,
             IList<Curve> innerBoundary, IList<Curve> riserLines)
@@ -194,9 +171,6 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
             }
         }
 
-        /// <summary>
-        ///     Move the center point
-        /// </summary>
         public override void Move(XYZ vector)
         {
             base.Move(vector);

@@ -10,10 +10,6 @@ using Color = System.Drawing.Color;
 
 namespace Ara3D.RevitSampleBrowser.Massing.ParameterValuesFromImage.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class used to set parameter values from image data
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class SetParameterValueWithImageData : IExternalCommand

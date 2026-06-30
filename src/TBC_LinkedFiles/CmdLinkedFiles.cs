@@ -76,7 +76,6 @@ namespace BuildingCoder
 
                 var e = link.get_Geometry(new Options());
                 if (null != e) // no geometry defined
-                    //GeometryObjectArray objects = e.Objects; // 2012
                     //n = objects.Size; // 2012
                     n = e.Count(); // 2013
 

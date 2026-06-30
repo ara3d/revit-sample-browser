@@ -20,11 +20,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         private readonly double m_columnLength; //the length of the column
         private readonly double m_columnWidth; //the width of the column
 
-        /// <summary>
-        ///     constructor for the ColumnGeometrySupport
-        /// </summary>
-        /// <param name="element">the column which the rebars are placed on</param>
-        /// <param name="geoOptions">the geometry option</param>
         public ColumnGeometrySupport(FamilyInstance element, Options geoOptions)
             : base(element, geoOptions)
         {
@@ -38,12 +33,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             m_columnWidth = GetColumnWidth();
         }
 
-        /// <summary>
-        ///     Get the geometry information of the transverse reinforcement
-        /// </summary>
-        /// <param name="location">the location of transverse rebar</param>
-        /// <param name="spacing">the spacing value of the rebar</param>
-        /// <returns>the got geometry information</returns>
         public RebarGeometry GetTransverseRebar(TransverseRebarLocation location, double spacing)
         {
             // sort the points of the swept profile
@@ -102,12 +91,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
 
-        /// <summary>
-        ///     Get the geometry information of vertical reinforcement
-        /// </summary>
-        /// <param name="location">the location of vertical rebar</param>
-        /// <param name="rebarNumber">the spacing value of the rebar</param>
-        /// <returns>the got geometry information</returns>
         public RebarGeometry GetVerticalRebar(VerticalRebarLocation location, int rebarNumber)
         {
             // sort the points of the swept profile
@@ -163,10 +146,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
 
-        /// <summary>
-        ///     Get the length of the column
-        /// </summary>
-        /// <returns>the length data</returns>
         private double GetColumnLength()
         {
             var comparer = new XyzHeightComparer();
@@ -179,10 +158,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return XyzMath.GetLength(directions[0]);
         }
 
-        /// <summary>
-        ///     Get the width of the column
-        /// </summary>
-        /// <returns>the width data</returns>
         private double GetColumnWidth()
         {
             var comparer = new XyzHeightComparer();

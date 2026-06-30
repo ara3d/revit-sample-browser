@@ -28,31 +28,14 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
     /// </summary>
     public class FramReinMaker : IFrameReinMaker
     {
-        /// <summary>
-        ///     a list to store all the hook types
-        /// </summary>
         private List<RebarHookType> m_hookTypes = new List<RebarHookType>();
 
-        /// <summary>
-        ///     the family instance to places rebar on
-        /// </summary>
         private readonly FamilyInstance m_hostObject;
 
-        /// <summary>
-        ///     a set to store all the rebar types
-        /// </summary>
         private List<RebarBarType> m_rebarTypes = new List<RebarBarType>();
 
-        /// <summary>
-        ///     the API create handle
-        /// </summary>
         private readonly Document m_revitDoc;
 
-        /// <summary>
-        ///     The constructor of FramReinMaker
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
-        /// <param name="hostObject">the host family instance</param>
         protected FramReinMaker(ExternalCommandData commandData, FamilyInstance hostObject)
         {
             // Get and store reinforcement create handle and host family instance
@@ -76,11 +59,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         /// </summary>
         public IList<RebarHookType> HookTypes => m_hookTypes;
 
-        /// <summary>
-        ///     Implement the Run() method of IFrameReinMaker interface.
-        ///     Give the flew process of the reinforcement creation.
-        /// </summary>
-        /// <returns></returns>
         bool IFrameReinMaker.Run()
         {
             // First, check the data whether is right and enough.
@@ -93,39 +71,21 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             return FillWithBars();
         }
 
-        /// <summary>
-        ///     This is a virtual method which used to check the data whether is right and enough.
-        /// </summary>
-        /// <returns>true if the the data is right and enough, otherwise false.</returns>
         protected virtual bool AssertData()
         {
             return true; // only return true
         }
 
-        /// <summary>
-        ///     This is a virtual method which used to collect creation information
-        /// </summary>
-        /// <returns>true if the informatin collection is successful, otherwise false</returns>
         protected virtual bool DisplayForm()
         {
             return true; // only return true
         }
 
-        /// <summary>
-        ///     This is a virtual method which used to create reinforcement.
-        /// </summary>
-        /// <returns>true if the creation is successful, otherwise false</returns>
         protected virtual bool FillWithBars()
         {
             return true; // only return true
         }
 
-        /// <summary>
-        ///     The helper function to changed rebar number and spacing properties
-        /// </summary>
-        /// <param name="bar">The rebar instance which need to modify</param>
-        /// <param name="number">The rebar number want to set</param>
-        /// <param name="spacing">The spacing want to set</param>
         protected static void SetRebarSpaceAndNumber(Rebar bar, int number, double spacing)
         {
             // Asset the parameter is valid
@@ -135,16 +95,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             bar.GetShapeDrivenAccessor().SetLayoutAsNumberWithSpacing(number, spacing, true, true, true);
         }
 
-        /// <summary>
-        ///     A wrap fuction which used to create the reinforcement.
-        /// </summary>
-        /// <param name="rebarType">The element of RebarBarType</param>
-        /// <param name="startHook">The element of start RebarHookType</param>
-        /// <param name="endHook">The element of end RebarHookType</param>
-        /// <param name="geomInfo">The goemetry information of the rebar</param>
-        /// <param name="startOrient">An Integer defines the orientation of the start hook</param>
-        /// <param name="endOrient">An Integer defines the orientation of the end hook</param>
-        /// <returns></returns>
         protected Rebar PlaceRebars(RebarBarType rebarType, RebarHookType startHook,
             RebarHookType endHook, RebarGeometry geomInfo,
             RebarHookOrientation startOrient, RebarHookOrientation endOrient)
@@ -164,11 +114,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             return createdRebar;
         }
 
-        /// <summary>
-        ///     get all the hook types in current project, and store in m_hookTypes data
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
-        /// <returns>true if some hook types can be gotton, otherwise false</returns>
         private bool GetHookTypes(ExternalCommandData commandData)
         {
             // Initialize the m_hookTypes which used to store all hook types.
@@ -181,11 +126,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             return 0 != m_hookTypes.Count;
         }
 
-        /// <summary>
-        ///     get all the rebar types in current project, and store in m_rebarTypes data
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
-        /// <returns>true if some rebar types can be gotton, otherwise false</returns>
         private bool GetRebarTypes(ExternalCommandData commandData)
         {
             // Initialize the m_rebarTypes which used to store all rebar types.

@@ -11,16 +11,11 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     this class read parameter data from txt files and add them to the active family document.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class AddParameterToFamily : IExternalCommand
     {
-        // the active Revit application
         private UIApplication m_app;
 
         public Result Execute(ExternalCommandData commandData,
@@ -49,12 +44,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
             }
         }
 
-        /// <summary>
-        ///     add parameters to the active document
-        /// </summary>
-        /// <returns>
-        ///     if succeeded, return true; otherwise false
-        /// </returns>
         private bool AddParameters()
         {
             var doc = m_app.ActiveUIDocument.Document;
@@ -71,7 +60,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
             }
 
             var assigner = new FamilyParameterAssigner(m_app.Application, doc);
-            // the parameters to be added are defined and recorded in a text file, read them from that file and load to memory
             var succeeded = assigner.LoadParametersFromFile();
             if (!succeeded) return false;
 
@@ -87,18 +75,13 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
             t.RollBack();
             return false;
         }
-    } // end of class "AddParameterToFamily"
+    }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     this class read parameter data from txt files and add them to the family files in a folder.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class AddParameterToFamilies : IExternalCommand
     {
-        // the active Revit application
         private Application m_app;
 
         public Result Execute(ExternalCommandData commandData,
@@ -127,13 +110,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
             }
         }
 
-        /// <summary>
-        ///     search for the family files and the corresponding parameter records
-        ///     load each family file, add parameters and then save and close.
-        /// </summary>
-        /// <returns>
-        ///     if succeeded, return true; otherwise false
-        /// </returns>
         private bool LoadFamiliesAndAddParameters()
         {
             var succeeded = true;
@@ -169,11 +145,9 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
                     continue;
                 }
 
-                // return and report the errors
                 if (!succeeded) return false;
 
                 var assigner = new FamilyParameterAssigner(m_app, doc);
-                // the parameters to be added are defined and recorded in a text file, read them from that file and load to memory
                 succeeded = assigner.LoadParametersFromFile();
                 if (!succeeded)
                 {
@@ -201,16 +175,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
 
             return true;
         }
-    } // end of class "AddParameterToFamilies"
+    }
 
-    /// <summary>
-    ///     store the warning/error messeges when executing the sample
-    /// </summary>
     public static class MessageManager
     {
-        /// <summary>
-        ///     store the warning/error messages
-        /// </summary>
         public static StringBuilder MessageBuff { get; set; } = new StringBuilder();
     }
 }

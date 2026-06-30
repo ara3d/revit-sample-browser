@@ -13,9 +13,6 @@ using PrintRange = Autodesk.Revit.DB.PrintRange;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
-    /// <summary>
-    ///     Exposes the print interfaces just like the Print Dialog (File->Print...) in UI.
-    /// </summary>
     public class PrintMgr
     {
         private readonly ExternalCommandData m_commandData;

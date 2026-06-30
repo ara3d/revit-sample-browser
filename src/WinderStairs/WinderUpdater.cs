@@ -63,9 +63,6 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
             }
         }
 
-        /// <summary>
-        ///     Implementation of IExternalEventHandler.Execute method.
-        /// </summary>
         void IExternalEventHandler.Execute(UIApplication app)
         {
             try
@@ -79,17 +76,11 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
             }
         }
 
-        /// <summary>
-        ///     Implementation of IExternalEventHandler.GetName method.
-        /// </summary>
         string IExternalEventHandler.GetName()
         {
             return "Ara3D.RevitSampleBrowser.WinderStairs";
         }
 
-        /// <summary>
-        ///     Implementation of IUpdater.Execute method.
-        /// </summary>
         void IUpdater.Execute(UpdaterData data)
         {
             // If there is any deleted elements, this updater need to be unregistered.
@@ -102,33 +93,21 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
             exEvent.Raise();
         }
 
-        /// <summary>
-        ///     Implementation of IUpdater.GetAdditionalInformation method.
-        /// </summary>
         string IUpdater.GetAdditionalInformation()
         {
             return "API SKETCHED WINDER";
         }
 
-        /// <summary>
-        ///     Implementation of IUpdater.GetChangePriority method.
-        /// </summary>
         ChangePriority IUpdater.GetChangePriority()
         {
             return ChangePriority.GridsLevelsReferencePlanes;
         }
 
-        /// <summary>
-        ///     Implementation of IUpdater.GetUpdaterId method.
-        /// </summary>
         UpdaterId IUpdater.GetUpdaterId()
         {
             return m_updaterId;
         }
 
-        /// <summary>
-        ///     Implementation of IUpdater.GetUpdaterName method.
-        /// </summary>
         string IUpdater.GetUpdaterName()
         {
             return "Ara3D.RevitSampleBrowser.WinderStairs";

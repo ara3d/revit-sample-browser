@@ -40,10 +40,6 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Moves a subregion and the associated topography to a new user-selected location.
-        /// </summary>
-        /// <param name="uiDoc">The document.</param>
         private void MoveSubregionAndPoints(UIDocument uiDoc)
         {
             var doc = uiDoc.Document;
@@ -65,7 +61,6 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             {
                 moveGroup.Start();
 
-                // Get elevation of region in current location
                 var existingPointsInCurrentLocation = subregion.GetPoints();
 
                 var existingElevation = SiteTopographyHelper.GetAverageElevation(existingPointsInCurrentLocation);

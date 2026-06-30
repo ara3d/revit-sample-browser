@@ -22,9 +22,6 @@ using Autodesk.Revit.UI.Events;
 
 namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
@@ -64,88 +61,44 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
             m_assemblyName = $"{Assembly.GetExecutingAssembly().GetName().Name}.dll";
             m_imageFolder = $"{GetProjectDirectory()}/Resources/";
 
-            //add a panel to go on the Add-In tab
             var panel = application.CreateRibbonPanel("ArrayPrismsOnASineCurve");
-            //add panel with text fields for user input for period, amplitude and cycles of sine curve
             AddCurvePropertiesTextFields(panel);
-            //add panel with text field for user input for number of partitions along the curve
             AddPartitionsTextField(panel);
             panel.AddSeparator();
-            //add drop down menu for type of prism selection
             AddPrismComboBox(panel);
             panel.AddSeparator();
-            //add RUN button
             AddRunButton(panel);
 
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Gets the name of the currently selected family symbol.
-        /// </summary>
-        /// <returns>A string representing the name of the currently selected family symbol</returns>
         public static string GetFamilySymbolName()
         {
             return _prismComboBox.Current.Name;
         }
 
-        /// <summary>
-        ///     Gets the value corresponding to the current text field input about the curve period.
-        /// </summary>
-        /// <returns>
-        ///     The double value corresponding to the curent text field input
-        ///     for the curve period parameter.
-        /// </returns>
         public static double GetPeriod()
         {
             return _periodVal;
         }
 
-        /// <summary>
-        ///     Gets the value corresponding to the current text field input about the curve
-        ///     number of cycles.
-        /// </summary>
-        /// <returns>
-        ///     The double value corresponding to the curent text field input
-        ///     for the curve number of cycles parameter.
-        /// </returns>
         public static double GetNumberOfCycles()
         {
             return _cyclesVal;
         }
 
-        /// <summary>
-        ///     Gets the value corresponding to the current text field about the curve amplitude.
-        /// </summary>
-        /// <returns>
-        ///     The double value corresponding to the curent text field input
-        ///     for the curve amplitude parameter.
-        /// </returns>
         public static double GetAplitude()
         {
             return _amplitudeVal;
         }
 
-        /// <summary>
-        ///     Gets the value corresponding to the current text field about the number of partitions.
-        /// </summary>
-        /// <returns>
-        ///     The double value corresponding to the curent text field input for the
-        ///     number of partitions.
-        /// </returns>
         public static double GetNumberOfPartitions()
         {
             return _partitionsVal;
         }
 
-        /// <summary>
-        ///     Adds a drop down menu for selection of a type of prism. This four types
-        ///     correspond to 4 family symbols already loaded in the working Revit document.
-        /// </summary>
-        /// <param name="panel">the RibbonPanel where the UI element is added</param>
         private void AddPrismComboBox(RibbonPanel panel)
         {
-            // create a four members combo box for family instance selection 
             //Family instance #1
             var comboBoxMemberData1 = new ComboBoxMemberData("cylinder", "cylinder prism");
             //Family instance #2
@@ -165,11 +118,6 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
             _prismComboBox.AddItem(comboBoxMemberData4);
         }
 
-        /// <summary>
-        ///     Adds a group of text fields for accepting user input for the various parameters
-        ///     of the sine curve (cycles, period, amplitude).
-        /// </summary>
-        /// <param name="panel">the RibbonPanel where the UI element is added</param>
         private void AddCurvePropertiesTextFields(RibbonPanel panel)
         {
             //Inactive textfields that just display information about the active input fields
@@ -207,11 +155,6 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
                 "Define the amplitude of the sine curve", $"{_amplitudeVal}", _amplitudeVal, true, 50);
         }
 
-        /// <summary>
-        ///     Add a text field for accepting user input for how many family instances to array on
-        ///     the curve.
-        /// </summary>
-        /// <param name="panel">the RibbonPanel where the UI element is added</param>
         private void AddPartitionsTextField(RibbonPanel panel)
         {
             var partitionsFieldData = new TextBoxData("curve partitions field");
@@ -225,11 +168,6 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
                 true, 50);
         }
 
-        /// <summary>
-        ///     Adds button that arrays family instances of curves given the various
-        ///     user inputs.
-        /// </summary>
-        /// <param name="panel">the RibbonPanel where the UI element is added</param>
         private void AddRunButton(RibbonPanel panel)
         {
             var pushButtonData = new PushButtonData("arrayPrisms", "run",
@@ -251,16 +189,6 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
             if (isEnabled) txtBox.EnterPressed += TextBoxEnterPressed;
         }
 
-        /// <summary>
-        ///     Handles the action of the text box user input. Checks if the input value is an
-        ///     acceptable double value and if it lies among the acceptable range of values; if
-        ///     it is it updates the corresponding field variable, if not it displays a warning
-        ///     message to the user and retains the previous value.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e">
-        ///     The event arguments used by ComboBox's CurrentChanged event.
-        /// </param>
         private void TextBoxEnterPressed(object sender, TextBoxEnterPressedEventArgs e)
         {
             //cast sender as TextBox to retrieve text value
@@ -303,13 +231,8 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
             }
         }
 
-        /// <summary>
-        ///     Returns the path of the main project directory.
-        /// </summary>
-        /// <returns>A string object corresponding to the full path of the main project directory.</returns>
         private string GetProjectDirectory()
         {
-            //get the absolut path of the assembly
             var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             //move two directory levels back
             var grandParentDir = Directory.GetParent(assemblyPath).Parent.FullName;

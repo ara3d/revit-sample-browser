@@ -26,13 +26,6 @@ namespace BuildingCoder
 {
     #region Compatibility Methods by Magson Leone
     
-        /// <summary>
-        ///     These compatibility helper methods make use of
-        ///     Reflection to determine which Revit method is
-        ///     available and call that. You can use these
-        ///     methods to create an add-in that is compatible
-        ///     across all versions of Revit from 2012 to 2016.
-        /// </summary>
         public static class CompatibilityMethods
         {
             #region Autodesk.Revit.DB.Curve
@@ -184,7 +177,6 @@ namespace BuildingCoder
             //    .GetMethod( "Create", new Type[] { t } ).Invoke( definitions,
             //      new object[] { ed } ) as Definition;
             //  }
-            //  else
             //  {
             //    value = definitions.GetType()
             //    .GetMethod( "Create", new Type[] { typeof(string),

@@ -77,9 +77,7 @@ namespace BuildingCoder
             return Result.Failed;
         }
 
-        /// <summary>
-        ///     Modified version with changes to use WindowSelect, by Tao (Tau) Yang, Autodesk.
-        /// </summary>
+        // Modified by Tao (Tau) Yang to use WindowSelect.
         public Result Execute2(
             ExternalCommandData commandData,
             ref string message,

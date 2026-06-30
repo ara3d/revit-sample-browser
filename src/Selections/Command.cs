@@ -22,14 +22,8 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class PickforDeletion : IExternalCommand
     {
-        /// <summary>
-        ///     store the application
-        /// </summary>
         private UIApplication m_application;
 
-        /// <summary>
-        ///     store the document
-        /// </summary>
         private UIDocument m_document;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -78,14 +72,8 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
     [Regeneration(RegenerationOption.Manual)]
     public class PlaceAtPointOnWallFace : IExternalCommand
     {
-        /// <summary>
-        ///     store the application
-        /// </summary>
         private UIApplication m_application;
 
-        /// <summary>
-        ///     store the document
-        /// </summary>
         private UIDocument m_document;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -120,10 +108,6 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
             }
         }
 
-        /// <summary>
-        ///     Pick a point on wall face.
-        /// </summary>
-        /// <returns>The point reference picked on wall face. Null for selection cancel.</returns>
         protected Reference PickPointOnWallFace()
         {
             try
@@ -137,16 +121,11 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
             }
         }
 
-        /// <summary>
-        ///     // Place the 36" x 48" window at the reference.
-        /// </summary>
-        /// <param name="eRef">The point reference picked from wall face.</param>
         protected void PlaceWindowAtReference(Reference eRef)
         {
             // Find the window type 36" x 48".
             var windowType = FindFamilySymbol("36\" x 48\"");
             if (windowType != null)
-                // Create the window.
                 m_document.Document.Create.NewFamilyInstance(eRef.GlobalPoint, windowType,
                     m_document.Document.GetElement(eRef), StructuralType.NonStructural);
         }
@@ -174,19 +153,10 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
     [Regeneration(RegenerationOption.Manual)]
     public class PlaceAtPickedFaceWorkplane : IExternalCommand
     {
-        /// <summary>
-        ///     store the application.
-        /// </summary>
         private UIApplication m_application;
 
-        /// <summary>
-        ///     For basic creation.
-        /// </summary>
         private ItemFactoryBase m_creationBase;
 
-        /// <summary>
-        ///     store the document
-        /// </summary>
         private UIDocument m_document;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -244,12 +214,6 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
             }
         }
 
-        /// <summary>
-        ///     Create a sketch plane via given normal and origin points.
-        /// </summary>
-        /// <param name="normal">The vector for normal of sketch plane.</param>
-        /// <param name="origin">The vector for origin of sketch plane.</param>
-        /// <returns>The new sketch plane created by specific normal and origin.</returns>
         public SketchPlane CreateSketchPlane(XYZ normal, XYZ origin)
         {
             // First create a Geometry.Plane which need in NewSketchPlane() method
@@ -278,7 +242,6 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
             try
             {
                 var manager = new SelectionManager(commandData);
-                // Create a form to select objects.
                 var result = DialogResult.None;
                 while (result == DialogResult.None || result == DialogResult.Retry)
                 {

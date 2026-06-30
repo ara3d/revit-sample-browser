@@ -1,5 +1,4 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-//
 // Adapted from CreateAndPrintSheetsAndViews by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CreateAndPrintSheetsAndViews
 
@@ -85,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             var w = r - p;
             return IsParallel(v, w);
         }
-        #endregion // Geometrical Comparison
+        #endregion
 
         #region Unit Handling
 
@@ -119,7 +118,7 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
         {
             return ToInt(_footToMm * length);
         }
-        #endregion // Unit Handling
+        #endregion
 
         #region Formatting
 
@@ -266,7 +265,7 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             TaskDialogResult result = taskDialog.Show();
             return result == TaskDialogResult.Yes;
         }
-        #endregion // Formatting
+        #endregion
 
         public static string GetProductCode(Element e)
         {

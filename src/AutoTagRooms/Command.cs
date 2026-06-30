@@ -19,16 +19,13 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
         {
             try
             {
-                //Create a transaction
                 var documentTransaction =
                     new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
                 documentTransaction.Start();
-                // Create a new instance of class RoomsData
                 var data = new RoomsData(commandData);
 
                 DialogResult result;
 
-                // Create a form to display the information of rooms
                 using (var roomsTagForm = new AutoTagRoomsForm(data))
                 {
                     result = roomsTagForm.ShowDialog();

@@ -33,9 +33,6 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.StringSearch.CS
 {
-  /// <summary>
-  /// Display a form for user to select search string and options.
-  /// </summary>
   public partial class SearchForm : Form
   {
     enum RadioButtonChecked { Selection, View, Project };

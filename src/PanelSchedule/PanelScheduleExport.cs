@@ -9,9 +9,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
-    /// <summary>
-    ///     Export Panel Schedule View form Revit to CSV or HTML file.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -22,7 +19,6 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            // get all PanelScheduleView instances in the Revit document.
             var fec = new FilteredElementCollector(doc);
             var panelScheduleViewsAreWanted = new ElementClassFilter(typeof(PanelScheduleView));
             fec.WherePasses(panelScheduleViewsAreWanted);
@@ -34,11 +30,9 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
             {
                 var psView = element as PanelScheduleView;
                 if (psView.IsPanelScheduleTemplate())
-                    // ignore the PanelScheduleView instance which is a template.
                     continue;
                 noPanelScheduleInstance = false;
 
-                // choose what format export to, it can be CSV or HTML.
                 var alternativeDlg = new TaskDialog("Choose Format to export")
                 {
                     MainContent = "Click OK to export in .CSV format, Cancel to export in HTML format.",
@@ -52,7 +46,6 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
                     : new CsvTranslator(psView) as Translator;
                 var exported = translator.Export();
 
-                // open the file if export successfully.
                 if (!string.IsNullOrEmpty(exported)) Process.Start(exported);
             }
 

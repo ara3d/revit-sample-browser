@@ -1,5 +1,4 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-//
 // Adapted from PathOfTravelDoors by Jeremy Tammik (MIT License):
 // https://github.com/jeremytammik/PathOfTravelDoors
 

@@ -47,7 +47,6 @@ namespace BuildingCoder
             var cd
                 = doc.Create;
 
-            // determine line load symbol to use:
 
             var symbols
                 = new FilteredElementCollector(doc);
@@ -57,7 +56,6 @@ namespace BuildingCoder
             var loadSymbol
                 = symbols.FirstElement() as LineLoadType;
 
-            // sketch plane and arrays of forces and moments:
 
             //Plane plane = ca.NewPlane( XYZ.BasisZ, XYZ.Zero ); // 2016
             var plane = Plane.CreateByNormalAndOrigin(XYZ.BasisZ, XYZ.Zero); // 2017
@@ -65,7 +63,6 @@ namespace BuildingCoder
             using var t = new Transaction(doc);
             t.Start("Create New Line Load");
 
-            //SketchPlane skplane = cd.NewSketchPlane( plane ); // 2013
 
             var skplane = SketchPlane.Create(doc, plane); // 2014
 
@@ -90,12 +87,8 @@ namespace BuildingCoder
             var p1 = new XYZ(0, 0, 0);
             var p2 = new XYZ(3, 0, 0);
             //List<XYZ> points = new List<XYZ>();
-            //points.Add( p1 );
-            //points.Add( p2 );
 
-            // create a new unhosted line load on points:
 
-            //LineLoad lineLoadNoHost = cd.NewLineLoad(
             //  points, forces, moments,
             //  false, false, false,
             //  loadSymbol, skplane ); // 2015
@@ -106,13 +99,11 @@ namespace BuildingCoder
 
             Debug.Print("Unhosted line load works.");
 
-            // create new line loads on beam:
 
             foreach (var e in beams)
             {
                 try
                 {
-                    //LineLoad lineLoad = cd.NewLineLoad(
                     //  e, forces, moments,
                     //  false, false, false,
                     //  loadSymbol, skplane ); // 2015
@@ -138,7 +129,6 @@ namespace BuildingCoder
                     am.GetCurves(AnalyticalCurveType.ActiveCurves))
                     try
                     {
-                        //LineLoad lineLoad = cd.NewLineLoad(
                         //  curve.Reference, forces, moments,
                         //  false, false, false,
                         //  loadSymbol, skplane ); // 2015
@@ -146,7 +136,6 @@ namespace BuildingCoder
                         var amstick = e.GetAnalyticalModel()
                             as AnalyticalModelStick; // 2022
 
-                        //AnalyticalMember amstick2 = e.
 
                         var lineLoad = LineLoad.Create(doc,
                             amstick, forces[0], moments[0], loadSymbol); // 2016
@@ -164,11 +153,6 @@ namespace BuildingCoder
 
             return Result.Succeeded;
         }
-
-        /// <summary>
-        ///     Create a point load on all
-        ///     analytical column end points.
-        /// </summary>
         private void CreatePointLoadOnColumnEnd(Document doc)
         {
             // Find all AM column instances in the document

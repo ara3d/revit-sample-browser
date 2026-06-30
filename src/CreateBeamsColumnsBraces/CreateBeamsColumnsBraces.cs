@@ -10,9 +10,6 @@ using STRUCTURALTYPE = Autodesk.Revit.DB.Structure.StructuralType;
 
 namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
 {
-    /// <summary>
-    ///     Create Beams, Columns and Braces according to user's input information
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -23,19 +20,10 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
         private UV[,] m_matrixUv; //2D coordinates of matrix
         private UIApplication m_revit;
 
-        /// <summary>
-        ///     list of all type of columns
-        /// </summary>
         public ArrayList ColumnMaps { get; } = new ArrayList();
 
-        /// <summary>
-        ///     list of all type of beams
-        /// </summary>
         public ArrayList BeamMaps { get; } = new ArrayList();
 
-        /// <summary>
-        ///     list of all type of braces
-        /// </summary>
         public ArrayList BraceMaps { get; } = new ArrayList();
 
         public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
@@ -74,15 +62,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
             }
         }
 
-        /// <summary>
-        ///     check the number of floors is less than the number of levels
-        ///     create beams, columns and braces according to selected types
-        /// </summary>
-        /// <param name="columnObject">type of column</param>
-        /// <param name="beamObject">type of beam</param>
-        /// <param name="braceObject">type of brace</param>
-        /// <param name="floorNumber">number of floor</param>
-        /// <returns>number of floors is less than the number of levels and create successfully then return true</returns>
         public bool AddInstance(object columnObject, object beamObject, object braceObject, int floorNumber)
         {
             //whether floor number less than levels number
@@ -143,12 +122,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
             return true;
         }
 
-        /// <summary>
-        ///     generate 2D coordinates of matrix according to parameters
-        /// </summary>
-        /// <param name="xNumber">Number of Columns in the X direction</param>
-        /// <param name="yNumber">Number of Columns in the Y direction</param>
-        /// <param name="distance">Distance between columns</param>
         public void CreateMatrix(int xNumber, int yNumber, double distance)
         {
             m_matrixUv = new UV[xNumber, yNumber];
@@ -158,10 +131,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
                 m_matrixUv[i, j] = new UV(i * distance, j * distance);
         }
 
-        /// <summary>
-        ///     iterate all the symbols of levels, columns, beams and braces
-        /// </summary>
-        /// <returns>A value that signifies if the initialization was successful for true or failed for false</returns>
         private bool Initialize()
         {
             try
@@ -209,13 +178,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
             return true;
         }
 
-        /// <summary>
-        ///     create column of certain type in certain position
-        /// </summary>
-        /// <param name="point2D">2D coordinate of the column</param>
-        /// <param name="columnType">type of column</param>
-        /// <param name="baseLevel">the base level of the column</param>
-        /// <param name="topLevel">the top level of the column</param>
         private void PlaceColumn(UV point2D, FamilySymbol columnType, Level baseLevel, Level topLevel)
         {
             //create column of certain type in certain level and start point 
@@ -252,15 +214,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
             }
         }
 
-        /// <summary>
-        ///     create beam of certain type in certain position
-        /// </summary>
-        /// <param name="point2D1">one point of the location line in 2D</param>
-        /// <param name="point2D2">another point of the location line in 2D</param>
-        /// <param name="baseLevel">the base level of the beam</param>
-        /// <param name="topLevel">the top level of the beam</param>
-        /// <param name="beamType">type of beam</param>
-        /// <returns>nothing</returns>
         private void PlaceBeam(UV point2D1, UV point2D2, Level baseLevel, Level topLevel, FamilySymbol beamType)
         {
             var height = topLevel.Elevation;
@@ -274,19 +227,9 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
             m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(line, beamType, topLevel, structuralType);
         }
 
-        /// <summary>
-        ///     create brace of certain type in certain position between two adjacent columns
-        /// </summary>
-        /// <param name="point2D1">one point of the location line in 2D</param>
-        /// <param name="point2D2">another point of the location line in 2D</param>
-        /// <param name="baseLevel">the base level of the brace</param>
-        /// <param name="topLevel">the top level of the brace</param>
-        /// <param name="braceType">type of beam</param>
-        /// <param name="isXDirection">whether the location line is in x direction</param>
         private void PlaceBrace(UV point2D1, UV point2D2, Level baseLevel, Level topLevel, FamilySymbol braceType,
             bool isXDirection)
         {
-            //get the start points and end points of location lines of two braces
             var topHeight = topLevel.Elevation;
             var baseHeight = baseLevel.Elevation;
             var middleElevation = (topHeight + baseHeight) / 2;
@@ -321,15 +264,8 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
         }
     }
 
-    /// <summary>
-    ///     assistant class contains the symbol and its name.
-    /// </summary>
     public class SymbolMap
     {
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="symbol">family symbol</param>
         public SymbolMap(FamilySymbol symbol)
         {
             var familyName = "";
@@ -337,9 +273,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
             SymbolName = $"{familyName} : {symbol.Name}";
         }
 
-        /// <summary>
-        ///     SymbolName property
-        /// </summary>
         public string SymbolName { get; }
     }
 }

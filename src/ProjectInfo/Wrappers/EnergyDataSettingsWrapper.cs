@@ -9,9 +9,6 @@ using Autodesk.Revit.DB.Mechanical;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {
-    /// <summary>
-    ///     Wrapper class for gbXMLParamElem
-    /// </summary>
     public class EnergyDataSettingsWrapper : IWrapper
     {
         /// <summary>
@@ -19,24 +16,14 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
         /// </summary>
         private readonly Document m_document;
 
-        /// <summary>
-        ///     gbXMLParamElem
-        /// </summary>
         private readonly EnergyDataSettings m_energyDataSettings;
 
-        /// <summary>
-        ///     Initializes private variables.
-        /// </summary>
-        /// <param name="gbXMLParamElem">gbXMLParamElem</param>
         public EnergyDataSettingsWrapper(Document document)
         {
             m_document = document;
             m_energyDataSettings = EnergyDataSettings.GetFromDocument(document);
         }
 
-        /// <summary>
-        ///     Gets or sets Building Type
-        /// </summary>
         [Category("Common")]
         [DisplayName("Building Type")]
         [TypeConverter(typeof(BuildingTypeConverter))]
@@ -46,9 +33,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_energyDataSettings.BuildingType = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Ground Plane
-        /// </summary>
         [Category("Common")]
         [DisplayName("Ground Plane")]
         [TypeConverter(typeof(ElementIdConverter<Level>))]
@@ -58,9 +42,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_energyDataSettings.GroundPlane = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Building Service
-        /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Building Service")]
         [TypeConverter(typeof(ServiceTypeConverter))]
@@ -71,9 +52,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_energyDataSettings.ServiceType = value;
         }
 
-        /// <summary>
-        ///     Gets Building Construction
-        /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Building Construction")]
         [TypeConverter(typeof(WrapperConverter))]
@@ -90,9 +68,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             }
         }
 
-        /// <summary>
-        ///     Gets and Sets BuildingConstructionClass
-        /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Building Infiltration Class")]
         [TypeConverter(typeof(HvacLoadConstructionClassConverter))]
@@ -103,9 +78,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_energyDataSettings.BuildingConstructionClass = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Project Phase
-        /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Project Phase")]
         [TypeConverter(typeof(ElementIdConverter<Phase>))]
@@ -115,9 +87,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_energyDataSettings.ProjectPhase = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Sliver Space Tolerance
-        /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Sliver Space Tolerance")]
         public double SliverSpaceTolerance
@@ -126,9 +95,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_energyDataSettings.SliverSpaceTolerance = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Export Complexity
-        /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Export Complexity")]
         [TypeConverter(typeof(ExportComplexityConverter))]
@@ -138,9 +104,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_energyDataSettings.ExportComplexity = value;
         }
 
-        /// <summary>
-        ///     Gets or sets Export Default Values
-        /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Export Default Values")]
         [RevitVersion(ProductType.MEP)]
@@ -150,9 +113,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_energyDataSettings.ExportDefaults = value;
         }
 
-        /// <summary>
-        ///     Gets and Sets ProjectReportType
-        /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Report Type")]
         [TypeConverter(typeof(HvacLoadLoadsReportTypeConverter))]
@@ -163,9 +123,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_energyDataSettings.ProjectReportType = value;
         }
 
-        /// <summary>
-        ///     Gets Project Location
-        /// </summary>
         [DisplayName("Project Location")]
         [TypeConverter(typeof(ProjectLocationConverter))]
         [RevitVersion(ProductType.MEP, ProductType.Architecture)]
@@ -175,23 +132,14 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
             set => m_document.ActiveProjectLocation = value;
         }
 
-        /// <summary>
-        ///     Gets Site Location
-        /// </summary>
         [DisplayName("Site Location")]
         [TypeConverter(typeof(WrapperConverter))]
         [RevitVersion(ProductType.MEP, ProductType.Architecture)]
         public SiteLocationWrapper SiteLocation => new SiteLocationWrapper(m_document.SiteLocation);
 
-        /// <summary>
-        ///     Gets the handle object.
-        /// </summary>
         [Browsable(false)]
         public object Handle => m_energyDataSettings;
 
-        /// <summary>
-        ///     Gets the name of the handle.
-        /// </summary>
         [Browsable(false)]
         public string Name
         {

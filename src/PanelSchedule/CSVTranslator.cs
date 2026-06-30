@@ -15,10 +15,6 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
     /// </summary>
     public class CsvTranslator : Translator
     {
-        /// <summary>
-        ///     create a CSVTranslator instance for a PanelScheduleView instance.
-        /// </summary>
-        /// <param name="psView">the exporting panel schedule view instance.</param>
         public CsvTranslator(PanelScheduleView psView)
         {
             PsView = psView;

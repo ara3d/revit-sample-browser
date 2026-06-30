@@ -12,12 +12,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
     /// </summary>
     public class CreateRadialAndArcGridsData : CreateGridsData
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="application">Application object</param>
-        /// <param name="unit">Current length display unit type</param>
-        /// <param name="labels">All existing labels in Revit's document</param>
         public CreateRadialAndArcGridsData(UIApplication application, ForgeTypeId unit, ArrayList labels)
             : base(application, labels, unit)
         {
@@ -36,14 +30,8 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         // Label of first arc grid
         // Label of first radial grid
 
-        /// <summary>
-        ///     X coordinate of origin
-        /// </summary>
         public double XOrigin { get; set; }
 
-        /// <summary>
-        ///     Y coordinate of origin
-        /// </summary>
         public double YOrigin { get; set; }
 
         /// <summary>
@@ -56,54 +44,24 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         /// </summary>
         public double EndDegree { get; set; }
 
-        /// <summary>
-        ///     Spacing between arc grids
-        /// </summary>
         public double ArcSpacing { get; set; }
 
-        /// <summary>
-        ///     Number of arc grids
-        /// </summary>
         public uint ArcNumber { get; set; }
 
-        /// <summary>
-        ///     Number of radial grids
-        /// </summary>
         public uint LineNumber { get; set; }
 
-        /// <summary>
-        ///     Radius of first arc grid
-        /// </summary>
         public double ArcFirstRadius { get; set; }
 
-        /// <summary>
-        ///     Distance from origin to start point
-        /// </summary>
         public double LineFirstDistance { get; set; }
 
-        /// <summary>
-        ///     Bubble location of arc grids
-        /// </summary>
         public BubbleLocation ArcFirstBubbleLoc { get; set; }
 
-        /// <summary>
-        ///     Bubble location of radial grids
-        /// </summary>
         public BubbleLocation LineFirstBubbleLoc { get; set; }
 
-        /// <summary>
-        ///     Label of first arc grid
-        /// </summary>
         public string ArcFirstLabel { get; set; }
 
-        /// <summary>
-        ///     Label of first radial grid
-        /// </summary>
         public string LineFirstLabel { get; set; }
 
-        /// <summary>
-        ///     Create grids
-        /// </summary>
         public void CreateGrids()
         {
             if (CreateRadialGrids() != 0)
@@ -134,10 +92,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Create radial grids
-        /// </summary>
-        /// <returns>Number of grids failed to create</returns>
         private int CreateRadialGrids()
         {
             var errorCount = 0;
@@ -223,11 +177,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             return errorCount;
         }
 
-        /// <summary>
-        ///     Create Arc Grids
-        /// </summary>
-        /// <param name="failureReasons">ArrayList contains failure reasons</param>
-        /// <returns>Number of grids failed to create</returns>
         private int CreateArcGrids(ref ArrayList failureReasons)
         {
             var errorCount = 0;

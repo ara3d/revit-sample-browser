@@ -8,17 +8,11 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.Units.CS
 {
-    /// <summary>
-    /// </summary>
     public partial class UnitsForm : Form
     {
         //Required designer variable.
         private readonly Autodesk.Revit.DB.Units m_units;
 
-        /// <summary>
-        ///     Initialize GUI with ProjectUnitData
-        /// </summary>
-        /// <param name="units">units in current document</param>
         public UnitsForm(Autodesk.Revit.DB.Units units)
         {
             InitializeComponent();
@@ -81,9 +75,6 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
             FillGrid();
         }
 
-        /// <summary>
-        ///     Fill the grid with selected discipline
-        /// </summary>
         private void FillGrid()
         {
             // using the static example value 1234.56789

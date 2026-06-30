@@ -9,11 +9,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_NestedFamilies sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Returns a list of the nested family files in the
-        ///     given family document whose name matches the given
-        ///     family file name filter.
-        /// </summary>
         public static IEnumerable<Family>
             GetFilteredNestedFamilyDefinitions(
                 string familyFileNameFilter,
@@ -34,10 +29,6 @@ namespace BuildingCoder
 
             return familiesMatching.Cast<Family>();
         }
-
-        /// <summary>
-        ///     Returns a list of family instances found in the given family document.
-        /// </summary>
         public static List<FamilyInstance>
             GetFilteredNestedFamilyInstances(
                 string familyFileNameFilter,
@@ -117,10 +108,6 @@ namespace BuildingCoder
 
             return oResult;
         }
-
-        /// <summary>
-        ///     Returns a reference to the FAMILY parameter on the given instance.
-        /// </summary>
         public static Parameter GetNestedFamilyParameter(
             FamilyInstance nestedFamilyInstance,
             string parameterName)
@@ -150,10 +137,6 @@ namespace BuildingCoder
 
             return oResult;
         }
-
-        /// <summary>
-        ///     Link a parameter on a nested family instance to a host family parameter.
-        /// </summary>
         public static void
             LinkNestedFamilyParameterToHostFamilyParameter(
                 Document hostFamilyDocument,

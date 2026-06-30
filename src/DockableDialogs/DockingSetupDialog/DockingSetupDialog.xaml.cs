@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-//
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
 // AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
 // MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE. AUTODESK, INC.
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
-//
 // Use, duplication, or disclosure by the U.S. Government is subject to
 // restrictions set forth in FAR 52.227-19 (Commercial Computer
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
@@ -20,9 +18,6 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
 {
-    /// <summary>
-    ///     Interaction logic for DockingSetupDialog.xaml
-    /// </summary>
     public partial class DockingSetupDialog : Window
     {
         private int m_bottom;
@@ -45,9 +40,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
         public int FloatTop => m_top;
         public int FloatBottom => m_bottom;
 
-        /// <summary>
-        ///     The guid of the main docking page.
-        /// </summary>
         public Guid MainPageGuid
         {
             get
@@ -70,9 +62,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
             }
         }
 
-        /// <summary>
-        ///     The guid of a tab-behind system pane.
-        /// </summary>
         public Guid TargetGuid
         {
             get
@@ -101,10 +90,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
             private set => m_dockPosition = value;
         }
 
-        /// <summary>
-        ///     Take user-input data for docking dialog choices and attempt to parse it
-        ///     into higher-level data for later use.
-        /// </summary>
         private void btn_ok_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(tb_left.Text, out m_left);

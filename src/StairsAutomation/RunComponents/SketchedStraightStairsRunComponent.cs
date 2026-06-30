@@ -8,9 +8,6 @@ using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
-    /// <summary>
-    ///     A stairs run consisting of a single sketched straight run.
-    /// </summary>
     public class SketchedStraightStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
     {
         private readonly double m_desiredTreadDepth;
@@ -40,14 +37,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             m_widthOffset = new XYZ(m_width, 0, 0);
         }
 
-        /// <summary>
-        ///     Creates a new sketched run configuration at the specified location and orientation.
-        /// </summary>
-        /// <param name="riserNumber">The number of risers.</param>
-        /// <param name="bottomElevation">The bottom elevation.</param>
-        /// <param name="desiredTreadDepth">The desired tread depth.</param>
-        /// <param name="width">The width of the run.</param>
-        /// <param name="transform">The transform (location and orientation).</param>
         public SketchedStraightStairsRunComponent(int riserNumber, double bottomElevation, double desiredTreadDepth,
             double width, Transform transform) :
             base(transform)
@@ -61,14 +50,8 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             m_widthOffset = new XYZ(m_width, 0, 0);
         }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double RunElevation { get; }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double TopElevation
         {
             get
@@ -78,9 +61,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             }
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public IList<Curve> GetStairsPath()
         {
             // Proceed up the middle of the run to the run extent
@@ -92,33 +72,21 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return Transform(ret);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public Curve GetFirstCurve()
         {
             return GenerateRunRiserCurves().First();
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public Curve GetLastCurve()
         {
             return GenerateRunRiserCurves().Last();
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public XYZ GetRunEndpoint()
         {
             return GetLastCurve().GetEndPoint(1);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public StairsRun CreateStairsRun(Document document, ElementId stairsId)
         {
             m_stairsRun = StairsRun.CreateSketchedRun(document, stairsId, GetRunElevation(),
@@ -129,9 +97,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return m_stairsRun;
         }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double Width
         {
             get => m_width;
@@ -142,26 +107,16 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             }
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public double GetRunElevation()
         {
             return RunElevation;
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public IList<Curve> GetRunBoundaryCurves()
         {
             return Transform(GenerateUntransformedRunBoundaryCurves());
         }
 
-        /// <summary>
-        ///     Generates the run boundary curves (not transformed by the stored transformation).
-        /// </summary>
-        /// <returns></returns>
         private IList<Curve> GenerateUntransformedRunBoundaryCurves()
         {
             // Start at 0, 0 and extend to the run extent
@@ -180,10 +135,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return ret;
         }
 
-        /// <summary>
-        ///     Generates the riser curves for the sketch.
-        /// </summary>
-        /// <returns></returns>
         private IList<Curve> GenerateRunRiserCurves()
         {
             var ret = new List<Curve>();

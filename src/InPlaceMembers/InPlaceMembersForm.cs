@@ -10,26 +10,12 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
     /// </summary>
     public partial class InPlaceMembersForm : Form, IMessageFilter
     {
-        /// <summary>
-        ///     window message key number
-        /// </summary>
         private const int WmKeydown = 0X0100;
 
-        /// <summary>
-        ///     Graphics data
-        /// </summary>
         private readonly GraphicsData m_graphicsData;
 
-        /// <summary>
-        ///     Properties instance
-        /// </summary>
         private readonly Properties m_instanceProperties;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="graphicsData"></param>
         public InPlaceMembersForm(Properties p, GraphicsData graphicsData)
         {
             m_instanceProperties = p;
@@ -100,32 +86,17 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             return false;
         }
 
-        /// <summary>
-        ///     load event handle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void InPlaceMembersForm_Load(object sender, EventArgs e)
         {
             instancePropertyGrid.SelectedObject = m_instanceProperties;
             modelPictureBox.DataSource = m_graphicsData;
         }
 
-        /// <summary>
-        ///     ok button event handler
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void OKbutton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     Cancel button event handler.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             Close();

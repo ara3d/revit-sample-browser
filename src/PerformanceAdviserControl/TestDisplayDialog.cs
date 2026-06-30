@@ -26,9 +26,6 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
             FormBorderStyle = FormBorderStyle.Fixed3D;
         }
 
-        /// <summary>
-        ///     Called when the user clicks the "Run Selected Tests" button
-        /// </summary>
         private void btn_RunTests_Click(object sender, EventArgs e)
         {
             Close();
@@ -82,9 +79,6 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
             }
         }
 
-        /// <summary>
-        ///     Closes the dialog without committing any action
-        /// </summary>
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
             Close();

@@ -27,10 +27,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
     [Transaction(TransactionMode.Manual)]
     public class ScheduleFormatterCommand : IExternalCommand
     {
-        /// <summary>
-        ///     The formatter used by the command when updating the schedule.
-        ///     Created upon first use.
-        /// </summary>
         private ScheduleFormatter m_theFormatter;
 
         /// <summary>
@@ -74,11 +70,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Adds an entity to the schedule, indicating that the schedule should be formatted by this tool.
-        /// </summary>
-        /// <param name="viewSchedule">The schedule.</param>
-        /// <param name="schema">The schema used for the entity.</param>
         private void AddMarkerEntity(ViewSchedule viewSchedule, Schema schema)
         {
             // Is entity already present?
@@ -93,10 +84,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
             }
         }
 
-        /// <summary>
-        ///     Set up the schema used to mark the schedules as formatted.
-        /// </summary>
-        /// <returns></returns>
         private static Schema GetOrCreateSchema()
         {
             var schemaId = new Guid("98017A5F-F4A7-451C-8807-EF137B587C50");
@@ -113,10 +100,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
             return schema;
         }
 
-        /// <summary>
-        ///     Add the updater to watch for formatted schedule changes.
-        /// </summary>
-        /// <param name="formatter">The schedule formatter.</param>
         private static void AddUpdater(ScheduleFormatter formatter)
         {
             // If not registered, register the updater

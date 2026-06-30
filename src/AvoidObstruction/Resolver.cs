@@ -14,32 +14,16 @@ using Ara3D.RevitSampleBrowser.Common.Mep;
 using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
-    /// <summary>
-    ///     This class implement the algorithm to detect the obstruction and resolve it.
-    /// </summary>
     public class Resolver
     {
-        /// <summary>
-        ///     Detector to detect the obstructions.
-        /// </summary>
         private readonly Detector m_detector;
 
         private readonly PipingSystemType m_pipingSystemType;
 
-        /// <summary>
-        ///     Revit Application.
-        /// </summary>
         private Application m_rvtApp;
 
-        /// <summary>
-        ///     Revit Document.
-        /// </summary>
         private readonly Document m_rvtDoc;
 
-        /// <summary>
-        ///     Constructor, initialize all the fields of this class.
-        /// </summary>
-        /// <param name="data">Revit ExternalCommandData from external command entrance</param>
         public Resolver(ExternalCommandData data)
         {
             m_rvtDoc = data.Application.ActiveUIDocument.Document;
@@ -57,44 +41,31 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             }
         }
 
-        /// <summary>
-        ///     Detect and resolve the obstructions of all Pipes.
-        /// </summary>
         public void Resolve()
         {
             foreach (var pipe in m_rvtDoc.GetElements<Pipe>())
                  Resolve(pipe);
         }
 
-        /// <summary>
-        ///     Resolve one obstruction of Pipe.
-        /// </summary>
-        /// <param name="pipe">Pipe to resolve</param>
         private void Resolve(Pipe pipe)
         {
             var parameter = pipe.get_Parameter(BuiltInParameter.RBS_START_LEVEL_PARAM);
             var levelId = parameter.AsElementId();
             var systemTypeId = m_pipingSystemType.Id;
-            // Get the centerline of pipe.
             var pipeLine = (pipe.Location as LocationCurve).Curve as Line;
 
-            // Calculate the intersection references with pipe's centerline.
             var obstructionRefArr = m_detector.Obstructions(pipeLine);
 
-            // Filter out the references, just allow Pipe, Beam, and Duct.
             Filter(pipe, obstructionRefArr);
 
             if (obstructionRefArr.Count == 0)
                 // There are no intersection found.
                 return;
 
-            // Calculate the direction of pipe's centerline.
             var dir = pipeLine.GetEndPoint(1) - pipeLine.GetEndPoint(0);
 
-            // Build the sections from the intersection references.
             var sections = Section.BuildSections(obstructionRefArr, dir.Normalize());
 
-            // Merge the neighbor sections if the distance of them is too close.
             for (var i = sections.Count - 2; i >= 0; i--)
             {
                 var detal = sections[i].End - sections[i + 1].Start;
@@ -105,26 +76,20 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
                 }
             }
 
-            // Resolve the obstructions one by one.
             foreach (var sec in sections)
             {
                 Resolve(pipe, sec);
             }
 
-            // Connect the neighbor sections with pipe and elbow fittings.
             //
             for (var i = 1; i < sections.Count; i++)
             {
-                // Get the end point from the previous section.
                 var start = sections[i - 1].End;
 
-                // Get the start point from the current section.
                 var end = sections[i].Start;
 
-                // Create a pipe between two neighbor section.
                 var tmpPipe = Pipe.Create(m_rvtDoc, systemTypeId, pipe.PipeType.Id, levelId, start, end);
 
-                // Copy pipe's parameters values to tmpPipe.
                 ParameterAccess.CopyParameters(pipe, tmpPipe);
 
                 // Create elbow fitting to connect previous section with tmpPipe.
@@ -144,17 +109,13 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 
             Pipe startPipe = null;
             if (null != startConn)
-                // Create a pipe between pipe's start connector and pipe's start section.
                 startPipe = Pipe.Create(m_rvtDoc, pipe.PipeType.Id, levelId, startConn, sections[0].Start);
             else
-                // Create a pipe between pipe's start point and pipe's start section.
                 startPipe = Pipe.Create(m_rvtDoc, systemTypeId, pipe.PipeType.Id, levelId, sections[0].Start,
                     pipeLine.GetEndPoint(0));
 
-            // Copy parameters from pipe to startPipe. 
             ParameterAccess.CopyParameters(pipe, startPipe);
 
-            // Connect the startPipe and first section with elbow fitting.
             var connStart1 = ConnectorHelper.FindConnector(startPipe, sections[0].Start);
             var connStart2 = ConnectorHelper.FindConnector(sections[0].Pipes[0], sections[0].Start);
             m_rvtDoc.Create.NewElbowFitting(connStart1, connStart2);
@@ -162,30 +123,20 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             Pipe endPipe = null;
             var count = sections.Count;
             if (null != endConn)
-                // Create a pipe between pipe's end connector and pipe's end section.
                 endPipe = Pipe.Create(m_rvtDoc, pipe.PipeType.Id, levelId, endConn, sections[count - 1].End);
             else
-                // Create a pipe between pipe's end point and pipe's end section.
                 endPipe = Pipe.Create(m_rvtDoc, systemTypeId, pipe.PipeType.Id, levelId, sections[count - 1].End,
                     pipeLine.GetEndPoint(1));
 
-            // Copy parameters from pipe to endPipe.
             ParameterAccess.CopyParameters(pipe, endPipe);
 
-            // Connect the endPipe and last section with elbow fitting.
             var connEnd1 = ConnectorHelper.FindConnector(endPipe, sections[count - 1].End);
             var connEnd2 = ConnectorHelper.FindConnector(sections[count - 1].Pipes[2], sections[count - 1].End);
             m_rvtDoc.Create.NewElbowFitting(connEnd1, connEnd2);
 
-            // Delete the pipe after resolved.
             m_rvtDoc.Delete(pipe.Id);
         }
 
-        /// <summary>
-        ///     Filter the inputting References, just allow Pipe, Duct and Beam References.
-        /// </summary>
-        /// <param name="pipe">Pipe</param>
-        /// <param name="refs">References to filter</param>
         private void Filter(Pipe pipe, List<ReferenceWithContext> refs)
         {
             for (var i = refs.Count - 1; i >= 0; i--)
@@ -199,12 +150,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             }
         }
 
-        /// <summary>
-        ///     This method will find out a route to avoid the obstruction.
-        /// </summary>
-        /// <param name="pipe">Pipe to resolve</param>
-        /// <param name="section">Pipe's one obstruction</param>
-        /// <returns>A route which can avoid the obstruction</returns>
         private Line FindRoute(Pipe pipe, Section section)
         {
             // Perpendicular direction minimal length.
@@ -213,7 +158,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             // Parallel direction jump step. 
             var jumpStep = pipe.Diameter;
 
-            // Calculate the directions in which to find the solution.
             var dirs = new List<XYZ>();
             foreach (var gref in section.Refs)
             {
@@ -241,18 +185,14 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             Line foundLine = null;
             while (null == foundLine)
             {
-                // Extend the section interval by jumpStep.
                 section.Inflate(0, jumpStep);
                 section.Inflate(1, jumpStep);
 
-                // Find solution in the given directions.
                 for (var i = 0; null == foundLine && i < dirs.Count; i++)
                 {
-                    // Calculate the intersections.
                     var obs1 = m_detector.Obstructions(section.Start, dirs[i]);
                     var obs2 = m_detector.Obstructions(section.End, dirs[i]);
 
-                    // Filter out the intersection result.
                     Filter(pipe, obs1);
                     Filter(pipe, obs2);
 
@@ -260,14 +200,12 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
                     var mins1 = SampleBrowserUtils.GetClosestSectionsToOrigin(obs1);
                     var mins2 = SampleBrowserUtils.GetClosestSectionsToOrigin(obs2);
 
-                    // Find solution in the given direction and its opposite direction.
                     for (var j = 0; null == foundLine && j < 2; j++)
                     {
                         if ((mins1[j] != null && Math.Abs(mins1[j].Proximity) < minLength) ||
                             (mins2[j] != null && Math.Abs(mins2[j].Proximity) < minLength))
                             continue;
 
-                        // Calculate the maximal height that the parallel line can be reached.
                         var maxHight = 1000 * pipe.Diameter;
                         if (mins1[j] != null && mins2[j] != null)
                             maxHight = Math.Min(Math.Abs(mins1[j].Proximity), Math.Abs(mins2[j].Proximity));
@@ -277,7 +215,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 
                         var dir = j == 1 ? dirs[i] : -dirs[i];
 
-                        // Calculate the parallel line which can avoid obstructions.
                         foundLine = FindParallelLine(pipe, section, dir, maxHight);
                     }
                 }
@@ -286,14 +223,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             return foundLine;
         }
 
-        /// <summary>
-        ///     Find a line Parallel to pipe's centerline to avoid the obstruction.
-        /// </summary>
-        /// <param name="pipe">Pipe who has obstructions</param>
-        /// <param name="section">Pipe's one obstruction</param>
-        /// <param name="dir">Offset Direction of the parallel line</param>
-        /// <param name="maxLength">Maximum offset distance</param>
-        /// <returns>Parallel line which can avoid the obstruction</returns>
         private Line FindParallelLine(Pipe pipe, Section section, XYZ dir, double maxLength)
         {
             var step = pipe.Diameter;
@@ -312,11 +241,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             return null;
         }
 
-        /// <summary>
-        ///     Resolve one obstruction of Pipe.
-        /// </summary>
-        /// <param name="pipe">Pipe to resolve</param>
-        /// <param name="section">One pipe's obstruction</param>
         private void Resolve(Pipe pipe, Section section)
         {
             // Find out a parallel line of pipe centerline, which can avoid the obstruction.
@@ -330,7 +254,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             var side2 = Line.CreateBound(offset.GetEndPoint(1), sectionLine.GetEndPoint(1));
 
             //
-            // Create an "U" shape, which connected with three pipes and two elbows, to round the obstruction.
             //
             var pipeType = pipe.PipeType;
             var start = side1.GetEndPoint(0);
@@ -346,7 +269,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             var pipe2 = Pipe.Create(m_rvtDoc, systemTypeId, pipeType.Id, levelId, startOffset, endOffset);
             var pipe3 = Pipe.Create(m_rvtDoc, systemTypeId, pipeType.Id, levelId, endOffset, end);
 
-            // Copy parameters from pipe to other three created pipes.
             ParameterAccess.CopyParameters(pipe, pipe1);
             ParameterAccess.CopyParameters(pipe, pipe2);
             ParameterAccess.CopyParameters(pipe, pipe3);
@@ -356,12 +278,10 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             section.Pipes.Add(pipe2);
             section.Pipes.Add(pipe3);
 
-            // Create the first elbow to connect two neighbor pipes of "U" shape.
             var conn1 = ConnectorHelper.FindConnector(pipe1, startOffset);
             var conn2 = ConnectorHelper.FindConnector(pipe2, startOffset);
             m_rvtDoc.Create.NewElbowFitting(conn1, conn2);
 
-            // Create the second elbow to connect another two neighbor pipes of "U" shape.
             var conn3 = ConnectorHelper.FindConnector(pipe2, endOffset);
             var conn4 = ConnectorHelper.FindConnector(pipe3, endOffset);
             m_rvtDoc.Create.NewElbowFitting(conn3, conn4);

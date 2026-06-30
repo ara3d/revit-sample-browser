@@ -5,28 +5,17 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
-    /// <summary>
-    ///     for control PropertyGrid to show and modify parameters of column, beam or brace
-    /// </summary>
     public class FrameTypeParameters
     {
-        private readonly Parameter m_bDimension; // parameter named b
-        private readonly Parameter m_hDimension; // parameter named h
+        private readonly Parameter m_bDimension;
+        private readonly Parameter m_hDimension;
 
-        /// <summary>
-        ///     constructor without parameter is forbidden
-        /// </summary>
         private FrameTypeParameters()
         {
         }
 
-        /// <summary>
-        ///     constructor used only for object factory
-        /// </summary>
-        /// <param name="symbol">FamilySymbol object has parameters</param>
         private FrameTypeParameters(FamilySymbol symbol)
         {
-            // iterate and initialize parameters
             foreach (Parameter para in symbol.Parameters)
             {
                 switch (para.Definition.Name)
@@ -41,9 +30,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
         }
 
-        /// <summary>
-        ///     parameter h in parameter category Dimension
-        /// </summary>
         [Category("Dimensions")]
         public double H
         {
@@ -51,9 +37,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             set => m_hDimension.Set(value);
         }
 
-        /// <summary>
-        ///     parameter b in parameter category Dimension
-        /// </summary>
         [Category("Dimensions")]
         public double B
         {
@@ -61,12 +44,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             set => m_bDimension.Set(value);
         }
 
-        /// <summary>
-        ///     object factory to create FramingTypeParameters;
-        ///     will return null if necessary Parameters can't be found
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <returns></returns>
+        // Returns null when the symbol lacks "h" and "b" dimension parameters.
         public static FrameTypeParameters CreateInstance(FamilySymbol symbol)
         {
             var result = new FrameTypeParameters(symbol);

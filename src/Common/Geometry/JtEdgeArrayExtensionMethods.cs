@@ -26,12 +26,6 @@ namespace BuildingCoder
 {
     public static class JtEdgeArrayExtensionMethods
         {
-            /// <summary>
-            ///     Return a polygon as a list of XYZ points from
-            ///     an EdgeArray. If any of the edges are curved,
-            ///     we retrieve the tessellated points, i.e. an
-            ///     approximation determined by Revit.
-            /// </summary>
             public static List<XYZ> GetPolygon(
                 this EdgeArray ea)
             {

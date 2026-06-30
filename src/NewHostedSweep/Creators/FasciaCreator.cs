@@ -9,9 +9,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
-    /// <summary>
-    ///     Provides functions to create Fascia.
-    /// </summary>
     public class FasciaCreator : HostedSweepCreator
     {
         /// <summary>
@@ -19,10 +16,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         /// </summary>
         private Dictionary<Element, List<Edge>> m_roofFasciaEdges;
 
-        /// <summary>
-        ///     Constructor which take Revit.Document as parameter.
-        /// </summary>
-        /// <param name="rvtDoc">Revit document</param>
         public FasciaCreator(UIDocument rvtDoc)
             : base(rvtDoc)
         {
@@ -123,12 +116,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
             transaction.RollBack();
         }
 
-        /// <summary>
-        ///     Create a Fascia.
-        /// </summary>
-        /// <param name="symbol">Fascia type</param>
-        /// <param name="refArr">Fascia reference array</param>
-        /// <returns>Created Fascia</returns>
         protected override HostedSweep CreateHostedSweep(ElementType symbol, ReferenceArray refArr)
         {
             var fascia = RvtDoc.Create.NewFascia(symbol as FasciaType, refArr);

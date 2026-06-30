@@ -7,17 +7,10 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SetRoomOccupancy sample.</summary>
     internal static partial class Util
     {
         private static char[] _digits;
 
-        /// <summary>
-        ///     Analyse the given string.
-        ///     If it ends in a sequence of digits representing a number,
-        ///     return a string with the number oincremented by one.
-        ///     Otherwise, return a string with a suffix "1" appended.
-        /// </summary>
         public static string BumpStringSuffix(string s)
         {
             if (null == s || 0 == s.Length) return "1";
@@ -44,10 +37,6 @@ namespace BuildingCoder
             return t;
         }
 
-        /// <summary>
-        ///     Read the value of the element ROOM_OCCUPANCY parameter.
-        ///     If it ends in a number, increment the number, else append "1".
-        /// </summary>
         public static void BumpOccupancy(Element e)
         {
             var p = e.get_Parameter(

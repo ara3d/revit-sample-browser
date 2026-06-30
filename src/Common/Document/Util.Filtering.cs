@@ -28,10 +28,6 @@ namespace BuildingCoder
     {
         #region Element Filtering
 
-        /// <summary>
-        ///     Return all elements of the requested class i.e. System.Type
-        ///     matching the given built-in category in the given document.
-        /// </summary>
         public static FilteredElementCollector GetElementsOfType(
             Document doc,
             Type type,
@@ -46,9 +42,6 @@ namespace BuildingCoder
             return collector;
         }
 
-        /// <summary>
-        ///     Return the first element of the given type and name.
-        /// </summary>
         public static Element GetFirstElementOfTypeNamed(
             Document doc,
             Type type,
@@ -101,15 +94,6 @@ namespace BuildingCoder
                 : null;
         }
 
-        /// <summary>
-        ///     Return the first 3D view which is not a template,
-        ///     useful for input to FindReferencesByDirection().
-        ///     In this case, one cannot use FirstElement() directly,
-        ///     since the first one found may be a template and
-        ///     unsuitable for use in this method.
-        ///     This demonstrates some interesting usage of
-        ///     a .NET anonymous method.
-        /// </summary>
         public static Element GetFirstNonTemplate3dView(Document doc)
         {
             var collector
@@ -122,10 +106,6 @@ namespace BuildingCoder
                 .First(v3 => !v3.IsTemplate);
         }
 
-        /// <summary>
-        ///     Given a specific family and symbol name,
-        ///     return the appropriate family symbol.
-        /// </summary>
         public static FamilySymbol FindFamilySymbol(
             Document doc,
             string familyName,
@@ -154,12 +134,6 @@ namespace BuildingCoder
             return null;
         }
 
-        /// <summary>
-        ///     Return the first element type matching the given name.
-        ///     This filter could be speeded up by using a (quick)
-        ///     parameter filter instead of the (slower than slow)
-        ///     LINQ post-processing.
-        /// </summary>
         public static ElementType GetElementTypeByName(
             Document doc,
             string name)
@@ -170,15 +144,6 @@ namespace BuildingCoder
                 as ElementType;
         }
 
-        /// <summary>
-        ///     Return the first family symbol matching the given name.
-        ///     Note that FamilySymbol is a subclass of ElementType,
-        ///     so this method is more restrictive above all faster
-        ///     than the previous one.
-        ///     This filter could be speeded up by using a (quick)
-        ///     parameter filter instead of the (slower than slow)
-        ///     LINQ post-processing.
-        /// </summary>
         public static ElementType GetFamilySymbolByName(
             Document doc,
             string name)

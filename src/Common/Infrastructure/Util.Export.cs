@@ -200,9 +200,6 @@ namespace BuildingCoder
             return r;
         }
 
-        /// <summary>
-        ///     Export current view to IFC.
-        /// </summary>
         internal static Result ExportToIfc(Document doc)
         {
             var r = Result.Failed;

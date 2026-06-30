@@ -40,11 +40,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         private readonly SlabShapeEditor m_slabShapeEditor; //object use to edit slab shape
         private readonly Pen m_toolPen; //pen use to draw new created vertex and crease
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="commandData">selected floor (or slab)</param>
-        /// <param name="commandData">contains reference of Revit Application</param>
         public SlabShapeEditingForm(Floor floor, ExternalCommandData commandData)
         {
             InitializeComponent();
@@ -64,11 +59,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             m_profilePen = new Pen(Color.Black, (float)0.5);
         }
 
-        /// <summary>
-        ///     represents the geometry info for slab
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void SlabShapePictureBox_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -84,11 +74,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             }
         }
 
-        /// <summary>
-        ///     Draw selected crease or vertex red
-        /// </summary>
-        /// <param name="graphics">Form graphics object,</param>
-        /// <param name="pen">Pen which used to draw lines</param>
         private void DrawSelectedLineRed(Graphics graphics, Pen pen)
         {
             if (-1 != m_selectIndex)
@@ -114,11 +99,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             }
         }
 
-        /// <summary>
-        ///     rotate slab and get selected vertex or crease
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void SlabShapePictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             var pointF = new PointF(e.X, e.Y);
@@ -152,11 +132,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             SlabShapePictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     get location where right button click down.
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void SlabShapePictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             if (MouseButtons.Right == e.Button)
@@ -167,11 +142,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             }
         }
 
-        /// <summary>
-        ///     add vertex and crease, select new created vertex and crease
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void SlabShapePictureBox_MouseClick(object sender, MouseEventArgs e)
         {
             switch (m_editorState)
@@ -186,7 +156,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
                         m_createCreases.Add(
                             m_slabProfile.AddCrease((PointF)m_lineTool.Points[lineSize - 2],
                                 (PointF)m_lineTool.Points[lineSize - 1]));
-                    CreateGraphicsPath(); //create graphic path for all the vertex and crease
+                    CreateGraphicsPath();
                     break;
                 }
                 case EditorState.AddVertex:
@@ -197,7 +167,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
                     //draw point as a short line, so add two points here
                     m_pointTool.Points.Add(new PointF(e.X + 2, e.Y + 2));
                     m_createdVertices.Add(vertex);
-                    CreateGraphicsPath(); //create graphic path for all the vertex and crease
+                    CreateGraphicsPath();
                     break;
                 }
                 case EditorState.Select when m_selectIndex >= 0:
@@ -228,11 +198,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             SlabShapePictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     get ready to add vertex
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void PointButton_Click(object sender, EventArgs e)
         {
             m_editorState = EditorState.AddVertex;
@@ -240,11 +205,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             SlabShapePictureBox.Cursor = Cursors.Cross;
         }
 
-        /// <summary>
-        ///     get ready to add crease
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void LineButton_Click(object sender, EventArgs e)
         {
             m_editorState = EditorState.AddCrease;
@@ -252,11 +212,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             SlabShapePictureBox.Cursor = Cursors.Cross;
         }
 
-        /// <summary>
-        ///     get ready to move vertex and crease
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void MoveButton_Click(object sender, EventArgs e)
         {
             m_editorState = EditorState.Select;
@@ -264,11 +219,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             SlabShapePictureBox.Cursor = Cursors.Arrow;
         }
 
-        /// <summary>
-        ///     Move vertex and crease, then update profile of slab
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void UpdateButton_Click(object sender, EventArgs e)
         {
             if (-1 == m_clickedIndex)
@@ -300,11 +250,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             SlabShapePictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     Reset slab shape
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ResetButton_Click(object sender, EventArgs e)
         {
             m_slabProfile.ResetSlabShape();
@@ -312,13 +257,9 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             m_pointTool.Points.Clear();
         }
 
-        /// <summary>
-        ///     Create Graphics Path for each vertex and crease
-        /// </summary>
         public void CreateGraphicsPath()
         {
             m_graphicsPaths.Clear();
-            //create path for all the lines draw by user
             for (var i = 0; i < m_lineTool.Points.Count - 1; i += 2)
             {
                 var path = new GraphicsPath();
@@ -334,41 +275,21 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             }
         }
 
-        /// <summary>
-        ///     set tool tip for MoveButton
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void MoveButton_MouseHover(object sender, EventArgs e)
         {
             toolTip.SetToolTip(MoveButton, "Select Vertex or Crease");
         }
 
-        /// <summary>
-        ///     set tool tip for PointButton
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void PointButton_MouseHover(object sender, EventArgs e)
         {
             toolTip.SetToolTip(PointButton, "Add Vertex");
         }
 
-        /// <summary>
-        ///     set tool tip for LineButton
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void LineButton_MouseHover(object sender, EventArgs e)
         {
             toolTip.SetToolTip(LineButton, "Add Crease");
         }
 
-        /// <summary>
-        ///     change cursor
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void SlabShapePictureBox_MouseHover(object sender, EventArgs e)
         {
             switch (m_editorState)

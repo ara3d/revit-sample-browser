@@ -3,12 +3,8 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
 {
-    /// <summary>
-    /// </summary>
     public partial class AlignmentSetting : Form
     {
-        /// <summary>
-        /// </summary>
         public AlignmentSetting()
         {
             InitializeComponent();

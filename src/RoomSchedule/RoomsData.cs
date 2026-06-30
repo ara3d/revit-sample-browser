@@ -48,44 +48,23 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         /// </summary>
         public const string SharedParam = "External Room ID";
 
-        /// <summary>
-        ///     Active document to which this RoomsData instance belongs
-        /// </summary>
         private readonly Document m_activeDocument;
 
-        /// <summary>
-        ///     a list to store column names of Rooms
-        /// </summary>
         private readonly List<string> m_columnNames = new List<string>();
 
-        /// <summary>
-        ///     parameters which will be displayed in DataGridView
-        /// </summary>
         private readonly List<BuiltInParameter> m_parameters = new List<BuiltInParameter>();
 
-        /// <summary>
-        ///     a list to store all rooms in the project
-        /// </summary>
         private List<Room> m_rooms = new List<Room>();
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="activeDocument">Revit project.</param>
         public RoomsData(Document activeDocument)
         {
             m_activeDocument = activeDocument;
 
-            // initialize the output parameters
             InitializeParameters();
 
-            // get all the rooms in the project
             GetAllRooms(activeDocument);
         }
 
-        /// <summary>
-        ///     A list of all the rooms in the project
-        /// </summary>
         public ReadOnlyCollection<Room> Rooms => new ReadOnlyCollection<Room>(m_rooms);
 
         /// <summary>
@@ -98,10 +77,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             GetAllRooms(m_activeDocument);
         }
 
-        /// <summary>
-        ///     Get all parameters to be displayed in DataGridView.
-        /// </summary>
-        /// <param name="specifiedParams">all parameters specified by user.</param>
         public void UpdateParameters(ReadOnlyCollection<BuiltInParameter> specifiedParams)
         {
             // if there is no instance, parameter setting is not allowed
@@ -111,11 +86,9 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             m_parameters.Clear();
             m_columnNames.Clear();
 
-            // get column names of room by specified parameters
             var firstRoom = m_rooms[0];
             foreach (var param in specifiedParams)
             {
-                // add this parameter
                 m_parameters.Add(param);
 
                 // store all specified parameter names of room.
@@ -132,7 +105,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         /// <returns>DataTable generated from rooms</returns>
         public DataTable GenRoomsDataTable(Level level)
         {
-            // get all Rooms information and generate a DataTable 
             if (m_rooms.Count == 0) return null;
 
             // generate columns by all parameters            
@@ -148,7 +120,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 newTable.Columns.Add(column);
             }
 
-            // add constant column: External Room ID
             var constantCol = new DataColumn
             {
                 ColumnName = SharedParam,
@@ -159,7 +130,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
             // filter rooms by level
             foreach (var room in m_rooms)
-                // check whether room is located at specified level 
             {
                 if (null == level || (m_activeDocument.GetElement(room.LevelId) != null && room.LevelId == level.Id))
                 {
@@ -167,7 +137,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                     for (var i = 0; i < m_parameters.Count; i++)
                         dataRow[i] = SampleBrowserUtils.GetProperty(m_activeDocument, room, m_parameters[i], true);
 
-                    // add constant column value: External Room ID
                     Parameter param = null;
                     var bExist = ParameterAccess.ShareParameterExists(room, SharedParam, ref param);
                     if (bExist && null != param && false == string.IsNullOrEmpty(param.AsString()))
@@ -175,7 +144,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                     else
                         dataRow[m_parameters.Count] = "<null>";
 
-                    // add this row
                     newTable.Rows.Add(dataRow);
                 }
             }
@@ -183,12 +151,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             return newTable;
         }
 
-        /// <summary>
-        ///     Get all rooms in current Revit project
-        /// </summary>
         private void GetAllRooms(Document activeDoc)
         {
-            // get all room elements
             // try to find all rooms in the project and add to the list
             var filter = new RoomFilter();
             var collector = new FilteredElementCollector(activeDoc);
@@ -197,21 +161,12 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             m_rooms.Sort(CompRoomByNumber);
         }
 
-        /// <summary>
-        ///     Sort the rooms by number
-        /// </summary>
-        /// <param name="room1"></param>
-        /// <param name="room2"></param>
-        /// <returns></returns>
         private static int CompRoomByNumber(Room room1, Room room2)
         {
             if (null == room1 || null == room2) return -1;
             return room1.Number.CompareTo(room2.Number);
         }
 
-        /// <summary>
-        ///     Initialize the parameters displayed in DataGridView control
-        /// </summary>
         private void InitializeParameters()
         {
             // Room name

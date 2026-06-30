@@ -16,11 +16,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
     {
         private readonly Floor m_data;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="floor">floor to create Opening on</param>
-        /// <param name="commandData">object which contains reference of Revit Application</param>
         public ProfileFloor(Floor floor, ExternalCommandData commandData)
             : base(commandData)
         {
@@ -31,11 +26,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             MoveToCenterMatrix = ToCenterMatrix();
         }
 
-        /// <summary>
-        ///     Get points of the first face
-        /// </summary>
-        /// <param name="faces">edges in all faces</param>
-        /// <returns>points of first face</returns>
         public override List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
             var needPoints = new List<List<XYZ>>();
@@ -48,15 +38,10 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return needPoints;
         }
 
-        /// <summary>
-        ///     Get a matrix which can transform points to 2D
-        /// </summary>
-        /// <returns>matrix which can transform points to 2D</returns>
         public override Matrix4 GetTo2DMatrix()
         {
             View viewLevel2 = null;
 
-            // get view which named "Level 2".
             // Skip view templates because they're behind-the-scene and invisible in project browser; also invalid for API.
             var views = from elem in
                     new FilteredElementCollector(CommandData.Application.ActiveUIDocument.Document)
@@ -75,11 +60,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return result;
         }
 
-        /// <summary>
-        ///     Create Opening on floor
-        /// </summary>
-        /// <param name="points">points used to create Opening</param>
-        /// <returns>newly created Opening</returns>
         public override Opening CreateOpening(List<Vector4> points)
         {
             XYZ p1, p2;

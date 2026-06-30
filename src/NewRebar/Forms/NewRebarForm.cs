@@ -47,18 +47,11 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
         /// </summary>
         private readonly BindingSource m_shapesBinding = new BindingSource();
 
-        /// <summary>
-        ///     Default constructor.
-        /// </summary>
         public NewRebarForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Constructor, initialize fields of RebarBarTypes and RebarShapes.
-        /// </summary>
-        /// <param name="rvtApp"></param>
         public NewRebarForm(Document rvtDoc)
             : this()
         {
@@ -73,14 +66,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
             m_rebarShapes = filteredElementCollector.Cast<RebarShape>().ToList();
         }
 
-        /// <summary>
-        ///     Return RebarBarType from selection of barTypesComboBox.
-        /// </summary>
         public RebarBarType RebarBarType => barTypesComboBox.SelectedItem as RebarBarType;
 
-        /// <summary>
-        ///     Return RebarShape from selection of shapesComboBox.
-        /// </summary>
         public RebarShape RebarShape => shapesComboBox.SelectedItem as RebarShape;
 
         /// <summary>

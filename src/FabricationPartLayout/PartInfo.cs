@@ -19,7 +19,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
         {
             try
             {
-                // check user selection
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
 
@@ -40,16 +39,12 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 var builder = new StringBuilder();
 
-                // alias
                 builder.AppendLine($"Alias: {part.Alias}");
 
-                // cid
                 builder.AppendLine($"CID: {part.ItemCustomId}");
 
-                // domain type
                 builder.AppendLine($"Domain Type: {part.DomainType}");
 
-                // hanger rod kit
                 if (part.IsAHanger())
                 {
                     var rodKitName = "None";
@@ -61,42 +56,31 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     builder.AppendLine($"Hanger Rod Kit: {rodKitName}");
                 }
 
-                // insulation specification
                 var insSpec =
                     $"{config.GetInsulationSpecificationGroup(part.InsulationSpecification)}: {config.GetInsulationSpecificationName(part.InsulationSpecification)}";
                 builder.AppendLine($"Insulation Specification: {insSpec}");
 
-                // has no connections
                 builder.AppendLine($"Has No Connections: {part.HasNoConnections()}");
 
-                // item number
                 builder.AppendLine($"Item Number: {part.ItemNumber}");
 
-                // material
                 var material = $"{config.GetMaterialGroup(part.Material)}: {config.GetMaterialName(part.Material)}";
                 builder.AppendLine($"Material: {material}");
 
-                // part guid
                 builder.AppendLine($"Part Guid: {part.PartGuid}");
 
-                // part status
                 builder.AppendLine($"Part Status: {config.GetPartStatusDescription(part.PartStatus)}");
 
-                // product code
                 builder.AppendLine($"Product Code: {part.ProductCode}");
 
-                // service
                 builder.AppendLine($"Service Name: {part.ServiceName}");
 
-                // get the service type name
                 builder.AppendLine($"Service Type: {config.GetServiceTypeName(part.ServiceType)}");
 
-                // specification
                 var spec =
                     $"{config.GetSpecificationGroup(part.Specification)}: {config.GetSpecificationName(part.Specification)}";
                 builder.AppendLine($"Specification: {spec}");
 
-                // centerline length
                 builder.AppendLine(
                     $"Centerline Length: {ValueFormatting.FormatNumber(doc, part.CenterlineLength, SpecTypeId.Length)}");
 

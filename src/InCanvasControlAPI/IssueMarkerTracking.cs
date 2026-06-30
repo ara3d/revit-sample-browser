@@ -39,9 +39,6 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
             m_selectedIndex = -1;
         }
 
-        /// <summary>
-        ///     Document this object tracks
-        /// </summary>
         public Document Document { get; }
 
         /// <summary>
@@ -49,10 +46,6 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
         /// </summary>
         public Guid Id { get; }
 
-        /// <summary>
-        ///     Adds a marker to this tracking
-        /// </summary>
-        /// <param name="marker">Marker to be updated by selector or updater.</param>
         public void SubscribeMarker(IssueMarker marker)
         {
             m_issueMarkerSet.Add(marker);

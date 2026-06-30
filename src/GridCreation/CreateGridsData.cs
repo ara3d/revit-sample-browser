@@ -16,9 +16,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
     /// </summary>
     public class CreateGridsData
     {
-        /// <summary>
-        ///     Resource manager
-        /// </summary>
         protected static readonly ResourceManager ResManager = Resources.ResourceManager;
 
         /// <summary>
@@ -36,21 +33,10 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         /// </summary>
         private readonly ArrayList m_labelsList;
 
-        /// <summary>
-        ///     The active document of Revit
-        /// </summary>
         protected readonly Autodesk.Revit.DB.Document RevitDoc;
 
-        /// <summary>
-        ///     Current display unit type
-        /// </summary>
         protected readonly ForgeTypeId m_unit;
 
-        /// <summary>
-        ///     Constructor without display unit type
-        /// </summary>
-        /// <param name="application">Revit application</param>
-        /// <param name="labels">All existing labels in Revit's document</param>
         public CreateGridsData(UIApplication application, ArrayList labels)
         {
             RevitDoc = application.ActiveUIDocument.Document;
@@ -59,12 +45,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             m_labelsList = labels;
         }
 
-        /// <summary>
-        ///     Constructor with display unit type
-        /// </summary>
-        /// <param name="application">Revit application</param>
-        /// <param name="labels">All existing labels in Revit's document</param>
-        /// <param name="unit">Current length display unit type</param>
         public CreateGridsData(UIApplication application, ArrayList labels, ForgeTypeId unit)
         {
             RevitDoc = application.ActiveUIDocument.Document;
@@ -74,14 +54,8 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             m_unit = unit;
         }
 
-        /// <summary>
-        ///     Current display unit type
-        /// </summary>
         public ForgeTypeId Unit => m_unit;
 
-        /// <summary>
-        ///     Get array list contains all grid labels in current document
-        /// </summary>
         public ArrayList LabelsList => m_labelsList;
 
         /// <summary>
@@ -109,12 +83,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             return lineToCreate;
         }
 
-        /// <summary>
-        ///     Get the arc to create grid according to the specified bubble location
-        /// </summary>
-        /// <param name="arc">The original selected line</param>
-        /// <param name="bubLoc">bubble location</param>
-        /// <returns>The arc to create grid</returns>
         protected Arc TransformArc(Arc arc, BubbleLocation bubLoc)
         {
             Arc arcToCreate;
@@ -164,15 +132,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             return arcToCreate;
         }
 
-        /// <summary>
-        ///     Get the arc to create grid according to the specified bubble location
-        /// </summary>
-        /// <param name="origin">Arc grid's origin</param>
-        /// <param name="radius">Arc grid's radius</param>
-        /// <param name="startDegree">Arc grid's start degree</param>
-        /// <param name="endDegree">Arc grid's end degree</param>
-        /// <param name="bubLoc">Arc grid's Bubble location</param>
-        /// <returns>The expected arc to create grid</returns>
         protected Arc TransformArc(XYZ origin, double radius, double startDegree, double endDegree,
             BubbleLocation bubLoc)
         {
@@ -220,51 +179,26 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             }
         }
 
-        /// <summary>
-        ///     Create a new bound line
-        /// </summary>
-        /// <param name="start">start point of line</param>
-        /// <param name="end">end point of line</param>
-        /// <returns></returns>
         protected Line NewLine(XYZ start, XYZ end)
         {
             return Line.CreateBound(start, end);
         }
 
-        /// <summary>
-        ///     Create a grid with a line
-        /// </summary>
-        /// <param name="line">Line to create grid</param>
-        /// <returns>Newly created grid</returns>
         protected Grid NewGrid(Line line)
         {
             return Grid.Create(RevitDoc, line);
         }
 
-        /// <summary>
-        ///     Create a grid with an arc
-        /// </summary>
-        /// <param name="arc">Arc to create grid</param>
-        /// <returns>Newly created grid</returns>
         protected Grid NewGrid(Arc arc)
         {
             return Grid.Create(RevitDoc, arc);
         }
 
-        /// <summary>
-        ///     Create linear grid
-        /// </summary>
-        /// <param name="line">The linear curve to be transferred to grid</param>
-        /// <returns>The newly created grid</returns>
         protected Grid CreateLinearGrid(Line line)
         {
             return Grid.Create(RevitDoc, line);
         }
 
-        /// <summary>
-        ///     Create batch of grids with curves
-        /// </summary>
-        /// <param name="curves">Curves used to create grids</param>
         protected void CreateGrids(CurveArray curves)
         {
             foreach (Curve c in curves)
@@ -288,11 +222,6 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             curves.Append(curve);
         }
 
-        /// <summary>
-        ///     Show a message box
-        /// </summary>
-        /// <param name="message">Message</param>
-        /// <param name="caption">title of message box</param>
         public static void ShowMessage(string message, string caption)
         {
             TaskDialog.Show(caption, message, TaskDialogCommonButtons.Ok);

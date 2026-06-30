@@ -51,24 +51,13 @@ namespace BuildingCoder
 
             var inst = a[0] as FamilyInstance;
 
-            // Here are two ways to traverse the nested instance geometry.
-            // The first way can get the right position, but can't get the right structure.
-            // The second way can get the right structure, but can't get the right position.
-            // What I want is the right structure and right position.
-
-            // First way:
-
-            // In the current project project1.rvt, I can get myFamily3 instance via API,
-            // the class is Autodesk.Revit.Elements.FamilyInstance.
-            // Then i try to get its geometry:
+            // GeometryInstance.SymbolGeometry has correct placement but not nested structure; EditFamily components have structure but symbol-local positions.
 
             var opt = app.Application.Create.NewGeometryOptions();
             var geoElement = inst.get_Geometry(opt);
 
-            //GeometryObjectArray a1 = geoElement.Objects; // 2012
-            //int n = a1.Size; // 2012
 
-            var n = geoElement.Count(); // 2013
+            var n = geoElement.Count();
 
             Debug.Print(
                 "Family instance geometry has {0} geometry object{1}{2}",
@@ -76,22 +65,12 @@ namespace BuildingCoder
 
             var i = 0;
 
-            //foreach( GeometryObject o1 in a1 ) // 2012
-            foreach (var o1 in geoElement) // 2013
+            foreach (var o1 in geoElement)
             {
                 var geoInstance = o1 as GeometryInstance;
                 if (null != geoInstance)
                 {
-                    // geometry includes one instance, so get its geometry:
-
                     var symbolGeo = geoInstance.SymbolGeometry;
-
-                    //GeometryObjectArray a2 = symbolGeo.Objects; // 2012
-                    //foreach( GeometryObject o2 in a2 ) // 2012
-
-                    // the symbol geometry contains five solids.
-                    // how can I find out which solid belongs to which column?
-                    // how to relate the solid to the family instance?
 
                     foreach (var o2 in symbolGeo)
                     {
@@ -110,29 +89,7 @@ namespace BuildingCoder
                 }
             }
 
-            // In the Revit 2009 API, we can use
-            // FamilyInstance.Symbol.Family.Components
-            // to obtain the nested family instances
-            // within the top level family instance.
-
-            // In the Revit 2010 API, this property has been
-            // removed, since we can iterate through the elements
-            // of a family just like any other document;
-            // cf. What's New in the RevitAPI.chm:
-
-
-#if REQUIRES_REVIT_2009_API
-      ElementSet components = inst.Symbol.Family.Components;
-      n = components.Size;
-#endif // REQUIRES_REVIT_2009_API
-
             var fdoc = doc.EditFamily(inst.Symbol.Family);
-
-#if REQUIRES_REVIT_2010_API
-      List<Element> components = new List<Element>();
-      fdoc.get_Elements( typeof( FamilyInstance ), components );
-      n = components.Count;
-#endif // REQUIRES_REVIT_2010_API
 
             var collector
                 = new FilteredElementCollector(fdoc);
@@ -140,19 +97,14 @@ namespace BuildingCoder
             collector.OfClass(typeof(FamilyInstance));
             var components = collector.ToElements();
 
+            n = components.Count;
+
             Debug.Print(
                 "Family instance symbol family has {0} component{1}{2}",
                 n, Util.PluralSuffix(n), Util.DotOrColon(n));
 
             foreach (var e in components)
             {
-                // there are 3 FamilyInstance: Column, myFamily1, myFamily2
-                // then we can loop myFamily1, myFamily2 also.
-                // then get all the Column geometry
-                // But all the Column's position is the same,
-                // because the geometry is defined by the Symbol.
-                // Not the actually position in project1.rvt
-
                 var lp = e.Location as LocationPoint;
                 Debug.Print("{0} at {1}",
                     Util.ElementDescription(e),

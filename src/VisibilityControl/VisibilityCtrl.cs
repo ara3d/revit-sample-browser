@@ -9,9 +9,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
 {
-    /// <summary>
-    ///     An enumerate type listing the types of element select mode.
-    /// </summary>
     public enum IsolateMode
     {
         None,
@@ -19,9 +16,6 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
         WindowSelect
     }
 
-    /// <summary>
-    ///     An object control visibility by category
-    /// </summary>
     public class VisibilityCtrl
     {
         private readonly Hashtable m_categoriesWithName; // all categories with its name
@@ -54,20 +48,10 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
             }
         }
 
-        /// <summary>
-        ///     get all categories name with its visibility
-        /// </summary>
         public Hashtable AllCategories { get; }
 
-        /// <summary>
-        ///     get and set the mode to select element(s)
-        /// </summary>
         public IsolateMode IsolateMode { get; set; }
 
-        /// <summary>
-        ///     Set the visibility for the active view
-        /// </summary>
-        /// <returns>Return true if operation successed, or else, return false.</returns>
         public bool SetVisibility(bool visible, string name)
         {
             try
@@ -85,10 +69,6 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
             return true;
         }
 
-        /// <summary>
-        ///     Isolate elements with the same categories that the selected elements belong to
-        ///     using PickOne or WindowSelect.
-        /// </summary>
         public void Isolate()
         {
             //m_document.Selection.Elements.Clear();

@@ -37,9 +37,6 @@ namespace AdnRme
   public class CmdResetDemo : IExternalCommand
   {
     #region Execute Command
-    /// <summary>
-    /// Reset the Revit model to pre-demo conditions.
-    /// </summary>
     public Result Execute(
       ExternalCommandData commandData,
       ref String message,
@@ -109,12 +106,9 @@ namespace AdnRme
       {
         foreach( FamilyInstance terminal in terminals )
         {
-          // Reset flow
 
           Parameter p = Util.GetTerminalFlowParameter( terminal );
           p.Set( 0 );
-
-          // Reset size
 
           ISet<ElementId> symbolIds 
             = terminal.Symbol.Family

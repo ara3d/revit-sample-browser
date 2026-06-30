@@ -10,10 +10,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand, create a wall
-    ///     all the properties for new wall comes from user selection in Ribbon
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -29,10 +25,10 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             trans.Start();
             var app = revit.Application;
 
-            var newWallType = GetNewWallType(app); //get WallType from RadioButtonGroup - WallTypeSelector
-            var newWallLevel = GetNewWallLevel(app); //get Level from Combobox - LevelsSelector
-            var newWallShape = GetNewWallShape(app); //get wall Curve from Combobox - WallShapeComboBox
-            var newWallMark = GetNewWallMark(app); //get mark of new wall from Text box - WallMark
+            var newWallType = GetNewWallType(app);
+            var newWallLevel = GetNewWallLevel(app);
+            var newWallShape = GetNewWallShape(app);
+            var newWallMark = GetNewWallMark(app);
 
             Wall newWall = null;
             if ("CreateStructureWall" == GetType().Name) //decided by SplitButton
@@ -43,7 +39,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
                     false);
             if (null != newWall)
             {
-                newWall.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).Set(newWallMark); //set new wall's mark
+                newWall.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).Set(newWallMark);
                 CreatedWalls.Insert(newWall);
             }
 
@@ -114,7 +110,6 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
                 var wallMark = wall.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).AsString();
                 if (wallMark.StartsWith(textBox.Value.ToString()) && wallMark.Contains('_'))
                 {
-                    //get the index for new wall (wall_1, wall_2...)
                     char[] chars = { '_' };
                     var strings = wallMark.Split(chars);
                     if (strings.Length >= 2)
@@ -197,12 +192,6 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             return curves;
         }
 
-        /// <summary>
-        ///     return the RibbonItem by the input name in a specific panel
-        /// </summary>
-        /// <param name="panelRibbon">RibbonPanel which contains the RibbonItem </param>
-        /// <param name="itemName">name of RibbonItem</param>
-        /// <return>RibbonItem whose name is same with input string</param>
         public RibbonItem GetRibbonItemByName(RibbonPanel panelRibbon, string itemName)
         {
             foreach (var item in panelRibbon.GetItems())
@@ -215,20 +204,12 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand,create a structural wall
-    ///     all the properties for new wall comes from user selection in Ribbon
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class CreateStructureWall : CreateWall
     {
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand,
-    ///     delete all the walls which create by Ribbon sample
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class DeleteWalls : IExternalCommand
@@ -252,9 +233,6 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand,Move walls, X direction
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class XMoveWalls : IExternalCommand
@@ -278,9 +256,6 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand,Move walls, Y direction
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class YMoveWalls : IExternalCommand
@@ -304,10 +279,6 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand,
-    ///     Reset all the Ribbon options to default, such as level, wall type...
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ResetSetting : IExternalCommand
@@ -331,19 +302,12 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             if (null == comboboxLevel) throw new InvalidCastException("Cannot get wall shape combo box!");
             comboboxWallShape.Current = comboboxWallShape.GetItems()[0];
 
-            //get wall mark
             if (!(GetRibbonItemByName(myPanel, "WallMark") is TextBox textBox)) throw new InvalidCastException("Cannot get Wall Mark TextBox!");
             textBox.Value = "new wall";
 
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     return the RibbonItem by the input name in a specific panel
-        /// </summary>
-        /// <param name="panelRibbon">RibbonPanel which contains the RibbonItem </param>
-        /// <param name="itemName">name of RibbonItem</param>
-        /// <return>RibbonItem whose name is same with input string</param>
         public RibbonItem GetRibbonItemByName(RibbonPanel panelRibbon, string itemName)
         {
             foreach (var item in panelRibbon.GetItems())

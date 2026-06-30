@@ -7,9 +7,6 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
-    /// <summary>
-    ///     Interaction logic for NetworkDialog.xaml
-    /// </summary>
     public partial class NetworkDialog : Window
     {
         private readonly Document m_doc;

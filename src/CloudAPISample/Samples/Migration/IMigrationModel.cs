@@ -16,62 +16,28 @@ using System.Collections.ObjectModel;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 {
-    /// <summary>
-    ///     Represents a folder on BIM360 site.
-    /// </summary>
     public class FolderLocation
     {
-        /// <summary>
-        ///     Folder's name
-        /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        ///     Folder's urn
-        /// </summary>
         public string Urn { get; set; }
     }
 
-    /// <summary>
-    ///     Indicates where to migrate models
-    /// </summary>
     public class MigrationRule
     {
-        /// <summary>
-        ///     The search string to match against the names of files, but it doesn't support regular expression.
-        /// </summary>
         public string Pattern { get; set; }
 
-        /// <summary>
-        ///     The target folder on BIM360
-        /// </summary>
         public FolderLocation Target { get; set; }
     }
 
-    /// <summary>
-    ///     Interface of a view model for migration sample.
-    /// </summary>
     public interface IMigrationModel
     {
-        /// <summary>
-        ///     Indicates the target BIM360 account guid
-        /// </summary>
         string AccountGuid { get; set; }
 
-        /// <summary>
-        ///     Indicates the target BIM360 project guid
-        /// </summary>
         string ProjectGuid { get; set; }
 
-        /// <summary>
-        ///     Provide all candidate folders which we can upload to.
-        /// </summary>
         ObservableCollection<FolderLocation> AvailableFolders { get; set; }
 
-        /// <summary>
-        ///     The collection for <see cref="MigrationRule" />.
-        ///     Items with lower index in collection have higher priority.
-        /// </summary>
         ObservableCollection<MigrationRule> Rules { get; set; }
     }
 }

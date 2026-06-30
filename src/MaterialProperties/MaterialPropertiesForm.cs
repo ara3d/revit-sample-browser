@@ -14,18 +14,12 @@ using Point = System.Drawing.Point;
 
 namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
 {
-    /// <summary>
-    ///     Summary description for MaterialPropFrm.
-    /// </summary>
     public class MaterialPropertiesForm : Form
     {
         private Button m_applyButton;
         private Button m_cancelButton;
         private Button m_changeButton;
 
-        /// <summary>
-        ///     Required designer variable.
-        /// </summary>
         private readonly Container m_components = null;
 
         private readonly MaterialProperties m_dataBuffer;
@@ -39,10 +33,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
         {
         }
 
-        /// <summary>
-        ///     material properties from
-        /// </summary>
-        /// <param name="dataBuffer">material properties from Revit</param>
         public MaterialPropertiesForm(MaterialProperties dataBuffer)
         {
             //
@@ -54,9 +44,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             m_dataBuffer = dataBuffer;
         }
 
-        /// <summary>
-        ///     Clean up any resources being used.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -187,19 +174,11 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             ResumeLayout(false);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void MaterialPropFrm_Load(object sender, EventArgs e)
         {
             LoadCurrentMaterial();
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void typeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch ((StructuralAssetClass)m_typeComboBox.SelectedIndex)
@@ -247,21 +226,11 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
                 (StructuralAssetClass)m_typeComboBox.SelectedIndex);
         }
 
-        /// <summary>
-        ///     close form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     set selected element's material to current selection and close form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             if (null != m_subTypeComboBox.SelectedValue)
@@ -273,11 +242,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             Close();
         }
 
-        /// <summary>
-        ///     set selected element's material to current selection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void applyButton_Click(object sender, EventArgs e)
         {
             if (null != m_subTypeComboBox.SelectedValue)

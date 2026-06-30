@@ -52,21 +52,11 @@ namespace BuildingCoder
                         tab.GetType().Name, tab.AutomationName);
 
                     if (tab.KeyTip == null)
-                        // This tab is user defined.
+                    {
+                        // User-defined tabs use Autodesk.Windows.RibbonPanel, not Revit.UI.RibbonPanel.
 
                         foreach (var panel in tab.Panels)
                         {
-                            // Cannot convert type 'Autodesk.Windows.RibbonPanel' 
-                            // to 'Autodesk.Revit.UI.RibbonPanel' via a reference 
-                            // conversion, boxing conversion, unboxing conversion, 
-                            // wrapping conversion, or null type conversion.
-                            //
-                            //Autodesk.Revit.UI.RibbonPanel rp 
-                            //  = panel as Autodesk.Revit.UI.RibbonPanel;
-
-                            var rp
-                                = panel;
-
                             Debug.Print("    {0} {1}",
                                 panel, panel.GetType().Name);
 
@@ -81,6 +71,7 @@ namespace BuildingCoder
                                     automationName, ri.Cookie);
                             }
                         }
+                    }
                 }
 
                 ComponentManager.ItemExecuted

@@ -11,103 +11,26 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
 {
-    /// <summary>
-    ///     1. This form allowing entry of a coordinate location (X, Y, Z) within the model and a coordinate direction (i, j,
-    ///     k).
-    ///     2. Launch a ray from this location in this direction to find the first intersection with a face
-    ///     3. Calculate the reflection angle of the ray from the face and launch another ray to find the next intersection
-    ///     4. For each ray/intersection, create a model line connecting the two points.  The end result should be a series of
-    ///     model lines bouncing from item to item.
-    ///     5. Provide a hard limit of say, 100 intersections, to prevent endless reflections within an enclosed space.
-    ///     6. Write a log file of the intersection containing: the element type, id, and material of the intersected face.
-    /// </summary>
     public partial class RayTraceBounceForm : Form
     {
-        /// <summary>
-        ///     current assembly name
-        /// </summary>
         private static readonly string AssemblyName = Assembly.GetExecutingAssembly().Location;
-
-        /// <summary>
-        ///     current assembly directory
-        /// </summary>
         private static string _assemblyDirectory = Path.GetDirectoryName(AssemblyName);
-
-        /// <summary>
-        ///     epsilon limit
-        /// </summary>
         private static readonly double Epsilon = 0.00000001;
-
-        /// <summary>
-        ///     how many bounces to run
-        /// </summary>
         private static readonly int RayLimit = 100;
 
-        /// <summary>
-        ///     revit application
-        /// </summary>
         private readonly UIApplication m_app;
-
-        /// <summary>
-        ///     ray direction
-        /// </summary>
         private XYZ m_direction = new XYZ(0, 0, 0);
-
-        /// <summary>
-        ///     current document
-        /// </summary>
         private readonly Document m_doc;
-
-        /// <summary>
-        ///     the face which the ray intersect with
-        /// </summary>
         private Face m_face;
-
-        /// <summary>
-        ///     the count of line between origin/intersection and ray/intersection
-        /// </summary>
         private int m_lineCount;
-
-        /// <summary>
-        ///     ray start from here
-        /// </summary>
         private XYZ m_origin = new XYZ(0, 0, 0);
-
-        /// <summary>
-        ///     output string list
-        /// </summary>
         private readonly List<string> m_outputInfo = new List<string>();
-
-        /// <summary>
-        ///     the count of ray between origin/intersection and ray/intersection
-        /// </summary>
         private int m_rayCount;
-
-        /// <summary>
-        ///     closet geometry reference between origin/intersection and ray/intersection
-        /// </summary>
         private ReferenceWithContext m_rClosest;
-
-        /// <summary>
-        ///     for time calculation
-        /// </summary>
         private readonly Stopwatch m_stopWatch = new Stopwatch();
-
-        /// <summary>
-        ///     trace listener
-        /// </summary>
         private readonly TraceListener m_txtListener;
-
-        /// <summary>
-        ///     3D view
-        /// </summary>
         private readonly View3D m_view;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit application</param>
-        /// <param name="v">3D View</param>
         public RayTraceBounceForm(ExternalCommandData commandData, View3D v)
         {
             InitializeComponent();
@@ -121,15 +44,9 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             m_doc = commandData.Application.ActiveUIDocument.Document;
             m_view = v;
             UpdateData(true);
-            // Delete lines it created
             DeleteLines();
         }
 
-        /// <summary>
-        ///     OK button click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
             DeleteLines();
@@ -140,7 +57,6 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             transaction.Start();
             m_lineCount = 0;
             m_rayCount = 0;
-            // Start Find References By Direction
             var startpt = m_origin;
             m_outputInfo.Add("Start Find References By Direction: ");
             for (var ctr = 1; ctr <= RayLimit; ctr++)
@@ -188,16 +104,17 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
                     info += "]";
                     m_outputInfo.Add(info);
                     var endptUv = reference.UVPoint;
-                    var faceNormal = m_face.ComputeDerivatives(endptUv).BasisZ; // face normal where ray hits
+                    var faceNormal = m_face.ComputeDerivatives(endptUv).BasisZ;
+                    // Transform face normal from symbol space to document coordinates.
                     faceNormal =
                         m_rClosest.GetInstanceTransform()
                             .OfVector(
-                                faceNormal); // transformation to get it in terms of document coordinates instead of the parent symbol
+                                faceNormal);
                     var directionMirrored =
                         m_direction -
                         2 * m_direction.DotProduct(faceNormal) *
-                        faceNormal; //http://www.fvastro.org/presentations/ray_tracing.htm
-                    m_direction = directionMirrored; // get ready to shoot the next ray
+                        faceNormal;
+                    m_direction = directionMirrored;
                     startpt = endpt;
                 }
             }
@@ -212,20 +129,11 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             OutputInformation();
         }
 
-        /// <summary>
-        ///     Cancel button click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             Trace.Flush();
@@ -237,10 +145,6 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        ///     Update textbox data with member variable
-        /// </summary>
-        /// <param name="updateControl">if get/set date from control</param>
         public bool UpdateData(bool updateControl)
         {
             try
@@ -284,11 +188,6 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             }
         }
 
-        /// <summary>
-        ///     Find the first intersection with a face
-        /// </summary>
-        /// <param name="references"></param>
-        /// <returns></returns>
         public ReferenceWithContext FindClosestReference(IList<ReferenceWithContext> references)
         {
             var faceProx = double.PositiveInfinity;
@@ -317,7 +216,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
 
             if (edgeProx <= faceProx)
             {
-                // stop bouncing if there is an edge at least as close as the nearest face - there is no single angle of reflection for a ray striking a line
+                // No single reflection angle when a ray hits an edge as close as the nearest face.
                 m_outputInfo.Add(
                     "there is an edge at least as close as the nearest face - there is no single angle of reflection for a ray striking a line");
                 m_rClosest = null;
@@ -326,31 +225,21 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             return m_rClosest;
         }
 
-        /// <summary>
-        ///     Make a line from start point to end point with the direction and style
-        /// </summary>
-        /// <param name="startpt">start point</param>
-        /// <param name="endpt">end point</param>
-        /// <param name="direction">the direction which decide the plane</param>
-        /// <param name="style">line style name</param>
         public void MakeLine(XYZ startpt, XYZ endpt, XYZ direction, string style)
         {
             try
             {
                 m_lineCount++;
                 var line = Line.CreateBound(startpt, endpt);
-                // Line must lie in the sketch plane.  Use the direction of the line to construct a plane that hosts the target line.
+                // Model curves must lie in the sketch plane; derive plane axes from the ray direction.
                 var rotatedDirection = XYZ.BasisX;
 
-                // If the direction is not vertical, cross the direction vector with Z to get a vector rotated ninety degrees.  That vector, 
-                // plus the original vector, form the axes of the sketch plane.
                 if (!direction.IsAlmostEqualTo(XYZ.BasisZ) && !direction.IsAlmostEqualTo(-XYZ.BasisZ))
                     rotatedDirection = direction.Normalize().CrossProduct(XYZ.BasisZ);
                 var geometryPlane = Plane.CreateByOriginAndBasis(direction, rotatedDirection, startpt);
                 var skplane = SketchPlane.Create(m_app.ActiveUIDocument.Document, geometryPlane);
                 var mcurve = m_app.ActiveUIDocument.Document.Create.NewModelCurve(line, skplane);
                 m_app.ActiveUIDocument.Document.Regenerate();
-                //ElementArray lsArr = mcurve.LineStyles;
                 var lsArr = mcurve.GetLineStyleIds();
                 foreach (var eid in lsArr)
                 {
@@ -371,9 +260,6 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             }
         }
 
-        /// <summary>
-        ///     Delete all unnecessary lines
-        /// </summary>
         public void DeleteLines()
         {
             try
@@ -398,9 +284,6 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             }
         }
 
-        /// <summary>
-        ///     Output the information to log file
-        /// </summary>
         protected void OutputInformation()
         {
             foreach (var item in m_outputInfo)

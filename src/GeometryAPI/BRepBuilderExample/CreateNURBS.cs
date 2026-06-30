@@ -44,10 +44,9 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 
         private BRepBuilder CreateNurbsSurface()
         {
-            //Note that we are not creating a closed solid here. It is an open shell.
+            // Open shell, not a closed solid.
             var brepBuilder = new BRepBuilder(BRepType.OpenShell);
 
-            // Create NURBS surface
             IList<double> knotsU = new List<double> { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 };
             IList<double> knotsV = new List<double> { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 };
             var degreeU = 4;
@@ -68,7 +67,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var nurbsSurface = BRepBuilderSurfaceGeometry.CreateNURBSSurface(degreeU, degreeV, knotsU, knotsV,
                 controlPoints, false /*bReverseOrientation*/, null /*pSurfaceEnvelope*/);
 
-            // Create 4 NURBS curves defining the boundary of the NURBS surface that has just been created
             IList<double> weights = new List<double> { 1, 1, 1, 1, 1 };
 
             IList<XYZ> backEdgeControlPoints = new List<XYZ>
@@ -93,7 +91,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var rightNurbs = NurbSpline.CreateCurve(4, knotsU, rightEdgeControlPoints, weights);
             var rightEdge = BRepBuilderEdgeGeometry.Create(rightNurbs);
 
-            // Add the geometries to the brepBuilder
             var nurbSplineFaceId = brepBuilder.AddFace(nurbsSurface, false);
             var loopId = brepBuilder.AddLoop(nurbSplineFaceId);
 
@@ -102,7 +99,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var leftEdgeId = brepBuilder.AddEdge(leftEdge);
             var rightEdgeId = brepBuilder.AddEdge(rightEdge);
 
-            // Add each edge to the loop
             brepBuilder.AddCoEdge(loopId, backEdgeId, true);
             brepBuilder.AddCoEdge(loopId, leftEdgeId, false);
             brepBuilder.AddCoEdge(loopId, frontEdgeId, false);

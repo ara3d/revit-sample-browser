@@ -7,9 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
-    /// <summary>
-    ///     Implements interface IExternalCommand of Revit API.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

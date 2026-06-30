@@ -6,20 +6,10 @@ using Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties;
 
 namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 {
-    /// <summary>
-    ///     The dialog which lets user operate selected elements
-    /// </summary>
     public partial class CircuitOperationForm : Form
     {
-        /// <summary>
-        ///     Object of data class
-        /// </summary>
         private readonly CircuitOperationData m_optionData;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="optionData"></param>
         public CircuitOperationForm(CircuitOperationData optionData)
         {
             m_optionData = optionData;
@@ -29,9 +19,6 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             AddToolTips();
         }
 
-        /// <summary>
-        ///     Initialize buttons
-        /// </summary>
         private void InitializeButtons()
         {
             // Set enabled status
@@ -41,9 +28,6 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             buttonDisconnectPanel.Enabled = m_optionData.HasPanel;
         }
 
-        /// <summary>
-        ///     Add tool tips
-        /// </summary>
         private void AddToolTips()
         {
             var rsm = Resources.ResourceManager;

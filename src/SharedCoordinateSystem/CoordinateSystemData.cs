@@ -17,19 +17,12 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         private readonly UIApplication m_application; //the revit application reference
         private readonly ExternalCommandData m_command; // the ExternalCommandData reference
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
         public CoordinateSystemData(ExternalCommandData commandData)
         {
             m_command = commandData;
             m_application = m_command.Application;
         }
 
-        /// <summary>
-        ///     the value of the angle form true north
-        /// </summary>
         public double AngleOffset { get; private set; }
 
         /// <summary>
@@ -42,37 +35,21 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         /// </summary>
         public double NorthSouthOffset { get; private set; }
 
-        /// <summary>
-        ///     return the Elevation above ground level
-        /// </summary>
         public double PositionElevation { get; private set; }
 
-        /// <summary>
-        ///     get and set the current project location name of the project
-        /// </summary>
         public string LocationName { get; set; }
 
-        /// <summary>
-        ///     get all the project locations' name of the project
-        /// </summary>
         public List<string> LocationNames { get; } = new List<string>();
 
-        /// <summary>
-        ///     get the shared coordinate system data of the project
-        /// </summary>
         public void GatData()
         {
             GetLocationData();
         }
 
-        /// <summary>
-        ///     get the information of all the project locations associated with this project
-        /// </summary>
         public void GetLocationData()
         {
             LocationNames.Clear();
             var currentLocation = m_application.ActiveUIDocument.Document.ActiveProjectLocation;
-            //get the current location name
             LocationName = currentLocation.Name;
             //Retrieve all the project locations associated with this project
             var locations = m_application.ActiveUIDocument.Document.ProjectLocations;
@@ -83,7 +60,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             {
                 var locationTransform = iter.Current as ProjectLocation;
                 var transformName = locationTransform.Name;
-                LocationNames.Add(transformName); //add the location's name to the list
+                LocationNames.Add(transformName);
             }
         }
 
@@ -116,7 +93,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             var locations = m_application.ActiveUIDocument.Document.ProjectLocations;
             foreach (ProjectLocation projectLocation in locations)
                 //find the project location which is selected by user and
-                //set it to the current projecte location 
             {
                 if (projectLocation.Name == locationName)
                 {
@@ -140,7 +116,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                     $"{projectLocation.Name} (current)" == locationName)
                 {
                     var origin = new XYZ(0, 0, 0);
-                    //get the project position
                     var pp = projectLocation.GetProjectPosition(origin);
                     AngleOffset = pp.Angle /= Modulus; //convert to unit degree  
                     EastWestOffset = pp.EastWest; //East to West offset
@@ -170,7 +145,6 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                 if (location.Name == locationName ||
                     $"{location.Name} (current)" == locationName)
                 {
-                    //get the project position
                     var origin = new XYZ(0, 0, 0);
                     var projectPosition = location.GetProjectPosition(origin);
                     //change the offset value of the project position
@@ -178,15 +152,11 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                     projectPosition.EastWest = newEast;
                     projectPosition.NorthSouth = newNorth;
                     projectPosition.Elevation = newElevation;
-                    //set the value of the project position
                     location.SetProjectPosition(origin, projectPosition);
                 }
             }
         }
 
-        /// <summary>
-        ///     change the Precision of the value
-        /// </summary>
         private void ChangePrecision()
         {
             AngleOffset = SampleBrowserUtils.DealPrecision(AngleOffset, Precision);

@@ -2,13 +2,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_BrepBuilder sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Create a cube 100 x 100 x 100, from
-        ///     (0,0,0) to (100, 100, 100).
-        /// </summary>
         internal static BRepBuilder CreateBrepSolid()
         {
             var b = new BRepBuilder(BRepType.Solid);
@@ -132,10 +127,6 @@ namespace BuildingCoder
 
             return b;
         }
-
-        /// <summary>
-        ///     Create a cylinder to subtract from the cube.
-        /// </summary>
         internal static BRepBuilder CreateBrepVoid()
         {
             // Naming convention for faces and edges: we 

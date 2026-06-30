@@ -16,7 +16,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
         {
             try
             {
-                // Get the Document
                 var document = commandData.Application.ActiveUIDocument.Document;
 
                 // Create an Analytical Member

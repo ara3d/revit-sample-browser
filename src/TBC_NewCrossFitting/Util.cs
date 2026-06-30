@@ -11,9 +11,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_NewCrossFitting sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return the normalised direction of the given pipe.
-        /// </summary>
         internal static XYZ GetPipeDirection(Pipe pipe)
         {
             var c = pipe.GetCurve();
@@ -21,10 +18,6 @@ namespace BuildingCoder
             dir = dir.Normalize();
             return dir;
         }
-
-        /// <summary>
-        ///     Are the two given pipes parallel?
-        /// </summary>
         internal static bool IsPipeParallel(Pipe p1, Pipe p2)
         {
             var c1 = p1.GetCurve() as Line;

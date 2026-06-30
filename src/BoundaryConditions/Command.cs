@@ -83,10 +83,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     the selected element must be a structural Column/brace/Beam/Wall/Wall Foundation/Slab/Foundation Slab.
-        /// </summary>
-        /// <returns></returns>
         private bool IsExpectedElement(Element element)
         {
             // judge the element's type. If it is any type of FamilyInstance, Wall, Floor or 

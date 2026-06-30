@@ -6,24 +6,13 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
-    /// <summary>
-    ///     Tool used to draw rectangle
-    /// </summary>
     public class RectTool : Tool
     {
-        /// <summary>
-        ///     Default constructor
-        /// </summary>
         public RectTool()
         {
             Type = ToolType.Rectangle;
         }
 
-        /// <summary>
-        ///     Mouse move event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object,used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
             if (Points.Count == 1)
@@ -34,11 +23,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse down event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object,used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseDown(Graphics graphic, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -52,11 +36,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             ;
         }
 
-        /// <summary>
-        ///     Mouse up event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object,used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseUp(Graphics graphic, MouseEventArgs e)
         {
             if (Points.Count == 2)
@@ -67,10 +46,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Draw rectangles
-        /// </summary>
-        /// <param name="graphic">Graphics object,used to draw geometry </param>
         public override void Draw(Graphics graphic)
         {
             foreach (var line in Lines)
@@ -79,13 +54,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Draw rectangle use the given two opposite point p1 and p2
-        /// </summary>
-        /// <param name="graphic">Graphics object,used to draw geometry</param>
-        /// <param name="pen">Pen used to set color</param>
-        /// <param name="p1">Rectangle one corner</param>
-        /// <param name="p2">Opposite corner of p1</param>
         private void DrawRect(Graphics graphic, Pen pen, Point p1, Point p2)
         {
             var p = new Size(p2.X - p1.X, p2.Y - p1.Y);

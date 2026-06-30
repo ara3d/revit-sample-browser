@@ -5,39 +5,17 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
-    /// <summary>
-    ///     The class is used to create window wizard form
-    /// </summary>
     public class WindowWizard
     {
-        /// <summary>
-        ///     store the ExternalCommandData
-        /// </summary>
         private readonly ExternalCommandData m_commandData;
-
-        /// <summary>
-        ///     store the WizardParameter
-        /// </summary>
         private WizardParameter m_para;
-
-        /// <summary>
-        ///     store the WindowCreation
-        /// </summary>
         private WindowCreation m_winCreator;
 
-        /// <summary>
-        ///     constructor of WindowWizard
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData parameter</param>
         public WindowWizard(ExternalCommandData commandData)
         {
             m_commandData = commandData;
         }
 
-        /// <summary>
-        ///     the method is used to show wizard form and do the creation
-        /// </summary>
-        /// <returns>the process result</returns>
         public int RunWizard()
         {
             var result = 0;
@@ -68,10 +46,6 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             return result;
         }
 
-        /// <summary>
-        ///     The window creation process
-        /// </summary>
-        /// <returns>the result</returns>
         private bool Creation()
         {
             return m_winCreator.Creation();

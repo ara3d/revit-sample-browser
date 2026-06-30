@@ -13,32 +13,18 @@ using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Ara3D.RevitSampleBrowser.Common.Mep;
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
 {
-    /// <summary>
-    ///     check whether the selected element is a mass and whether the mass is kind of parallelepiped
-    ///     (only mass of parallelepiped supported in this sample)
-    /// </summary>
     public class MassChecker
     {
         // the document containing all the data used in the sample
         private readonly MyDocument m_mydocument;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="mydoc">
-        ///     the document of the sample
-        /// </param>
         public MassChecker(MyDocument mydoc)
         {
             m_mydocument = mydoc;
         }
 
-        /// <summary>
-        ///     check whether the selection is a parallelepiped mass
-        /// </summary>
         public bool CheckSelectedMass()
         {
-            // get the selected mass
             var mass = GetSelectedMass();
             // start the sample without making a parallelepiped mass selected
             if (null == mass)
@@ -47,7 +33,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
                 return false;
             }
 
-            // check whether the mass is parallelepiped
             var isMassParallelepiped = IsMassParallelepiped(mass);
             if (false == isMassParallelepiped)
             {
@@ -58,16 +43,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             return true;
         }
 
-        /// <summary>
-        ///     check whether the mass is a parallelepiped mass by checking the faces' normals
-        ///     (if it's a parallelepiped mass, it will have 3 groups of parallel faces)
-        /// </summary>
-        /// <param name="mass">
-        ///     the mass to be checked
-        /// </param>
-        /// <returns>
-        ///     return true if the mass is parallelepiped; otherwise false
-        /// </returns>
         private bool IsMassParallelepiped(FamilyInstance mass)
         {
             var faces = GetMassFaceArray(mass);
@@ -79,21 +54,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
 
             var isFacesParallel = IsFacesParallel(faces);
 
-            // store the face array
             if (isFacesParallel) m_mydocument.MassFaceArray = faces;
 
             return isFacesParallel;
         }
 
-        /// <summary>
-        ///     check whether the faces of the mass are one-one parallel
-        /// </summary>
-        /// <param name="faces">
-        ///     the 6 faces of the mass
-        /// </param>
-        /// <returns>
-        ///     if the 6 faces are one-one parallel, return true; otherwise false
-        /// </returns>
         private bool IsFacesParallel(FaceArray faces)
         {
             // step1: get the normals of the 6 faces
@@ -128,15 +93,6 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             return FaceAndSolidGeometry.AreFaceNormalsPaired(normals);
         }
 
-        /// <summary>
-        ///     get the faces of the mass
-        /// </summary>
-        /// <param name="mass">
-        ///     the source mass
-        /// </param>
-        /// <returns>
-        ///     the faces of the mass
-        /// </returns>
         private FaceArray GetMassFaceArray(FamilyInstance mass)
         {
             // Obtain the gemotry information of the mass
@@ -173,17 +129,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             return null;
         }
 
-        /// <summary>
-        ///     get the selected mass
-        /// </summary>
-        /// <returns>
-        ///     return the selected mass; if it's not a mass, return null
-        /// </returns>
         private FamilyInstance GetSelectedMass()
         {
             FamilyInstance resultMass = null;
 
-            // check whether a mass was selected before launching this sample
             var selection = m_mydocument.UiDocument.Selection;
             var elementSet = new ElementSet();
             foreach (var elementId in selection.GetElementIds())

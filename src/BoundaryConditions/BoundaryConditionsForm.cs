@@ -9,18 +9,11 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 {
-    /// <summary>
-    ///     UI which display the information and interact with users
-    /// </summary>
     public partial class BoundaryConditionsForm : Form
     {
         // an instance of BoundaryConditionsData class which deal with the need data
         private readonly BoundaryConditionsData m_dataBuffer;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="dataBuffer"></param>
         public BoundaryConditionsForm(BoundaryConditionsData dataBuffer)
         {
             InitializeComponent();
@@ -28,11 +21,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             m_dataBuffer = dataBuffer;
         }
 
-        /// <summary>
-        ///     display the information about the host element and the BC parameter value
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void BoundaryConditionsForm_Load(object sender, EventArgs e)
         {
             // display host element id in the text box
@@ -69,11 +57,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             bCComboBox.SelectedIndex = 0;
         }
 
-        /// <summary>
-        ///     display the BC's property value according the selected BC ID in combobox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void bCComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // create a BCProperties instance according to current selected BC Id
@@ -100,11 +83,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             bCPropertyGrid.BrowsableAttributes = new AttributeCollection(attributes);
         }
 
-        /// <summary>
-        ///     deal with operations that user set these parameters with other valid value.
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="e"></param>
         private void bCPropertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             if (e.ChangedItem.Label.Contains("Translation") || e.ChangedItem.Label.Contains("Rotation"))
@@ -118,11 +96,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             }
         }
 
-        /// <summary>
-        ///     confirm the changed and exist the UI
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;

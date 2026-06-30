@@ -8,9 +8,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
-    /// <summary>
-    ///     Create view instance for an electrical panel.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

@@ -19,18 +19,11 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         private readonly Size m_sizePictureBox; //size of picture box
         private readonly Tool m_tool; //current using tool
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
         public ShaftHolePuncherForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="profile">ProfileWall, ProfileFloor or ProfileNull</param>
         public ShaftHolePuncherForm(Profile profile)
             : this()
         {
@@ -56,11 +49,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             }
         }
 
-        /// <summary>
-        ///     store mouse location when mouse down
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             var graphics = pictureBox.CreateGraphics();
@@ -69,11 +57,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             pictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     draw the line to where mouse moved
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void PictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             pictureBox.Refresh();
@@ -82,11 +65,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             m_tool.OnMouseMove(graphics, e);
         }
 
-        /// <summary>
-        ///     draw the curve of floor (or wall) and curves of Opening
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -94,7 +72,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             //Draw the pictures in the m_tools
             m_tool.Draw(e.Graphics);
 
-            //get transform matrix
             m_profile.ComputeScaleMatrix(m_sizePictureBox);
             var trans = m_profile.Compute3DTo2DMatrix();
 
@@ -102,11 +79,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             m_profile.Draw2D(e.Graphics, Pens.Blue, trans);
         }
 
-        /// <summary>
-        ///     clear all the curves of the Opening
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ButtonClean_Click(object sender, EventArgs e)
         {
             m_tool.Clear();
@@ -114,11 +86,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             pictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     create Shaft Opening in Revit
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void CreateButton_Click(object sender, EventArgs e)
         {
             var points = m_tool.Points;
@@ -143,21 +110,11 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             }
         }
 
-        /// <summary>
-        ///     close the form
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     set the scale of profile when create Shaft Opening
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ScaleComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var profile = m_profile as ProfileNull;

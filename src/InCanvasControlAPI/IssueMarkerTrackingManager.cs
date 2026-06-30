@@ -32,20 +32,11 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
         {
         }
 
-        /// <summary>
-        ///     Gets an instance of IssueMarkerTrackingManager.
-        /// </summary>
-        /// <returns>An instance of IssueMarkerTrackingManager</returns>
         public static IssueMarkerTrackingManager GetInstance()
         {
             return _manager ?? (_manager = new IssueMarkerTrackingManager());
         }
 
-        /// <summary>
-        ///     Gets tracking for specified document
-        /// </summary>
-        /// <param name="doc">A Revit document</param>
-        /// <returns>A corresponding instance of IssueMarkerTracking</returns>
         public IssueMarkerTracking GetTracking(Document doc)
         {
             if (m_trackings.Where(track => track.Document.Equals(doc)).FirstOrDefault() is IssueMarkerTracking tracking)
@@ -53,28 +44,17 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
             return null;
         }
 
-        /// <summary>
-        ///     Adds IssueMarkerTracking for the given document
-        /// </summary>
-        /// <param name="doc">A Revit document</param>
         public void AddTracking(Document doc)
         {
             if (!m_trackings.Any(track => track.Document.Equals(doc)))
                 m_trackings.Add(new IssueMarkerTracking(doc));
         }
 
-        /// <summary>
-        ///     Removes IssueMarkerTracking from this manager
-        /// </summary>
-        /// <param name="guid">A GUID of the tracking</param>
         public void DeleteTracking(Guid guid)
         {
             m_trackings.RemoveWhere(track => track.Id == guid);
         }
 
-        /// <summary>
-        ///     Clears all trackings
-        /// </summary>
         public void ClearTrackings()
         {
             m_trackings.Clear();

@@ -6,20 +6,10 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Data class which stores information of lower priority for exporting DWF(x) format.
-    /// </summary>
     public partial class ExportDwfOptionForm : Form
     {
-        /// <summary>
-        ///     ExportDWFData object
-        /// </summary>
         private readonly ExportDwfData m_data;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="data">Data class object</param>
         public ExportDwfOptionForm(ExportDwfData data)
         {
             m_data = data;
@@ -27,9 +17,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             Initialize();
         }
 
-        /// <summary>
-        ///     Initialize controls
-        /// </summary>
         private void Initialize()
         {
             checkBoxModelElements.Checked = m_data.ExportObjectData;

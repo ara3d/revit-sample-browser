@@ -6,28 +6,16 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
-    /// <summary>
-    ///     create model line options form
-    /// </summary>
     public partial class CreateModelLineOptionsForm : Form
     {
         private readonly List<OpeningInfo> m_openingInfos; //store all the OpeningInfo class
         private readonly OpeningInfo m_selectedOpeningInfo; //current displayed (in preview) OpeningInfo
 
-        /// <summary>
-        ///     The default constructor
-        /// </summary>
         public CreateModelLineOptionsForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     constructor of CreateModelLineOptionsForm
-        /// </summary>
-        /// <param name="openingInfos">a list of OpeningInfo</param>
-        /// ///
-        /// <param name="selectOpening">current displayed (in preview) Opening</param>
         public CreateModelLineOptionsForm(List<OpeningInfo> openingInfos,
             OpeningInfo selectOpening)
         {

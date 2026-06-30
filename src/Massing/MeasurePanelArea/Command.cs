@@ -6,10 +6,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     this class creates an instance of the UI window and pop it up.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

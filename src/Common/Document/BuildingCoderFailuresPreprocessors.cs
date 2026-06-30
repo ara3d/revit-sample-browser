@@ -8,9 +8,6 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     No-op failures preprocessor that allows failure handling to continue.
-    /// </summary>
     internal class ContinueFailuresPreprocessor : IFailuresPreprocessor
     {
         public FailureProcessingResult PreprocessFailures(
@@ -20,10 +17,6 @@ namespace BuildingCoder
         }
     }
 
-    /// <summary>
-    ///     Suppresses the "Room is not in a properly enclosed region"
-    ///     warning when creating unbounded rooms.
-    /// </summary>
     internal class RoomWarningSwallower : IFailuresPreprocessor
     {
         public FailureProcessingResult PreprocessFailures(

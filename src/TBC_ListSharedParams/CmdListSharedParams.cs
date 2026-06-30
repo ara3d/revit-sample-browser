@@ -21,7 +21,6 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-//using Autodesk.Revit.Collections;
 
 #endregion // Namespaces
 
@@ -62,10 +61,7 @@ namespace BuildingCoder
                     Debug.Assert(b is InstanceBinding or TypeBinding,
                         "all bindings are either instance or type");
 
-                    // All definitions obtained in this manner
-                    // are InternalDefinition instances, even
-                    // if they are actually associated with
-                    // shared parameters, i.e. external.
+                    // BindingMap returns InternalDefinition even for shared (external) parameters.
 
                     Debug.Assert(d is InternalDefinition,
                         "all definitions obtained from BindingMap are internal");
@@ -83,13 +79,6 @@ namespace BuildingCoder
 
         #region Obsolete code that was never used
 
-        /// <summary>
-        ///     Get GUID for a given shared param name.
-        /// </summary>
-        /// <param name="app">Revit application</param>
-        /// <param name="defGroup">Definition group name</param>
-        /// <param name="defName">Definition name</param>
-        /// <returns>GUID</returns>
         public Result ExecuteObsolete(
             ExternalCommandData commandData,
             ref string message,
@@ -100,7 +89,6 @@ namespace BuildingCoder
             var doc = uidoc.Document;
 
             var bindings = doc.ParameterBindings;
-            //Dictionary<string, Guid> guids = new Dictionary<string, Guid>();
             var mapDefToGuid = new Dictionary<Definition, object>();
 
             var n = bindings.Size;
@@ -126,14 +114,8 @@ namespace BuildingCoder
                     {
                         Debug.Assert(d is InternalDefinition);
 
-                        // this built-in parameter is INVALID:
-
                         var bip = ((InternalDefinition) d).BuiltInParameter;
                         Debug.Print($"{d.Name}: {bip}");
-
-                        // if have a definition file and group name, we can still determine the GUID:
-
-                        //Guid g = Util.SharedParamGuid( app, "Identity data", d.Name );
 
                         mapDefToGuid.Add(d, null);
                     }
@@ -151,9 +133,6 @@ namespace BuildingCoder
             }
             else
             {
-                //List<string> keys = new List<string>( mapDefToGuid.Keys );
-                //keys.Sort();
-
                 foreach (Wall wall in walls)
                 {
                     Debug.Print(Util.ElementDescription(wall));

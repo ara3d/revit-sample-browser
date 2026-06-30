@@ -50,13 +50,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             if (2 == m_points.Count) DrawRect(graphic, ForeGroundPen, m_points[0], m_points[1]);
         }
 
-        /// <summary>
-        ///     draw rectangle use the given two points p1 and p2
-        /// </summary>
-        /// <param name="graphic">Graphics object,used to draw geometry</param>
-        /// <param name="pen">Pen used to set color</param>
-        /// <param name="p1">rectangle one corner</param>
-        /// <param name="p2">opposite corner of p1</param>
         private void DrawRect(Graphics graphic, Pen pen, Point p1, Point p2)
         {
             var points = new Point[5]

@@ -5,13 +5,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_Categories sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Hide the LightingFixtures category
-        ///     Hosts subcategory in the given view.
-        /// </summary>
         internal static void HideLightingFixtureHosts(View view)
         {
             var doc = view.Document;
@@ -65,10 +60,6 @@ namespace BuildingCoder
             doc.ParameterBindings.Insert(def, binding,
                 GroupTypeId.Construction);
         }
-
-        /// <summary>
-        ///     List names of built-in categories in document.
-        /// </summary>
         internal static void BuiltInCategoryNames(Document doc)
         {
             var categories = doc.Settings.Categories;

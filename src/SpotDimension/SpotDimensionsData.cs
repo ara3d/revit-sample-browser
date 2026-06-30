@@ -19,10 +19,6 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
 
         private readonly List<string> m_views = new List<string>();
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData"></param>
         public SpotDimensionsData(ExternalCommandData commandData)
         {
             m_revit = commandData.Application;
@@ -40,12 +36,8 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
         /// </summary>
         public ReadOnlyCollection<string> Views => new ReadOnlyCollection<string>(m_views);
 
-        /// <summary>
-        ///     try to find all the SpotDimensions and add them to the list
-        /// </summary>
         private void GetSpotDimensions()
         {
-            //get the active document 
             var document = m_revit.ActiveUIDocument.Document;
 
             var elementIterator = new FilteredElementCollector(document)

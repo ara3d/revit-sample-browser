@@ -103,7 +103,6 @@ namespace BuildingCoder
                 return rc;
             }
 
-            //Level level = ceiling.Level;
 
             //XYZ p = new XYZ( 40.1432351841559, 30.09700395984548, 8.0000 );
 

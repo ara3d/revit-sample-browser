@@ -65,10 +65,6 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             }
         }
 
-        /// <summary>
-        ///     Generates the list of view types supported by the Exporter.
-        /// </summary>
-        /// <returns>List of types that are valid view types for export. </returns>
         public static ICollection<ViewType> GetExportableViewTypes()
         {
             return new[]
@@ -119,10 +115,6 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             };
         }
 
-        /// <summary>
-        ///     Displays the results from a run of path of travel creation using a TaskDialog.
-        /// </summary>
-        /// <param name="resultsSummary"></param>
         private static void ShowResults(ResultsSummary resultsSummary)
         {
             var td = new TaskDialog("Results of 2D export")
@@ -139,9 +131,6 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             td.Show();
         }
 
-        /// <summary>
-        ///     Class that aggregates the results of the export.
-        /// </summary>
         private class ResultsSummary
         {
             public int NumElements { get; set; }

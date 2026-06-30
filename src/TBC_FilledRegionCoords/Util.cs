@@ -3,7 +3,6 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_FilledRegionCoords sample.</summary>
     internal static partial class Util
     {
         internal static List<XYZ> GetBoundaryCorners(FilledRegion region)
@@ -27,9 +26,6 @@ namespace BuildingCoder
             return result;
         }
 
-        /// <summary>
-        ///     Edit filled region by moving it back and forth.
-        /// </summary>
         internal static void EditFilledRegion(Document doc)
         {
             var fillRegionIds

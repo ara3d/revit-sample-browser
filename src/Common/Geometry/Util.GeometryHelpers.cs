@@ -77,13 +77,6 @@ namespace BuildingCoder
                 .ToList();
         }
 
-        /// <summary>
-        ///     Use the formula
-        ///     area = sign * 0.5 * sum( xi * ( yi+1 - yi-1 ) )
-        ///     to determine the winding direction (clockwise
-        ///     or counter) and area of a 2D polygon.
-        ///     Cf. also GetPolygonPlane.
-        /// </summary>
         public static double GetSignedPolygonArea(List<UV> p)
         {
             var n = p.Count;
@@ -93,17 +86,11 @@ namespace BuildingCoder
             return 0.5 * sum;
         }
 
-        /// <summary>
-        ///     Eliminate the Z coordinate.
-        /// </summary>
         public static UV Flatten(XYZ point)
         {
             return new UV(point.X, point.Y);
         }
 
-        /// <summary>
-        ///     Eliminate the Z coordinate.
-        /// </summary>
         public static List<UV> Flatten(List<XYZ> polygon)
         {
             var z = polygon[0].Z;
@@ -118,9 +105,6 @@ namespace BuildingCoder
             return a;
         }
 
-        /// <summary>
-        ///     Eliminate the Z coordinate.
-        /// </summary>
         public static List<List<UV>> Flatten(List<List<XYZ>> polygons)
         {
             var z = polygons[0][0].Z;
@@ -135,11 +119,6 @@ namespace BuildingCoder
             return a;
         }
 
-        /// <summary>
-        ///     Return the plane properties of a given polygon,
-        ///     i.e. the plane normal, area, and its distance
-        ///     from the origin.
-        /// </summary>
         public static bool GetPolygonPlane(
             List<XYZ> polygon,
             out XYZ normal,
@@ -267,17 +246,8 @@ namespace BuildingCoder
             return polygonTransformed;
         }
 
-        /// <summary>
-        ///     Offset the generated boundary polygon loop
-        ///     model lines downwards to separate them from
-        ///     the slab edge.
-        /// </summary>
         private const double SlabBoundary_offset = 0.1;
 
-        /// <summary>
-        ///     Determine the boundary polygons of the lowest
-        ///     horizontal planar face of the given solid.
-        /// </summary>
         private static bool GetBoundary(
             List<List<XYZ>> polygons,
             Solid solid)
@@ -332,11 +302,6 @@ namespace BuildingCoder
             return null != lowest;
         }
 
-        /// <summary>
-        ///     Return all floor slab boundary loop polygons
-        ///     for the given floors, offset downwards from the
-        ///     bottom floor faces by a certain amount.
-        /// </summary>
         public static List<List<XYZ>> GetFloorBoundaryPolygons(
             List<Element> floors,
             Options opt)
@@ -357,18 +322,8 @@ namespace BuildingCoder
             return polygons;
         }
 
-        /// <summary>
-        ///     Offset the generated boundary polygon loop
-        ///     model lines outwards to separate them from
-        ///     the wall edge, measured in feet.
-        /// </summary>
         private const double _wallProfileOffset = 1.0;
 
-        /// <summary>
-        ///     Determine the elevation boundary profile
-        ///     polygons of the exterior vertical planar
-        ///     face of the given wall solid.
-        /// </summary>
         private static bool GetWallProfile(
             List<List<XYZ>> polygons,
             Solid solid,
@@ -435,11 +390,6 @@ namespace BuildingCoder
             return null != outermost;
         }
 
-        /// <summary>
-        ///     Return all wall profile boundary loop polygons
-        ///     for the given walls, offset out from the outer
-        ///     face of the wall by a certain amount.
-        /// </summary>
         public static List<List<XYZ>> GetWallProfilePolygons(
             List<Element> walls,
             Options opt)

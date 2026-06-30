@@ -625,22 +625,12 @@ namespace BuildingCoder
         }
 
         #endregion // Todd's sample code snippet
-
-        /// <summary>
-        ///     Return true if the given built-in
-        ///     category supports type parameters.
-        /// </summary>
         private static bool BicSupportsTypeParameters(
             BuiltInCategory bic)
         {
             return _bicSupportsTypeParameters.ContainsKey(
                 bic);
         }
-
-        /// <summary>
-        ///     Return true if the given built-in
-        ///     category supports instance parameters.
-        /// </summary>
         private static bool BicSupportsInstanceParameters(
             BuiltInCategory bic)
         {

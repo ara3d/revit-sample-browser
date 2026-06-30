@@ -7,9 +7,6 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
 {
-    /// <summary>
-    ///     An integer-based 3D point class.
-    /// </summary>
     internal class PointInt : IComparable<PointInt>
     {
         public int X { get; set; }
@@ -23,9 +20,6 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.AdnMeshJsonExporter.CS
             return (int)(FeetToMm * d + 0.5);
         }
 
-        /// <summary>
-        ///     Create an integer-based point in millimetres from a given point in imperial coordinates.
-        /// </summary>
         public PointInt(XYZ p)
         {
             X = ConvertFeetToMillimetres(p.X);

@@ -6,9 +6,6 @@ using System.Globalization;
 using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
-    /// <summary>
-    ///     Converts angle with string
-    /// </summary>
     public class AngleConverter : TypeConverter
     {
         /// <summary>

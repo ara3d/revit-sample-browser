@@ -7,11 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     this class controls the class which subscribes handle events and the events' information UI.
-    ///     like a bridge between them.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

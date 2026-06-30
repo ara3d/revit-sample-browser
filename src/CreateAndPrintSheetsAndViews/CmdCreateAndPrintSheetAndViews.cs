@@ -1,5 +1,4 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-//
 // Adapted from CreateAndPrintSheetsAndViews by Jeremy Tammik (MIT).
 // https://github.com/jeremytammik/CreateAndPrintSheetsAndViews
 
@@ -16,10 +15,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
 {
-    /// <summary>
-    /// Create a sheet with four views (right, front, top, and isometric 3D)
-    /// for a selected element, then print the sheet to PDF and JPG.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -179,11 +174,6 @@ namespace Ara3D.RevitSampleBrowser.CreateAndPrintSheetsAndViews.CS
             v.IsolateElementsTemporary(idsToShow);
         }
 
-        /// <summary>
-        /// Create a sheet and four views for the given element: right, front,
-        /// top and 3D, isolated and zoomed. For fabrication parts, orient
-        /// the views according to the duct LCS.
-        /// </summary>
         public static void CreateSheetAndViewsFor(Element e)
         {
             Document doc = e.Document;

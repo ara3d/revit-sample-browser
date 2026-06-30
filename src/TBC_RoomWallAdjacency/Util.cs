@@ -9,14 +9,8 @@ using Autodesk.Revit.DB.Architecture;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_RoomWallAdjacency sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     For all rooms, determine all adjacent walls,
-        ///     create dictionary mapping walls to adjacent rooms,
-        ///     and tag the walls with the adjacent room names.
-        /// </summary>
         public static void TagWallsWithAdjacentRooms(Document doc)
         {
             var rooms

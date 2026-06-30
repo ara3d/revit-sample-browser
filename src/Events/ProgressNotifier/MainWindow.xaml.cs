@@ -12,9 +12,6 @@ using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 {
-    /// <summary>
-    ///     Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly Application m_application;
@@ -24,10 +21,6 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 
         private bool m_receivedCancelEvent;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="application"></param>
         public MainWindow(Application application)
         {
             InitializeComponent();
@@ -93,7 +86,6 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
                 {
                 }
 
-            //   textBox_log.Text += "Previous: "+  previousEventData + Environment.NewLine + "Current: " + itemReturn.ToString() + Environment.NewLine;
             System.Windows.Forms.Application.DoEvents();
 
             m_previousEvent = itemReturn;

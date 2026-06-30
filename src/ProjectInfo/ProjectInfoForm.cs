@@ -5,28 +5,15 @@ using Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
 {
-    /// <summary>
-    ///     Form used to display project information
-    /// </summary>
     public partial class ProjectInfoForm : Form
     {
-        /// <summary>
-        ///     Wrapper for ProjectInfo
-        /// </summary>
         private readonly ProjectInfoWrapper m_projectInfoWrapper;
 
-        /// <summary>
-        ///     Initialize component
-        /// </summary>
         public ProjectInfoForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Initialize PropertyGrid
-        /// </summary>
-        /// <param name="projectInfoWrapper">ProjectInfo wrapper</param>
         public ProjectInfoForm(ProjectInfoWrapper projectInfoWrapper)
             : this()
         {

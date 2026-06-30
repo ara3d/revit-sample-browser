@@ -87,16 +87,7 @@ namespace BuildingCoder
 
     #region TestWall
 
-    /// <summary>
-    ///     Answer to http://forums.autodesk.com/t5/Autodesk-Revit-API/Why-cannot-create-the-wall-by-following-profiles/m-p/3186912/highlight/false#M2351
-    ///     1. Please look at the following two commands in The Building Coder samples: CmdCreateGableWall and CmdSlopedWall.
-    ///     2. I actually went and tested your code, and I see that you are checking the verticality using an epsilon value of 1.e-5. I would suggest raising that to 1.e-9, which is more
-    ///     like what Revit used internally. I did so, and then the IsVertical test fails on your three given points, so the message box saying "not vertical" is displayed. After that,
-    ///     Revit displays an error message saying "Can't make Extrusion.я" At the same time, I temporarily see three model lines on the graphics screen. I have to select Cancel in the
-    ///     Revit message box, though, and afterwards the three model lines disappear again.
-    ///     So I would say the problem lies in your three points. They are not well enough aligned. You need higher precision.
-    /// </summary>
-
+    // Wall profile points need ~1e-9 verticality tolerance, not 1e-5; see https://forums.autodesk.com/t5/Autodesk-Revit-API/Why-cannot-create-the-wall-by-following-profiles/m-p/3186912
 
     #endregion // TestWall
 }

@@ -10,9 +10,6 @@ using Document = Autodesk.Revit.DB.Document;
 
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
-    /// <summary>
-    ///     A stairs component consisting of a single curved run.
-    /// </summary>
     public class CurvedStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
     {
         private Application m_appCreate;
@@ -78,19 +75,10 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             m_appCreate = appCreate;
         }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         private double Radius => (m_innerRadius + m_outerRadius) / 2.0;
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double RunElevation { get; }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double TopElevation
         {
             get
@@ -100,9 +88,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             }
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public IList<Curve> GetStairsPath()
         {
             if (m_stairsRun == null) throw new NotSupportedException("Stairs run hasn't been constructed yet.");
@@ -110,33 +95,21 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return curveLoop.ToList();
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public Curve GetFirstCurve()
         {
             return GetEndCurve(false);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public Curve GetLastCurve()
         {
             return GetEndCurve(true);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public XYZ GetRunEndpoint()
         {
             return GetLastCurve().GetEndPoint(0);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public StairsRun CreateStairsRun(Document document, ElementId stairsId)
         {
             m_stairsRun = StairsRun.CreateSpiralRun(document, stairsId, TransformPoint(m_center),
@@ -146,9 +119,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             return m_stairsRun;
         }
 
-        /// <summary>
-        ///     Implements the interface property.
-        /// </summary>
         public double Width
         {
             get => m_outerRadius - m_innerRadius;
@@ -163,11 +133,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             }
         }
 
-        /// <summary>
-        ///     Gets the first or last riser curve of the run.
-        /// </summary>
-        /// <param name="last">True to get the last curve, false to get the first.</param>
-        /// <returns>The curve.</returns>
         private Curve GetEndCurve(bool last)
         {
             if (m_stairsRun == null) throw new NotSupportedException("Stairs run hasn't been constructed yet.");

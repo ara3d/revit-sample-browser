@@ -5,48 +5,17 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
 {
-    /// <summary>
-    ///     A "fake" keynote database used to demonstrate how Revit keynote data can
-    ///     be generated without reading from a *.txt file.
-    /// </summary>
     public static class ExternalResourceHelper
     {
-        /// <summary>
-        ///     Indicates what version of keynote data is currently available from the database.
-        /// </summary>
         public static string CurrentVersion =>
             // Assume that the server's keynote data is updated at the beginning of every month.
             DateTime.Now.ToString("MM-yyyy");
 
-        /// <summary>
-        ///     Validates the specified database 'key.'
-        /// </summary>
-        /// <param name="key">
-        ///     A string containing the 'key' to a particular set of keynote data
-        ///     that is available from this 'database.'
-        /// </param>
-        /// <returns>
-        ///     True, if the specified 'key' corresponds to a valid set of keynote data in the
-        ///     'database,' else False.
-        /// </returns>
         public static bool IsValidDbKey(string key)
         {
             return key == "1" || key == "2" || key == "3" || key == "4";
         }
 
-        /// <summary>
-        ///     Loads keynote data corresponding to the specified 'key' string into a KeyBasedTreeEntriesLoadContent
-        ///     object.
-        /// </summary>
-        /// <param name="key">
-        ///     A string containing the 'key' to a particular set of keynote data
-        ///     that is available from this 'database.'
-        /// </param>
-        /// <param name="kdrlc">
-        ///     A KeyBasedTreeEntriesLoadContent object to which the keynote data will be
-        ///     added.
-        /// </param>
-        /// <returns></returns>
         public static void LoadKeynoteEntries(string key, ref KeyBasedTreeEntriesLoadContent kdrlc)
         {
             if (!IsValidDbKey(key))

@@ -28,28 +28,14 @@ namespace BuildingCoder
     {
         #region Geometrical Comparison
 
-        /// <summary>
-        ///     Default tolerance used to add fuzz
-        ///     for real number equality detection
-        /// </summary>
         public const double _eps = 1.0e-9;
 
-        /// <summary>
-        ///     Default tolerance used to add fuzz
-        ///     for real number equality detection
-        /// </summary>
         public static double Eps => _eps;
 
         public static double MinLineLength => _eps;
 
         public static double TolPointOnPlane => _eps;
 
-        /// <summary>
-        ///     Predicate to determine whether the given
-        ///     real number should be considered equal to
-        ///     zero, adding fuzz according to the specified
-        ///     tolerance
-        /// </summary>
         public static bool IsZero(
             double a,
             double tolerance = _eps)
@@ -57,11 +43,6 @@ namespace BuildingCoder
             return tolerance > Math.Abs(a);
         }
 
-        /// <summary>
-        ///     Predicate to determine whether the two given
-        ///     real numbers should be considered equal, adding
-        ///     fuzz according to the specified tolerance
-        /// </summary>
         public static bool IsEqual(
             double a,
             double b,
@@ -70,11 +51,6 @@ namespace BuildingCoder
             return IsZero(b - a, tolerance);
         }
 
-        /// <summary>
-        ///     Predicate to determine whether a is
-        ///     smaller than or equal to b, adding fuzz
-        ///     according to the specified tolerance
-        /// </summary>
         public static bool IsLessOrEqual(
             double a,
             double b,
@@ -84,11 +60,6 @@ namespace BuildingCoder
                    || a < b;
         }
 
-        /// <summary>
-        ///     Comparison method for two real numbers
-        ///     returning 0 if they are to be considered equal,
-        ///     -1 if the first is smaller and +1 otherwise
-        /// </summary>
         public static int Compare(
             double a,
             double b,
@@ -101,11 +72,6 @@ namespace BuildingCoder
                     : 1;
         }
 
-        /// <summary>
-        ///     Comparison method for two XYZ objects
-        ///     returning 0 if they are to be considered equal,
-        ///     -1 if the first is smaller and +1 otherwise
-        /// </summary>
         public static int Compare(
             XYZ p,
             XYZ q,
@@ -123,11 +89,6 @@ namespace BuildingCoder
             return d;
         }
 
-        /// <summary>
-        ///     Implement a comparison operator for lines
-        ///     in the XY plane useful for sorting into
-        ///     groups of parallel lines.
-        /// </summary>
         public static int Compare(Line a, Line b)
         {
             var pa = a.GetEndPoint(0);
@@ -187,11 +148,6 @@ namespace BuildingCoder
             return d;
         }
 
-        /// <summary>
-        ///     Predicate to test whether two points or
-        ///     vectors can be considered equal with the
-        ///     given tolerance.
-        /// </summary>
         public static bool IsEqual(
             XYZ p,
             XYZ q,
@@ -200,10 +156,6 @@ namespace BuildingCoder
             return 0 == Compare(p, q, tolerance);
         }
 
-        /// <summary>
-        ///     Return true if the given bounding box bb
-        ///     contains the given point p in its interior.
-        /// </summary>
         public static bool BoundingBoxXyzContains(
             BoundingBoxXYZ bb,
             XYZ p)
@@ -212,10 +164,6 @@ namespace BuildingCoder
                    && 0 < Compare(p, bb.Max);
         }
 
-        /// <summary>
-        ///     Return true if the vectors v and w
-        ///     are non-zero and perpendicular.
-        /// </summary>
         private static bool IsPerpendicular(XYZ v, XYZ w)
         {
             var a = v.GetLength();
@@ -227,18 +175,11 @@ namespace BuildingCoder
             // c * c < _eps * a * b
         }
 
-        /// <summary>
-        ///     Return true if the vectors p and Q are parallel, 
-        ///     or at least one of them is zero length.
-        /// </summary>
         public static bool IsParallel(XYZ p, XYZ q)
         {
             return p.CrossProduct(q).IsZeroLength();
         }
 
-        /// <summary>
-        ///     Predicate returning true if three given points are collinear
-        /// </summary>
         public static bool AreCollinear(XYZ p, XYZ q, XYZ r)
         {
             var v = q - p;
@@ -246,9 +187,6 @@ namespace BuildingCoder
             return IsParallel(v, w);
         }
 
-        /// <summary>
-        ///     Predicate returning true if two given lines are collinear
-        /// </summary>
         public static bool IsCollinear(Line a, Line b)
         {
             var v = a.Direction;
@@ -295,19 +233,8 @@ namespace BuildingCoder
             return IsVertical(f.Axis);
         }
 
-        /// <summary>
-        ///     Minimum slope for a vector to be considered
-        ///     to be pointing upwards. Slope is simply the
-        ///     relationship between the vertical and
-        ///     horizontal components.
-        /// </summary>
         private const double _minimumSlope = 0.3;
 
-        /// <summary>
-        ///     Return true if the Z coordinate of the
-        ///     given vector is positive and the slope
-        ///     is larger than the minimum limit.
-        /// </summary>
         public static bool PointsUpwards(XYZ v)
         {
             var horizontalLength = v.X * v.X + v.Y * v.Y;
@@ -321,9 +248,6 @@ namespace BuildingCoder
             //return _eps < v.Normalize().Z && IsVertical( v.Normalize(), tolerance );
         }
 
-        /// <summary>
-        ///     Return the maximum value from an array of real numbers.
-        /// </summary>
         public static double Max(double[] a)
         {
             Debug.Assert(1 == a.Rank, "expected one-dimensional array");

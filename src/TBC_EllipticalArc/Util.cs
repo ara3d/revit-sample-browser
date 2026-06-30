@@ -4,13 +4,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_EllipticalArc sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Create and return a new elliptical arc geometry object
-        ///     with a given start and end angle.
-        /// </summary>
         internal static Curve CreateEllipse(Application app)
         {
             var center = XYZ.Zero;

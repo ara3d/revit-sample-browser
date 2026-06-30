@@ -46,10 +46,6 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
             set => m_application = value;
         }
 
-        /// <summary>
-        ///     Called by Revit to initialize dockable pane settings set in DockingSetupDialog.
-        /// </summary>
-        /// <param name="data"></param>
         public void SetupDockablePane(DockablePaneProviderData data)
         {
             data.FrameworkElement = this;

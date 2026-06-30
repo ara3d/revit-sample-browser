@@ -7,14 +7,9 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SetGridEndpoint sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Align the given grid horizontally or vertically
-        ///     if it is very slightly off axis, by Fair59 in
-        ///     https://forums.autodesk.com/t5/revit-api-forum/grids-off-axis/m-p/7129065
-        /// </summary>
+        // Off-axis grid alignment; see https://forums.autodesk.com/t5/revit-api-forum/grids-off-axis/m-p/7129065
         public static void AlignOffAxisGrid(
             Grid grid)
         {

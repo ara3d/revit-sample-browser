@@ -28,22 +28,10 @@ namespace BuildingCoder
     [Transaction(TransactionMode.ReadOnly)]
     internal class CmdListAllRooms : IExternalCommand
     {
-        /// <summary>
-        ///     Create a comma-delimited CSV file instead of
-        ///     a human readable text file?
-        /// </summary>
         private const bool _exportCsv = true;
-
-        /// <summary>
-        ///     CSV export headers
-        /// </summary>
         private const string _csv_headers = "Room nr;Name;Center;"
                                             + "Lower left;Boundary;Convex hull;Bounding box;"
                                             + "Area in sq ft";
-
-        /// <summary>
-        ///     Export format string
-        /// </summary>
         private const string _format_string = _exportCsv
             ? "{0},{1},{2},{3},{4},{5},{6},{7}"
             : "Room nr. '{0}' named '{1}' at {2} with "
@@ -52,10 +40,6 @@ namespace BuildingCoder
               + "bounding box {6} and area {7} sqf has "
               + "{8} loop{9} and {10} segment{11} in first "
               + "loop.";
-
-        /// <summary>
-        ///     Export in millimetres instead of imperial feet?
-        /// </summary>
         private static readonly bool _exportInMillimetres = true;
 
         public Result Execute(
@@ -68,54 +52,7 @@ namespace BuildingCoder
             var app = uiapp.Application;
             var doc = uidoc.Document;
 
-            // Filtering for Room elements throws an exception:
-            // Input type is of an element type that exists in
-            // the API, but not in Revit's native object model.
-            // Try using Autodesk.Revit.DB.SpatialElement
-            // instead, and then postprocessing the results to
-            // find the elements of interest.
-
-            //FilteredElementCollector a
-            //  = new FilteredElementCollector( doc )
-            //    .OfClass( typeof( Room ) );
-
-            // Solution using SpatialElement and then
-            // checking for Room type
-
-            //FilteredElementCollector a
-            //  = new FilteredElementCollector( doc )
-            //    .OfClass( typeof( SpatialElement ) );
-
-            //foreach( SpatialElement e in a )
-            //{
-            //  Room room = e as Room;
-
-            //  if( null != room )
-            //  {
-            //    ListRoomData( room );
-            //  }
-            //}
-
-            // Improvement suggested by 
-            // Victor Chekalin using LINQ
-
-            // http://thebuildingcoder.typepad.com/blog/2011/11/accessing-room-data.html
-            // ?cid=6a00e553e168978833017c3690489f970b#comment-6a00e553e168978833017c3690489f970b
-            // --> version 2013.0.100.2
-
-            //FilteredElementCollector collector
-            //  = new FilteredElementCollector( doc );
-
-            //var rooms = collector
-            //  .OfClass( typeof( SpatialElement ) )
-            //  .OfType<Room>();
-
-            //FilteredElementCollector collector
-            //  = new FilteredElementCollector( doc );
-
-            //var rooms = collector
-            //  .OfClass( typeof( SpatialElement ) )
-            //  .OfType<Room>();
+            // OfClass(typeof(Room)) throws; filter SpatialElement and cast to Room.
 
             var collector
                 = new FilteredElementCollector(doc)
@@ -129,12 +66,6 @@ namespace BuildingCoder
             foreach (Room room in rooms) ListRoomData(room);
             return Result.Succeeded;
         }
-
-
-        /// <summary>
-        ///     Draft for method to distinguish 'Not Placed',
-        ///     'Redundant' and 'Not Enclosed' rooms.
-        /// </summary>
         private void DistinguishRoomsDraft(
             Document doc,
             ref StringBuilder sb,
@@ -160,11 +91,6 @@ namespace BuildingCoder
                                     + "- how to distinguish?");
             }
         }
-
-        /// <summary>
-        ///     List some properties of a given room to the
-        ///     Visual Studio debug output window.
-        /// </summary>
         private void ListRoomData(Room room)
         {
             var opt
@@ -270,5 +196,3 @@ namespace BuildingCoder
         }
     }
 }
-
-// C:\Program Files\Autodesk\Revit Architecture 2012\Program\Samples\rac_basic_sample_project.rvt

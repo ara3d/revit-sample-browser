@@ -9,9 +9,6 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ColorFill.CS
 {
-    /// <summary>
-    ///     This is a helper class to deal with the color fill
-    /// </summary>
     public class ColorFillMgr
     {
         private readonly Document m_document;
@@ -21,11 +18,6 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
         private List<ElementId> m_parameterDefinitions = new List<ElementId>();
         private readonly ElementId m_schemeCategoryId;
 
-        /// <summary>
-        ///     Construction
-        /// </summary>
-        /// <param name="doc">Revit document that will be dealt with</param>
-        /// <param name="commandData"></param>
         public ColorFillMgr(Document doc, ExternalCommandData commandData)
         {
             m_document = doc;
@@ -33,19 +25,10 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
             m_externalCommandData = commandData;
         }
 
-        /// <summary>
-        ///     All room schemes from document
-        /// </summary>
         public List<ColorFillScheme> RoomSchemes { get; private set; }
 
-        /// <summary>
-        ///     DB Views from the document
-        /// </summary>
         public List<View> Views { get; private set; }
 
-        /// <summary>
-        ///     Get Data from document
-        /// </summary>
         public void RetrieveData()
         {
             RoomSchemes = m_document.GetElements<ColorFillScheme>()
@@ -61,13 +44,6 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
                 .ToList();
         }
 
-        /// <summary>
-        ///     Duplicate a color fill scheme based on an existing one.
-        /// </summary>
-        /// <param name="scheme">The color fill which that is duplicated.</param>
-        /// <param name="schemeName">Name for new color fill scheme.</param>
-        /// <param name="schemeTitle">Title for new color fill scheme.</param>
-        /// <returns></returns>
         public void DuplicateScheme(ColorFillScheme scheme, string schemeName, string schemeTitle)
         {
             var parameterId = new ElementId(BuiltInParameter.AREA_SCHEME_NAME);
@@ -84,11 +60,6 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
             }
         }
 
-        /// <summary>
-        ///     Create color legend on view with the specific color fill scheme
-        /// </summary>
-        /// <param name="scheme"></param>
-        /// <param name="view"></param>
         public void CreateAndPlaceLegend(ColorFillScheme scheme, View view)
         {
             using (var transaction = new Transaction(m_document))
@@ -110,10 +81,6 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
             }
         }
 
-        /// <summary>
-        ///     Make modify to existing color fill scheme
-        /// </summary>
-        /// <param name="scheme"></param>
         public void ModifyByValueScheme(ColorFillScheme scheme)
         {
             var entries = scheme.GetEntries().ToList();

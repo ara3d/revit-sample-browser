@@ -8,7 +8,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_FaceWall sample.</summary>
     internal static partial class Util
     {
         private const string FaceWallConceptualMassTemplatePath
@@ -36,9 +35,6 @@ namespace BuildingCoder
             return doc.FamilyCreate.NewModelCurve(line, skplane);
         }
 
-        /// <summary>
-        ///     Create an extrusion form in a conceptual mass family document.
-        /// </summary>
         internal static void CreateMassExtrusion(Document doc)
         {
             using var tx = new Transaction(doc);
@@ -150,9 +146,6 @@ namespace BuildingCoder
             tx.Commit();
         }
 
-        /// <summary>
-        ///     Create face walls and mass floors on and in selected mass element.
-        /// </summary>
         internal static void CreateFaceWallsAndMassFloors(UIDocument uidoc)
         {
             var doc = uidoc.Document;

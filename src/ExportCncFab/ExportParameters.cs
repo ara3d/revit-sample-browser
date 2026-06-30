@@ -21,10 +21,7 @@ namespace Ara3D.RevitSampleBrowser.ExportCncFab.CS
         const string _exported_first = "CncFabExportedFirst";
         const string _exported_last = "CncFabExportedLast";
 
-        /// <summary>
-        /// An optional sort mark can be added to elements.
-        /// The sort mark is inserted into the generated output filename.
-        /// </summary>
+        // Optional; when present, inserted into the export filename.
         const string _sort_mark = "CncFabSortMark";
 
         Definition _definition_is_exported;

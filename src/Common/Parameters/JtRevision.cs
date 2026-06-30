@@ -7,20 +7,10 @@ namespace BuildingCoder
 {
     #region Obsolete JtRevision using parameter display names
 
-    /// <summary>
-    ///     A Revision parameter wrapper class by Max.
-    /// </summary>
     internal class JtRevisionUsingDisplayName
     {
-        /// <summary>
-        ///     The BIM element.
-        /// </summary>
         private readonly Element _e;
 
-        /// <summary>
-        ///     Create a Revision parameter accessor
-        ///     for the given BIM element.
-        /// </summary>
         public JtRevisionUsingDisplayName(Element e)
         {
             _e = e;
@@ -74,9 +64,6 @@ namespace BuildingCoder
             set => _p("Issued by").Set(value);
         }
 
-        /// <summary>
-        ///     Internal access to the named parameter.
-        /// </summary>
         private Parameter _p(string parameter_name)
         {
             //return _e.get_Parameter( parameter_name ); // 2014
@@ -91,22 +78,10 @@ namespace BuildingCoder
 
     #endregion // Obsolete JtRevision using parameter display names
 
-    /// <summary>
-    ///     A Revision parameter wrapper class avoiding
-    ///     use of display names to access the data by
-    ///     Jose Ignacio Montes.
-    /// </summary>
     internal class JtRevision
     {
-        /// <summary>
-        ///     The BIM element.
-        /// </summary>
         private readonly Element _e;
 
-        /// <summary>
-        ///     Create a Revision parameter accessor
-        ///     for the given BIM element.
-        /// </summary>
         public JtRevision(Element e)
         {
             _e = e;
@@ -160,9 +135,6 @@ namespace BuildingCoder
             set => _p(BuiltInParameter.PROJECT_REVISION_REVISION_ISSUED_BY).Set(value);
         }
 
-        /// <summary>
-        ///     Internal access to the named parameter.
-        /// </summary>
         private Parameter _p(BuiltInParameter bip)
         {
             return _e.get_Parameter(bip);

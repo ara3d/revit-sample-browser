@@ -6,15 +6,8 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 {
-    /// <summary>
-    ///     This class is used as PropertyGrid.SelectedObject.
-    /// </summary>
     public class Properties
     {
-        /// <summary>
-        ///     get this family instance's properties to display.
-        /// </summary>
-        /// <param name="f">a In-Place family instance</param>
         public Properties(FamilyInstance f)
         {
             Id = f.Id.Value;

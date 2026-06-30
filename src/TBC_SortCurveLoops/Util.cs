@@ -9,7 +9,6 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_SortCurveLoops sample.</summary>
     internal static partial class Util
     {
         public static List<List<CurveLoop>> SortCurveLoops(Face face)

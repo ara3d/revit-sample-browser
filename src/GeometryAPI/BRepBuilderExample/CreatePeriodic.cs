@@ -7,9 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
-    /// <summary>
-    ///     Implement method Execute of this class as an external command for Revit.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class CreatePeriodic : IExternalCommand
     {
@@ -33,13 +30,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Create a DirectShape element from a BRepBuilder object and keep it in the _dbdocument.
-        ///     The main purpose is to display the BRepBuilder objects created.
-        ///     In this function, the BrepBuilder is directly set to a DirectShape.
-        /// </summary>
-        /// <param name="myBRepBuilder"> The BRepBuilder object.</param>
-        /// <param name="name"> Name of the BRepBuilder object, which will be passed on to the DirectShape creation method.</param>
         private void CreateDirectShapeElementFromBrepBuilderObject(BRepBuilder myBRepBuilder, string name)
         {
             if (!myBRepBuilder.IsResultAvailable())
@@ -61,31 +51,24 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 
         private void CreateCylinder()
         {
-            // Naming convention for faces and edges: we assume that x is to the left and pointing down, y is horizontal and pointing to the right, z is up
+            // x down-left, y right, z up.
             var brepBuilder = new BRepBuilder(BRepType.Solid);
 
-            // The surfaces of the four faces.
             var basis = new Frame(new XYZ(50, -100, 0), new XYZ(0, 1, 0), new XYZ(-1, 0, 0), new XYZ(0, 0, 1));
-            // Note that we do not have to create two identical surfaces here. The same surface can be used for multiple faces, 
-            // since BRepBuilderSurfaceGeometry::Create() copies the input surface.
-            // Thus, potentially we could have only one surface here, 
-            // but we must create at least two faces below to account for periodicity. 
+            // Periodic surfaces need at least two faces even when the underlying surface is identical
+            // (BRepBuilderSurfaceGeometry.Create copies the input surface).
             var frontCylSurf = CylindricalSurface.Create(basis, 50);
             var backCylSurf = CylindricalSurface.Create(basis, 50);
             var top = Plane.CreateByNormalAndOrigin(new XYZ(0, 0, 1),
-                new XYZ(0, 0, 100)); // normal points outside the cylinder
+                new XYZ(0, 0, 100));
             var bottom =
-                Plane.CreateByNormalAndOrigin(new XYZ(0, 0, 1), new XYZ(0, 0, 0)); // normal points inside the cylinder
-            // Note that the alternating of "inside/outside" matches the alternating of "true/false" in the next block that defines faces. 
-            // There must be a correspondence to ensure that all faces are correctly oriented to point out of the solid.
-
-            // Add the four faces
+                Plane.CreateByNormalAndOrigin(new XYZ(0, 0, 1), new XYZ(0, 0, 0));
+            // Alternating inside/outside normals must match alternating true/false on AddFace.
             var frontCylFaceId = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(frontCylSurf, null), false);
             var backCylFaceId = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(backCylSurf, null), false);
             var topFaceId = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(top, null), false);
             var bottomFaceId = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(bottom, null), true);
 
-            // Geometry for the four semi-circular edges and two vertical linear edges
             var frontEdgeBottom =
                 BRepBuilderEdgeGeometry.Create(Arc.Create(new XYZ(0, -100, 0), new XYZ(100, -100, 0),
                     new XYZ(50, -50, 0)));
@@ -101,7 +84,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var linearEdgeFront = BRepBuilderEdgeGeometry.Create(new XYZ(100, -100, 0), new XYZ(100, -100, 100));
             var linearEdgeBack = BRepBuilderEdgeGeometry.Create(new XYZ(0, -100, 0), new XYZ(0, -100, 100));
 
-            // Add the six edges
             var frontEdgeBottomId = brepBuilder.AddEdge(frontEdgeBottom);
             var frontEdgeTopId = brepBuilder.AddEdge(frontEdgeTop);
             var linearEdgeFrontId = brepBuilder.AddEdge(linearEdgeFront);
@@ -109,13 +91,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var backEdgeBottomId = brepBuilder.AddEdge(backEdgeBottom);
             var backEdgeTopId = brepBuilder.AddEdge(backEdgeTop);
 
-            // Loops of the four faces
             var loopIdTop = brepBuilder.AddLoop(topFaceId);
             var loopIdBottom = brepBuilder.AddLoop(bottomFaceId);
             var loopIdFront = brepBuilder.AddLoop(frontCylFaceId);
             var loopIdBack = brepBuilder.AddLoop(backCylFaceId);
 
-            // Add coedges for the loop of the front face
             brepBuilder.AddCoEdge(loopIdFront, linearEdgeBackId, false);
             brepBuilder.AddCoEdge(loopIdFront, frontEdgeTopId, false);
             brepBuilder.AddCoEdge(loopIdFront, linearEdgeFrontId, true);
@@ -123,7 +103,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             brepBuilder.FinishLoop(loopIdFront);
             brepBuilder.FinishFace(frontCylFaceId);
 
-            // Add coedges for the loop of the back face
             brepBuilder.AddCoEdge(loopIdBack, linearEdgeBackId, true);
             brepBuilder.AddCoEdge(loopIdBack, backEdgeBottomId, true);
             brepBuilder.AddCoEdge(loopIdBack, linearEdgeFrontId, false);
@@ -131,13 +110,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             brepBuilder.FinishLoop(loopIdBack);
             brepBuilder.FinishFace(backCylFaceId);
 
-            // Add coedges for the loop of the top face
             brepBuilder.AddCoEdge(loopIdTop, backEdgeTopId, false);
             brepBuilder.AddCoEdge(loopIdTop, frontEdgeTopId, true);
             brepBuilder.FinishLoop(loopIdTop);
             brepBuilder.FinishFace(topFaceId);
 
-            // Add coedges for the loop of the bottom face
             brepBuilder.AddCoEdge(loopIdBottom, frontEdgeBottomId, false);
             brepBuilder.AddCoEdge(loopIdBottom, backEdgeBottomId, false);
             brepBuilder.FinishLoop(loopIdBottom);
@@ -156,14 +133,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 
             var basis = new Frame(new XYZ(0, 0, 100), new XYZ(0, 1, 0), new XYZ(1, 0, 0), new XYZ(0, 0, -1));
 
-            // Note that we do not have to create two identical surfaces here. The same surface can be used for multiple faces, 
-            // since BRepBuilderSurfaceGeometry::Create() copies the input surface.
-            // Thus, potentially we could have only one surface here, 
-            // but we must create at least two faces below to account for periodicity. 
+            // Periodic surfaces need at least two faces even when the underlying surface is identical.
             var rightConicalSurface = ConicalSurface.Create(basis, Math.Atan(0.5));
             var leftConicalSurface = ConicalSurface.Create(basis, Math.Atan(0.5));
 
-            // Create 4 faces of the cone
             var topFaceId = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(top, null), false);
             var bottomFaceId = brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(bottom, null), false);
             var rightSideFaceId =
@@ -171,20 +144,17 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var leftSideFaceId =
                 brepBuilder.AddFace(BRepBuilderSurfaceGeometry.Create(leftConicalSurface, null), false);
 
-            // Create 2 edges at the bottom of the cone
             var bottomRightEdgeGeom =
                 BRepBuilderEdgeGeometry.Create(Arc.Create(new XYZ(-50, 0, 0), new XYZ(50, 0, 0), new XYZ(0, 50, 0)));
             var bottomLeftEdgeGeom =
                 BRepBuilderEdgeGeometry.Create(Arc.Create(new XYZ(50, 0, 0), new XYZ(-50, 0, 0), new XYZ(0, -50, 0)));
 
-            // Create 2 edges at the top of the cone
             var topLeftEdgeGeom =
                 BRepBuilderEdgeGeometry.Create(Arc.Create(new XYZ(-25, 0, 50), new XYZ(25, 0, 50),
                     new XYZ(0, -25, 50)));
             var topRightEdgeGeom =
                 BRepBuilderEdgeGeometry.Create(Arc.Create(new XYZ(25, 0, 50), new XYZ(-25, 0, 50), new XYZ(0, 25, 50)));
 
-            // Create 2 side edges of the cone
             var sideFrontEdgeGeom = BRepBuilderEdgeGeometry.Create(new XYZ(25, 0, 50), new XYZ(50, 0, 0));
             var sideBackEdgeGeom = BRepBuilderEdgeGeometry.Create(new XYZ(-25, 0, 50), new XYZ(-50, 0, 0));
 
@@ -195,21 +165,18 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             var sideFrontEdgeid = brepBuilder.AddEdge(sideFrontEdgeGeom);
             var sideBackEdgeId = brepBuilder.AddEdge(sideBackEdgeGeom);
 
-            // Create bottom face
             var bottomLoopId = brepBuilder.AddLoop(bottomFaceId);
             brepBuilder.AddCoEdge(bottomLoopId, bottomRightId, false);
             brepBuilder.AddCoEdge(bottomLoopId, bottomLeftId, false);
             brepBuilder.FinishLoop(bottomLoopId);
             brepBuilder.FinishFace(bottomFaceId);
 
-            // Create top face
             var topLoopId = brepBuilder.AddLoop(topFaceId);
             brepBuilder.AddCoEdge(topLoopId, topLeftEdgeId, false);
             brepBuilder.AddCoEdge(topLoopId, topRightEdgeId, false);
             brepBuilder.FinishLoop(topLoopId);
             brepBuilder.FinishFace(topFaceId);
 
-            // Create right face
             var rightLoopId = brepBuilder.AddLoop(rightSideFaceId);
             brepBuilder.AddCoEdge(rightLoopId, topRightEdgeId, true);
             brepBuilder.AddCoEdge(rightLoopId, sideFrontEdgeid, false);
@@ -218,7 +185,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
             brepBuilder.FinishLoop(rightLoopId);
             brepBuilder.FinishFace(rightSideFaceId);
 
-            // Create left face
             var leftLoopId = brepBuilder.AddLoop(leftSideFaceId);
             brepBuilder.AddCoEdge(leftLoopId, topLeftEdgeId, true);
             brepBuilder.AddCoEdge(leftLoopId, sideBackEdgeId, false);

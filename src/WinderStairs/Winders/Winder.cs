@@ -8,44 +8,20 @@ using Autodesk.Revit.DB.Architecture;
 
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
-    /// <summary>
-    ///     It represents a winder stairs, might include multiple straight runs and winder corners.
-    /// </summary>
     public abstract class Winder
     {
-        /// <summary>
-        ///     Control Points to determine the winder shape(e.g. L or U shape).
-        /// </summary>
         public virtual IList<XYZ> ControlPoints { get; set; }
 
-        /// <summary>
-        ///     Winder stairs Run width.
-        /// </summary>
         public double RunWidth { get; set; }
 
-        /// <summary>
-        ///     Winder stairs tread depth, it just makes sense for straight steps.
-        /// </summary>
         public double TreadDepth { get; set; }
 
-        /// <summary>
-        ///     Outer boundary curves calculated by algorithm.
-        /// </summary>
         protected IList<Curve> OuterBoundary { get; private set; }
 
-        /// <summary>
-        ///     Inner boundary curves calculated by algorithm.
-        /// </summary>
         protected IList<Curve> InnerBoundary { get; private set; }
 
-        /// <summary>
-        ///     Center walk-path calculated by algorithm.
-        /// </summary>
         protected IList<Curve> CenterWalkpath { get; private set; }
 
-        /// <summary>
-        ///     Riser lines calculated by algorithm.
-        /// </summary>
         protected IList<Curve> RiserLines { get; set; }
 
         /// <summary>

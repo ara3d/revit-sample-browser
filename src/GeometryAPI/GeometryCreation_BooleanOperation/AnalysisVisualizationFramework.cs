@@ -9,50 +9,21 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
 {
     public class AnalysisVisualizationFramework
     {
-        /// <summary>
-        ///     The singleton instance of AnalysisVisualizationFramework
-        /// </summary>
         private static AnalysisVisualizationFramework _instance;
-
-        /// <summary>
-        ///     The ID of schema which SpatialFieldManager register
-        /// </summary>
         private static int _schemaId = -1;
-
-        /// <summary>
-        ///     revit document
-        /// </summary>
         private readonly Document m_doc;
-
-        /// <summary>
-        ///     The created view list
-        /// </summary>
         private readonly List<string> m_viewNameList = new List<string>();
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="doc">Revit document</param>
         private AnalysisVisualizationFramework(Document doc)
         {
             m_doc = doc;
         }
 
-        /// <summary>
-        ///     Get the singleton instance of AnalysisVisualizationFramework
-        /// </summary>
-        /// <param name="doc">Revit document</param>
-        /// <returns>The singleton instance of AnalysisVisualizationFramework</returns>
         public static AnalysisVisualizationFramework GetInstance(Document doc)
         {
             return _instance ?? (_instance = new AnalysisVisualizationFramework(doc));
         }
 
-        /// <summary>
-        ///     Paint a solid in a new named view
-        /// </summary>
-        /// <param name="s">solid</param>
-        /// <param name="viewName">Given the name of view</param>
         public void PaintSolid(Solid s, string viewName)
         {
             View view;
@@ -66,7 +37,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
                         view3DId = e.Id;
                 }
 
-                //view = m_doc.Create.NewView3D(new XYZ(1, 1, 1));
                 view = View3D.CreateIsometric(m_doc, view3DId);
                 var viewOrientation3D = new ViewOrientation3D(new XYZ(1, -1, -1), new XYZ(1, 1, 1), new XYZ(1, 1, -2));
                 (view as View3D).SetOrientation(viewOrientation3D);
@@ -122,13 +92,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
             }
         }
 
-        /// <summary>
-        ///     Compute the value of face on specific point
-        /// </summary>
-        /// <param name="face"></param>
-        /// <param name="uvPts"></param>
-        /// <param name="valList"></param>
-        /// <param name="measurementNo"></param>
         private static void ComputeValueAtPointForFace(Face face, out IList<UV> uvPts, out IList<ValueAtPoint> valList,
             int measurementNo)
         {
@@ -142,7 +105,6 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
                 var uvPnt = new UV(u, v);
                 uvPts.Add(uvPnt);
                 var faceXyz = face.Evaluate(uvPnt);
-                // Specify three values for each point
                 for (var ii = 1; ii <= measurementNo; ii++)
                     doubleList.Add(faceXyz.DistanceTo(XYZ.Zero) * ii);
                 valList.Add(new ValueAtPoint(doubleList));

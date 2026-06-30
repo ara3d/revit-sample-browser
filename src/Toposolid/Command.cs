@@ -63,9 +63,6 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
         }
     }
 
-    /// <summary>
-    ///     Create toposolid from dwg
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ToposolidFromDwg : IExternalCommand
@@ -136,9 +133,6 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
         }
     }
 
-    /// <summary>
-    ///     Add contour setting items to toposolid type
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ContourSettingCreation : IExternalCommand
@@ -169,9 +163,6 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
         }
     }
 
-    /// <summary>
-    ///     Modify the current contoursetting of the toposolid type
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ContourSettingModification : IExternalCommand
@@ -208,9 +199,6 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
         }
     }
 
-    /// <summary>
-    ///     Create a toposolid from an existing topography surface
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ToposolidFromSurface : IExternalCommand
@@ -253,9 +241,6 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
         }
     }
 
-    /// <summary>
-    ///     Set the SSE point visibility
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class SsePointVisibility : IExternalCommand
@@ -277,9 +262,6 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
         }
     }
 
-    /// <summary>
-    ///     Split a toposolid by selected model curves
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class SplitToposolid : IExternalCommand
@@ -310,9 +292,6 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
         }
     }
 
-    /// <summary>
-    ///     Simplify a toposolid by reducing its inner vertices.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class SimplifyToposolid : IExternalCommand
@@ -338,108 +317,52 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
         }
     }
 
-    /// <summary>
-    ///     ImportInstanceFilter
-    /// </summary>
     public class ImportInstanceFilter : ISelectionFilter
     {
-        /// <summary>
-        ///     Interface implementation
-        /// </summary>
-        /// <param name="elem"></param>
-        /// <returns></returns>
         public bool AllowElement(Element elem)
         {
             return elem is ImportInstance;
         }
 
-        /// <summary>
-        ///     Interface implementation
-        /// </summary>
-        /// <param name="reference"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
         public bool AllowReference(Reference reference, XYZ position)
         {
             return false;
         }
     }
 
-    /// <summary>
-    ///     TopographySurfaceFilter
-    /// </summary>
     public class TopographySurfaceFilter : ISelectionFilter
     {
-        /// <summary>
-        ///     Interface implementation
-        /// </summary>
-        /// <param name="elem"></param>
-        /// <returns></returns>
         public bool AllowElement(Element elem)
         {
             return elem is TopographySurface;
         }
 
-        /// <summary>
-        ///     Interface implementation
-        /// </summary>
-        /// <param name="reference"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
         public bool AllowReference(Reference reference, XYZ position)
         {
             return false;
         }
     }
 
-    /// <summary>
-    ///     ModelCurveFilter
-    /// </summary>
     public class ModelCurveFilter : ISelectionFilter
     {
-        /// <summary>
-        ///     Interface implementation
-        /// </summary>
-        /// <param name="elem"></param>
-        /// <returns></returns>
         public bool AllowElement(Element elem)
         {
             return elem is ModelCurve;
         }
 
-        /// <summary>
-        ///     Interface implementation
-        /// </summary>
-        /// <param name="reference"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
         public bool AllowReference(Reference reference, XYZ position)
         {
             return false;
         }
     }
 
-    /// <summary>
-    ///     ToposolidFilter
-    /// </summary>
     public class ToposolidFilter : ISelectionFilter
     {
-        /// <summary>
-        ///     Interface implementation
-        /// </summary>
-        /// <param name="elem"></param>
-        /// <returns></returns>
         public bool AllowElement(Element elem)
         {
             return elem is Autodesk.Revit.DB.Toposolid;
         }
 
-        /// <summary>
-        ///     Interface implementation
-        /// </summary>
-        /// <param name="reference"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
         public bool AllowReference(Reference reference, XYZ position)
         {
             return false;

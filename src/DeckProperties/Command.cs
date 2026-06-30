@@ -21,7 +21,6 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
             ref string message,
             ElementSet elements)
         {
-            // Get the application of revit
             var revit = commandData.Application;
             m_document = revit.ActiveUIDocument.Document;
 
@@ -73,10 +72,6 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Dump the properties of interest for the slab passed as a parameter
-        /// </summary>
-        /// <param name="slab"></param>
         private void DumpSlab(Floor slab)
         {
             m_displayForm.WriteLine($"Dumping Slab{slab.Id}");
@@ -95,17 +90,12 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
             m_displayForm.WriteLine(" ");
         }
 
-        /// <summary>
-        ///     Dump properties specific to a decking layer
-        /// </summary>
-        /// <param name="deck"></param>
         private void DumbDeck(CompoundStructureLayer deck)
         {
             m_displayForm.WriteLine("Dumping Deck");
 
             if (deck.MaterialId != ElementId.InvalidElementId)
             {
-                // get the deck material object. In this sample all we need to display is the
                 // name, but other properties are readily available from the material object.
                 var deckMaterial = m_document.GetElement(deck.MaterialId) as Material;
                 m_displayForm.WriteLine($"Deck Material = {deckMaterial.Name}");
@@ -127,21 +117,12 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
             }
         }
 
-        /// <summary>
-        ///     A generic parameter display method that displays all the parameters of an element
-        /// </summary>
-        /// <param name="element"></param>
         private void DumpParameters(Element element)
         {
             foreach (Parameter parameter in element.Parameters)
                 m_displayForm.WriteLine($"{parameter.Definition.Name} = {ParameterAccess.FormatParameterValue(parameter)}");
         }
 
-        /// <summary>
-        ///     for non deck layers this method is called and it displays minimal information
-        ///     about the layer
-        /// </summary>
-        /// <param name="layer"></param>
         private void DumpLayer(CompoundStructureLayer layer)
         {
             // Display the name of the material. More detailed material properties can

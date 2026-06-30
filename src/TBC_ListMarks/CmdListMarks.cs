@@ -121,10 +121,8 @@ namespace BuildingCoder
                 tx.Commit();
             }
 
-            // return Succeeded only if we wish to commit
             // the transaction to modify the database:
             //
-            //return 0 < n
             //  ? Result.Succeeded
             //  : Result.Failed;
             //

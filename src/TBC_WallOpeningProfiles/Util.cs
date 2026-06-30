@@ -4,13 +4,8 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_WallOpeningProfiles sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Retrieve all planar faces belonging to the
-        ///     specified opening in the given wall.
-        /// </summary>
         internal static List<PlanarFace> GetWallOpeningPlanarFaces(
             Wall wall,
             ElementId openingId)

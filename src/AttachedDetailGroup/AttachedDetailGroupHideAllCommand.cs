@@ -8,19 +8,9 @@ using Ara3D.RevitSampleBrowser.Common.Documents;
 using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
 {
-    /// <summary>
-    ///     The external command that hides all of the selected group's attached detail groups.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class AttachedDetailGroupHideAllCommand : IExternalCommand
     {
-        /// <summary>
-        ///     The implementation of the command.
-        /// </summary>
-        /// <param name="commandData"></param>
-        /// <param name="message"></param>
-        /// <param name="elements"></param>
-        /// <returns></returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var uiDoc = commandData.Application.ActiveUIDocument;

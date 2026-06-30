@@ -12,21 +12,13 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_ProjectParameterGuids sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Delete all shared parameters from document, for
-        ///     https://github.com/jeremytammik/RevitLookup/issues/57
-        /// </summary>
+        // RevitLookup #57
         public static void DeleteSharedParameters(Document doc)
         {
             doc.Delete(new FilteredElementCollector(doc)
                 .OfClass(typeof(SharedParameterElement))
                 .ToElementIds());
         }
-
-        /// <summary>
-        ///     Return project parameter id for given name
-        ///     for https://forums.autodesk.com/t5/revit-api-forum/create-view-filters-for-project-parameter/m-p/9051132
-        /// </summary>
         public static ElementId GetProjectParameterId(
             Document doc,
             string name)
@@ -40,11 +32,6 @@ namespace BuildingCoder
 
             return pElem?.Id;
         }
-
-        /// <summary>
-        ///     Delete non-shared project parameter by name
-        ///     for https://forums.autodesk.com/t5/revit-api-forum/deleting-a-non-shared-project-parameter/td-p/5975020
-        /// </summary>
         public static void DeleteNonSharedProjectParam(
             Document doc,
             string parametername)
@@ -60,11 +47,6 @@ namespace BuildingCoder
 
             if (projectparameter != null) doc.Delete(projectparameter.Id);
         }
-
-        /// <summary>
-        ///     Returns a list of the objects containing
-        ///     references to the project parameter definitions
-        /// </summary>
         public static List<ProjectParameterData>
             GetProjectParameterData(
                 Document doc)
@@ -95,12 +77,6 @@ namespace BuildingCoder
 
             return result;
         }
-
-        /// <summary>
-        ///     This method takes a category and information
-        ///     about a project parameter and adds a binding
-        ///     to the category for the parameter.
-        /// </summary>
         public static bool AddProjectParameterBinding(
             Document doc,
             ProjectParameterData projectParameterData,
@@ -156,12 +132,6 @@ namespace BuildingCoder
 
             return result;
         }
-
-        /// <summary>
-        ///     This method populates the appropriate values
-        ///     on a ProjectParameterData object with
-        ///     information from the given Parameter object.
-        /// </summary>
         public static void PopulateProjectParameterData(
             Parameter parameter,
             ProjectParameterData projectParameterDataToFill)
@@ -177,11 +147,6 @@ namespace BuildingCoder
             if (parameter.IsShared)
                 projectParameterDataToFill.GUID = parameter.GUID.ToString();
         }
-
-        /// <summary>
-        ///     This class contains information discovered
-        ///     about a (shared or non-shared) project parameter
-        /// </summary>
         public class ProjectParameterData
         {
             public ElementBinding Binding;

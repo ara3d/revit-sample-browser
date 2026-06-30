@@ -26,13 +26,7 @@ namespace AdnRme
 {
   class Const
   {
-    /// <summary>
-    /// Unit conversion factor for calculating CFM/SF from CFS internal units
-    /// </summary>
     public const double SecondsPerMinute = 60;
-    /// <summary>
-    /// Round-up factor factor for rounding up terminal flow
-    /// </summary>
     public const double RoundTerminalFlowTo = 5;
   }
 }

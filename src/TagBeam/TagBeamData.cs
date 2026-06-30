@@ -12,33 +12,18 @@ using Ara3D.RevitSampleBrowser.Common.Documents;
 using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.TagBeam.CS
 {
-    /// <summary>
-    ///     Tag beam data class.
-    /// </summary>
     public class TagBeamData
     {
-        /// <summary>
-        ///     Selected beams
-        /// </summary>
         private readonly List<FamilyInstance> m_beamList;
 
-        /// <summary>
-        ///     Tag types whose category is "Structural Framing Tags"
-        /// </summary>
         private readonly List<FamilySymbolWrapper> m_categoryTagTypes =
             new List<FamilySymbolWrapper>();
 
         private Document m_docCreator; // document creation
 
-        /// <summary>
-        ///     Tag types whose category is "Material Tags"
-        /// </summary>
         private readonly List<FamilySymbolWrapper> m_materialTagTypes =
             new List<FamilySymbolWrapper>();
 
-        /// <summary>
-        ///     Tag types whose category is "Multi-Category Tags"
-        /// </summary>
         private readonly List<FamilySymbolWrapper> m_multiCategoryTagTypes =
             new List<FamilySymbolWrapper>();
 
@@ -47,13 +32,6 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
         //Required designer variable.
         private readonly View m_view; // current view
 
-        /// <summary>
-        ///     Initializes a new instance of TagBeamData.
-        /// </summary>
-        /// <param name="commandData">
-        ///     An object that is passed to the external application
-        ///     which contains data related to the command
-        /// </param>
         public TagBeamData(ExternalCommandData commandData)
         {
             //Get beams selected 
@@ -85,11 +63,6 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
             }
         }
 
-        /// <summary>
-        ///     Tag families with specified mode
-        /// </summary>
-        /// <param name="mode">mode of tag families to get</param>
-        /// <returns></returns>
         public List<FamilySymbolWrapper> this[TagMode mode]
         {
             get
@@ -108,13 +81,6 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
             }
         }
 
-        /// <summary>
-        ///     Tag the beam's start and end.
-        /// </summary>
-        /// <param name="tagMode">Mode of tag</param>
-        /// <param name="tagSymbol">Tag symbol wrapper</param>
-        /// <param name="leader">Whether the tag has leader</param>
-        /// <param name="tagOrientation">Orientation of tag</param>
         public void CreateTag(TagMode tagMode,
             FamilySymbolWrapper tagSymbol, bool leader,
             TagOrientation tagOrientation)

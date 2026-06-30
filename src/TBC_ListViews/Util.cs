@@ -8,10 +8,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_ListViews sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return the viewport on the given
-        ///     sheet displaying the given view.
-        /// </summary>
         public static Element GetViewport(ViewSheet sheet, View view)
         {
             var doc = sheet.Document;

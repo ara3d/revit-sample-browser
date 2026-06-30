@@ -20,14 +20,7 @@ using Autodesk.Revit.UI;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     Here is some code that is in the RevitAPI.chm
-    ///     as a snippet for IFailuresPreprocessor Interface).
-    ///     It creates an unbounded room and suppresses the
-    ///     warning ("Room is not in a properly enclosed region")
-    ///     that would otherwise be given.
-    ///     By Harry Mattison.
-    /// </summary>
+    /// <summary>Suppresses the unbounded-room warning via IFailuresPreprocessor (Harry Mattison).</summary>
     [Transaction(TransactionMode.Manual)]
     internal class CmdPreprocessFailure : IExternalCommand
     {

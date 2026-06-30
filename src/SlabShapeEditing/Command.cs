@@ -28,11 +28,6 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     get selected floor (slab)
-        /// </summary>
-        /// <param name="commandData">object which contains reference of Revit Application.</param>
-        /// <returns>selected floor (slab)</returns>
         private Floor GetSelectFloor(ExternalCommandData commandData)
         {
             var eleSet = new ElementSet();

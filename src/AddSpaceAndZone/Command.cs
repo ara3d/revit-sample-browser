@@ -23,12 +23,10 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
                     new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
                 documentTransaction.Start();
 
-                // Create a new instance of class DataManager
                 var dataManager = new DataManager(commandData);
 
                 DialogResult result;
 
-                // Create a form
                 using (var mainForm = new MainForm(dataManager))
                 {
                     result = mainForm.ShowDialog();
@@ -45,7 +43,6 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
             }
             catch (Exception ex)
             {
-                // If there are something wrong, give error information and return failed
                 message = ex.Message;
                 return Result.Failed;
             }

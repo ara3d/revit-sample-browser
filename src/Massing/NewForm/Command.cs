@@ -9,10 +9,6 @@ using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class show how to create extrusion form by Revit API.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -54,10 +50,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
         }
     }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class show how to create cap form by Revit API.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class MakeCapForm : IExternalCommand
@@ -96,10 +88,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
         }
     }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class show how to create revolve form by Revit API.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class MakeRevolveForm : IExternalCommand
@@ -144,10 +132,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
         }
     }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class show how to create swept blend form by Revit API.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class MakeSweptBlendForm : IExternalCommand
@@ -213,10 +197,6 @@ namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
         }
     }
 
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class show how to create loft form by Revit API.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class MakeLoftForm : IExternalCommand

@@ -7,23 +7,13 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
-    /// <summary>
-    ///     Tool used to draw circle
-    /// </summary>
     public class CircleTool : Tool
     {
-        /// <summary>
-        ///     Default constructor
-        /// </summary>
         public CircleTool()
         {
             Type = ToolType.Circle;
         }
 
-        /// <summary>
-        ///     Draw circles contained in the tool
-        /// </summary>
-        /// <param name="graphic"></param>
         public override void Draw(Graphics graphic)
         {
             foreach (var line in Lines)
@@ -32,11 +22,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse down event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseDown(Graphics graphic, MouseEventArgs e)
         {
             base.OnMouseDown(graphic, e);
@@ -49,11 +34,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse move event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
             base.OnMouseMove(graphic, e);
@@ -66,11 +46,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Mouse up event handler
-        /// </summary>
-        /// <param name="graphic">Graphics object, used to draw geometry</param>
-        /// <param name="e">Mouse event argument</param>
         public override void OnMouseUp(Graphics graphic, MouseEventArgs e)
         {
             base.OnMouseUp(graphic, e);
@@ -83,13 +58,6 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             }
         }
 
-        /// <summary>
-        ///     Draw circle with center and one point on circle
-        /// </summary>
-        /// <param name="graphics">Graphics object, used  to draw geometry</param>
-        /// <param name="pen">Pen used to set drawing color</param>
-        /// <param name="pCenter">Circle center</param>
-        /// <param name="pBound">One point on circle</param>
         private void DrawCircle(Graphics graphics, Pen pen, Point pCenter, Point pBound)
         {
             var radius = (int)Math.Sqrt((pBound.X - pCenter.X) * (pBound.X - pCenter.X)

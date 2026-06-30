@@ -11,19 +11,8 @@ using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledEx
 
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
-    /// <summary>
-    ///     Helper class to report custom data from fabrication part selection.
-    /// </summary>
     public class CustomDataHelper
     {
-        /// <summary>
-        ///     Report the custom data.
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="uiDoc"></param>
-        /// <param name="setNewValues"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
         public static Result ReportCustomData(Document doc, UIDocument uiDoc, bool setNewValues, ref string message)
         {
             FabricationPart fabPart = null;
@@ -31,7 +20,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
             try
             {
-                // check for a load fabrication config
                 config = FabricationConfiguration.GetFabricationConfiguration(doc);
 
                 if (config == null)
@@ -40,7 +28,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     return Result.Failed;
                 }
 
-                // pick a fabrication part
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part to start.");
                 fabPart = doc.GetElement(refObj) as FabricationPart;
             }
@@ -55,12 +42,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 return Result.Failed;
             }
 
-            // get custom data from loaded fabrication config
             var customDataIds = config.GetAllPartCustomData();
             var customDataCount = customDataIds.Count;
             var results = string.Empty;
 
-            // report custom data info
             if (customDataCount > 0)
             {
                 var resultsBuilder = new StringBuilder();
@@ -73,7 +58,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     var customDataName = config.GetPartCustomDataName(customDataId);
 
                     resultsBuilder.AppendLine($"Type: {customDataType} Name: {customDataName}");
-                    // check custom data exists on selected part
                     if (fabPart.HasCustomData(customDataId))
                     {
                         var fabPartCurrentValue = string.Empty;

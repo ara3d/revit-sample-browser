@@ -19,11 +19,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         private double m_transverseEndSpacing; //the space value of end transverse reinforcement
         private int m_verticalRebarNumber; //the number of the vertical reinforcement
 
-        /// <summary>
-        ///     Constructor of the ColumnFramReinMaker
-        /// </summary>
-        /// <param name="commandData">the ExternalCommandData reference</param>
-        /// <param name="hostObject">the host column</param>
         public ColumnFramReinMaker(ExternalCommandData commandData, FamilyInstance hostObject)
             : base(commandData, hostObject)
         {
@@ -35,24 +30,12 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             m_geometry = new ColumnGeometrySupport(hostObject, geoOptions);
         }
 
-        /// <summary>
-        ///     get and set the type of the end transverse reinforcement
-        /// </summary>
         public RebarBarType TransverseEndType { get; set; }
 
-        /// <summary>
-        ///     get and set the type of the center transverse reinforcement
-        /// </summary>
         public RebarBarType TransverseCenterType { get; set; }
 
-        /// <summary>
-        ///     get and set the type of the vertical reinforcement
-        /// </summary>
         public RebarBarType VerticalRebarType { get; set; }
 
-        /// <summary>
-        ///     get and set the space value of end transverse reinforcement
-        /// </summary>
         public double TransverseEndSpacing
         {
             get => m_transverseEndSpacing;
@@ -64,9 +47,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             }
         }
 
-        /// <summary>
-        ///     get and set the space value of center transverse reinforcement
-        /// </summary>
         public double TransverseCenterSpacing
         {
             get => m_transverseCenterSpacing;
@@ -78,9 +58,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             }
         }
 
-        /// <summary>
-        ///     get and set the number of vertical reinforcement
-        /// </summary>
         public int VerticalRebarNumber
         {
             get => m_verticalRebarNumber;
@@ -92,24 +69,13 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             }
         }
 
-        /// <summary>
-        ///     get and set the hook type of transverse reinforcement
-        /// </summary>
         public RebarHookType TransverseHookType { get; set; }
 
-        /// <summary>
-        ///     Override method to do some further checks
-        /// </summary>
-        /// <returns>true if the the data is right and enough, otherwise false.</returns>
         protected override bool AssertData()
         {
             return base.AssertData();
         }
 
-        /// <summary>
-        ///     Display a form to collect the information for column reinforcement creation
-        /// </summary>
-        /// <returns>true if the information collection is successful, otherwise false</returns>
         protected override bool DisplayForm()
         {
             // Display ColumnFramReinMakerForm for the user input information 
@@ -121,10 +87,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return base.DisplayForm();
         }
 
-        /// <summary>
-        ///     Override method to create reinforcement on the selected column
-        /// </summary>
-        /// <returns>true if the creation is successful, otherwise false.</returns>
         protected override bool FillWithBars()
         {
             //create Rebar Container
@@ -141,10 +103,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return base.FillWithBars();
         }
 
-        /// <summary>
-        ///     create the transverse reinforcement for the column
-        /// </summary>
-        /// <returns>true if the creation is successful, otherwise false</returns>
         public bool FillTransverseItems(RebarContainer cont)
         {
             // create all kinds of transverse reinforcement according to the TransverseRebarLocation
@@ -158,11 +116,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             return true;
         }
 
-        /// <summary>
-        ///     Create the transverse reinforcement, according to the transverse reinforcement location
-        /// </summary>
-        /// <param name="location">location of rebar which need to be created</param>
-        /// <returns>the created reinforcement, return null if the creation is unsuccessful</returns>
         public RebarContainerItem FillTransverseItem(RebarContainer cont, TransverseRebarLocation location)
         {
             // Get the geometry information which support reinforcement creation
@@ -186,11 +139,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
                 RebarHookOrientation.Left, RebarHookOrientation.Left);
         }
 
-        /// <summary>
-        ///     Create the vertical reinforcement according the location
-        /// </summary>
-        /// <param name="location">location of rebar which need to be created</param>
-        /// <returns>the created reinforcement, return null if the creation is unsuccessful</returns>
         public RebarContainerItem FillVerticalItem(RebarContainer cont, VerticalRebarLocation location)
         {
             //calculate the reinforcement number in different location
@@ -218,10 +166,6 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
                 RebarHookOrientation.Right);
         }
 
-        /// <summary>
-        ///     create the all the vertical reinforcement
-        /// </summary>
-        /// <returns>true if the creation is successful, otherwise false</returns>
         private bool FillVerticalItems(RebarContainer cont)
         {
             // create all kinds of vertical reinforcement according to the VerticalRebarLocation

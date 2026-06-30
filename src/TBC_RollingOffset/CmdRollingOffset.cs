@@ -41,26 +41,10 @@ namespace BuildingCoder
         private const BuiltInParameter bipDiameter
             = BuiltInParameter.RBS_PIPE_DIAMETER_PARAM;
 
-        /// <summary>
-        ///     This command can place either a model line
-        ///     to represent the rolling offset calculation
-        ///     result, or insert a real pipe segment and the
-        ///     associated fittings.
-        /// </summary>
         private static readonly bool _place_model_line = false;
 
-        /// <summary>
-        ///     Place the two 45 degree fittings and connect
-        ///     them instead of explicitly placing the
-        ///     rolling offset pipe segment.
-        /// </summary>
         private static readonly bool _place_fittings = false;
 
-        /// <summary>
-        ///     Switch between the new static Pipe.Create
-        ///     method and the obsolete
-        ///     Document.Create.NewPipe.
-        /// </summary>
         private static readonly bool _use_static_pipe_create = true;
 
         public Result Execute(
@@ -190,8 +174,6 @@ namespace BuildingCoder
 
             var pipes = picker.Selected;
 
-            // Check for same pipe system type.
-
             var systemTypeId
                 = pipes[0].MEPSystem.GetTypeId();
 
@@ -200,16 +182,12 @@ namespace BuildingCoder
                         systemTypeId.Value),
                 "expected two similar pipes");
 
-            // Check for same pipe level.
-
             var levelId = pipes[0].LevelId;
 
             Debug.Assert(
                 pipes[1].LevelId.Value.Equals(
                     levelId.Value),
                 "expected two pipes on same level");
-
-            // Extract data from the two selected pipes.
 
             var wall_thickness = Util.GetWallThickness(pipes[0]);
 
@@ -243,9 +221,6 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            // Select the two pipe endpoints
-            // that are farthest apart.
-
             var p0 = p00.DistanceTo(p10) > p01.DistanceTo(p10)
                 ? p00
                 : p01;
@@ -264,25 +239,12 @@ namespace BuildingCoder
                 return Result.Failed;
             }
 
-            // Normal vector of the plane defined by the
-            // two parallel and offset pipes, which is
-            // the plane hosting the rolling offset
-
             var z = v.CrossProduct(v1);
-
-            // Vector perpendicular to v0 and v0 and
-            // z, i.e. vector pointing from the first pipe
-            // to the second in the cross sectional view.
 
             var w = z.CrossProduct(v1).Normalize();
 
-            // Offset distance perpendicular to pipe direction
-
             var distanceAcross = Math.Abs(
                 v.DotProduct(w));
-
-            // Distance between endpoints parallel 
-            // to pipe direction
 
             var distanceAlong = Math.Abs(
                 v.DotProduct(v1.Normalize()));
@@ -292,19 +254,13 @@ namespace BuildingCoder
                               + distanceAlong * distanceAlong)),
                 "expected Pythagorean equality here");
 
-            // The required offset pipe angle.
-
             var angle = 45 * Math.PI / 180.0;
-
-            // The angle on the other side.
 
             var angle2 = 0.5 * Math.PI - angle;
 
             var length = distanceAcross * Math.Tan(angle2);
 
             var halfLength = 0.5 * length;
-
-            // How long should the pipe stubs become?
 
             var remainingPipeLength
                 = 0.5 * (distanceAlong - length);
@@ -318,16 +274,12 @@ namespace BuildingCoder
             var q1 = p1 - remainingPipeLength * v1;
 
             using var tx = new Transaction(doc);
-            // Determine pipe diameter for creating 
-            // matching pipes and fittings
 
             var pipe = pipes[0];
 
             var diameter = pipe
                 .get_Parameter(bipDiameter) // "Diameter"
                 .AsDouble();
-
-            // Pipe type for calls to doc.Create.NewPipe
 
             var pipe_type_standard
                 = new FilteredElementCollector(doc)
@@ -347,15 +299,11 @@ namespace BuildingCoder
 
             if (_place_model_line)
             {
-                // Trim or extend existing pipes
-
                 (pipes[0].Location as LocationCurve).Curve
                     = Line.CreateBound(p0, q0);
 
                 (pipes[1].Location as LocationCurve).Curve
                     = Line.CreateBound(p1, q1);
-
-                // Add a model line for the rolling offset pipe
 
                 var creator = new Creator(doc);
 
@@ -367,10 +315,7 @@ namespace BuildingCoder
             }
             else if (_place_fittings)
             {
-                // Set active work plane to the rolling 
-                // offset plane... removed again, since
-                // this has no effect at all on the 
-                // fitting placement or rotation.
+                // Setting the active work plane does not affect fitting placement or rotation.
                 //
                 //Plane plane = new Plane( z, q0 );
                 //
@@ -388,8 +333,6 @@ namespace BuildingCoder
                         .Where(e
                             => e.Family.Name.Contains("Elbow - Generic"))
                         .FirstOrDefault();
-
-                // Set up first 45 degree elbow fitting
 
                 var fitting0 = doc.Create
                     .NewFamilyInstance(q0, symbol,
@@ -413,16 +356,10 @@ namespace BuildingCoder
                 var con0 = Util.GetConnectorClosestTo(
                     fitting0, p0);
 
-                // Trim or extend existing pipe
-
                 (pipes[0].Location as LocationCurve).Curve
                     = Line.CreateBound(p0, con0.Origin);
 
-                // Connect pipe to fitting
-
                 Util.Connect(con0.Origin, pipe, fitting0);
-
-                // Set up second 45 degree elbow fitting
 
                 var fitting1 = doc.Create
                     .NewFamilyInstance(q1, symbol,
@@ -459,26 +396,15 @@ namespace BuildingCoder
                 con1 = Util.GetConnectorClosestTo(
                     fitting1, pm);
 
-                // Connecting one fitting to the other does
-                // not insert a pipe in between. If the 
-                // system is edited later, however, the two 
-                // fittings snap together.
+                // Connecting fittings directly does not insert a pipe segment between them.
                 //
                 //con0.ConnectTo( con1 );
-
-                // Create rolling offset pipe segment
-
-                //pipe = doc.Create.NewPipe( con0.Origin, // 2014
-                //  con1.Origin, pipe_type_standard );
 
                 pipe = Pipe.Create(doc,
                     pipe_type_standard.Id, levelId, con0, con1); // 2015
 
                 pipe.get_Parameter(bipDiameter)
                     .Set(diameter);
-
-                // Connect rolling offset pipe segment
-                // with elbow fittings at each end
 
                 Util.Connect(con0.Origin, fitting0, pipe);
                 Util.Connect(con1.Origin, pipe, fitting1);
@@ -487,29 +413,20 @@ namespace BuildingCoder
             {
                 if (_use_static_pipe_create)
                 {
-                    // Element id arguments to Pipe.Create.
-
                     ElementId idSystem;
                     ElementId idType;
                     ElementId idLevel;
 
-                    // All these values are invalid for idSystem:
-
+                    // pipe.MEPSystem.Id and similar values are invalid for Pipe.Create's systemTypeId.
                     var idSystem1 = pipe.MEPSystem.Id;
                     var idSystem2 = ElementId.InvalidElementId;
                     var idSystem3 = PipingSystem.Create(
                             doc, pipe.MEPSystem.GetTypeId(), "Tbc")
                         .Id;
 
-                    // This throws an argument exception saying
-                    // The systemTypeId is not valid piping system type.
-                    // Parameter name: systemTypeId
-
+                    // Throws: "The systemTypeId is not valid piping system type."
                     //pipe = Pipe.Create( doc, idSystem,
                     //  idType, idLevel, q0, q1 );
-
-                    // Retrieve pipe system type, e.g. 
-                    // hydronic supply.
 
                     var pipingSystemType
                         = new FilteredElementCollector(doc)
@@ -533,8 +450,6 @@ namespace BuildingCoder
                             .AsElementId().Value.Equals(
                                 idSystem.Value),
                         "expected same piping system element id");
-
-                    // Retrieve the PipeType.
 
                     var pipeType =
                         new FilteredElementCollector(doc)
@@ -560,14 +475,10 @@ namespace BuildingCoder
                             .Equals(idType.Value),
                         "expected same pipe type element id");
 
-                    // Retrieve the reference level.
-                    // pipe.LevelId is not the correct source!
-
+                    // pipe.LevelId is not the reference level for Pipe.Create.
                     idLevel = pipe.get_Parameter(
                             BuiltInParameter.RBS_START_LEVEL_PARAM)
                         .AsElementId();
-
-                    // Create the rolling offset pipe.
 
                     pipe = Pipe.Create(doc,
                         idSystem, idType, idLevel, q0, q1);
@@ -583,18 +494,8 @@ namespace BuildingCoder
                 pipe.get_Parameter(bipDiameter)
                     .Set(diameter);
 
-                // Connect rolling offset pipe segment
-                // directly with the neighbouring original
-                // pipes
-                //
                 //Util.Connect( q0, pipes[0], pipe );
                 //Util.Connect( q1, pipe, pipes[1] );
-
-                // NewElbowFitting performs the following:
-                // - select appropriate fitting family and type
-                // - place and orient a family instance
-                // - set its parameters appropriately
-                // - connect it with its neighbours
 
                 var con0 = Util.GetConnectorClosestTo(
                     pipes[0], q0);
@@ -619,6 +520,3 @@ namespace BuildingCoder
         }
     }
 }
-
-// Z:\a\rvt\rolling_offset.rvt
-// /a/j/adn/case/bsd/1264642/attach/PipeTest.cs

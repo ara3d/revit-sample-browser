@@ -10,51 +10,30 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
     /// </summary>
     public struct Vector
     {
-        /// <summary>
-        ///     x coordinate of vector
-        /// </summary>
         private double m_x;
 
-        /// <summary>
-        ///     y coordinate of vector
-        /// </summary>
         private double m_y;
 
-        /// <summary>
-        ///     z coordinate of vector
-        /// </summary>
         private double m_z;
 
-        /// <summary>
-        ///     Property to get X coordinate
-        /// </summary>
         public double X
         {
             get => m_x;
             set => m_x = value;
         }
 
-        /// <summary>
-        ///     Property to get Y coordinate
-        /// </summary>
         public double Y
         {
             get => m_y;
             set => m_y = value;
         }
 
-        /// <summary>
-        ///     Property to get Z coordinate
-        /// </summary>
         public double Z
         {
             get => m_z;
             set => m_z = value;
         }
 
-        /// <summary>
-        ///     Property to get x, y, z coordinate bu index 1, 2, 3
-        /// </summary>
         public double this[int index]
         {
             get
@@ -90,9 +69,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             }
         }
 
-        /// <summary>
-        ///     copy constructor
-        /// </summary>
         public Vector(Vector rhs)
         {
             m_x = rhs.X;
@@ -100,12 +76,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             m_z = rhs.Z;
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="x">x coordinate of point</param>
-        /// <param name="y">y coordinate of point</param>
-        /// <param name="z">z coordinate of point</param>
         public Vector(double x, double y, double z)
         {
             m_x = x;
@@ -113,9 +83,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             m_z = z;
         }
 
-        /// <summary>
-        ///     get Normal by vector
-        /// </summary>
         public Vector GetNormal()
         {
             var direct = new Vector();
@@ -126,12 +93,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return direct;
         }
 
-        /// <summary>
-        ///     add two vector
-        /// </summary>
-        /// <param name="lhs">first vector</param>
-        /// <param name="rhs">second vector</param>
-        /// <returns>add two vector</returns>
         public static Vector operator +(Vector lhs, Vector rhs)
         {
             var result = new Vector(lhs);
@@ -141,12 +102,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return result;
         }
 
-        /// <summary>
-        ///     subtraction of two vector
-        /// </summary>
-        /// <param name="lhs">first vector</param>
-        /// <param name="rhs">second vector</param>
-        /// <returns>subtraction of two vector</returns>
         public static Vector operator -(Vector lhs, Vector rhs)
         {
             var result = new Vector(lhs);
@@ -156,11 +111,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return result;
         }
 
-        /// <summary>
-        ///     negative of vector
-        /// </summary>
-        /// <param name="lhs">vector</param>
-        /// <returns>negative of vector</returns>
         public static Vector operator -(Vector lhs)
         {
             var result = new Vector(lhs)
@@ -172,12 +122,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return result;
         }
 
-        /// <summary>
-        ///     get normal vector of two vector
-        /// </summary>
-        /// <param name="lhs">first vector</param>
-        /// <param name="rhs">second vector</param>
-        /// <returns> normal vector of two vector</returns>
         public static Vector operator &(Vector lhs, Vector rhs)
         {
             var v1 = lhs.X;
@@ -195,77 +139,36 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return new Vector(x, y, z);
         }
 
-        /// <summary>
-        ///     get cross vector of two vector
-        /// </summary>
-        /// <param name="lhs">first vector</param>
-        /// <param name="rhs">second vector</param>
-        /// <returns> cross vector of two vector</returns>
         public static double operator *(Vector lhs, Vector rhs)
         {
             return lhs.X * rhs.X + lhs.Y * rhs.Y + lhs.Z * rhs.Z;
         }
 
-        /// <summary>
-        ///     get vector multiply by an double value
-        /// </summary>
-        /// <param name="lhs">vector</param>
-        /// <param name="rhs">double value</param>
-        /// <returns> vector multiply by an double value</returns>
         public static Vector operator *(Vector lhs, double rhs)
         {
             return new Vector(lhs.X * rhs, lhs.Y * rhs, lhs.Z * rhs);
         }
 
-        /// <summary>
-        ///     estimate whether two are unequal
-        /// </summary>
-        /// <param name="lhs">first vector</param>
-        /// <param name="rhs">second vector</param>
-        /// <returns> whether two are unequal</returns>
         public static bool operator !=(Vector lhs, Vector rhs)
         {
             return !IsEqual(lhs, rhs);
         }
 
-        /// <summary>
-        ///     estimate whether two are equal
-        /// </summary>
-        /// <param name="lhs">first vector</param>
-        /// <param name="rhs">second vector</param>
-        /// <returns> whether two are equal</returns>
         public static bool operator ==(Vector lhs, Vector rhs)
         {
             return IsEqual(lhs, rhs);
         }
 
-        /// <summary>
-        ///     get the length of vector
-        /// </summary>
-        /// <param name="lhs">vector</param>
-        /// <returns>length of vector</returns>
         public static double operator ~(Vector lhs)
         {
             return lhs.GetLength();
         }
 
-        /// <summary>
-        ///     get vector divided by an double value
-        /// </summary>
-        /// <param name="lhs">vector</param>
-        /// <param name="rhs">double value</param>
-        /// <returns> vector divided by an double value</returns>
         public static Vector operator /(Vector lhs, double rhs)
         {
             return new Vector(lhs.m_x / rhs, lhs.m_y / rhs, lhs.m_z / rhs);
         }
 
-        /// <summary>
-        ///     get angle of two vector
-        /// </summary>
-        /// <param name="lhs">first vector</param>
-        /// <param name="rhs">second vector</param>
-        /// <returns> angle of two vector</returns>
         public static double GetAngleOf2Vectors(Vector lhs, Vector rhs, bool acuteAngleDesired)
         {
             var angle = Math.Acos(lhs.GetNormal() * rhs.GetNormal());
@@ -273,11 +176,6 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return angle;
         }
 
-        /// <summary>
-        ///     estimate whether two are equal
-        /// </summary>
-        /// <param name="obj">object which compare with</param>
-        /// <returns> whether two are equal</returns>
         public override bool Equals(object obj)
         {
             try
@@ -292,28 +190,16 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             return false;
         }
 
-        /// <summary>
-        ///     Get HashCode
-        /// </summary>
         public override int GetHashCode()
         {
             return m_x.GetHashCode() ^ m_y.GetHashCode() ^ m_z.GetHashCode();
         }
 
-        /// <summary>
-        ///     Get Length of vector
-        /// </summary>
         public double GetLength()
         {
             return Math.Sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
         }
 
-        /// <summary>
-        ///     estimate whether two vector are equal
-        /// </summary>
-        /// <param name="lhs">first vector</param>
-        /// <param name="rhs">second vector</param>
-        /// <returns> whether two are equal</returns>
         private static bool IsEqual(Vector lhs, Vector rhs)
         {
             return lhs.X == rhs.X && lhs.X == rhs.X && lhs.X == rhs.X;

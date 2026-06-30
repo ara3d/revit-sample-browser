@@ -43,10 +43,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         // All rooms data from spread sheet
         private DataTable m_spreadRoomsTable;
 
-        /// <summary>
-        ///     Class constructor
-        /// </summary>
-        /// <param name="commandData">Revit external command data</param>
         public RoomScheduleForm(ExternalCommandData commandData)
         {
             // UI initialization 
@@ -77,18 +73,13 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             UpdateRoomMapSheetInfo();
         }
 
-        /// <summary>
-        ///     Get all available levels and phases from current document
-        /// </summary>
         private void GetAllLevelsAndPhases()
         {
-            // get all levels which can place rooms
             foreach (PlanTopology planTopology in m_document.PlanTopologies)
             {
                 m_allLevels.Add(planTopology.Level);
             }
 
-            // get all phases by filter type
             var collector = new FilteredElementCollector(m_document);
             ICollection<Element> allPhases = collector.OfClass(typeof(Phase)).ToElements();
             foreach (Phase phs in allPhases)
@@ -97,10 +88,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
         }
 
-        /// <summary>
-        ///     Create shared parameter for Rooms category
-        /// </summary>
-        /// <returns>True, shared parameter exists; false, doesn't exist</returns>
         private bool CreateMyRoomSharedParameter()
         {
             // Create Room Shared Parameter Routine: -->
@@ -131,15 +118,12 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 // open shared parameter file
                 var parafile = revitApp.OpenSharedParameterFile();
 
-                // create a group
                 var apiGroup = parafile.Groups.Create("SDKSampleRoomScheduleGroup");
 
-                // create a visible "External Room ID" of text type.
                 var externalDefinitionCreationOptions =
                     new ExternalDefinitionCreationOptions(RoomsData.SharedParam, SpecTypeId.String.Text);
                 var roomSharedParamDef = apiGroup.Definitions.Create(externalDefinitionCreationOptions);
 
-                // get Rooms category
                 var roomCat =
                     m_commandData.Application.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory
                         .OST_Rooms);
@@ -158,11 +142,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
         }
 
-        /// <summary>
-        ///     Test if the Room binds a specified shared parameter
-        /// </summary>
-        /// <param name="paramName">Parameter name to be checked</param>
-        /// <returns>true, the definition exists, false, doesn't exist.</returns>
         private bool ShareParameterExists(string paramName)
         {
             var bindingMap = m_document.ParameterBindings;
@@ -176,7 +155,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 // find the definition of which the name is the appointed one
                 if (string.Compare(tempDefinition.Name, paramName) != 0) continue;
 
-                // get the category which is bound
                 var binding = bindingMap.get_Item(tempDefinition) as ElementBinding;
                 var bindCategories = binding.Categories;
                 foreach (Category category in bindCategories)
@@ -203,11 +181,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             TaskDialog.Show("Room Schedule", strMsg, TaskDialogCommonButtons.Ok);
         }
 
-        /// <summary>
-        ///     Update control display of form
-        ///     call this method when create new rooms or switch the room show(show all or show by level)
-        /// </summary>
-        /// <param name="bUpdateAllRooms">whether retrieve all rooms from Revit project once more</param>
         private void UpdateFormDisplay(bool bUpdateAllRooms)
         {
             // update Revit Rooms data when there is room creation
@@ -225,9 +198,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             revitRoomDataGridView.Update();
         }
 
-        /// <summary>
-        ///     Display current Room sheet information: Excel path
-        /// </summary>
         private void UpdateRoomMapSheetInfo()
         {
             var hashCode = m_document.GetHashCode();
@@ -236,11 +206,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 roomExcelTextBox.Text = $"Mapped Sheet: {xlsAndTable.FileName}: {xlsAndTable.SheetName}";
         }
 
-        /// <summary>
-        ///     Some preparation and check before creating room.
-        /// </summary>
-        /// <param name="curPhase">Current phase used to create room, all rooms will be created in this phase.</param>
-        /// <returns>Number indicates how many new rooms were created.</returns>
         private int RoomCreationStart()
         {
             var nNewRoomsSize = 0;
@@ -252,7 +217,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 Phase curPhase = null;
                 if (!RoomCreationPreparation(ref curPhase)) return 0;
 
-                // get all existing rooms which have mapped to spreadsheet rooms.
                 // we should skip the creation for those spreadsheet rooms which have been mapped by Revit rooms.
                 var existingRooms = new Dictionary<ElementId, string>();
                 foreach (var room in m_roomData.Rooms)
@@ -263,7 +227,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 }
 
                 myTransaction.Start();
-                // create rooms with spread sheet based rooms data
                 for (var row = 0; row < m_spreadRoomsTable.Rows.Count; row++)
                 {
                     // get the ID column value and use it to check whether this spreadsheet room is mapped by Revit room.
@@ -272,7 +235,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                         // skip the spreadsheet room creation if it's mapped by Revit room
                         continue;
 
-                    // create rooms in specified phase, but without placing them.
                     var newRoom = m_document.Create.NewRoom(curPhase);
                     if (null == newRoom)
                     {
@@ -335,14 +297,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             return nNewRoomsSize;
         }
 
-        /// <summary>
-        ///     Some preparation and check before creating room.
-        /// </summary>
-        /// <param name="curPhase">Current phase used to create room, all rooms will be created in this phase.</param>
-        /// <returns></returns>
         private bool RoomCreationPreparation(ref Phase curPhase)
         {
-            // check to see whether there is available spread sheet based rooms to create
             if (null == m_spreadRoomsTable || null == m_spreadRoomsTable.Rows || m_spreadRoomsTable.Rows.Count == 0)
             {
                 MyMessageBox("There is no available spread sheet based room to create.", MessageBoxIcon.Warning);
@@ -353,7 +309,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             CreateMyRoomSharedParameter();
 
             // create Revit rooms by using spread sheet based rooms
-            // add "ID" data of spread sheet to Room element's share parameter: "External Room ID"
             var column = m_spreadRoomsTable.Columns[RoomsData.RoomId];
             if (column == null)
             {
@@ -361,7 +316,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 return false;
             }
 
-            // get phase used to create room
             foreach (var phase in m_allPhases)
             {
                 if (string.Compare(phase.Name, phaseComboBox.Text) == 0)
@@ -380,11 +334,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             return true;
         }
 
-        /// <summary>
-        ///     Update new room with values in spreadsheet, currently there are three columns need to be set.
-        /// </summary>
-        /// <param name="newRoom">New room to be updated.</param>
-        /// <param name="index">The index of row in spreadsheet, use values of this row to update the new room.</param>
         private void UpdateNewRoom(Room newRoom, int row)
         {
             string[] constantColumns = { RoomsData.RoomName, RoomsData.RoomNumber, RoomsData.RoomComments };
@@ -413,11 +362,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
         }
 
-        /// <summary>
-        ///     Import room spread sheet and display them in form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void importRoomButton_Click(object sender, EventArgs e)
         {
             using (var sfdlg = new OpenFileDialog())
@@ -455,12 +399,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
         }
 
-        /// <summary>
-        ///     Select one table(work sheet) and display its data to DataGridView control.
-        ///     after selection, generate data table from data source
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void tablesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // update spread sheet based rooms
@@ -471,7 +409,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             {
                 m_spreadRoomsTable?.Clear();
 
-                // get all rooms table then close this connection immediately
                 xlsCon = new XlsDbConnector(m_dataBaseName);
 
                 // generate room data table from room work sheet.
@@ -505,14 +442,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
         }
 
-        /// <summary>
-        ///     Filter rooms by specified level.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void levelComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // get the selected level, by comparing its name and ComboBox selected item's name
             Level selLevel = null;
             foreach (var level in m_allLevels)
             {
@@ -534,14 +465,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             revitRoomDataGridView.DataSource = new DataView(m_roomData.GenRoomsDataTable(selLevel));
         }
 
-        /// <summary>
-        ///     Create new rooms according to spreadsheet based rooms data and specified phase.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void newRoomButton_Click(object sender, EventArgs e)
         {
-            // Create room process:
             // 1: Create shared parameter for "Room" category elements if it doesn't exist.
             // 2: Create rooms by using spread sheet's data: 
             //    a: We should make sure that each of spreadsheet room is mapped by only one Revit room; 
@@ -550,7 +475,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             // 3: Subscribe document Save, SaveAs and Close event handlers.
             // 4: Update all rooms data and pop up message
 
-            // Create rooms now
             var nNewRoomsSize = RoomCreationStart();
             if (nNewRoomsSize <= 0) return;
 
@@ -569,11 +493,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             UpdateFormDisplay(true);
         }
 
-        /// <summary>
-        ///     Show all rooms in current document
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void showAllRoomsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             // disable and enable some controls
@@ -583,22 +502,11 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             UpdateFormDisplay(false);
         }
 
-        /// <summary>
-        ///     Close the form.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void closeButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /// <summary>
-        ///     Clear all values of shared parameters
-        ///     Allow user to create more unplaced rooms and update map relationships between Revit and spreadsheet rooms.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void clearIDButton_Click(object sender, EventArgs e)
         {
             var nCount = 0;

@@ -7,9 +7,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_LandXml sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Parse LandXML Pnts elements into XYZ points.
-        /// </summary>
         internal static List<XYZ> ParseLandXmlPoints(XmlDocument xmlDoc)
         {
             var pnts = xmlDoc.GetElementsByTagName("Pnts");

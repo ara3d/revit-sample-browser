@@ -8,30 +8,17 @@ using Ara3D.RevitSampleBrowser.AreaReinParameters.CS;
 using Ara3D.RevitSampleBrowser.Common.Structural;
 namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 {
-    /// <summary>
-    ///     data and data manager of the AreaReinforcement
-    /// </summary>
     public class AreaReinData
     {
         private readonly Document m_doc;
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
         public AreaReinData(Document doc)
         {
             m_doc = doc;
         }
 
-        /// <summary>
-        ///     Parameter LayoutRule of AreaReinforcement
-        /// </summary>
         public LayoutRules LayoutRule { get; set; } = LayoutRules.MaximumSpacing;
 
-        /// <summary>
-        ///     set the parameters to given AreaReinforcement
-        /// </summary>
-        /// <param name="areaRein"></param>
         public virtual void FillIn(AreaReinforcement areaRein)
         {
             var temp = (int)LayoutRule;

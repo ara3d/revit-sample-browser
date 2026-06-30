@@ -9,11 +9,6 @@ namespace BuildingCoder
     /// <summary>Utilities extracted from TBC_NewSprinkler sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Return the largest horizontal face of the given
-        ///     element e, either top or bottom, optionally
-        ///     computing references.
-        /// </summary>
         internal static PlanarFace GetLargestHorizontalFace(
             Element e,
             bool computReferences = true,
@@ -52,11 +47,6 @@ namespace BuildingCoder
 
             return largest_face;
         }
-
-        /// <summary>
-        ///     Return the median point of a triangle by
-        ///     taking the average of its three vertices.
-        /// </summary>
         internal static XYZ MedianPoint(MeshTriangle triangle)
         {
             var p = XYZ.Zero;
@@ -66,11 +56,6 @@ namespace BuildingCoder
             p *= 0.3333333333333333;
             return p;
         }
-
-        /// <summary>
-        ///     Return the area of a triangle as half of
-        ///     its height multiplied with its base length.
-        /// </summary>
         internal static double TriangleArea(MeshTriangle triangle)
         {
             var a = triangle.get_Vertex(0);
@@ -85,11 +70,6 @@ namespace BuildingCoder
 
             return area;
         }
-
-        /// <summary>
-        ///     Return an arbitrary point on a planar face,
-        ///     namely the midpoint of the first mesh triangle.
-        /// </summary>
         internal static XYZ PointOnFace(PlanarFace face)
         {
             var mesh = face.Triangulate();
@@ -98,11 +78,6 @@ namespace BuildingCoder
                 ? MedianPoint(mesh.get_Triangle(0))
                 : XYZ.Zero;
         }
-
-        /// <summary>
-        ///     Return a 'good' point on a planar face, namely
-        ///     the median point of its largest mesh triangle.
-        /// </summary>
         internal static XYZ PointOnFace2(PlanarFace face)
         {
             var mesh = face.Triangulate();

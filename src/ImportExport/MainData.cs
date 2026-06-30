@@ -10,126 +10,54 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS
 {
-    /// <summary>
-    ///     Export formats
-    /// </summary>
     public enum ExportFormat
     {
-        /// <summary>
-        ///     DWG format
-        /// </summary>
         Dwg,
 
-        /// <summary>
-        ///     DXF format
-        /// </summary>
         Dxf,
 
-        /// <summary>
-        ///     SAT format
-        /// </summary>
         Sat,
 
-        /// <summary>
-        ///     DWF format
-        /// </summary>
         Dwf,
 
-        /// <summary>
-        ///     DWFx format
-        /// </summary>
         DwFx,
 
-        /// <summary>
-        ///     GBXML format
-        /// </summary>
         Gbxml,
 
-        /// <summary>
-        ///     FBX format
-        /// </summary>
         Fbx,
 
-        /// <summary>
-        ///     DGN format
-        /// </summary>
         Dgn,
 
-        /// <summary>
-        ///     IMG format
-        /// </summary>
         Image,
 
-        /// <summary>
-        ///     PDF format
-        /// </summary>
         Pdf
     }
 
-    /// <summary>
-    ///     Import formats
-    /// </summary>
     public enum ImportFormat
     {
-        /// <summary>
-        ///     DWF format
-        /// </summary>
         Dwg,
 
-        /// <summary>
-        ///     IMAGE format
-        /// </summary>
         Image,
 
-        /// <summary>
-        ///     GBXML format
-        /// </summary>
         Gbxml,
 
-        /// <summary>
-        ///     Inventor format
-        /// </summary>
         Inventor
     }
 
-    /// <summary>
-    ///     Data class contains the external command data.
-    /// </summary>
     public class MainData
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="commandData">Revit command data</param>
         public MainData(ExternalCommandData commandData)
         {
             CommandData = commandData;
-
-            //Whether current active view is 3D view
             if (commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == ViewType.ThreeD)
                 Is3DView = true;
             else
                 Is3DView = false;
         }
-        // Revit command data
-
-        // Whether current view is a 3D view
-
-        /// <summary>
-        ///     Revit command data
-        /// </summary>
         public ExternalCommandData CommandData { get; }
 
-        /// <summary>
-        ///     Whether current view is a 3D view
-        /// </summary>
         public bool Is3DView { get; set; }
 
-        /// <summary>
-        ///     Get the format to export
-        /// </summary>
-        /// <param name="selectedFormat">Selected format in format selecting dialog</param>
-        /// <returns>The format to export</returns>
         private static ExportFormat GetSelectedExportFormat(string selectedFormat)
         {
             var format = ExportFormat.Dwg;
@@ -170,10 +98,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             return format;
         }
 
-        /// <summary>
-        ///     Export according to selected format
-        /// </summary>
-        /// <param name="selectedFormat">Selected format</param>
         public DialogResult Export(string selectedFormat)
         {
             var format = GetSelectedExportFormat(selectedFormat);
@@ -260,10 +184,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             return dialogResult;
         }
 
-        /// <summary>
-        ///     Export
-        /// </summary>
-        /// <param name="data"></param>
         private static DialogResult Export(ExportData data)
         {
             var returnFilename = string.Empty;
@@ -282,13 +202,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             return result;
         }
 
-        /// <summary>
-        ///     Show Save dialog
-        /// </summary>
-        /// <param name="exportData">Data to export</param>
-        /// <param name="returnFileName">File name will be returned</param>
-        /// <param name="filterIndex">Selected filter index will be returned</param>
-        /// <returns></returns>
         public static DialogResult ShowSaveDialog(ExportData exportData, ref string returnFileName,
             ref int filterIndex)
         {
@@ -312,11 +225,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             }
         }
 
-        /// <summary>
-        ///     Get the format to import
-        /// </summary>
-        /// <param name="selectedFormat">Selected format in format selecting dialog</param>
-        /// <returns>The format to import</returns>
         private static ImportFormat GetSelectedImportFormat(string selectedFormat)
         {
             var format = ImportFormat.Dwg;
@@ -339,11 +247,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             return format;
         }
 
-        /// <summary>
-        ///     Export according to selected format
-        /// </summary>
-        /// <param name="selectedFormat">Selected format</param>
-        /// <returns></returns>
         public DialogResult Import(string selectedFormat)
         {
             var dialogResult = DialogResult.OK;
@@ -380,10 +283,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             return dialogResult;
         }
 
-        /// <summary>
-        ///     Import
-        /// </summary>
-        /// <param name="data"></param>
         private static DialogResult Import(ImportData data)
         {
             var returnFilename = string.Empty;
@@ -399,12 +298,6 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             return result;
         }
 
-        /// <summary>
-        ///     Show Open File dialog
-        /// </summary>
-        /// <param name="importData">Data to import</param>
-        /// <param name="returnFileName">File name will be returned</param>
-        /// <returns>Dialog result</returns>
         public static DialogResult ShowOpenDialog(ImportData importData, ref string returnFileName)
         {
             using (var importDialog = new OpenFileDialog())

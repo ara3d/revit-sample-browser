@@ -30,7 +30,6 @@ namespace BuildingCoder
     // https://forums.autodesk.com/t5/revit-api-forum/mathematical-translations/m-p/7580510
 
 
-
     #endregion // Automatic Walls
 
     [Transaction(TransactionMode.Manual)]
@@ -58,9 +57,6 @@ namespace BuildingCoder
         // Face Wall and Mass Floor creation with the Revit API
         // https://youtu.be/nHWen2_lN6U
 
-        /// <summary>
-        ///     Create face walls and mass floors on and in selected mass element
-        /// </summary>
         public void CreateFaceWallsAndMassFloors(UIDocument uidoc)
         {
             Util.CreateFaceWallsAndMassFloors(uidoc);

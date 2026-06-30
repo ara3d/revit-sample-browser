@@ -8,56 +8,27 @@ using Autodesk.Revit.DB.Architecture;
 using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
 {
-    /// <summary>
-    ///     The main class governing the automatic stairs element creation.
-    /// </summary>
     public class StairsAutomationUtility
     {
         private readonly int m_stairsNumber;
 
-        /// <summary>
-        ///     The bottom level for the stairs assembly.
-        /// </summary>
         public Level BottomLevel { get; set; }
 
-        /// <summary>
-        ///     The top level for the stairs assembly.
-        /// </summary>
         public Level TopLevel { get; set; }
 
-        /// <summary>
-        ///     The document.
-        /// </summary>
         protected Document Document { get; }
 
-        /// <summary>
-        ///     The stairs.
-        /// </summary>
         protected Stairs Stairs { get; private set; }
 
-        /// <summary>
-        ///     Creates a new instance of this class for a given stairs congfiguration.
-        /// </summary>
-        /// <param name="document">The document.</param>
-        /// <param name="stairsNumber">The stairs configuration number.</param>
         protected StairsAutomationUtility(Document document, int stairsNumber)
         {
             Document = document;
             m_stairsNumber = stairsNumber;
         }
 
-        /// <summary>
-        ///     Sets up a new stairs automation utility.
-        /// </summary>
-        /// <param name="document">The document in which the stairs will be created.</param>
-        /// <param name="stairsNumber">The predefined stairs configuration number.</param>
-        /// <returns></returns>
         public static StairsAutomationUtility Create(Document document, int stairsNumber) =>
             new StairsAutomationUtility(document, stairsNumber);
 
-        /// <summary>
-        ///     Sets up the levels for the bottom and top of the stairs assembly.
-        /// </summary>
         private void SetupLevels()
         {
             var targetLevels = StairsHelper.FindTargetLevels(Document, "Level 1", "Level 2", "Level 3");
@@ -169,9 +140,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             return null;
         }
 
-        /// <summary>
-        ///     Execute the creation of the specified stairs assembly.
-        /// </summary>
         public void GenerateStairs()
         {
             SetupLevels();

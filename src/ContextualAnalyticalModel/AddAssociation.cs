@@ -8,10 +8,6 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    ///     Adds new relation between physical and analytical elements using AnalyticalToPhysicalAssociationManager
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class AddAssociation : IExternalCommand
@@ -31,7 +27,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 var analyticalElementId = ElementQuery.GetSelectedObject(activeDoc, "Please select analytical element");
                 var physicalElementId = ElementQuery.GetSelectedObject(activeDoc, "Please select physical element");
 
-                //gets the AnalyticalToPhysicalAssociationManager for the current document
                 var analyticalToPhysicalmanager =
                     AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(doc);
                 if (analyticalToPhysicalmanager == null)

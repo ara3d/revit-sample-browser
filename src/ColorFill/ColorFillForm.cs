@@ -5,15 +5,8 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.ColorFill.CS
 {
-    /// <summary>
-    ///     This is a dialog should appear that contains the following:
-    ///     A list view represents all room scheme names.
-    /// </summary>
     public partial class ColorFillForm : Form
     {
-        /// <summary>
-        ///     constructor
-        /// </summary>
         public ColorFillForm(ColorFillMgr colorFillMgr)
         {
             m_colorFillMgr = colorFillMgr;

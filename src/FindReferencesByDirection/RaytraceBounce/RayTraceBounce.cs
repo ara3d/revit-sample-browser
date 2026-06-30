@@ -11,31 +11,19 @@ using Ara3D.RevitSampleBrowser.Common.Geometry;
 using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
 {
-    /// <summary>
-    ///     A class inherits IExternalCommand interface.
-    ///     This class shows how to find intersection between ray and face and create
-    ///     connecting lines by Revit API method FindReferencesByDirection.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        ///     revit application
-        /// </summary>
         private UIApplication m_app;
-
-        /// <summary>
-        ///     a 3D View
-        /// </summary>
         private View3D m_view;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
-                // should have a line style "bounce" created in the document before running this
+                // Requires a document line style named "bounce" before running.
                 m_app = commandData.Application;
                 m_view = ElementQuery.Get3DView(m_app.ActiveUIDocument.Document);
                 if (m_view == null)

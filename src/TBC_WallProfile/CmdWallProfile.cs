@@ -36,8 +36,6 @@ namespace BuildingCoder
             ref string msg,
             ElementSet els)
         {
-            // Choose which implementation to use.
-
             var use_execute_nr = 3;
 
             switch (use_execute_nr)
@@ -50,10 +48,7 @@ namespace BuildingCoder
             return Result.Failed;
         }
 
-        /// <summary>
-        ///     Original implementation published November 17, 2008:
-        ///     http://thebuildingcoder.typepad.com/blog/2008/11/wall-elevation-profile.html
-        /// </summary>
+        // http://thebuildingcoder.typepad.com/blog/2008/11/wall-elevation-profile.html
         public Result Execute1(
             ExternalCommandData commandData,
             ref string message,
@@ -97,10 +92,7 @@ namespace BuildingCoder
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Alternative implementation published January 23, 2015:
-        ///     http://thebuildingcoder.typepad.com/blog/2015/01/getting-the-wall-elevation-profile.html
-        /// </summary>
+        // http://thebuildingcoder.typepad.com/blog/2015/01/getting-the-wall-elevation-profile.html
         public Result Execute2(
             ExternalCommandData commandData,
             ref string message,
@@ -128,8 +120,6 @@ namespace BuildingCoder
             using var tx = new Transaction(doc);
             tx.Start("Wall Profile");
 
-            // Get the external wall face for the profile
-
             var sideFaces
                 = HostObjectUtils.GetSideFaces(wall,
                     ShellLayerType.Exterior);
@@ -139,30 +129,17 @@ namespace BuildingCoder
             var face = e2.GetGeometryObjectFromReference(
                 sideFaces[0]) as Face;
 
-            // The normal of the wall external face.
-
             var normal = face.ComputeNormal(new UV(0, 0));
-
-            // Offset curve copies for visibility.
 
             var offset = Transform.CreateTranslation(
                 5 * normal);
 
-            // If the curve loop direction is counter-
-            // clockwise, change its color to RED.
-
             var colorRed = new Color(255, 0, 0);
-
-            // Get edge loops as curve loops.
 
             var curveLoops
                 = face.GetEdgesAsCurveLoops();
 
-            // ExporterIFCUtils class can also be used for 
-            // non-IFC purposes. The SortCurveLoops method 
-            // sorts curve loops (edge loops) so that the 
-            // outer loops come first.
-
+            // ExporterIFCUtils.SortCurveLoops puts outer loops first (non-IFC use is fine).
             var curveLoopLoop
                 = ExporterIFCUtils.SortCurveLoops(
                     curveLoops);
@@ -171,16 +148,12 @@ namespace BuildingCoder
                 in curveLoopLoop)
             foreach (var curveLoop2 in curveLoops2)
             {
-                // Check if curve loop is counter-clockwise.
-
                 var isCCW = curveLoop2.IsCounterclockwise(
                     normal);
 
                 var curves = creapp.NewCurveArray();
 
                 foreach (var curve in curveLoop2) curves.Append(curve.CreateTransformed(offset));
-
-                // Create model lines for an curve loop.
 
                 //Plane plane = creapp.NewPlane( curves ); // 2016
 
@@ -213,11 +186,7 @@ namespace BuildingCoder
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Improved implementation by Alexander Ignatovich
-        ///     supporting curved wall with curved window,
-        ///     second attempt, published April 10, 2015:
-        /// </summary>
+        // Curved wall with curved window; Alexander Ignatovich, April 2015.
         public Result Execute3(
             ExternalCommandData commandData,
             ref string message,
@@ -247,10 +216,6 @@ namespace BuildingCoder
             using var tx = new Transaction(doc);
             tx.Start("Wall Profile");
 
-            // Get the external wall face for the profile
-            // a little bit simpler than in the last 
-            // implementation in Execute2.
-
             var sideFaceReference
                 = HostObjectUtils.GetSideFaces(
                         wall, ShellLayerType.Exterior)
@@ -258,8 +223,6 @@ namespace BuildingCoder
 
             var face = wall.GetGeometryObjectFromReference(
                 sideFaceReference) as Face;
-
-            // The plane and normal of the wall external face.
 
             var normal = wall.Orientation.Normalize();
             var ftx = face.ComputeDerivatives(UV.Zero);
@@ -272,22 +235,13 @@ namespace BuildingCoder
                 Util.PointString(forigin),
                 Util.PointString(fnormal));
 
-            // Offset distance.
-
             double d = 5;
-
-            // Offset curve copies for visibility.
 
             var voffset = d * normal;
             var offset = Transform.CreateTranslation(
                 voffset);
 
-            // If the curve loop direction is counter-
-            // clockwise, change its color to RED.
-
             var colorRed = new Color(255, 0, 0);
-
-            // Get edge loops as curve loops.
 
             var curveLoops
                 = face.GetEdgesAsCurveLoops();
@@ -305,8 +259,6 @@ namespace BuildingCoder
 
                 var isCounterClockwize = curveLoop
                     .IsCounterclockwise(normal);
-
-                // Create model lines for an curve loop if it is made 
 
                 var wallCurve = ((LocationCurve) wall.Location).Curve;
 

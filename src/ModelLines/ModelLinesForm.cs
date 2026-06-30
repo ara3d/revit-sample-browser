@@ -26,10 +26,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
         // Private members
         private readonly ModelLines m_dataBuffer; // A reference of ModelLines.
 
-        /// <summary>
-        ///     Constructor of ModelLinesForm
-        /// </summary>
-        /// <param name="dataBuffer">A reference of ModelLines class</param>
         public ModelLinesForm(ModelLines dataBuffer)
         {
             // Required for Windows Form Designer support
@@ -65,11 +61,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             numberColumn.Width = informationDataGridView.Width * 2 / 5 - 2; // set column width
         }
 
-        /// <summary>
-        ///     Check the data which the user input are integrated or not
-        /// </summary>
-        /// <param name="createType"></param>
-        /// <returns>If the data are integrated return true, otherwise false</returns>
         private bool AssertDataIntegrity(LineType createType)
         {
             // check whether the user has selected a sketch plane
@@ -108,10 +99,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             }
         }
 
-        /// <summary>
-        ///     Get the curve type for creation from the UI
-        /// </summary>
-        /// <returns>the curve type enum selected by the user</returns>
         private LineType GetCurveType()
         {
             if (lineRadioButton.Checked) // the user check lineRadioButton

@@ -30,18 +30,11 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         private readonly LineTool m_tool; //current using tool
         private Matrix4 m_transMatrix; //save the final matrix
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
         public NewPathReinforcementForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="profile">ProfileWall or ProfileFloor</param>
         public NewPathReinforcementForm(Profile profile)
             : this()
         {
@@ -54,11 +47,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             m_sizePictureBox = pictureBox.Size;
         }
 
-        /// <summary>
-        ///     store mouse location when mouse down
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             if (!m_previewMode)
@@ -71,11 +59,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             }
         }
 
-        /// <summary>
-        ///     draw the line to where mouse moved
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void PictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             pictureBox.Refresh();
@@ -84,11 +67,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             m_tool.OnMouseMove(graphics, e);
         }
 
-        /// <summary>
-        ///     draw the curve of slab (or wall) and path of PathReinforcement
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -121,11 +99,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             m_profile.Draw2D(e.Graphics, Pens.Blue, m_transMatrix);
         }
 
-        /// <summary>
-        ///     draw all the curves of PathReinforcement when click "Preview" Button
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ButtonPreview_Click(object sender, EventArgs e)
         {
             m_previewMode = true;
@@ -154,21 +127,11 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             pictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     redraw curve of PathReinforcement when "flip" changed
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void FlipCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (m_previewMode) ButtonPreview_Click(null, null);
         }
 
-        /// <summary>
-        ///     clean all the points of the PathReinforcement when click "Clean" Button
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void ButtonClean_Click(object sender, EventArgs e)
         {
             m_tool.Clear();
@@ -178,11 +141,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             pictureBox.Refresh();
         }
 
-        /// <summary>
-        ///     stop drawing path when click "Escape" button
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void NewPathReinforcementForm_KeyPress(object sender, KeyPressEventArgs e)
         {
             //finish the sketch when press "Escape"
@@ -226,11 +184,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             Close();
         }
 
-        /// <summary>
-        ///     close the form
-        /// </summary>
-        /// <param name="sender">object who sent this event</param>
-        /// <param name="e">event args</param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
             Close();
@@ -257,10 +210,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             return result;
         }
 
-        /// <summary>
-        ///     calculate the matrix use to scale
-        /// </summary>
-        /// <param name="size">pictureBox size</param>
         private Matrix4 ComputeScaleMatrix(Size size)
         {
             var boundPoints = m_profile.GetFaceBounds();
@@ -270,9 +219,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             return new Matrix4(factor);
         }
 
-        /// <summary>
-        ///     calculate the matrix used to transform 3D to 2D
-        /// </summary>
         private Matrix4 Compute3DTo2DMatrix()
         {
             var result = Matrix4.Multiply(
@@ -281,10 +227,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             return result;
         }
 
-        /// <summary>
-        ///     use matrix to transform point
-        /// </summary>
-        /// <param name="pts">contain the points to be transform</param>
         private void TransformPoints(Point[] pts)
         {
             var matrix = new Matrix(
@@ -293,10 +235,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             matrix.TransformPoints(pts);
         }
 
-        /// <summary>
-        ///     Get geometry of the pathReinforcement
-        /// </summary>
-        /// <param name="pathRein">pathReinforcement created</param>
         private List<List<XYZ>> GetGeometry(Autodesk.Revit.DB.Structure.PathReinforcement pathRein)
         {
             var options = m_profile.CommandData.Application.Application.Create.NewGeometryOptions();
@@ -354,9 +292,6 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             }
         }
 
-        /// <summary>
-        ///     draw preview of Path Reinforcement on the form
-        /// </summary>
         private void DrawPreview(Graphics graphics)
         {
             if (null == m_pointsPreview) return;

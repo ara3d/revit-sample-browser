@@ -4,21 +4,8 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
-    /// <summary>
-    ///     The class is used to create ReferencePlane
-    /// </summary>
     public class CreateRefPlane
     {
-        /// <summary>
-        ///     This method is used to create ReferencePlane along to a host referenceplane with a offset parameter
-        /// </summary>
-        /// <param name="doc">the document</param>
-        /// <param name="host">the host ReferencePlane</param>
-        /// <param name="view">the view</param>
-        /// <param name="offSet">the offset of the host</param>
-        /// <param name="cutVec">the cutVec of the ReferencePlane</param>
-        /// <param name="name">the name of the ReferencePlane</param>
-        /// <returns>ReferencePlane</returns>
         public Autodesk.Revit.DB.ReferencePlane Create(Document doc, Autodesk.Revit.DB.ReferencePlane host, View view,
             XYZ offSet, XYZ cutVec, string name)
         {

@@ -27,11 +27,6 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
             }
         }
 
-        /// <summary>
-        ///     Creates an Analytical Member
-        /// </summary>
-        /// <param name="document"></param>
-        /// <returns></returns>
         public static AnalyticalMember CreateMember(Document document)
         {
             using var transaction = new Transaction(document, "Create Analytical Member");

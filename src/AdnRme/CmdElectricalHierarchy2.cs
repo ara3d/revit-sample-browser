@@ -38,31 +38,11 @@ namespace AdnRme
 {
   #region MapParentToChildren
   /// <summary>
-  /// Map tree node parents to their children.
-  /// 
-  /// The various possible combinations of parent and child 
-  /// element types include:
-  /// 
-  ///   null --> root panels
-  ///   panel --> systems
-  ///   system --> circuit elements, further panels, ...
-  /// 
-  /// This map is populated as follows: as we iterate over all the relevant
-  /// electrical equipment, systems, and circuit objects. Each object
-  /// attempts to identify its parent, i.e. its destination parent node
-  /// in the tree and registers itself in the parent's list of elements.
-  /// We attempted to use the parent element itself as a key, but that 
-  /// does not work, so we reverted to using the parent element id as 
-  /// a key instead.
+  /// Parent ElementId to child elements for the electrical hierarchy tree (null id = root panels).
+  /// Uses element ids as keys because Element instances do not compare reliably as dictionary keys.
   /// </summary>
   public class MapParentToChildren : Dictionary<ElementId, List<Element>>
   {
-    /// <summary>
-    /// Add a new parent, or a new child to a parent, ensuring that a new container 
-    /// list is created if this parent has not yet been registered.
-    /// </summary>
-    /// <param name="parentId">Parent element id</param>
-    /// <param name="child">New child element</param>
     public void Add( ElementId parentId, Element child )
     {
       if( !this.ContainsKey( parentId ) )
@@ -77,11 +57,7 @@ namespace AdnRme
   }
 
   #region Using Element as Key
-  /// <summary>
-  /// I tried to use the Element instance itself as a key into this map,
-  /// but apparently the comparison does not always work correctly, so I 
-  /// had to revert to using the element id instead.
-  /// </summary>
+  // Element keys failed comparison; kept for reference.
   public class MapParentToChildren2 : Dictionary<Element, List<Element>>
   {
     Element _root;
@@ -112,26 +88,7 @@ namespace AdnRme
   #endregion // MapParentToChildren
 
   #region CmdElectricalHierarchy2
-  /// <summary>
-  /// Inspect the electrical system.
-  /// 
-  /// Analyse the electrical system connection graph and display it in 
-  /// tree view in a a modeless dialogue, i.e. it remains visible after 
-  /// the command has completed.
-  /// 
-  /// This presents a more direct approach than the first implementation 
-  /// in CmdElectricalSystemBrowser. In this implementation, we directly 
-  /// build the tree hierarchy in a MapParentToChildren dictionary from 
-  /// the element relationships. Also, we use element ids wherever 
-  /// possible, instead of key strings of the form 
-  /// "panel name : circuit or system name".
-  /// 
-  /// Note: this sample was written before the introduction of the 
-  /// Connector and ConnectionManager classes. The complex determination 
-  /// of the connection hierarchy based on parameter values performed 
-  /// here can be much simplified using the connectors, as demonstrated 
-  /// by CmdElectricalConnectors.
-  /// </summary>
+  // Parameter-based electrical hierarchy browser; prefer CmdElectricalConnectors (connector API).
   [Transaction( TransactionMode.ReadOnly )]
   public class CmdElectricalHierarchy2 : IExternalCommand
   {

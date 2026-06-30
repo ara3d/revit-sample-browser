@@ -23,16 +23,10 @@ using Size = System.Drawing.Size;
 
 namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalApplication
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        /// <summary>
-        ///     Path to this assembly.
-        /// </summary>
         private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
@@ -61,22 +55,12 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
             SetIconsForPushButton(formatSchedulePb, Resources.ScheduleFormatter);
         }
 
-        /// <summary>
-        ///     Utility for adding icons to the button.
-        /// </summary>
-        /// <param name="button">The push button.</param>
-        /// <param name="icon">The icon.</param>
         private static void SetIconsForPushButton(PushButton button, Icon icon)
         {
             button.LargeImage = GetStdIcon(icon);
             button.Image = GetSmallIcon(icon);
         }
 
-        /// <summary>
-        ///     Gets the standard sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetStdIcon(Icon icon)
         {
             return Imaging.CreateBitmapSourceFromHIcon(
@@ -85,11 +69,6 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
                 BitmapSizeOptions.FromEmptyOptions());
         }
 
-        /// <summary>
-        ///     Gets the small sized icon as a BitmapSource.
-        /// </summary>
-        /// <param name="icon">The icon.</param>
-        /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetSmallIcon(Icon icon)
         {
             var smallIcon = new Icon(icon, new Size(16, 16));

@@ -8,28 +8,13 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
-    /// <summary>
-    ///     Convert ElementIds with string
-    /// </summary>
-    /// <typeparam name="T">Element Type</typeparam>
     public class ElementIdConverter<T> : TypeConverter where T : Element
     {
-        /// <summary>
-        ///     Returns whether this object supports a standard set of values that can be
-        ///     picked from a list, using the specified context.
-        /// </summary>
-        /// <returns>true</returns>
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
         {
             return true;
         }
 
-        /// <summary>
-        ///     Returns whether the collection of standard values returned from
-        ///     System.ComponentModel.TypeConverter.GetStandardValues()
-        ///     is an exclusive list.
-        /// </summary>
-        /// <returns>true</returns>
         public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
         {
             return true;
@@ -46,7 +31,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             //Autodesk.Revit.DB.TypeFilter typeFilter = RevitStartInfo.RevitApp.Create.Filter.NewTypeFilter(targetType, true);
             //ElementIterator elementIterator = RevitStartInfo.RevitDoc.get_Elements(typeFilter);
 
-            //// create a list
             //List<Element> list = new List<Element>();
             //elementIterator.Reset();
             //while (elementIterator.MoveNext())
@@ -76,19 +60,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             return destinationType.Equals(typeof(string)) || base.CanConvertTo(context, destinationType);
         }
 
-        /// <summary>
-        ///     Returns an element from a string contains its id
-        /// </summary>
-        /// <param name="context">
-        ///     An System.ComponentModel.ITypeDescriptorContext
-        ///     that provides a format context.
-        /// </param>
-        /// <param name="culture">
-        ///     An optional System.Globalization.CultureInfo.
-        ///     If not supplied, the current culture is assumed.
-        /// </param>
-        /// <param name="value">string to be converted to an element</param>
-        /// <returns>An element if the element exists, otherwise null</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var text = value as string;
@@ -106,15 +77,6 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             return base.ConvertFrom(context, culture, value);
         }
 
-        /// <summary>
-        ///     Returns element name.
-        ///     returns empty string if value is null or Element.Name throws an exception.
-        /// </summary>
-        /// <param name="context">An ITypeDescriptorContext that provides a format context. </param>
-        /// <param name="culture">A CultureInfo. If null is passed, the current culture is assumed. </param>
-        /// <param name="value">The Object to convert. </param>
-        /// <param name="destinationType">The Type to convert the value parameter to. </param>
-        /// <returns>Converted string</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {

@@ -20,10 +20,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         private Level m_level1; //level 1 used to create Shaft Opening
         private Level m_level2; //level 2 used to create Shaft Opening
 
-        /// <summary>
-        ///     constructor
-        /// </summary>
-        /// <param name="commandData">object which contains reference of Revit Application</param>
         public ProfileNull(ExternalCommandData commandData)
             : base(commandData)
         {
@@ -37,9 +33,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         /// </summary>
         public float Scale { get; set; } = 1;
 
-        /// <summary>
-        ///     get level1 and level2 used to create shaft opening
-        /// </summary>
         private void GetLevels()
         {
             var levelList = new FilteredElementCollector(CommandData.Application.ActiveUIDocument.Document)
@@ -136,11 +129,6 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
             return result;
         }
 
-        /// <summary>
-        ///     Create Shaft Opening
-        /// </summary>
-        /// <param name="points">points used to create Opening</param>
-        /// <returns>newly created Opening</returns>
         public override Opening CreateOpening(List<Vector4> points)
         {
             XYZ p1, p2;

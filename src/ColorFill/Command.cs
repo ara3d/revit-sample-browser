@@ -18,7 +18,6 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
                 var colorFillMgr = new ColorFillMgr(document, commandData);
-                // Show UI
                 var form = new ColorFillForm(colorFillMgr);
                 form.ShowDialog();
 

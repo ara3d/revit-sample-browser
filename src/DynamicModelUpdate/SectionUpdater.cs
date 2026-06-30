@@ -7,9 +7,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
 {
-    /// <summary>
-    ///     Updater to automatically move a section in conjunction with the location of a window
-    /// </summary>
     public class SectionUpdater : IUpdater
     {
         private Element m_sectionElement; // The view section element to move and rotate
@@ -146,7 +143,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
             var dotF = position.DotProduct(fRectOrientation);
             var dotS = sOrigin.DotProduct(fRectOrientation);
             var moveDot = dotF - dotS;
-            var sNewDirection = section.ViewDirection; // Get the new direction after rotation.
+            var sNewDirection = section.ViewDirection;
             var correction = fRectOrientation.DotProduct(sNewDirection);
             var translationVec = sNewDirection * correction * moveDot;
 

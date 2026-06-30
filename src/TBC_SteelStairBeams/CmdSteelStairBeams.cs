@@ -112,13 +112,9 @@ namespace BuildingCoder
             using var t = new Transaction(doc);
             t.Start("Create Steel Stair Beams");
 
-            // Check whether the required family is loaded:
-
             var collector
                 = new FilteredElementCollector(doc)
                     .OfClass(typeof(Family));
-
-            // If the family is not already loaded, do so:
 
             if (!collector.Any(
                 e => e.Name.Equals(FamilyName)))
@@ -138,8 +134,6 @@ namespace BuildingCoder
 
             try
             {
-                // Create a couple of connected beams:
-
                 var s = new BeamCreator(doc);
 
                 s.Run();
@@ -159,8 +153,3 @@ namespace BuildingCoder
         }
     }
 }
-
-// C:\ProgramData\Autodesk\
-//
-// \RAC 2012\Libraries\US Metric\Structural\Framing\Steel\RHS-Rectangular Hollow Section.rfa
-// \RST 2012\Libraries\US Metric\Structural\Framing\Steel\RHS-Rectangular Hollow Section.rfa

@@ -11,31 +11,20 @@ using Autodesk.Revit.UI;
 using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
-    /// <summary>
-    ///     Performs basic operations on detailed structural connections.
-    /// </summary>
     public class DetailedStructuralConnectionOps
     {
-        /// <summary>
-        ///     Create detailed structural connection.
-        /// </summary>
-        /// <param name="activeDoc">The active document.</param>
-        /// <param name="message">Set message on failure.</param>
-        /// <returns>Returns the status of the operation.</returns>
         public static Result CreateDetailedStructuralConnection(UIDocument activeDoc, ref string message)
         {
             var ret = Result.Succeeded;
 
-            // Selected the elements to be connected.
             var ids = SelectionHelper.SelectConnectionElements(activeDoc);
             if (ids.Count() > 0)
             {
-                // Start a new transaction.
                 using (var transaction = new Transaction(activeDoc.Document, "Create detailed structural connection"))
                 {
                     transaction.Start();
 
-                    // The type is from the SteelConnectionsData.xml file.
+                    // Connection type name and GUID come from SteelConnectionsData.xml.
                     var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "usclipangle",
                         new Guid("A42C5CE5-91C5-47E4-B445-D053E5BD66DB"), "usclipangle");
                     if (connectionType != null)
@@ -58,17 +47,10 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             return ret;
         }
 
-        /// <summary>
-        ///     Change detailed structural connection.
-        /// </summary>
-        /// <param name="activeDoc">The active document.</param>
-        /// <param name="message">Set message on failure.</param>
-        /// <returns>Returns the status of the operation.</returns>
         public static Result ChangeDetailedStructuralConnection(UIDocument activeDoc, ref string message)
         {
             var ret = Result.Succeeded;
 
-            // Prompt to select a structural connection.
             var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
@@ -76,11 +58,11 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
                 {
                     tran.Start();
 
-                    // The type is from the SteelConnectionsData.xml file.
+                    // Connection type name and GUID come from SteelConnectionsData.xml.
                     var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "shearplatenew",
                         new Guid("B490A703-5B6D-4B7A-8471-752133527925"), "shearplatenew");
                     if (connectionType != null)
-                        // The replacement type should be valid on the connected elements.
+                        // Replacement type must be valid for the connected elements.
                         conn.ChangeTypeId(connectionType.Id);
 
                     var ts = tran.Commit();
@@ -100,24 +82,15 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             return ret;
         }
 
-        /// <summary>
-        ///     Copy detailed structural connection.
-        /// </summary>
-        /// <param name="activeDoc">The active document.</param>
-        /// <param name="message">Set message on failure.</param>
-        /// <returns>Returns the status of the operation.</returns>
         public static Result CopyDetailedStructuralConnection(UIDocument activeDoc, ref string message)
         {
             var ret = Result.Succeeded;
 
-            // Select a connection and the connected elements.
             var ids = activeDoc.Selection.GetElementIds().ToList();
             if (ids.Count() > 0)
             {
-                // Create transform
                 var transform = Transform.CreateTranslation(new XYZ(0, 20, 0));
 
-                // Copy selection
                 using (var tran = new Transaction(activeDoc.Document, "Copy elements"))
                 {
                     tran.Start();
@@ -139,17 +112,10 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             return ret;
         }
 
-        /// <summary>
-        ///     Match properties for detailed structural connections.
-        /// </summary>
-        /// <param name="activeDoc">The active document.</param>
-        /// <param name="message">Set message on failure.</param>
-        /// <returns>Returns the status of the operation.</returns>
         public static Result MatchPropertiesDetailedStructuralConnection(UIDocument activeDoc, ref string message)
         {
             var ret = Result.Succeeded;
 
-            // Prompt to select a structural connection
             var srcConn = SelectionHelper.SelectConnection(activeDoc);
             var destConn = SelectionHelper.SelectConnection(activeDoc);
 
@@ -159,11 +125,10 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
                 {
                     tran.Start();
 
-                    // Do the properties match.
                     var primarySchema = GetSchema(activeDoc.Document, srcConn);
                     var primaryEnt = srcConn.GetEntity(primarySchema);
 
-                    // You could also access and modify the connection parameters.
+                    // Connection parameters can also be read and modified via extensible storage fields.
                     var fields = primarySchema.ListFields();
                     foreach (var field in fields)
                     {
@@ -172,7 +137,6 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
                             var parameters = primaryEnt.Get<IList<string>>(field);
                             foreach (var str in parameters)
                             {
-                                // Do something.
                             }
                         }
                     }
@@ -196,17 +160,9 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             return ret;
         }
 
-        /// <summary>
-        ///     Reset detailed structural connection type to generic.
-        /// </summary>
-        /// <param name="activeDoc">The active document.</param>
-        /// <param name="message">Set message on failure.</param>
-        /// <returns>Returns the status of the operation.</returns>
         public static Result ResetDetailedStructuralConnection(UIDocument activeDoc, ref string message)
         {
             var ret = Result.Succeeded;
-
-            // Prompt to select a structural connection.
 
             var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
@@ -242,9 +198,6 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             ;
         }
 
-        /// <summary>
-        ///     Get the Extensible storage schema
-        /// </summary>
         private static Schema GetSchema(Document doc, StructuralConnectionHandler connection)
         {
             Schema schema = null;
@@ -256,12 +209,6 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             return schema;
         }
 
-        /// <summary>
-        ///     Get the unique identifier of the structural steel connection type
-        /// </summary>
-        /// <param name="conn">structural connection</param>
-        /// <param name="doc">current document</param>
-        /// <returns>returns the unique identifier of the input connection type</returns>
         private static Guid GetConnectionHandlerTypeGuid(StructuralConnectionHandler conn, Document doc)
         {
             if (conn == null || doc == null)

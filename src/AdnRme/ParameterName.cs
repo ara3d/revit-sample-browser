@@ -26,39 +26,11 @@ namespace AdnRme
 {
   class ParameterName
   {
-    //
-    // used for display only
-    //
     public const string CalculatedSupplyAirFlow = "Calculated Supply Air Flow";
-    //
-    // The "CFM per SF" is a project parameter, and as such, there is no enumeration for this;
-    // In 2009, "Calculated Supply Airflow per area" exists, built-in parameter
-    // ROOM_CALCULATED_SUPPLY_AIRFLOW_PER_AREA_PARAM:
-    //
+    // Project parameter; no BuiltInParameter enum value.
     public const string CfmPerSf = "CFM per SF";
-    //
-    // The other issue regarding the two 'Flow' params is quite simple ... 
-    // the Flow we are accessing is not a Built-in-Parameter of the Air Terminal itself ... 
-    // the Flow is simply a Family Parameter that is mapped to the Connector on the Air Terminal ... 
-    // I would guess that the 'Flow' that is the built-in-parameter is actually the Flow on the connector 
-    // (and/or - perhaps it is the Flow parameter of a Duct object) ... 
-    // at this point, the API doesn't expose Connector objects, so to get the Flow from the connector, 
-    // we have to get it via the Family parameter on the terminal.  
-    // The Flow in our case could be named anything, i.e., it could be "SomeFlowParameter" ... 
-    // it really just depends on how the Family is created, which in our case could be problematic 
-    // if the user is using a custom Family that doesn't have the parameter named "Flow" ... 
-    // but they could also create an air terminal that has >1 connector ... 
-    // would they actually do that?  Hmm ... likely not, but you never know :).
-    //
-    // The way the "Flow" family parameter is mapped to the Flow built-in-parameter of the Connector 
-    // is through Family Editor (FE).  In FE, select the connector object, click Element Properties, 
-    // and note that the Flow parameter here has a button in the right hand column ... 
-    // click this, and you will see that the "Flow" family parameter is selected.
-    //
+    // Family parameter mapped to the connector Flow, not the instance BuiltInParameter.
     public const string Flow = "Flow";
-    //
-    // air terminal family symbol parameters used in CmdChangeSize:
-    //
     public const string MaxFlow = "Max Flow";
     public const string MinFlow = "Min Flow";
   }

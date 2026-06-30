@@ -5,10 +5,6 @@ using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
-    /// <summary>
-    ///     A simple class with two coordinates
-    ///     and some other basic info.
-    /// </summary>
     internal class WallOpening2d
     {
         public XYZ Start { get; set; }
@@ -19,36 +15,21 @@ namespace BuildingCoder
             return $"({Util.PointString(Start)}-{Util.PointString(End)})";
         }
     }
-
-    /// <summary>Utilities extracted from TBC_WallOpenings sample.</summary>
     internal static partial class Util
     {
-        /// <summary>
-        ///     Move out of wall and up from floor a bit.
-        /// </summary>
         private const double _wallOpeningOffset = 0.1;
 
-        /// <summary>
-        ///     Predicate: is the given number even?
-        /// </summary>
         internal static bool IsEven(int i)
         {
             return 0 == i % 2;
         }
 
-        /// <summary>
-        ///     Predicate: does the given reference refer to a surface?
-        /// </summary>
         internal static bool IsSurface(Reference r)
         {
             return ElementReferenceType.REFERENCE_TYPE_SURFACE
                    == r.ElementReferenceType;
         }
 
-        /// <summary>
-        ///     Retrieve all wall openings,
-        ///     including at start and end of wall.
-        /// </summary>
         internal static List<WallOpening2d> GetWallOpenings(
             Wall wall,
             View3D view)

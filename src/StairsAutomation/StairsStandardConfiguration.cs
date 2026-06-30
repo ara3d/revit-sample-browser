@@ -33,12 +33,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         private readonly StairsType m_stairsType;
         private readonly Transform m_transform;
 
-        /// <summary>
-        ///     Creates a new StairsStandardConfiguration of runs and landings at the default location and orientation.
-        /// </summary>
-        /// <param name="stairs">The stairs element.</param>
-        /// <param name="bottomLevel">The bottom level.</param>
-        /// <param name="numberOfLandings">The number of landings to be included.</param>
         public StairsStandardConfiguration(Stairs stairs, Level bottomLevel, int numberOfLandings)
         {
             m_stairs = stairs;
@@ -50,13 +44,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             EqualizeRuns = false;
         }
 
-        /// <summary>
-        ///     Creates a new StairsStandardConfiguration of runs and landings at a specified location and orientation.
-        /// </summary>
-        /// <param name="stairs">The stairs element.</param>
-        /// <param name="bottomLevel">The bottom level.</param>
-        /// <param name="numberOfLandings">The number of landings to be included.</param>
-        /// <param name="transform">The transformation (location and orientation).</param>
         public StairsStandardConfiguration(Stairs stairs, Level bottomLevel, int numberOfLandings, Transform transform)
         {
             m_stairs = stairs;
@@ -68,9 +55,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             EqualizeRuns = false;
         }
 
-        /// <summary>
-        ///     The number of risers to include in the stairs.
-        /// </summary>
         public int RiserNumber { get; set; }
 
         /// <summary>
@@ -135,25 +119,16 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         /// </summary>
         protected Application AppCreate => m_stairs.Document.Application.Create;
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public int GetNumberOfRuns()
         {
             return m_numberOfLandings + 1;
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public int GetNumberOfLandings()
         {
             return m_numberOfLandings;
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public void CreateStairsRun(Document document, ElementId stairsElementId, int runIndex)
         {
             // Calculate where the previous run ended.
@@ -187,9 +162,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             configuration.CreateStairsRun(document, stairsElementId);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public void CreateLanding(Document document, ElementId stairsElementId, int landingIndex)
         {
             // Get the run configurations for the runs before and after this landing.
@@ -211,9 +183,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             configuration.CreateLanding(document, stairsElementId);
         }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
         public void SetRunWidth(double value)
         {
             //cache width for new runs.
@@ -226,9 +195,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             }
         }
 
-        /// <summary>
-        ///     Initializes the run and landing data in the configuration.
-        /// </summary>
         public void Initialize()
         {
             if (m_numberOfLandings < 0)
@@ -253,14 +219,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             m_riserIncrement = RiserNumber / (m_numberOfLandings + 1);
         }
 
-        /// <summary>
-        ///     Generates the landing configuration for the end lines of 2 risers.
-        /// </summary>
-        /// <param name="riser1Line">The end line of the first riser.</param>
-        /// <param name="riser2Line">The start line of the second riser.</param>
-        /// <param name="runDirection">The run direction.</param>
-        /// <param name="landingElevation">The elevation.</param>
-        /// <returns>The landing configuration.</returns>
         public virtual IStairsLandingComponent GenerateLanding(Line riser1Line, Line riser2Line, XYZ runDirection,
             double landingElevation)
         {
@@ -270,15 +228,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             return landingConfiguration;
         }
 
-        /// <summary>
-        ///     Generates the run configuration for the given elevation and properties.
-        /// </summary>
-        /// <param name="numberOfRisers">The number of risers in the run.</param>
-        /// <param name="elevation">The start elevation.</param>
-        /// <param name="minTreadDepth">The minimum tread depth.</param>
-        /// <param name="runWidth">The width of the run.</param>
-        /// <param name="transform">The transformation applied to the run start point and orientation.</param>
-        /// <returns></returns>
         public virtual IStairsRunComponent GenerateRun(int numberOfRisers, double elevation, double minTreadDepth,
             double runWidth, Transform transform)
         {
@@ -287,10 +236,6 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             return run;
         }
 
-        /// <summary>
-        ///     Returns the transform assigned to the configuration.
-        /// </summary>
-        /// <returns>The transform.</returns>
         protected Transform GetTransform()
         {
             return m_transform;

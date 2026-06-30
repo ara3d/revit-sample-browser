@@ -7,9 +7,6 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
 {
     public static class RevitAddInUtilitySample
     {
-        /// <summary>
-        ///     The main entry point for the application.
-        /// </summary>
         [STAThread]
         private static void Main()
         {

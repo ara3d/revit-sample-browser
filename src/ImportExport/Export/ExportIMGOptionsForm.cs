@@ -10,25 +10,12 @@ using View = Autodesk.Revit.DB.View;
 
 namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
-    /// <summary>
-    ///     Provide a dialog which provides the options of lower priority information for exporting image
-    /// </summary>
     public partial class ExportImgOptionsForm : Form
     {
-        /// <summary>
-        ///     Data class object of ExportDataWithViews
-        /// </summary>
         private readonly ExportDataWithViews m_exportData;
 
-        /// <summary>
-        ///     Data class object of m_exportOptions
-        /// </summary>
         private readonly ImageExportOptions m_exportOptions;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="exportData">Data class object</param>
         public ExportImgOptionsForm(ExportDataWithViews exportData)
         {
             m_exportOptions = new ImageExportOptions();

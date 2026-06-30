@@ -6,7 +6,6 @@ using Autodesk.Revit.DB.Structure;
 
 namespace BuildingCoder
 {
-    /// <summary>Utilities extracted from TBC_CreateWallsAutomaticallyCommand sample.</summary>
     internal static partial class Util
     {
         internal static Wall CreateWallForCube(

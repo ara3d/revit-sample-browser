@@ -28,9 +28,6 @@ namespace BuildingCoder
     [Transaction(TransactionMode.Manual)]
     internal class CmdMidCurve : IExternalCommand
     {
-        /// <summary>
-        ///     Number of approximation segments to generate.
-        /// </summary>
         private const int _nSegments = 64;
 
         private const string _prompt
@@ -51,8 +48,6 @@ namespace BuildingCoder
             var app = uiapp.Application;
             var doc = uidoc.Document;
 
-            // Select all model curves in the entire model.
-
             var curves = new List<CurveElement>(
                 new FilteredElementCollector(doc)
                     .OfClass(typeof(CurveElement))
@@ -61,21 +56,14 @@ namespace BuildingCoder
 
             var n = curves.Count;
 
-            // If there are less than two, 
-            // there is nothing we can do.
-
             if (2 > n)
             {
                 message = _prompt;
                 return Result.Failed;
             }
 
-            // If there are exactly two, pick those.
-
             if (2 < n)
             {
-                // Else, check for a pre-selection.
-
                 curves.Clear();
 
                 var sel = uidoc.Selection;
@@ -85,9 +73,6 @@ namespace BuildingCoder
 
                 Debug.Print("{0} pre-selected elements.",
                     n);
-
-                // If two or more model curves were pre-
-                // selected, use the first two encountered.
 
                 if (1 < n)
                     foreach (var id in ids)
@@ -103,9 +88,6 @@ namespace BuildingCoder
                                 break;
                             }
                         }
-
-                // Else, prompt for an 
-                // interactive post-selection.
 
                 if (2 != curves.Count)
                 {
@@ -144,8 +126,6 @@ namespace BuildingCoder
                 }
             }
 
-            // Extract data from the two selected curves.
-
             var c0 = curves[0].GeometryCurve;
             var c1 = curves[1].GeometryCurve;
 
@@ -166,14 +146,10 @@ namespace BuildingCoder
                 Util.RealString(sp1),
                 Util.RealString(ep1));
 
-            // Modify document within a transaction.
-
             using var tx = new Transaction(doc);
             var creator = new Creator(doc);
 
             tx.Start("MidCurve");
-
-            // Current segment start points.
 
             var t0 = sp0;
             var t1 = sp1;
@@ -189,8 +165,6 @@ namespace BuildingCoder
             Debug.Assert(
                 p1.IsAlmostEqualTo(c1.Evaluate(t1, false)),
                 "expected equal start points");
-
-            // Current segment end points.
 
             t0 += step0;
             t1 += step1;
@@ -215,8 +189,6 @@ namespace BuildingCoder
                     Util.PointString(q1),
                     Util.PointString(p),
                     Util.PointString(q));
-
-                // Create approximating curve segment.
 
                 line = Line.CreateBound(p, q);
                 creator.CreateModelCurve(line);

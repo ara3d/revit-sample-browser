@@ -14,17 +14,14 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            //Expected results: The Analytical Node has been moved and the connection has been kept
             try
             {
-                // Get the Document
                 var activeDoc = commandData.Application.ActiveUIDocument;
                 var document = activeDoc.Document;
 
                 // Create Analytical Panel
                 CreateAnalyticalPanel.CreateAmPanel(document);
 
-                // Create the connected Analytical Member
                 CreateAnalyticalMember.CreateMember(document);
 
                 // Select the node

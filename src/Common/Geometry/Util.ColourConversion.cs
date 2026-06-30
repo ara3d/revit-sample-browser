@@ -28,10 +28,6 @@ namespace BuildingCoder
     {
         #region Colour Conversion
 
-        /// <summary>
-        ///     Revit text colour parameter value stored as an integer
-        ///     in text note type BuiltInParameter.LINE_COLOR.
-        /// </summary>
         public static int ToColorParameterValue(
             int red,
             int green,
@@ -49,10 +45,6 @@ namespace BuildingCoder
             return c;
         }
 
-        /// <summary>
-        ///     Revit text colour parameter value stored as an integer
-        ///     in text note type BuiltInParameter.LINE_COLOR.
-        /// </summary>
         public static int GetRevitTextColorFromSystemColor(
             Color color)
         {

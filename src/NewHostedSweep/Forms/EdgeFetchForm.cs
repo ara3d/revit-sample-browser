@@ -14,28 +14,10 @@ using Form = System.Windows.Forms.Form;
 
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
-    /// <summary>
-    ///     This form is intent to fetch edges for hosted sweep creation or modification.
-    ///     It contains a picture box for geometry preview and a tree view to list all the edges
-    ///     which hosted sweep can be created on.
-    ///     If the user mouse-over an edge where a hosted sweep can be created, the edge will be
-    ///     highlighted in yellow. If user clicks on the highlighted edge, the edge will
-    ///     be marked as selected in red color. Click it again to un-select, the color will turn back.
-    ///     Edge selection from preview box will be reflected in edge list and vice versa.
-    ///     The geometry displayed in the picture box can be rotated with left mouse or
-    ///     arrow keys (up, down, left and right) and zoomed with right mouse.
-    /// </summary>
     public partial class EdgeFetchForm : Form
     {
-        /// <summary>
-        ///     Active element displayed in the preview.
-        /// </summary>
         private Element m_activeElem;
 
-        /// <summary>
-        ///     Flag to indicate whether or not we should cancel expand or collapse
-        ///     the tree-node which contains children.
-        /// </summary>
         private bool m_cancelExpandOrCollapse;
 
         /// <summary>
@@ -53,18 +35,11 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
         /// </summary>
         private readonly TrackBall m_trackBall;
 
-        /// <summary>
-        ///     Default constructor.
-        /// </summary>
         public EdgeFetchForm()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        ///     Customize constructor.
-        /// </summary>
-        /// <param name="creationData"></param>
         public EdgeFetchForm(CreationData creationData)
             : this()
         {
@@ -136,9 +111,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             treeViewHost.TopNode.Expand();
         }
 
-        /// <summary>
-        ///     Initialize element geometry.
-        /// </summary>
         private void InitializeElementGeometry()
         {
             foreach (var elemGeom in m_creationData.Creator.ElemGeomDic.Values)
@@ -182,9 +154,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             }
         }
 
-        /// <summary>
-        ///     Initialize text properties of this form.
-        /// </summary>
         private void InitializeText()
         {
             Text = $"Pick edges for {m_creationData.Creator.Name}";
@@ -192,9 +161,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             groupBoxEdges.Text = $"All edges for {m_creationData.Creator.Name}";
         }
 
-        /// <summary>
-        ///     Initialize something related to the geometry preview.
-        /// </summary>
         private void InitializePreview()
         {
             m_centerMatrix = new Matrix(1, 0, 0, -1,
@@ -327,11 +293,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             }
         }
 
-        /// <summary>
-        ///     Get the related tree node of an edit
-        /// </summary>
-        /// <param name="edge">Given edge to find its tree-node</param>
-        /// <returns>Tree-node matched with the given edge</returns>
         private TreeNode GetEdgeTreeNode(Edge edge)
         {
             TreeNode result = null;
@@ -376,11 +337,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             Close();
         }
 
-        /// <summary>
-        ///     Close this form.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -428,11 +384,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             m_cancelExpandOrCollapse = false;
         }
 
-        /// <summary>
-        ///     Draw the geometry.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void pictureBoxPreview_Paint(object sender, PaintEventArgs e)
         {
             if (m_activeElem == null) return;
@@ -446,11 +397,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             elemGeo.Draw(e.Graphics);
         }
 
-        /// <summary>
-        ///     Initialize the track ball.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void pictureBoxPreview_MouseDown(object sender, MouseEventArgs e)
         {
             m_trackBall.OnMouseDown(pictureBoxPreview.Width, pictureBoxPreview.Height, e);
@@ -497,11 +443,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             }
         }
 
-        /// <summary>
-        ///     Select or unselect edge
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void pictureBoxPreview_MouseClick(object sender, MouseEventArgs e)
         {
             if (m_activeElem == null || e.Button != MouseButtons.Left) return;
@@ -567,11 +508,6 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             }
         }
 
-        /// <summary>
-        ///     Suppress the key input.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void treeViewHost_KeyDown(object sender, KeyEventArgs e)
         {
             e.SuppressKeyPress = true;

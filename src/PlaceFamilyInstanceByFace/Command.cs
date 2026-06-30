@@ -17,7 +17,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             ref string message,
             ElementSet elements)
         {
-            // Quit if active document is null
             if (null == commandData.Application.ActiveUIDocument.Document)
             {
                 message = "Active document is null.";
@@ -28,7 +27,6 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             {
                 var creator = new FamilyInstanceCreator(commandData.Application);
 
-                // an option dialog for user choosing based type of creating
                 var baseTypeform = new BasedTypeForm();
                 if (DialogResult.OK == baseTypeform.ShowDialog())
                 {
@@ -37,12 +35,10 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
                     placeForm.ShowDialog();
                 }
 
-                // if everything goes well, return succeeded.
                 return Result.Succeeded;
             }
             catch (Exception ex)
             {
-                // If any error, give error information and return failed
                 message = ex.Message;
                 return Result.Failed;
             }

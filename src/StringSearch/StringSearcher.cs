@@ -57,10 +57,6 @@ namespace Ara3D.RevitSampleBrowser.StringSearch.CS
       public int Hits { get; set; }
     }
 
-    /// <summary>
-    /// Return an English plural suffix 's' or
-    /// nothing for the given number of items.
-    /// </summary>
     public static string PluralSuffix( int n )
     {
       return 1 == n ? "" : "s";
@@ -120,10 +116,6 @@ namespace Ara3D.RevitSampleBrowser.StringSearch.CS
       return s;
     }
 
-    /// <summary>
-    /// Return number of occurrences of 
-    /// search string in parameter value.
-    /// </summary>
     bool SearchParameter(
       SortableBindingList<SearchHit> data,
       Element e,

@@ -8,12 +8,6 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
-    /// <summary>
-    ///     This command will add needed shared parameters and initialize them.
-    ///     It will initialize door opening parameter based on family's actual geometry and
-    ///     country's standard. It will initialize each door instance's opening, ToRoom, FromRoom and
-    ///     public door flag values according to door's current geometry.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
@@ -67,11 +61,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         }
     }
 
-    /// <summary>
-    ///     A ExternalCommand class inherited IExternalCommand interface.
-    ///     This command will update each door instance's opening, ToRoom, FromRoom and
-    ///     public door flag values according to door's current geometry.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class UpdateParamsCommand : IExternalCommand
@@ -112,11 +101,6 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         }
     }
 
-    /// <summary>
-    ///     A ExternalCommand class inherited IExternalCommand interface.
-    ///     This command will update door instance's geometry according to door's
-    ///     current To/From Room value.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class UpdateGeometryCommand : IExternalCommand

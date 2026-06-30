@@ -7,27 +7,14 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
-    /// <summary>
-    ///     Implements the interface IFailuresPreprocessor
-    /// </summary>
     public class FailurePreproccessor : IFailuresPreprocessor
     {
-        /// <summary>
-        ///     This method is called when there have been failures found at the end of a transaction and Revit is about to start
-        ///     processing them.
-        /// </summary>
-        /// <param name="failuresAccessor">The Interface class that provides access to the failure information. </param>
-        /// <returns></returns>
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
         {
             return FailureProcessingResult.Continue;
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    ///     Modify Analytical Panel contour using SketchEditScope
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ModifyPanelContour : IExternalCommand
