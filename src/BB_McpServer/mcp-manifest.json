@@ -1,0 +1,3411 @@
+{
+  "generatedFrom": "scripts/build_mcp_manifest.py",
+  "toolCount": 185,
+  "exposure": {
+    "tiers": [
+      "semantic",
+      "bowerbird",
+      "mcp5"
+    ],
+    "maxTools": 25
+  },
+  "tools": [
+    {
+      "name": "revit_cable_tray_elbow_align",
+      "description": "Creates horizontal and vertical cable tray segments, rotates the vertical segment to align connector coordinate systems, then inserts an elbow fitting.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "cable_tray_type_name": {
+            "type": "string",
+            "description": "Cable tray type name (default: Default)"
+          },
+          "level_name": {
+            "type": "string",
+            "description": "Level name (default: Level 1)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": false,
+      "commandClass": "CmdCableTray4",
+      "sample": "CableTraySample",
+      "source": "src/CableTraySample/CmdCableTray4.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_cable_tray_elbow_fitting",
+      "description": "Creates a multi-segment cable tray run and inserts an elbow fitting between the first horizontal and vertical segments.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "cable_tray_type_name": {
+            "type": "string",
+            "description": "Cable tray type name (default: Default)"
+          },
+          "level_name": {
+            "type": "string",
+            "description": "Level name (default: Level 1)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "CmdCableTray",
+      "sample": "CableTraySample",
+      "source": "src/CableTraySample/CmdCableTray.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_cable_tray_elbow_rotate",
+      "description": "Creates two cable tray segments, rotates the second about the shared endpoint, and inserts an elbow fitting.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "cable_tray_type_name": {
+            "type": "string",
+            "description": "Cable tray type name (default: default)"
+          },
+          "level_name": {
+            "type": "string",
+            "description": "Level name (default: Level 1)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "CmdCableTray3",
+      "sample": "CableTraySample",
+      "source": "src/CableTraySample/CmdCableTray3.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_cable_tray_elbow_two_segment",
+      "description": "Creates two separated cable tray segments and connects them with an elbow fitting.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "cable_tray_type_name": {
+            "type": "string",
+            "description": "Cable tray type name (default: Default)"
+          },
+          "level_name": {
+            "type": "string",
+            "description": "Level name (default: Level 1)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "CmdCableTray2",
+      "sample": "CableTraySample",
+      "source": "src/CableTraySample/CmdCableTray2.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_conduit_elbow_fitting",
+      "description": "Creates two conduit segments and inserts an elbow fitting between their open connectors.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "level_name": {
+            "type": "string",
+            "description": "Level name (default: Level 1)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "CmdConduit",
+      "sample": "CableTraySample",
+      "source": "src/CableTraySample/CmdConduit.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_and_print_sheet_for_element",
+      "description": "Creates a sheet with right, front, top, and isometric 3D views for a single selected element, exports PDF and JPG, and optionally commits the transaction to save the sheet.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "element_id": {
+            "type": "integer",
+            "description": "Element to document; when omitted, prompts for interactive pick"
+          },
+          "save_sheet": {
+            "type": "boolean",
+            "description": "Whether to commit the transaction and keep the sheet (default prompts user)"
+          },
+          "output_directory": {
+            "type": "string",
+            "description": "Directory for PDF and image export (default C:/tmp)"
+          },
+          "title_block_name": {
+            "type": "string",
+            "description": "Title block family symbol name (default 'AIR CRO - Plano DIN A4')"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": true,
+      "commandClass": "CmdCreateAndPrintSheetAndViews",
+      "sample": "CreateAndPrintSheetsAndViews",
+      "source": "src/CreateAndPrintSheetsAndViews/CmdCreateAndPrintSheetAndViews.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_and_print_sheets_batch",
+      "description": "Batch-processes selected HVAC fabrication duct parts: for each matching product code, creates a sheet with right, front, top, and isometric views, exports PDF and JPG, then rolls back the transaction so nothing is committed.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "element_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "FabricationPart element ids; when omitted, uses pre-selection or interactive pick"
+          },
+          "product_codes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Fabrication product codes to process (defaults to built-in list in Command)"
+          },
+          "output_directory": {
+            "type": "string",
+            "description": "Directory for PDF and image export (default C:/tmp)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": true,
+      "commandClass": "Command",
+      "sample": "CreateAndPrintSheetsAndViews",
+      "source": "src/CreateAndPrintSheetsAndViews/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_direct_shape_from_face",
+      "description": "Creates a Generic Model DirectShape from a picked face with sketch-plane reuse, per-triangle model lines, and geometry-instance transform stack resolution for nested families.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "face_reference": {
+            "type": "string",
+            "description": "Stable representation of the face to convert (interactive pick when omitted)"
+          },
+          "draw_model_lines": {
+            "type": "boolean",
+            "description": "When true, draw model-line loops for each triangle (always true in the current command)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": true,
+      "commandClass": "CreateDirectShapeCommand",
+      "sample": "DirectShapeFromFace",
+      "source": "src/DirectShapeFromFace/CreateDirectShapeCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_direct_shape_from_face_initial",
+      "description": "Creates a Generic Model DirectShape from a picked element face using the initial tessellated shape builder approach with a LocationPoint offset.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "face_reference": {
+            "type": "string",
+            "description": "Stable representation of the face to convert (interactive pick when omitted)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": true,
+      "commandClass": "CreateDirectShapeInitialCommand",
+      "sample": "DirectShapeFromFace",
+      "source": "src/DirectShapeFromFace/CreateDirectShapeInitialCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_pipe_system",
+      "description": "Enumerates all pipes and pipe fittings in the document, logging connector endpoints, diameters, and inferred fitting types (plug, elbow, tee) to debug output.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "system_type": {
+            "type": "string",
+            "description": "Optional MEP system type name filter (not yet implemented; exports all pipes and fittings)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": false,
+      "commandClass": "Command",
+      "sample": "PipeSystemExporter",
+      "source": "src/PipeSystemExporter/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_room_svg",
+      "description": "Exports a room plan boundary to an SVG file scaled to a 100x100 viewBox.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "room_id": {
+            "type": "integer",
+            "description": "Element id of the room to export"
+          },
+          "output_path": {
+            "type": "string",
+            "description": "Full path for the output .svg file"
+          }
+        },
+        "required": [
+          "room_id",
+          "output_path"
+        ]
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": true,
+      "commandClass": "Command",
+      "sample": "SvgExport",
+      "source": "src/SvgExport/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_import_stl",
+      "description": "Imports an STL file into a Generic Model DirectShape element using TessellatedShapeBuilder and the QuantumConcepts STL reader.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "file_path": {
+            "type": "string",
+            "description": "Path to the STL file (OpenFileDialog when omitted)"
+          },
+          "binary": {
+            "type": "boolean",
+            "description": "When true, read binary STL; when false, read ASCII STL (defaults to current StlImportProperties setting)"
+          },
+          "target": {
+            "type": "string",
+            "enum": [
+              "Solid",
+              "AnyGeometry",
+              "Mesh"
+            ],
+            "description": "TessellatedShapeBuilder target mode (defaults to current StlImportProperties setting)"
+          },
+          "graphics_style": {
+            "type": "string",
+            "enum": [
+              "None",
+              "Sketch"
+            ],
+            "description": "Optional graphics style for imported mesh (defaults to current StlImportProperties setting)"
+          }
+        },
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": true,
+      "commandClass": "StlImportCommand",
+      "sample": "StlImport",
+      "source": "src/StlImport/StlImportCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_unhosted_mep_elements",
+      "description": "List MEP family instances that are not hosted to a valid host element.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": false,
+      "commandClass": "CmdUnhostedElements",
+      "sample": "AdnRme",
+      "source": "src/AdnRme/CmdUnhostedElements.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_external_event",
+      "description": "Modeless dialog that tags selected elements via RevitToolkitEvents from Common.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": true,
+      "commandClass": "N3P_ExternalEvent",
+      "sample": "N3P_ExternalEvent",
+      "source": "src/N3P_ExternalEvent/N3P_ExternalEvent.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_populate_cfm_per_sf",
+      "description": "Populate the CFM-per-SF parameter on all MEP spaces from actual supply airflow and area.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 3,
+      "requiresUi": false,
+      "commandClass": "CmdPopulateCfmPerSf",
+      "sample": "AdnRme",
+      "source": "src/AdnRme/CmdPopulateCfmPerSf.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_stl_import_set_data_type_ascii",
+      "description": "Sets STL file reader to ASCII format.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "SetDataTypeToAsciiCommand",
+      "sample": "StlImport",
+      "source": "src/StlImport/StlImportPropertiesCommands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_stl_import_set_data_type_binary",
+      "description": "Sets STL file reader to binary format.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "SetDataTypeToBinaryCommand",
+      "sample": "StlImport",
+      "source": "src/StlImport/StlImportPropertiesCommands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_stl_import_set_mode_any_geometry",
+      "description": "Sets STL import TessellatedShapeBuilder mode to AnyGeometry with Mesh fallback.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "SetToAnyGeometryCommand",
+      "sample": "StlImport",
+      "source": "src/StlImport/StlImportPropertiesCommands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_stl_import_set_mode_polymesh",
+      "description": "Sets STL import TessellatedShapeBuilder mode to Mesh with Salvage fallback.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "SetToPolymeshCommand",
+      "sample": "StlImport",
+      "source": "src/StlImport/StlImportPropertiesCommands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_stl_import_set_mode_solid",
+      "description": "Sets STL import TessellatedShapeBuilder mode to Solid with Abort fallback.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "SetToSolidCommand",
+      "sample": "StlImport",
+      "source": "src/StlImport/StlImportPropertiesCommands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_stl_import_set_style_none",
+      "description": "Clears the graphics style used when importing STL geometry.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "SetStyleToNoneCommand",
+      "sample": "StlImport",
+      "source": "src/StlImport/StlImportPropertiesCommands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_stl_import_set_style_sketch",
+      "description": "Sets STL import graphics style to the document <Sketch> GraphicsStyle when available.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "descriptor",
+      "mcpRating": 2,
+      "requiresUi": false,
+      "commandClass": "SetStyleToSketchCommand",
+      "sample": "StlImport",
+      "source": "src/StlImport/StlImportPropertiesCommands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_analytical_model_geom",
+      "description": "Retrieve analytical model geometry",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdAnalyticalModelGeom",
+      "sample": "TBC_AnalyticalModelGeom",
+      "source": "src/TBC_AnalyticalModelGeom/CmdAnalyticalModelGeom.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_azimuth",
+      "description": "Calculate azimuth",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdAzimuth",
+      "sample": "TBC_Azimuth",
+      "source": "src/TBC_Azimuth/CmdAzimuth.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_bim360_links",
+      "description": "Retrieve and list BIM360 linked models",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdBim360Links",
+      "sample": "TBC_Bim360Links",
+      "source": "src/TBC_Bim360Links/CmdBim360Links.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_bounding_box",
+      "description": "Retrieve Element Bounding Box",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdBoundingBox",
+      "sample": "TBC_BoundingBox",
+      "source": "src/TBC_BoundingBox/CmdBoundingBox.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_brep_builder",
+      "description": "Create a direct shape using BrepBuilder and Boolean operation",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdBrepBuilder",
+      "sample": "TBC_BrepBuilder",
+      "source": "src/TBC_BrepBuilder/CmdBrepBuilder.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_categories",
+      "description": "List document and built-in categories",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdCategories",
+      "sample": "TBC_Categories",
+      "source": "src/TBC_Categories/CmdCategories.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_change_element_color",
+      "description": "Using OverrideGraphicSettings for active view",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdChangeElementColor",
+      "sample": "TBC_ChangeElementColor",
+      "source": "src/TBC_ChangeElementColor/CmdChangeElementColor.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_change_linked_file_path",
+      "description": "Change linked RVT file path",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdChangeLinkedFilePath",
+      "sample": "TBC_ChangeLinkedFilePath",
+      "source": "src/TBC_ChangeLinkedFilePath/CmdChangeLinkedFilePath.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_compare_element_centroid",
+      "description": "Compares tessellation-based centroid and volume with Solid.ComputeCentroid and Solid.Volume for each tessellatable solid.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "element_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Element ids to analyze; when omitted, uses the current selection or interactive pick"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CompareCentroidCommand",
+      "sample": "GetCentroid",
+      "source": "src/GetCentroid/CompareCentroidCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_coords_of_view_on_sheet",
+      "description": "Retrieve coordinates of view on sheet",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdCoordsOfViewOnSheet",
+      "sample": "TBC_CoordsOfViewOnSheet",
+      "source": "src/TBC_CoordsOfViewOnSheet/CmdCoordsOfViewOnSheet.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_copy_wall_type",
+      "description": "Duplicate a system type from on project to another to partially transfer project standards",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdCopyWallType",
+      "sample": "TBC_CopyWallType",
+      "source": "src/TBC_CopyWallType/CmdCopyWallType.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_cnc_fab_shared_parameters",
+      "description": "Create and bind CncFab export-tracking shared parameters (IsExported, ExportedFirst, ExportedLast) to the Parts category.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "CmdCreateSharedParameters",
+      "sample": "ExportCncFab",
+      "source": "src/ExportCncFab/Commands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_direct_shape_from_face_simple",
+      "description": "Creates a Generic Model DirectShape from a picked element face by triangulating the face and applying the family instance total transform when needed.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "face_reference": {
+            "type": "string",
+            "description": "Stable representation of the face to convert (interactive pick when omitted)"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CreateDirectShapeSimpleCommand",
+      "sample": "DirectShapeFromFace",
+      "source": "src/DirectShapeFromFace/CreateDirectShapeSimpleCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_gable_wall",
+      "description": "Create gable wall specifying non-rectangular wall profile",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdCreateGableWall",
+      "sample": "TBC_CreateGableWall",
+      "source": "src/TBC_CreateGableWall/CmdCreateGableWall.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_line_style",
+      "description": "Create a new line style using NewSubcategory",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdCreateLineStyle",
+      "sample": "TBC_CreateLineStyle",
+      "source": "src/TBC_CreateLineStyle/CmdCreateLineStyle.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_room_cropped_plan_views",
+      "description": "Duplicates each level's associated plan view per room and sets a crop region offset to the room boundary by wall thickness.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "level_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Optional subset of level element ids to process"
+          },
+          "room_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Optional subset of room element ids to process"
+          },
+          "wall_offset_factor": {
+            "type": "number",
+            "description": "Multiplier applied to wall width when computing outward offset (default uses wall width plus 0.1 ft padding)"
+          },
+          "view_name_suffix": {
+            "type": "string",
+            "description": "Optional suffix appended to generated view names instead of the default date stamp"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "Command",
+      "sample": "CropViewToRoom",
+      "source": "src/CropViewToRoom/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_room_volume_direct_shapes",
+      "description": "Creates Generic Model DirectShape volumes from room ClosedShell geometry and stores room parameters as JSON in Comments.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "level_id": {
+            "type": "integer",
+            "description": "Optional level filter for rooms to process"
+          },
+          "room_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Optional subset of room element ids to process"
+          },
+          "overwrite_existing": {
+            "type": "boolean",
+            "description": "When true, delete prior DirectShapes whose ApplicationDataId matches a room UniqueId before creating new ones"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "Command",
+      "sample": "RoomVolumeDirectShape",
+      "source": "src/RoomVolumeDirectShape/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_shared_params",
+      "description": "Create shared parameters for Doors, Walls, inserted DWG, Model Groups and Model Lines",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdCreateSharedParams",
+      "sample": "TBC_CreateSharedParams",
+      "source": "src/TBC_CreateSharedParams/CmdCreateSharedParams.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_create_sloped_slab",
+      "description": "Create Sloped Floor",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdCreateSlopedSlab",
+      "sample": "TBC_CreateSlopedSlab",
+      "source": "src/TBC_CreateSlopedSlab/CmdCreateSlopedSlab.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_crop_to_room",
+      "description": "Set 3D view crop box to room extents",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdCropToRoom",
+      "sample": "TBC_CropToRoom",
+      "source": "src/TBC_CropToRoom/CmdCropToRoom.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_curtain_wall_geom",
+      "description": "Retrieve curtain wall geometry",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdCurtainWallGeom",
+      "sample": "TBC_CurtainWallGeom",
+      "source": "src/TBC_CurtainWallGeom/CmdCurtainWallGeom.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_delete_macros",
+      "description": "Retrieve MacroManager and delete all macros",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDeleteMacros",
+      "sample": "TBC_DeleteMacros",
+      "source": "src/TBC_DeleteMacros/CmdDeleteMacros.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_detail_curves",
+      "description": "Create detail curves, an arc and a line",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDetailCurves",
+      "sample": "TBC_DetailCurves",
+      "source": "src/TBC_DetailCurves/CmdDetailCurves.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_dimension_instance_origin",
+      "description": "Create dimensioning between the origins of family instances",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDimensionInstanceOrigin",
+      "sample": "TBC_DimensionInstanceOrigin",
+      "source": "src/TBC_DimensionInstanceOrigin/CmdDimensionInstanceOrigin.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_dimension_walls_find_refs",
+      "description": "Create dimensioning elements between opposing walls by using FindReferencesByDirection",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDimensionWallsFindRefs",
+      "sample": "TBC_DimensionWallsFindRefs",
+      "source": "src/TBC_DimensionWallsFindRefs/CmdDimensionWallsFindRefs.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_dimension_walls_iterate_faces",
+      "description": "Create dimensioning elements between opposing walls by iterating over their faces",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDimensionWallsIterateFaces",
+      "sample": "TBC_DimensionWallsIterateFaces",
+      "source": "src/TBC_DimensionWallsIterateFaces/CmdDimensionWallsIterateFaces.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_disallow_join",
+      "description": "Allow or disallow join at wall ends",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDisallowJoin",
+      "sample": "TBC_DisallowJoin",
+      "source": "src/TBC_DisallowJoin/CmdDisallowJoin.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_document_version",
+      "description": "List DocumentVersion data, i.e. document GUID and save count",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDocumentVersion",
+      "sample": "TBC_DocumentVersion",
+      "source": "src/TBC_DocumentVersion/CmdDocumentVersion.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_duct_resize",
+      "description": "Ensure that branch ducts are no larger than the main duct they are tapping into",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDuctResize",
+      "sample": "TBC_DuctResize",
+      "source": "src/TBC_DuctResize/CmdDuctResize.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_duplicate_elements",
+      "description": "Duplicate selected elements",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDuplicateElements",
+      "sample": "TBC_DuplicateElements",
+      "source": "src/TBC_DuplicateElements/CmdDuplicateElements.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_dut_abbreviation",
+      "description": "Runs the Building Coder CmdDutAbbreviation sample.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDutAbbreviation",
+      "sample": "TBC_DutAbbreviation",
+      "source": "src/TBC_DutAbbreviation/CmdDutAbbreviation.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_edit_floor",
+      "description": "Generate a new floor element from the curve array of an existing one",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdEditFloor",
+      "sample": "TBC_EditFloor",
+      "source": "src/TBC_EditFloor/CmdEditFloor.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_electrical_load",
+      "description": "Retrieve electrical load from selected family instance",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdElectricalLoad",
+      "sample": "TBC_ElectricalLoad",
+      "source": "src/TBC_ElectricalLoad/CmdElectricalLoad.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_element_images",
+      "description": "Exports PNG images of selected elements from multiple 3D view angles (Isometric, North, East, Top).",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "element_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Element ids of the elements to export"
+          },
+          "output_dir": {
+            "type": "string",
+            "description": "Directory for exported PNG files; defaults to %TEMP%\\GetElementImage"
+          }
+        },
+        "required": [
+          "element_ids"
+        ]
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "Command",
+      "sample": "GetElementImage",
+      "source": "src/GetElementImage/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_ifc",
+      "description": "Export current view to IFC",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdExportIfc",
+      "sample": "TBC_ExportIfc",
+      "source": "src/TBC_ExportIfc/CmdExportIfc.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_image",
+      "description": "Export a preview JPG 3D image of the family or project",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdExportImage",
+      "sample": "TBC_ExportImage",
+      "source": "src/TBC_ExportImage/CmdExportImage.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_schedules_to_excel",
+      "description": "Exports selected Revit schedules and standard tables to an Excel workbook for external editing or layout review.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "schedule_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Schedule view names to export; omit to require UI selection"
+          },
+          "include_standards": {
+            "type": "boolean",
+            "description": "When true, also export selected standard tables (line styles, object styles, etc.)"
+          },
+          "export_mode": {
+            "type": "string",
+            "enum": [
+              "bidirectional",
+              "layout_only"
+            ],
+            "description": "Bidirectional workbooks can be re-imported; layout_only preserves schedule appearance for viewing"
+          },
+          "output_path": {
+            "type": "string",
+            "description": "Destination .xlsx file path"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdExcelExport",
+      "sample": "B1_ExcelExport",
+      "source": "src/B1_ExcelExport/CmdExcelExport.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_solid_to_sat",
+      "description": "Create a solid in memory and export it to a SAT file",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdExportSolidToSat",
+      "sample": "TBC_ExportSolidToSat",
+      "source": "src/TBC_ExportSolidToSat/CmdExportSolidToSat.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_wall_parts_dxf",
+      "description": "Export selected wall parts from a 3D parts-only view to individual DXF files for CNC fabrication.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "part_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Element ids of wall-derived Part elements to export"
+          },
+          "output_folder": {
+            "type": "string",
+            "description": "Directory path for exported DXF files"
+          },
+          "view_id": {
+            "type": "integer",
+            "description": "Optional 3D view id; defaults to the active view"
+          }
+        },
+        "required": [
+          "part_ids",
+          "output_folder"
+        ]
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdDxf",
+      "sample": "ExportCncFab",
+      "source": "src/ExportCncFab/Commands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_wall_parts_sat",
+      "description": "Export selected wall parts from a 3D parts-only view to individual SAT files for CNC fabrication.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "part_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Element ids of wall-derived Part elements to export"
+          },
+          "output_folder": {
+            "type": "string",
+            "description": "Directory path for exported SAT files"
+          },
+          "view_id": {
+            "type": "integer",
+            "description": "Optional 3D view id; defaults to the active view"
+          }
+        },
+        "required": [
+          "part_ids",
+          "output_folder"
+        ]
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSat",
+      "sample": "ExportCncFab",
+      "source": "src/ExportCncFab/Commands.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_exterior_walls",
+      "description": "Determine exterior walls of building by placing a large surrounding room",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdExteriorWalls",
+      "sample": "TBC_ExteriorWalls",
+      "source": "src/TBC_ExteriorWalls/CmdExteriorWalls.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_family_param_guid",
+      "description": "Determine family parameter IsShared and GUID properties using System.Reflection",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdFamilyParamGuid",
+      "sample": "TBC_FamilyParamGuid",
+      "source": "src/TBC_FamilyParamGuid/CmdFamilyParamGuid.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_family_param_value",
+      "description": "List family parameter values defined on the types in a family document",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdFamilyParamValue",
+      "sample": "TBC_FamilyParamValue",
+      "source": "src/TBC_FamilyParamValue/CmdFamilyParamValue.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_filled_region_coords",
+      "description": "Retrieve FilledRegion coordinates",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdFilledRegionCoords",
+      "sample": "TBC_FilledRegionCoords",
+      "source": "src/TBC_FilledRegionCoords/CmdFilledRegionCoords.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_find_exterior_walls",
+      "description": "Identify exterior walls from a candidate set in a floor plan using ray casting and end-join propagation, then return or select the exterior subset.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "wall_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional wall element ids to analyze (replaces interactive rectangle pick)"
+          },
+          "view_id": {
+            "type": "string",
+            "description": "Optional floor plan view id to ensure correct view context"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "FindExteriorWallsCommand",
+      "sample": "FindExteriorWalls",
+      "source": "src/FindExteriorWalls/FindExteriorWallsCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_flatten",
+      "description": "Convert all Revit elements to DirectShapes retaining shape and category",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdFlatten",
+      "sample": "TBC_Flatten",
+      "source": "src/TBC_Flatten/CmdFlatten.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_flow_mismatch",
+      "description": "Check MEP systems for flow mismatch and unconnected parts",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdFlowMismatch",
+      "sample": "TBC_FlowMismatch",
+      "source": "src/TBC_FlowMismatch/CmdFlowMismatch.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_get_dimension_points",
+      "description": "Determine dimension segment start and end points",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdGetDimensionPoints",
+      "sample": "TBC_GetDimensionPoints",
+      "source": "src/TBC_GetDimensionPoints/CmdGetDimensionPoints.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_get_element_centroid",
+      "description": "Calculates tessellation-based centroid and volume for selected or picked elements.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "element_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Element ids to analyze; when omitted, uses the current selection or interactive pick"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "Command",
+      "sample": "GetCentroid",
+      "source": "src/GetCentroid/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_get_materials",
+      "description": "Retrieve building element materials",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdGetMaterials",
+      "sample": "TBC_GetMaterials",
+      "source": "src/TBC_GetMaterials/CmdGetMaterials.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_get_sketch_elements",
+      "description": "Retrieve sketch elements for a selected wall, floor, roof, filled region, etc.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdGetSketchElements",
+      "sample": "TBC_GetSketchElements",
+      "source": "src/TBC_GetSketchElements/CmdGetSketchElements.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_hide_category_in_all_views",
+      "description": "Hide the category of a picked element in every view of the active project.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "element_id": {
+            "type": "string",
+            "description": "Element id used to resolve the category to hide (replaces interactive pick)"
+          },
+          "category_id": {
+            "type": "string",
+            "description": "Category id to hide directly (alternative to element_id)"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "HideCategoryCommand",
+      "sample": "HideCategory",
+      "source": "src/HideCategory/HideCategoryCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_import_schedules_from_excel",
+      "description": "Imports parameter updates from a bidirectional Excel export back into Revit schedules and supported standard tables.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "input_path": {
+            "type": "string",
+            "description": "Path to an .xlsx file previously exported in bidirectional mode"
+          },
+          "worksheet_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional subset of worksheets to import; omit to require UI selection"
+          }
+        },
+        "required": [
+          "input_path"
+        ]
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdExcelImport",
+      "sample": "B1_ExcelImport",
+      "source": "src/B1_ExcelImport/CmdExcelImport.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_imports_in_families",
+      "description": "List all imported symbols in all families in project",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdImportsInFamilies",
+      "sample": "TBC_ImportsInFamilies",
+      "source": "src/TBC_ImportsInFamilies/CmdImportsInFamilies.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_install_location",
+      "description": "Determine Revit product install location",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdInstallLocation",
+      "sample": "TBC_InstallLocation",
+      "source": "src/TBC_InstallLocation/CmdInstallLocation.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_intersect_junction_box",
+      "description": "Determine conduit elements intersecting a junction box",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdIntersectJunctionBox",
+      "sample": "TBC_IntersectJunctionBox",
+      "source": "src/TBC_IntersectJunctionBox/CmdIntersectJunctionBox.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_land_xml",
+      "description": "Import LandXML data and create TopographySurface",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdLandXml",
+      "sample": "TBC_LandXml",
+      "source": "src/TBC_LandXml/CmdLandXml.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_library_paths",
+      "description": "List existing and update application options library paths",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdLibraryPaths",
+      "sample": "TBC_LibraryPaths",
+      "source": "src/TBC_LibraryPaths/CmdLibraryPaths.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_linked_file_elements",
+      "description": "List elements in linked files",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdLinkedFileElements",
+      "sample": "TBC_LinkedFileElements",
+      "source": "src/TBC_LinkedFileElements/CmdLinkedFileElements.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_linked_files",
+      "description": "Determine linked files and their full path",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdLinkedFiles",
+      "sample": "TBC_LinkedFiles",
+      "source": "src/TBC_LinkedFiles/CmdLinkedFiles.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_all_rooms",
+      "description": "List properties from all rooms",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdListAllRooms",
+      "sample": "TBC_ListAllRooms",
+      "source": "src/TBC_ListAllRooms/CmdListAllRooms.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_import_instances",
+      "description": "List ImportInstance elements in the active project, detect duplicate view-specific CAD imports, and write a text report beside the project file.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "output_path": {
+            "type": "string",
+            "description": "Optional path for the report file (defaults to <project>-ListOfImportedData.txt beside the RVT)"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "ListImportInstancesCommand",
+      "sample": "ListImportInstances",
+      "source": "src/ListImportInstances/ListImportInstancesCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_marks",
+      "description": "List all door marks",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdListMarks",
+      "sample": "TBC_ListMarks",
+      "source": "src/TBC_ListMarks/CmdListMarks.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_path_of_travel_doors",
+      "description": "Lists door marks crossed by path-of-travel elements in traversal order.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "path_of_travel_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Element ids of path-of-travel elements to analyze"
+          }
+        },
+        "required": [
+          "path_of_travel_ids"
+        ]
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "Command",
+      "sample": "PathOfTravelDoors",
+      "source": "src/PathOfTravelDoors/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_pipe_sizes",
+      "description": "List pipe sizes in a project",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdListPipeSizes",
+      "sample": "TBC_ListPipeSizes",
+      "source": "src/TBC_ListPipeSizes/CmdListPipeSizes.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_railing_types",
+      "description": "List all railing and stair types",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdListRailingTypes",
+      "sample": "TBC_ListRailingTypes",
+      "source": "src/TBC_ListRailingTypes/CmdListRailingTypes.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_shared_params",
+      "description": "List all shared parameters defined in document and saved on wall instances",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdListSharedParams",
+      "sample": "TBC_ListSharedParams",
+      "source": "src/TBC_ListSharedParams/CmdListSharedParams.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_views",
+      "description": "Determine all all the view ports of a drawing sheet and vice versa",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdListViews",
+      "sample": "TBC_ListViews",
+      "source": "src/TBC_ListViews/CmdListViews.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_list_walls",
+      "description": "List wall lengths and areas",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdListWalls",
+      "sample": "TBC_ListWalls",
+      "source": "src/TBC_ListWalls/CmdListWalls.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_mep_element_shape",
+      "description": "Determine element shape, i.e. MEP element cross section",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdMepElementShape",
+      "sample": "TBC_MepElementShape",
+      "source": "src/TBC_MepElementShape/CmdMepElementShape.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_mid_curve",
+      "description": "Create a series of model line segments between two curve elements",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdMidCurve",
+      "sample": "TBC_MidCurve",
+      "source": "src/TBC_MidCurve/CmdMidCurve.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_mirror",
+      "description": "Mirror selected elements",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdMirror",
+      "sample": "TBC_Mirror",
+      "source": "src/TBC_Mirror/CmdMirror.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_multistory_stair_subelements",
+      "description": "Access all subelements of all MultistoryStair instances",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdMultistoryStairSubelements",
+      "sample": "TBC_MultistoryStairSubelements",
+      "source": "src/TBC_MultistoryStairSubelements/CmdMultiStoryStairSubelements.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_families",
+      "description": "Queries family symbols/instances and wall join relationships using modeling extensions.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "N3P_Families",
+      "sample": "N3P_Families",
+      "source": "src/N3P_Families/N3P_Families.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_mep",
+      "description": "Inspects pipe HasOpenConnector using MEP plumbing extensions.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "N3P_Mep",
+      "sample": "N3P_Mep",
+      "source": "src/N3P_Mep/N3P_Mep.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_scopes",
+      "description": "Copies a wall using RevitToolkit failure and dialog suppression scopes from Common.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "N3P_Scopes",
+      "sample": "N3P_Scopes",
+      "source": "src/N3P_Scopes/N3P_Scopes.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_structure",
+      "description": "Inspects structural framing join flags or rebar shape parameters when present.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "N3P_Structure",
+      "sample": "N3P_Structure",
+      "source": "src/N3P_Structure/N3P_Structure.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_uiapplication",
+      "description": "Lists ribbon panels and notes ribbon authoring patterns for IExternalApplication.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "N3P_UIApplication",
+      "sample": "N3P_UIApplication",
+      "source": "src/N3P_UIApplication/N3P_UIApplication.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_nested_families",
+      "description": "List nested family files and instances in a family document",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNestedFamilies",
+      "sample": "TBC_NestedFamilies",
+      "source": "src/TBC_NestedFamilies/CmdNestedFamilies.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_nested_instance_geo",
+      "description": "Determine nested instance geometry and structure",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNestedInstanceGeo",
+      "sample": "TBC_NestedInstanceGeo",
+      "source": "src/TBC_NestedInstanceGeo/CmdNestedInstanceGeo.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_area",
+      "description": "Create a new area element",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewArea",
+      "sample": "TBC_NewArea",
+      "source": "src/TBC_NewArea/CmdNewArea.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_beam_type_instance",
+      "description": "Create a new beam type and insert an instance of it",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewBeamTypeInstance",
+      "sample": "TBC_NewBeamTypeInstance",
+      "source": "src/TBC_NewBeamTypeInstance/CmdNewBeamTypeInstance.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_blend",
+      "description": "Create a new blend using the NewBlend method",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewBlend",
+      "sample": "TBC_NewBlend",
+      "source": "src/TBC_NewBlend/CmdNewBlend.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_column_type_instance",
+      "description": "Create a new column type and insert an instance of it",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewColumnTypeInstance",
+      "sample": "TBC_NewColumnTypeInstance",
+      "source": "src/TBC_NewColumnTypeInstance/CmdNewColumnTypeInstance.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_cross_fitting",
+      "description": "Create a new pipe cross fitting",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewCrossFitting",
+      "sample": "TBC_NewCrossFitting",
+      "source": "src/TBC_NewCrossFitting/CmdNewCrossFitting.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_dimension_label",
+      "description": "Create a new dimension label in a family document",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewDimensionLabel",
+      "sample": "TBC_NewDimensionLabel",
+      "source": "src/TBC_NewDimensionLabel/CmdNewDimensionLabel.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_duct_system",
+      "description": "Create a new duct system via the NewMechanicalSystem API call",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewDuctSystem",
+      "sample": "TBC_NewDuctSystem",
+      "source": "src/TBC_NewDuctSystem/CmdNewDuctSystem.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_extrusion_roof",
+      "description": "Create a strangely stair shaped new extrusion roof",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewExtrusionRoof",
+      "sample": "TBC_NewExtrusionRoof",
+      "source": "src/TBC_NewExtrusionRoof/CmdNewExtrusionRoof.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_lighting_fixture",
+      "description": "Insert a new lighting fixture family instance",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewLightingFixture",
+      "sample": "TBC_NewLightingFixture",
+      "source": "src/TBC_NewLightingFixture/CmdNewLightingFixture.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_line_load",
+      "description": "Create a new structural line load elements",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewLineLoad",
+      "sample": "TBC_NewLineLoad",
+      "source": "src/TBC_NewLineLoad/CmdNewLineLoad.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_project_doc",
+      "description": "Create a new project document",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewProjectDoc",
+      "sample": "TBC_NewProjectDoc",
+      "source": "src/TBC_NewProjectDoc/CmdNewProjectDoc.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_railing",
+      "description": "Cannot create a new railing instance",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewRailing",
+      "sample": "TBC_NewRailing",
+      "source": "src/TBC_NewRailing/CmdNewRailing.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_spot_elevation",
+      "description": "Insert a new spot elevation on top surface of beam",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewSpotElevation",
+      "sample": "TBC_NewSpotElevation",
+      "source": "src/TBC_NewSpotElevation/CmdNewSpotElevation.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_sprinkler",
+      "description": "Insert a new sprinkler family instance",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewSprinkler",
+      "sample": "TBC_NewSprinkler",
+      "source": "src/TBC_NewSprinkler/CmdNewSprinkler.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_new_text_note",
+      "description": "Create a new text note and determine its exact width",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdNewTextNote",
+      "sample": "TBC_NewTextNote",
+      "source": "src/TBC_NewTextNote/CmdNewTextNote.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_param_values_for_cats",
+      "description": "Retrieve all parameter values for all elements of the given categories",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdParamValuesForCats",
+      "sample": "TBC_ParamValuesForCats",
+      "source": "src/TBC_ParamValuesForCats/CmdParamValuesForCats.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_part_atom",
+      "description": "Extract part atom from family file",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdPartAtom",
+      "sample": "TBC_PartAtom",
+      "source": "src/TBC_PartAtom/CmdPartAtom.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_pick_point3d",
+      "description": "Set active work plane to pick a point in 3d",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdPickPoint3d",
+      "sample": "TBC_PickPoint3d",
+      "source": "src/TBC_PickPoint3d/CmdPickPoint3d.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_pick_room_incl_linked",
+      "description": "Selection filter to pick a room either in current project or linked model",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdPickRoomInclLinked",
+      "sample": "TBC_PickRoomInclLinked",
+      "source": "src/TBC_PickRoomInclLinked/CmdPickRoomInclLinked.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_place_concrete_setout_points",
+      "description": "Place setout point family instances on every geometry corner of structural concrete elements.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "element_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional host element ids to limit placement (default: all matching concrete elements)"
+          },
+          "family_path": {
+            "type": "string",
+            "description": "Optional path to SetoutPoint.rfa when the family is not already loaded"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "description": "When true, report corner counts without creating instances"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "CmdGeomVertices",
+      "sample": "SetoutPoints",
+      "source": "src/SetoutPoints/CmdGeomVertices.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_place_family_instance",
+      "description": "Call PromptForFamilyInstancePlacement to place family instances and use the DocumentChanged event to capture the newly added element ids",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdPlaceFamilyInstance",
+      "sample": "TBC_PlaceFamilyInstance",
+      "source": "src/TBC_PlaceFamilyInstance/CmdPlaceFamilyInstance.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_plan_topology",
+      "description": "List plan topology and its rooms and circuits with no rooms",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdPlanTopology",
+      "sample": "TBC_PlanTopology",
+      "source": "src/TBC_PlanTopology/CmdPlanTopology.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_post_request_instance_placement",
+      "description": "Exercise the PostRequestForElementTypePlacement method",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdPostRequestInstancePlacement",
+      "sample": "TBC_PostRequestInstancePlacement",
+      "source": "src/TBC_PostRequestInstancePlacement/CmdPostRequestInstancePlacement.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_process_visible_dwg",
+      "description": "Extract geometry from visible import instance layers in the current view",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdProcessVisibleDwg",
+      "sample": "TBC_ProcessVisibleDwg",
+      "source": "src/TBC_ProcessVisibleDwg/CmdProcessVisibleDwg.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_project_parameter_guids",
+      "description": "Determine and report all project parameter GUIDs",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdProjectParameterGuids",
+      "sample": "TBC_ProjectParameterGuids",
+      "source": "src/TBC_ProjectParameterGuids/CmdProjectParameterGuids.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_purge_line_styles",
+      "description": "Purge all the _Solid-Red-1 line styles",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdPurgeLineStyles",
+      "sample": "TBC_PurgeLineStyles",
+      "source": "src/TBC_PurgeLineStyles/CmdPurgeLineStyles.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_purge_text_note_types",
+      "description": "Delete all unused TextNote types",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdPurgeTextNoteTypes",
+      "sample": "TBC_PurgeTextNoteTypes",
+      "source": "src/TBC_PurgeTextNoteTypes/CmdPurgeTextNoteTypes.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_rebar_curves",
+      "description": "Retrieve and duplicate all rebar centreline curves with model curves",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdRebarCurves",
+      "sample": "TBC_RebarCurves",
+      "source": "src/TBC_RebarCurves/CmdRebarCurves.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_rect_duct_corners",
+      "description": "Determine the corners of a rectangular duct",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdRectDuctCorners",
+      "sample": "TBC_RectDuctCorners",
+      "source": "src/TBC_RectDuctCorners/CmdRectDuctCorners.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_relationship_inverter",
+      "description": "Determine opening > wall host relationships and invert them to wall > opening",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdRelationshipInverter",
+      "sample": "TBC_RelationshipInverter",
+      "source": "src/TBC_RelationshipInverter/CmdRelationshipInverter.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_remove_dwf_links",
+      "description": "Remove DWF links",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdRemoveDwfLinks",
+      "sample": "TBC_RemoveDwfLinks",
+      "source": "src/TBC_RemoveDwfLinks/CmdRemoveDwfLinks.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_remove_imported_jpgs",
+      "description": "Remove imported JPG image files",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdRemoveImportedJpgs",
+      "sample": "TBC_RemoveImportedJpgs",
+      "source": "src/TBC_RemoveImportedJpgs/CmdRemoveImportedJpgs.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_renumber_setout_points",
+      "description": "Renumber major setout point instances with an SOP prefix starting at one.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "prefix": {
+            "type": "string",
+            "description": "Label prefix for renumbered points (default: SOP )"
+          },
+          "host_element_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional filter to renumber only points hosted on these elements"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "CmdRenumber",
+      "sample": "SetoutPoints",
+      "source": "src/SetoutPoints/CmdRenumber.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_rolling_offset",
+      "description": "Calculate a rolling offset pipe between two selected pipe segments",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdRollingOffset",
+      "sample": "TBC_RollingOffset",
+      "source": "src/TBC_RollingOffset/CmdRollingOffset.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_room_neighbours",
+      "description": "Determine neighbouring room at midpoint of each room boundary segment",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdRoomNeighbours",
+      "sample": "TBC_RoomNeighbours",
+      "source": "src/TBC_RoomNeighbours/CmdRoomNeighbours.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_room_wall_adjacency",
+      "description": "Determine part of wall face area that bounds a room",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdRoomWallAdjacency",
+      "sample": "TBC_RoomWallAdjacency",
+      "source": "src/TBC_RoomWallAdjacency/CmdRoomWallAdjacency.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_room_wall_net_area",
+      "description": "Reports net, opening, and gross wall area per room using SpatialElementGeometryCalculator, grouped by room, wall type, or outer material.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "level_id": {
+            "type": "integer",
+            "description": "Optional level filter for rooms to analyze"
+          },
+          "room_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Optional subset of room element ids to analyze"
+          },
+          "group_by": {
+            "type": "string",
+            "enum": [
+              "room",
+              "wall_type",
+              "material"
+            ],
+            "description": "How to group results; defaults to all three groupings"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": false,
+      "commandClass": "Command",
+      "sample": "SpatialElementGeometryCalculator",
+      "source": "src/SpatialElementGeometryCalculator/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_rotated_beam_location",
+      "description": "Determine rotated beam location",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdRotatedBeamLocation",
+      "sample": "TBC_RotatedBeamLocation",
+      "source": "src/TBC_RotatedBeamLocation/CmdRotatedBeamLocation.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_search_parameters",
+      "description": "Search element parameter values in the current view, selection, or project for a given string with optional category, parameter, and regex filters.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "search_string": {
+            "type": "string",
+            "description": "Text or regular expression to find in parameter values"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "view",
+              "selection",
+              "project"
+            ],
+            "description": "Element set to search"
+          },
+          "category": {
+            "type": "string",
+            "description": "BuiltInCategory name to limit search, or '*' for all categories"
+          },
+          "parameter_name": {
+            "type": "string",
+            "description": "Parameter name to search, or '*' for all parameters"
+          },
+          "match_case": {
+            "type": "boolean",
+            "description": "Require exact character case when matching"
+          },
+          "whole_word": {
+            "type": "boolean",
+            "description": "Require the search string to match the entire parameter value"
+          },
+          "regex": {
+            "type": "boolean",
+            "description": "Treat search_string as a .NET regular expression"
+          },
+          "built_in_params": {
+            "type": "boolean",
+            "description": "Search BuiltInParameter values via the API instead of visible parameters"
+          },
+          "element_types": {
+            "type": "boolean",
+            "description": "Include element types (wall types, family symbols, etc.)"
+          },
+          "element_instances": {
+            "type": "boolean",
+            "description": "Include element instances (walls, family instances, etc.)"
+          }
+        },
+        "required": [
+          "search_string",
+          "scope"
+        ]
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "Command",
+      "sample": "StringSearch",
+      "source": "src/StringSearch/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_set_grid_endpoint",
+      "description": "Move selected grid endpoints in Y direction using SetCurveInView",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSetGridEndpoint",
+      "sample": "TBC_SetGridEndpoint",
+      "source": "src/TBC_SetGridEndpoint/CmdSetGridEndpoint.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_set_room_occupancy",
+      "description": "Set room occupancy via built-in parameter ROOM_OCCUPANCY",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSetRoomOccupancy",
+      "sample": "TBC_SetRoomOccupancy",
+      "source": "src/TBC_SetRoomOccupancy/CmdSetRoomOccupancy.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_set_tag_type",
+      "description": "Create a wall, door, door tag, then create and set a new door tag type",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSetTagType",
+      "sample": "TBC_SetTagType",
+      "source": "src/TBC_SetTagType/CmdSetTagType.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_set_tangent_lock",
+      "description": "Set tangent lock on adjoining curve elements",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSetTangentLock",
+      "sample": "TBC_SetTangentLock",
+      "source": "src/TBC_SetTangentLock/CmdSetTangentLock.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_set_wall_type",
+      "description": "Set the wall type of a selected wall",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSetWallType",
+      "sample": "TBC_SetWallType",
+      "source": "src/TBC_SetWallType/CmdSetWallType.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_shared_param_guids",
+      "description": "List all shared parameter GUIDs",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSharedParamGuids",
+      "sample": "TBC_SharedParamGuids",
+      "source": "src/TBC_SharedParamGuids/CmdSharedParamGuids.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_sheet_data",
+      "description": "Export sheet data to XML file",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSheetData",
+      "sample": "TBC_SheetData",
+      "source": "src/TBC_SheetData/CmdSheetData.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_sheet_size",
+      "description": "List title block element types and title block and view sheet instances and sizes",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSheetSize",
+      "sample": "TBC_SheetSize",
+      "source": "src/TBC_SheetSize/CmdSheetSize.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_sheet_to_model",
+      "description": "Convert sheet to model coordinates and convert DWF markup to model elements",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSheetToModel",
+      "sample": "TBC_SheetToModel",
+      "source": "src/TBC_SheetToModel/CmdSheetToModel.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_slab_boundary",
+      "description": "Determine polygonal floor slab boundary loops",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSlabBoundary",
+      "sample": "TBC_SlabBoundary",
+      "source": "src/TBC_SlabBoundary/CmdSlabBoundary.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_slab_boundary_area",
+      "description": "Determine floor slab boundary loop polygon areas",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSlabBoundaryArea",
+      "sample": "TBC_SlabBoundaryArea",
+      "source": "src/TBC_SlabBoundaryArea/CmdSlabBoundaryArea.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_slab_sides",
+      "description": "Determine floor slab side faces",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSlabSides",
+      "sample": "TBC_SlabSides",
+      "source": "src/TBC_SlabSides/CmdSlabSides.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_sloped_wall",
+      "description": "Create a sloped wall",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSlopedWall",
+      "sample": "TBC_SlopedWall",
+      "source": "src/TBC_SlopedWall/CmdSlopedWall.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_sort_curve_loops",
+      "description": "Retrieve and sort outer and inner face curve loops",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSortCurveLoops",
+      "sample": "TBC_SortCurveLoops",
+      "source": "src/TBC_SortCurveLoops/CmdSortCurveLoops.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_space_adjacency",
+      "description": "Analyse and report space adjacencies",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSpaceAdjacency",
+      "sample": "TBC_SpaceAdjacency",
+      "source": "src/TBC_SpaceAdjacency/CmdSpaceAdjacency.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_steel_stair_beams",
+      "description": "Create a series of connected mitered steel beams for a steel stair",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdSteelStairBeams",
+      "sample": "TBC_SteelStairBeams",
+      "source": "src/TBC_SteelStairBeams/CmdSteelStairBeams.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_transformed_coords",
+      "description": "Determine transformed vertex coordinates for family instance symbol geometry",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdTransformedCoords",
+      "sample": "TBC_TransformedCoords",
+      "source": "src/TBC_TransformedCoords/CmdTransformedCoords.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_triangle_count",
+      "description": "Determine model total triangle count using custom exporter",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdTriangleCount",
+      "sample": "TBC_TriangleCount",
+      "source": "src/TBC_TriangleCount/CmdTriangleCount.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_unrotate_north",
+      "description": "Transform element location back to original coordinates to cancel effect of rotating project north",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdUnrotateNorth",
+      "sample": "TBC_UnrotateNorth",
+      "source": "src/TBC_UnrotateNorth/CmdUnrotateNorth.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_views_showing_elements",
+      "description": "Determine all views displaying a given set of elements",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdViewsShowingElements",
+      "sample": "TBC_ViewsShowingElements",
+      "source": "src/TBC_ViewsShowingElements/CmdViewsShowingElements.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_bottom_face",
+      "description": "Determine the bottom face of a wall",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallBottomFace",
+      "sample": "TBC_WallBottomFace",
+      "source": "src/TBC_WallBottomFace/CmdWallBottomFace.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_dimensions",
+      "description": "Extract wall solid and list all its dimensions",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallDimensions",
+      "sample": "TBC_WallDimensions",
+      "source": "src/TBC_WallDimensions/CmdWallDimensions.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_footing",
+      "description": "Determine wall footing from selected wall",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallFooting",
+      "sample": "TBC_WallFooting",
+      "source": "src/TBC_WallFooting/CmdWallFooting.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_layer_volumes",
+      "description": "Calculate compound wall layer volumes",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallLayerVolumes",
+      "sample": "TBC_WallLayerVolumes",
+      "source": "src/TBC_WallLayerVolumes/CmdWallLayerVolumes.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_layers",
+      "description": "List and determine position of all wall compound layers",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallLayers",
+      "sample": "TBC_WallLayers",
+      "source": "src/TBC_WallLayers/CmdWallLayers.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_neighbours",
+      "description": "Determine wall neighbours, i.e. wall joined at end points",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallNeighbours",
+      "sample": "TBC_WallNeighbours",
+      "source": "src/TBC_WallNeighbours/CmdWallNeighbours.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_opening_profiles",
+      "description": "Determine and display all wall opening edges including elevation profile lines",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallOpeningProfiles",
+      "sample": "TBC_WallOpeningProfiles",
+      "source": "src/TBC_WallOpeningProfiles/CmdWallOpeningProfiles.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_openings",
+      "description": "Determine wall opening side faces and report their start and end points along location line",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallOpenings",
+      "sample": "TBC_WallOpenings",
+      "source": "src/TBC_WallOpenings/CmdWallOpenings.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_profile",
+      "description": "Determine wall elevation profile boundary loop polygons",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallProfile",
+      "sample": "TBC_WallProfile",
+      "source": "src/TBC_WallProfile/CmdWallProfile.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_profile_area",
+      "description": "Determine wall elevation profile boundary loop polygon areas",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallProfileArea",
+      "sample": "TBC_WallProfileArea",
+      "source": "src/TBC_WallProfileArea/CmdWallProfileArea.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_wall_top_faces",
+      "description": "Retrieve top faces of selected or all wall",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "CmdWallTopFaces",
+      "sample": "TBC_WallTopFaces",
+      "source": "src/TBC_WallTopFaces/CmdWallTopFaces.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_write_path_of_travel_door_marks",
+      "description": "Writes comma-separated door marks crossed by each path of travel into the path Comments parameter.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "path_of_travel_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Element ids of path-of-travel elements to update"
+          }
+        },
+        "required": [
+          "path_of_travel_ids"
+        ]
+      },
+      "tier": "mcp4",
+      "mcpRating": 4,
+      "requiresUi": true,
+      "commandClass": "WriteDoorMarksCommand",
+      "sample": "PathOfTravelDoors",
+      "source": "src/PathOfTravelDoors/WriteDoorMarksCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_export_view_3d_mesh_json",
+      "description": "Exports tessellated 3D mesh geometry from a 3D view to ADN mesh JSON format (vertices, indices, normals, centroid, color, element id per mesh).",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "view_id": {
+            "type": "integer",
+            "description": "3D view to export (defaults to active view)"
+          },
+          "output_path": {
+            "type": "string",
+            "description": "Path for the output JSON file (if omitted, a save dialog is shown)"
+          }
+        },
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": true,
+      "commandClass": "Command",
+      "sample": "CustomExporter/AdnMeshJsonExporter",
+      "source": "src/CustomExporter/AdnMeshJsonExporter/Command.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_application",
+      "description": "Logs optional Revit module availability flags and AsControlledApplication.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_Application",
+      "sample": "N3P_Application",
+      "source": "src/N3P_Application/N3P_Application.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_category",
+      "description": "Resolves BuiltInCategory to Category objects and compares category ElementIds.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_Category",
+      "sample": "N3P_Category",
+      "source": "src/N3P_Category/N3P_Category.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_collector",
+      "description": "Demonstrates fluent FilteredElementCollector extensions such as CollectElements, OfClass, OfClasses, and Rooms.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_Collector",
+      "sample": "N3P_Collector",
+      "source": "src/N3P_Collector/N3P_Collector.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_display",
+      "description": "Formats ForgeTypeId labels and converts Revit Color values to hex/RGB strings.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_Display",
+      "sample": "N3P_Display",
+      "source": "src/N3P_Display/N3P_Display.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_document",
+      "description": "Reads document Version, CheckAllFamilies, and global parameter counts.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_Document",
+      "sample": "N3P_Document",
+      "source": "src/N3P_Document/N3P_Document.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_element",
+      "description": "Demonstrates Nice3point Element extensions: ToElement, FindParameter, and CanBeDeleted on walls.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_Element",
+      "sample": "N3P_Element",
+      "source": "src/N3P_Element/N3P_Element.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_external_command",
+      "description": "Read-only demo of toolkit ExternalCommand base class and RevitContext.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_ExternalCommand",
+      "sample": "N3P_ExternalCommand",
+      "source": "src/N3P_ExternalCommand/N3P_ExternalCommand.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_geometry",
+      "description": "Reports bounding-box volume/centroid and solid tessellation flags via geometry extensions.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_Geometry",
+      "sample": "N3P_Geometry",
+      "source": "src/N3P_Geometry/N3P_Geometry.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_parameters",
+      "description": "Shows parameter helpers: ToElementId, AsBool, and WhereParameter filter chaining.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_Parameters",
+      "sample": "N3P_Parameters",
+      "source": "src/N3P_Parameters/N3P_Parameters.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_unit",
+      "description": "Converts wall offset values using ToMillimeters, FromMillimeters, Round, and Units.Format.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_Unit",
+      "sample": "N3P_Unit",
+      "source": "src/N3P_Unit/N3P_Unit.cs",
+      "requiresRevit": true
+    },
+    {
+      "name": "revit_n3p_view",
+      "description": "Counts elements visible/selectable in the active view and checks spatial field managers.",
+      "arguments": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tier": "mcp5",
+      "mcpRating": 5,
+      "requiresUi": false,
+      "commandClass": "N3P_View",
+      "sample": "N3P_View",
+      "source": "src/N3P_View/N3P_View.cs",
+      "requiresRevit": true
+    }
+  ]
+}

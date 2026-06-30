@@ -298,6 +298,9 @@
     <EmbeddedResource Include="TBC_*\**\*.resx" Exclude="TBC_Shared\**" />
     <Compile Include="BB_Shared\**\*.cs" />
     <Compile Include="BB_*\**\*.cs" Exclude="BB_Shared\**" />
+    <Content Include="BB_McpServer\mcp-manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="BB_*\**\*.resx" Exclude="BB_Shared\**" />
     <Compile Include="B1_Shared\**\*.cs" />
     <Compile Include="B1_ExcelExport\**\*.cs" />

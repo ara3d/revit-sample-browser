@@ -1,13 +1,6 @@
+using Ara3D.Bowerbird.RevitSamples.AecAgent;
 using Ara3D.Utils;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Newtonsoft.Json.Linq;
-using System;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Ara3D.Bowerbird.RevitSamples;
@@ -19,11 +12,11 @@ public class CommandMcpServer : NamedCommand
 {
     const int Port = 8765;
     const string McpPath = "/mcp";
-    const int RevitBridgeTimeoutMs = 30_000;
 
     static WebServer _server;
-    static ExternalEvent _revitEvent;
-    static RevitBridgeHandler _revitBridge;
+    static RevitBridge _bridge;
+    static McpToolRegistry _registry;
+    static McpProtocolHandler _protocol;
 
     public override string Name => "Start MCP Server";
 
@@ -35,9 +28,12 @@ public class CommandMcpServer : NamedCommand
             return;
         }
 
-        _revitBridge = new RevitBridgeHandler();
-        _revitEvent = ExternalEvent.Create(_revitBridge);
-        _server = new WebServer(HandleRequest, Port);
+        _bridge = new RevitBridge();
+        _registry = new McpToolRegistry();
+        _registry.Initialize(_bridge, RepoPaths.FindRepoRoot());
+        _protocol = new McpProtocolHandler(_registry);
+        _server = new WebServer(context => _protocol.HandleRequest(context), Port);
+
         _server.Start();
 
         var config = $@"Add to %USERPROFILE%\.cursor\mcp.json:
@@ -50,340 +46,14 @@ public class CommandMcpServer : NamedCommand
   }}
 }}
 
-Reload MCP in Cursor (Settings → Tools & MCP), then try the echo or revit_document_info tools.";
+Reload MCP in Cursor (Settings → Tools & MCP), then try:
+- aec.get_host_context
+- aec.query_elements
+- dev.search_examples
+- inspect_current_context prompt";
 
-        MessageBox.Show($"MCP server started at {McpUrl}\n\n{config}", "Bowerbird MCP Server");
+        MessageBox.Show($"MCP server started at {McpUrl}\n\nRegistered tools: {_registry.Context.ToolCount}\n\n{config}", "Bowerbird MCP Server");
     }
 
     static string McpUrl => $"http://127.0.0.1:{Port}{McpPath}";
-
-    static void HandleRequest(HttpListenerContext context)
-    {
-        var request = context.Request;
-        var response = context.Response;
-
-        if (!IsAllowedOrigin(request))
-        {
-            response.StatusCode = 403;
-            return;
-        }
-
-        var path = request.Url?.AbsolutePath ?? "";
-        if (!path.Equals(McpPath, StringComparison.OrdinalIgnoreCase))
-        {
-            response.StatusCode = 404;
-            return;
-        }
-
-        if (request.HttpMethod == "GET")
-        {
-            response.StatusCode = 405;
-            return;
-        }
-
-        if (request.HttpMethod != "POST")
-        {
-            response.StatusCode = 405;
-            return;
-        }
-
-        string body;
-        using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
-            body = reader.ReadToEnd();
-
-        if (string.IsNullOrWhiteSpace(body))
-        {
-            response.StatusCode = 400;
-            return;
-        }
-
-        var message = JToken.Parse(body);
-        if (message is JArray batch)
-        {
-            HandleBatch(batch, response);
-            return;
-        }
-
-        HandleMessage(message as JObject, response);
-    }
-
-    static void HandleBatch(JArray batch, HttpListenerResponse response)
-    {
-        var requests = batch.OfType<JObject>().Where(IsRequest).ToList();
-        if (requests.Count == 0)
-        {
-            response.StatusCode = 202;
-            return;
-        }
-
-        var responses = requests.Select(HandleRequestObject).Where(r => r != null).ToList();
-        WriteJson(response, responses.Count == 1 ? responses[0]! : new JArray(responses));
-    }
-
-    static void HandleMessage(JObject message, HttpListenerResponse response)
-    {
-        if (message == null)
-        {
-            response.StatusCode = 400;
-            return;
-        }
-
-        if (!IsRequest(message))
-        {
-            response.StatusCode = 202;
-            return;
-        }
-
-        WriteJson(response, HandleRequestObject(message)!);
-    }
-
-    static JObject HandleRequestObject(JObject request)
-    {
-        var id = request["id"];
-        var method = request["method"]?.Value<string>() ?? "";
-
-        try
-        {
-            var result = method switch
-            {
-                "initialize" => HandleInitialize(),
-                "tools/list" => HandleToolsList(),
-                "tools/call" => HandleToolsCall(request["params"] as JObject),
-                "ping" => [],
-                _ => throw new McpProtocolException(-32601, $"Method not found: {method}"),
-            };
-
-            return id == null || id.Type == JTokenType.Null
-                ? null
-                : new JObject
-                {
-                    ["jsonrpc"] = "2.0",
-                    ["id"] = id,
-                    ["result"] = result,
-                };
-        }
-        catch (McpProtocolException ex)
-        {
-            return id == null || id.Type == JTokenType.Null
-                ? null
-                : new JObject
-                {
-                    ["jsonrpc"] = "2.0",
-                    ["id"] = id,
-                    ["error"] = new JObject
-                    {
-                        ["code"] = ex.Code,
-                        ["message"] = ex.Message,
-                    },
-                };
-        }
-        catch (Exception ex)
-        {
-            return id == null || id.Type == JTokenType.Null
-                ? null
-                : new JObject
-                {
-                    ["jsonrpc"] = "2.0",
-                    ["id"] = id,
-                    ["error"] = new JObject
-                    {
-                        ["code"] = -32603,
-                        ["message"] = ex.Message,
-                    },
-                };
-        }
-    }
-
-    static bool IsRequest(JObject message)
-    {
-        return message["method"] != null && message["id"] != null;
-    }
-
-    static JObject HandleInitialize()
-    {
-        return new()
-        {
-            ["protocolVersion"] = "2025-03-26",
-            ["capabilities"] = new JObject
-            {
-                ["tools"] = new JObject(),
-            },
-            ["serverInfo"] = new JObject
-            {
-                ["name"] = "bowerbird-revit-mcp",
-                ["version"] = "1.0.0",
-            },
-        };
-    }
-
-    static JObject HandleToolsList()
-    {
-        return new()
-        {
-            ["tools"] = new JArray
-            {
-                new JObject
-                {
-                    ["name"] = "echo",
-                    ["description"] = "Echoes the message back to the client.",
-                    ["inputSchema"] = new JObject
-                    {
-                        ["type"] = "object",
-                        ["properties"] = new JObject
-                        {
-                            ["message"] = new JObject
-                            {
-                                ["type"] = "string",
-                                ["description"] = "Message to echo",
-                            },
-                        },
-                        ["required"] = new JArray("message"),
-                    },
-                },
-                new JObject
-                {
-                    ["name"] = "revit_document_info",
-                    ["description"] = "Returns the active Revit document title and path.",
-                    ["inputSchema"] = new JObject
-                    {
-                        ["type"] = "object",
-                        ["properties"] = new JObject(),
-                    },
-                },
-            },
-        };
-    }
-
-    static JObject HandleToolsCall(JObject parameters)
-    {
-        var name = parameters?["name"]?.Value<string>();
-        var arguments = parameters?["arguments"] as JObject ?? [];
-
-        var text = name switch
-        {
-            "echo" => HandleEcho(arguments),
-            "revit_document_info" => HandleRevitDocumentInfo(),
-            _ => throw new McpProtocolException(-32602, $"Unknown tool: {name}"),
-        };
-
-        return ToolResult(text);
-    }
-
-    static string HandleEcho(JObject arguments)
-    {
-        var message = arguments["message"]?.Value<string>();
-        return string.IsNullOrEmpty(message)
-            ? throw new McpProtocolException(-32602, "Missing required argument: message")
-            : $"hello {message}";
-    }
-
-    static string HandleRevitDocumentInfo()
-    {
-        if (_revitEvent == null || _revitBridge == null)
-            return "Revit bridge is not initialized.";
-
-        var result = _revitBridge.RunOnRevitThread(_revitEvent, RevitBridgeTimeoutMs, app =>
-        {
-            var doc = app.ActiveUIDocument?.Document;
-            if (doc == null)
-                return "No document open";
-
-            var title = doc.Title;
-            var path = string.IsNullOrEmpty(doc.PathName) ? "(unsaved)" : doc.PathName;
-            return $"Title: {title}\nPath: {path}";
-        });
-
-        return result ?? "Timed out waiting for Revit.";
-    }
-
-    static JObject ToolResult(string text, bool isError = false)
-    {
-        return new()
-        {
-            ["content"] = new JArray
-            {
-                new JObject
-                {
-                    ["type"] = "text",
-                    ["text"] = text,
-                },
-            },
-            ["isError"] = isError,
-        };
-    }
-
-    static bool IsAllowedOrigin(HttpListenerRequest request)
-    {
-        var origin = request.Headers["Origin"];
-        return string.IsNullOrEmpty(origin) || Uri.TryCreate(origin, UriKind.Absolute, out var uri) && uri.Host is "localhost" or "127.0.0.1";
-    }
-
-    static void WriteJson(HttpListenerResponse response, JToken payload)
-    {
-        var json = payload.ToString(Newtonsoft.Json.Formatting.None);
-        var bytes = Encoding.UTF8.GetBytes(json);
-        response.StatusCode = 200;
-        response.ContentType = "application/json; charset=utf-8";
-        response.ContentLength64 = bytes.Length;
-        response.OutputStream.Write(bytes, 0, bytes.Length);
-    }
-
-    sealed class RevitBridgeHandler : IExternalEventHandler
-    {
-        readonly ManualResetEventSlim _done = new(false);
-        readonly object _lock = new();
-        Func<UIApplication, string> _work;
-        string _result;
-        Exception _error;
-
-        public string RunOnRevitThread(ExternalEvent ev, int timeoutMs, Func<UIApplication, string> work)
-        {
-            lock (_lock)
-            {
-                _work = work;
-                _result = null;
-                _error = null;
-                _done.Reset();
-                ev.Raise();
-            }
-
-            if (!_done.Wait(timeoutMs))
-                return null;
-
-            lock (_lock)
-            {
-                return _error != null ? throw _error : _result;
-            }
-        }
-
-        public void Execute(UIApplication app)
-        {
-            try
-            {
-                Func<UIApplication, string> work;
-                lock (_lock)
-                    work = _work;
-
-                _result = work?.Invoke(app);
-            }
-            catch (Exception ex)
-            {
-                _error = ex;
-            }
-            finally
-            {
-                _done.Set();
-            }
-        }
-
-        public string GetName()
-        {
-            return "MCP Revit Bridge";
-        }
-    }
-
-    sealed class McpProtocolException(int code, string message) : Exception(message)
-    {
-        public int Code { get; } = code;
-    }
 }
