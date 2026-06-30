@@ -169,7 +169,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Views
                     {
                         t2.Start();
                         var options = new CopyPasteOptions();
-                        options.SetDuplicateTypeNamesHandler(new HideAndAcceptDuplicateTypeNamesHandler());
+                        options.SetDuplicateTypeNamesHandler(RevitToolkitCopyPaste.UseDestinationTypes);
                         var copiedElements = ElementTransformUtils.CopyElements(fromView, toCopy, toView,
                             RevitTransform.Identity, options);
                         var failureOptions = t2.GetFailureHandlingOptions();

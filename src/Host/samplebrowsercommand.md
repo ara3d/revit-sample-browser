@@ -12,7 +12,7 @@ Opens the Revit Sample Browser WinForms shell that lists and runs other sample c
 ## What it demonstrates
 
 - Reflecting `IExternalCommand` and `IExternalApplication` types into `SampleData` entries
-- `SampleBrowserMainForm` with `GenericExternalEventHandler` for safe Revit API execution from UI threads
+- `SampleBrowserMainForm` with `RevitActionEvent` (from Common `RevitToolkitEvents`) for safe Revit API execution from UI threads
 - `TraceListener` routing debug output to a RichTextBox log pane
 
 ## Prerequisites

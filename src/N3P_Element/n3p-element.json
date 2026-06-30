@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_element",
+  "description": "Demonstrates Nice3point Element extensions: ToElement, FindParameter, and CanBeDeleted on walls.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_Element",
+  "sample": "N3P_Element",
+  "source": "src/N3P_Element/N3P_Element.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Read-only Nice3point extension demo; results appear in the sample browser log."
+}

@@ -58,12 +58,6 @@ using Ara3D.RevitSampleBrowser.Common.Views;
 
 namespace Ara3D.RevitSampleBrowser.Common.Infrastructure
 {
-    public class HideAndAcceptDuplicateTypeNamesHandler : IDuplicateTypeNamesHandler
-    {
-        public DuplicateTypeAction OnDuplicateTypeNamesFound(DuplicateTypeNamesHandlerArgs args) =>
-            DuplicateTypeAction.UseDestinationTypes;
-    }
-
     public enum ValueType
     {
         General = 0,

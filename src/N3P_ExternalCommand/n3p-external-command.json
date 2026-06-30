@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_external_command",
+  "description": "Read-only demo of toolkit ExternalCommand base class and RevitContext.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_ExternalCommand",
+  "sample": "N3P_ExternalCommand",
+  "source": "src/N3P_ExternalCommand/N3P_ExternalCommand.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Read-only; reports RevitContext properties to the sample browser log."
+}

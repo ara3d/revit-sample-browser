@@ -75,6 +75,32 @@ namespace Ara3D.RevitSampleBrowser
                     return tbcPath;
             }
 
+            if (type.Namespace != null && type.Namespace.StartsWith("Ara3D.Bowerbird.RevitSamples"))
+            {
+                var suffix = type.Name.StartsWith("Cmd", StringComparison.Ordinal)
+                    ? type.Name.Substring(3)
+                    : type.Name;
+                var bbPath = Path.Combine(ThisFolderPath, "BB_" + suffix);
+                if (Directory.Exists(bbPath))
+                    return bbPath;
+            }
+
+            if (type.Namespace != null && type.Namespace.StartsWith("ExcelExporterImporter"))
+            {
+                var folder = type.Name switch
+                {
+                    "CmdExcelExport" => "B1_ExcelExport",
+                    "CmdExcelImport" => "B1_ExcelImport",
+                    _ => null
+                };
+                if (folder != null)
+                {
+                    var b1Path = Path.Combine(ThisFolderPath, folder);
+                    if (Directory.Exists(b1Path))
+                        return b1Path;
+                }
+            }
+
             return defaultPath;
         }
 

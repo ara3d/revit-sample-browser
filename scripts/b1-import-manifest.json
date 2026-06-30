@@ -1,0 +1,6 @@
+{
+  "source": "https://github.com/bimone/addins-excelexporterimporter.git",
+  "commit": "f063c528ab580f89ae7a28ffbbf81f18a08b4d90",
+  "target": "src/B1_Shared",
+  "filesCopied": 67
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_scopes",
+  "description": "Copies a wall using RevitToolkit failure and dialog suppression scopes from Common.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_Scopes",
+  "sample": "N3P_Scopes",
+  "source": "src/N3P_Scopes/N3P_Scopes.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Modifies the model by copying a wall; uses Common RevitToolkitScopes helpers."
+}

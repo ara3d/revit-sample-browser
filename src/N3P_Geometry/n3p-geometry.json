@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_geometry",
+  "description": "Reports bounding-box volume/centroid and solid tessellation flags via geometry extensions.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_Geometry",
+  "sample": "N3P_Geometry",
+  "source": "src/N3P_Geometry/N3P_Geometry.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Read-only Nice3point extension demo; results appear in the sample browser log."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_mep",
+  "description": "Inspects pipe HasOpenConnector using MEP plumbing extensions.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_Mep",
+  "sample": "N3P_Mep",
+  "source": "src/N3P_Mep/N3P_Mep.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Read-only Nice3point extension demo; results appear in the sample browser log."
+}

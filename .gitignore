@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Ara3D SDK vendor DLLs (sync via scripts/sync_ara3d_vendor.py)
+vendor/ara3d/*.dll

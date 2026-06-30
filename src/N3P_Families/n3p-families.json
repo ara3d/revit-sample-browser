@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_families",
+  "description": "Queries family symbols/instances and wall join relationships using modeling extensions.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_Families",
+  "sample": "N3P_Families",
+  "source": "src/N3P_Families/N3P_Families.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Read-only Nice3point extension demo; results appear in the sample browser log."
+}

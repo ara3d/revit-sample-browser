@@ -13,6 +13,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Autodesk.Revit.DB;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
@@ -26,14 +27,14 @@ namespace BuildingCoder
 {
     public static class JtElementIdExtensionMethods
         {
-            public static bool IsInvalid(this ElementId id)
+                                                            public static bool IsInvalid(this ElementId id)
             {
-                return ElementId.InvalidElementId == id;
+                return ElementIdExtensions.IsInvalid(id);
             }
     
             public static bool IsValid(this ElementId id)
             {
-                return !IsInvalid(id);
+                return ElementIdExtensions.IsValid(id);
             }
         }
 }

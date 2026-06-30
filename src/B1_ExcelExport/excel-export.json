@@ -1,0 +1,34 @@
+{
+  "name": "revit_export_schedules_to_excel",
+  "description": "Exports selected Revit schedules and standard tables to an Excel workbook for external editing or layout review.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "schedule_names": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Schedule view names to export; omit to require UI selection"
+      },
+      "include_standards": {
+        "type": "boolean",
+        "description": "When true, also export selected standard tables (line styles, object styles, etc.)"
+      },
+      "export_mode": {
+        "type": "string",
+        "enum": ["bidirectional", "layout_only"],
+        "description": "Bidirectional workbooks can be re-imported; layout_only preserves schedule appearance for viewing"
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Destination .xlsx file path"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CmdExcelExport",
+  "sample": "B1_ExcelExport",
+  "source": "src/B1_ExcelExport/CmdExcelExport.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Upstream BIM One add-in; selection and save dialogs are not yet parameterized for headless MCP use."
+}

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- Ara3D vendor DLL references — run scripts/sync_ara3d_vendor.py first -->
+  <ItemGroup>
+    <Reference Include="Ara3D.BimOpenGeometry">
+      <HintPath>..\vendor\ara3d\Ara3D.BimOpenGeometry.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.BimOpenSchema">
+      <HintPath>..\vendor\ara3d\Ara3D.BimOpenSchema.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.BimOpenSchema.IO">
+      <HintPath>..\vendor\ara3d\Ara3D.BimOpenSchema.IO.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Bowerbird">
+      <HintPath>..\vendor\ara3d\Ara3D.Bowerbird.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Collections">
+      <HintPath>..\vendor\ara3d\Ara3D.Collections.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.DataTable">
+      <HintPath>..\vendor\ara3d\Ara3D.DataTable.dll</HintPath>
+      <Private>true</Private>
+      <Aliases>ara3d_dt</Aliases>
+    </Reference>
+    <Reference Include="Ara3D.Domo">
+      <HintPath>..\vendor\ara3d\Ara3D.Domo.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Events">
+      <HintPath>..\vendor\ara3d\Ara3D.Events.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Extras">
+      <HintPath>..\vendor\ara3d\Ara3D.Extras.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Geometry">
+      <HintPath>..\vendor\ara3d\Ara3D.Geometry.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.IO.A3D">
+      <HintPath>..\vendor\ara3d\Ara3D.IO.A3D.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.IO.BFAST">
+      <HintPath>..\vendor\ara3d\Ara3D.IO.BFAST.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.IO.G3D">
+      <HintPath>..\vendor\ara3d\Ara3D.IO.G3D.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.IO.GltfExporter">
+      <HintPath>..\vendor\ara3d\Ara3D.IO.GltfExporter.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.IO.IfcParser">
+      <HintPath>..\vendor\ara3d\Ara3D.IO.IfcParser.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.IO.PLY">
+      <HintPath>..\vendor\ara3d\Ara3D.IO.PLY.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.IO.StepParser">
+      <HintPath>..\vendor\ara3d\Ara3D.IO.StepParser.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.IO.VIM">
+      <HintPath>..\vendor\ara3d\Ara3D.IO.VIM.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Logging">
+      <HintPath>..\vendor\ara3d\Ara3D.Logging.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Memory">
+      <HintPath>..\vendor\ara3d\Ara3D.Memory.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.MemoryMappedFiles">
+      <HintPath>..\vendor\ara3d\Ara3D.MemoryMappedFiles.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Models">
+      <HintPath>..\vendor\ara3d\Ara3D.Models.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.NarwhalDB">
+      <HintPath>..\vendor\ara3d\Ara3D.NarwhalDB.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.PropKit">
+      <HintPath>..\vendor\ara3d\Ara3D.PropKit.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.SceneEval">
+      <HintPath>..\vendor\ara3d\Ara3D.SceneEval.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.SDK">
+      <HintPath>..\vendor\ara3d\Ara3D.SDK.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Services">
+      <HintPath>..\vendor\ara3d\Ara3D.Services.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.Utils">
+      <HintPath>..\vendor\ara3d\Ara3D.Utils.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Ara3D.WorkItems">
+      <HintPath>..\vendor\ara3d\Ara3D.WorkItems.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="ClosedXML">
+      <HintPath>..\vendor\ara3d\ClosedXML.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="ClosedXML.Parser">
+      <HintPath>..\vendor\ara3d\ClosedXML.Parser.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\vendor\ara3d\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework">
+      <HintPath>..\vendor\ara3d\DocumentFormat.OpenXml.Framework.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="DuckDB.NET.Bindings">
+      <HintPath>..\vendor\ara3d\DuckDB.NET.Bindings.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="DuckDB.NET.Data">
+      <HintPath>..\vendor\ara3d\DuckDB.NET.Data.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="ExcelNumberFormat">
+      <HintPath>..\vendor\ara3d\ExcelNumberFormat.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="IronCompress">
+      <HintPath>..\vendor\ara3d\IronCompress.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration">
+      <HintPath>..\vendor\ara3d\Microsoft.Extensions.Configuration.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+      <HintPath>..\vendor\ara3d\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.FileExtensions">
+      <HintPath>..\vendor\ara3d\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Xml">
+      <HintPath>..\vendor\ara3d\Microsoft.Extensions.Configuration.Xml.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions">
+      <HintPath>..\vendor\ara3d\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Physical">
+      <HintPath>..\vendor\ara3d\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileSystemGlobbing">
+      <HintPath>..\vendor\ara3d\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives">
+      <HintPath>..\vendor\ara3d\Microsoft.Extensions.Primitives.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream">
+      <HintPath>..\vendor\ara3d\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Parquet">
+      <HintPath>..\vendor\ara3d\Parquet.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="RBush">
+      <HintPath>..\vendor\ara3d\RBush.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="SixLabors.Fonts">
+      <HintPath>..\vendor\ara3d\SixLabors.Fonts.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Snappier">
+      <HintPath>..\vendor\ara3d\Snappier.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="System.Drawing.Common">
+      <HintPath>..\vendor\ara3d\System.Drawing.Common.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging">
+      <HintPath>..\vendor\ara3d\System.IO.Packaging.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="ZstdSharp">
+      <HintPath>..\vendor\ara3d\ZstdSharp.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

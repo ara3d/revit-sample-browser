@@ -199,7 +199,7 @@ namespace Ara3D.RevitSampleBrowser.Common.Documents
                     {
                         t1.Start();
                         var options = new CopyPasteOptions();
-                        options.SetDuplicateTypeNamesHandler(new HideAndAcceptDuplicateTypeNamesHandler());
+                        options.SetDuplicateTypeNamesHandler(RevitToolkitCopyPaste.UseDestinationTypes);
                         copiedIds = ElementTransformUtils.CopyElements(fromDocument, elementIds, toDocument,
                             Transform.Identity, options);
                         var failureOptions = t1.GetFailureHandlingOptions();

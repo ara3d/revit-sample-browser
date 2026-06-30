@@ -1,0 +1,25 @@
+{
+  "name": "revit_import_schedules_from_excel",
+  "description": "Imports parameter updates from a bidirectional Excel export back into Revit schedules and supported standard tables.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "input_path": {
+        "type": "string",
+        "description": "Path to an .xlsx file previously exported in bidirectional mode"
+      },
+      "worksheet_names": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Optional subset of worksheets to import; omit to require UI selection"
+      }
+    },
+    "required": ["input_path"]
+  },
+  "commandClass": "CmdExcelImport",
+  "sample": "B1_ExcelImport",
+  "source": "src/B1_ExcelImport/CmdExcelImport.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Only files exported by this add-in in bidirectional mode are importable. Read-only Revit parameters cannot be updated."
+}

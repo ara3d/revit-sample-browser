@@ -6,15 +6,15 @@
 
 | Metric | Value |
 |--------|-------|
-| Total commands | 445 |
-| Command docs created | 445 / 445 |
-| MCP descriptors created | 287 / 287 |
+| Total commands | 460 |
+| Command docs created | 460 / 460 |
+| MCP descriptors created | 302 / 302 |
 | Last updated | 2026-06-30
 
 ### MCP rating distribution (preliminary)
 
-- **5/5**: 34 commands ? MCP JSON required
-- **4/5**: 90 commands ? MCP JSON required
+- **5/5**: 44 commands ? MCP JSON required
+- **4/5**: 94 commands ? MCP JSON required
 - **3/5**: 7 commands ? MCP JSON required
 - **2/5**: 127 commands
 - **1/5**: 31 commands
@@ -130,6 +130,18 @@ Columns: **Doc** = Task A ? **MCP** = Task B (`?` when rating is 1 or 2)
 | Doc | MCP | Class | Command doc | MCP descriptor | Source | Rating |
 |-----|-----|-------|-------------|----------------|--------|--------|
 | [x] | ? | `Command` | [AvoidObstruction/avoidobstruction.md](src/AvoidObstruction/avoidobstruction.md) | ? | `AvoidObstruction/Command.cs` | 2 |
+### B1_ExcelExport (1)
+
+| Doc | MCP | Class | Command doc | MCP descriptor | Source | Rating |
+|-----|-----|-------|-------------|----------------|--------|--------|
+| [x] | [x] | `CmdExcelExport` | [B1_ExcelExport/excel-export.md](src/B1_ExcelExport/excel-export.md) | [B1_ExcelExport/excel-export.json](src/B1_ExcelExport/excel-export.json) | `B1_ExcelExport/CmdExcelExport.cs` | 4 |
+
+### B1_ExcelImport (1)
+
+| Doc | MCP | Class | Command doc | MCP descriptor | Source | Rating |
+|-----|-----|-------|-------------|----------------|--------|--------|
+| [x] | [x] | `CmdExcelImport` | [B1_ExcelImport/excel-import.md](src/B1_ExcelImport/excel-import.md) | [B1_ExcelImport/excel-import.json](src/B1_ExcelImport/excel-import.json) | `B1_ExcelImport/CmdExcelImport.cs` | 4 |
+
 ### BeamAndSlabNewParameter (1)
 
 | Doc | MCP | Class | Command doc | MCP descriptor | Source | Rating |
@@ -1125,3 +1137,22 @@ Imported 152 commands from The Building Coder.
 | [x] | [x] | `CmdWallProfileArea` | [TBC_WallProfileArea/wall-profile-area.md](src/TBC_WallProfileArea/wall-profile-area.md) | [TBC_WallProfileArea/wall-profile-area.json](src/TBC_WallProfileArea/wall-profile-area.json) | `TBC_WallProfileArea/CmdWallProfileArea.cs` | 3 |
 | [x] | [x] | `CmdWallTopFaces` | [TBC_WallTopFaces/wall-top-faces.md](src/TBC_WallTopFaces/wall-top-faces.md) | [TBC_WallTopFaces/wall-top-faces.json](src/TBC_WallTopFaces/wall-top-faces.json) | `TBC_WallTopFaces/CmdWallTopFaces.cs` | 3 |
 | [x] | [x] | `CmdWindowHandle` | [TBC_WindowHandle/window-handle.md](src/TBC_WindowHandle/window-handle.md) | [TBC_WindowHandle/window-handle.json](src/TBC_WindowHandle/window-handle.json) | `TBC_WindowHandle/CmdWindowHandle.cs` | 3 |
+### N3P / Nice3point RevitExtensions (15)
+
+| Doc | MCP | Class | Command doc | MCP descriptor | Source | Rating |
+|-----|-----|-------|-------------|----------------|--------|--------|
+| [x] | [x] | `N3P_Application` | [N3P_Application/n3p-application.md](src/N3P_Application/n3p-application.md) | [N3P_Application/n3p-application.json](src/N3P_Application/n3p-application.json) | `N3P_Application/N3P_Application.cs` | 5 |
+| [x] | [x] | `N3P_Category` | [N3P_Category/n3p-category.md](src/N3P_Category/n3p-category.md) | [N3P_Category/n3p-category.json](src/N3P_Category/n3p-category.json) | `N3P_Category/N3P_Category.cs` | 5 |
+| [x] | [x] | `N3P_Collector` | [N3P_Collector/n3p-collector.md](src/N3P_Collector/n3p-collector.md) | [N3P_Collector/n3p-collector.json](src/N3P_Collector/n3p-collector.json) | `N3P_Collector/N3P_Collector.cs` | 5 |
+| [x] | [x] | `N3P_Display` | [N3P_Display/n3p-display.md](src/N3P_Display/n3p-display.md) | [N3P_Display/n3p-display.json](src/N3P_Display/n3p-display.json) | `N3P_Display/N3P_Display.cs` | 5 |
+| [x] | [x] | `N3P_Document` | [N3P_Document/n3p-document.md](src/N3P_Document/n3p-document.md) | [N3P_Document/n3p-document.json](src/N3P_Document/n3p-document.json) | `N3P_Document/N3P_Document.cs` | 5 |
+| [x] | [x] | `N3P_Element` | [N3P_Element/n3p-element.md](src/N3P_Element/n3p-element.md) | [N3P_Element/n3p-element.json](src/N3P_Element/n3p-element.json) | `N3P_Element/N3P_Element.cs` | 5 |
+| [x] | [x] | `N3P_Families` | [N3P_Families/n3p-families.md](src/N3P_Families/n3p-families.md) | [N3P_Families/n3p-families.json](src/N3P_Families/n3p-families.json) | `N3P_Families/N3P_Families.cs` | 4 |
+| [x] | [x] | `N3P_Geometry` | [N3P_Geometry/n3p-geometry.md](src/N3P_Geometry/n3p-geometry.md) | [N3P_Geometry/n3p-geometry.json](src/N3P_Geometry/n3p-geometry.json) | `N3P_Geometry/N3P_Geometry.cs` | 5 |
+| [x] | [x] | `N3P_Mep` | [N3P_Mep/n3p-mep.md](src/N3P_Mep/n3p-mep.md) | [N3P_Mep/n3p-mep.json](src/N3P_Mep/n3p-mep.json) | `N3P_Mep/N3P_Mep.cs` | 4 |
+| [x] | [x] | `N3P_ModelInterop` | [N3P_ModelInterop/n3p-model-interop.md](src/N3P_ModelInterop/n3p-model-interop.md) | [N3P_ModelInterop/n3p-model-interop.json](src/N3P_ModelInterop/n3p-model-interop.json) | `N3P_ModelInterop/N3P_ModelInterop.cs` | 5 |
+| [x] | [x] | `N3P_Parameters` | [N3P_Parameters/n3p-parameters.md](src/N3P_Parameters/n3p-parameters.md) | [N3P_Parameters/n3p-parameters.json](src/N3P_Parameters/n3p-parameters.json) | `N3P_Parameters/N3P_Parameters.cs` | 5 |
+| [x] | [x] | `N3P_Structure` | [N3P_Structure/n3p-structure.md](src/N3P_Structure/n3p-structure.md) | [N3P_Structure/n3p-structure.json](src/N3P_Structure/n3p-structure.json) | `N3P_Structure/N3P_Structure.cs` | 4 |
+| [x] | [x] | `N3P_UIApplication` | [N3P_UIApplication/n3p-uiapplication.md](src/N3P_UIApplication/n3p-uiapplication.md) | [N3P_UIApplication/n3p-uiapplication.json](src/N3P_UIApplication/n3p-uiapplication.json) | `N3P_UIApplication/N3P_UIApplication.cs` | 4 |
+| [x] | [x] | `N3P_Unit` | [N3P_Unit/n3p-unit.md](src/N3P_Unit/n3p-unit.md) | [N3P_Unit/n3p-unit.json](src/N3P_Unit/n3p-unit.json) | `N3P_Unit/N3P_Unit.cs` | 5 |
+| [x] | [x] | `N3P_View` | [N3P_View/n3p-view.md](src/N3P_View/n3p-view.md) | [N3P_View/n3p-view.json](src/N3P_View/n3p-view.json) | `N3P_View/N3P_View.cs` | 5 |

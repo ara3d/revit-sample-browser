@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -20,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser
     {
         public SampleBrowserMainForm Form { get; private set; }
         public ExternalCommandData CommandData { get; private set; }
-        public GenericExternalEventHandler EventHandler { get; } = new GenericExternalEventHandler();
+        public RevitActionEvent EventHandler { get; } = new RevitActionEvent();
         public LoggingListener CurrentListener { get; set; }
 
         public class LoggingListener : TraceListener

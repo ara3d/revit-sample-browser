@@ -24,7 +24,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Debug|Any CPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;REVIT2021</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -33,7 +33,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release|Any CPU'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;REVIT2021</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -46,7 +46,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;REVIT2021</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
@@ -57,7 +57,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;REVIT2021</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -72,7 +72,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;REVIT2021</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -83,7 +83,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;REVIT2021</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -133,6 +133,7 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <Import Project="..\vendor\ara3d\Ara3d.References.props" />
   <ItemGroup>
     <Content Include="APIAppStartup\Resources\test.rvt-Revit_black-93694.bmp" />
     <Content Include="AppearanceAssetEditing\Resources\element_select.ico" />
@@ -293,7 +294,32 @@
   <ItemGroup>
     <Compile Include="Common\**\*.cs" />
     <Compile Include="TBC_*\**\*.cs" Exclude="TBC_Shared\**" />
+    <Compile Include="N3P_*\**\*.cs" />
     <EmbeddedResource Include="TBC_*\**\*.resx" Exclude="TBC_Shared\**" />
+    <Compile Include="BB_Shared\**\*.cs" />
+    <Compile Include="BB_*\**\*.cs" Exclude="BB_Shared\**" />
+    <EmbeddedResource Include="BB_*\**\*.resx" Exclude="BB_Shared\**" />
+    <Compile Include="B1_Shared\**\*.cs" />
+    <Compile Include="B1_ExcelExport\**\*.cs" />
+    <Compile Include="B1_ExcelImport\**\*.cs" />
+    <EmbeddedResource Include="B1_Shared\**\*.resx" />
+    <Page Include="B1_Shared\Views\ExportWindow.xaml" />
+    <Page Include="B1_Shared\Views\ImportWindow.xaml" />
+    <Page Include="B1_Shared\Views\ProgressWindow.xaml" />
+    <Page Include="B1_Shared\Resources\Styles.xaml" />
+    <Resource Include="B1_Shared\Resources\iconapp.ico" />
+    <Resource Include="B1_Shared\Resources\logo.png" />
+    <Resource Include="B1_Shared\Resources\IconUniModeMiniBlue.png" />
+    <Resource Include="B1_Shared\Resources\IconBiModeMiniBlue.png" />
+    <Content Include="B1_Shared\ParametersSettings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="B1_Shared\MaterialAssetsSettings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="B1_Shared\Resources\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Revit2025Aliases.cs" />
 
 
@@ -811,7 +837,6 @@
     <Compile Include="ExternalCommand\RevitAddInUtilitySample\RevitAddInUtilityForm.Designer.cs">
       <DependentUpon>RevitAddInUtilityForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GenericExternalEventHandler.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceDBServer\Application.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceDBServer\SampleExternalResourceDBServer.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceDBServer\ServerInterfaceExtensionsForRevitLinks.cs" />
@@ -2666,7 +2691,16 @@
     <Folder Include="VisibilityControl\Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="4.5.3.2" />
+    <PackageReference Include="EPPlusEnumerable" Version="1.1.0" />
+    <PackageReference Include="log4net" Version="2.0.17" />
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+    <PackageReference Include="Nice3point.Revit.Extensions" Version="2025.*" />
+    <PackageReference Include="Nice3point.Revit.Toolkit" Version="2025.*" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="QuantumConcepts.Formats.STL" Version="1.1.0" />
+    <PackageReference Include="SimMetrics.Net" Version="1.0.5" />
+    <PackageReference Include="TrieNet.Core" Version="1.0.4" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />

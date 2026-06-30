@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_collector",
+  "description": "Demonstrates fluent FilteredElementCollector extensions such as CollectElements, OfClass, OfClasses, and Rooms.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_Collector",
+  "sample": "N3P_Collector",
+  "source": "src/N3P_Collector/N3P_Collector.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Read-only Nice3point extension demo; results appear in the sample browser log."
+}

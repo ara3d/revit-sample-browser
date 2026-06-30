@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_application",
+  "description": "Logs optional Revit module availability flags and AsControlledApplication.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_Application",
+  "sample": "N3P_Application",
+  "source": "src/N3P_Application/N3P_Application.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Read-only Nice3point extension demo; results appear in the sample browser log."
+}

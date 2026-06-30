@@ -1,0 +1,163 @@
+[
+  {
+    "className": "CommandBackgroundExportRooms",
+    "folder": "BB_BackgroundExportRooms",
+    "slug": "background-export-rooms",
+    "sourceFile": "CommandBackgroundExportRooms.cs",
+    "cmdClass": "CmdBackgroundExportRooms"
+  },
+  {
+    "className": "CommandBimOpenSchemaVersion1",
+    "folder": "BB_BimOpenSchemaVersion1",
+    "slug": "bim-open-schema-version1",
+    "sourceFile": "CommandBimOpenSchemaVersion1.cs",
+    "cmdClass": "CmdBimOpenSchemaVersion1"
+  },
+  {
+    "className": "CommandBimOpenSchemaVersion2",
+    "folder": "BB_BimOpenSchemaVersion2",
+    "slug": "bim-open-schema-version2",
+    "sourceFile": "CommandBimOpenSchemaVersion2.cs",
+    "cmdClass": "CmdBimOpenSchemaVersion2"
+  },
+  {
+    "className": "CommandBuildFloorPlan",
+    "folder": "BB_BuildFloorPlan",
+    "slug": "build-floor-plan",
+    "sourceFile": "CommandBuildFloorPlan.cs",
+    "cmdClass": "CmdBuildFloorPlan"
+  },
+  {
+    "className": "CommandColladaExport",
+    "folder": "BB_ColladaExport",
+    "slug": "collada-export",
+    "sourceFile": "CommandColladaExport.cs",
+    "cmdClass": "CmdColladaExport"
+  },
+  {
+    "className": "Colorizer",
+    "folder": "BB_Colorizer",
+    "slug": "colorizer",
+    "sourceFile": "Colorizer.cs",
+    "cmdClass": "CmdColorizer"
+  },
+  {
+    "className": "CommandCurrentDocument",
+    "folder": "BB_CurrentDocument",
+    "slug": "current-document",
+    "sourceFile": "CommandCurrentDocument.cs",
+    "cmdClass": "CmdCurrentDocument"
+  },
+  {
+    "className": "CommandDirectContextDemoArrow",
+    "folder": "BB_DirectContextDemoArrow",
+    "slug": "direct-context-demo-arrow",
+    "sourceFile": "CommandDirectContextDemoArrow.cs",
+    "cmdClass": "CmdDirectContextDemoArrow"
+  },
+  {
+    "className": "CommandDirectContextPlyLoader",
+    "folder": "BB_DirectContextPlyLoader",
+    "slug": "direct-context-ply-loader",
+    "sourceFile": "CommandDirectContextPlyLoader.cs",
+    "cmdClass": "CmdDirectContextPlyLoader"
+  },
+  {
+    "className": "CommandElectricalFixtures",
+    "folder": "BB_ElectricalFixtures",
+    "slug": "electrical-fixtures",
+    "sourceFile": "CommandElectricalFixtures.cs",
+    "cmdClass": "CmdElectricalFixtures"
+  },
+  {
+    "className": "CommandExportAllJson",
+    "folder": "BB_ExportAllJson",
+    "slug": "export-all-json",
+    "sourceFile": "CommandExportAllJson.cs",
+    "cmdClass": "CmdExportAllJson"
+  },
+  {
+    "className": "CommandExportPdfOverlay",
+    "folder": "BB_ExportPdfOverlay",
+    "slug": "export-pdf-overlay",
+    "sourceFile": "CommandExportPdfOverlay.cs",
+    "cmdClass": "CmdExportPdfOverlay"
+  },
+  {
+    "className": "CommandExportPdfs",
+    "folder": "BB_ExportPdfs",
+    "slug": "export-pdfs",
+    "sourceFile": "CommandExportPdfs.cs",
+    "cmdClass": "CmdExportPdfs"
+  },
+  {
+    "className": "CommandExportSchedules",
+    "folder": "BB_ExportSchedules",
+    "slug": "export-schedules",
+    "sourceFile": "CommandExportSchedules.cs",
+    "cmdClass": "CmdExportSchedules"
+  },
+  {
+    "className": "CommandExternalEventDemo",
+    "folder": "BB_ExternalEventDemo",
+    "slug": "external-event-demo",
+    "sourceFile": "CommandExternalEventDemo.cs",
+    "cmdClass": "CmdExternalEventDemo"
+  },
+  {
+    "className": "CommandFamilyInstanceData",
+    "folder": "BB_FamilyInstanceData",
+    "slug": "family-instance-data",
+    "sourceFile": "CommandFamilyInstanceData.cs",
+    "cmdClass": "CmdFamilyInstanceData"
+  },
+  {
+    "className": "CommandIdlingDemo",
+    "folder": "BB_IdlingDemo",
+    "slug": "idling-demo",
+    "sourceFile": "CommandIdlingDemo.cs",
+    "cmdClass": "CmdIdlingDemo"
+  },
+  {
+    "className": "CommandListRooms",
+    "folder": "BB_ListRooms",
+    "slug": "list-rooms",
+    "sourceFile": "CommandListRooms.cs",
+    "cmdClass": "CmdListRooms"
+  },
+  {
+    "className": "CommandMcpServer",
+    "folder": "BB_McpServer",
+    "slug": "mcp-server",
+    "sourceFile": "CommandMcpServer.cs",
+    "cmdClass": "CmdMcpServer"
+  },
+  {
+    "className": "CommandSaveCurrentViewAsPng",
+    "folder": "BB_SaveCurrentViewAsPng",
+    "slug": "save-current-view-as-png",
+    "sourceFile": "CommandSaveCurrentViewAsPng.cs",
+    "cmdClass": "CmdSaveCurrentViewAsPng"
+  },
+  {
+    "className": "CommandSelectedElementsJson",
+    "folder": "BB_SelectedElementsJson",
+    "slug": "selected-elements-json",
+    "sourceFile": "CommandSelectedElementsJson.cs",
+    "cmdClass": "CmdSelectedElementsJson"
+  },
+  {
+    "className": "CommandSelectedItemGeometry",
+    "folder": "BB_SelectedItemGeometry",
+    "slug": "selected-item-geometry",
+    "sourceFile": "CommandSelectedItemGeometry.cs",
+    "cmdClass": "CmdSelectedItemGeometry"
+  },
+  {
+    "className": "CommandUpgradeFiles",
+    "folder": "BB_UpgradeFiles",
+    "slug": "upgrade-files",
+    "sourceFile": "CommandUpgradeFiles.cs",
+    "cmdClass": "CmdUpgradeFiles"
+  }
+]

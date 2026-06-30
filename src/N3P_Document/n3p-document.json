@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_document",
+  "description": "Reads document Version, CheckAllFamilies, and global parameter counts.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_Document",
+  "sample": "N3P_Document",
+  "source": "src/N3P_Document/N3P_Document.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Read-only Nice3point extension demo; results appear in the sample browser log."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_n3p_external_event",
+  "description": "Modeless dialog that tags selected elements via RevitToolkitEvents from Common.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "N3P_ExternalEvent",
+  "sample": "N3P_ExternalEvent",
+  "source": "src/N3P_ExternalEvent/N3P_ExternalEvent.cs",
+  "mcpRating": 3,
+  "requiresUi": true,
+  "notes": "Requires user to select elements and click the modeless dialog button."
+}
