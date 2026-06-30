@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
                 new ElementCategoryFilter(BuiltInCategory.OST_RoofSoffit));
 
             // Calculator for room/space geometry.
-            var calculator = new SpatialElementGeometryCalculator(m_document);
+            var calculator = new Autodesk.Revit.DB.SpatialElementGeometryCalculator(m_document);
 
             // Stores the resulting room->roof relationships
             var roomsAndRoofs = new Dictionary<Element, List<ElementId>>();

@@ -1,0 +1,34 @@
+{
+  "name": "revit_create_room_cropped_plan_views",
+  "description": "Duplicates each level's associated plan view per room and sets a crop region offset to the room boundary by wall thickness.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "level_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Optional subset of level element ids to process"
+      },
+      "room_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Optional subset of room element ids to process"
+      },
+      "wall_offset_factor": {
+        "type": "number",
+        "description": "Multiplier applied to wall width when computing outward offset (default uses wall width plus 0.1 ft padding)"
+      },
+      "view_name_suffix": {
+        "type": "string",
+        "description": "Optional suffix appended to generated view names instead of the default date stamp"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "CropViewToRoom",
+  "source": "src/CropViewToRoom/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Optional filters and naming parameters are not yet implemented in the command. Re-running may fail when duplicate view names already exist."
+}

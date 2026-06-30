@@ -1,0 +1,11 @@
+{
+  "name": "revit_stl_import_set_mode_any_geometry",
+  "description": "Sets STL import TessellatedShapeBuilder mode to AnyGeometry with Mesh fallback.",
+  "arguments": { "type": "object", "properties": {}, "required": [] },
+  "commandClass": "SetToAnyGeometryCommand",
+  "sample": "StlImport",
+  "source": "src/StlImport/StlImportPropertiesCommands.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Updates shared StlImportProperties; run before StlImportCommand."
+}

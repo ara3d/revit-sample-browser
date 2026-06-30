@@ -1,0 +1,29 @@
+{
+  "name": "revit_create_room_volume_direct_shapes",
+  "description": "Creates Generic Model DirectShape volumes from room ClosedShell geometry and stores room parameters as JSON in Comments.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "level_id": {
+        "type": "integer",
+        "description": "Optional level filter for rooms to process"
+      },
+      "room_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Optional subset of room element ids to process"
+      },
+      "overwrite_existing": {
+        "type": "boolean",
+        "description": "When true, delete prior DirectShapes whose ApplicationDataId matches a room UniqueId before creating new ones"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "RoomVolumeDirectShape",
+  "source": "src/RoomVolumeDirectShape/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Returns created DirectShape element ids; overwrite_existing is not yet implemented in the command."
+}

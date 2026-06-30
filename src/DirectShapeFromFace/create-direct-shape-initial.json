@@ -1,0 +1,20 @@
+{
+  "name": "revit_create_direct_shape_from_face_initial",
+  "description": "Creates a Generic Model DirectShape from a picked element face using the initial tessellated shape builder approach with a LocationPoint offset.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "face_reference": {
+        "type": "string",
+        "description": "Stable representation of the face to convert (interactive pick when omitted)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CreateDirectShapeInitialCommand",
+  "sample": "DirectShapeFromFace",
+  "source": "src/DirectShapeFromFace/CreateDirectShapeInitialCommand.cs",
+  "mcpRating": 3,
+  "requiresUi": true,
+  "notes": "Requires interactive face pick; LocationPoint offset may misplace geometry on non-point-based elements."
+}

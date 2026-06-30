@@ -1,0 +1,21 @@
+{
+  "name": "revit_list_path_of_travel_doors",
+  "description": "Lists door marks crossed by path-of-travel elements in traversal order.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "path_of_travel_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Element ids of path-of-travel elements to analyze"
+      }
+    },
+    "required": ["path_of_travel_ids"]
+  },
+  "commandClass": "Command",
+  "sample": "PathOfTravelDoors",
+  "source": "src/PathOfTravelDoors/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Current implementation uses interactive pick or pre-selection and requires an active floor plan view plus a 3D view for ReferenceIntersector. Refactor to accept path_of_travel_ids for headless MCP execution."
+}

@@ -1,0 +1,24 @@
+{
+  "name": "revit_cable_tray_elbow_fitting",
+  "description": "Creates a multi-segment cable tray run and inserts an elbow fitting between the first horizontal and vertical segments.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "cable_tray_type_name": {
+        "type": "string",
+        "description": "Cable tray type name (default: Default)"
+      },
+      "level_name": {
+        "type": "string",
+        "description": "Level name (default: Level 1)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CmdCableTray",
+  "sample": "CableTraySample",
+  "source": "src/CableTraySample/CmdCableTray.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Uses hard-coded world coordinates from the upstream forum repro case. Requires MEP cable tray types and Level 1 in the project."
+}

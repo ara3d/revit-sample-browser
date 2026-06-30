@@ -1,0 +1,20 @@
+{
+  "name": "revit_conduit_elbow_fitting",
+  "description": "Creates two conduit segments and inserts an elbow fitting between their open connectors.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "level_name": {
+        "type": "string",
+        "description": "Level name (default: Level 1)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CmdConduit",
+  "sample": "CableTraySample",
+  "source": "src/CableTraySample/CmdConduit.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Uses hard-coded coordinates and the first available ConduitType. Requires Level 1 in the project."
+}

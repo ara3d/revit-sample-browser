@@ -1,0 +1,29 @@
+{
+  "name": "revit_export_wall_parts_sat",
+  "description": "Export selected wall parts from a 3D parts-only view to individual SAT files for CNC fabrication.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "part_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Element ids of wall-derived Part elements to export"
+      },
+      "output_folder": {
+        "type": "string",
+        "description": "Directory path for exported SAT files"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "Optional 3D view id; defaults to the active view"
+      }
+    },
+    "required": ["part_ids", "output_folder"]
+  },
+  "commandClass": "CmdSat",
+  "sample": "ExportCncFab",
+  "source": "src/ExportCncFab/Commands.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Delegates to CmdDxf.Execute2 with SATExportOptions. Same UI refactoring needs as cmddxf."
+}

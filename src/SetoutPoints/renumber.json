@@ -1,0 +1,25 @@
+{
+  "name": "revit_renumber_setout_points",
+  "description": "Renumber major setout point instances with an SOP prefix starting at one.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "prefix": {
+        "type": "string",
+        "description": "Label prefix for renumbered points (default: SOP )"
+      },
+      "host_element_ids": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Optional filter to renumber only points hosted on these elements"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CmdRenumber",
+  "sample": "SetoutPoints",
+  "source": "src/SetoutPoints/CmdRenumber.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Targets family instances of the major SetoutPoint symbol. No-op with a dialog if the family is not loaded."
+}

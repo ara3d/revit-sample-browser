@@ -1,0 +1,24 @@
+{
+  "name": "revit_cable_tray_elbow_rotate",
+  "description": "Creates two cable tray segments, rotates the second about the shared endpoint, and inserts an elbow fitting.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "cable_tray_type_name": {
+        "type": "string",
+        "description": "Cable tray type name (default: default)"
+      },
+      "level_name": {
+        "type": "string",
+        "description": "Level name (default: Level 1)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CmdCableTray3",
+  "sample": "CableTraySample",
+  "source": "src/CableTraySample/CmdCableTray3.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Rotates the second tray 90 degrees about Z at the junction before connecting. Uses cable tray type name 'default' (case as in upstream sample)."
+}

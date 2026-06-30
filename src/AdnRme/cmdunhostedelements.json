@@ -1,0 +1,15 @@
+{
+  "name": "revit_list_unhosted_mep_elements",
+  "description": "List MEP family instances that are not hosted to a valid host element.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdUnhostedElements",
+  "sample": "AdnRme",
+  "source": "src/AdnRme/CmdUnhostedElements.cs",
+  "mcpRating": 3,
+  "requiresUi": false,
+  "notes": "Read-only scan; results written to debug output. Could return element id list for MCP use."
+}

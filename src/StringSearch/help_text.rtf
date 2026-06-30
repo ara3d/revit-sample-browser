@@ -1,0 +1,78 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang2057\deflangfe2057{\fonttbl{\f0\froman\fprq2\fcharset0 Cambria;}{\f1\froman\fprq2\fcharset0 Times New Roman;}{\f2\fswiss\fprq2\fcharset0 Calibri;}{\f3\froman\fprq2\fcharset2 Symbol;}}
+{\stylesheet{ Normal;}{\s1 heading 1;}{\s2 heading 2;}{\s3 heading 3;}}
+{\*\generator Msftedit 5.41.15.1515;}\viewkind4\uc1\pard\keepn\nowidctlpar\s1\sb240\sa60\kerning32\b\f0\fs32 Revit String Search Help\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\kerning0\fs24 Description\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 Search Revit project elements and their parameter values for a given string.\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 System Requirements\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 This plugin has been tested with Revit Architecture 2011 and 2012, and requires the .NET Framework 3.5.\f1\par
+\f2 A pre-built version of the plug-in has been provided which works on both Revit 2011 and 2012, and on both the 32- and 64-bit Windows systems.\f1\par
+\f2 It has not been tested with all Revit verticals, but should work fine (see "Feedback", below, otherwise).\f1\par
+\f2 The source code has been provided as a Visual Studio 2008 C# project. It is not required to run the plugin.\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Installation\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 The following steps are for using the plugin with Revit 2012. If you are using Revit 2011, then please replace "2012" by "2011" in the paths listed below.\f1\par
+\f2 1. If you are using Vista or Windows 7, first check whether the zip file needs to be unblocked. Right-click on the zip file and select "Properties". If you see an "Unblock" button, then click it. \f1\par
+\f2 2. Copy the plugin module "ADNPlugin-StringSearch.dll" and the add-in manifest file "ADNPlugin-StringSearch.addin" to one of the following locations: \f1\par
+\pard\keepn\nowidctlpar\s3\sb240\sa60\ul\f2 For Windows XP:\f1\par
+\pard\nowidctlpar\sb120\ulnone\f2   C:\\Documents and Settings\\<your login>\\Application Data\\Autodesk\\Revit\\Addins\\2012\f1\par
+\f2 or \f1\par
+\f2   C:\\Documents and Settings\\All Users\\Application Data\\Autodesk\\Revit\\Addins\\2012\f1\par
+\f2 The first location will make the plugin available for your use only, while the second is for all users of your computer.\f1\par
+\f2 ** Note: The first location is recommended if you have security permission issues (e.g., when UAC is turned on).\f1\par
+\pard\keepn\nowidctlpar\s3\sb240\sa60\ul\f2 For Vista/Windows 7:\f1\par
+\pard\nowidctlpar\sb120\ulnone\f2   C:\\Users\\<your login>\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2012\f1\par
+\f2 or \f1\par
+\f2   C:\\ProgramData\\Autodesk\\Revit\\Addins\\2012\f1\par
+\f2 The first location will make the plugin available for your use only, while the second is for all users of your computer.\f1\par
+\f2 ** Note: The first location is recommended if you have security permission issues (e.g., when UAC is turned on).\f1\par
+\f2 If you decide on a different location for the DLL, please modify the following line in the add-in manifest file "ADNPlugin-StringSearch.addin" to match your desired location:\f1\par
+\f2   <Assembly>.\\ADNPlugin-StringSearch.dll</Assembly>\f1\par
+\f2 3. Once installed, the "String Search" command becomes available in Revit.  Go to the "Add-Ins" tab > "String Search" panel. It shows the "String Search" button to launch the command.\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Usage\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 In Revit, click "Add-Ins" > "String Search" panel > "String Search" to launch the command.\f1\par
+\f2 In the dialogue that appears, you can type in the search string in the 'Find what' text box. \f1\par
+\f2 Click 'OK'. The command will search for the given string on all standard and user parameters of all elements in the current view.\f1\par
+\f2 All occurrences of the search string are listed in a data grid view in a modeless navigator dialogue. Double click on a row in the navigator to zoom to the element.\f1\par
+\f2 A log file of the search operation and its results is created in your temporary directory. To view the log file, right click on the search form and select 'Display Log File'.\f1\par
+\f2 The string matching options and the elements and parameters to search can be modified as follows.\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Options\f2\par
+\pard\nowidctlpar\sb120\b0\fs22 Category: Limit the search to elements belonging to a specific category. All other categories will be skipped. Specify an asterisk '*' to search all categories. This is the default setting.\f1\par
+\f2 Parameter name: You can specify the name of a specific parameter to search in. All other parameters will be skipped. Specify an asterisk '*' to search all parameters. This is the default setting.\f1\par
+\f2 Find options: Match case and match whole parameter limit the string pattern matching to more specific cases, i.e. the upper and lower case of each character must match, and the specified search string must match the entire parameter value.\f1\par
+\f2 Element selection: You can search either the currently selected element set, all elements in the current view, or all elements in the entire project. The latter can be slow. \f1\par
+\f2 Instances versus Types and Symbols: You can specify whether to search in the BIM elements themselves, such as walls and family instances, or in the element types, such as wall types and family symbols. When searching element types, there is no way to limit the search to selected elements (because they cannot be selected) or to a view (because they are not displayed graphically). By default, all elements in the current view are searched. Searching types is not additional to instances, it is complementary. You can search either element types (derived from ElementType in the API) or instances, but not both at once.\par
+Parameter selection: You can select whether only standard built-in Revit parameters are searched, or user-defined family and shared parameters, or both.\f1\par
+\f2 Advanced: You have the option of using a regular expression to specify the search string. This option is intended for users with advanced programming knowledge and is not suited for non-programmers. The .NET Regex library is used for this. For more detail about regular expression, please refer to the following link to a 'cheat sheet':\f1\par
+\f2   http://regexlib.com/cheatsheet.aspx  \f1\par
+\f2 You can also search in BuiltInParameters, which are only visible through the Revit API. Again, this option is intended for users with advanced programming knowledge and is not suited for others. With this option, the parameter selection option is ignored and the 'Parameter name' setting switches to a list of all built-in parameters. Again, you can search in all of them using the asterisk '*', or pick a specific one. Searching all built-in parameters across the entire project can be extremely slow.\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Examples\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 To search for a string 'abc' in all parameter values of all elements in the current view, simply type in 'abc' as the search string and hit OK. If any occurrences are found, they are listed in the modeless navigator window. You can continue working in Revit as normal. If you double click an entry in the navigator, the Revit screen will zoom in to the selected element and highlight it.\f1\par
+\f2 To search for all structurally non-bearing walls, you might make use of the built-in parameter option as follows: \f1\par
+\pard\nowidctlpar\fi-357\li714\sb120\f3\'b7\tab\f2 Enter the search string 'Non-bearing'\par
+\pard\nowidctlpar\fi-360\li720\f3\'b7\tab\f2 Under Category, select Walls\par
+\f3\'b7\tab\f2 Under Advanced, select 'Search BuiltInParameters'\f1\par
+\f3\'b7\tab\f2 Under Built-in parameter, select WALL_STRUCTURAL_USAGE_TEXT_PARAM\f1\par
+\pard\nowidctlpar\sb120\f2 Click OK and examine the results in the navigator.\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Uninstallation\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 Simply removing "ADNPlugin-StringSearch.addin" file from your installation folder will uninstall the plugin. \f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Limitations and Known Issues\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 Only parameter values are searched, no other element properties. Therefore, for instance, if you have a text note element displaying the string "REVIEW" on the screen, this tool will not pick it up, since it is not contained in any element parameter. This is the expected and intended behaviour.\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Author\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 This plugin was written by Jeremy Tammik of the Autodesk Developer Technical Services team. \f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Acknowledgements\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 Many thanks to Saikat Bhattacharya for his careful review and many valuable suggestions!\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Further Reading\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 For more information on developing with Revit, please visit the Revit Developer Center at http://www.autodesk.com/developrevit.\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Feedback\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 Email us at labs.plugins@autodesk.com with feedback or requests for enhancements.\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Release History\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 2011-11-01 2012.0.1\f1 .0\f2  \endash  First public release\f1 .\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 To do\f1\par
+\pard\nowidctlpar\fi-360\li720\b0\f3\fs22\'b7\tab\f2 Implement a progress bar for long operations (e.g. searching all built-in parameters on all elements).\par
+\f3\'b7\tab\f2 Support for search and replace.\f1\par
+\pard\keepn\nowidctlpar\s2\sb240\sa60\b\f0\fs24 Copyright Notice\f1\par
+\pard\nowidctlpar\sb120\b0\f2\fs22 (C) Copyright 2011-2014 by Autodesk, Inc. \f1\par
+\f2 Permission to use, copy, modify, and distribute this software in object code form for any purpose and without fee is hereby granted, provided that the above copyright notice appears in all copies and that both that copyright notice and the limited warranty and restricted rights notice below appear in all supporting documentation.\f1\par
+\f2 AUTODESK PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK, INC. DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE UNINTERRUPTED OR ERROR FREE.\f1\par
+\par
+}
+ 

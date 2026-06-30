@@ -1,0 +1,11 @@
+{
+  "name": "revit_stl_import_set_data_type_binary",
+  "description": "Sets STL file reader to binary format.",
+  "arguments": { "type": "object", "properties": {}, "required": [] },
+  "commandClass": "SetDataTypeToBinaryCommand",
+  "sample": "StlImport",
+  "source": "src/StlImport/StlImportPropertiesCommands.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Updates shared StlImportProperties; run before StlImportCommand."
+}

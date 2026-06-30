@@ -1,0 +1,24 @@
+{
+  "name": "revit_cable_tray_elbow_two_segment",
+  "description": "Creates two separated cable tray segments and connects them with an elbow fitting.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "cable_tray_type_name": {
+        "type": "string",
+        "description": "Cable tray type name (default: Default)"
+      },
+      "level_name": {
+        "type": "string",
+        "description": "Level name (default: Level 1)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CmdCableTray2",
+  "sample": "CableTraySample",
+  "source": "src/CableTraySample/CmdCableTray2.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Uses hard-coded coordinates. Segments are not co-located; this variant explores elbow insertion on separated tray runs."
+}

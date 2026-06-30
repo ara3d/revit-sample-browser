@@ -1,0 +1,30 @@
+{
+  "name": "revit_create_and_print_sheets_batch",
+  "description": "Batch-processes selected HVAC fabrication duct parts: for each matching product code, creates a sheet with right, front, top, and isometric views, exports PDF and JPG, then rolls back the transaction so nothing is committed.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "FabricationPart element ids; when omitted, uses pre-selection or interactive pick"
+      },
+      "product_codes": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Fabrication product codes to process (defaults to built-in list in Command)"
+      },
+      "output_directory": {
+        "type": "string",
+        "description": "Directory for PDF and image export (default C:/tmp)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "CreateAndPrintSheetsAndViews",
+  "source": "src/CreateAndPrintSheetsAndViews/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": true,
+  "notes": "Requires fabrication ductwork with matching product codes and title block 'AIR CRO - Plano DIN A4'. Uses DialogBoxShowing to auto-accept temporary hide/isolate export prompt. Each part is processed in a rolled-back transaction."
+}

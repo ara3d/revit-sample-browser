@@ -1,0 +1,34 @@
+{
+  "name": "revit_import_stl",
+  "description": "Imports an STL file into a Generic Model DirectShape element using TessellatedShapeBuilder and the QuantumConcepts STL reader.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "file_path": {
+        "type": "string",
+        "description": "Path to the STL file (OpenFileDialog when omitted)"
+      },
+      "binary": {
+        "type": "boolean",
+        "description": "When true, read binary STL; when false, read ASCII STL (defaults to current StlImportProperties setting)"
+      },
+      "target": {
+        "type": "string",
+        "enum": ["Solid", "AnyGeometry", "Mesh"],
+        "description": "TessellatedShapeBuilder target mode (defaults to current StlImportProperties setting)"
+      },
+      "graphics_style": {
+        "type": "string",
+        "enum": ["None", "Sketch"],
+        "description": "Optional graphics style for imported mesh (defaults to current StlImportProperties setting)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "StlImportCommand",
+  "sample": "StlImport",
+  "source": "src/StlImport/StlImportCommand.cs",
+  "mcpRating": 3,
+  "requiresUi": true,
+  "notes": "Requires OpenFileDialog for STL path; import options are shared with the property setter commands in this sample."
+}

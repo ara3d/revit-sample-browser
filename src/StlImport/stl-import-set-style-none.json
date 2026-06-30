@@ -1,0 +1,11 @@
+{
+  "name": "revit_stl_import_set_style_none",
+  "description": "Clears the graphics style used when importing STL geometry.",
+  "arguments": { "type": "object", "properties": {}, "required": [] },
+  "commandClass": "SetStyleToNoneCommand",
+  "sample": "StlImport",
+  "source": "src/StlImport/StlImportPropertiesCommands.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Updates shared StlImportProperties; run before StlImportCommand."
+}

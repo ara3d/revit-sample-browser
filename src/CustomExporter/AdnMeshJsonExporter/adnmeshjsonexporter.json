@@ -1,0 +1,24 @@
+{
+  "name": "revit_export_view_3d_mesh_json",
+  "description": "Exports tessellated 3D mesh geometry from a 3D view to ADN mesh JSON format (vertices, indices, normals, centroid, color, element id per mesh).",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "view_id": {
+        "type": "integer",
+        "description": "3D view to export (defaults to active view)"
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Path for the output JSON file (if omitted, a save dialog is shown)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "CustomExporter/AdnMeshJsonExporter",
+  "source": "src/CustomExporter/AdnMeshJsonExporter/Command.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "Replace SaveFileDialog with output_path parameter for headless MCP execution. Active view must be a 3D view."
+}

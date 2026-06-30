@@ -1,0 +1,24 @@
+{
+  "name": "revit_create_direct_shape_from_face",
+  "description": "Creates a Generic Model DirectShape from a picked face with sketch-plane reuse, per-triangle model lines, and geometry-instance transform stack resolution for nested families.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "face_reference": {
+        "type": "string",
+        "description": "Stable representation of the face to convert (interactive pick when omitted)"
+      },
+      "draw_model_lines": {
+        "type": "boolean",
+        "description": "When true, draw model-line loops for each triangle (always true in the current command)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CreateDirectShapeCommand",
+  "sample": "DirectShapeFromFace",
+  "source": "src/DirectShapeFromFace/CreateDirectShapeCommand.cs",
+  "mcpRating": 3,
+  "requiresUi": true,
+  "notes": "Requires interactive face pick; also creates model lines and reuses sketch planes named '<not associated>'."
+}

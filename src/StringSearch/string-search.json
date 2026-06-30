@@ -1,0 +1,57 @@
+{
+  "name": "revit_search_parameters",
+  "description": "Search element parameter values in the current view, selection, or project for a given string with optional category, parameter, and regex filters.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "search_string": {
+        "type": "string",
+        "description": "Text or regular expression to find in parameter values"
+      },
+      "scope": {
+        "type": "string",
+        "enum": ["view", "selection", "project"],
+        "description": "Element set to search"
+      },
+      "category": {
+        "type": "string",
+        "description": "BuiltInCategory name to limit search, or '*' for all categories"
+      },
+      "parameter_name": {
+        "type": "string",
+        "description": "Parameter name to search, or '*' for all parameters"
+      },
+      "match_case": {
+        "type": "boolean",
+        "description": "Require exact character case when matching"
+      },
+      "whole_word": {
+        "type": "boolean",
+        "description": "Require the search string to match the entire parameter value"
+      },
+      "regex": {
+        "type": "boolean",
+        "description": "Treat search_string as a .NET regular expression"
+      },
+      "built_in_params": {
+        "type": "boolean",
+        "description": "Search BuiltInParameter values via the API instead of visible parameters"
+      },
+      "element_types": {
+        "type": "boolean",
+        "description": "Include element types (wall types, family symbols, etc.)"
+      },
+      "element_instances": {
+        "type": "boolean",
+        "description": "Include element instances (walls, family instances, etc.)"
+      }
+    },
+    "required": ["search_string", "scope"]
+  },
+  "commandClass": "Command",
+  "sample": "StringSearch",
+  "source": "src/StringSearch/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Current implementation uses SearchForm and SearchHitNavigator dialogs. Refactor to accept arguments directly and return structured hits for headless MCP execution."
+}

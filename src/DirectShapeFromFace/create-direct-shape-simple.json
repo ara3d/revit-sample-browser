@@ -1,0 +1,20 @@
+{
+  "name": "revit_create_direct_shape_from_face_simple",
+  "description": "Creates a Generic Model DirectShape from a picked element face by triangulating the face and applying the family instance total transform when needed.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "face_reference": {
+        "type": "string",
+        "description": "Stable representation of the face to convert (interactive pick when omitted)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CreateDirectShapeSimpleCommand",
+  "sample": "DirectShapeFromFace",
+  "source": "src/DirectShapeFromFace/CreateDirectShapeSimpleCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Requires interactive face pick; preferred simple workflow for most family-instance faces."
+}

@@ -1,0 +1,11 @@
+{
+  "name": "revit_stl_import_set_mode_polymesh",
+  "description": "Sets STL import TessellatedShapeBuilder mode to Mesh with Salvage fallback.",
+  "arguments": { "type": "object", "properties": {}, "required": [] },
+  "commandClass": "SetToPolymeshCommand",
+  "sample": "StlImport",
+  "source": "src/StlImport/StlImportPropertiesCommands.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Updates shared StlImportProperties; run before StlImportCommand."
+}

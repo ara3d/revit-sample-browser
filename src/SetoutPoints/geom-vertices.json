@@ -1,0 +1,29 @@
+{
+  "name": "revit_place_concrete_setout_points",
+  "description": "Place setout point family instances on every geometry corner of structural concrete elements.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_ids": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Optional host element ids to limit placement (default: all matching concrete elements)"
+      },
+      "family_path": {
+        "type": "string",
+        "description": "Optional path to SetoutPoint.rfa when the family is not already loaded"
+      },
+      "dry_run": {
+        "type": "boolean",
+        "description": "When true, report corner counts without creating instances"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CmdGeomVertices",
+  "sample": "SetoutPoints",
+  "source": "src/SetoutPoints/CmdGeomVertices.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Requires shared parameters from shared_parameters.txt bound to the setout point family. Loads SetoutPoint.rfa from src/SetoutPoints/test/ when needed."
+}

@@ -1,0 +1,24 @@
+{
+  "name": "revit_hide_category_in_all_views",
+  "description": "Hide the category of a picked element in every view of the active project.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_id": {
+        "type": "string",
+        "description": "Element id used to resolve the category to hide (replaces interactive pick)"
+      },
+      "category_id": {
+        "type": "string",
+        "description": "Category id to hide directly (alternative to element_id)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "HideCategoryCommand",
+  "sample": "HideCategory",
+  "source": "src/HideCategory/HideCategoryCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Interactive pick selects the category. Some view types skip SetCategoryHidden with ArgumentException; results are summarized in a TaskDialog."
+}

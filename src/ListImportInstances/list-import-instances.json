@@ -1,0 +1,20 @@
+{
+  "name": "revit_list_import_instances",
+  "description": "List ImportInstance elements in the active project, detect duplicate view-specific CAD imports, and write a text report beside the project file.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "output_path": {
+        "type": "string",
+        "description": "Optional path for the report file (defaults to <project>-ListOfImportedData.txt beside the RVT)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "ListImportInstancesCommand",
+  "sample": "ListImportInstances",
+  "source": "src/ListImportInstances/ListImportInstancesCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Writes a log file and shows a TaskDialog with an option to open it in Notepad. Unsaved projects use Default-ListOfImportedData.txt in the current directory."
+}

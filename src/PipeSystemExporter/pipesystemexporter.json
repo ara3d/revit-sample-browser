@@ -1,0 +1,20 @@
+{
+  "name": "revit_export_pipe_system",
+  "description": "Enumerates all pipes and pipe fittings in the document, logging connector endpoints, diameters, and inferred fitting types (plug, elbow, tee) to debug output.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "system_type": {
+        "type": "string",
+        "description": "Optional MEP system type name filter (not yet implemented; exports all pipes and fittings)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "PipeSystemExporter",
+  "source": "src/PipeSystemExporter/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": false,
+  "notes": "Currently writes to Debug.Print only. For MCP use, capture output into a structured JSON payload of pipes and fittings with connector XYZ endpoints."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_populate_cfm_per_sf",
+  "description": "Populate the CFM-per-SF parameter on all MEP spaces from actual supply airflow and area.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdPopulateCfmPerSf",
+  "sample": "AdnRme",
+  "source": "src/AdnRme/CmdPopulateCfmPerSf.cs",
+  "mcpRating": 3,
+  "requiresUi": false,
+  "notes": "Processes all spaces in the active document. Requires spaces with Actual Supply Airflow and Area parameters plus a CFM per SF shared/instance parameter."
+}

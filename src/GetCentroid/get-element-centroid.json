@@ -1,0 +1,21 @@
+{
+  "name": "revit_get_element_centroid",
+  "description": "Calculates tessellation-based centroid and volume for selected or picked elements.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Element ids to analyze; when omitted, uses the current selection or interactive pick"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "GetCentroid",
+  "source": "src/GetCentroid/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Current implementation uses pre-selection or interactive pick. Refactor to accept element_ids for headless MCP execution."
+}

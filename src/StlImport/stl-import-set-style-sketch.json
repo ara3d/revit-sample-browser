@@ -1,0 +1,11 @@
+{
+  "name": "revit_stl_import_set_style_sketch",
+  "description": "Sets STL import graphics style to the document <Sketch> GraphicsStyle when available.",
+  "arguments": { "type": "object", "properties": {}, "required": [] },
+  "commandClass": "SetStyleToSketchCommand",
+  "sample": "StlImport",
+  "source": "src/StlImport/StlImportPropertiesCommands.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Updates shared StlImportProperties; run before StlImportCommand."
+}

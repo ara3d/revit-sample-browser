@@ -1,0 +1,15 @@
+{
+  "name": "revit_create_cnc_fab_shared_parameters",
+  "description": "Create and bind CncFab export-tracking shared parameters (IsExported, ExportedFirst, ExportedLast) to the Parts category.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "CmdCreateSharedParameters",
+  "sample": "ExportCncFab",
+  "source": "src/ExportCncFab/Commands.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Run once per project before CmdDxf or CmdSat. Creates a temp shared parameter file if none is configured."
+}

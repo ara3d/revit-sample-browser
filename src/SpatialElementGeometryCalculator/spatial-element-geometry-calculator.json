@@ -1,0 +1,30 @@
+{
+  "name": "revit_room_wall_net_area",
+  "description": "Reports net, opening, and gross wall area per room using SpatialElementGeometryCalculator, grouped by room, wall type, or outer material.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "level_id": {
+        "type": "integer",
+        "description": "Optional level filter for rooms to analyze"
+      },
+      "room_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Optional subset of room element ids to analyze"
+      },
+      "group_by": {
+        "type": "string",
+        "enum": ["room", "wall_type", "material"],
+        "description": "How to group results; defaults to all three groupings"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "SpatialElementGeometryCalculator",
+  "source": "src/SpatialElementGeometryCalculator/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Read-only; replace TaskDialog summaries with structured JSON return for MCP execution."
+}

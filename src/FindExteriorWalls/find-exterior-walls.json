@@ -1,0 +1,27 @@
+{
+  "name": "revit_find_exterior_walls",
+  "description": "Identify exterior walls from a candidate set in a floor plan using ray casting and end-join propagation, then return or select the exterior subset.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "wall_ids": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Optional wall element ids to analyze (replaces interactive rectangle pick)"
+      },
+      "view_id": {
+        "type": "string",
+        "description": "Optional floor plan view id to ensure correct view context"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "FindExteriorWallsCommand",
+  "sample": "FindExteriorWalls",
+  "source": "src/FindExteriorWalls/FindExteriorWallsCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Current implementation requires a floor plan view and rectangle wall selection. MCP use would accept wall_ids and return exterior wall ids instead of calling SetElementIds."
+}

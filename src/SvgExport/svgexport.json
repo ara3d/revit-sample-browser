@@ -1,0 +1,24 @@
+{
+  "name": "revit_export_room_svg",
+  "description": "Exports a room plan boundary to an SVG file scaled to a 100x100 viewBox.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "room_id": {
+        "type": "integer",
+        "description": "Element id of the room to export"
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Full path for the output .svg file"
+      }
+    },
+    "required": ["room_id", "output_path"]
+  },
+  "commandClass": "Command",
+  "sample": "SvgExport",
+  "source": "src/SvgExport/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": true,
+  "notes": "Current implementation uses interactive room pick and SaveFileDialog. Non-linear boundary curves are approximated as line segments only. Only the first boundary loop is exported."
+}

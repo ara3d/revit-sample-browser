@@ -1,0 +1,21 @@
+{
+  "name": "revit_compare_element_centroid",
+  "description": "Compares tessellation-based centroid and volume with Solid.ComputeCentroid and Solid.Volume for each tessellatable solid.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Element ids to analyze; when omitted, uses the current selection or interactive pick"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CompareCentroidCommand",
+  "sample": "GetCentroid",
+  "source": "src/GetCentroid/CompareCentroidCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Current implementation uses pre-selection or interactive pick. Refactor to accept element_ids for headless MCP execution."
+}

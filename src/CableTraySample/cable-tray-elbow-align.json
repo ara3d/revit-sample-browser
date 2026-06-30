@@ -1,0 +1,24 @@
+{
+  "name": "revit_cable_tray_elbow_align",
+  "description": "Creates horizontal and vertical cable tray segments, rotates the vertical segment to align connector coordinate systems, then inserts an elbow fitting.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "cable_tray_type_name": {
+        "type": "string",
+        "description": "Cable tray type name (default: Default)"
+      },
+      "level_name": {
+        "type": "string",
+        "description": "Level name (default: Level 1)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CmdCableTray4",
+  "sample": "CableTraySample",
+  "source": "src/CableTraySample/CmdCableTray4.cs",
+  "mcpRating": 3,
+  "requiresUi": false,
+  "notes": "Computes rotation angle from connector BasisY/BasisZ alignment. Key upstream sample for resolving 'Failed to insert elbow' on cable trays."
+}

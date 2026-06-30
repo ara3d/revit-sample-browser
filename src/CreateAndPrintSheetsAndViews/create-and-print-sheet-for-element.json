@@ -1,0 +1,32 @@
+{
+  "name": "revit_create_and_print_sheet_for_element",
+  "description": "Creates a sheet with right, front, top, and isometric 3D views for a single selected element, exports PDF and JPG, and optionally commits the transaction to save the sheet.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_id": {
+        "type": "integer",
+        "description": "Element to document; when omitted, prompts for interactive pick"
+      },
+      "save_sheet": {
+        "type": "boolean",
+        "description": "Whether to commit the transaction and keep the sheet (default prompts user)"
+      },
+      "output_directory": {
+        "type": "string",
+        "description": "Directory for PDF and image export (default C:/tmp)"
+      },
+      "title_block_name": {
+        "type": "string",
+        "description": "Title block family symbol name (default 'AIR CRO - Plano DIN A4')"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CmdCreateAndPrintSheetAndViews",
+  "sample": "CreateAndPrintSheetsAndViews",
+  "source": "src/CreateAndPrintSheetsAndViews/CmdCreateAndPrintSheetAndViews.cs",
+  "mcpRating": 3,
+  "requiresUi": true,
+  "notes": "FabricationPart elements use duct LCS for view orientation. Requires title block in project. Uses DialogBoxShowing to auto-accept temporary hide/isolate export prompt."
+}

@@ -1,0 +1,27 @@
+{
+  "name": "revit_export_element_images",
+  "description": "Exports PNG images of selected elements from multiple 3D view angles (Isometric, North, East, Top).",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "description": "Element ids of the elements to export"
+      },
+      "output_dir": {
+        "type": "string",
+        "description": "Directory for exported PNG files; defaults to %TEMP%\\GetElementImage"
+      }
+    },
+    "required": ["element_ids"]
+  },
+  "commandClass": "Command",
+  "sample": "GetElementImage",
+  "source": "src/GetElementImage/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Current implementation uses interactive element pick or pre-selection. Temporary 3D views are rolled back after export. Refactor to accept element_ids and output_dir for headless MCP execution."
+}

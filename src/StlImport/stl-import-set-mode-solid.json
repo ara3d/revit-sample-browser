@@ -1,0 +1,11 @@
+{
+  "name": "revit_stl_import_set_mode_solid",
+  "description": "Sets STL import TessellatedShapeBuilder mode to Solid with Abort fallback.",
+  "arguments": { "type": "object", "properties": {}, "required": [] },
+  "commandClass": "SetToSolidCommand",
+  "sample": "StlImport",
+  "source": "src/StlImport/StlImportPropertiesCommands.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Updates shared StlImportProperties; run before StlImportCommand."
+}

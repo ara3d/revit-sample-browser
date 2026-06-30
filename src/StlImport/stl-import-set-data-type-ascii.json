@@ -1,0 +1,11 @@
+{
+  "name": "revit_stl_import_set_data_type_ascii",
+  "description": "Sets STL file reader to ASCII format.",
+  "arguments": { "type": "object", "properties": {}, "required": [] },
+  "commandClass": "SetDataTypeToAsciiCommand",
+  "sample": "StlImport",
+  "source": "src/StlImport/StlImportPropertiesCommands.cs",
+  "mcpRating": 2,
+  "requiresUi": false,
+  "notes": "Updates shared StlImportProperties; run before StlImportCommand."
+}

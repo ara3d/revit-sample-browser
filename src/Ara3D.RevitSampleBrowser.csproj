@@ -246,6 +246,12 @@
     <Content Include="ScheduleAutomaticFormatter\Resources\ScheduleFormatter.ico" />
     <Content Include="ScheduleToHTML\Resources\ScheduleExport.ico" />
     <Content Include="SharedCoordinateSystem\timezone.txt" />
+    <Content Include="SetoutPoints\shared_parameters.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SetoutPoints\test\SetoutPoint.rfa">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="SinePlotter\Resources\Start.png" />
     <Content Include="SinePlotter\SinePlotter.sln" />
     <Content Include="Site\Resources\AddPond.ico" />
@@ -299,6 +305,8 @@
     <None Include="CurtainSystem\ReadMe_CurtainSystem.rtf" />
     <None Include="CurtainWallGrid\ReadMe_CurtainWallGrid.rtf" />
     <None Include="CurvedBeam\ReadMe_CurvedBeam.rtf" />
+    <None Include="CustomExporter\AdnMeshJsonExporter\Readme_AdnMeshJsonExporter.rtf" />
+    <None Include="StringSearch\Readme_StringSearch.rtf" />
     <None Include="CustomExporter\Custom2DExporter\Readme_Custom2DExporter.rtf" />
     <None Include="DatumsModification\Readme_DatumsModification.rtf" />
     <None Include="DeckProperties\ReadMe_DeckProperties.rtf" />
@@ -589,6 +597,12 @@
       <DependentUpon>SpringModulusForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CapitalizeAllTextNotes\Command.cs" />
+    <Compile Include="CableTraySample\CmdCableTray.cs" />
+    <Compile Include="CableTraySample\CmdCableTray2.cs" />
+    <Compile Include="CableTraySample\CmdCableTray3.cs" />
+    <Compile Include="CableTraySample\CmdCableTray4.cs" />
+    <Compile Include="CableTraySample\CmdConduit.cs" />
+    <Compile Include="CableTraySample\Util.cs" />
     <Compile Include="CloudAPISample\Application.cs" />
     <Compile Include="CloudAPISample\Coroutine\Coroutine.cs" />
     <Compile Include="CloudAPISample\Coroutine\CoroutineScheduler.cs" />
@@ -636,6 +650,11 @@
     <Compile Include="ContextualAnalyticalModel\ReleaseConditionsAnalyticalMember.cs" />
     <Compile Include="ContextualAnalyticalModel\RemoveAssociation.cs" />
     <Compile Include="ContextualAnalyticalModel\SetOuterContourForPanels.cs" />
+    <Compile Include="CreateAndPrintSheetsAndViews\CmdCreateAndPrintSheetAndViews.cs" />
+    <Compile Include="CreateAndPrintSheetsAndViews\Command.cs" />
+    <Compile Include="CreateAndPrintSheetsAndViews\FabricationPartSelectionFilter.cs" />
+    <Compile Include="CreateAndPrintSheetsAndViews\FabricationPartSelector.cs" />
+    <Compile Include="CreateAndPrintSheetsAndViews\Util.cs" />
     <Compile Include="CreateBeamsColumnsBraces\CreateBeamsColumnsBraces.cs" />
     <Compile Include="CreateBeamsColumnsBraces\CreateBeamsColumnsBracesForm.cs">
       <SubType>Form</SubType>
@@ -750,6 +769,60 @@
       <DependentUpon>Export2DView.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomExporter\Custom2DExporter\TessellatedGeomAndText2DExportContext.cs" />
+    <Compile Include="CustomExporter\AdnMeshJsonExporter\AdnMeshData.cs" />
+    <Compile Include="CustomExporter\AdnMeshJsonExporter\CentroidVolume.cs" />
+    <Compile Include="CustomExporter\AdnMeshJsonExporter\Command.cs" />
+    <Compile Include="CustomExporter\AdnMeshJsonExporter\ExportContextAdnMesh.cs" />
+    <Compile Include="CustomExporter\AdnMeshJsonExporter\NormalLookupXyz.cs" />
+    <Compile Include="CustomExporter\AdnMeshJsonExporter\PointInt.cs" />
+    <Compile Include="CustomExporter\AdnMeshJsonExporter\Util.cs" />
+    <Compile Include="CustomExporter\AdnMeshJsonExporter\VertexLookupInt.cs" />
+    <Compile Include="AdnRme\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdnRme\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdnRme\Bip.cs" />
+    <Compile Include="AdnRme\CmdAbout.cs" />
+    <Compile Include="AdnRme\CmdAssignFlowToTerminals.cs" />
+    <Compile Include="AdnRme\CmdChangeSize.cs" />
+    <Compile Include="AdnRme\CmdElectricalConnectors.cs" />
+    <Compile Include="AdnRme\CmdElectricalHierarchy2.cs" />
+    <Compile Include="AdnRme\CmdElectricalSystemBrowser.cs" />
+    <Compile Include="AdnRme\CmdInspectElectricalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdnRme\CmdInspectElectricalForm.Designer.cs">
+      <DependentUpon>CmdInspectElectricalForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdnRme\CmdInspectElectricallForm2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdnRme\CmdInspectElectricallForm2.designer.cs">
+      <DependentUpon>CmdInspectElectricallForm2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdnRme\CmdPopulateCfmPerSf.cs" />
+    <Compile Include="AdnRme\CmdResetDemo.cs" />
+    <Compile Include="AdnRme\CmdUnhostedElements.cs" />
+    <Compile Include="AdnRme\Const.cs" />
+    <Compile Include="AdnRme\FamilySelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdnRme\FamilySelector.Designer.cs">
+      <DependentUpon>FamilySelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdnRme\PanelTreeNodeHelper.cs" />
+    <Compile Include="AdnRme\ParameterName.cs" />
+    <Compile Include="AdnRme\ParameterValue.cs" />
+    <Compile Include="AdnRme\ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdnRme\ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdnRme\Util.cs" />
+    <Compile Include="AdnRme\WaitCursor.cs" />
     <Compile Include="DatumsModification\AlignmentSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1134,6 +1207,10 @@
     </Compile>
     <Compile Include="GridCreation\Properties\Resources.Designer.cs" />
     <Compile Include="GridCreation\Properties\Settings.Designer.cs" />
+    <Compile Include="HideCategory\HideCategoryCommand.cs" />
+    <Compile Include="FindExteriorWalls\FindExteriorWallsCommand.cs" />
+    <Compile Include="FindExteriorWalls\FindExteriorWallsExtensions.cs" />
+    <Compile Include="FindExteriorWalls\WallsSelectionFilter.cs" />
     <Compile Include="HelloRevit\Command.cs" />
     <Compile Include="ImportExport\Command.cs" />
     <Compile Include="ImportExport\Export\ExportBaseOptionsData.cs" />
@@ -1247,6 +1324,9 @@
       <DependentUpon>LevelsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LevelsProperty\Properties\Resources.Designer.cs" />
+    <Compile Include="ListImportInstances\IReportImportData.cs" />
+    <Compile Include="ListImportInstances\ListImportInstancesCommand.cs" />
+    <Compile Include="ListImportInstances\SimpleTextFileBasedReporter.cs" />
     <Compile Include="Loads\LoadCaseDeal.cs" />
     <Compile Include="Loads\LoadCaseMap.cs" />
     <Compile Include="Loads\LoadCaseTabPage.cs">
@@ -1540,6 +1620,8 @@
     </Compile>
     <Compile Include="PerformanceAdviserControl\UICommand.cs" />
     <Compile Include="PhysicalProp\Command.cs" />
+    <Compile Include="PipeSystemExporter\Command.cs" />
+    <Compile Include="PipeSystemExporter\Util.cs" />
     <Compile Include="PlaceFamilyInstanceByFace\BasedType.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1699,7 +1781,31 @@
     <Compile Include="Ribbon\AddInCommand.cs" />
     <Compile Include="Ribbon\Ribbon.cs" />
     <Compile Include="RoofsRooms\Command.cs" />
+    <Compile Include="SpatialElementGeometryCalculator\Command.cs" />
+    <Compile Include="SpatialElementGeometryCalculator\DebugHandler.cs" />
+    <Compile Include="SpatialElementGeometryCalculator\LogCreator.cs" />
+    <Compile Include="SpatialElementGeometryCalculator\OpeningHandler.cs" />
+    <Compile Include="SpatialElementGeometryCalculator\ShapeCreator.cs" />
+    <Compile Include="SpatialElementGeometryCalculator\SolidHandler.cs" />
+    <Compile Include="SpatialElementGeometryCalculator\SpatialDataCache.cs" />
+    <Compile Include="SetoutPoints\CmdGeomVertices.cs" />
+    <Compile Include="SetoutPoints\CmdRenumber.cs" />
+    <Compile Include="SetoutPoints\GeomVertices.cs" />
     <Compile Include="RoomSchedule\Command.cs" />
+    <Compile Include="CropViewToRoom\Command.cs" />
+    <Compile Include="CropViewToRoom\RoomCropGeometry.cs" />
+    <Compile Include="DirectShapeFromFace\CreateDirectShapeCommand.cs" />
+    <Compile Include="DirectShapeFromFace\CreateDirectShapeInitialCommand.cs" />
+    <Compile Include="DirectShapeFromFace\CreateDirectShapeSimpleCommand.cs" />
+    <Compile Include="StlImport\StlImportCommand.cs" />
+    <Compile Include="StlImport\StlImportProperties.cs" />
+    <Compile Include="StlImport\StlImportPropertiesCommands.cs" />
+    <Compile Include="PathOfTravelDoors\Command.cs" />
+    <Compile Include="PathOfTravelDoors\PathOfTravelDoorFinder.cs" />
+    <Compile Include="PathOfTravelDoors\WriteDoorMarksCommand.cs" />
+    <Compile Include="RoomVolumeDirectShape\Command.cs" />
+    <Compile Include="RoomVolumeDirectShape\RoomPropertyHelper.cs" />
+    <Compile Include="RoomVolumeDirectShape\RoomVolumeGeometry.cs" />
     <Compile Include="RoomSchedule\CtrlApplication.cs" />
     <Compile Include="RoomSchedule\EventsReactor.cs" />
     <Compile Include="RoomSchedule\RoomScheduleForm.cs">
@@ -1845,6 +1951,54 @@
     <Compile Include="StructuralLayerFunction\StructuralLayerFunctionForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GetElementImage\Command.cs" />
+    <Compile Include="GetElementImage\ImageExporter.cs" />
+    <Compile Include="GetCentroid\CentroidVolume.cs" />
+    <Compile Include="GetCentroid\Command.cs" />
+    <Compile Include="GetCentroid\CompareCentroidCommand.cs" />
+    <Compile Include="GetCentroid\GetCentroidSelection.cs" />
+    <Compile Include="GetCentroid\SolidCentroidCalculator.cs" />
+    <Compile Include="StringSearch\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringSearch\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringSearch\Command.cs" />
+    <Compile Include="StringSearch\HelpDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringSearch\HelpDlg.Designer.cs">
+      <DependentUpon>HelpDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringSearch\JtLogFile.cs" />
+    <Compile Include="StringSearch\Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StringSearch\PropertyComparer.cs" />
+    <Compile Include="StringSearch\SearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringSearch\SearchForm.Designer.cs">
+      <DependentUpon>SearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringSearch\SearchHit.cs" />
+    <Compile Include="StringSearch\SearchHitNavigator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringSearch\SearchHitNavigator.Designer.cs">
+      <DependentUpon>SearchHitNavigator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringSearch\SearchOptions.cs" />
+    <Compile Include="StringSearch\SortableBindingList.cs" />
+    <Compile Include="StringSearch\StringSearcher.cs" />
+    <Compile Include="StringSearch\StringSearchHost.cs" />
+    <Compile Include="ExportCncFab\Commands.cs" />
+    <Compile Include="ExportCncFab\ExportParameters.cs" />
+    <Compile Include="ExportCncFab\Util.cs" />
+    <Compile Include="SvgExport\Command.cs" />
     <Compile Include="TagBeam\Command.cs" />
     <Compile Include="TagBeam\FamilySymbolWrapper.cs" />
     <Compile Include="TagBeam\TagBeamData.cs" />
@@ -2082,6 +2236,21 @@
     <EmbeddedResource Include="CurvedBeam\Properties\Resources.resx" />
     <EmbeddedResource Include="CustomExporter\Custom2DExporter\Export2DView.resx">
       <DependentUpon>Export2DView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdnRme\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdnRme\CmdInspectElectricalForm.resx">
+      <DependentUpon>CmdInspectElectricalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdnRme\CmdInspectElectricallForm2.resx">
+      <DependentUpon>CmdInspectElectricallForm2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdnRme\FamilySelector.resx">
+      <DependentUpon>FamilySelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdnRme\ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DatumsModification\AlignmentSetting.resx">
       <DependentUpon>AlignmentSetting.cs</DependentUpon>
@@ -2446,6 +2615,23 @@
       <DependentUpon>UWinderOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinderStairs\Properties\Resources.resx" />
+    <EmbeddedResource Include="StringSearch\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringSearch\HelpDlg.resx">
+      <DependentUpon>HelpDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringSearch\help_text.rtf" />
+    <EmbeddedResource Include="StringSearch\Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringSearch\SearchForm.resx">
+      <DependentUpon>SearchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringSearch\SearchHitNavigator.resx">
+      <DependentUpon>SearchHitNavigator.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Page Include="CloudAPISample\View\ViewInputMigrationInfo.xaml">
@@ -2657,6 +2843,9 @@
     <Folder Include="ViewPrinter\Properties\" />
     <Folder Include="ViewTemplateCreation\Properties\" />
     <Folder Include="VisibilityControl\Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="QuantumConcepts.Formats.STL" Version="1.1.0" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />

@@ -1,0 +1,22 @@
+{\rtf1\ansi\deff0
+{\fonttbl{\f0\fswiss Arial;}}
+\f0\fs20
+\b ADN Mesh JSON Exporter\b0\par
+\par
+Exports tessellated 3D mesh geometry from the active 3D view to ADN mesh JSON format.\par
+\par
+\b Requirements:\b0\par
+- Active project document\par
+- Active view must be a 3D view\par
+\par
+\b Output:\b0\par
+A JSON file containing an array of mesh objects. Each object includes vertex coordinates, triangle indices, normals, centroid, material color, and the element UniqueId.\par
+\par
+\b API:\b0\par
+Autodesk.Revit.DB.CustomExporter\par
+Autodesk.Revit.DB.IExportContext\par
+\par
+\b Source:\b0\par
+Adapted from CustomExporterAdnMeshJson by Jeremy Tammik (MIT).\par
+https://github.com/jeremytammik/CustomExporterAdnMeshJson\par
+}
